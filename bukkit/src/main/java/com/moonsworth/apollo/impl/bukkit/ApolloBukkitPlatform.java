@@ -8,6 +8,9 @@ import com.moonsworth.apollo.impl.bukkit.wrapper.BukkitPlayer;
 import com.moonsworth.apollo.impl.bukkit.network.BukkitPacketHandler;
 import lombok.Getter;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
@@ -16,7 +19,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform {
+/**
+ * Implementation of ApolloPlatform for Bukkit-based servers.
+ */
+public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, Listener {
 
     @Getter
     private static ApolloBukkitPlatform instance;
@@ -33,6 +39,7 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform {
         instance = this;
         Apollo.setPlatform(this);
         registerPluginChannel();
+        getServer().getPluginManager().registerEvents(this, this);
     }
 
     private void registerPluginChannel() {
@@ -45,7 +52,7 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform {
             });
         });
     }
-
+    
     @Override
     public @Nullable ApolloPlayer tryWrapPlayer(Object o) {
         if (o instanceof Player player) {
@@ -54,6 +61,11 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform {
             }
         }
         return null;
+    }
+    
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        supportedPlayers.remove(event.getPlayer().getUniqueId());
     }
 
 }

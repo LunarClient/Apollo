@@ -2,6 +2,13 @@
 
 **Apollo** is an API for interacting with Lunar Client players from a server or proxy.
 
+## Architecture
+
+`api` contains classes available on all platforms. It defines the protocol between Lunar Client and servers / proxies.
+
+There are modules for different implementation of the API that are also plugins for their platform.
+These modules contain source sets for NMS and Mixin code.
+
 ## Building
 
 Run Spigot BuildTools to get a copy of the latest Minecraft Spigot in your local maven installation.

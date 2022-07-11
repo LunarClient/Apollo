@@ -1,4 +1,4 @@
-package com.moonsworth.apollo.impl.bukkit.nms;
+package com.moonsworth.apollo.impl.bukkit.v1_18;
 
 import net.minecraft.world.entity.EntityLiving;
 import org.bukkit.craftbukkit.v1_18_R2.CraftChunk;

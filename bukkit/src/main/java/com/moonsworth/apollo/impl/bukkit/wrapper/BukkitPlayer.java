@@ -7,6 +7,11 @@ import com.moonsworth.apollo.api.network.PacketRegistry;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
 import org.bukkit.entity.Player;
 
+/**
+ * Wrapper for Bukkit Players to implement the ApolloPlayer interface.
+ *
+ * @param player Player to wrap
+ */
 public record BukkitPlayer(Player player) implements ApolloPlayer {
 
     @Override

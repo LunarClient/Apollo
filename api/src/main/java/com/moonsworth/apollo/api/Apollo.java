@@ -11,6 +11,9 @@ import java.util.function.Consumer;
  */
 public class Apollo {
 
+    /**
+     * The plugin message channel that Lunar Client and Apollo talk over.
+     */
     public static final String PLUGIN_MESSAGE_CHANNEL = "lunarclient:apollo";
 
     /**
@@ -26,6 +29,5 @@ public class Apollo {
             consumer.accept(apolloPlayer);
         }
     }
-
 
 }

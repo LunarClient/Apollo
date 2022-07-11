@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Registry for Packets that can parse and serialize.
+ */
 public class PacketRegistry {
 
     // TODO: fastutil - figure out what version works for all platforms?
