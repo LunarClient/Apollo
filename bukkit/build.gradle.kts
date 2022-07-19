@@ -6,6 +6,13 @@ import com.moonsworth.apollo.toolchain.MinecraftVersion
 plugins {
     id("java")
     id("fr.il_totore.manadrop")
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 group = "com.moonsworth"
@@ -37,17 +44,26 @@ tasks.named("buildTools", BuildTools::class.java) {
 
 val craftbukkitSourceSets = MinecraftVersion.values().map { mc ->
     // create a craftbukkit source set that depends on main
-    sourceSets.create("craftbukkit_${mc.name}") {
+    val versionedSourceSet = sourceSets.create("craftbukkit_${mc.name}") {
         val main = sourceSets.main.get()
         this.compileClasspath += main.output
+        this.compileClasspath += main.compileClasspath
         val sourceSet = this
         val cb = compileOnlyConfigurationName
         dependencies {
-            add(main.runtimeClasspathConfigurationName, sourceSet.output)
+            // Add this if you want the mixins to be shaded in
+            // add(main.runtimeClasspathConfigurationName, sourceSet.output)
             add(cb, "org.bukkit:craftbukkit:${mc.exactVersion}-R0.1-SNAPSHOT")
             add(cb, "org.spongepowered:mixin:0.8.5")
         }
     }
+
+    // :apollo-bukkit:jar_v1_X builds a jar containing Mixins for that version
+    tasks.create("jar_${mc.name}", Jar::class) {
+        from(versionedSourceSet.output)
+        archiveBaseName.set("${archiveBaseName.get()}-${mc.name}")
+    }
+
 }
 
 val lombokVersion: String by project
@@ -58,6 +74,7 @@ dependencies {
 
     implementation(project(":apollo-api"))
     compileOnly(spigotApi(minecraftVersion))
+    compileOnly("space.vectrix.ignite:ignite-api:0.8.0")
 }
 
 tasks.processResources.get().finalizedBy(tasks.named("spigotPlugin"))

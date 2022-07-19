@@ -1,0 +1,11 @@
+{
+  "id": "apollo",
+  "version": "0.0.0",
+  "entry": "com.moonsworth.apollo.impl.bukkit.v1_18.ApolloIgniteMod_v1_18",
+  "dependencies": [
+    "ignite"
+  ],
+  "mixins": [
+    "mixins.apollo.v1_18.json"
+  ]
+}

@@ -3,6 +3,13 @@ plugins {
     `java-library`
 }
 
+// TODO: enforce this works with Java 8
+//java {
+//    toolchain {
+//        languageVersion.set(JavaLanguageVersion.of(8))
+//    }
+//}
+
 repositories {
     mavenCentral()
 }
