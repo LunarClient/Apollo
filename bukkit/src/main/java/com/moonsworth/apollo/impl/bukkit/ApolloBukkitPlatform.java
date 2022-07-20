@@ -4,9 +4,17 @@ import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.network.PacketRegistry;
+import com.moonsworth.apollo.impl.bukkit.command.KnockbackCommand;
+import com.moonsworth.apollo.impl.bukkit.listener.ArmorDurabilityListener;
+import com.moonsworth.apollo.impl.bukkit.listener.AttackSpeedListener;
+import com.moonsworth.apollo.impl.bukkit.listener.KnockbackListener;
+import com.moonsworth.apollo.impl.bukkit.listener.RegenListener;
 import com.moonsworth.apollo.impl.bukkit.wrapper.BukkitPlayer;
 import com.moonsworth.apollo.impl.bukkit.network.BukkitPacketHandler;
 import lombok.Getter;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,8 +46,13 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
     public void onEnable() {
         instance = this;
         Apollo.setPlatform(this);
+        getCommand("setkb").setExecutor(new KnockbackCommand());
         registerPluginChannel();
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(new AttackSpeedListener(), this);
+        getServer().getPluginManager().registerEvents(new KnockbackListener(), this);
+        getServer().getPluginManager().registerEvents(new ArmorDurabilityListener(this), this);
+        getServer().getPluginManager().registerEvents(new RegenListener(this), this);
     }
 
     private void registerPluginChannel() {

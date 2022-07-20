@@ -32,6 +32,9 @@ spigot {
         named("Apollo-Bukkit")
         authors("Moonsworth")
         main("com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform")
+        command {
+            named("setkb")
+        }
     }
 }
 
