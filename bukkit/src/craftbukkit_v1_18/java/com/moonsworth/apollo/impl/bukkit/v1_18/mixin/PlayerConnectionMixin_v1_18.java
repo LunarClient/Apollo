@@ -6,9 +6,11 @@ import io.netty.util.concurrent.GenericFutureListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.PacketPlayOutEntitySound;
 import net.minecraft.network.protocol.game.PacketPlayOutNamedSoundEffect;
+import net.minecraft.network.protocol.game.PacketPlayOutSetCooldown;
 import net.minecraft.server.network.PlayerConnection;
 import net.minecraft.sounds.SoundEffect;
 import net.minecraft.sounds.SoundEffects;
+import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -37,6 +39,11 @@ public class PlayerConnectionMixin_v1_18 {
     public void impl$sendPacket(Packet<?> packet, @Nullable GenericFutureListener<? extends Future<? super Void>> genericfuturelistener, CallbackInfo ci) {
         if (packet instanceof PacketPlayOutNamedSoundEffect) {
             if (BLOCKED_SOUND_EFFECTS.contains(((PacketPlayOutNamedSoundEffect) packet).b())) {
+                ci.cancel();
+            }
+        }
+        if (packet instanceof PacketPlayOutSetCooldown) {
+            if (((PacketPlayOutSetCooldown) packet).b() == Items.pA) {
                 ci.cancel();
             }
         }
