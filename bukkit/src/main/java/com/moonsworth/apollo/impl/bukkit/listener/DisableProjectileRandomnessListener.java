@@ -1,5 +1,7 @@
 package com.moonsworth.apollo.impl.bukkit.listener;
 
+import org.bukkit.Material;
+import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -18,6 +20,10 @@ public class DisableProjectileRandomnessListener implements Listener {
         ProjectileSource shooter = projectile.getShooter();
 
         if (shooter instanceof Player player) {
+            if (projectile instanceof EnderPearl) {
+                player.setCooldown(Material.ENDER_PEARL, 0);
+            }
+
             Vector playerDirection = player.getLocation().getDirection().normalize();
             Vector projectileDirection = projectile.getVelocity();
 
