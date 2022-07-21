@@ -24,6 +24,7 @@ public class DisableProjectileRandomnessListener implements Listener {
         ProjectileSource shooter = projectile.getShooter();
 
         if (shooter instanceof Player player) {
+            ((Player) shooter).setCooldown(Material.ENDER_PEARL, 0);
             Vector playerDirection = player.getLocation().getDirection().normalize();
             Vector projectileDirection = projectile.getVelocity();
 

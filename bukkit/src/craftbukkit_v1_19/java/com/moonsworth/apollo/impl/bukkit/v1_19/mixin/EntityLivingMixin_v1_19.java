@@ -14,8 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(EntityLiving.class)
 public class EntityLivingMixin_v1_19 {
 
-    @Shadow private float ci;
-
     @Inject(
             method = "a(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
             at = @At("HEAD"),
