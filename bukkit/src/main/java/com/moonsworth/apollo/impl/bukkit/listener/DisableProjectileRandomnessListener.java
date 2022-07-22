@@ -1,6 +1,7 @@
 package com.moonsworth.apollo.impl.bukkit.listener;
 
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,8 +15,10 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 
+@AllArgsConstructor
 public class DisableProjectileRandomnessListener implements Listener {
 
+    private ApolloBukkitPlatform plugin;
     private static final double EPSILON = 0.1D;
 
     @EventHandler
@@ -24,7 +27,11 @@ public class DisableProjectileRandomnessListener implements Listener {
         ProjectileSource shooter = projectile.getShooter();
 
         if (shooter instanceof Player player) {
-            ((Player) shooter).setCooldown(Material.ENDER_PEARL, 0);
+            if (projectile instanceof EnderPearl) {
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    ((Player) shooter).setCooldown(Material.ENDER_PEARL, 0);
+                }, 1);
+            }
             Vector playerDirection = player.getLocation().getDirection().normalize();
             Vector projectileDirection = projectile.getVelocity();
 
