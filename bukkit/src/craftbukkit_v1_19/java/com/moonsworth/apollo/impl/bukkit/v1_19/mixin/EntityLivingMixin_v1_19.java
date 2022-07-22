@@ -1,8 +1,10 @@
 package com.moonsworth.apollo.impl.bukkit.v1_19.mixin;
 
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityLiving;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,6 +15,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(EntityLiving.class)
 public class EntityLivingMixin_v1_19 {
+
+    /**
+     * @author Tre
+     * @reason Under all cases remove collisions
+     */
+    @Overwrite
+    public boolean canCollideWithBukkit(Entity entity) {
+        return false;
+    }
+
 
     @Inject(
             method = "a(Lnet/minecraft/world/damagesource/DamageSource;F)Z",

@@ -19,16 +19,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(EntityLiving.class)
 public class EntityLivingMixin_v1_18 {
 
-    @Shadow public boolean collides;
-
-    @Inject(
-            method = "<init>",
-            at = @At("TAIL")
-    )
-    public void impl$init(EntityTypes entitytypes, World world, CallbackInfo ci) {
-        collides = false;
-    }
-
     /**
      * @author Tre
      * @reason Under all cases remove collisions
