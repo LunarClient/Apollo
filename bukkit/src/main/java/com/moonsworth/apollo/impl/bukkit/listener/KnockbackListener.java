@@ -1,21 +1,24 @@
 package com.moonsworth.apollo.impl.bukkit.listener;
 
+import com.google.common.base.Functions;
+import com.google.common.collect.ImmutableMap;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.WeakHashMap;
+import java.util.*;
 
 public class KnockbackListener implements Listener {
 
@@ -107,6 +110,106 @@ public class KnockbackListener implements Listener {
 
             // Knockback is sent immediately in 1.8+, there is no reason to send packets manually
             playerKnockbackHashMap.put(victim.getUniqueId(), playerVelocity);
+        }
+    }
+
+    private static final boolean FISHING_KNOCKBACK_NON_PLAYER_ENTITIES = true;
+    private static final double FISHING_DAMAGE = 0.2D;
+    // Fishing Rod KB
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onProjectileHit(ProjectileHitEvent e) {
+        Entity hookEntity = e.getEntity();
+
+        if (e.getEntityType() != EntityType.FISHING_HOOK) {
+            return;
+        }
+
+        Entity hitEntity = e.getHitEntity();
+
+        if (hitEntity == null) {
+            return;
+        }
+        if (!(hitEntity instanceof LivingEntity livingEntity)) {
+            return;
+        }
+        if (!FISHING_KNOCKBACK_NON_PLAYER_ENTITIES && !(hitEntity instanceof Player)) {
+            return;
+        }
+
+        FishHook hook = (FishHook) hookEntity;
+        Player rodder = (Player) hook.getShooter();
+
+        if (!FISHING_KNOCKBACK_NON_PLAYER_ENTITIES) {
+            Player player = (Player) hitEntity;
+
+            if (player.equals(rodder) || player.getGameMode() == GameMode.CREATIVE) {
+                return;
+            }
+        }
+
+        //Check if cooldown time has elapsed
+        if (livingEntity.getNoDamageTicks() > livingEntity.getMaximumNoDamageTicks() / 2f) {
+            return;
+        }
+
+        double damage = FISHING_DAMAGE;
+
+        EntityDamageEvent event = new EntityDamageByEntityEvent(rodder, hitEntity,
+                EntityDamageEvent.DamageCause.PROJECTILE,
+                new EnumMap<>(ImmutableMap.of(EntityDamageEvent.DamageModifier.BASE, damage)),
+                new EnumMap<>(ImmutableMap.of(EntityDamageEvent.DamageModifier.BASE, Functions.constant(damage))));
+        Bukkit.getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            return;
+        }
+        boolean mainHand = true;
+        ItemStack item = rodder.getInventory().getItemInMainHand();
+        if (item.getType() != Material.FISHING_ROD) {
+            mainHand = false;
+            item = rodder.getInventory().getItemInOffHand();
+        }
+
+        short durability = (short) (item.getDurability() + 1);
+        if (durability >= item.getType().getMaxDurability()) {
+            if (mainHand) {
+                rodder.getInventory().setItemInMainHand(null);
+            } else {
+                rodder.getInventory().setItemInOffHand(null);
+            }
+        } else {
+            item.setDurability(durability);
+        }
+        livingEntity.damage(damage);
+        livingEntity.setVelocity(calculateKnockbackVelocity(livingEntity.isOnGround(), hook.getLocation()));
+    }
+
+    private Vector calculateKnockbackVelocity(boolean playerIsOnGround, Location hook) {
+        double kx = hook.getDirection().getX() / 2.5;
+        double kz = hook.getDirection().getZ() / 2.5;
+        kx = kx - kx * 2;
+
+        double upVel = 0.372;
+        if (!playerIsOnGround) {
+            upVel = 0;
+        }
+
+
+        return new Vector(kx, upVel, kz);
+    }
+
+    /**
+     * This is to cancel dragging the entity closer when you reel in
+     */
+    @EventHandler(priority = EventPriority.HIGHEST)
+    private void onPlayerFish(PlayerFishEvent e) {
+        if (e.getState() != PlayerFishEvent.State.CAUGHT_ENTITY) {
+            return;
+        }
+        if (!(e.getCaught() instanceof Mob)) {
+            e.getHook().remove();
+            e.setCancelled(true);
         }
     }
 

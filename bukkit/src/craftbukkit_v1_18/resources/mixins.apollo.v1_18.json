@@ -5,6 +5,7 @@
   "required": true,
   "compatibilityLevel": "JAVA_11",
   "mixins": [
+    "EntityHumanMixin_v1_18",
     "EntityLivingMixin_v1_18",
     "PlayerConnectionMixin_v1_18"
   ],
