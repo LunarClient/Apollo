@@ -30,4 +30,8 @@ public class Apollo {
         }
     }
 
+    public void test() throws com.google.protobuf.InvalidProtocolBufferException {
+        com.moonsworth.apollo.api.proto.Msg.parseFrom(new byte[0]);
+    }
+
 }

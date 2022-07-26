@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_package = "com.moonsworth.apollo.api.proto";
+option java_outer_classname = "ApolloProtocol";
+option java_multiple_files = true;
+
+message Msg {
+  string foo = 1;
+  SecondMsg blah = 2;
+}
+
+message SecondMsg {
+  int32 blah = 1;
+}

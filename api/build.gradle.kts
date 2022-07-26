@@ -1,6 +1,17 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath("com.google.protobuf:protobuf-gradle-plugin:0.8.19")
+    }
+}
+
 plugins {
     id("java")
     `java-library`
+    id("com.google.protobuf") version "0.8.19"
+    id("idea")
 }
 
 // TODO: enforce this works with Java 8
@@ -37,4 +48,7 @@ dependencies {
     compileOnlyApi("commons-codec:commons-codec:1.15")
     compileOnlyApi("com.google.code.gson:gson:2.8.9")
     compileOnlyApi("org.apache.logging.log4j:log4j-api:2.17.1")
+
+    // shaded in dependencies
+    api("com.google.protobuf:protobuf-java:3.21.4")
 }
