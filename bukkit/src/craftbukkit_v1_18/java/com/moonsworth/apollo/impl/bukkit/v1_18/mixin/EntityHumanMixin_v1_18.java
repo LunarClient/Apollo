@@ -27,5 +27,14 @@ public class EntityHumanMixin_v1_18 {
         return false;
     }
 
+    // This is for attack speed removal. This is what the client thinks this value is as well.
+    @Inject(
+            method = "v",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    public void impl$getAttackSpeed(float f, CallbackInfoReturnable<Float> cir) {
+        cir.setReturnValue(1.0f);
+    }
 
 }
