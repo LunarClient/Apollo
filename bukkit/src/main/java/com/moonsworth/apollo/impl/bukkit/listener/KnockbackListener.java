@@ -22,6 +22,10 @@ import java.util.*;
 
 public class KnockbackListener implements Listener {
 
+    private static final float PEARL_DAMAGE = 0.0001F;
+    private static final float SNOW_DAMAGE = 0.0001F;
+    private static final float EGG_DAMAGE = 0.0001F;
+
     public static double knockbackFriction = 2.0D;
     public static double knockbackHorizontal = 0.35D;
     public static double knockbackVertical = 0.35D;
@@ -211,6 +215,36 @@ public class KnockbackListener implements Listener {
             e.getHook().remove();
             e.setCancelled(true);
         }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onEntityHit(EntityDamageByEntityEvent e) {
+        EntityType type = e.getDamager().getType();
+
+        if (e.getDamage() != 0.0) {
+            return;
+        }
+        float damage = 0;
+        switch (type) {
+            case SNOWBALL:
+                damage = SNOW_DAMAGE;
+                break;
+            case EGG:
+                damage = EGG_DAMAGE;
+                break;
+            case ENDER_PEARL:
+                damage = PEARL_DAMAGE;
+                break;
+            default:
+                return;
+        }
+
+        e.setDamage(damage);
+        if (e.isApplicable(EntityDamageEvent.DamageModifier.ABSORPTION)) {
+            e.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, 0);
+        }
+
+
     }
 
 }
