@@ -1,6 +1,10 @@
 package com.moonsworth.apollo.api;
 
+import com.google.protobuf.GeneratedMessageV3;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
+import com.moonsworth.apollo.api.proto.ApolloProtocol;
+import com.moonsworth.apollo.api.proto.Msg;
+import com.moonsworth.apollo.api.proto.SecondMsg;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +35,9 @@ public class Apollo {
     }
 
     public void test() throws com.google.protobuf.InvalidProtocolBufferException {
+        Msg message = Msg.newBuilder().setFoo("test").setBlah(SecondMsg.newBuilder().setBlah(1).build()).build();
+//        message.
+
         com.moonsworth.apollo.api.proto.Msg.parseFrom(new byte[0]);
     }
 
