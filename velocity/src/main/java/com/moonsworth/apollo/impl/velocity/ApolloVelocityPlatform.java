@@ -4,8 +4,6 @@ import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.google.inject.Inject;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-import com.moonsworth.apollo.api.network.PacketRegistry;
-import com.moonsworth.apollo.impl.velocity.network.VelocityPacketHandler;
 import com.moonsworth.apollo.impl.velocity.wrapper.VelocityPlayer;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
@@ -36,8 +34,6 @@ public class ApolloVelocityPlatform implements ApolloPlatform {
     private final Logger logger;
     private final Set<UUID> supportedPlayers = new HashSet<>();
 
-    private final VelocityPacketHandler packetHandler = new VelocityPacketHandler();
-
     @Inject
     public ApolloVelocityPlatform(ProxyServer server, Logger logger) {
         this.server = server;
@@ -56,9 +52,6 @@ public class ApolloVelocityPlatform implements ApolloPlatform {
             if (event.getSource() instanceof Player player) {
                 supportedPlayers.add(player.getUniqueId());
             }
-            PacketRegistry.parse(event.getData()).ifPresent(packet -> {
-                packet.processServer(packetHandler);
-            });
         }
     }
 

@@ -1,0 +1,71 @@
+package com.moonsworth.apollo.api.options;
+
+import com.google.gson.JsonObject;
+import lombok.AccessLevel;
+import lombok.Getter;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
+
+public abstract class ApolloOption<T> {
+
+    /**
+     * The value of this property
+     */
+    @Getter(AccessLevel.PROTECTED)
+    private T value, defaultValue;
+
+    /**
+     * The name and ID of this property
+     */
+    @Getter
+    private String id;
+
+    /**
+     * Called when the value gets updated, if present
+     */
+    private final List<Consumer<T>> onUpdate = new CopyOnWriteArrayList<>();
+
+    private boolean hasLoaded = false;
+
+    public ApolloOption(String id, T value) {
+        this.id = id;
+        this.value = this.defaultValue = value;
+    }
+
+    /**
+     * Called when the value gets updated
+     */
+    public <S extends ApolloOption<T>> S onUpdate(Consumer<T> consumer) {
+        this.onUpdate.add(consumer);
+        return (S) this;
+    }
+
+    /**
+     * Parse a string to the options value.
+     *
+     * @param value The string to be parsed
+     */
+    public abstract void update(String value);
+
+    public void update(T value) {
+        if (!hasLoaded || !Objects.equals(this.value, value)) {
+            this.value = value;
+            for (Consumer<T> c : onUpdate) {
+                c.accept(value);
+            }
+            hasLoaded = true;
+        }
+    }
+
+    public void load(JsonObject element) {
+        if (!element.has(id) || element.get(id).isJsonNull()) {
+            update(defaultValue);
+            return;
+        }
+        this.update(element.get(id).getAsString());
+    }
+
+}

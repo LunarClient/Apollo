@@ -3,11 +3,9 @@ package com.moonsworth.apollo.impl.bukkit;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-import com.moonsworth.apollo.api.network.PacketRegistry;
 import com.moonsworth.apollo.impl.bukkit.command.KnockbackCommand;
 import com.moonsworth.apollo.impl.bukkit.listener.*;
 import com.moonsworth.apollo.impl.bukkit.wrapper.BukkitPlayer;
-import com.moonsworth.apollo.impl.bukkit.network.BukkitPacketHandler;
 import lombok.Getter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
@@ -32,8 +31,6 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
     @Getter
     private static ApolloBukkitPlatform instance;
     private final Set<UUID> supportedPlayers = new HashSet<>();
-    private final BukkitPacketHandler packetHandler = new BukkitPacketHandler();
-
     @Override
     public Kind getKind() {
         return Kind.SERVER;
@@ -59,9 +56,6 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
         messenger.registerOutgoingPluginChannel(this, Apollo.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this, Apollo.PLUGIN_MESSAGE_CHANNEL, (channel, player, bytes) -> {
             this.supportedPlayers.add(player.getUniqueId());
-            PacketRegistry.parse(bytes).ifPresent(packet -> {
-                packet.processServer(packetHandler);
-            });
         });
     }
     
