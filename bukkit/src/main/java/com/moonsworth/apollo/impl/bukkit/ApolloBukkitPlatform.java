@@ -37,7 +37,7 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
 
     @Getter
     private static ApolloBukkitPlatform instance;
-    private final Set<UUID> supportedPlayers = new HashSet<>();
+
     @Override
     public Kind getKind() {
         return Kind.SERVER;
@@ -76,23 +76,23 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
         Messenger messenger = getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this, Apollo.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this, Apollo.PLUGIN_MESSAGE_CHANNEL, (channel, player, bytes) -> {
-            this.supportedPlayers.add(player.getUniqueId());
+            Apollo.getApolloPlayerManager().registerPlayer(player);
         });
     }
-    
+
     @Override
     public @Nullable ApolloPlayer tryWrapPlayer(Object o) {
         if (o instanceof Player player) {
-            if (supportedPlayers.contains(player.getUniqueId())) {
+            if (Apollo.getApolloPlayerManager().getApolloPlayer(player.getUniqueId()).isEmpty()) {
                 return new BukkitPlayer(player);
             }
         }
         return null;
     }
-    
+
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        supportedPlayers.remove(event.getPlayer().getUniqueId());
+        Apollo.getApolloPlayerManager().unRegisterPlayer(event.getPlayer().getUniqueId());
     }
 
 }

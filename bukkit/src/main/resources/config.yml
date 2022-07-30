@@ -8,9 +8,9 @@ modules:
     legacyCrits: true
     legacyAttackSpeed: true
     armorDurability: true
-    projectileDamage: false
+    projectileDamage: true
     armorDurabilityReduction: 1
-    noDamageTicks: 18
+    noDamageTicks: 19
     attackSpeed: 16
     projectileRandomnessValue: 0.1
     regenInterval: 3990

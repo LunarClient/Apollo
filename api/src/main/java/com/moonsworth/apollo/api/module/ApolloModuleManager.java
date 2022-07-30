@@ -2,7 +2,10 @@ package com.moonsworth.apollo.api.module;
 
 import com.google.common.reflect.ClassPath;
 import com.moonsworth.apollo.api.Apollo;
+import com.moonsworth.apollo.api.events.Listener;
+import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerRegister;
 import lombok.Getter;
+import com.moonsworth.apollo.api.proto.ModuleInit;
 
 import java.io.IOException;
 import java.util.*;
@@ -10,7 +13,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ApolloModuleManager {
+public class ApolloModuleManager implements Listener {
 
     private static final String PACKAGE = "com.moonsworth.apollo.api.module.impl";
     private final Map<Class<? extends ApolloModule>, List<Consumer<ApolloModule>>> listeners = new HashMap<>();
@@ -21,6 +24,10 @@ public class ApolloModuleManager {
 
     public ApolloModuleManager() {
         loadConfigurableModules();
+        handle(EventApolloPlayerRegister.class, this::onPlayerLogin);
+    }
+
+    private void onPlayerLogin(EventApolloPlayerRegister event) {
     }
 
     private void loadConfigurableModules() {

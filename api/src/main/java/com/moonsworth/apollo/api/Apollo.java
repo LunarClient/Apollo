@@ -4,6 +4,7 @@ import com.google.protobuf.GeneratedMessageV3;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.module.ApolloModuleManager;
+import com.moonsworth.apollo.api.player.ApolloPlayerManager;
 import com.moonsworth.apollo.api.proto.ApolloProtocol;
 import com.moonsworth.apollo.api.proto.Msg;
 import com.moonsworth.apollo.api.proto.SecondMsg;
@@ -33,10 +34,13 @@ public class Apollo {
     private static ApolloPlatform platform = null;
     @Getter
     private static ApolloModuleManager apolloModuleManager = null;
+    @Getter
+    private static ApolloPlayerManager apolloPlayerManager = null;
 
     public static void setPlatform(ApolloPlatform platform) {
         Apollo.platform = platform;
         apolloModuleManager = new ApolloModuleManager();
+        apolloPlayerManager = new ApolloPlayerManager();
     }
 
 
@@ -55,12 +59,4 @@ public class Apollo {
             consumer.accept(apolloPlayer);
         }
     }
-
-    public void test() throws com.google.protobuf.InvalidProtocolBufferException {
-        Msg message = Msg.newBuilder().setFoo("test").setBlah(SecondMsg.newBuilder().setBlah(1).build()).build();
-//        message.
-
-        com.moonsworth.apollo.api.proto.Msg.parseFrom(new byte[0]);
-    }
-
 }

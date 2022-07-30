@@ -2,10 +2,18 @@ package com.moonsworth.apollo.api.bridge;
 
 import com.google.protobuf.GeneratedMessageV3;
 
+import java.util.UUID;
+
 /**
  * A player that supports Apollo.
  */
 public interface ApolloPlayer {
+
+    /**
+     * Gets the players UUID from their Platform
+     * @return The Id of the player
+     */
+    UUID getUniqueId();
 
     /**
      * Sends a compiled message to an ApolloPlayer

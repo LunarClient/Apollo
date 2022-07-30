@@ -5,12 +5,19 @@ import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 /**
  * Wrapper for Bukkit Players to implement the ApolloPlayer interface.
  *
  * @param player Player to wrap
  */
 public record BukkitPlayer(Player player) implements ApolloPlayer {
+
+    @Override
+    public UUID getUniqueId() {
+        return player.getUniqueId();
+    }
 
     @Override
     public void sendPacket(byte[] bytes) {
