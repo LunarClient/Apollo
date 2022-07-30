@@ -2,16 +2,49 @@ package com.moonsworth.apollo.api.module;
 
 import lombok.Getter;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ApolloModuleManager {
 
+    private final Map<Class<? extends ApolloModule>, List<Consumer<ApolloModule>>> listeners = new HashMap<>();
     @Getter
     private final Map<Class<? extends ApolloModule>, ApolloModule> moduleMap = new HashMap<>();
 
     /**
+     * Registers a listener to be called when a module has been enabled.
+     * If the module is currently enabled it will be called immediately.
+     * @param clazz The apollo module
+     * @param moduleConsumer The callback
+     */
+    public void registerModuleListener(Class<? extends ApolloModule> clazz, Consumer<ApolloModule> moduleConsumer) {
+        getModule(clazz).ifPresentOrElse(moduleConsumer, () -> listeners.computeIfAbsent(clazz, aClass -> new ArrayList<>()).add(moduleConsumer));
+    }
+
+    /**
+     * Determine if a module is enabled without grabbing an instance of the module
+     *
+     * @param clazz The module class
+     * @return the module enabled value
+     */
+    public boolean isModuleEnabled(Class<? extends ApolloModule> clazz) {
+        return moduleMap.containsKey(clazz);
+    }
+
+    /**
+     * Gets a module by the class specified.
+     * If the module does not exist, the optional will be empty
+     * @param clazz The module to grab
+     * @return An optional value containing the module.
+     */
+    public Optional<ApolloModule> getModule(Class<? extends ApolloModule> clazz){
+        return Optional.ofNullable(moduleMap.get(clazz));
+    }
+
+    /**
      * Registers the module for usage.
+     * This will also invoke the module listeners after the module has been initialized.
      * @param clazz The instance of the module
      */
     public void register(Class<? extends ApolloModule> clazz) {
@@ -24,6 +57,12 @@ public class ApolloModuleManager {
         }
         moduleMap.put(clazz, module);
         module.enable();
+        List<Consumer<ApolloModule>> consumers = listeners.remove(clazz);
+        if (consumers != null) {
+            for (Consumer<ApolloModule> consumer : consumers) {
+                consumer.accept(module);
+            }
+        }
     }
 
     /**

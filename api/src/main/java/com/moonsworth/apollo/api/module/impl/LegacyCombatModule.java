@@ -21,4 +21,9 @@ public class LegacyCombatModule extends ApolloModule {
         );
     }
 
+    @Override
+    public boolean notifyPlayers() {
+        return true;
+    }
+
 }

@@ -3,6 +3,8 @@ package com.moonsworth.apollo.impl.bukkit;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
+import com.moonsworth.apollo.api.module.ApolloModule;
+import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
 import com.moonsworth.apollo.impl.bukkit.command.KnockbackCommand;
 import com.moonsworth.apollo.impl.bukkit.listener.*;
 import com.moonsworth.apollo.impl.bukkit.wrapper.BukkitPlayer;
@@ -22,6 +24,7 @@ import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 /**
  * Implementation of ApolloPlatform for Bukkit-based servers.
@@ -40,15 +43,17 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
     public void onEnable() {
         instance = this;
         Apollo.setPlatform(this);
-        getCommand("setkb").setExecutor(new KnockbackCommand());
         registerPluginChannel();
         getServer().getPluginManager().registerEvents(this, this);
-        getServer().getPluginManager().registerEvents(new DisableProjectileRandomnessListener(this), this);
-        getServer().getPluginManager().registerEvents(new AttackSpeedListener(), this);
-        getServer().getPluginManager().registerEvents(new KnockbackListener(), this);
-        getServer().getPluginManager().registerEvents(new ArmorDurabilityListener(this), this);
-        getServer().getPluginManager().registerEvents(new RegenListener(this), this);
-        getServer().getPluginManager().registerEvents(new AttackFrequencyListener(), this);
+        Apollo.getApolloModuleManager().registerModuleListener(LegacyCombatModule.class, apolloModule -> {
+            getCommand("setkb").setExecutor(new KnockbackCommand());
+            getServer().getPluginManager().registerEvents(new DisableProjectileRandomnessListener(this), this);
+            getServer().getPluginManager().registerEvents(new AttackSpeedListener(), this);
+            getServer().getPluginManager().registerEvents(new KnockbackListener(), this);
+            getServer().getPluginManager().registerEvents(new ArmorDurabilityListener(this), this);
+            getServer().getPluginManager().registerEvents(new RegenListener(this), this);
+            getServer().getPluginManager().registerEvents(new AttackFrequencyListener(), this);
+        });
     }
 
     private void registerPluginChannel() {
