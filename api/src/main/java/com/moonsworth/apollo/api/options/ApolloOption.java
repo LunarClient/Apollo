@@ -35,6 +35,10 @@ public abstract class ApolloOption<T> {
         this.value = this.defaultValue = value;
     }
 
+    public T get() {
+        return value;
+    }
+
     /**
      * Called when the value gets updated
      */

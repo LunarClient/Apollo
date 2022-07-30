@@ -1,5 +1,6 @@
 package com.moonsworth.apollo.impl.bukkit.listener;
 
+import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +22,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ArmorDurabilityListener implements Listener {
 
-    private static final int ARMOR_DURABILITY_REDUCTION = 1;
     private final Map<UUID, List<ItemStack>> explosionDamaged = new WeakHashMap<>();
     private final ApolloBukkitPlatform plugin;
+    private final LegacyCombatModule legacyCombatModule;
     private final Random random = new Random();
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onItemDamage(PlayerItemDamageEvent e) {
+        if (!legacyCombatModule.getArmorDurability().get()) {
+            return;
+        }
+
+
         Player player = e.getPlayer();
 
         final ItemStack item = e.getItem();
@@ -52,7 +58,7 @@ public class ArmorDurabilityListener implements Listener {
             if (!matchedPieces.isEmpty()) return;
         }
 
-        int reduction = ARMOR_DURABILITY_REDUCTION;
+        int reduction = legacyCombatModule.getArmorDurabilityReduction().get();
 
         // 60 + (40 / (level + 1) ) % chance that durability is reduced (for each point of durability)
         final int damageChance = 60 + (40 / (item.getEnchantmentLevel(Enchantment.DURABILITY) + 1));
@@ -67,6 +73,9 @@ public class ArmorDurabilityListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerExplosionDamage(EntityDamageEvent e) {
+        if (!legacyCombatModule.getArmorDurability().get()) {
+            return;
+        }
         if (e.getEntityType() != EntityType.PLAYER) {
             return;
         }

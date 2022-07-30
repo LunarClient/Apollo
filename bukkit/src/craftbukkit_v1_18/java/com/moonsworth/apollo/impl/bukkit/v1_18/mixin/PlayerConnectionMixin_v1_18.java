@@ -1,6 +1,8 @@
 package com.moonsworth.apollo.impl.bukkit.v1_18.mixin;
 
 import com.google.common.collect.ImmutableList;
+import com.moonsworth.apollo.api.Apollo;
+import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import net.minecraft.network.protocol.Packet;
@@ -38,17 +40,21 @@ public class PlayerConnectionMixin_v1_18 {
             cancellable = true
     )
     public void impl$sendPacket(Packet<?> packet, @Nullable GenericFutureListener<? extends Future<? super Void>> genericfuturelistener, CallbackInfo ci) {
-        if (packet instanceof PacketPlayOutNamedSoundEffect) {
+        boolean legacySounds = Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableSwingSounds().get()).orElse(false);
+        boolean noSweep = Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableSweep().get()).orElse(false);
+        boolean noEnderpearlCooldown = Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableEnderpearlCooldown().get()).orElse(false);
+
+        if (packet instanceof PacketPlayOutNamedSoundEffect && legacySounds) {
             if (BLOCKED_SOUND_EFFECTS.contains(((PacketPlayOutNamedSoundEffect) packet).b())) {
                 ci.cancel();
             }
         }
-        if (packet instanceof PacketPlayOutWorldParticles) {
+        if (packet instanceof PacketPlayOutWorldParticles && noSweep) {
             if (((PacketPlayOutWorldParticles) packet).k().a().toUpperCase().contains("SWEEP")) {
                 ci.cancel();
             }
         }
-        if (packet instanceof PacketPlayOutSetCooldown) {
+        if (packet instanceof PacketPlayOutSetCooldown && noEnderpearlCooldown) {
             if (((PacketPlayOutSetCooldown) packet).b() == Items.pA) {
                 ci.cancel();
             }

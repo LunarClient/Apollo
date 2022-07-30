@@ -2,6 +2,8 @@ package com.moonsworth.apollo.impl.bukkit.listener;
 
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableMap;
+import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -20,11 +22,11 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
+@RequiredArgsConstructor
 public class KnockbackListener implements Listener {
 
-    private static final float PEARL_DAMAGE = 0.0001F;
-    private static final float SNOW_DAMAGE = 0.0001F;
-    private static final float EGG_DAMAGE = 0.0001F;
+
+    private final LegacyCombatModule legacyCombatModule;
 
     public static double knockbackFriction = 2.0D;
     public static double knockbackHorizontal = 0.35D;
@@ -219,25 +221,14 @@ public class KnockbackListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityHit(EntityDamageByEntityEvent e) {
-        EntityType type = e.getDamager().getType();
+        if (!legacyCombatModule.getProjectileDamage().get()) {
+            return;
+        }
 
         if (e.getDamage() != 0.0) {
             return;
         }
-        float damage = 0;
-        switch (type) {
-            case SNOWBALL:
-                damage = SNOW_DAMAGE;
-                break;
-            case EGG:
-                damage = EGG_DAMAGE;
-                break;
-            case ENDER_PEARL:
-                damage = PEARL_DAMAGE;
-                break;
-            default:
-                return;
-        }
+        float damage = 0.0001F;
 
         e.setDamage(damage);
         if (e.isApplicable(EntityDamageEvent.DamageModifier.ABSORPTION)) {

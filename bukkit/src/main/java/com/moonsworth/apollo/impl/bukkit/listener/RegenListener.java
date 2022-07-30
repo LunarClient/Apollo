@@ -1,5 +1,6 @@
 package com.moonsworth.apollo.impl.bukkit.listener;
 
+import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
@@ -20,10 +21,8 @@ import java.util.WeakHashMap;
 public class RegenListener implements Listener {
 
     private final Map<UUID, Long> healTimes = new WeakHashMap<>();
-    private static final int INTERVAL = 3990;
-    private static final int HEAL_AMOUNT = 1;
-    private static final int EXHAUSTION_HEAL = 3;
     private final ApolloBukkitPlatform plugin;
+    private final LegacyCombatModule combatModule;
 
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -45,7 +44,7 @@ public class RegenListener implements Listener {
         final long lastHealTime = healTimes.computeIfAbsent(player.getUniqueId(), id -> currentTime);
 
         // If we're skipping this heal, we must fix the exhaustion in the following tick
-        if (hasLastHealTime && currentTime - lastHealTime <= INTERVAL) {
+        if (hasLastHealTime && currentTime - lastHealTime <= combatModule.getRegenInterval().get()) {
             Bukkit.getScheduler().runTaskLater(plugin, () -> player.setExhaustion(previousExhaustion), 1L);
             return;
         }
@@ -54,7 +53,7 @@ public class RegenListener implements Listener {
         final double playerHealth = player.getHealth();
 
         if (playerHealth < maxHealth) {
-            player.setHealth(Math.min(Math.max(playerHealth + HEAL_AMOUNT, 0.0), maxHealth));
+            player.setHealth(Math.min(Math.max(playerHealth + combatModule.getRegenHealAmount().get(), 0.0), maxHealth));
             healTimes.put(player.getUniqueId(), currentTime);
         }
 
@@ -62,7 +61,7 @@ public class RegenListener implements Listener {
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             // We do this in the next tick because bukkit doesn't stop the exhaustion change when cancelling the event
-            player.setExhaustion(previousExhaustion + EXHAUSTION_HEAL);
+            player.setExhaustion(previousExhaustion + combatModule.getRegenExhaustionHealAmount().get());
         }, 1L);
     }
 

@@ -1,13 +1,22 @@
 package com.moonsworth.apollo.api.module;
 
 import com.google.gson.JsonObject;
+import com.moonsworth.apollo.api.Apollo;
+import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.options.ApolloOption;
+import lombok.Getter;
 
 import java.util.List;
 
 public abstract class ApolloModule {
 
+    @Getter
+    private List<ApolloOption> options;
+
+    public ApolloModule() {
+        options = options();
+    }
     /**
      * Enables this ApolloModule.
      * NOTE: Modules are enabled as they're created. Some modules will load before others!
@@ -27,6 +36,12 @@ public abstract class ApolloModule {
      * @return The result of if this should contain a combat module
      */
     public abstract boolean notifyPlayers();
+
+    /**
+     * Determines where the specified module can run
+     * @return Where the module can run
+     */
+    public abstract List<ApolloPlatform.Kind> runsOn();
 
     /**
      * Called when a player logs in.

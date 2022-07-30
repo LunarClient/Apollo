@@ -44,7 +44,7 @@ public class Apollo {
      * This needs to be done very close to the start of the platform.
      * @param clazz The module to register.
      */
-    public static void using(Class<? extends ApolloModule> clazz) {
+    public static <T extends ApolloModule> void using(Class<T> clazz) {
         apolloModuleManager.register(clazz);
     }
 

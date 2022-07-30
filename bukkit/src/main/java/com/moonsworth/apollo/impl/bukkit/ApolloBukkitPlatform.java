@@ -43,16 +43,18 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
     public void onEnable() {
         instance = this;
         Apollo.setPlatform(this);
+        // TODO FIGURE OUT CONFIG!
+        Apollo.using(LegacyCombatModule.class);
         registerPluginChannel();
         getServer().getPluginManager().registerEvents(this, this);
-        Apollo.getApolloModuleManager().registerModuleListener(LegacyCombatModule.class, apolloModule -> {
+        Apollo.getApolloModuleManager().registerModuleListener(LegacyCombatModule.class, combatModule -> {
             getCommand("setkb").setExecutor(new KnockbackCommand());
-            getServer().getPluginManager().registerEvents(new DisableProjectileRandomnessListener(this), this);
-            getServer().getPluginManager().registerEvents(new AttackSpeedListener(), this);
-            getServer().getPluginManager().registerEvents(new KnockbackListener(), this);
-            getServer().getPluginManager().registerEvents(new ArmorDurabilityListener(this), this);
-            getServer().getPluginManager().registerEvents(new RegenListener(this), this);
-            getServer().getPluginManager().registerEvents(new AttackFrequencyListener(), this);
+            getServer().getPluginManager().registerEvents(new DisableProjectileRandomnessListener(this, combatModule), this);
+            getServer().getPluginManager().registerEvents(new AttackSpeedListener(combatModule), this);
+            getServer().getPluginManager().registerEvents(new KnockbackListener(combatModule), this);
+            getServer().getPluginManager().registerEvents(new ArmorDurabilityListener(this, combatModule), this);
+            getServer().getPluginManager().registerEvents(new RegenListener(this, combatModule), this);
+            getServer().getPluginManager().registerEvents(new AttackFrequencyListener(combatModule), this);
         });
     }
 

@@ -18,8 +18,8 @@ public class ApolloModuleManager {
      * @param clazz The apollo module
      * @param moduleConsumer The callback
      */
-    public void registerModuleListener(Class<? extends ApolloModule> clazz, Consumer<ApolloModule> moduleConsumer) {
-        getModule(clazz).ifPresentOrElse(moduleConsumer, () -> listeners.computeIfAbsent(clazz, aClass -> new ArrayList<>()).add(moduleConsumer));
+    public <T> void registerModuleListener(Class<T> clazz, Consumer<T> moduleConsumer) {
+        getModule(clazz).ifPresentOrElse(moduleConsumer, () -> listeners.computeIfAbsent((Class<? extends ApolloModule>) clazz, aClass -> new ArrayList<>()).add((Consumer<ApolloModule>) moduleConsumer));
     }
 
     /**
@@ -38,8 +38,8 @@ public class ApolloModuleManager {
      * @param clazz The module to grab
      * @return An optional value containing the module.
      */
-    public Optional<ApolloModule> getModule(Class<? extends ApolloModule> clazz){
-        return Optional.ofNullable(moduleMap.get(clazz));
+    public <T> Optional<T> getModule(Class<T> clazz){
+        return (Optional<T>) Optional.ofNullable(moduleMap.get(clazz));
     }
 
     /**

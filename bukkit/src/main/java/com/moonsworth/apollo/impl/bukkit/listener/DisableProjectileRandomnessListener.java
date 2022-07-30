@@ -1,5 +1,6 @@
 package com.moonsworth.apollo.impl.bukkit.listener;
 
+import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import org.bukkit.util.Vector;
 public class DisableProjectileRandomnessListener implements Listener {
 
     private ApolloBukkitPlatform plugin;
-    private static final double EPSILON = 0.1D;
+    private LegacyCombatModule legacyCombatModule;
 
     @EventHandler
     public void onProjectileLaunch(ProjectileLaunchEvent e) {
@@ -27,10 +28,8 @@ public class DisableProjectileRandomnessListener implements Listener {
         ProjectileSource shooter = projectile.getShooter();
 
         if (shooter instanceof Player player) {
-            if (projectile instanceof EnderPearl) {
-                Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    ((Player) shooter).setCooldown(Material.ENDER_PEARL, 0);
-                }, 1);
+            if (projectile instanceof EnderPearl && legacyCombatModule.getDisableEnderpearlCooldown().get()) {
+                Bukkit.getScheduler().runTaskLater(plugin, () -> ((Player) shooter).setCooldown(Material.ENDER_PEARL, 0), 1);
             }
             Vector playerDirection = player.getLocation().getDirection().normalize();
             Vector projectileDirection = projectile.getVelocity();
@@ -51,7 +50,7 @@ public class DisableProjectileRandomnessListener implements Listener {
     }
 
     private boolean fuzzyVectorEquals(Vector a, Vector b) {
-        return Math.abs(a.getX() - b.getX()) < EPSILON && Math.abs(a.getZ() - b.getZ()) < EPSILON;
+        return Math.abs(a.getX() - b.getX()) < legacyCombatModule.getProjectileRandomnessValue().get() && Math.abs(a.getZ() - b.getZ()) < legacyCombatModule.getProjectileRandomnessValue().get();
     }
 
     private Vector rotateAroundY(Vector vector, double angle) {
