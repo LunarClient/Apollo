@@ -12,6 +12,7 @@ import lombok.Getter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,9 +20,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
+import org.yaml.snakeyaml.Yaml;
 
 import javax.annotation.Nullable;
+import java.io.InputStream;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -43,8 +47,8 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
     public void onEnable() {
         instance = this;
         Apollo.setPlatform(this);
-        // TODO FIGURE OUT CONFIG!
-        Apollo.using(LegacyCombatModule.class);
+        handleConfiguration();
+
         registerPluginChannel();
         getServer().getPluginManager().registerEvents(this, this);
         Apollo.getApolloModuleManager().registerModuleListener(LegacyCombatModule.class, combatModule -> {
@@ -56,6 +60,16 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
             getServer().getPluginManager().registerEvents(new RegenListener(this, combatModule), this);
             getServer().getPluginManager().registerEvents(new AttackFrequencyListener(combatModule), this);
         });
+    }
+
+    private void handleConfiguration() {
+        saveDefaultConfig();
+        ConfigurationSection modules = getConfig().getConfigurationSection("modules");
+        if (modules == null) {
+            return;
+        }
+        Map<String, Object> values = modules.getValues(true);
+        Apollo.getApolloModuleManager().loadConfiguration(values);
     }
 
     private void registerPluginChannel() {

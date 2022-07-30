@@ -1,0 +1,18 @@
+modules:
+  LegacyCombatModule:
+    enabled: true
+    disableEntityCramming: true
+    disableEnderpearlCooldown: true
+    disableSwingSounds: true
+    disableSweep: true
+    legacyCrits: true
+    legacyAttackSpeed: true
+    armorDurability: true
+    projectileDamage: false
+    armorDurabilityReduction: 1
+    noDamageTicks: 18
+    attackSpeed: 16
+    projectileRandomnessValue: 0.1
+    regenInterval: 3990
+    regenHealAmount: 1
+    regenExhaustionHealAmount: 3

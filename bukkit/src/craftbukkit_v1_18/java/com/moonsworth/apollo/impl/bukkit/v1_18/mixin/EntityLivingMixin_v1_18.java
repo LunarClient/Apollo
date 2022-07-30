@@ -31,7 +31,7 @@ public abstract class EntityLivingMixin_v1_18 {
             cancellable = true
     )
     public void impl$canCollide(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-        boolean noCollisions = Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableEntityCramming().get()).orElse(false);
+        boolean noCollisions = true;//Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableEntityCramming().get()).orElse(false);
         if (noCollisions) {
             cir.setReturnValue(false);
         }
@@ -43,7 +43,7 @@ public abstract class EntityLivingMixin_v1_18 {
             cancellable = true
     )
     public void impl$damage(DamageSource damagesource, float f, CallbackInfoReturnable<Boolean> cir) {
-        boolean noSweep = Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableSweep().get()).orElse(false);
+        boolean noSweep = true;// Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableSweep().get()).orElse(false);
         if (damagesource.isSweep() && noSweep) {
             cir.setReturnValue(false);
         }

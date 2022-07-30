@@ -57,14 +57,4 @@ public abstract class ApolloModule {
 
     }
 
-    /**
-     * Loads the configuration from the specified YML file as a JsonObject.
-     *
-     * This is called
-     */
-    public void loadConfiguration(JsonObject object) {
-
-    }
-
-
 }

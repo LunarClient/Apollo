@@ -40,9 +40,9 @@ public class PlayerConnectionMixin_v1_18 {
             cancellable = true
     )
     public void impl$sendPacket(Packet<?> packet, @Nullable GenericFutureListener<? extends Future<? super Void>> genericfuturelistener, CallbackInfo ci) {
-        boolean legacySounds = Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableSwingSounds().get()).orElse(false);
-        boolean noSweep = Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableSweep().get()).orElse(false);
-        boolean noEnderpearlCooldown = Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableEnderpearlCooldown().get()).orElse(false);
+        boolean legacySounds = true;//Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableSwingSounds().get()).orElse(false);
+        boolean noSweep = true;//Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableSweep().get()).orElse(false);
+        boolean noEnderpearlCooldown =true;// Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getDisableEnderpearlCooldown().get()).orElse(false);
 
         if (packet instanceof PacketPlayOutNamedSoundEffect && legacySounds) {
             if (BLOCKED_SOUND_EFFECTS.contains(((PacketPlayOutNamedSoundEffect) packet).b())) {

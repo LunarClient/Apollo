@@ -39,6 +39,7 @@ public class Apollo {
         apolloModuleManager = new ApolloModuleManager();
     }
 
+
     /**
      * Registers modules for Apollo.
      * This needs to be done very close to the start of the platform.

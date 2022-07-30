@@ -39,6 +39,10 @@ public abstract class ApolloOption<T> {
         return value;
     }
 
+    public T getDefault() {
+        return defaultValue;
+    }
+
     /**
      * Called when the value gets updated
      */
@@ -64,12 +68,12 @@ public abstract class ApolloOption<T> {
         }
     }
 
-    public void load(JsonObject element) {
-        if (!element.has(id) || element.get(id).isJsonNull()) {
+    public void load(String value) {
+        if (value == null) {
             update(defaultValue);
             return;
         }
-        this.update(element.get(id).getAsString());
+        this.update(value);
     }
 
 }

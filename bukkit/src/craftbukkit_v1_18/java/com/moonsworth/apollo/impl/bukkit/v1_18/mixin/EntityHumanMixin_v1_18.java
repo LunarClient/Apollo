@@ -24,7 +24,7 @@ public class EntityHumanMixin_v1_18 {
             )
     )
     public boolean impl$criticalSprint(EntityHuman instance) {
-        boolean legacyCrits = Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getLegacyCrits().get()).orElse(false);
+        boolean legacyCrits = true;//Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getLegacyCrits().get()).orElse(false);
         if (legacyCrits) {
             return false;
         }
@@ -39,7 +39,7 @@ public class EntityHumanMixin_v1_18 {
             cancellable = true
     )
     public void impl$getAttackSpeed(float f, CallbackInfoReturnable<Float> cir) {
-        boolean legacyAttackSpeed = Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getLegacyAttackSpeed().get()).orElse(false);
+        boolean legacyAttackSpeed = true;// Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getLegacyAttackSpeed().get()).orElse(false);
         if (legacyAttackSpeed) {
             cir.setReturnValue(1.0f);
         }
