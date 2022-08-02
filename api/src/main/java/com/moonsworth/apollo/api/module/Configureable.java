@@ -8,7 +8,7 @@ public interface Configureable {
      * Gets the name for the Configuration Section
      * @return The name of the item
      */
-    String name();
+    String getName();
 
     /**
      * Loads the items from a config file.

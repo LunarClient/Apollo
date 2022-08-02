@@ -33,8 +33,8 @@ public class LegacyCombatModule extends ApolloModule implements Configureable {
     private NumberOption<Integer> regenHealAmount;
     private NumberOption<Integer> regenExhaustionHealAmount;
 
-    @Override
-    public void enable() {
+    public LegacyCombatModule() {
+        super("LegacyCombatModule");
     }
 
     @Override
@@ -69,18 +69,13 @@ public class LegacyCombatModule extends ApolloModule implements Configureable {
     }
 
     @Override
-    public String name() {
-        return "LegacyCombatModule";
-    }
-
-    @Override
     public void load(Map<String, Object> configuration) {
         for (ApolloOption option : getOptions()) {
-            if (!configuration.containsKey(name() + "." + option.getId())) {
+            if (!configuration.containsKey(getName() + "." + option.getId())) {
                 continue;
             }
             try {
-                option.load(configuration.get(name() + "." + option.getId()).toString());
+                option.load(configuration.get(getName() + "." + option.getId()).toString());
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

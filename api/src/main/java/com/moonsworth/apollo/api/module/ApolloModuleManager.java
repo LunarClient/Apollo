@@ -28,6 +28,12 @@ public class ApolloModuleManager implements Listener {
     }
 
     private void onPlayerLogin(EventApolloPlayerRegister event) {
+        List<String> modules = new ArrayList<>();
+        moduleMap.values().stream().filter(ApolloModule::isEnabled).filter(ApolloModule::notifyPlayers).forEach(apolloModule -> {
+            modules.add(apolloModule.getName());
+            apolloModule.playerLogin(event.getPlayer());
+        });
+        event.getPlayer().sendPacket(ModuleInit.newBuilder().addAllModules(modules).build());
     }
 
     private void loadConfigurableModules() {
@@ -47,7 +53,7 @@ public class ApolloModuleManager implements Listener {
                             e.printStackTrace();
                             return;
                         }
-                        configureableModules.put(instance.name(), instance);
+                        configureableModules.put(instance.getName(), instance);
                     });
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,8 +119,8 @@ public class ApolloModuleManager implements Listener {
             // We do not want to enable a module that isn't meant for this type.
             return;
         }
-        moduleMap.put(module.getClass(), module);
         module.enable();
+        moduleMap.put(module.getClass(), module);
         List<Consumer<ApolloModule>> consumers = listeners.remove(module.getClass());
         if (consumers != null) {
             for (Consumer<ApolloModule> consumer : consumers) {

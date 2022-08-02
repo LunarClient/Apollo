@@ -9,13 +9,17 @@ import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 public abstract class ApolloModule {
 
-    @Getter
-    private List<ApolloOption> options;
+    private final List<ApolloOption> options = options();
 
-    public ApolloModule() {
-        options = options();
+    private boolean enabled;
+    private String name;
+
+    public ApolloModule(String name) {
+        this.enabled = false;
+        this.name = name;
     }
     /**
      * Enables this ApolloModule.
@@ -24,7 +28,18 @@ public abstract class ApolloModule {
      * Called then the module is set to be enabled.
      * This happens before enable, but after init in ApolloConsumer.
      */
-    public abstract void enable();
+    public void enable() {
+        this.enabled = true;
+        this.onEnable();
+    }
+
+    /**
+     * Called when the module is enabled.
+     * Not required to have logic, but avaible.
+     */
+    public void onEnable() {
+
+    }
 
     public abstract List<ApolloOption> options();
 
