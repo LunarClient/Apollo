@@ -28,10 +28,14 @@ public abstract class ApolloOption<T> {
      */
     private final List<Consumer<T>> onUpdate = new CopyOnWriteArrayList<>();
 
+    @Getter
+    private OptionProperty property;
+
     private boolean hasLoaded = false;
 
-    public ApolloOption(String id, T value) {
+    public ApolloOption(String id, T value, OptionProperty property) {
         this.id = id;
+        this.property = property;
         this.value = this.defaultValue = value;
     }
 

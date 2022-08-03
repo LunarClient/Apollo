@@ -1,5 +1,6 @@
 package com.moonsworth.apollo.api.bridge;
 
+import com.google.protobuf.Any;
 import com.google.protobuf.GeneratedMessageV3;
 
 import java.util.UUID;
@@ -28,7 +29,7 @@ public interface ApolloPlayer {
      * @param packet The packet send to the player.
      */
     default void sendPacket(GeneratedMessageV3 packet) {
-        sendPacket(packet.toByteArray());
+        sendPacket(Any.pack(packet).toByteArray());
     }
 
 }

@@ -5,16 +5,7 @@ import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.module.ApolloModuleManager;
 import com.moonsworth.apollo.api.player.ApolloPlayerManager;
-import com.moonsworth.apollo.api.proto.ApolloProtocol;
-import com.moonsworth.apollo.api.proto.Msg;
-import com.moonsworth.apollo.api.proto.SecondMsg;
 import lombok.Getter;
-import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
 
 /**

@@ -4,8 +4,8 @@ import com.google.common.reflect.ClassPath;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.events.Listener;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerRegister;
+import com.moonsworth.apollo.api.protocol.ModuleInit;
 import lombok.Getter;
-import com.moonsworth.apollo.api.proto.ModuleInit;
 
 import java.io.IOException;
 import java.util.*;
@@ -31,9 +31,11 @@ public class ApolloModuleManager implements Listener {
         List<String> modules = new ArrayList<>();
         moduleMap.values().stream().filter(ApolloModule::isEnabled).filter(ApolloModule::notifyPlayers).forEach(apolloModule -> {
             modules.add(apolloModule.getName());
-            apolloModule.playerLogin(event.getPlayer());
         });
         event.getPlayer().sendPacket(ModuleInit.newBuilder().addAllModules(modules).build());
+        moduleMap.values().stream().filter(ApolloModule::isEnabled).filter(ApolloModule::notifyPlayers).forEach(apolloModule -> {
+            apolloModule.playerLogin(event.getPlayer());
+        });
     }
 
     private void loadConfigurableModules() {

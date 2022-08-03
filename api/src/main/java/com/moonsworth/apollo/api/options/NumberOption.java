@@ -10,8 +10,8 @@ public class NumberOption<T extends Number & Comparable<T>> extends ApolloOption
     @Setter
     private T min, max;
 
-    public NumberOption(String id, T value, T min, T max) {
-        super(id, value);
+    public NumberOption(String id, OptionProperty property, T value, T min, T max) {
+        super(id, value, property);
         this.min = min;
         this.max = max;
     }

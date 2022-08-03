@@ -4,7 +4,14 @@ import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+import java.util.UUID;
+
 public record BungeePlayer(ProxiedPlayer player) implements ApolloPlayer {
+
+    @Override
+    public UUID getUniqueId() {
+        return player.getUniqueId();
+    }
 
     @Override
     public void sendPacket(byte[] bytes) {

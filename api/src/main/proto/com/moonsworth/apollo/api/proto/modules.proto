@@ -1,9 +1,14 @@
 syntax = "proto3";
 
-option java_package = "com.moonsworth.apollo.api.proto";
+option java_package = "com.moonsworth.apollo.api.protocol";
 option java_outer_classname = "ApolloProtocol";
 option java_multiple_files = true;
 
 message ModuleInit {
   repeated string modules = 1;
+}
+
+message ModuleConfiguration {
+  string moduleName = 1;
+  map<string, string> values = 2;
 }

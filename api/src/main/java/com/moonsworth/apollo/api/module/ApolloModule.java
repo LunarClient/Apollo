@@ -5,6 +5,8 @@ import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.options.ApolloOption;
+import com.moonsworth.apollo.api.options.OptionProperty;
+import com.moonsworth.apollo.api.protocol.ModuleConfiguration;
 import lombok.Getter;
 
 import java.util.List;
@@ -69,7 +71,19 @@ public abstract class ApolloModule {
      * @param player The player that has recently logged in.
      */
     public void playerLogin(ApolloPlayer player) {
-
+        if (notifyPlayers() && isEnabled()) {
+            var config = ModuleConfiguration.newBuilder().setModuleName(getName());
+            for (ApolloOption option : getOptions()) {
+                if (option.getId().equals(option.getDefault())) {
+                    return;
+                }
+                if (option.getProperty() != OptionProperty.CLIENT) {
+                    return;
+                }
+                config.putValues(option.getId(), option.toString());
+            }
+            player.sendPacket(config.build());
+        }
     }
 
 }
