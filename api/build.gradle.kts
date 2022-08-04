@@ -1,3 +1,5 @@
+import com.google.protobuf.gradle.*
+
 buildscript {
     repositories {
         gradlePluginPortal()
@@ -12,7 +14,11 @@ plugins {
     `java-library`
     id("com.google.protobuf") version "0.8.19"
     id("idea")
+    id("maven-publish")
 }
+
+group = "com.moonsworth"
+version = "1.0-SNAPSHOT"
 
 // TODO: enforce this works with Java 8
 //java {
@@ -26,7 +32,14 @@ repositories {
 }
 
 val lombokVersion: String by project
+val protobufVersion: String by project
+val protocVersion: String by project
 
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:$protocVersion"
+    }
+}
 dependencies {
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
