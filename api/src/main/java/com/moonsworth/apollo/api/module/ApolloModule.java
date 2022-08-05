@@ -1,9 +1,8 @@
 package com.moonsworth.apollo.api.module;
 
-import com.google.gson.JsonObject;
-import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
+import com.moonsworth.apollo.api.module.receive.ApolloPacketReceiver;
 import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.options.OptionProperty;
 import com.moonsworth.apollo.api.protocol.ModuleConfiguration;
@@ -12,7 +11,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public abstract class ApolloModule {
+public abstract class ApolloModule extends ApolloPacketReceiver {
 
     private final List<ApolloOption> options = options();
 
@@ -72,15 +71,15 @@ public abstract class ApolloModule {
      */
     public void playerLogin(ApolloPlayer player) {
         if (notifyPlayers() && isEnabled()) {
-            var config = ModuleConfiguration.newBuilder().setModuleName(getName());
+            var config = ModuleConfiguration.newBuilder().addModuleName(getName());
             for (ApolloOption option : getOptions()) {
-                if (option.getId().equals(option.getDefault())) {
-                    return;
+                if (option.get().equals(option.getDefault())) {
+                    continue;
                 }
                 if (option.getProperty() != OptionProperty.CLIENT) {
-                    return;
+                    continue;
                 }
-                config.putValues(option.getId(), option.toString());
+                config.putValues(option.getId(), option.get().toString());
             }
             player.sendPacket(config.build());
         }

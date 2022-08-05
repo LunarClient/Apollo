@@ -3,6 +3,7 @@ package com.moonsworth.apollo.api.module;
 import com.google.common.reflect.ClassPath;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.events.Listener;
+import com.moonsworth.apollo.api.events.impl.packet.EventApolloReceivePacket;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerRegister;
 import com.moonsworth.apollo.api.protocol.ModuleInit;
 import lombok.Getter;
@@ -25,6 +26,11 @@ public class ApolloModuleManager implements Listener {
     public ApolloModuleManager() {
         loadConfigurableModules();
         handle(EventApolloPlayerRegister.class, this::onPlayerLogin);
+        handle(EventApolloReceivePacket.class, this::onPacketReceive);
+    }
+
+    public void onPacketReceive(EventApolloReceivePacket event) {
+        moduleMap.values().stream().filter(ApolloModule::isEnabled).forEach(a -> a.handle(event.getPlayer(), event.getPacket()));
     }
 
     private void onPlayerLogin(EventApolloPlayerRegister event) {

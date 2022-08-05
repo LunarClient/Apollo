@@ -5,7 +5,9 @@ import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.impl.bungee.util.ConfigurationUtil;
 import com.moonsworth.apollo.impl.bungee.wrapper.BungeePlayer;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -39,8 +41,6 @@ public class ApolloBungeePlatform extends Plugin implements ApolloPlatform, List
         Apollo.getApolloModuleManager().loadConfiguration(values);
     }
 
-    )
-
 
     @Override
     public Kind getKind() {
@@ -50,10 +50,9 @@ public class ApolloBungeePlatform extends Plugin implements ApolloPlatform, List
     @Override
     public ApolloPlayer tryWrapPlayer(Object o) {
         if (o instanceof ProxiedPlayer player) {
-            if (Apollo.getApolloPlayerManager().getApolloPlayer(player.getUniqueId()).isEmpty()) {
-                return new BungeePlayer(player);
-            }
+            return Apollo.getApolloPlayerManager().getApolloPlayer(player.getUniqueId()).orElse(new BungeePlayer(player));
         }
         return null;
     }
+
 }

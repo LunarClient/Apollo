@@ -8,7 +8,8 @@ message ModuleInit {
   repeated string modules = 1;
 }
 
+// I wanna remove repeated here, but it breaks
 message ModuleConfiguration {
-  string moduleName = 1;
+  repeated string moduleName = 1;
   map<string, string> values = 2;
 }
