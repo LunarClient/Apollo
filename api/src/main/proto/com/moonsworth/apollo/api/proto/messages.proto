@@ -13,3 +13,10 @@ message ModuleConfiguration {
   repeated string moduleName = 1;
   map<string, string> values = 2;
 }
+
+
+message CooldownMessage {
+  bytes name = 1;
+  int64 durationMs = 2;
+  int32 itemId = 3;
+}

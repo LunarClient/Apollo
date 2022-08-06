@@ -1,13 +1,16 @@
 package com.moonsworth.apollo.impl.bungee;
 
+import com.google.common.base.Charsets;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.impl.bungee.util.ConfigurationUtil;
 import com.moonsworth.apollo.impl.bungee.wrapper.BungeePlayer;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.connection.ConnectedPlayer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PluginMessageEvent;
+import net.md_5.bungee.api.plugin.Event;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -55,4 +58,15 @@ public class ApolloBungeePlatform extends Plugin implements ApolloPlatform, List
         return null;
     }
 
+    @EventHandler
+    public void onRegister(PluginMessageEvent event) {
+        if (event.getReceiver() instanceof ProxyServer && event.getSender() instanceof ProxiedPlayer player) {
+            if (event.getTag().equals("REGISTER")) {
+                String channels = new String(event.getData(), Charsets.UTF_8);
+                if (channels.contains(Apollo.PLUGIN_MESSAGE_CHANNEL)) {
+                    Apollo.getApolloPlayerManager().registerPlayer(player);
+                }
+            }
+        }
+    }
 }

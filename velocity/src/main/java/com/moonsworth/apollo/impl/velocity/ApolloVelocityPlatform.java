@@ -1,5 +1,6 @@
 package com.moonsworth.apollo.impl.velocity;
 
+import com.google.common.base.Charsets;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.google.inject.Inject;
@@ -32,7 +33,6 @@ public class ApolloVelocityPlatform implements ApolloPlatform {
     public static MinecraftChannelIdentifier PLUGIN_CHANNEL = MinecraftChannelIdentifier.from(Apollo.PLUGIN_MESSAGE_CHANNEL);
     private final ProxyServer server;
     private final Logger logger;
-    private final Set<UUID> supportedPlayers = new HashSet<>();
 
     @Inject
     public ApolloVelocityPlatform(ProxyServer server, Logger logger) {
@@ -47,17 +47,8 @@ public class ApolloVelocityPlatform implements ApolloPlatform {
     }
 
     @Subscribe
-    public void onPluginMessageEvent(PluginMessageEvent event) {
-        if (event.getIdentifier().equals(PLUGIN_CHANNEL)) {
-            if (event.getSource() instanceof Player player) {
-                supportedPlayers.add(player.getUniqueId());
-            }
-        }
-    }
-
-    @Subscribe
     public void onDisconnect(DisconnectEvent event) {
-        this.supportedPlayers.remove(event.getPlayer().getUniqueId());
+        Apollo.getApolloPlayerManager().unRegisterPlayer(event.getPlayer().getUniqueId());
     }
 
     @Override
@@ -69,10 +60,20 @@ public class ApolloVelocityPlatform implements ApolloPlatform {
     @Override
     public ApolloPlayer tryWrapPlayer(Object o) {
         if (o instanceof Player player) {
-            if (this.supportedPlayers.contains(player.getUniqueId())) {
-                return new VelocityPlayer(player);
-            }
+            return Apollo.getApolloPlayerManager().getApolloPlayer(player.getUniqueId()).orElse(new VelocityPlayer(player));
         }
         return null;
+    }
+
+    @Subscribe
+    public void onRegister(PluginMessageEvent event) {
+        if (event.getSource() instanceof Player player) {
+            if (event.getIdentifier().getId().equals("REGISTER")) {
+                String channels = new String(event.getData(), Charsets.UTF_8);
+                if (channels.contains(Apollo.PLUGIN_MESSAGE_CHANNEL)) {
+                    Apollo.getApolloPlayerManager().registerPlayer(player);
+                }
+            }
+        }
     }
 }
