@@ -24,4 +24,9 @@ public record BukkitPlayer(Player player) implements ApolloPlayer {
     public void sendPacket(byte[] bytes) {
         player.sendPluginMessage(ApolloBukkitPlatform.getInstance(), Apollo.PLUGIN_MESSAGE_CHANNEL, bytes);
     }
+
+    @Override
+    public boolean hasPermission(String permissionNode) {
+        return player.hasPermission(permissionNode);
+    }
 }

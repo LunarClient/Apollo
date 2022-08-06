@@ -16,3 +16,6 @@ modules:
     regenInterval: 3990
     regenHealAmount: 1
     regenExhaustionHealAmount: 3
+  StaffModModule:
+    enabled: true
+    xray: "apollo.staffmods.xray"

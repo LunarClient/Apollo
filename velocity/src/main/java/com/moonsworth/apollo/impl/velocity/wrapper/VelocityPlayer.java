@@ -18,4 +18,9 @@ public record VelocityPlayer(Player player) implements ApolloPlayer {
     public void sendPacket(byte[] bytes) {
         player.sendPluginMessage(ApolloVelocityPlatform.PLUGIN_CHANNEL, bytes);
     }
+
+    @Override
+    public boolean hasPermission(String permissionNode) {
+        return player.hasPermission(permissionNode);
+    }
 }

@@ -17,4 +17,9 @@ public record BungeePlayer(ProxiedPlayer player) implements ApolloPlayer {
     public void sendPacket(byte[] bytes) {
         player.sendData(Apollo.PLUGIN_MESSAGE_CHANNEL, bytes);
     }
+
+    @Override
+    public boolean hasPermission(String permissionNode) {
+        return player.hasPermission(permissionNode);
+    }
 }

@@ -2,13 +2,18 @@ package com.moonsworth.apollo.api.module;
 
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
+import com.moonsworth.apollo.api.events.Event;
+import com.moonsworth.apollo.api.events.EventBus;
 import com.moonsworth.apollo.api.module.receive.ApolloPacketReceiver;
 import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.options.OptionProperty;
 import com.moonsworth.apollo.api.protocol.ModuleConfiguration;
 import lombok.Getter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 @Getter
 public abstract class ApolloModule extends ApolloPacketReceiver {
@@ -31,6 +36,7 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
      */
     public void enable() {
         this.enabled = true;
+        registerAllEvents();
         this.onEnable();
     }
 
@@ -85,4 +91,24 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
         }
     }
 
+    /**
+     * All the events this mod needs.
+     * Events get registered or unregistered when the mod gets enabled or disabled.
+     */
+    private Map<Class<Event>, Consumer<Event>> events = new HashMap<>();
+
+    public void registerAllEvents() {
+        for (Map.Entry<Class<Event>, Consumer<Event>> entry : events.entrySet()) {
+            Class<Event> k = entry.getKey();
+            Consumer<Event> v = entry.getValue();
+            EventBus.getBus().register(k, v);
+        }
+    }
+
+    @SuppressWarnings( "unchecked" )
+    protected <T extends Event> void handle(Class<T> clazz, Consumer<T> consumer) {
+        events.put((Class<Event>) clazz, (Consumer<Event>) consumer);
+    }
+
 }
+

@@ -35,7 +35,7 @@ public class ApolloModuleManager implements Listener {
 
     private void onPlayerLogin(EventApolloPlayerRegister event) {
         List<String> modules = new ArrayList<>();
-        moduleMap.values().stream().filter(ApolloModule::isEnabled).forEach(apolloModule -> {
+        moduleMap.values().stream().filter(ApolloModule::isEnabled).filter(ApolloModule::notifyPlayers).forEach(apolloModule -> {
             modules.add(apolloModule.getName());
         });
         event.getPlayer().sendPacket(ModuleInit.newBuilder().addAllModules(modules).build());

@@ -24,6 +24,14 @@ public interface ApolloPlayer {
     void sendPacket(byte[] compiledProtobufMessage);
 
     /**
+     * Determines if an apoolo player has permission to a specific permission node.
+     *
+     * @param permissionNode The node
+     * @return The value of the permission
+     */
+    boolean hasPermission(String permissionNode);
+
+    /**
      * A helper method to send a Protobuf packet easier.
      *
      * @param packet The packet send to the player.

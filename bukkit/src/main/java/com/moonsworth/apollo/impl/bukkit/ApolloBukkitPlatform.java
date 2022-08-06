@@ -7,6 +7,7 @@ import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.events.EventBus;
 import com.moonsworth.apollo.api.events.impl.packet.EventApolloReceivePacket;
+import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerJoin;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
 import com.moonsworth.apollo.impl.bukkit.command.KnockbackCommand;
@@ -17,6 +18,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.event.player.PlayerUnregisterChannelEvent;
@@ -25,6 +27,7 @@ import org.bukkit.plugin.messaging.Messenger;
 
 import javax.annotation.Nullable;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * Implementation of ApolloPlatform for Bukkit-based servers.
@@ -101,6 +104,13 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
             Apollo.getApolloPlayerManager().unRegisterPlayer(event.getPlayer().getUniqueId());
 
         }
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Apollo.getApolloPlayerManager().getApolloPlayer(event.getPlayer().getUniqueId()).ifPresent(apolloPlayer -> {
+            EventBus.getBus().post(new EventApolloPlayerJoin(apolloPlayer));
+        });
     }
 
     @EventHandler

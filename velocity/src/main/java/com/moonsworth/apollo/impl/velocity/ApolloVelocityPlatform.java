@@ -5,10 +5,13 @@ import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.google.inject.Inject;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
+import com.moonsworth.apollo.api.events.EventBus;
+import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerJoin;
 import com.moonsworth.apollo.impl.velocity.wrapper.VelocityPlayer;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
+import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.Player;
@@ -75,5 +78,10 @@ public class ApolloVelocityPlatform implements ApolloPlatform {
                 }
             }
         }
+    }
+
+    @Subscribe
+    public void onPlayerJoin(PostLoginEvent event) {
+        Apollo.getApolloPlayerManager().getApolloPlayer(event.getPlayer().getUniqueId()).ifPresent(apolloPlayer -> EventBus.getBus().post(new EventApolloPlayerJoin(apolloPlayer)));
     }
 }

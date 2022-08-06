@@ -20,3 +20,10 @@ message CooldownMessage {
   int64 durationMs = 2;
   int32 itemId = 3;
 }
+
+message StaffMods {
+  enum StaffModule {
+    XRAY = 0;
+  }
+  repeated StaffModule moduleToEnable = 1;
+}
