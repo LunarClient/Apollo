@@ -43,14 +43,9 @@ public class StaffModModule extends ApolloModule {
     }
 
     public void handleJoin(EventApolloPlayerJoin event) {
-        StaffMods.Builder builder = StaffMods.newBuilder();
-
         if (event.getPlayer().hasPermission(xrayPermission.get())) {
-            builder.addModuleToEnable(StaffMods.StaffModule.XRAY);
-        }
-        if (builder.getModuleToEnableCount() != 0) {
             playersWithStaffMods.add(event.getPlayer().getUniqueId());
-            event.getPlayer().sendPacket(builder.build());
+            event.getPlayer().sendPacket(StaffMods.newBuilder().setModule(StaffMods.StaffModule.XRAY).setValue(true).build());
         }
     }
 

@@ -25,5 +25,6 @@ message StaffMods {
   enum StaffModule {
     XRAY = 0;
   }
-  repeated StaffModule moduleToEnable = 1;
+  StaffModule module = 1;
+  bool value = 2;
 }
