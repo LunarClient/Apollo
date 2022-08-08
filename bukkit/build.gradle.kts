@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import fr.il_totore.manadrop.MinecraftDependencyHelper.*
 import fr.il_totore.manadrop.MinecraftRepositoryHelper.*
 import fr.il_totore.manadrop.spigot.task.BuildTools
@@ -62,9 +63,11 @@ val craftbukkitSourceSets = MinecraftVersion.values().map { mc ->
     }
 
     // :apollo-bukkit:jar_v1_X builds a jar containing Mixins for that version
-    tasks.create("jar_${mc.name}", Jar::class) {
+    // + the main sourceset and the api
+    tasks.create("jar_${mc.name}", ShadowJar::class) {
         from(versionedSourceSet.output)
-        archiveBaseName.set("${archiveBaseName.get()}-${mc.name}")
+        configurations = listOf(project.configurations.runtimeClasspath.get())
+        archiveClassifier.set(mc.name)
     }
 
 }

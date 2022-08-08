@@ -24,7 +24,8 @@ public class EntityHumanMixin_v1_18 {
             )
     )
     public boolean impl$criticalSprint(EntityHuman instance) {
-        boolean legacyCrits = true;//Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getLegacyCrits().get()).orElse(false);
+        // TODO: move to Mixin plugin
+        boolean legacyCrits = Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getLegacyCrits().get()).orElse(false);
         if (legacyCrits) {
             return false;
         }
