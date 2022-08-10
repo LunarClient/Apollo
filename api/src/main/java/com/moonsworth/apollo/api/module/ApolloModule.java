@@ -1,5 +1,6 @@
 package com.moonsworth.apollo.api.module;
 
+import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.events.Event;
@@ -26,6 +27,8 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
     public ApolloModule(String name) {
         this.enabled = false;
         this.name = name;
+        Consumer consumer = o -> Apollo.getApolloPlayerManager().getApolloPlayers().forEach(this::playerLogin);
+        options.forEach(option -> option.onUpdate(consumer));
     }
     /**
      * Enables this ApolloModule.

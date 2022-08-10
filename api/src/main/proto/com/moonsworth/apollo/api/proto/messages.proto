@@ -28,3 +28,44 @@ message StaffMods {
   StaffModule module = 1;
   bool value = 2;
 }
+
+message TeammateMessage {
+  repeated Teammate teammates = 1;
+}
+
+message Teammate {
+  bytes player = 1;
+  int32 color = 2;
+  // Coordinates are only used when the player is out of render distance for the observer
+  // If you know the players are close you choose not to send these values.
+  bytes world = 3;
+  int32 x = 4;
+  int32 y = 5;
+  int32 z = 6;
+}
+
+message NotificationMessage {
+  bytes title = 1;
+  bytes description = 2;
+}
+
+message NametagMessage {
+  bytes playerAffected = 1;
+  bool hideNametag = 2;
+  repeated RenderableString nametagOverride = 3;
+  int32 indexContainingPlayerName = 4;
+}
+
+message RenderableString {
+  enum TextDecorators {
+      OBFUSCATED = 0;
+      BOLD = 1;
+      STRIKETHROUGH = 2;
+      UNDERLINED = 3;
+      ITALIC = 4;
+  }
+  bytes content = 1;
+  int32 color = 2;
+  repeated TextDecorators decoration = 3;
+  repeated RenderableString children = 4;
+}

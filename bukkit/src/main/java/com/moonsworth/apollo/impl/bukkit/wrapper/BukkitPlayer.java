@@ -1,6 +1,7 @@
 package com.moonsworth.apollo.impl.bukkit.wrapper;
 
 import com.moonsworth.apollo.api.Apollo;
+import com.moonsworth.apollo.api.bridge.ApolloLocation;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
 import org.bukkit.Bukkit;
@@ -28,5 +29,10 @@ public record BukkitPlayer(Player player) implements ApolloPlayer {
     @Override
     public boolean hasPermission(String permissionNode) {
         return player.hasPermission(permissionNode);
+    }
+
+    @Override
+    public ApolloLocation getWorldLocation() {
+        return new BukkitLocation(player.getLocation());
     }
 }
