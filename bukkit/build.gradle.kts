@@ -36,6 +36,7 @@ spigot {
         command {
             named("setkb")
         }
+        apiVersion("1.18")
     }
 }
 
