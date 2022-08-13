@@ -3,7 +3,6 @@ package com.moonsworth.apollo.api.events;
 import com.moonsworth.apollo.api.events.annotation.Listen;
 import lombok.Getter;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
@@ -18,12 +17,8 @@ public class EventBus {
 
     protected ConcurrentHashMap<Class<? extends Event>, CopyOnWriteArrayList<Consumer<? extends Event>>> eventMap;
 
-    @Getter
-    private EventBusClassLoader eventBusClassLoader;
-
     private EventBus() {
         this.eventMap = new ConcurrentHashMap<>();
-        this.eventBusClassLoader = new EventBusClassLoader(EventBus.class.getClassLoader());
     }
 
     @SuppressWarnings("unchecked")

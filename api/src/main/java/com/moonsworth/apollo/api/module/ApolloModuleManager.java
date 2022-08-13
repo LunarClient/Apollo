@@ -5,18 +5,18 @@ import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.events.Listener;
 import com.moonsworth.apollo.api.events.impl.packet.EventApolloReceivePacket;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerRegister;
+import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
+import com.moonsworth.apollo.api.module.impl.StaffModModule;
+import com.moonsworth.apollo.api.module.impl.WaypointModule;
 import com.moonsworth.apollo.api.protocol.ModuleInit;
 import lombok.Getter;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class ApolloModuleManager implements Listener {
 
-    private static final String PACKAGE = "com.moonsworth.apollo.api.module.impl";
     private final Map<Class<? extends ApolloModule>, List<Consumer<ApolloModule>>> listeners = new HashMap<>();
     @Getter
     private final Map<Class<? extends ApolloModule>, ApolloModule> moduleMap = new HashMap<>();
@@ -44,29 +44,14 @@ public class ApolloModuleManager implements Listener {
         });
     }
 
+    public void registerConfiguration(Configureable configureable) {
+        configureableModules.put(configureable.getName(), configureable);
+    }
+
     private void loadConfigurableModules() {
-        try {
-            ClassPath.from(getClass().getClassLoader())
-                    .getAllClasses()
-                    .stream()
-                    .filter(clazz -> clazz.getPackageName()
-                            .equalsIgnoreCase(PACKAGE))
-                    .map(ClassPath.ClassInfo::load)
-                    .filter(Configureable.class::isAssignableFrom)
-                    .forEach(clazz -> {
-                        Configureable instance;
-                        try {
-                            instance = (Configureable) clazz.newInstance();
-                        } catch (InstantiationException | IllegalAccessException e) {
-                            e.printStackTrace();
-                            return;
-                        }
-                        configureableModules.put(instance.getName(), instance);
-                    });
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Failed to load configurable classes.");
-        }
+        registerConfiguration(new WaypointModule());
+        registerConfiguration(new LegacyCombatModule());
+        registerConfiguration(new StaffModModule());
     }
 
     /**
@@ -120,6 +105,7 @@ public class ApolloModuleManager implements Listener {
 
     /**
      * Registers and enables a new module.
+     *
      * @param module The module to enable
      */
     private void registerModule(ApolloModule module) {

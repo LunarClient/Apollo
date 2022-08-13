@@ -6,7 +6,6 @@ import com.moonsworth.apollo.api.ApolloPlatform;
 import com.google.inject.Inject;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.events.EventBus;
-import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerJoin;
 import com.moonsworth.apollo.impl.velocity.wrapper.VelocityPlayer;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
@@ -19,10 +18,6 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
 @Plugin(
         id = "apollo",
@@ -78,10 +73,5 @@ public class ApolloVelocityPlatform implements ApolloPlatform {
                 }
             }
         }
-    }
-
-    @Subscribe
-    public void onPlayerJoin(PostLoginEvent event) {
-        Apollo.getApolloPlayerManager().getApolloPlayer(event.getPlayer().getUniqueId()).ifPresent(apolloPlayer -> EventBus.getBus().post(new EventApolloPlayerJoin(apolloPlayer)));
     }
 }
