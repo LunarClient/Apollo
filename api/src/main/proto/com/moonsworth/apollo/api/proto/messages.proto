@@ -28,6 +28,99 @@ message StaffMods {
   bool value = 2;
 }
 
+message TeammateMessage {
+  repeated Teammate teammates = 1;
+}
+
+message Teammate {
+  bytes player = 1;
+  int32 color = 2;
+  // Coordinates are only used when the player is out of render distance for the observer
+  // If you know the players are close you choose not to send these values.
+  bytes world = 3;
+  sint32 x = 4;
+  sint32 y = 5;
+  sint32 z = 6;
+}
+
+message NotificationMessage {
+  bytes title = 1;
+  bytes description = 2;
+}
+
+message NametagMessage {
+  bytes playerAffected = 1;
+  bool hideNametag = 2;
+  repeated RenderableString nametagOverride = 3;
+  int32 indexContainingPlayerName = 4;
+}
+
+message AddWaypointMessage {
+  Waypoint waypoint = 1;
+  sint32 color = 2;
+  sint32 x = 3;
+  sint32 y = 4;
+  sint32 z = 5;
+  bool forced = 6;
+  bool visible = 7;
+}
+
+message RemoveWaypointMessage {
+  Waypoint waypoint = 1;
+}
+
+message Waypoint {
+  bytes name = 1;
+  bytes world = 2;
+}
+
+// Only supported or needed for 1.7.10.
+// Please use the normal minecraft API for all other versions.
+message TitleMessage {
+  bytes message = 1;
+  float scale = 2;
+  int64 displayTimeMs = 3;
+  int64 fadeinTimeMs = 4;
+  int64 fadeOutTimeMs = 5;
+}
+
+// Only supported or needed for 1.7.10.
+// Please use the normal minecraft API for all other versions.
+// Ideally you would integrate this into your spigot so that you can use
+// a singular API for all of these components.
+message CreateUpdateWorldBorderMessage {
+  bytes id = 1;
+  bytes world = 2;
+  bool cancelEntry = 3;
+  bool cancelExit = 4;
+  bool canShrinkOrExpand = 5;
+  sint32 color = 6;
+  double minX = 7;
+  double minZ = 8;
+  double maxX = 9;
+  double maxZ = 10;
+}
+
+message RemoveWorldBorderMessage {
+  bytes id = 1;
+}
+
+
+message RenderableString {
+  enum TextDecorators {
+      OBFUSCATED = 0;
+      BOLD = 1;
+      STRIKETHROUGH = 2;
+      UNDERLINED = 3;
+      ITALIC = 4;
+  }
+  bytes content = 1;
+  sint32 color = 2;
+  repeated TextDecorators decoration = 3;
+  repeated RenderableString children = 4;
+}
+
+
 message ToggleArmorMessage {
   bool showArmor = 1;
 }

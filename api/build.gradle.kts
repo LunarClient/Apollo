@@ -31,6 +31,18 @@ repositories {
     mavenCentral()
 }
 
+publishing {
+    repositories {
+        maven {
+            url = uri("https://lunarclient-947665438472.d.codeartifact.us-east-2.amazonaws.com/maven/maven/")
+            credentials {
+                username = project.property("mavenUsername").toString()
+                password = project.property("mavenPassword").toString()
+            }
+        }
+    }
+}
+
 val lombokVersion: String by project
 val protobufVersion: String by project
 val protocVersion: String by project

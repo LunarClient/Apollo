@@ -40,4 +40,10 @@ public interface ApolloPlayer {
         sendPacket(Any.pack(packet).toByteArray());
     }
 
+    /**
+     * Gets the player's location in the world.
+     * Only available on the SERVER, not the proxy.
+     * @return the location of the player in the world
+     */
+    ApolloLocation getWorldLocation();
 }

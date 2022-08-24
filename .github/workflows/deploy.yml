@@ -1,0 +1,33 @@
+name: Deploy
+
+on:
+  push:
+    branches: [trunk]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    name: Deploy
+
+    steps:
+      - name: Checkout from GitHub
+        uses: actions/checkout@master
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.ARTIFACTS_ROLE_ARN }}
+          aws-region: us-east-2
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 16
+     
+      - name: Build
+        run: |
+          export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain lunarclient --domain-owner 947665438472 --query authorizationToken --output text`
+          ./gradlew publish -PmavenUsername=aws -PmavenPassword=${CODEARTIFACT_AUTH_TOKEN}

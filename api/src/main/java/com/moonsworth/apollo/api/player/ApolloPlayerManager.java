@@ -8,10 +8,7 @@ import com.moonsworth.apollo.api.events.Listener;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerRegister;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerUnregister;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class ApolloPlayerManager {
@@ -21,6 +18,14 @@ public class ApolloPlayerManager {
     // TODO implement on Bungee and Velocity
     public ApolloPlayerManager() {
 
+    }
+
+    /**
+     * Gets all the players online that are using Lunar Client.
+     * @return An immutable copy list of players using LunarClient.
+     */
+    public List<ApolloPlayer> getApolloPlayers() {
+        return new ArrayList<>(supportedPlayers.values());
     }
 
 
