@@ -51,6 +51,16 @@ protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:$protocVersion"
     }
+    generateProtoTasks {
+        all().configureEach {
+            // The generateProto task does not seem to properly clean its previously generated outputs.
+            // See https://github.com/google/protobuf-gradle-plugin/issues/332
+            // See https://github.com/google/protobuf-gradle-plugin/issues/331
+            this.doFirst {
+                delete(this.outputs)
+            }
+        }
+    }
 }
 dependencies {
     compileOnly("org.projectlombok:lombok:$lombokVersion")
