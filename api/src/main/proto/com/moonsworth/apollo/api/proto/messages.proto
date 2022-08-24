@@ -31,3 +31,15 @@ message StaffMods {
 message ToggleArmorMessage {
   bool showArmor = 1;
 }
+
+message EquipSuitMessage {
+  int32 suitId = 1;
+  bool equipped = 2;
+}
+
+/**
+Pass in -1 to close the gui
+ */
+message OpenGuiMessage {
+  int32 guiId = 1;
+}
