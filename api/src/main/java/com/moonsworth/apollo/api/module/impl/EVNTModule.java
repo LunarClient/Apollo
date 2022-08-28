@@ -6,9 +6,11 @@ import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.guis.Gui;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
+import com.moonsworth.apollo.api.protocol.DisplayVignetteMessage;
 import com.moonsworth.apollo.api.protocol.EquipSuitMessage;
 import com.moonsworth.apollo.api.protocol.ToggleArmorMessage;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class EVNTModule extends ApolloModule {
@@ -38,6 +40,15 @@ public class EVNTModule extends ApolloModule {
 
     public void equipSuit(ApolloPlayer player, int suitId, boolean equiped) {
         player.sendPacket(EquipSuitMessage.newBuilder().setSuitId(suitId).setEquipped(equiped).build());
+    }
+
+    /**
+     * Displays a vignette texture (such as a pumpkin head).
+     * @param texture The texture to display, or null to hide it
+     * @param opacity The opacity to render the texture at
+     */
+    public void displayVignette(ApolloPlayer player, @Nullable String texture, float opacity) {
+        player.sendPacket(DisplayVignetteMessage.newBuilder().setTexture(texture).setOpacity(opacity).build());
     }
 
 //    public void displayGui(ApolloPlayer player, Gui gui) {

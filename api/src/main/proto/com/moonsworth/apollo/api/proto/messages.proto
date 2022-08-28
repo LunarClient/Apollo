@@ -128,3 +128,11 @@ message EquipSuitMessage {
   int32 suitId = 1;
   bool equipped = 2;
 }
+
+/**
+  Display a vignette texture on the client's screen (like a pumpkin head) with a given opacity. Pass in null to stop displaying the texture.
+ */
+message DisplayVignetteMessage {
+  string texture = 1;
+  float opacity = 2;
+}

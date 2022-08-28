@@ -6,6 +6,7 @@ import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.events.EventBus;
 import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
 import com.moonsworth.apollo.impl.bukkit.command.KnockbackCommand;
+import com.moonsworth.apollo.impl.bukkit.command.VignetteCommand;
 import com.moonsworth.apollo.impl.bukkit.listener.*;
 import com.moonsworth.apollo.impl.bukkit.wrapper.BukkitPlayer;
 import lombok.Getter;
@@ -46,6 +47,7 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
         getServer().getPluginManager().registerEvents(this, this);
         Apollo.getApolloModuleManager().registerModuleListener(LegacyCombatModule.class, combatModule -> {
             getCommand("setkb").setExecutor(new KnockbackCommand());
+            getCommand("vignette").setExecutor(new VignetteCommand());
             getServer().getPluginManager().registerEvents(new DisableProjectileRandomnessListener(this, combatModule), this);
             getServer().getPluginManager().registerEvents(new AttackSpeedListener(combatModule), this);
             getServer().getPluginManager().registerEvents(new KnockbackListener(combatModule), this);
