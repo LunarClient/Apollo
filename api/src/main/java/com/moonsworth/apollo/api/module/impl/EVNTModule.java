@@ -15,8 +15,8 @@ import java.util.List;
 
 public class EVNTModule extends ApolloModule {
 
-    public EVNTModule(String name) {
-        super(name);
+    public EVNTModule() {
+        super("EVNTModule");
     }
 
     @Override
