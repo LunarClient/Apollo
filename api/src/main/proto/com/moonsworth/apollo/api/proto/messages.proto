@@ -130,7 +130,7 @@ message EquipSuitMessage {
 }
 
 /**
-  Display a vignette texture on the client's screen (like a pumpkin head) with a given opacity. Pass in null to stop displaying the texture.
+  Display a vignette texture on the client's screen (like a pumpkin head) with a given opacity. Use 0 opacity to hide the texture
  */
 message DisplayVignetteMessage {
   string texture = 1;

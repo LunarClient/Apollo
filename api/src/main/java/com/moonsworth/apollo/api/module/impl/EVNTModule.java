@@ -44,10 +44,10 @@ public class EVNTModule extends ApolloModule {
 
     /**
      * Displays a vignette texture (such as a pumpkin head).
-     * @param texture The texture to display, or null to hide it
-     * @param opacity The opacity to render the texture at
+     * @param texture The texture to display
+     * @param opacity The opacity to render the texture in the range [0.0, 1.0]
      */
-    public void displayVignette(ApolloPlayer player, @Nullable String texture, float opacity) {
+    public void displayVignette(ApolloPlayer player, String texture, float opacity) {
         player.sendPacket(DisplayVignetteMessage.newBuilder().setTexture(texture).setOpacity(opacity).build());
     }
 
