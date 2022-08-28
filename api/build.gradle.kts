@@ -88,16 +88,16 @@ dependencies {
     api("com.google.protobuf:protobuf-java:3.21.4")
 }
 
-val sourcesJar by tasks.registering(Jar::class) {
-    classifier = "sources"
-    from(sourceSets.main.get().allSource)
-}
+//val sourcesJar by tasks.registering(Jar::class) {
+//    classifier = "sources"
+//    from(sourceSets.main.get().allSource)
+//}
 
 publishing {
     publications {
         register("mavenJava", MavenPublication::class) {
             from(components["java"])
-            artifact(sourcesJar)
+//            artifact(sourcesJar)
         }
     }
 }
