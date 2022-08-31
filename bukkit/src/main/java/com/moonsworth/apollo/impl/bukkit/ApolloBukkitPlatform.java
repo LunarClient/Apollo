@@ -3,18 +3,18 @@ package com.moonsworth.apollo.impl.bukkit;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-import com.moonsworth.apollo.api.events.EventBus;
+import com.moonsworth.apollo.api.module.impl.EVNTModule;
 import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
 import com.moonsworth.apollo.impl.bukkit.command.KnockbackCommand;
 import com.moonsworth.apollo.impl.bukkit.command.VignetteCommand;
 import com.moonsworth.apollo.impl.bukkit.listener.*;
 import com.moonsworth.apollo.impl.bukkit.wrapper.BukkitPlayer;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.event.player.PlayerUnregisterChannelEvent;
@@ -47,13 +47,18 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
         getServer().getPluginManager().registerEvents(this, this);
         Apollo.getApolloModuleManager().registerModuleListener(LegacyCombatModule.class, combatModule -> {
             getCommand("setkb").setExecutor(new KnockbackCommand());
-            getCommand("vignette").setExecutor(new VignetteCommand());
-            getServer().getPluginManager().registerEvents(new DisableProjectileRandomnessListener(this, combatModule), this);
+            getServer().getPluginManager()
+                    .registerEvents(new DisableProjectileRandomnessListener(this, combatModule), this);
             getServer().getPluginManager().registerEvents(new AttackSpeedListener(combatModule), this);
             getServer().getPluginManager().registerEvents(new KnockbackListener(combatModule), this);
             getServer().getPluginManager().registerEvents(new ArmorDurabilityListener(this, combatModule), this);
             getServer().getPluginManager().registerEvents(new RegenListener(this, combatModule), this);
             getServer().getPluginManager().registerEvents(new AttackFrequencyListener(combatModule), this);
+        });
+
+        Apollo.getApolloModuleManager().registerModuleListener(EVNTModule.class, combatModule -> {
+            getCommand("vignette").setExecutor(new VignetteCommand());
+            Bukkit.broadcastMessage("sdf");
         });
     }
 
@@ -78,7 +83,8 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
     @Override
     public @Nullable ApolloPlayer tryWrapPlayer(Object o) {
         if (o instanceof Player player) {
-            return Apollo.getApolloPlayerManager().getApolloPlayer(player.getUniqueId()).orElse(new BukkitPlayer(player));
+            return Apollo.getApolloPlayerManager().getApolloPlayer(player.getUniqueId())
+                    .orElse(new BukkitPlayer(player));
         }
         return null;
     }

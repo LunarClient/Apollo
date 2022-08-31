@@ -5,6 +5,7 @@ import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.guis.Gui;
 import com.moonsworth.apollo.api.module.ApolloModule;
+import com.moonsworth.apollo.api.module.Configureable;
 import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.protocol.DisplayVignetteMessage;
 import com.moonsworth.apollo.api.protocol.EquipSuitMessage;
@@ -12,8 +13,9 @@ import com.moonsworth.apollo.api.protocol.ToggleArmorMessage;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
 
-public class EVNTModule extends ApolloModule {
+public class EVNTModule extends ApolloModule implements Configureable {
 
     public EVNTModule() {
         super("EVNTModule");
@@ -49,6 +51,11 @@ public class EVNTModule extends ApolloModule {
      */
     public void displayVignette(ApolloPlayer player, String texture, float opacity) {
         player.sendPacket(DisplayVignetteMessage.newBuilder().setTexture(texture).setOpacity(opacity).build());
+    }
+
+    @Override
+    public void load(Map<String, Object> configuration) {
+
     }
 
 //    public void displayGui(ApolloPlayer player, Gui gui) {

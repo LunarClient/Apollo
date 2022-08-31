@@ -19,13 +19,13 @@ public class VignetteCommand implements CommandExecutor {
         }
         ApolloPlayer apolloPlayer = ApolloBukkitPlatform.getInstance().tryWrapPlayer(sender);
         if (apolloPlayer != null) {
-            if(args[1].equals("reset")) {
+            if(args[0].equals("reset")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class)
                         .ifPresent(module -> module.displayVignette(apolloPlayer, null, 1.0f));
                 sender.sendMessage(ChatColor.GREEN + "Reset vignette!");
                 return true;
             }
-            NamespacedKey textureLocation = NamespacedKey.fromString(args[1]);
+            NamespacedKey textureLocation = NamespacedKey.fromString(args[0]);
             if (textureLocation == null) {
                 sender.sendMessage(ChatColor.RED + "Please specify a valid texture location.");
                 return true;
