@@ -5,10 +5,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.protobuf.ByteString;
 import com.moonsworth.apollo.api.ApolloPlatform;
-import com.moonsworth.apollo.api.events.EventBus;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerRegister;
 import com.moonsworth.apollo.api.module.ApolloModule;
-import com.moonsworth.apollo.api.module.Configureable;
 import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.protocol.AddWaypointMessage;
 import com.moonsworth.apollo.api.protocol.Waypoint;
@@ -17,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class WaypointModule extends ApolloModule implements Configureable {
+public class WaypointModule extends ApolloModule {
 
-    private List<AddWaypointMessage> waypoints = new ArrayList<>();
+    private final List<AddWaypointMessage> waypoints = new ArrayList<>();
 
     public WaypointModule() {
         super("WaypointModule");
@@ -47,7 +45,7 @@ public class WaypointModule extends ApolloModule implements Configureable {
 
 
     @Override
-    public void load(Map<String, Object> configuration) {
+    public void loadConfiguration(Map<String, Object> configuration) {
         List<Map<?, ?>> maps = (List<Map<?, ?>>) configuration.get(getName() + ".waypoints");
         for (Map<?, ?> map : maps) {
             // Create the waypoint.

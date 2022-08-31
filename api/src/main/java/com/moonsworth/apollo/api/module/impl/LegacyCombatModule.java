@@ -1,10 +1,8 @@
 package com.moonsworth.apollo.api.module.impl;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.JsonObject;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.module.ApolloModule;
-import com.moonsworth.apollo.api.module.Configureable;
 import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.options.BooleanOption;
 import com.moonsworth.apollo.api.options.NumberOption;
@@ -16,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
-public class LegacyCombatModule extends ApolloModule implements Configureable {
+public class LegacyCombatModule extends ApolloModule {
 
     private BooleanOption legacyCrits;
     private BooleanOption legacyAttackSpeed; // TODO send to client
@@ -67,19 +65,5 @@ public class LegacyCombatModule extends ApolloModule implements Configureable {
     @Override
     public List<ApolloPlatform.Kind> runsOn() {
         return Collections.singletonList(ApolloPlatform.Kind.SERVER);
-    }
-
-    @Override
-    public void load(Map<String, Object> configuration) {
-        for (ApolloOption option : getOptions()) {
-            if (!configuration.containsKey(getName() + "." + option.getId())) {
-                continue;
-            }
-            try {
-                option.load(configuration.get(getName() + "." + option.getId()).toString());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
     }
 }

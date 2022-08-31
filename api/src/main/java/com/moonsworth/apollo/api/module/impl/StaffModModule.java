@@ -5,17 +5,15 @@ import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerRegister;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerUnregister;
 import com.moonsworth.apollo.api.module.ApolloModule;
-import com.moonsworth.apollo.api.module.Configureable;
 import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.options.PermissionNodeOption;
 import com.moonsworth.apollo.api.protocol.StaffMods;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
-public class StaffModModule extends ApolloModule implements Configureable {
+public class StaffModModule extends ApolloModule {
 
     private PermissionNodeOption xrayPermission;
 
@@ -53,19 +51,5 @@ public class StaffModModule extends ApolloModule implements Configureable {
 
     public void handleQuit(EventApolloPlayerUnregister apolloPlayer) {
         playersWithStaffMods.remove(apolloPlayer.getPlayer().getUniqueId());
-    }
-
-    @Override
-    public void load(Map<String, Object> configuration) {
-        for (ApolloOption option : getOptions()) {
-            if (!configuration.containsKey(getName() + "." + option.getId())) {
-                continue;
-            }
-            try {
-                option.load(configuration.get(getName() + "." + option.getId()).toString());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
     }
 }

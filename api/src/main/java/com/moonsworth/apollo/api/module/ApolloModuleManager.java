@@ -21,7 +21,7 @@ public class ApolloModuleManager implements Listener {
     @Getter
     private final Map<Class<? extends ApolloModule>, ApolloModule> moduleMap = new HashMap<>();
 
-    private final Map<String, Configureable> configureableModules = new HashMap<>();
+    private final Map<String, ApolloModule> configureableModules = new HashMap<>();
 
     public ApolloModuleManager() {
         loadConfigurableModules();
@@ -44,8 +44,8 @@ public class ApolloModuleManager implements Listener {
         });
     }
 
-    public void registerConfiguration(Configureable configureable) {
-        configureableModules.put(configureable.getName(), configureable);
+    public void registerConfiguration(ApolloModule module) {
+        configureableModules.put(module.getName(), module);
     }
 
     private void loadConfigurableModules() {
@@ -129,12 +129,12 @@ public class ApolloModuleManager implements Listener {
      * Needs to be called after registering all the modules
      */
     public void loadConfiguration(Map<String, Object> config) {
-        for (Map.Entry<String, Configureable> entry : configureableModules.entrySet()) {
+        for (Map.Entry<String, ApolloModule> entry : configureableModules.entrySet()) {
             if (!config.containsKey(entry.getKey() + ".enabled")) {
                 continue;
             }
             entry.getValue().load(config);
-            if (entry.getValue() instanceof ApolloModule && Boolean.parseBoolean(config.get(entry.getKey() + ".enabled").toString())) {
+            if (entry.getValue() != null && Boolean.parseBoolean(config.get(entry.getKey() + ".enabled").toString())) {
                 registerModule((ApolloModule) entry.getValue());
             }
         }

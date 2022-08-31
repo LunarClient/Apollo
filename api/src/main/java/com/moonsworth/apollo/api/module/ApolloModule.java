@@ -113,5 +113,29 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
         events.put((Class<Event>) clazz, (Consumer<Event>) consumer);
     }
 
+    /**
+     * Called at the start of loading configuration.
+     * Used to load extra configuration that isn't quite an option
+     * @param configuration The config map
+     */
+    protected void loadConfiguration(Map<String, Object> configuration) {}
+
+    /**
+     * Loads the items from a config file.
+     * @param configuration The data from the config section in YAML
+     */
+    public void load(Map<String, Object> configuration) {
+        loadConfiguration(configuration);
+        for (ApolloOption option : getOptions()) {
+            if (!configuration.containsKey(getName() + "." + option.getId())) {
+                continue;
+            }
+            try {
+                option.load(configuration.get(getName() + "." + option.getId()).toString());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 }
 
