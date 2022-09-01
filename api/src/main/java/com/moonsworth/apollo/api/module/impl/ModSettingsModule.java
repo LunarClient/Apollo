@@ -2,20 +2,16 @@ package com.moonsworth.apollo.api.module.impl;
 
 import com.google.common.collect.ImmutableList;
 import com.moonsworth.apollo.api.ApolloPlatform;
-import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerRegister;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.options.OptionProperty;
 import com.moonsworth.apollo.api.options.StringListOption;
-import com.moonsworth.apollo.api.protocol.AddWaypointMessage;
-import com.moonsworth.apollo.api.protocol.ModSetting;
-import com.moonsworth.apollo.api.protocol.ModSettings;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+@Getter
 public class ModSettingsModule extends ApolloModule {
 
     private StringListOption settings;

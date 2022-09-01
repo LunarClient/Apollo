@@ -12,11 +12,12 @@ import com.moonsworth.apollo.api.options.BooleanOption;
 import com.moonsworth.apollo.api.options.OptionProperty;
 import com.moonsworth.apollo.api.protocol.AddWaypointMessage;
 import com.moonsworth.apollo.api.protocol.Waypoint;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+@Getter
 public class WaypointModule extends ApolloModule {
 
     private final List<AddWaypointMessage> waypoints = new ArrayList<>();
