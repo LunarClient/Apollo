@@ -14,6 +14,14 @@ message ModuleConfiguration {
   map<string, string> values = 2;
 }
 
+message ModSettings {
+  map<string, ModSetting> modSettings = 1;
+}
+
+message ModSetting {
+  bool enabled = 1;
+  map<string, string> properties = 2;
+}
 
 message CooldownMessage {
   bytes name = 1;

@@ -31,4 +31,10 @@ modules:
           color: 0xFF0000 # MUST be a hexadecimal representation of a number.
           forced: false # MUST be either a true or false value. No quotes.
           visible: true # MUST be either a true or false value. No quotes.
+  ModSettingsModule:
+    enabled: true
+    settings:
+      - "test"
+      - "test"
+      - "paw"
 

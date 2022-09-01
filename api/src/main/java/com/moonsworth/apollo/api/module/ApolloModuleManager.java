@@ -6,6 +6,7 @@ import com.moonsworth.apollo.api.events.Listener;
 import com.moonsworth.apollo.api.events.impl.packet.EventApolloReceivePacket;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerRegister;
 import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
+import com.moonsworth.apollo.api.module.impl.ModSettingsModule;
 import com.moonsworth.apollo.api.module.impl.StaffModModule;
 import com.moonsworth.apollo.api.module.impl.WaypointModule;
 import com.moonsworth.apollo.api.protocol.ModuleInit;
@@ -52,6 +53,7 @@ public class ApolloModuleManager implements Listener {
         registerConfiguration(new WaypointModule());
         registerConfiguration(new LegacyCombatModule());
         registerConfiguration(new StaffModModule());
+        registerConfiguration(new ModSettingsModule());
     }
 
     /**

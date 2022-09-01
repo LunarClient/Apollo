@@ -8,6 +8,8 @@ import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerRegister;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
+import com.moonsworth.apollo.api.options.BooleanOption;
+import com.moonsworth.apollo.api.options.OptionProperty;
 import com.moonsworth.apollo.api.protocol.AddWaypointMessage;
 import com.moonsworth.apollo.api.protocol.Waypoint;
 
@@ -18,6 +20,8 @@ import java.util.Map;
 public class WaypointModule extends ApolloModule {
 
     private final List<AddWaypointMessage> waypoints = new ArrayList<>();
+
+    private BooleanOption waypointsHandledByServer;
 
     public WaypointModule() {
         super("WaypointModule");
@@ -30,7 +34,9 @@ public class WaypointModule extends ApolloModule {
 
     @Override
     public List<ApolloOption> options() {
-        return new ArrayList<>();
+        return ImmutableList.of(
+            waypointsHandledByServer = new BooleanOption("waypointsHandledByServer", OptionProperty.CLIENT, false)
+        );
     }
 
     @Override
@@ -46,6 +52,9 @@ public class WaypointModule extends ApolloModule {
 
     @Override
     public void loadConfiguration(Map<String, Object> configuration) {
+        if (!configuration.containsKey(getName() + ".waypoints")) {
+            return;
+        }
         List<Map<?, ?>> maps = (List<Map<?, ?>>) configuration.get(getName() + ".waypoints");
         for (Map<?, ?> map : maps) {
             // Create the waypoint.

@@ -32,6 +32,8 @@ public class LegacyCombatModule extends ApolloModule {
     private NumberOption<Integer> regenHealAmount;
     private NumberOption<Integer> regenExhaustionHealAmount;
 
+    private BooleanOption legacyEnchanting;
+
     public LegacyCombatModule() {
         super("LegacyCombatModule");
     }
@@ -53,7 +55,8 @@ public class LegacyCombatModule extends ApolloModule {
                 projectileRandomnessValue = new NumberOption<>("projectileRandomnessValue", OptionProperty.SERVER,0.1D, 0.001D, 1D),
                 regenInterval = new NumberOption<>("regenInterval", OptionProperty.SERVER,3990, 1000, 5000),
                 regenHealAmount = new NumberOption<>("regenHealAmount", OptionProperty.SERVER, 1, 0, 5),
-                regenExhaustionHealAmount = new NumberOption<>("regenExhaustionHealAmount", OptionProperty.SERVER,3, 0, 5)
+                regenExhaustionHealAmount = new NumberOption<>("regenExhaustionHealAmount", OptionProperty.SERVER,3, 0, 5),
+                legacyEnchanting = new BooleanOption("legacyEnchanting", OptionProperty.CLIENT, false)
         );
     }
 
