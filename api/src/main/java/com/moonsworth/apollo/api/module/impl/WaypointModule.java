@@ -41,7 +41,7 @@ public class WaypointModule extends ApolloModule {
 
     @Override
     public boolean notifyPlayers() {
-        return false;
+        return true;
     }
 
     @Override
