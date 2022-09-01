@@ -21,11 +21,11 @@ group = "com.moonsworth"
 version = "1.0-SNAPSHOT"
 
 // TODO: enforce this works with Java 8
-//java {
-//    toolchain {
-//        languageVersion.set(JavaLanguageVersion.of(8))
-//    }
-//}
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(16))
+    }
+}
 
 repositories {
     mavenCentral()
@@ -50,6 +50,16 @@ val protocVersion: String by project
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:$protocVersion"
+    }
+    generateProtoTasks {
+        all().configureEach {
+            // The generateProto task does not seem to properly clean its previously generated outputs.
+            // See https://github.com/google/protobuf-gradle-plugin/issues/332
+            // See https://github.com/google/protobuf-gradle-plugin/issues/331
+            this.doFirst {
+                delete(this.outputs)
+            }
+        }
     }
 }
 dependencies {
@@ -78,16 +88,16 @@ dependencies {
     api("com.google.protobuf:protobuf-java:3.21.4")
 }
 
-val sourcesJar by tasks.registering(Jar::class) {
-    classifier = "sources"
-    from(sourceSets.main.get().allSource)
-}
+//val sourcesJar by tasks.registering(Jar::class) {
+//    classifier = "sources"
+//    from(sourceSets.main.get().allSource)
+//}
 
 publishing {
     publications {
         register("mavenJava", MavenPublication::class) {
             from(components["java"])
-            artifact(sourcesJar)
+//            artifact(sourcesJar)
         }
     }
 }

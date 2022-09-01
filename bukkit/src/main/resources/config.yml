@@ -37,4 +37,5 @@ modules:
       - "test"
       - "test"
       - "paw"
-
+  EVNTModule:
+    enabled: true

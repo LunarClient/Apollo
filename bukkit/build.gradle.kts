@@ -36,6 +36,9 @@ spigot {
         command {
             named("setkb")
         }
+        command {
+            named("vignette")
+        }
         apiVersion("1.18")
     }
 }

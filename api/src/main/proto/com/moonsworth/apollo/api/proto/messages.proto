@@ -128,3 +128,20 @@ message RenderableString {
   repeated TextDecorators decoration = 3;
   repeated RenderableString children = 4;
 }
+
+message ToggleArmorMessage {
+  bool showArmor = 1;
+}
+
+message EquipSuitMessage {
+  int32 suitId = 1;
+  bool equipped = 2;
+}
+
+/**
+  Display a vignette texture on the client's screen (like a pumpkin head) with a given opacity. Use 0 opacity to hide the texture
+ */
+message DisplayVignetteMessage {
+  repeated string texture = 1;
+  float opacity = 2;
+}

@@ -9,8 +9,8 @@ import java.util.function.BiConsumer;
 
 @Getter
 @RequiredArgsConstructor
-public class ApolloPacketPair {
+public class ApolloPacketPair<M extends Message> {
 
-    private final Class<? extends Message> clazz;
-    private final BiConsumer<ApolloPlayer, Message> consumer;
+    private final Class<? extends M> clazz;
+    private final BiConsumer<ApolloPlayer, M> consumer;
 }
