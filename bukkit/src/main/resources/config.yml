@@ -32,10 +32,53 @@ modules:
           forced: false # MUST be either a true or false value. No quotes.
           visible: true # MUST be either a true or false value. No quotes.
   ModSettingsModule:
+    # Mod Ids: (Last Updated: 05/05/2021)
+    # one_seven_visuals - 1.7 Visuals
+    # fps - FPS
+    # cps - CPS
+    # skyblockAddons - Skyblock Addons
+    # toggleSneak - Toggle Sneak/Sprint
+    # hypixel_mod - Hypixel Mods
+    # armorstatus - Armor Status
+    # keystrokes - Key Strokes
+    # coords - Coordinates
+    # crosshair - Crosshair
+    # potioneffects - Potion Effects
+    # directionhud - Direction HUD
+    # waypoints - Waypoints
+    # scoreboard - Scoreboard
+    # potion_counter - Potion Counter
+    # ping - Ping
+    # motionBlur - Motion Blur
+    # chat - Chat
+    # scrollable_tooltips - Scrollable Tooltips
+    # uhc_overlay - UHC Overlay
+    # particleMultiplierMod - Particle Multiplier
+    # cooldowns - Cooldowns
+    # worldedit_cui - WorldEdit CUI
+    # clock - Clock
+    # stopwatch - Stopwatch
+    # memory - Memory Usage
+    # combo - Combo Counter
+    # range - Reach Display
+    # time_changer - Time Changer
+    # serverAddressMod - Server Address
+    # saturation - Saturation
+    # itemPhysic - Item Physics
+    # itemTrackerChild - Item Tracker
+    # shinyPots - Shiny Pots
+    # block_outline - Block Outline
+    # screenshot - Screenshot Uploader
+    # fov_mod - FOV Mod
+    # textHotKey - Auto Text Hot Key
+    # netgraph - Net Graph
+    # mumble-link - Mumble Link
+    # bossbar - Boss Bar
+    # freelook - Freelook
+    # replaymod - ReplayMod
+    # nickHider - NickHider
     enabled: true
     settings:
-      - "test"
-      - "test"
-      - "paw"
+      - "skyblockAddons"
   EVNTModule:
     enabled: true
