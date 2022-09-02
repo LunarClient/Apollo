@@ -27,13 +27,19 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
     public ApolloModule(String name) {
         this.enabled = false;
         this.name = name;
+
         Consumer consumer = o -> Apollo.getApolloPlayerManager().getApolloPlayers().forEach(this::playerLogin);
-        options.forEach(option -> option.onUpdate(consumer));
+        options.forEach(option -> {
+            if (Apollo.getApolloPlayerManager() != null) {
+                option.onUpdate(consumer);
+            }
+        });
     }
+
     /**
      * Enables this ApolloModule.
      * NOTE: Modules are enabled as they're created. Some modules will load before others!
-     *
+     * <p>
      * Called then the module is set to be enabled.
      * This happens before enable, but after init in ApolloConsumer.
      */
@@ -58,12 +64,14 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
      * This is very useful for things like LegacyCombatModule where it directly determines gameplay
      * factors from the moment the user logs in, but less useful for things like NotificationModule
      * where the user only needs to know it's enabled once it takes an action.
+     *
      * @return The result of if this should contain a combat module
      */
     public abstract boolean notifyPlayers();
 
     /**
      * Determines where the specified module can run
+     *
      * @return Where the module can run
      */
     public abstract List<ApolloPlatform.Kind> runsOn();
@@ -73,9 +81,10 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
      * If this is a notifying module, the player will have already received the packet that
      * this module is enabled, and this will be overridden to add additional details around the
      * rules of the module.
-     *
+     * <p>
      * An example of this could be telling the client a duration for a cool down on login instead
      * of sending that value everytime an action to cause the cooldown is invoked.
+     *
      * @param player The player that has recently logged in.
      */
     public void playerLogin(ApolloPlayer player) {
@@ -108,7 +117,7 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
         }
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     protected <T extends Event> void handle(Class<T> clazz, Consumer<T> consumer) {
         events.put((Class<Event>) clazz, (Consumer<Event>) consumer);
     }
@@ -116,12 +125,15 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
     /**
      * Called at the start of loading configuration.
      * Used to load extra configuration that isn't quite an option
+     *
      * @param configuration The config map
      */
-    protected void loadConfiguration(Map<String, Object> configuration) {}
+    protected void loadConfiguration(Map<String, Object> configuration) {
+    }
 
     /**
      * Loads the items from a config file.
+     *
      * @param configuration The data from the config section in YAML
      */
     public void load(Map<String, Object> configuration) {
