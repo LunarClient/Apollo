@@ -89,8 +89,9 @@ message TitleMessage {
   bytes message = 1;
   float scale = 2;
   int64 displayTimeMs = 3;
-  int64 fadeinTimeMs = 4;
+  int64 fadeInTimeMs = 4;
   int64 fadeOutTimeMs = 5;
+  bool title = 6;
 }
 
 // Only supported or needed for 1.7.10.
@@ -108,6 +109,7 @@ message CreateUpdateWorldBorderMessage {
   double minZ = 8;
   double maxX = 9;
   double maxZ = 10;
+  int32 durationTicks = 11;
 }
 
 message RemoveWorldBorderMessage {
