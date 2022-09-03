@@ -82,3 +82,8 @@ modules:
       - "skyblockAddons"
   EVNTModule:
     enabled: true
+  ServerRuleModule:
+    enabled: true
+    competitiveGame: false
+    shadersDisabled: false
+
