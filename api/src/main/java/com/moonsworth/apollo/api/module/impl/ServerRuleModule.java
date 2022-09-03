@@ -5,6 +5,7 @@ import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.options.BooleanOption;
+import com.moonsworth.apollo.api.options.NumberOption;
 import com.moonsworth.apollo.api.options.OptionProperty;
 import lombok.Getter;
 
@@ -15,6 +16,10 @@ public class ServerRuleModule extends ApolloModule {
 
     private BooleanOption competitiveGame;
     private BooleanOption shadersDisabled;
+    private BooleanOption disableF6Broadcasting;
+    private BooleanOption antiPortalTraps;
+    private BooleanOption cpsLimiter;
+    private NumberOption<Integer> cpsLimit;
 
     public ServerRuleModule() {
         super("ServerRuleModule");
@@ -24,7 +29,11 @@ public class ServerRuleModule extends ApolloModule {
     public List<ApolloOption> options() {
         return ImmutableList.of(
                 competitiveGame = new BooleanOption("competitiveGame", OptionProperty.CLIENT, false),
-                shadersDisabled = new BooleanOption("shadersDisabled", OptionProperty.CLIENT, false)
+                shadersDisabled = new BooleanOption("shadersDisabled", OptionProperty.CLIENT, false),
+                disableF6Broadcasting = new BooleanOption("disableF6Broadcasting", OptionProperty.CLIENT, false),
+                antiPortalTraps = new BooleanOption("antiPortalTraps", OptionProperty.CLIENT, false),
+                cpsLimiter = new BooleanOption("cpsLimiter", OptionProperty.CLIENT, false),
+                cpsLimit = new NumberOption<>("cpsLimit", OptionProperty.CLIENT, 20, 1, 100)
         );
     }
 

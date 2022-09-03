@@ -86,4 +86,8 @@ modules:
     enabled: true
     competitiveGame: false
     shadersDisabled: false
+    disableF6Broadcasting: false # Only needed/available on 1.7 & 1.8
+    antiPortalTraps: false # work in progress
+    cpsLimiter: false # Work in progress
+    cpsLimit: 20 # Work in progress
 
