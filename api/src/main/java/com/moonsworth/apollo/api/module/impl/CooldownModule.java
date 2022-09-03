@@ -6,6 +6,7 @@ import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
+import com.moonsworth.apollo.api.protocol.ClearCooldownMessage;
 import com.moonsworth.apollo.api.protocol.CooldownMessage;
 
 
@@ -109,5 +110,13 @@ public class CooldownModule extends ApolloModule {
             throw new IllegalStateException("Attempted to send a cooldown that isn't registered [" + cooldownName + "]");
         }
         player.sendPacket(CooldownMessage.newBuilder().setName(ByteString.copyFromUtf8(cooldownId)).setDurationMs(0).build());
+    }
+
+    /**
+     * Clears all cooldowns for a player
+     * @param player The player to remove the cooldowns for.
+     */
+    public void clearCooldowns(ApolloPlayer player) {
+        player.sendPacket(ClearCooldownMessage.newBuilder().build());
     }
 }
