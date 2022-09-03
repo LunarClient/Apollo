@@ -46,7 +46,12 @@ public class EVNTModule extends ApolloModule {
      * @param opacity The opacity to render the texture with in the range [0.0, 1.0]
      */
     public void displayVignette(ApolloPlayer player, String texture, float opacity) {
-        player.sendPacket(DisplayVignetteMessage.newBuilder().addTexture(texture).setOpacity(opacity).build());
+        var builder = DisplayVignetteMessage.newBuilder();
+        if (texture != null) {
+            builder = builder.addTexture(texture);
+        }
+        builder = builder.setOpacity(opacity);
+        player.sendPacket(builder.build());
     }
 
     public void clearVignette(ApolloPlayer player) {

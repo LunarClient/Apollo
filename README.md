@@ -2,6 +2,9 @@
 
 **Apollo** is an API for interacting with Lunar Client players from a server or proxy.
 
+* Do not shade the API unless you provide docs
+
+
 ## Architecture
 
 `api` contains classes available on all platforms. It defines the protocol between Lunar Client and servers / proxies.
