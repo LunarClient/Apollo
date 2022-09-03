@@ -21,7 +21,7 @@ public class VignetteCommand implements CommandExecutor {
         if (apolloPlayer != null) {
             if(args[0].equals("reset")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class)
-                        .ifPresent(module -> module.displayVignette(apolloPlayer, null, 1.0f));
+                        .ifPresent(module -> module.displayVignette(apolloPlayer, "", 0.0f));
                 sender.sendMessage(ChatColor.GREEN + "Reset vignette!");
                 return true;
             }

@@ -44,7 +44,6 @@ publishing {
 }
 
 val lombokVersion: String by project
-val protobufVersion: String by project
 val protocVersion: String by project
 
 protobuf {

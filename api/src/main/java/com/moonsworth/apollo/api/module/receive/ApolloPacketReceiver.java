@@ -20,7 +20,8 @@ public abstract class ApolloPacketReceiver {
     }
 
     public void handle(ApolloPlayer apolloPlayer, Any any) {
-        ApolloPacketPair pair = packetHandlers.get(any.getDescriptorForType().getFullName());
+        //very hacky way to get the message type
+        ApolloPacketPair pair = packetHandlers.get(any.getTypeUrl().split("type\\.googleapis\\.com/")[1]);
         if (pair != null) {
             try {
                 pair.getConsumer().accept(apolloPlayer, any.unpack(pair.getClazz()));
