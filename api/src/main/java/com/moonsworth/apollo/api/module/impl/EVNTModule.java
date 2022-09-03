@@ -55,7 +55,7 @@ public class EVNTModule extends ApolloModule {
     }
 
     public void clearVignette(ApolloPlayer player) {
-        player.sendPacket(DisplayVignetteMessage.newBuilder().addTexture("").setOpacity(0).build());
+        player.sendPacket(DisplayVignetteMessage.newBuilder().setOpacity(0).build());
     }
 
 //    public void displayGui(ApolloPlayer player, Gui gui) {
