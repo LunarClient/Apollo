@@ -28,4 +28,9 @@ public record BungeePlayer(ProxiedPlayer player) implements ApolloPlayer {
     public ApolloLocation getWorldLocation() {
         throw new UnsupportedOperationException("This method is not allowed on the proxy!");
     }
+
+    @Override
+    public void sendMessage(String message) {
+        player.sendMessage(message);
+    }
 }

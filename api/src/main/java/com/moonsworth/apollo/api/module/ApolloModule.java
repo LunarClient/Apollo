@@ -28,11 +28,13 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
         this.enabled = false;
         this.name = name;
 
-        Consumer consumer = o -> Apollo.getApolloPlayerManager().getApolloPlayers().forEach(this::playerLogin);
+        Runnable consumer = () -> Apollo.getApolloPlayerManager().getApolloPlayers().forEach(this::playerLogin);
         options.forEach(option -> {
-            if (Apollo.getApolloPlayerManager() != null) {
-                option.onUpdate(consumer);
-            }
+            option.onUpdate(o -> {
+                if (Apollo.getApolloPlayerManager() != null) {
+                    consumer.run();
+                }
+            });
         });
     }
 

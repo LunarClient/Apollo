@@ -35,4 +35,9 @@ public record BukkitPlayer(Player player) implements ApolloPlayer {
     public ApolloLocation getWorldLocation() {
         return new BukkitLocation(player.getLocation());
     }
+
+    @Override
+    public void sendMessage(String message) {
+        player.sendMessage(message);
+    }
 }

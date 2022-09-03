@@ -46,4 +46,10 @@ public interface ApolloPlayer {
      * @return the location of the player in the world
      */
     ApolloLocation getWorldLocation();
+
+    /**
+     * Send a message to the player. Used for debug only!
+     * @param message The message to send to the player.
+     */
+    void sendMessage(String message);
 }

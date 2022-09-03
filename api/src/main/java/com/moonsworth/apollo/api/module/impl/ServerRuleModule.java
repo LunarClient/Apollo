@@ -20,6 +20,8 @@ public class ServerRuleModule extends ApolloModule {
     private BooleanOption antiPortalTraps;
     private BooleanOption cpsLimiter;
     private NumberOption<Integer> cpsLimit;
+    private BooleanOption affectBrightness;
+    private NumberOption<Integer> brightness;
 
     public ServerRuleModule() {
         super("ServerRuleModule");
@@ -33,7 +35,9 @@ public class ServerRuleModule extends ApolloModule {
                 disableF6Broadcasting = new BooleanOption("disableF6Broadcasting", OptionProperty.CLIENT, false),
                 antiPortalTraps = new BooleanOption("antiPortalTraps", OptionProperty.CLIENT, false),
                 cpsLimiter = new BooleanOption("cpsLimiter", OptionProperty.CLIENT, false),
-                cpsLimit = new NumberOption<>("cpsLimit", OptionProperty.CLIENT, 20, 1, 100)
+                cpsLimit = new NumberOption<>("cpsLimit", OptionProperty.CLIENT, 20, 1, 100),
+                affectBrightness = new BooleanOption("affectBrightness", OptionProperty.CLIENT, false),
+                brightness = new NumberOption<>("brightness", OptionProperty.CLIENT, 50, 1, 10000)
         );
     }
 

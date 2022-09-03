@@ -1,11 +1,13 @@
 package com.moonsworth.apollo.impl.bukkit.command;
 
+import com.google.common.primitives.Ints;
 import com.google.protobuf.ByteString;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.impl.CooldownModule;
 import com.moonsworth.apollo.api.module.impl.EVNTModule;
 import com.moonsworth.apollo.api.module.impl.NotificationModule;
+import com.moonsworth.apollo.api.module.impl.ServerRuleModule;
 import com.moonsworth.apollo.api.protocol.CooldownMessage;
 import com.moonsworth.apollo.api.protocol.RenderableIcon;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
@@ -30,6 +32,24 @@ public class VignetteCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.GREEN + "Reset vignette!");
                 return true;
             }
+            if (args.length == 2 && args[0].equals("bright")) {
+                Integer value = Ints.tryParse(args[1]);
+                if (value == null) {
+                    Boolean t = Boolean.parseBoolean(args[1]);
+                    Apollo.getApolloModuleManager().getModule(ServerRuleModule.class).ifPresent(rule -> {
+                        rule.getAffectBrightness().update(t);
+                        sender.sendMessage(ChatColor.YELLOW + "Setting value for brightness to " + rule.getAffectBrightness().get());
+
+                    });
+                    return true;
+                }
+                Apollo.getApolloModuleManager().getModule(ServerRuleModule.class).ifPresent(rule -> {
+                    rule.getBrightness().update(value);
+                    sender.sendMessage(ChatColor.GREEN + "Setting value for brightness " + rule.getBrightness().get());
+
+                });
+                return true;
+            }
             NamespacedKey textureLocation = NamespacedKey.fromString(args[0]);
             if (textureLocation == null) {
                 sender.sendMessage(ChatColor.RED + "Please specify a valid texture location.");
@@ -38,7 +58,7 @@ public class VignetteCommand implements CommandExecutor {
             if (args.length == 4 && args[1].equals("notify")) {
                 String title = args[2];
                 String description = args[3];
-                Apollo.getApolloModuleManager().getModule(NotificationModule.class).get().notifyAll(title, description, textureLocation.toString());
+                Apollo.getApolloModuleManager().getModule(NotificationModule.class).get().notifyAll( ChatColor.translateAlternateColorCodes('&', title), ChatColor.translateAlternateColorCodes('&', description), textureLocation.toString());
                 sender.sendMessage(ChatColor.GREEN + "Displayed notify!");
 
                 return true;
