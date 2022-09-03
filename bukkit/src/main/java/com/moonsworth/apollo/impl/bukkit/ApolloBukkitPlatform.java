@@ -5,6 +5,7 @@ import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.impl.EVNTModule;
 import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
+import com.moonsworth.apollo.api.module.impl.NotificationModule;
 import com.moonsworth.apollo.impl.bukkit.command.KnockbackCommand;
 import com.moonsworth.apollo.impl.bukkit.command.VignetteCommand;
 import com.moonsworth.apollo.impl.bukkit.listener.*;
@@ -41,6 +42,7 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
     public void onEnable() {
         instance = this;
         Apollo.setPlatform(this);
+        Apollo.getApolloModuleManager().register(NotificationModule.class);
         handleConfiguration();
 
         registerPluginChannel();

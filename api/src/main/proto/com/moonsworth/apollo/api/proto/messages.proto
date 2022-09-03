@@ -62,6 +62,7 @@ message Teammate {
 message NotificationMessage {
   bytes title = 1;
   bytes description = 2;
+  bytes resourceLocation = 3;
 }
 
 message NametagMessage {

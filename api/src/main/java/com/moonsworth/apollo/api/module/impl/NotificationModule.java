@@ -35,15 +35,44 @@ public class NotificationModule extends ApolloModule {
         return ImmutableList.of(ApolloPlatform.Kind.SERVER, ApolloPlatform.Kind.PROXY);
     }
 
-
+    /**
+     * Notify all ApolloPlayers online
+     *
+     * @param title       The title of the notification (accepts legacy colors)
+     * @param description The body of the notification (accepts legacy colors)
+     */
     public void notifyAll(String title, String description) {
-        pushNotify(title, description, Apollo.getApolloPlayerManager().getApolloPlayers().toArray(new ApolloPlayer[0]));
+        pushNotify(title, description, null, Apollo.getApolloPlayerManager().getApolloPlayers().toArray(new ApolloPlayer[0]));
     }
 
-    public void pushNotify(String title, String description, ApolloPlayer... viewer) {
-        NotificationMessage message = NotificationMessage.newBuilder().setTitle(ByteString.copyFromUtf8(title)).setDescription(ByteString.copyFromUtf8(description)).build();
+    /**
+     * Notify all ApolloPlayers online
+     *
+     * @param title            The title of the notification (accepts legacy colors)
+     * @param description      The body of the notification (accepts legacy colors)
+     * @param resourceLocation The notification icon that will appear on the client.
+     *                         By default, (null) it'll display a generic info message.
+     */
+    public void notifyAll(String title, String description, String resourceLocation) {
+        pushNotify(title, description, resourceLocation, Apollo.getApolloPlayerManager().getApolloPlayers().toArray(new ApolloPlayer[0]));
+    }
+
+    /**
+     * Notify a collection of ApolloPlayer.
+     * @param title            The title of the notification (accepts legacy colors)
+     * @param description      The body of the notification (accepts legacy colors)
+     * @param resourceLocation The notification icon that will appear on the client.
+     *                         By default, (null) it'll display a generic info message.
+     * @param viewer All the recipients of the notification
+     */
+    public void pushNotify(String title, String description, String resourceLocation, ApolloPlayer... viewer) {
+        var builder = NotificationMessage.newBuilder().setTitle(ByteString.copyFromUtf8(title)).setDescription(ByteString.copyFromUtf8(description));
+        if (resourceLocation != null) {
+            builder = builder.setResourceLocation(ByteString.copyFromUtf8(resourceLocation));
+        }
+        NotificationMessage notificationMessage = builder.build();
         for (ApolloPlayer player : viewer) {
-            player.sendPacket(message);
+            player.sendPacket(notificationMessage);
         }
     }
 
