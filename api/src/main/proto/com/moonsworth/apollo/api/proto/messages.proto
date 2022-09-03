@@ -26,7 +26,10 @@ message ModSetting {
 message CooldownMessage {
   bytes name = 1;
   int64 durationMs = 2;
-  int32 itemId = 3;
+  oneof icon {
+    int32 itemId = 3;
+    RenderableIcon iconLocation = 4;
+  }
 }
 
 message StaffMods {
@@ -116,6 +119,22 @@ message RemoveWorldBorderMessage {
   bytes id = 1;
 }
 
+message RenderableIcon {
+  bytes location = 1;
+  oneof textureDetails {
+    int32 size = 2;
+    RenderableIconSpecifications specification = 3;
+  }
+}
+
+message RenderableIconSpecifications {
+  float width = 1; // Size of the image width (in pixels)
+  float height = 2; // Size of the image height (in pixels)
+  float uMin = 3; // A range of 0-1 (the x location on a TextureAtlas)
+  float uMax = 4; // A range of 0-1 (the x location on a TextureAtlas)
+  float vMin = 5; // A range of 0-1 (the y location on a TextureAtlas)
+  float vMax = 6; // A range of 0-1 (the y location on a TextureAtlas)
+}
 
 message RenderableString {
   enum TextDecorators {
