@@ -20,24 +20,12 @@ import org.bukkit.command.CommandSender;
 public class VignetteCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        ApolloPlayer apolloPlayer = ApolloBukkitPlatform.getInstance().tryWrapPlayer(sender);
-        if (args[0].equals("remove")) {
-            Apollo.getApolloModuleManager().getModule(EVNTModule.class)
-                    .ifPresent(module -> module.removeBeacon(apolloPlayer, 80));
-            Apollo.getApolloModuleManager().getModule(EVNTModule.class)
-                    .ifPresent(module -> module.removeBeacon(apolloPlayer, 81));
-        }
-        else {
-            Apollo.getApolloModuleManager().getModule(EVNTModule.class)
-                    .ifPresent(module -> module.addBeacon(apolloPlayer, 80, 0x21943f, new ApolloBlockPos(100, 100, 100)));
-            Apollo.getApolloModuleManager().getModule(EVNTModule.class)
-                    .ifPresent(module -> module.addBeacon(apolloPlayer, 81, 0x21943f, new ApolloBlockPos(150, 100, 100)));
-        }
-
         if (args.length == 0) {
             sender.sendMessage(ChatColor.RED + "Please specify a vignette.");
             return true;
         }
+
+        ApolloPlayer apolloPlayer = ApolloBukkitPlatform.getInstance().tryWrapPlayer(sender);
         if (apolloPlayer != null) {
             if (args[0].equals("reset")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class)
