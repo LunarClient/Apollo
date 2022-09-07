@@ -171,3 +171,20 @@ message DisplayVignetteMessage {
   repeated string texture = 1;
   float opacity = 2;
 }
+
+message BlockPosition {
+  sint32 x = 1;
+  sint32 y = 2;
+  sint32 z = 3;
+}
+
+message DisplayBeaconMessage {
+  int32 id = 1;
+  int32 color = 2;
+  BlockPosition position = 3;
+}
+
+message RemoveBeaconMessage {
+  int32 id = 1;
+}
+

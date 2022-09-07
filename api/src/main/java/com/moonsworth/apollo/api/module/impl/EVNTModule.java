@@ -2,12 +2,11 @@ package com.moonsworth.apollo.api.module.impl;
 
 import com.google.common.collect.ImmutableList;
 import com.moonsworth.apollo.api.ApolloPlatform;
+import com.moonsworth.apollo.api.bridge.ApolloBlockPos;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
-import com.moonsworth.apollo.api.protocol.DisplayVignetteMessage;
-import com.moonsworth.apollo.api.protocol.EquipSuitMessage;
-import com.moonsworth.apollo.api.protocol.ToggleArmorMessage;
+import com.moonsworth.apollo.api.protocol.*;
 
 import java.util.List;
 
@@ -56,6 +55,14 @@ public class EVNTModule extends ApolloModule {
 
     public void clearVignette(ApolloPlayer player) {
         player.sendPacket(DisplayVignetteMessage.newBuilder().setOpacity(0).build());
+    }
+
+    public void addBeacon(ApolloPlayer player, int id, int color, ApolloBlockPos position) {
+        player.sendPacket(DisplayBeaconMessage.newBuilder().setId(id).setColor(color).setPosition(position.toProto()).build());
+    }
+
+    public void removeBeacon(ApolloPlayer player, int id) {
+        player.sendPacket(RemoveBeaconMessage.newBuilder().setId(id).build());
     }
 
 //    public void displayGui(ApolloPlayer player, Gui gui) {

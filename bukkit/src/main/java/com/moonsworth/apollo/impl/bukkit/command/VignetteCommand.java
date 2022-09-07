@@ -3,8 +3,8 @@ package com.moonsworth.apollo.impl.bukkit.command;
 import com.google.common.primitives.Ints;
 import com.google.protobuf.ByteString;
 import com.moonsworth.apollo.api.Apollo;
+import com.moonsworth.apollo.api.bridge.ApolloBlockPos;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-import com.moonsworth.apollo.api.module.impl.CooldownModule;
 import com.moonsworth.apollo.api.module.impl.EVNTModule;
 import com.moonsworth.apollo.api.module.impl.NotificationModule;
 import com.moonsworth.apollo.api.module.impl.ServerRuleModule;
@@ -20,11 +20,24 @@ import org.bukkit.command.CommandSender;
 public class VignetteCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        ApolloPlayer apolloPlayer = ApolloBukkitPlatform.getInstance().tryWrapPlayer(sender);
+        if (args[0].equals("remove")) {
+            Apollo.getApolloModuleManager().getModule(EVNTModule.class)
+                    .ifPresent(module -> module.removeBeacon(apolloPlayer, 80));
+            Apollo.getApolloModuleManager().getModule(EVNTModule.class)
+                    .ifPresent(module -> module.removeBeacon(apolloPlayer, 81));
+        }
+        else {
+            Apollo.getApolloModuleManager().getModule(EVNTModule.class)
+                    .ifPresent(module -> module.addBeacon(apolloPlayer, 80, 0x21943f, new ApolloBlockPos(100, 100, 100)));
+            Apollo.getApolloModuleManager().getModule(EVNTModule.class)
+                    .ifPresent(module -> module.addBeacon(apolloPlayer, 81, 0x21943f, new ApolloBlockPos(150, 100, 100)));
+        }
+
         if (args.length == 0) {
             sender.sendMessage(ChatColor.RED + "Please specify a vignette.");
             return true;
         }
-        ApolloPlayer apolloPlayer = ApolloBukkitPlatform.getInstance().tryWrapPlayer(sender);
         if (apolloPlayer != null) {
             if (args[0].equals("reset")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class)
@@ -38,7 +51,9 @@ public class VignetteCommand implements CommandExecutor {
                     Boolean t = Boolean.parseBoolean(args[1]);
                     Apollo.getApolloModuleManager().getModule(ServerRuleModule.class).ifPresent(rule -> {
                         rule.getAffectBrightness().update(t);
-                        sender.sendMessage(ChatColor.YELLOW + "Setting value for brightness to " + rule.getAffectBrightness().get());
+                        sender.sendMessage(
+                                ChatColor.YELLOW + "Setting value for brightness to " + rule.getAffectBrightness()
+                                        .get());
 
                     });
                     return true;
@@ -58,13 +73,19 @@ public class VignetteCommand implements CommandExecutor {
             if (args.length == 4 && args[1].equals("notify")) {
                 String title = args[2];
                 String description = args[3];
-                Apollo.getApolloModuleManager().getModule(NotificationModule.class).get().notifyAll( ChatColor.translateAlternateColorCodes('&', title), ChatColor.translateAlternateColorCodes('&', description), textureLocation.toString());
+                Apollo.getApolloModuleManager().getModule(NotificationModule.class).get()
+                        .notifyAll(ChatColor.translateAlternateColorCodes('&', title),
+                                ChatColor.translateAlternateColorCodes('&', description), textureLocation.toString());
                 sender.sendMessage(ChatColor.GREEN + "Displayed notify!");
 
                 return true;
             }
             if (args.length == 2 && args[1].equals("cooldown")) {
-                apolloPlayer.sendPacket(CooldownMessage.newBuilder().setDurationMs(8000).setName(ByteString.copyFromUtf8("Text")).setIconLocation(RenderableIcon.newBuilder().setLocation(ByteString.copyFromUtf8(textureLocation.toString())).setSize(10).build()).build());
+                apolloPlayer.sendPacket(
+                        CooldownMessage.newBuilder().setDurationMs(8000).setName(ByteString.copyFromUtf8("Text"))
+                                .setIconLocation(RenderableIcon.newBuilder()
+                                        .setLocation(ByteString.copyFromUtf8(textureLocation.toString())).setSize(10)
+                                        .build()).build());
                 sender.sendMessage(ChatColor.GREEN + "Displayed cooldown!");
                 return true;
             }
