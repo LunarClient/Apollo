@@ -59,6 +59,10 @@ message Teammate {
   sint32 z = 6;
 }
 
+message ColoredFireMessage {
+  map<string, int32> playerFireColor = 1;
+}
+
 message NotificationMessage {
   bytes title = 1;
   bytes description = 2;
