@@ -3,10 +3,7 @@ package com.moonsworth.apollo.impl.bukkit;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-import com.moonsworth.apollo.api.module.impl.ColoredFireModule;
-import com.moonsworth.apollo.api.module.impl.EVNTModule;
-import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
-import com.moonsworth.apollo.api.module.impl.NotificationModule;
+import com.moonsworth.apollo.api.module.impl.*;
 import com.moonsworth.apollo.impl.bukkit.command.KnockbackCommand;
 import com.moonsworth.apollo.impl.bukkit.command.VignetteCommand;
 import com.moonsworth.apollo.impl.bukkit.listener.*;
@@ -44,6 +41,7 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
         instance = this;
         Apollo.setPlatform(this);
         Apollo.getApolloModuleManager().register(NotificationModule.class);
+        Apollo.getApolloModuleManager().register(HeartTextureModule.class);
         Apollo.getApolloModuleManager().register(ColoredFireModule.class);
         handleConfiguration();
 

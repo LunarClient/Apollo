@@ -6,6 +6,7 @@ import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.bridge.ApolloBlockPos;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.impl.EVNTModule;
+import com.moonsworth.apollo.api.module.impl.HeartTextureModule;
 import com.moonsworth.apollo.api.module.impl.NotificationModule;
 import com.moonsworth.apollo.api.module.impl.ServerRuleModule;
 import com.moonsworth.apollo.api.protocol.CooldownMessage;
@@ -32,6 +33,24 @@ public class VignetteCommand implements CommandExecutor {
                         .ifPresent(module -> module.displayVignette(apolloPlayer, "", 0.0f));
                 sender.sendMessage(ChatColor.GREEN + "Reset vignette!");
                 return true;
+            }
+
+            if (args.length == 2 && args[1].equals("health")) {
+                Integer value = Ints.tryParse(args[1]);
+                if (value == null) {
+                    sender.sendMessage(ChatColor.RED + "Not a valid number, use -1 for removal!");
+                    return true;
+                }
+                Apollo.getApolloModuleManager().getModule(HeartTextureModule.class).ifPresent(module -> {
+                    if (value == -1) {
+                        module.clearHeartLocation(apolloPlayer);
+                        sender.sendMessage(ChatColor.GREEN + "Clear Custom Health!");
+                    } else {
+                        module.setHeartXLocationOverride(apolloPlayer, value, false);
+                        sender.sendMessage(ChatColor.GREEN + "Set X Loc Custom Health!");
+                    }
+                });
+
             }
             if (args.length == 2 && args[0].equals("bright")) {
                 Integer value = Ints.tryParse(args[1]);
