@@ -172,11 +172,11 @@ message RenderableIconSpecifications {
 
 message RenderableString {
   enum TextDecorators {
-      OBFUSCATED = 0;
-      BOLD = 1;
-      STRIKETHROUGH = 2;
-      UNDERLINED = 3;
-      ITALIC = 4;
+    OBFUSCATED = 0;
+    BOLD = 1;
+    STRIKETHROUGH = 2;
+    UNDERLINED = 3;
+    ITALIC = 4;
   }
   bytes content = 1;
   sint32 color = 2;
@@ -188,8 +188,19 @@ message ToggleArmorMessage {
   bool showArmor = 1;
 }
 
-message EquipSuitMessage {
-  int32 suitId = 1;
+message EquipCharacterMessage {
+  enum CharacterType {
+    Angel = 0;
+    Axel = 1;
+    Banjax = 2;
+    Daedra = 3;
+    Froska = 4;
+    Granny = 5;
+    GreatMage = 6;
+    Ignus = 7;
+    Tulabot = 8;
+  }
+  CharacterType id = 1;
   bool equipped = 2;
 }
 
