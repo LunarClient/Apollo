@@ -34,7 +34,7 @@ repositories {
     mavenCentral()
 }
 
-var awsCredentials = DefaultCredentialsProvider.create().resolveCredentials()
+var awsCredentials = DefaultCredentialsProvider.create().resolveCredentials() as AwsSessionCredentials;
 
 publishing {
     repositories {
