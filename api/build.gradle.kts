@@ -1,4 +1,5 @@
 import com.google.protobuf.gradle.*
+import software.amazon.awssdk.auth.credentials.*
 
 buildscript {
     repositories {
@@ -6,6 +7,8 @@ buildscript {
     }
     dependencies {
         classpath("com.google.protobuf:protobuf-gradle-plugin:0.8.19")
+        classpath("software.amazon.awssdk:auth:2.17.272")
+        classpath("software.amazon.awssdk:sso:2.17.272")
     }
 }
 
@@ -31,13 +34,15 @@ repositories {
     mavenCentral()
 }
 
+var awsCredentials = DefaultCredentialsProvider.create().resolveCredentials()
+
 publishing {
     repositories {
         maven {
-            url = uri("https://lunarclient-947665438472.d.codeartifact.us-east-2.amazonaws.com/maven/maven/")
-            credentials {
-                username = project.findProperty("mavenUsername").toString()
-                password = project.findProperty("mavenPassword").toString()
+            url = uri("s3://lunarclient-cdn-repo.s3-us-east-2.amazonaws.com")
+            credentials(AwsCredentials::class) {
+                accessKey = awsCredentials.accessKeyId()
+                secretKey = awsCredentials.secretAccessKey()
             }
         }
     }

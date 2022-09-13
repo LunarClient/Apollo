@@ -1,8 +1,5 @@
 name: Deploy
-
-on:
-  push:
-    branches: [trunk, EVNT]
+on: [push]
 
 jobs:
   deploy:
@@ -27,7 +24,5 @@ jobs:
         with:
           java-version: 16
      
-      - name: Build
-        run: |
-          export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain lunarclient --domain-owner 947665438472 --query authorizationToken --output text`
-          ./gradlew publish -PmavenUsername=aws -PmavenPassword=${CODEARTIFACT_AUTH_TOKEN}
+      - name: Publish
+        run: ./gradlew publish
