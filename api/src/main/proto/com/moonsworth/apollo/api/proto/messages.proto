@@ -188,6 +188,15 @@ message ToggleArmorMessage {
   bool showArmor = 1;
 }
 
+message OpenGuiMessage {
+  enum Gui {
+      SUIT_GUI = 0;
+      CHARACTER_SELECTION = 1;
+  }
+  Gui guiId = 1;
+  bool close = 2;
+}
+
 message EquipCharacterMessage {
   enum CharacterType {
     Angel = 0;

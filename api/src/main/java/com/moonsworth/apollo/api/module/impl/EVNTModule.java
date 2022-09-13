@@ -65,12 +65,12 @@ public class EVNTModule extends ApolloModule {
         player.sendPacket(RemoveBeaconMessage.newBuilder().setId(id).build());
     }
 
-//    public void displayGui(ApolloPlayer player, Gui gui) {
-//        player.sendPacket(OpenGuiMessage.newBuilder().setGuiId(gui.ordinal()).build());
-//    }
-//
-//    public void closeGui(ApolloPlayer player) {
-//        //Pass in -1 to close the gui
-//        player.sendPacket(OpenGuiMessage.newBuilder().setGuiId(-1).build());
-//    }
+    public void displayGui(ApolloPlayer player, OpenGuiMessage.Gui gui) {
+        player.sendPacket(OpenGuiMessage.newBuilder().setGuiId(gui).build());
+    }
+
+    public void closeGui(ApolloPlayer player) {
+        //Pass in -1 to close the gui
+        player.sendPacket(OpenGuiMessage.newBuilder().setClose(true).build());
+    }
 }
