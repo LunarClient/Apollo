@@ -27,5 +27,5 @@ jobs:
         with:
           java-version: 16
      
-      - name: Publish
+      - name: Build
         run: ./gradlew publish
