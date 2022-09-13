@@ -39,10 +39,11 @@ var awsCredentials = DefaultCredentialsProvider.create().resolveCredentials()
 publishing {
     repositories {
         maven {
-            url = uri("s3://lunarclient-cdn-repo.s3-us-east-2.amazonaws.com")
+            url = uri("s3://lunarclient-cdn-repo.s3.us-east-2.amazonaws.com")
             credentials(AwsCredentials::class) {
                 accessKey = awsCredentials.accessKeyId()
                 secretKey = awsCredentials.secretAccessKey()
+                sessionToken = awsCredentials.sessionToken()
             }
         }
     }
