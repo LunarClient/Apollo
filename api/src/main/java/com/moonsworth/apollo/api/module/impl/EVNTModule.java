@@ -9,11 +9,13 @@ import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.protocol.*;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 
 public class EVNTModule extends ApolloModule {
 
     public EVNTModule() {
         super("EVNTModule");
+        registerPacket(EquipCharacterMessage.getDefaultInstance(), (player, message) -> player.sendPacket(EquipCharacterMessage.newBuilder().setEquipped(true).setId(message.getId()).build()));
     }
 
     @Override

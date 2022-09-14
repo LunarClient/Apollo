@@ -10,6 +10,7 @@ import com.moonsworth.apollo.api.module.impl.HeartTextureModule;
 import com.moonsworth.apollo.api.module.impl.NotificationModule;
 import com.moonsworth.apollo.api.module.impl.ServerRuleModule;
 import com.moonsworth.apollo.api.protocol.CooldownMessage;
+import com.moonsworth.apollo.api.protocol.OpenGuiMessage;
 import com.moonsworth.apollo.api.protocol.RenderableIcon;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
 import org.bukkit.ChatColor;
@@ -35,7 +36,14 @@ public class VignetteCommand implements CommandExecutor {
                 return true;
             }
 
-            if (args.length == 2 && args[1].equals("health")) {
+            if (args[0].equals("characterSelection")) {
+                Apollo.getApolloModuleManager().getModule(EVNTModule.class).ifPresent(module -> {
+                    module.displayGui(apolloPlayer, OpenGuiMessage.Gui.CHARACTER_SELECTION);
+                });
+                return true;
+            }
+
+            if (args.length == 2 && args[0].equals("health")) {
                 Integer value = Ints.tryParse(args[1]);
                 if (value == null) {
                     sender.sendMessage(ChatColor.RED + "Not a valid number, use -1 for removal!");
@@ -50,7 +58,7 @@ public class VignetteCommand implements CommandExecutor {
                         sender.sendMessage(ChatColor.GREEN + "Set X Loc Custom Health!");
                     }
                 });
-
+                return true;
             }
             if (args.length == 2 && args[0].equals("bright")) {
                 Integer value = Ints.tryParse(args[1]);
