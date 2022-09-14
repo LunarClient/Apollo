@@ -46,13 +46,6 @@ publishing {
                 sessionToken = awsCredentials.sessionToken()
             }
         }
-        maven {
-            url = uri("https://lunarclient-947665438472.d.codeartifact.us-east-2.amazonaws.com/maven/maven/")
-            credentials {
-                username = project.findProperty("mavenUsername").toString()
-                password = project.findProperty("mavenPassword").toString()
-            }
-        }
     }
 }
 
