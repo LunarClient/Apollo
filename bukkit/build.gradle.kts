@@ -35,9 +35,11 @@ spigot {
         main("com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform")
         command {
             named("setkb")
+            permission("command.setkb")
         }
         command {
             named("vignette")
+            permission("command.vignette")
         }
         apiVersion("1.18")
     }

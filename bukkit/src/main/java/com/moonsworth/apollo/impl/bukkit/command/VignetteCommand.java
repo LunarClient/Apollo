@@ -9,15 +9,15 @@ import com.moonsworth.apollo.api.module.impl.EVNTModule;
 import com.moonsworth.apollo.api.module.impl.HeartTextureModule;
 import com.moonsworth.apollo.api.module.impl.NotificationModule;
 import com.moonsworth.apollo.api.module.impl.ServerRuleModule;
-import com.moonsworth.apollo.api.protocol.CooldownMessage;
-import com.moonsworth.apollo.api.protocol.OpenGuiMessage;
-import com.moonsworth.apollo.api.protocol.RenderableIcon;
+import com.moonsworth.apollo.api.protocol.*;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+
+import java.util.UUID;
 
 public class VignetteCommand implements CommandExecutor {
     @Override
@@ -39,6 +39,18 @@ public class VignetteCommand implements CommandExecutor {
             if (args[0].equals("characterSelection")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class).ifPresent(module -> {
                     module.displayGui(apolloPlayer, OpenGuiMessage.Gui.CHARACTER_SELECTION);
+                });
+                return true;
+            }
+
+            if (args[0].equals("observer")) {
+                var builder = CharacterOverviewMessage.newBuilder();
+                for (int i = 0; i < 10; i++) {
+                    builder.addPlayers(EventPlayer.newBuilder().setPlayerName(ByteString.copyFromUtf8("Player " + i)).setTeamOne(i % 2 == 0).setPlayerId(ByteString.copyFromUtf8(UUID.randomUUID().toString())).setCharacterSelected(CharacterType.values()[i % 9]).build());
+                }
+                apolloPlayer.sendPacket(builder.build());
+                Apollo.getApolloModuleManager().getModule(EVNTModule.class).ifPresent(module -> {
+                    module.displayGui(apolloPlayer, OpenGuiMessage.Gui.OBSERVER_UI);
                 });
                 return true;
             }
