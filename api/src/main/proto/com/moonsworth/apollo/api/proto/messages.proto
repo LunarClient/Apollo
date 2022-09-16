@@ -197,21 +197,33 @@ message OpenGuiMessage {
   bool close = 2;
 }
 
+enum CharacterType {
+  Angel = 0;
+  Axel = 1;
+  Banjax = 2;
+  Daedra = 3;
+  Froska = 4;
+  Granny = 5;
+  GreatMage = 6;
+  Ignus = 7;
+  Tulabot = 8;
+}
+
 message EquipCharacterMessage {
-  enum CharacterType {
-    Angel = 0;
-    Axel = 1;
-    Banjax = 2;
-    Daedra = 3;
-    Froska = 4;
-    Granny = 5;
-    GreatMage = 6;
-    Ignus = 7;
-    Tulabot = 8;
-  }
   CharacterType id = 1;
   bool equipped = 2;
   bytes player = 3; // The UUID of the player who selected this character -- Not populated from client to server.
+}
+
+message EventPlayer {
+  bytes playerId = 1;
+  bytes playerName = 2;
+  CharacterType characterSelected = 3;
+  bool teamOne = 4; // true for team 1, false for team 2
+}
+
+message CharacterOverviewMessage {
+  repeated EventPlayer players = 1;
 }
 
 /**

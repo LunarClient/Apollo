@@ -37,7 +37,7 @@ public class EVNTModule extends ApolloModule {
         player.sendPacket(ToggleArmorMessage.newBuilder().setShowArmor(showArmor).build());
     }
 
-    public void equipCharacter(ApolloPlayer player, EquipCharacterMessage.CharacterType character, boolean enabled) {
+    public void equipCharacter(ApolloPlayer player, CharacterType character, boolean enabled) {
         player.sendPacket(EquipCharacterMessage.newBuilder().setId(character).setEquipped(enabled).build());
     }
 
