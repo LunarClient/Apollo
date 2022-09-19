@@ -251,3 +251,13 @@ message RemoveBeaconMessage {
   int32 id = 1;
 }
 
+enum ArmorPart {
+  Helmet = 0;
+  Chestplate = 1;
+  Leggings = 2;
+  Boots = 3;
+}
+message HideArmor {
+  ArmorPart armor = 1;
+  bool hidden = 2;
+}

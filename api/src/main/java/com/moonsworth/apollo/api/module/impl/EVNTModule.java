@@ -75,4 +75,8 @@ public class EVNTModule extends ApolloModule {
         //Pass in -1 to close the gui
         player.sendPacket(OpenGuiMessage.newBuilder().setClose(true).build());
     }
+
+    public void hideArmor(ApolloPlayer player, ArmorPart armorPart, boolean hidden) {
+        player.sendPacket(HideArmor.newBuilder().setArmor(armorPart).setHidden(hidden).build());
+    }
 }
