@@ -79,4 +79,8 @@ public class EVNTModule extends ApolloModule {
     public void hideArmor(ApolloPlayer player, ArmorPart armorPart, boolean hidden) {
         player.sendPacket(HideArmor.newBuilder().setArmor(armorPart).setHidden(hidden).build());
     }
+
+    public void hideBodyPart(ApolloPlayer player, BodyPart bone, boolean hidden) {
+        player.sendPacket(HideBodyPart.newBuilder().setBone(bone).setHidden(hidden).build());
+    }
 }

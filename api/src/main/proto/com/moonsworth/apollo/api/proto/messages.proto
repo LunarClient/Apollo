@@ -257,7 +257,22 @@ enum ArmorPart {
   Leggings = 2;
   Boots = 3;
 }
+
+enum BodyPart {
+  Head = 0;
+  Torso = 1;
+  LeftArm = 2;
+  RightArm = 3;
+  LeftLeg = 4;
+  RightLeg = 5;
+}
+
 message HideArmor {
   ArmorPart armor = 1;
+  bool hidden = 2;
+}
+
+message HideBodyPart {
+  BodyPart bone = 1;
   bool hidden = 2;
 }
