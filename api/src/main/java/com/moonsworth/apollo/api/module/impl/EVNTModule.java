@@ -7,8 +7,10 @@ import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.protocol.*;
+import com.moonsworth.apollo.api.utils.UUIDUtils;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 
 public class EVNTModule extends ApolloModule {
@@ -76,11 +78,11 @@ public class EVNTModule extends ApolloModule {
         player.sendPacket(OpenGuiMessage.newBuilder().setClose(true).build());
     }
 
-    public void hideArmor(ApolloPlayer player, ArmorPart armorPart, boolean hidden) {
-        player.sendPacket(HideArmor.newBuilder().setArmor(armorPart).setHidden(hidden).build());
+    public void hideArmor(ApolloPlayer sendTo, UUID affectedPlayer, ArmorPart armorPart, boolean hidden) {
+        sendTo.sendPacket(HideArmor.newBuilder().setAffectedPlayer(UUIDUtils.fromUUID(affectedPlayer)).setArmor(armorPart).setHidden(hidden).build());
     }
 
-    public void hideBodyPart(ApolloPlayer player, BodyPart bone, boolean hidden) {
-        player.sendPacket(HideBodyPart.newBuilder().setBone(bone).setHidden(hidden).build());
+    public void hideBodyPart(ApolloPlayer sendTo, UUID affectedPlayer, BodyPart bone, boolean hidden) {
+        sendTo.sendPacket(HideBodyPart.newBuilder().setAffectedPlayer(UUIDUtils.fromUUID(affectedPlayer)).setBone(bone).setHidden(hidden).build());
     }
 }

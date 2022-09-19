@@ -251,6 +251,10 @@ message RemoveBeaconMessage {
   int32 id = 1;
 }
 
+message UUIDMessage {
+  repeated string value = 1;
+}
+
 enum ArmorPart {
   Helmet = 0;
   Chestplate = 1;
@@ -268,11 +272,13 @@ enum BodyPart {
 }
 
 message HideArmor {
-  ArmorPart armor = 1;
-  bool hidden = 2;
+  UUIDMessage affectedPlayer = 1;
+  ArmorPart armor = 2;
+  bool hidden = 3;
 }
 
 message HideBodyPart {
-  BodyPart bone = 1;
-  bool hidden = 2;
+  UUIDMessage affectedPlayer = 1;
+  BodyPart bone = 2;
+  bool hidden = 3;
 }
