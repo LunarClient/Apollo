@@ -282,3 +282,8 @@ message HideBodyPart {
   BodyPart bone = 2;
   bool hidden = 3;
 }
+
+message FlipEntity {
+  UUIDMessage entityID = 1;
+  bool flipped = 2;
+}

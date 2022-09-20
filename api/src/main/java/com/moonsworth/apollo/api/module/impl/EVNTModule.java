@@ -85,4 +85,8 @@ public class EVNTModule extends ApolloModule {
     public void hideBodyPart(ApolloPlayer sendTo, UUID affectedPlayer, BodyPart bone, boolean hidden) {
         sendTo.sendPacket(HideBodyPart.newBuilder().setAffectedPlayer(UUIDUtils.fromUUID(affectedPlayer)).setBone(bone).setHidden(hidden).build());
     }
+
+    public void flipEntity(ApolloPlayer player, UUID entity, boolean flipped) {
+        player.sendPacket(FlipEntity.newBuilder().setEntityID(UUIDUtils.fromUUID(entity)).setFlipped(flipped).build());
+    }
 }
