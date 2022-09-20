@@ -89,4 +89,8 @@ public class EVNTModule extends ApolloModule {
     public void flipEntity(ApolloPlayer player, UUID entity, boolean flipped) {
         player.sendPacket(FlipEntity.newBuilder().setEntityID(UUIDUtils.fromUUID(entity)).setFlipped(flipped).build());
     }
+
+    public void setRainbowSheep(ApolloPlayer player, UUID entity, boolean rainbow) {
+        player.sendPacket(EnableRainbowSheepMessage.newBuilder().setSheepEntityID(UUIDUtils.fromUUID(entity)).setRainbow(rainbow).build());
+    }
 }

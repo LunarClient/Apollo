@@ -287,3 +287,8 @@ message FlipEntity {
   UUIDMessage entityID = 1;
   bool flipped = 2;
 }
+
+message EnableRainbowSheepMessage {
+  UUIDMessage sheepEntityID = 1;
+  bool rainbow = 2;
+}
