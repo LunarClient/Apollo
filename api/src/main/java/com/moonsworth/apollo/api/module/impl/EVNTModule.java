@@ -11,7 +11,6 @@ import com.moonsworth.apollo.api.utils.UUIDUtils;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.function.BiConsumer;
 
 public class EVNTModule extends ApolloModule {
 
@@ -86,8 +85,8 @@ public class EVNTModule extends ApolloModule {
         sendTo.sendPacket(HideBodyPart.newBuilder().setAffectedPlayer(UUIDUtils.fromUUID(affectedPlayer)).setBone(bone).setHidden(hidden).build());
     }
 
-    public void flipEntity(ApolloPlayer player, UUID entity, boolean flipped) {
-        player.sendPacket(FlipEntity.newBuilder().setEntityID(UUIDUtils.fromUUID(entity)).setFlipped(flipped).build());
+    public void flipAllEntities(ApolloPlayer player, boolean flipped) {
+        player.sendPacket(FlipAllEntitiesMessage.newBuilder().setFlipped(flipped).build());
     }
 
     public void setRainbowSheep(ApolloPlayer player, UUID entity, boolean rainbow) {

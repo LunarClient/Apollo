@@ -283,9 +283,8 @@ message HideBodyPart {
   bool hidden = 3;
 }
 
-message FlipEntity {
-  UUIDMessage entityID = 1;
-  bool flipped = 2;
+message FlipAllEntitiesMessage {
+  bool flipped = 1;
 }
 
 message EnableRainbowSheepMessage {
