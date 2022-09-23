@@ -214,6 +214,7 @@ message EquipCharacterMessage {
   CharacterType id = 1;
   bool equipped = 2;
   bytes player = 3; // The UUID of the player who selected this character -- Not populated from client to server.
+  int32 color = 4; // The color of the player
 }
 
 message EventPlayer {
