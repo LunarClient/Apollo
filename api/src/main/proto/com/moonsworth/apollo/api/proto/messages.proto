@@ -210,6 +210,15 @@ enum CharacterType {
   Tulabot = 8;
 }
 
+message CharacterAbilityMessage {
+  repeated CharacterAbility abilities = 1;
+}
+
+message CharacterAbility {
+  CharacterType type = 1;
+  repeated RenderableString abilities = 2;
+}
+
 message EquipCharacterMessage {
   CharacterType id = 1;
   bool equipped = 2;

@@ -39,6 +39,19 @@ public class VignetteCommand implements CommandExecutor {
 
             if (args[0].equals("characterSelection")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class).ifPresent(module -> {
+                    var abilityMessage = CharacterAbilityMessage.newBuilder();
+                    for (CharacterType value : CharacterType.values()) {
+                        if (value == CharacterType.UNRECOGNIZED) {
+                            continue;
+                        }
+                        var a = RenderableString.newBuilder().setColor(0xFFFF0000).setContent(ByteString.copyFromUtf8("Tester!"));
+                        var b = RenderableString.newBuilder().setColor(0xFFFF5500).setContent(ByteString.copyFromUtf8("  * Ability 2!"));
+                        var c = RenderableString.newBuilder().setColor(0xFFFF5555).setContent(ByteString.copyFromUtf8("Testing!"));
+                        var d = RenderableString.newBuilder().setColor(0xFF00FF55).setContent(ByteString.copyFromUtf8("  * Ability 3!"));
+                        var thing = CharacterAbility.newBuilder().setType(value).addAbilities(a).addAbilities(b).addAbilities(c).addAbilities(d);
+                        abilityMessage.addAbilities(thing.build());
+                    }
+                    apolloPlayer.sendPacket(abilityMessage.build());
                     module.displayGui(apolloPlayer, OpenGuiMessage.Gui.CHARACTER_SELECTION);
                 });
                 return true;
