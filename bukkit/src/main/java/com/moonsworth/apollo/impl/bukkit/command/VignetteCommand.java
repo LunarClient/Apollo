@@ -39,6 +39,7 @@ public class VignetteCommand implements CommandExecutor {
 
             if (args[0].equals("characterSelection")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class).ifPresent(module -> {
+                    module.handleDemo();
                     var abilityMessage = CharacterAbilityMessage.newBuilder();
                     for (CharacterType value : CharacterType.values()) {
                         if (value == CharacterType.UNRECOGNIZED) {

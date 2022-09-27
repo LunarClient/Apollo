@@ -16,7 +16,6 @@ public class EVNTModule extends ApolloModule {
 
     public EVNTModule() {
         super("EVNTModule");
-        registerPacket(EquipCharacterMessage.getDefaultInstance(), (player, message) -> player.sendPacket(EquipCharacterMessage.newBuilder().setEquipped(true).setId(message.getId()).build()));
     }
 
     @Override
@@ -91,5 +90,9 @@ public class EVNTModule extends ApolloModule {
 
     public void setRainbowSheep(ApolloPlayer player, UUID entity, boolean rainbow) {
         player.sendPacket(EnableRainbowSheepMessage.newBuilder().setSheepEntityID(UUIDUtils.fromUUID(entity)).setRainbow(rainbow).build());
+    }
+
+    public void handleDemo() {
+        registerPacket(EquipCharacterMessage.getDefaultInstance(), (player, message) -> player.sendPacket(EquipCharacterMessage.newBuilder().setEquipped(true).setId(message.getId()).build()));
     }
 }
