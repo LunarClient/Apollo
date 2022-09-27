@@ -34,16 +34,20 @@ repositories {
     mavenCentral()
 }
 
-var awsCredentials = DefaultCredentialsProvider.create().resolveCredentials() as AwsSessionCredentials;
-
+var awsCredentials: AwsSessionCredentials? = null;
+try {
+    awsCredentials = DefaultCredentialsProvider.create().resolveCredentials() as AwsSessionCredentials;
+}
+catch(_: Exception) {
+}
 publishing {
     repositories {
         maven {
             url = uri("s3://lunarclient-staticsite-repo.s3.us-east-2.amazonaws.com")
             credentials(AwsCredentials::class) {
-                accessKey = awsCredentials.accessKeyId()
-                secretKey = awsCredentials.secretAccessKey()
-                sessionToken = awsCredentials.sessionToken()
+                accessKey = awsCredentials?.accessKeyId()
+                secretKey = awsCredentials?.secretAccessKey()
+                sessionToken = awsCredentials?.sessionToken()
             }
         }
     }
