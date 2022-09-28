@@ -190,9 +190,9 @@ message ToggleArmorMessage {
 
 message OpenGuiMessage {
   enum Gui {
-      SUIT_GUI = 0;
-      CHARACTER_SELECTION = 1;
-      OBSERVER_UI = 2;
+    SUIT_GUI = 0;
+    CHARACTER_SELECTION = 1;
+    OBSERVER_UI = 2;
   }
   Gui guiId = 1;
   bool close = 2;
@@ -305,4 +305,15 @@ message FlipAllEntitiesMessage {
 message EnableRainbowSheepMessage {
   UUIDMessage sheepEntityID = 1;
   bool rainbow = 2;
+}
+
+message Vector3DMessage {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+message TranslateNametagMessage {
+  UUIDMessage entityID = 1;
+  Vector3DMessage translation = 2;
 }
