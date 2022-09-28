@@ -210,6 +210,11 @@ enum CharacterType {
   Tulabot = 8;
 }
 
+message ApplyCharacterCosmeticsMessage {
+  bytes npcId = 1; // The UUID of the NPC
+  CharacterType characterType = 2;
+}
+
 message CharacterAbilityMessage {
   repeated CharacterAbility abilities = 1;
 }
