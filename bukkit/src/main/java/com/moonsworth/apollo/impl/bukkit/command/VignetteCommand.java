@@ -58,6 +58,11 @@ public class VignetteCommand implements CommandExecutor {
                 return true;
             }
 
+            if (args[0].equals("hud")) {
+                Apollo.getApolloModuleManager().getModule(EVNTModule.class).ifPresent(module -> {
+                });
+            }
+
             if (args[0].equals("observer")) {
                 var builder = CharacterOverviewMessage.newBuilder();
                 for (int i = 0; i < 10; i++) {

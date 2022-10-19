@@ -210,6 +210,33 @@ enum CharacterType {
   Tulabot = 8;
 }
 
+message EventPlayerStatusMessage {
+  repeated EventPlayerStatus teamOneStatus = 1;
+  repeated EventPlayerStatus teamTwoStatus = 2;
+}
+
+message EventPlayerStatus {
+  bytes playerId = 1; // player uuid
+  float health = 2;
+  float ultimatePercentage = 3;
+}
+
+message EventGameStatusMessage {
+  EventTeamStatus teamOneStatus = 1;
+  EventTeamStatus teamTwoStatus = 2;
+  float tier3Health = 3;
+  int64 gameStartTime = 4;
+}
+
+message EventTeamStatus {
+  float topWitherHealth = 1;
+  float topCrystalHealth = 2;
+  float middleWitherHealth = 3;
+  float middleCrystalHealth = 4;
+  float bottomWitherHealth = 5;
+  float bottomCrystalHealth = 6;
+}
+
 message ApplyCharacterCosmeticsMessage {
   bytes npcId = 1; // The UUID of the NPC
   CharacterType characterType = 2;
