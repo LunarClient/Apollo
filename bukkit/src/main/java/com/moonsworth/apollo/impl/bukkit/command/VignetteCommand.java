@@ -17,6 +17,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -60,7 +62,27 @@ public class VignetteCommand implements CommandExecutor {
 
             if (args[0].equals("hud")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class).ifPresent(module -> {
+                    var teamStatus = EventTeamStatus.newBuilder()
+                            .setBottomCrystalHealth(100)
+                            .setBottomWitherHealth(100)
+                            .setMiddleCrystalHealth(75)
+                            .setMiddleWitherHealth(75)
+                            .setTopCrystalHealth(50)
+                            .setTopWitherHealth(50)
+                            .build();
+                    var status = EventGameStatusMessage.newBuilder()
+                            .setTier3Health(100)
+                            .setGameStartTime(System.currentTimeMillis())
+                            .setTeamOneStatus(teamStatus)
+                            .setTeamTwoStatus(teamStatus);
+                    List<EventPlayerStatus> playerStatusList = new ArrayList<>();
+                    for (int i = 0; i < 5; i++) {
+                        playerStatusList.add(EventPlayerStatus.newBuilder().setPlayerId(ByteString.copyFromUtf8(apolloPlayer.getUniqueId().toString())).setHealth(i * 20).setUltimatePercentage(i * 3f).build());
+                    }
+                    apolloPlayer.sendPacket(EventPlayerStatusMessage.newBuilder().addAllTeamOneStatus(playerStatusList).addAllTeamTwoStatus(playerStatusList).build());
+                    apolloPlayer.sendPacket(status.build());
                 });
+                return true;
             }
 
             if (args[0].equals("observer")) {
