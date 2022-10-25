@@ -17,6 +17,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,6 +38,13 @@ public class VignetteCommand implements CommandExecutor {
                         .ifPresent(module -> module.displayVignette(apolloPlayer, "", 0.0f));
                 sender.sendMessage(ChatColor.GREEN + "Reset vignette!");
                 return true;
+            }
+
+            if(args[0].equals("changeCharacter")) {
+                Apollo.getApolloModuleManager().getModule(EVNTModule.class)
+                        .ifPresent(module -> module.updateCharacterResources(apolloPlayer, CharacterType.Froska, null, null, "lunar:event/models/MCL_Froska/MCL_Froska2.png"));
+                Apollo.getApolloModuleManager().getModule(EVNTModule.class)
+                        .ifPresent(module -> module.reloadCosmetics(apolloPlayer));
             }
 
             if (args[0].equals("characterSelection")) {
