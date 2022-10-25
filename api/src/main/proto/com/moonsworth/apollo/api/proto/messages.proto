@@ -345,9 +345,13 @@ message TranslateNametagMessage {
   Vector3DMessage translation = 2;
 }
 
-message UpdateCosmeticResources {
+message UpdateCosmeticResourcesMessage {
   CharacterType character = 1;
   repeated string modelPath = 2;
   repeated string animationPath = 3;
   repeated string texturePath = 4;
+}
+
+message ReloadCosmeticsMessage {
+
 }

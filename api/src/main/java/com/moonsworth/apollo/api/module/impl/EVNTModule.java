@@ -10,6 +10,7 @@ import com.moonsworth.apollo.api.protocol.*;
 import com.moonsworth.apollo.api.utils.UUIDUtils;
 import com.moonsworth.apollo.api.utils.Vector3DUtils;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -110,8 +111,19 @@ public class EVNTModule extends ApolloModule {
                 EquipCharacterMessage.newBuilder().setEquipped(true).setId(message.getId()).build()));
     }
 
-    public void updateCharacterResources(ApolloPlayer player, CharacterType character, String modelPath, String animationPath, String texturePath) {
-        player.sendPacket(UpdateCosmeticResources.newBuilder().setCharacter(character).addModelPath(modelPath)
-                .addAnimationPath(animationPath).addTexturePath(texturePath).build());
+    public void updateCharacterResources(ApolloPlayer player, CharacterType character, @Nullable String modelPath,
+                                         @Nullable String animationPath, @Nullable String texturePath) {
+        UpdateCosmeticResourcesMessage.Builder builder = UpdateCosmeticResourcesMessage.newBuilder()
+                .setCharacter(character);
+        if (modelPath != null) {
+            builder.addModelPath(modelPath);
+        }
+        if (animationPath != null) {
+            builder.addAnimationPath(animationPath);
+        }
+        if (texturePath != null) {
+            builder.addTexturePath(texturePath);
+        }
+        player.sendPacket(builder.build());
     }
 }
