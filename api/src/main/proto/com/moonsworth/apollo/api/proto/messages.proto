@@ -344,3 +344,10 @@ message TranslateNametagMessage {
   UUIDMessage entityID = 1;
   Vector3DMessage translation = 2;
 }
+
+message UpdateCosmeticResources {
+  CharacterType character = 1;
+  repeated string modelPath = 2;
+  repeated string animationPath = 3;
+  repeated string texturePath = 4;
+}

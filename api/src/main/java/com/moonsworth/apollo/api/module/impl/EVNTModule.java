@@ -109,4 +109,9 @@ public class EVNTModule extends ApolloModule {
         registerPacket(EquipCharacterMessage.getDefaultInstance(), (player, message) -> player.sendPacket(
                 EquipCharacterMessage.newBuilder().setEquipped(true).setId(message.getId()).build()));
     }
+
+    public void updateCharacterResources(ApolloPlayer player, CharacterType character, String modelPath, String animationPath, String texturePath) {
+        player.sendPacket(UpdateCosmeticResources.newBuilder().setCharacter(character).addModelPath(modelPath)
+                .addAnimationPath(animationPath).addTexturePath(texturePath).build());
+    }
 }
