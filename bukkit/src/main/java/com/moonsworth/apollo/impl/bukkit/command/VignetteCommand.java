@@ -85,7 +85,7 @@ public class VignetteCommand implements CommandExecutor {
                             .setTeamTwoStatus(teamStatus);
                     List<EventPlayerStatus> playerStatusList = new ArrayList<>();
                     for (int i = 0; i < 5; i++) {
-                        playerStatusList.add(EventPlayerStatus.newBuilder().setPlayerId(ByteString.copyFromUtf8(apolloPlayer.getUniqueId().toString())).setHealth(i * 20).setUltimatePercentage(i * 3f).build());
+                        playerStatusList.add(EventPlayerStatus.newBuilder().setPlayerId(ByteString.copyFromUtf8(apolloPlayer.getUniqueId().toString())).setHealth((i == 0 ? -.5f : i) * 20).setUltimatePercentage(i * 3f).build());
                     }
                     apolloPlayer.sendPacket(EventPlayerStatusMessage.newBuilder().addAllTeamOneStatus(playerStatusList).addAllTeamTwoStatus(playerStatusList).build());
                     apolloPlayer.sendPacket(status.build());
