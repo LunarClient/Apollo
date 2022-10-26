@@ -226,6 +226,7 @@ message EventGameStatusMessage {
   EventTeamStatus teamTwoStatus = 2;
   float tier3Health = 3;
   int64 gameStartTime = 4;
+  bool witherShields = 5;
 }
 
 message EventTeamStatus {
