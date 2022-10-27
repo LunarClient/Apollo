@@ -25,7 +25,7 @@ public class NametagModule extends ApolloModule {
 
     @Override
     public boolean notifyPlayers() {
-        return false;
+        return true;
     }
 
     @Override

@@ -5,10 +5,7 @@ import com.google.protobuf.ByteString;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.bridge.ApolloBlockPos;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-import com.moonsworth.apollo.api.module.impl.EVNTModule;
-import com.moonsworth.apollo.api.module.impl.HeartTextureModule;
-import com.moonsworth.apollo.api.module.impl.NotificationModule;
-import com.moonsworth.apollo.api.module.impl.ServerRuleModule;
+import com.moonsworth.apollo.api.module.impl.*;
 import com.moonsworth.apollo.api.protocol.*;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
 import org.bukkit.ChatColor;
@@ -18,10 +15,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import java.lang.management.PlatformLoggingMXBean;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class VignetteCommand implements CommandExecutor {
     @Override
@@ -64,6 +58,14 @@ public class VignetteCommand implements CommandExecutor {
                     }
                     apolloPlayer.sendPacket(abilityMessage.build());
                     module.displayGui(apolloPlayer, OpenGuiMessage.Gui.CHARACTER_SELECTION);
+                });
+                return true;
+            }
+
+            if (args[0].equals("nametag")) {
+                Apollo.getApolloModuleManager().getModule(NametagModule.class).ifPresent(module -> {
+                    RenderableString string = RenderableString.newBuilder().setContent(ByteString.copyFromUtf8("Testing Nametag Override")).setColor(0xFFAA0000).build();
+                    module.overrideNametag(apolloPlayer, Collections.singletonList(string), 0, apolloPlayer);
                 });
                 return true;
             }
