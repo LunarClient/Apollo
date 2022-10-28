@@ -36,7 +36,7 @@ public class VignetteCommand implements CommandExecutor {
 
             if(args[0].equals("changeCharacter")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class)
-                        .ifPresent(module -> module.updateCharacterResources(apolloPlayer, CharacterType.Froska, null, null, "lunar:event/models/MCL_Froska/MCL_Froska2.png"));
+                        .ifPresent(module -> module.updateCharacterResources(apolloPlayer, apolloPlayer.getUniqueId(), CharacterType.Froska, null, null, "lunar:event/models/MCL_Froska/MCL_Froska2.png"));
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class)
                         .ifPresent(module -> module.reloadCosmetics(apolloPlayer));
             }
