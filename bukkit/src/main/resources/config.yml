@@ -92,4 +92,9 @@ modules:
     cpsLimit: 20 # Work in progress
     affectBrightness: true
     brightness: 10
+    # This will heavily depend on the render distance of the server, and player.
+    # If either is less than this value, the name will likely not be rendered as the client doesn't "know" about that player.
+    # 64 is default
+    # 96 is max (6 chunks).
+    nametagRenderDistance: 64
 

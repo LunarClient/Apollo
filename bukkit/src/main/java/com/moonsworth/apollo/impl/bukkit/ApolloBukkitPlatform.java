@@ -40,6 +40,7 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
     public void onEnable() {
         instance = this;
         Apollo.setPlatform(this);
+        Apollo.getApolloModuleManager().register(NametagModule.class);
         Apollo.getApolloModuleManager().register(NotificationModule.class);
         Apollo.getApolloModuleManager().register(HeartTextureModule.class);
         Apollo.getApolloModuleManager().register(ColoredFireModule.class);

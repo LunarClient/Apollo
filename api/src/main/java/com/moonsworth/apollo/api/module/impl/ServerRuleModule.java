@@ -23,6 +23,8 @@ public class ServerRuleModule extends ApolloModule {
     private BooleanOption affectBrightness;
     private NumberOption<Integer> brightness;
 
+    private NumberOption<Integer> nametagRenderDistance; // Heavily depends on the server render distance!
+
     public ServerRuleModule() {
         super("ServerRuleModule");
     }
@@ -37,7 +39,8 @@ public class ServerRuleModule extends ApolloModule {
                 cpsLimiter = new BooleanOption("cpsLimiter", OptionProperty.CLIENT, false),
                 cpsLimit = new NumberOption<>("cpsLimit", OptionProperty.CLIENT, 20, 1, 100),
                 affectBrightness = new BooleanOption("affectBrightness", OptionProperty.CLIENT, false),
-                brightness = new NumberOption<>("brightness", OptionProperty.CLIENT, 50, 1, 10000)
+                brightness = new NumberOption<>("brightness", OptionProperty.CLIENT, 50, 1, 10000),
+                nametagRenderDistance = new NumberOption<>("nametagRenderDistance", OptionProperty.CLIENT, 64, 1, 96)
         );
     }
 

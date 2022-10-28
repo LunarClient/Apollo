@@ -5,10 +5,7 @@ import com.google.protobuf.ByteString;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.bridge.ApolloBlockPos;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-import com.moonsworth.apollo.api.module.impl.EVNTModule;
-import com.moonsworth.apollo.api.module.impl.HeartTextureModule;
-import com.moonsworth.apollo.api.module.impl.NotificationModule;
-import com.moonsworth.apollo.api.module.impl.ServerRuleModule;
+import com.moonsworth.apollo.api.module.impl.*;
 import com.moonsworth.apollo.api.protocol.*;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
 import org.bukkit.ChatColor;
@@ -18,10 +15,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import java.lang.management.PlatformLoggingMXBean;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class VignetteCommand implements CommandExecutor {
     @Override
@@ -68,6 +62,14 @@ public class VignetteCommand implements CommandExecutor {
                 return true;
             }
 
+            if (args[0].equals("nametag")) {
+                Apollo.getApolloModuleManager().getModule(NametagModule.class).ifPresent(module -> {
+                    RenderableString string = RenderableString.newBuilder().setContent(ByteString.copyFromUtf8("Testing Nametag Override")).setColor(0xFFAA0000).build();
+                    module.overrideNametag(apolloPlayer, Collections.singletonList(string), 0, apolloPlayer);
+                });
+                return true;
+            }
+
             if (args[0].equals("hud")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class).ifPresent(module -> {
                     var teamStatus = EventTeamStatus.newBuilder()
@@ -85,7 +87,7 @@ public class VignetteCommand implements CommandExecutor {
                             .setTeamTwoStatus(teamStatus);
                     List<EventPlayerStatus> playerStatusList = new ArrayList<>();
                     for (int i = 0; i < 5; i++) {
-                        playerStatusList.add(EventPlayerStatus.newBuilder().setPlayerId(ByteString.copyFromUtf8(apolloPlayer.getUniqueId().toString())).setHealth(i * 20).setUltimatePercentage(i * 3f).build());
+                        playerStatusList.add(EventPlayerStatus.newBuilder().setPlayerId(ByteString.copyFromUtf8(apolloPlayer.getUniqueId().toString())).setHealth((i == 0 ? -.5f : i) * 20).setUltimatePercentage(i * 3f).build());
                     }
                     apolloPlayer.sendPacket(EventPlayerStatusMessage.newBuilder().addAllTeamOneStatus(playerStatusList).addAllTeamTwoStatus(playerStatusList).build());
                     apolloPlayer.sendPacket(status.build());
