@@ -347,9 +347,10 @@ message TranslateNametagMessage {
 
 message UpdateCosmeticResourcesMessage {
   CharacterType character = 1;
-  repeated string modelPath = 2;
-  repeated string animationPath = 3;
-  repeated string texturePath = 4;
+  UUIDMessage playerID = 2;
+  repeated string modelPath = 3;
+  repeated string animationPath = 4;
+  repeated string texturePath = 5;
 }
 
 message ReloadCosmeticsMessage {

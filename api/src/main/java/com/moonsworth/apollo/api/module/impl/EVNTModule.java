@@ -111,10 +111,10 @@ public class EVNTModule extends ApolloModule {
                 EquipCharacterMessage.newBuilder().setEquipped(true).setId(message.getId()).build()));
     }
 
-    public void updateCharacterResources(ApolloPlayer player, CharacterType character, @Nullable String modelPath,
+    public void updateCharacterResources(ApolloPlayer player, UUID affectedPlayer, CharacterType character, @Nullable String modelPath,
                                          @Nullable String animationPath, @Nullable String texturePath) {
         UpdateCosmeticResourcesMessage.Builder builder = UpdateCosmeticResourcesMessage.newBuilder()
-                .setCharacter(character);
+                .setCharacter(character).setPlayerID(UUIDUtils.fromUUID(affectedPlayer));
         if (modelPath != null) {
             builder.addModelPath(modelPath);
         }
