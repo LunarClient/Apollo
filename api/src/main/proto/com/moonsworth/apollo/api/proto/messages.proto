@@ -355,5 +355,6 @@ message UpdateCosmeticResourcesMessage {
 }
 
 message ReloadCosmeticsMessage {
-
+  repeated string modelLocations = 1;
+  repeated string animationLocations = 2;
 }

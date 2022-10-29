@@ -127,7 +127,7 @@ public class EVNTModule extends ApolloModule {
         player.sendPacket(builder.build());
     }
 
-    public void reloadCosmetics(ApolloPlayer player) {
-        player.sendPacket(ReloadCosmeticsMessage.newBuilder().build());
+    public void reloadCosmetics(ApolloPlayer player, List<String> modelLocations, List<String> animationLocations) {
+        player.sendPacket(ReloadCosmeticsMessage.newBuilder().addAllModelLocations(modelLocations).addAllAnimationLocations(animationLocations).build());
     }
 }
