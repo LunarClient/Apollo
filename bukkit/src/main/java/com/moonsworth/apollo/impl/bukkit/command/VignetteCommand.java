@@ -37,8 +37,8 @@ public class VignetteCommand implements CommandExecutor {
             if(args[0].equals("changeCharacter")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class)
                         .ifPresent(module -> module.updateCharacterResources(apolloPlayer, apolloPlayer.getUniqueId(), CharacterType.Froska, null, null, "lunar:event/models/MCL_Froska/MCL_Froska2.png"));
-                Apollo.getApolloModuleManager().getModule(EVNTModule.class)
-                        .ifPresent(module -> module.reloadCosmetics(apolloPlayer));
+//                Apollo.getApolloModuleManager().getModule(EVNTModule.class)
+//                        .ifPresent(module -> module.reloadCosmetics(apolloPlayer));
             }
 
             if (args[0].equals("characterSelection")) {
@@ -70,6 +70,33 @@ public class VignetteCommand implements CommandExecutor {
                 return true;
             }
 
+            if (args[0].equals("hude")) {
+                Apollo.getApolloModuleManager().getModule(EVNTModule.class).ifPresent(module -> {
+                    var teamStatus = EventTeamStatus.newBuilder()
+                            .setBottomCrystalHealth(0)
+                            .setBottomWitherHealth(0)
+                            .setMiddleCrystalHealth(0)
+                            .setMiddleWitherHealth(0)
+                            .setTopCrystalHealth(0)
+                            .setTopWitherHealth(0)
+                            .setDragonHealth(10)
+                            .build();
+                    var status = EventGameStatusMessage.newBuilder()
+                            .setTier3Health(0)
+                            .setLockGametime(true)
+                            .setGameStartTime(System.currentTimeMillis() - 10_000)
+                            .setTeamOneStatus(teamStatus)
+                            .setTeamTwoStatus(teamStatus);
+                    List<EventPlayerStatus> playerStatusList = new ArrayList<>();
+                    for (int i = 0; i < 5; i++) {
+                        playerStatusList.add(EventPlayerStatus.newBuilder().setPlayerId(ByteString.copyFromUtf8(apolloPlayer.getUniqueId().toString())).setHealth((i == 0 ? -.5f : i) * 20).setUltimatePercentage(i * 3f).build());
+                    }
+                    apolloPlayer.sendPacket(EventPlayerStatusMessage.newBuilder().addAllTeamOneStatus(playerStatusList).addAllTeamTwoStatus(playerStatusList).build());
+                    apolloPlayer.sendPacket(status.build());
+                });
+                return true;
+            }
+
             if (args[0].equals("hud")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class).ifPresent(module -> {
                     var teamStatus = EventTeamStatus.newBuilder()
@@ -79,9 +106,11 @@ public class VignetteCommand implements CommandExecutor {
                             .setMiddleWitherHealth(75)
                             .setTopCrystalHealth(50)
                             .setTopWitherHealth(50)
+                            .setDragonHealth(100)
                             .build();
                     var status = EventGameStatusMessage.newBuilder()
                             .setTier3Health(100)
+                            .setLockGametime(false)
                             .setGameStartTime(System.currentTimeMillis())
                             .setTeamOneStatus(teamStatus)
                             .setTeamTwoStatus(teamStatus);
