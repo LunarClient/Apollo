@@ -236,6 +236,7 @@ message EventTeamStatus {
   float middleCrystalHealth = 4;
   float bottomWitherHealth = 5;
   float bottomCrystalHealth = 6;
+  float dragonHealth = 7;
 }
 
 message ApplyCharacterCosmeticsMessage {
