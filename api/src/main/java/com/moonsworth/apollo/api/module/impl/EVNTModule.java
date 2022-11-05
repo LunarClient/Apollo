@@ -1,6 +1,7 @@
 package com.moonsworth.apollo.api.module.impl;
 
 import com.google.common.collect.ImmutableList;
+import com.google.protobuf.ByteString;
 import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloBlockPos;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
@@ -11,6 +12,7 @@ import com.moonsworth.apollo.api.utils.UUIDUtils;
 import com.moonsworth.apollo.api.utils.Vector3DUtils;
 
 import javax.annotation.Nullable;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.UUID;
 
@@ -116,13 +118,13 @@ public class EVNTModule extends ApolloModule {
         UpdateCosmeticResourcesMessage.Builder builder = UpdateCosmeticResourcesMessage.newBuilder()
                 .setCharacter(character).setPlayerID(UUIDUtils.fromUUID(affectedPlayer));
         if (modelPath != null) {
-            builder.addModelPath(modelPath);
+            builder.setModelPath(ByteString.copyFrom(modelPath, Charset.defaultCharset()));
         }
         if (animationPath != null) {
-            builder.addAnimationPath(animationPath);
+            builder.setAnimationPath(ByteString.copyFrom(animationPath, Charset.defaultCharset()));
         }
         if (texturePath != null) {
-            builder.addTexturePath(texturePath);
+            builder.setTexturePath(ByteString.copyFrom(texturePath, Charset.defaultCharset()));
         }
         player.sendPacket(builder.build());
     }
