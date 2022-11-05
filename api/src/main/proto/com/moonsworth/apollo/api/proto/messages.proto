@@ -227,6 +227,7 @@ message EventGameStatusMessage {
   float tier3Health = 3;
   int64 gameStartTime = 4;
   bool witherShields = 5;
+  bool lockGametime = 6;
 }
 
 message EventTeamStatus {
@@ -236,6 +237,7 @@ message EventTeamStatus {
   float middleCrystalHealth = 4;
   float bottomWitherHealth = 5;
   float bottomCrystalHealth = 6;
+  float dragonHealth = 7;
 }
 
 message ApplyCharacterCosmeticsMessage {
