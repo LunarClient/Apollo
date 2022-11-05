@@ -79,14 +79,14 @@ public class VignetteCommand implements CommandExecutor {
                             .setMiddleWitherHealth(0)
                             .setTopCrystalHealth(0)
                             .setTopWitherHealth(0)
-                            .setDragonHealth(10)
-                            .build();
+                            .setDragonHealth(40);
+                    var teamOneStatus = teamStatus.clone().setDragonHealth(40).build();
                     var status = EventGameStatusMessage.newBuilder()
                             .setTier3Health(0)
                             .setLockGametime(true)
                             .setGameStartTime(System.currentTimeMillis() - 10_000)
-                            .setTeamOneStatus(teamStatus)
-                            .setTeamTwoStatus(teamStatus);
+                            .setTeamOneStatus(teamOneStatus)
+                            .setTeamTwoStatus(teamStatus.build());
                     List<EventPlayerStatus> playerStatusList = new ArrayList<>();
                     for (int i = 0; i < 5; i++) {
                         playerStatusList.add(EventPlayerStatus.newBuilder().setPlayerId(ByteString.copyFromUtf8(apolloPlayer.getUniqueId().toString())).setHealth((i == 0 ? -.5f : i) * 20).setUltimatePercentage(i * 3f).build());
