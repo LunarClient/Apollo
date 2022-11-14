@@ -118,13 +118,13 @@ public class EVNTModule extends ApolloModule {
         UpdateCosmeticResourcesMessage.Builder builder = UpdateCosmeticResourcesMessage.newBuilder()
                 .setCharacter(character).setPlayerID(UUIDUtils.fromUUID(affectedPlayer));
         if (modelPath != null) {
-            builder.setModelPath(ByteString.copyFrom(modelPath, Charset.defaultCharset()));
+            builder.setModelPath(ByteString.copyFromUtf8(modelPath));
         }
         if (animationPath != null) {
-            builder.setAnimationPath(ByteString.copyFrom(animationPath, Charset.defaultCharset()));
+            builder.setAnimationPath(ByteString.copyFromUtf8(animationPath));
         }
         if (texturePath != null) {
-            builder.setTexturePath(ByteString.copyFrom(texturePath, Charset.defaultCharset()));
+            builder.setTexturePath(ByteString.copyFromUtf8(texturePath));
         }
         player.sendPacket(builder.build());
     }

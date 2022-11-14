@@ -219,6 +219,7 @@ message EventPlayerStatus {
   bytes playerId = 1; // player uuid
   float health = 2;
   float ultimatePercentage = 3;
+  int64 respawnAt = 4; // A timestamp (in millis) for when the player will respawn.
 }
 
 message EventGameStatusMessage {
@@ -228,6 +229,7 @@ message EventGameStatusMessage {
   int64 gameStartTime = 4;
   bool witherShields = 5;
   bool lockGametime = 6;
+  int64 midRespawnTime = 7; // The timestamp (in millis) for when the next mid-boss will spawn, if the health is > 0 this value is ignored.
 }
 
 message EventTeamStatus {
