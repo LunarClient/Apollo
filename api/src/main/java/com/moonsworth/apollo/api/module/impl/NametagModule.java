@@ -19,7 +19,7 @@ public class NametagModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return new ArrayList<>();
     }
 
@@ -33,8 +33,8 @@ public class NametagModule extends ApolloModule {
         return ImmutableList.of(ApolloPlatform.Kind.SERVER);
     }
 
-    public void sendNametag(NametagMessage nametag, ApolloPlayer... receiver) {
-        for (ApolloPlayer player : receiver) {
+    public void sendNametag(NametagMessage nametag, ApolloPlayer<?>... receiver) {
+        for (ApolloPlayer<?> player : receiver) {
             player.sendPacket(nametag);
         }
     }
@@ -50,9 +50,9 @@ public class NametagModule extends ApolloModule {
      *                            If one is not provided, the client will use whatever line contains the player's name
      * @param viewer              The observer who will see the targets nametag as a lunar client nametag.
      */
-    public void overrideNametag(ApolloPlayer target, List<RenderableString> lines, int indexContainingName, ApolloPlayer... viewer) {
+    public void overrideNametag(ApolloPlayer<?> target, List<RenderableString> lines, int indexContainingName, ApolloPlayer<?>... viewer) {
         var message = NametagMessage.newBuilder().setPlayerAffected(ByteString.copyFromUtf8(target.getUniqueId().toString())).addAllNametagOverride(lines).setIndexContainingPlayerName(indexContainingName).build();
-        for (ApolloPlayer player : viewer) {
+        for (ApolloPlayer<?> player : viewer) {
             player.sendPacket(message);
         }
     }
@@ -65,8 +65,8 @@ public class NametagModule extends ApolloModule {
      * @param target The player's nametag that will be reset for the viewer.
      * @param viewer The observer who will see the targets nametag as normal (bukkit).
      */
-    public void resetNametag(ApolloPlayer target, ApolloPlayer... viewer) {
-        for (ApolloPlayer player : viewer) {
+    public void resetNametag(ApolloPlayer<?> target, ApolloPlayer<?>... viewer) {
+        for (ApolloPlayer<?> player : viewer) {
             player.sendPacket(NametagMessage.newBuilder().setPlayerAffected(ByteString.copyFromUtf8(target.getUniqueId().toString())).build());
         }
     }
@@ -77,8 +77,8 @@ public class NametagModule extends ApolloModule {
      * @param target This player's nametag will be hidden from the viewer.
      * @param viewer The observer who will hide the targets nametag.
      */
-    public void hideNametag(ApolloPlayer target, ApolloPlayer... viewer) {
-        for (ApolloPlayer player : viewer) {
+    public void hideNametag(ApolloPlayer<?> target, ApolloPlayer<?>... viewer) {
+        for (ApolloPlayer<?> player : viewer) {
             player.sendPacket(NametagMessage.newBuilder().setPlayerAffected(ByteString.copyFromUtf8(target.getUniqueId().toString())).setHideNametag(true).build());
         }
     }

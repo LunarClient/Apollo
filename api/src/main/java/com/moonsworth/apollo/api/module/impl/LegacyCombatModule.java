@@ -11,7 +11,6 @@ import lombok.Getter;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 public class LegacyCombatModule extends ApolloModule {
@@ -39,7 +38,7 @@ public class LegacyCombatModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return ImmutableList.of(
                 disableEntityCramming = new BooleanOption("disableEntityCramming", OptionProperty.CLIENT,true),
                 disableEnderpearlCooldown = new BooleanOption("disableEnderpearlCooldown", OptionProperty.CLIENT,true),

@@ -23,6 +23,5 @@ public interface ApolloPlatform {
      * @return a wrapped player object with extended functionality
      */
     @Nullable
-    ApolloPlayer tryWrapPlayer(Object player);
-
+    ApolloPlayer<?> tryWrapPlayer(Object player);
 }

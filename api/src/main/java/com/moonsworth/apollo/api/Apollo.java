@@ -1,15 +1,17 @@
 package com.moonsworth.apollo.api;
 
 import com.google.protobuf.Any;
-import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.events.EventBus;
 import com.moonsworth.apollo.api.events.impl.packet.EventApolloReceivePacket;
+import com.moonsworth.apollo.api.events.impl.packet.EventApolloSendPacket;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.module.ApolloModuleManager;
+import com.moonsworth.apollo.api.packet.ApolloPacketManager;
 import com.moonsworth.apollo.api.player.ApolloPlayerManager;
 import lombok.Getter;
+
 import java.util.function.Consumer;
 
 /**
@@ -30,18 +32,30 @@ public class Apollo {
     @Getter
     private static ApolloModuleManager apolloModuleManager = null;
     @Getter
+    private static ApolloPacketManager apolloPacketManager = null;
+    @Getter
     private static ApolloPlayerManager apolloPlayerManager = null;
 
     public static void setPlatform(ApolloPlatform platform) {
         Apollo.platform = platform;
         apolloModuleManager = new ApolloModuleManager();
+        apolloPacketManager = new ApolloPacketManager(platform);
         apolloPlayerManager = new ApolloPlayerManager();
     }
 
     public static void handleIncomingPacket(Object playerObject, byte[] packet) {
-        ApolloPlayer player = platform.tryWrapPlayer(playerObject);
+        ApolloPlayer<?> player = platform.tryWrapPlayer(playerObject);
         try {
             EventBus.getBus().post(new EventApolloReceivePacket(player, Any.parseFrom(packet)));
+        } catch (InvalidProtocolBufferException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void handleOutgoingPacket(Object playerObject, byte[] packet) {
+        ApolloPlayer<?> player = platform.tryWrapPlayer(playerObject);
+        try {
+            EventBus.getBus().post(new EventApolloSendPacket(player, Any.parseFrom(packet)));
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
         }
@@ -57,7 +71,7 @@ public class Apollo {
         apolloModuleManager.register(clazz);
     }
 
-    public void withPlayer(Object o, Consumer<ApolloPlayer> consumer) {
+    public void withPlayer(Object o, Consumer<ApolloPlayer<?>> consumer) {
         var apolloPlayer = platform.tryWrapPlayer(o);
         if (apolloPlayer != null) {
             consumer.accept(apolloPlayer);

@@ -26,7 +26,7 @@ public class StaffModModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return ImmutableList.of(
                 xrayPermission = new PermissionNodeOption("xray", "apollo.staffmods.xray")
         );

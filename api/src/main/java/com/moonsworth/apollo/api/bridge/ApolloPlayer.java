@@ -2,13 +2,14 @@ package com.moonsworth.apollo.api.bridge;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.GeneratedMessageV3;
+import com.moonsworth.apollo.api.Apollo;
 
 import java.util.UUID;
 
 /**
  * A player that supports Apollo.
  */
-public interface ApolloPlayer {
+public interface ApolloPlayer<T> {
 
     /**
      * Gets the players UUID from their Platform
@@ -37,7 +38,10 @@ public interface ApolloPlayer {
      * @param packet The packet send to the player.
      */
     default void sendPacket(GeneratedMessageV3 packet) {
-        sendPacket(Any.pack(packet).toByteArray());
+        byte[] bytes = Any.pack(packet).toByteArray();
+
+        this.sendPacket(bytes);
+        Apollo.getApolloPacketManager().handleOutgoingPacket(this, bytes);
     }
 
     /**
@@ -52,4 +56,6 @@ public interface ApolloPlayer {
      * @param message The message to send to the player.
      */
     void sendMessage(String message);
+
+    T getPlayer();
 }

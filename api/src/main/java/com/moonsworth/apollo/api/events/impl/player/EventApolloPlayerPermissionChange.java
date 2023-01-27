@@ -5,7 +5,7 @@ import com.moonsworth.apollo.api.events.TargetedEvent;
 
 public class EventApolloPlayerPermissionChange extends TargetedEvent {
 
-    public EventApolloPlayerPermissionChange(ApolloPlayer player) {
+    public EventApolloPlayerPermissionChange(ApolloPlayer<?> player) {
         super(player);
     }
 }

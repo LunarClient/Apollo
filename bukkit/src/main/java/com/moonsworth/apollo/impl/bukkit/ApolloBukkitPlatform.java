@@ -77,14 +77,14 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
 
     private void registerPluginChannel() {
         Messenger messenger = getServer().getMessenger();
+
         messenger.registerOutgoingPluginChannel(this, Apollo.PLUGIN_MESSAGE_CHANNEL);
-        messenger.registerIncomingPluginChannel(this, Apollo.PLUGIN_MESSAGE_CHANNEL, (channel, player, bytes) -> {
-            Apollo.handleIncomingPacket(player, bytes);
-        });
+        messenger.registerIncomingPluginChannel(this, Apollo.PLUGIN_MESSAGE_CHANNEL, (channel, player, bytes) ->
+                Apollo.getApolloPacketManager().handleIncomingPacket(player, bytes));
     }
 
     @Override
-    public @Nullable ApolloPlayer tryWrapPlayer(Object o) {
+    public @Nullable ApolloPlayer<?> tryWrapPlayer(Object o) {
         if (o instanceof Player player) {
             return Apollo.getApolloPlayerManager().getApolloPlayer(player.getUniqueId())
                     .orElse(new BukkitPlayer(player));

@@ -8,15 +8,12 @@ import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerUnregister;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
-import com.moonsworth.apollo.api.protocol.NotificationMessage;
 import com.moonsworth.apollo.api.protocol.Teammate;
 import com.moonsworth.apollo.api.protocol.TeammateMessage;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class TeammatesModule extends ApolloModule {
 
@@ -43,7 +40,7 @@ public class TeammatesModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return new ArrayList<>();
     }
 
@@ -72,9 +69,9 @@ public class TeammatesModule extends ApolloModule {
      * @param apolloPlayers The list of players in the team.
      * @return The newly created team object.
      */
-    public ApolloTeam createTeam(List<ApolloPlayer> apolloPlayers) {
+    public ApolloTeam createTeam(List<ApolloPlayer<?>> apolloPlayers) {
         ApolloTeam team = new ApolloTeam(UUID.randomUUID());
-        for (ApolloPlayer apolloPlayer : apolloPlayers) {
+        for (ApolloPlayer<?> apolloPlayer : apolloPlayers) {
             team.addMemberNoRefresh(apolloPlayer, 0xFF00AA80);
         }
         team.refresh();
@@ -153,7 +150,7 @@ public class TeammatesModule extends ApolloModule {
          * @param color  The color to assoicate with this player.
          *               0xFF00AA80 is the standard color.
          */
-        public void addMember(ApolloPlayer player, int color) {
+        public void addMember(ApolloPlayer<?> player, int color) {
             addMemberNoRefresh(player, color);
             refresh();
         }
@@ -165,13 +162,13 @@ public class TeammatesModule extends ApolloModule {
          * @param player The player to update
          * @param color  The new color
          */
-        public void updatePlayerColor(ApolloPlayer player, int color) {
+        public void updatePlayerColor(ApolloPlayer<?> player, int color) {
             if (playerTeammateMap.containsKey(player.getUniqueId())) {
                 playerTeammateMap.put(player.getUniqueId(), playerTeammateMap.get(player.getUniqueId()).toBuilder().setColor(color).build());
             }
         }
 
-        protected void addMemberNoRefresh(ApolloPlayer player, int color) {
+        protected void addMemberNoRefresh(ApolloPlayer<?> player, int color) {
             playerTeammateMap.put(player.getUniqueId(), Teammate.newBuilder().setPlayer(ByteString.copyFromUtf8(player.getUniqueId().toString())).setColor(color).build());
             Apollo.getApolloModuleManager().getModule(TeammatesModule.class).ifPresent(module -> module.playerTeamMap.put(player.getUniqueId(), teamId));
         }

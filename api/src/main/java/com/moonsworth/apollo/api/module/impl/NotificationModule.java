@@ -7,9 +7,7 @@ import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
-import com.moonsworth.apollo.api.protocol.NametagMessage;
 import com.moonsworth.apollo.api.protocol.NotificationMessage;
-import com.moonsworth.apollo.api.protocol.RenderableString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,7 @@ public class NotificationModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return new ArrayList<>();
     }
 
@@ -65,13 +63,13 @@ public class NotificationModule extends ApolloModule {
      *                         By default, (null) it'll display a generic info message.
      * @param viewer All the recipients of the notification
      */
-    public void pushNotify(String title, String description, String resourceLocation, ApolloPlayer... viewer) {
+    public void pushNotify(String title, String description, String resourceLocation, ApolloPlayer<?>... viewer) {
         var builder = NotificationMessage.newBuilder().setTitle(ByteString.copyFromUtf8(title)).setDescription(ByteString.copyFromUtf8(description));
         if (resourceLocation != null) {
             builder = builder.setResourceLocation(ByteString.copyFromUtf8(resourceLocation));
         }
         NotificationMessage notificationMessage = builder.build();
-        for (ApolloPlayer player : viewer) {
+        for (ApolloPlayer<?> player : viewer) {
             player.sendPacket(notificationMessage);
         }
     }

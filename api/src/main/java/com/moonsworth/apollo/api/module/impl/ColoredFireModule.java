@@ -7,7 +7,6 @@ import com.moonsworth.apollo.api.options.ApolloOption;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class ColoredFireModule extends ApolloModule {
 
@@ -16,7 +15,7 @@ public class ColoredFireModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return new ArrayList<>();
     }
 

@@ -7,7 +7,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.UUID;
 
-public record BungeePlayer(ProxiedPlayer player) implements ApolloPlayer {
+public record BungeePlayer(ProxiedPlayer player) implements ApolloPlayer<ProxiedPlayer> {
 
     @Override
     public UUID getUniqueId() {
@@ -32,5 +32,10 @@ public record BungeePlayer(ProxiedPlayer player) implements ApolloPlayer {
     @Override
     public void sendMessage(String message) {
         player.sendMessage(message);
+    }
+
+    @Override
+    public ProxiedPlayer getPlayer() {
+        return this.player;
     }
 }

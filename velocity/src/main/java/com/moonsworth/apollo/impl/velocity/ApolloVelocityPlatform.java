@@ -56,7 +56,7 @@ public class ApolloVelocityPlatform implements ApolloPlatform {
 
     @Nullable
     @Override
-    public ApolloPlayer tryWrapPlayer(Object o) {
+    public ApolloPlayer<?> tryWrapPlayer(Object o) {
         if (o instanceof Player player) {
             return Apollo.getApolloPlayerManager().getApolloPlayer(player.getUniqueId()).orElse(new VelocityPlayer(player));
         }

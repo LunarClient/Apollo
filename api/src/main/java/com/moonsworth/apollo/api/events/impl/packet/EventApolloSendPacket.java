@@ -8,8 +8,8 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class EventApolloReceivePacket extends Event {
+public class EventApolloSendPacket extends Event {
 
-    private final ApolloPlayer<?> player;
+    private final ApolloPlayer player;
     private final Any packet;
 }

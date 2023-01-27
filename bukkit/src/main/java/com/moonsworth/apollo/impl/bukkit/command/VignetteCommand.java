@@ -25,7 +25,7 @@ public class VignetteCommand implements CommandExecutor {
             return true;
         }
 
-        ApolloPlayer apolloPlayer = ApolloBukkitPlatform.getInstance().tryWrapPlayer(sender);
+        ApolloPlayer<?> apolloPlayer = ApolloBukkitPlatform.getInstance().tryWrapPlayer(sender);
         if (apolloPlayer != null) {
             if (args[0].equals("reset")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class)

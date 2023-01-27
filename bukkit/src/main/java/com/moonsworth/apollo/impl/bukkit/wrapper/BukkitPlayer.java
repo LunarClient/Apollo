@@ -4,7 +4,6 @@ import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.bridge.ApolloLocation;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -14,7 +13,7 @@ import java.util.UUID;
  *
  * @param player Player to wrap
  */
-public record BukkitPlayer(Player player) implements ApolloPlayer {
+public record BukkitPlayer(Player player) implements ApolloPlayer<Player> {
 
     @Override
     public UUID getUniqueId() {
@@ -39,5 +38,10 @@ public record BukkitPlayer(Player player) implements ApolloPlayer {
     @Override
     public void sendMessage(String message) {
         player.sendMessage(message);
+    }
+
+    @Override
+    public Player getPlayer() {
+        return this.player;
     }
 }
