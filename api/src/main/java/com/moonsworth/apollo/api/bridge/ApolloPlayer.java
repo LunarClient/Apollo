@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * A player that supports Apollo.
  */
-public interface ApolloPlayer<T> {
+public interface ApolloPlayer {
 
     /**
      * Gets the players UUID from their Platform
@@ -56,6 +56,4 @@ public interface ApolloPlayer<T> {
      * @param message The message to send to the player.
      */
     void sendMessage(String message);
-
-    T getPlayer();
 }

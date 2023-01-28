@@ -3,7 +3,6 @@ package com.moonsworth.apollo.impl.bukkit.command;
 import com.google.common.primitives.Ints;
 import com.google.protobuf.ByteString;
 import com.moonsworth.apollo.api.Apollo;
-import com.moonsworth.apollo.api.bridge.ApolloBlockPos;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.impl.*;
 import com.moonsworth.apollo.api.protocol.*;
@@ -14,7 +13,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import java.lang.management.PlatformLoggingMXBean;
 import java.util.*;
 
 public class VignetteCommand implements CommandExecutor {
@@ -25,7 +23,7 @@ public class VignetteCommand implements CommandExecutor {
             return true;
         }
 
-        ApolloPlayer<?> apolloPlayer = ApolloBukkitPlatform.getInstance().tryWrapPlayer(sender);
+        ApolloPlayer apolloPlayer = ApolloBukkitPlatform.getInstance().tryWrapPlayer(sender);
         if (apolloPlayer != null) {
             if (args[0].equals("reset")) {
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class)

@@ -49,7 +49,7 @@ public class ApolloBungeePlatform extends Plugin implements ApolloPlatform, List
     }
 
     @Override
-    public ApolloPlayer<?> tryWrapPlayer(Object o) {
+    public ApolloPlayer tryWrapPlayer(Object o) {
         if (o instanceof ProxiedPlayer player) {
             return Apollo.getApolloPlayerManager().getApolloPlayer(player.getUniqueId()).orElse(new BungeePlayer(player));
         }

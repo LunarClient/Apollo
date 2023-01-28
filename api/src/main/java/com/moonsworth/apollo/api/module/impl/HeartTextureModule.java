@@ -31,11 +31,11 @@ public class HeartTextureModule extends ApolloModule {
         return ImmutableList.of(ApolloPlatform.Kind.SERVER);
     }
 
-    public void setHeartXLocationOverride(ApolloPlayer<?> player, int x, boolean hardCore) {
+    public void setHeartXLocationOverride(ApolloPlayer player, int x, boolean hardCore) {
         player.sendPacket(HeartTextureMessage.newBuilder().setXLocation(x).setHardCore(hardCore).build());
     }
 
-    public void clearHeartLocation(ApolloPlayer<?> player) {
+    public void clearHeartLocation(ApolloPlayer player) {
         player.sendPacket(HeartTextureMessage.newBuilder().setXLocation(-1).build());
     }
 }

@@ -13,7 +13,7 @@ import java.util.UUID;
  *
  * @param player Player to wrap
  */
-public record BukkitPlayer(Player player) implements ApolloPlayer<Player> {
+public record BukkitPlayer(Player player) implements ApolloPlayer {
 
     @Override
     public UUID getUniqueId() {
@@ -38,10 +38,5 @@ public record BukkitPlayer(Player player) implements ApolloPlayer<Player> {
     @Override
     public void sendMessage(String message) {
         player.sendMessage(message);
-    }
-
-    @Override
-    public Player getPlayer() {
-        return this.player;
     }
 }

@@ -89,7 +89,7 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
      *
      * @param player The player that has recently logged in.
      */
-    public void playerLogin(ApolloPlayer<?> player) {
+    public void playerLogin(ApolloPlayer player) {
         if (notifyPlayers() && isEnabled()) {
             var config = ModuleConfiguration.newBuilder().addModuleName(getName());
             for (ApolloOption<?> option : getOptions()) {

@@ -84,7 +84,7 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
     }
 
     @Override
-    public @Nullable ApolloPlayer<?> tryWrapPlayer(Object o) {
+    public @Nullable ApolloPlayer tryWrapPlayer(Object o) {
         if (o instanceof Player player) {
             return Apollo.getApolloPlayerManager().getApolloPlayer(player.getUniqueId())
                     .orElse(new BukkitPlayer(player));

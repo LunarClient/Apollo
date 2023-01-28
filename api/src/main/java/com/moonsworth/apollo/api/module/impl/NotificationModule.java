@@ -63,13 +63,13 @@ public class NotificationModule extends ApolloModule {
      *                         By default, (null) it'll display a generic info message.
      * @param viewer All the recipients of the notification
      */
-    public void pushNotify(String title, String description, String resourceLocation, ApolloPlayer<?>... viewer) {
+    public void pushNotify(String title, String description, String resourceLocation, ApolloPlayer... viewer) {
         var builder = NotificationMessage.newBuilder().setTitle(ByteString.copyFromUtf8(title)).setDescription(ByteString.copyFromUtf8(description));
         if (resourceLocation != null) {
             builder = builder.setResourceLocation(ByteString.copyFromUtf8(resourceLocation));
         }
         NotificationMessage notificationMessage = builder.build();
-        for (ApolloPlayer<?> player : viewer) {
+        for (ApolloPlayer player : viewer) {
             player.sendPacket(notificationMessage);
         }
     }

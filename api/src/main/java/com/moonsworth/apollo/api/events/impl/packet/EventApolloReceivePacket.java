@@ -10,6 +10,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EventApolloReceivePacket extends Event {
 
-    private final ApolloPlayer<?> player;
+    private final ApolloPlayer player;
     private final Any packet;
 }

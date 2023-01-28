@@ -44,7 +44,7 @@ public class Apollo {
     }
 
     public static void handleIncomingPacket(Object playerObject, byte[] packet) {
-        ApolloPlayer<?> player = platform.tryWrapPlayer(playerObject);
+        ApolloPlayer player = platform.tryWrapPlayer(playerObject);
         try {
             EventBus.getBus().post(new EventApolloReceivePacket(player, Any.parseFrom(packet)));
         } catch (InvalidProtocolBufferException e) {
@@ -53,7 +53,7 @@ public class Apollo {
     }
 
     public static void handleOutgoingPacket(Object playerObject, byte[] packet) {
-        ApolloPlayer<?> player = platform.tryWrapPlayer(playerObject);
+        ApolloPlayer player = platform.tryWrapPlayer(playerObject);
         try {
             EventBus.getBus().post(new EventApolloSendPacket(player, Any.parseFrom(packet)));
         } catch (InvalidProtocolBufferException e) {
@@ -71,7 +71,7 @@ public class Apollo {
         apolloModuleManager.register(clazz);
     }
 
-    public void withPlayer(Object o, Consumer<ApolloPlayer<?>> consumer) {
+    public void withPlayer(Object o, Consumer<ApolloPlayer> consumer) {
         var apolloPlayer = platform.tryWrapPlayer(o);
         if (apolloPlayer != null) {
             consumer.accept(apolloPlayer);

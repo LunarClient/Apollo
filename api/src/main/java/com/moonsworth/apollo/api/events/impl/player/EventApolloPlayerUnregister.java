@@ -5,7 +5,7 @@ import com.moonsworth.apollo.api.events.TargetedEvent;
 
 public class EventApolloPlayerUnregister extends TargetedEvent {
 
-    public EventApolloPlayerUnregister(ApolloPlayer<?> player) {
+    public EventApolloPlayerUnregister(ApolloPlayer player) {
         super(player);
     }
 }

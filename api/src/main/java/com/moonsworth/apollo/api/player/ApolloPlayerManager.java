@@ -10,7 +10,7 @@ import java.util.*;
 
 public class ApolloPlayerManager {
 
-    private final Map<UUID, ApolloPlayer<?>> supportedPlayers = new HashMap<>();
+    private final Map<UUID, ApolloPlayer> supportedPlayers = new HashMap<>();
 
     // TODO implement on Bungee and Velocity
     public ApolloPlayerManager() {
@@ -21,7 +21,7 @@ public class ApolloPlayerManager {
      * Gets all the players online that are using Lunar Client.
      * @return An immutable copy list of players using LunarClient.
      */
-    public List<ApolloPlayer<?>> getApolloPlayers() {
+    public List<ApolloPlayer> getApolloPlayers() {
         return new ArrayList<>(this.supportedPlayers.values());
     }
 
@@ -30,11 +30,17 @@ public class ApolloPlayerManager {
      * Gets an Apollo representation of a player by their ID
      * @param id The Unique Id of an ApolloPlayer
      */
-    public Optional<ApolloPlayer<?>> getApolloPlayer(UUID id) {
+    public Optional<ApolloPlayer> getApolloPlayer(UUID id) {
         return Optional.ofNullable(this.supportedPlayers.get(id));
     }
 
-    public boolean isRunningLunarClient(UUID uuid) {
+    /**
+     * Determines if the player supports apollo
+     *
+     * @param uuid The Unique Id of a Player
+     * @return The value whether the player supports apollo
+     */
+    public boolean supportsApollo(UUID uuid) {
         return this.getApolloPlayer(uuid).isPresent();
     }
 
@@ -43,7 +49,7 @@ public class ApolloPlayerManager {
      * @param player The player object on the specific platform to register.
      */
     public void registerPlayer(Object player) {
-        ApolloPlayer<?> apolloPlayer = Apollo.getPlatform().tryWrapPlayer(player);
+        ApolloPlayer apolloPlayer = Apollo.getPlatform().tryWrapPlayer(player);
         if (apolloPlayer == null) {
             return;
         }
@@ -57,7 +63,7 @@ public class ApolloPlayerManager {
      * @param player The player to unregister.
      */
     public void unRegisterPlayer(UUID player) {
-        ApolloPlayer<?> apolloPlayer = this.supportedPlayers.remove(player);
+        ApolloPlayer apolloPlayer = this.supportedPlayers.remove(player);
         if (apolloPlayer != null) {
             EventBus.getBus().post(new EventApolloPlayerUnregister(apolloPlayer));
         }

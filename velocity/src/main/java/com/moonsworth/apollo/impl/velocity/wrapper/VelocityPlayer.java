@@ -8,7 +8,7 @@ import net.kyori.adventure.text.Component;
 
 import java.util.UUID;
 
-public record VelocityPlayer(Player player) implements ApolloPlayer<Player> {
+public record VelocityPlayer(Player player) implements ApolloPlayer {
 
     @Override
     public UUID getUniqueId() {
@@ -33,10 +33,5 @@ public record VelocityPlayer(Player player) implements ApolloPlayer<Player> {
     @Override
     public void sendMessage(String message) {
         player.sendMessage(Component.text(message));
-    }
-
-    @Override
-    public Player getPlayer() {
-        return this.player;
     }
 }

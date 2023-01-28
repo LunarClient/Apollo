@@ -8,6 +8,7 @@ plugins {
     id("java")
     id("fr.il_totore.manadrop")
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("maven-publish")
 }
 
 java {
@@ -17,6 +18,7 @@ java {
 }
 
 group = "com.moonsworth"
+version = "1.0-SNAPSHOT"
 val minecraftVersion = "1.19"
 
 repositories {
@@ -90,3 +92,12 @@ dependencies {
 }
 
 tasks.processResources.get().finalizedBy(tasks.named("spigotPlugin"))
+
+publishing {
+    publications {
+        register("mavenJava", MavenPublication::class) {
+            from(components["java"])
+//            artifact(sourcesJar)
+        }
+    }
+}

@@ -36,11 +36,11 @@ public class EVNTModule extends ApolloModule {
         return ImmutableList.of(ApolloPlatform.Kind.SERVER);
     }
 
-    public void togglePlayerArmor(ApolloPlayer<?> player, boolean showArmor) {
+    public void togglePlayerArmor(ApolloPlayer player, boolean showArmor) {
         player.sendPacket(ToggleArmorMessage.newBuilder().setShowArmor(showArmor).build());
     }
 
-    public void equipCharacter(ApolloPlayer<?> player, CharacterType character, boolean enabled) {
+    public void equipCharacter(ApolloPlayer player, CharacterType character, boolean enabled) {
         player.sendPacket(EquipCharacterMessage.newBuilder().setId(character).setEquipped(enabled).build());
     }
 
@@ -50,7 +50,7 @@ public class EVNTModule extends ApolloModule {
      * @param texture The texture to display
      * @param opacity The opacity to render the texture with in the range [0.0, 1.0]
      */
-    public void displayVignette(ApolloPlayer<?> player, String texture, float opacity) {
+    public void displayVignette(ApolloPlayer player, String texture, float opacity) {
         var builder = DisplayVignetteMessage.newBuilder();
         if (texture != null) {
             builder = builder.addTexture(texture);
@@ -59,50 +59,50 @@ public class EVNTModule extends ApolloModule {
         player.sendPacket(builder.build());
     }
 
-    public void clearVignette(ApolloPlayer<?> player) {
+    public void clearVignette(ApolloPlayer player) {
         player.sendPacket(DisplayVignetteMessage.newBuilder().setOpacity(0).build());
     }
 
-    public void addBeacon(ApolloPlayer<?> player, int id, int color, ApolloBlockPos position) {
+    public void addBeacon(ApolloPlayer player, int id, int color, ApolloBlockPos position) {
         player.sendPacket(
                 DisplayBeaconMessage.newBuilder().setId(id).setColor(color).setPosition(position.toProto()).build());
     }
 
-    public void removeBeacon(ApolloPlayer<?> player, int id) {
+    public void removeBeacon(ApolloPlayer player, int id) {
         player.sendPacket(RemoveBeaconMessage.newBuilder().setId(id).build());
     }
 
-    public void displayGui(ApolloPlayer<?> player, OpenGuiMessage.Gui gui) {
+    public void displayGui(ApolloPlayer player, OpenGuiMessage.Gui gui) {
         player.sendPacket(OpenGuiMessage.newBuilder().setGuiId(gui).build());
     }
 
-    public void closeGui(ApolloPlayer<?> player) {
+    public void closeGui(ApolloPlayer player) {
         //Pass in -1 to close the gui
         player.sendPacket(OpenGuiMessage.newBuilder().setClose(true).build());
     }
 
-    public void hideArmor(ApolloPlayer<?> sendTo, UUID affectedPlayer, ArmorPart armorPart, boolean hidden) {
+    public void hideArmor(ApolloPlayer sendTo, UUID affectedPlayer, ArmorPart armorPart, boolean hidden) {
         sendTo.sendPacket(
                 HideArmor.newBuilder().setAffectedPlayer(UUIDUtils.fromUUID(affectedPlayer)).setArmor(armorPart)
                         .setHidden(hidden).build());
     }
 
-    public void hideBodyPart(ApolloPlayer<?> sendTo, UUID affectedPlayer, BodyPart bone, boolean hidden) {
+    public void hideBodyPart(ApolloPlayer sendTo, UUID affectedPlayer, BodyPart bone, boolean hidden) {
         sendTo.sendPacket(HideBodyPart.newBuilder().setAffectedPlayer(UUIDUtils.fromUUID(affectedPlayer)).setBone(bone)
                 .setHidden(hidden).build());
     }
 
-    public void flipAllEntities(ApolloPlayer<?> player, boolean flipped) {
+    public void flipAllEntities(ApolloPlayer player, boolean flipped) {
         player.sendPacket(FlipAllEntitiesMessage.newBuilder().setFlipped(flipped).build());
     }
 
-    public void setRainbowSheep(ApolloPlayer<?> player, UUID entity, boolean rainbow) {
+    public void setRainbowSheep(ApolloPlayer player, UUID entity, boolean rainbow) {
         player.sendPacket(
                 EnableRainbowSheepMessage.newBuilder().setSheepEntityID(UUIDUtils.fromUUID(entity)).setRainbow(rainbow)
                         .build());
     }
 
-    public void translateEntityNametag(ApolloPlayer<?> player, UUID entity, double x, double y, double z) {
+    public void translateEntityNametag(ApolloPlayer player, UUID entity, double x, double y, double z) {
         player.sendPacket(TranslateNametagMessage.newBuilder().setEntityID(UUIDUtils.fromUUID(entity)).setTranslation(
                 Vector3DUtils.fromVector(x, y, z)).build());
     }
@@ -112,7 +112,7 @@ public class EVNTModule extends ApolloModule {
                 EquipCharacterMessage.newBuilder().setEquipped(true).setId(message.getId()).build()));
     }
 
-    public void updateCharacterResources(ApolloPlayer<?> player, UUID affectedPlayer, CharacterType character, @Nullable String modelPath,
+    public void updateCharacterResources(ApolloPlayer player, UUID affectedPlayer, CharacterType character, @Nullable String modelPath,
                                          @Nullable String animationPath, @Nullable String texturePath) {
         UpdateCosmeticResourcesMessage.Builder builder = UpdateCosmeticResourcesMessage.newBuilder()
                 .setCharacter(character).setPlayerID(UUIDUtils.fromUUID(affectedPlayer));
@@ -128,7 +128,7 @@ public class EVNTModule extends ApolloModule {
         player.sendPacket(builder.build());
     }
 
-    public void reloadCosmetics(ApolloPlayer<?> player, List<String> modelLocations, List<String> animationLocations) {
+    public void reloadCosmetics(ApolloPlayer player, List<String> modelLocations, List<String> animationLocations) {
         player.sendPacket(ReloadCosmeticsMessage.newBuilder().addAllModelLocations(modelLocations).addAllAnimationLocations(animationLocations).build());
     }
 }

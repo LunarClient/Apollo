@@ -87,7 +87,7 @@ public class CooldownModule extends ApolloModule {
      * @param cooldownName The name of the {@link CooldownMessage} that is sent.
      * @throws IllegalStateException If the cooldown to send doesn't exist.
      */
-    public void sendCooldown(ApolloPlayer<?> player, String cooldownName) throws IllegalStateException {
+    public void sendCooldown(ApolloPlayer player, String cooldownName) throws IllegalStateException {
         String cooldownId = cooldownName.toLowerCase();
         if (!registeredCooldowns.containsKey(cooldownId)) {
             throw new IllegalStateException("Attempted to send a cooldown that isn't registered [" + cooldownName + "]");
@@ -103,7 +103,7 @@ public class CooldownModule extends ApolloModule {
      * @param cooldownName The name of the cooldown
      * @throws IllegalStateException If the static cool down doesn't exist.
      */
-    public void clearCooldown(ApolloPlayer<?> player, String cooldownName) throws IllegalStateException {
+    public void clearCooldown(ApolloPlayer player, String cooldownName) throws IllegalStateException {
         String cooldownId = cooldownName.toLowerCase();
         if (!registeredCooldowns.containsKey(cooldownId)) {
             throw new IllegalStateException("Attempted to send a cooldown that isn't registered [" + cooldownName + "]");
@@ -115,7 +115,7 @@ public class CooldownModule extends ApolloModule {
      * Clears all cooldowns for a player
      * @param player The player to remove the cooldowns for.
      */
-    public void clearCooldowns(ApolloPlayer<?> player) {
+    public void clearCooldowns(ApolloPlayer player) {
         player.sendPacket(ClearCooldownMessage.newBuilder().build());
     }
 }
