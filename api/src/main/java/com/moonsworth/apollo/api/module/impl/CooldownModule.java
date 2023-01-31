@@ -89,12 +89,14 @@ public class CooldownModule extends ApolloModule {
      */
     public void sendCooldown(ApolloPlayer player, String cooldownName) throws IllegalStateException {
         String cooldownId = cooldownName.toLowerCase();
-        if (!registeredCooldowns.containsKey(cooldownId)) {
+        CooldownMessage cooldownMessage = registeredCooldowns.get(cooldownId);
+
+        if(cooldownMessage == null) {
             throw new IllegalStateException("Attempted to send a cooldown that isn't registered [" + cooldownName + "]");
         }
-        player.sendPacket(registeredCooldowns.get(cooldownId));
-    }
 
+        player.sendPacket(cooldownMessage);
+    }
 
     /**
      * Clears a cooldown for an apollo player
