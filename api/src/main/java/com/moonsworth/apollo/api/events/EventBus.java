@@ -52,11 +52,16 @@ public class EventBus {
         return consumers != null && consumers.remove(consumer);
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends Event> T post(T event) {
+        return this.post(event, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Event> T post(T event, Runnable action) {
         // If there is an error with getting the consumers, we want to throw that, and break.
         try {
             CopyOnWriteArrayList<Consumer<? extends Event>> consumers = eventMap.get(event.getClass());
+
             if (consumers != null) {
                 for (Consumer<? extends Event> c : consumers) {
                     // If there is an error with a single consumer, we want to catch that
@@ -68,13 +73,17 @@ public class EventBus {
                         e.printStackTrace();
                     }
                 }
+
+                if(action != null && event instanceof EventCancellable cancellable && !cancellable.isCancelled()) {
+                    action.run();
+                }
+
                 return event;
             }
         } catch (Exception | Error e) {
             if (e instanceof AbstractMethodError || e instanceof IllegalAccessError) {
                 throw e;
             }
-
 
             e.printStackTrace();
         }

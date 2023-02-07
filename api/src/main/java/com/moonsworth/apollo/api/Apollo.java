@@ -1,11 +1,6 @@
 package com.moonsworth.apollo.api;
 
-import com.google.protobuf.Any;
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-import com.moonsworth.apollo.api.events.EventBus;
-import com.moonsworth.apollo.api.events.impl.packet.EventApolloReceivePacket;
-import com.moonsworth.apollo.api.events.impl.packet.EventApolloSendPacket;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.module.ApolloModuleManager;
 import com.moonsworth.apollo.api.packet.ApolloPacketManager;
@@ -42,25 +37,6 @@ public class Apollo {
         apolloPacketManager = new ApolloPacketManager(platform);
         apolloPlayerManager = new ApolloPlayerManager();
     }
-
-    public static void handleIncomingPacket(Object playerObject, byte[] packet) {
-        ApolloPlayer player = platform.tryWrapPlayer(playerObject);
-        try {
-            EventBus.getBus().post(new EventApolloReceivePacket(player, Any.parseFrom(packet)));
-        } catch (InvalidProtocolBufferException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void handleOutgoingPacket(Object playerObject, byte[] packet) {
-        ApolloPlayer player = platform.tryWrapPlayer(playerObject);
-        try {
-            EventBus.getBus().post(new EventApolloSendPacket(player, Any.parseFrom(packet)));
-        } catch (InvalidProtocolBufferException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     /**
      * Registers modules for Apollo.

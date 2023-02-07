@@ -39,8 +39,6 @@ public interface ApolloPlayer {
      */
     default void sendPacket(GeneratedMessageV3 packet) {
         byte[] bytes = Any.pack(packet).toByteArray();
-
-        this.sendPacket(bytes);
         Apollo.getApolloPacketManager().handleOutgoingPacket(this, bytes);
     }
 

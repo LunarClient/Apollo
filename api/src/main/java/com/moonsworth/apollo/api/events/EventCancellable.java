@@ -1,16 +1,8 @@
 package com.moonsworth.apollo.api.events;
 
-import lombok.Getter;
-import lombok.Setter;
+public interface EventCancellable {
 
-public class EventCancellable extends Event {
+    boolean isCancelled();
 
-    @Getter
-    @Setter
-    private boolean cancelled;
-
-    public void cancel() {
-        this.cancelled = true;
-    }
-
+    void setCancelled(boolean cancel);
 }
