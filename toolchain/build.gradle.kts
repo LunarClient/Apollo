@@ -9,9 +9,11 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(gradleApi())
+    implementation("fr.il_totore:manadrop:0.4.3")
 }

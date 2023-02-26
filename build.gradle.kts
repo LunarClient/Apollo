@@ -1,12 +1,15 @@
 buildscript {
+    repositories {
+        maven("https://repo.papermc.io/repository/maven-public/")
+    }
     dependencies {
         classpath("com.moonsworth:toolchain")
     }
 }
 
 plugins {
-    id("fr.il_totore.manadrop") version "0.4.2" apply false
     id("com.github.johnrengelman.shadow") version "7.1.2" apply false
+    id("io.papermc.paperweight.userdev") version "1.5.1" apply false
 }
 
 group = "com.moonsworth"

@@ -1,0 +1,16 @@
+{
+  "minVersion": "0.8",
+  "package": "com.moonsworth.apollo.impl.bukkit.v1_18.mixin",
+  "target": "CLIENT",
+  "required": true,
+  "compatibilityLevel": "JAVA_11",
+  "mixins": [
+    "PlayerMixin_v1_18",
+    "LivingEntityMixin_v1_18",
+    "ThrownPotionMixin_v1_18",
+    "ServerGamePacketListenerImplMixin_v1_18"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
