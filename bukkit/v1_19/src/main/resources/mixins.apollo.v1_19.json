@@ -1,0 +1,15 @@
+{
+  "minVersion": "0.8",
+  "package": "com.moonsworth.apollo.impl.bukkit.v1_19.mixin",
+  "target": "CLIENT",
+  "required": true,
+  "compatibilityLevel": "JAVA_11",
+  "mixins": [
+    "PlayerMixin_v1_19",
+    "LivingEntityMixin_v1_19",
+    "ServerGamePacketListenerImplMixin_v1_19"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

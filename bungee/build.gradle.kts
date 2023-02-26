@@ -1,3 +1,4 @@
+import com.moonsworth.apollo.toolchain.tasks.BuildBungee
 import fr.il_totore.manadrop.MinecraftDependencyHelper.*
 import fr.il_totore.manadrop.MinecraftRepositoryHelper.*
 
@@ -34,4 +35,5 @@ bungee {
     }
 }
 
-tasks.processResources.get().finalizedBy(tasks.named("bungeePlugin"))
+val bungeeTask by tasks.registering(BuildBungee::class)
+tasks.processResources.get().finalizedBy(bungeeTask)
