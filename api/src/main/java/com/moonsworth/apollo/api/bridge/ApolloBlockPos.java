@@ -1,11 +1,7 @@
 package com.moonsworth.apollo.api.bridge;
 
 import com.moonsworth.apollo.api.protocol.BlockPosition;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@Getter
-@RequiredArgsConstructor
 public record ApolloBlockPos(int x, int y, int z) {
 
     public BlockPosition toProto() {
