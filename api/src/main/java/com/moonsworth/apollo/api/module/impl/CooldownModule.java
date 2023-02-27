@@ -9,7 +9,6 @@ import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.protocol.ClearCooldownMessage;
 import com.moonsworth.apollo.api.protocol.CooldownMessage;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +23,7 @@ public class CooldownModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return new ArrayList<>();
     }
 
@@ -89,13 +88,23 @@ public class CooldownModule extends ApolloModule {
      * @throws IllegalStateException If the cooldown to send doesn't exist.
      */
     public void sendCooldown(ApolloPlayer player, String cooldownName) throws IllegalStateException {
-        String cooldownId = cooldownName.toLowerCase();
-        if (!registeredCooldowns.containsKey(cooldownId)) {
-            throw new IllegalStateException("Attempted to send a cooldown that isn't registered [" + cooldownName + "]");
-        }
-        player.sendPacket(registeredCooldowns.get(cooldownId));
+        CooldownMessage cooldownMessage = this.getCooldown(cooldownName);
+        player.sendPacket(cooldownMessage);
     }
 
+    /**
+     * Sends a cooldown to a Lunar Client player that has previously been registered.
+     * This could be used instead of passing around a {@link CooldownMessage} instance.
+     *
+     * @param player The player to send a cooldown to
+     * @param cooldownName The name of the {@link CooldownMessage} that is sent.
+     * @param millis The amount of time to send to cool down for.
+     * @throws IllegalStateException If the cooldown to send doesn't exist.
+     */
+    public void sendCooldown(ApolloPlayer player, String cooldownName, long millis) throws IllegalStateException {
+        CooldownMessage cooldownMessage = this.getCooldown(cooldownName);
+        player.sendPacket(cooldownMessage.toBuilder().setDurationMs(millis).build());
+    }
 
     /**
      * Clears a cooldown for an apollo player
@@ -106,9 +115,11 @@ public class CooldownModule extends ApolloModule {
      */
     public void clearCooldown(ApolloPlayer player, String cooldownName) throws IllegalStateException {
         String cooldownId = cooldownName.toLowerCase();
+
         if (!registeredCooldowns.containsKey(cooldownId)) {
             throw new IllegalStateException("Attempted to send a cooldown that isn't registered [" + cooldownName + "]");
         }
+
         player.sendPacket(CooldownMessage.newBuilder().setName(ByteString.copyFromUtf8(cooldownId)).setDurationMs(0).build());
     }
 
@@ -118,5 +129,22 @@ public class CooldownModule extends ApolloModule {
      */
     public void clearCooldowns(ApolloPlayer player) {
         player.sendPacket(ClearCooldownMessage.newBuilder().build());
+    }
+
+    /**
+     * Gets the cooldown message by cooldown name
+     *
+     * @param cooldownName The name of the cooldown
+     * @return The protobuf representation of a Cooldown
+     */
+    private CooldownMessage getCooldown(String cooldownName) {
+        String cooldownId = cooldownName.toLowerCase();
+        CooldownMessage cooldownMessage = registeredCooldowns.get(cooldownId);
+
+        if(cooldownMessage == null) {
+            throw new IllegalStateException("Attempted to send a cooldown that isn't registered [" + cooldownName + "]");
+        }
+
+        return cooldownMessage;
     }
 }

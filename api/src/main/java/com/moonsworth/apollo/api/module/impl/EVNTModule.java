@@ -12,7 +12,6 @@ import com.moonsworth.apollo.api.utils.UUIDUtils;
 import com.moonsworth.apollo.api.utils.Vector3DUtils;
 
 import javax.annotation.Nullable;
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,7 +22,7 @@ public class EVNTModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return ImmutableList.of();
     }
 

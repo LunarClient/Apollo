@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 @Getter
 public abstract class ApolloModule extends ApolloPacketReceiver {
 
-    private final List<ApolloOption> options = options();
+    private final List<ApolloOption<?>> options = options();
 
     private boolean enabled;
     private String name;
@@ -59,7 +59,7 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
 
     }
 
-    public abstract List<ApolloOption> options();
+    public abstract List<ApolloOption<?>> options();
 
     /**
      * Determines if we notify the players in a bulk packet when they login.
@@ -92,7 +92,7 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
     public void playerLogin(ApolloPlayer player) {
         if (notifyPlayers() && isEnabled()) {
             var config = ModuleConfiguration.newBuilder().addModuleName(getName());
-            for (ApolloOption option : getOptions()) {
+            for (ApolloOption<?> option : getOptions()) {
                 if (option.get().equals(option.getDefault())) {
                     continue;
                 }
@@ -140,7 +140,7 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
      */
     public void load(Map<String, Object> configuration) {
         loadConfiguration(configuration);
-        for (ApolloOption option : getOptions()) {
+        for (ApolloOption<?> option : getOptions()) {
             if (!configuration.containsKey(getName() + "." + option.getId())) {
                 continue;
             }

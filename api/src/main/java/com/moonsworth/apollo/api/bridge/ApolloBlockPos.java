@@ -1,17 +1,14 @@
 package com.moonsworth.apollo.api.bridge;
 
 import com.moonsworth.apollo.api.protocol.BlockPosition;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
-public class ApolloBlockPos {
-    private int x;
-    private int y;
-    private int z;
+@RequiredArgsConstructor
+public record ApolloBlockPos(int x, int y, int z) {
 
     public BlockPosition toProto() {
-        return BlockPosition.newBuilder().setX(x).setY(y).setZ(z).build();
+        return BlockPosition.newBuilder().setX(this.x).setY(this.y).setZ(this.z).build();
     }
 }

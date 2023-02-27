@@ -20,7 +20,7 @@ public class ModSettingsModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return ImmutableList.of(settings = new StringListOption("settings", new ArrayList<>(), OptionProperty.CLIENT));
     }
 

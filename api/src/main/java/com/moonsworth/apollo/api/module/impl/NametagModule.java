@@ -19,7 +19,7 @@ public class NametagModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return new ArrayList<>();
     }
 

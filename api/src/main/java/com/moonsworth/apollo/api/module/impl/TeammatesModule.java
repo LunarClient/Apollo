@@ -8,15 +8,12 @@ import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerUnregister;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
-import com.moonsworth.apollo.api.protocol.NotificationMessage;
 import com.moonsworth.apollo.api.protocol.Teammate;
 import com.moonsworth.apollo.api.protocol.TeammateMessage;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class TeammatesModule extends ApolloModule {
 
@@ -43,7 +40,7 @@ public class TeammatesModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return new ArrayList<>();
     }
 
@@ -61,9 +58,13 @@ public class TeammatesModule extends ApolloModule {
      * Calls to update all teams for all players.
      */
     public void updateAllTeams() {
-        for (ApolloTeam value : teams.values()) {
+        for(var value : teams.values()) {
             value.refresh();
         }
+    }
+
+    public ApolloTeam createTeam() {
+        return this.createTeam(Collections.emptyList());
     }
 
     /**
@@ -73,11 +74,17 @@ public class TeammatesModule extends ApolloModule {
      * @return The newly created team object.
      */
     public ApolloTeam createTeam(List<ApolloPlayer> apolloPlayers) {
-        ApolloTeam team = new ApolloTeam(UUID.randomUUID());
-        for (ApolloPlayer apolloPlayer : apolloPlayers) {
+        var team = new ApolloTeam(UUID.randomUUID());
+
+        for(var apolloPlayer : apolloPlayers) {
             team.addMemberNoRefresh(apolloPlayer, 0xFF00AA80);
         }
-        team.refresh();
+
+        if(!apolloPlayers.isEmpty()) {
+            team.refresh();
+        }
+
+        this.teams.put(team.getTeamId(), team);
         return team;
     }
 
@@ -108,6 +115,7 @@ public class TeammatesModule extends ApolloModule {
     @Data
     @RequiredArgsConstructor
     public static class ApolloTeam {
+
         private final UUID teamId;
         private Map<UUID, Teammate> playerTeammateMap = new HashMap<>();
 
@@ -116,21 +124,26 @@ public class TeammatesModule extends ApolloModule {
          * Remove old entries.
          */
         public void refresh() {
-            Set<UUID> toRemove = new HashSet<>();
-            TeammateMessage.Builder message = TeammateMessage.newBuilder();
-            for (Map.Entry<UUID, Teammate> entry : playerTeammateMap.entrySet()) {
-                Apollo.getApolloPlayerManager().getApolloPlayer(entry.getKey()).ifPresentOrElse(apolloPlayer -> {
+            var toRemove = new HashSet<UUID>();
+            var message = TeammateMessage.newBuilder();
+
+            for(var entry : playerTeammateMap.entrySet()) {
+                var apolloPlayer = Apollo.getApolloPlayerManager().getApolloPlayer(entry.getKey());
+
+                apolloPlayer.ifPresentOrElse(player -> {
                     var packet = entry.getValue().toBuilder();
-                    var location = apolloPlayer.getWorldLocation();
+                    var location = player.getWorldLocation();
+
                     packet.setX(location.getX());
                     packet.setY(location.getY());
                     packet.setZ(location.getZ());
                     packet.setWorld(ByteString.copyFromUtf8(location.getWorld()));
-                    message.addTeammates(entry.getValue());
+
+                    message.addTeammates(packet);
                 }, () -> toRemove.add(entry.getKey()));
             }
-            playerTeammateMap.keySet().removeAll(toRemove);
 
+            playerTeammateMap.keySet().removeAll(toRemove);
             sendUpdatedInfo(message.build());
         }
 
@@ -141,7 +154,8 @@ public class TeammatesModule extends ApolloModule {
          */
         private void sendUpdatedInfo(TeammateMessage message) {
             for (Map.Entry<UUID, Teammate> entry : playerTeammateMap.entrySet()) {
-                Apollo.getApolloPlayerManager().getApolloPlayer(entry.getKey()).ifPresent(apolloPlayer -> apolloPlayer.sendPacket(message));
+                Apollo.getApolloPlayerManager().getApolloPlayer(entry.getKey())
+                        .ifPresent(apolloPlayer -> apolloPlayer.sendPacket(message));
             }
         }
 
@@ -158,6 +172,13 @@ public class TeammatesModule extends ApolloModule {
             refresh();
         }
 
+        public void removeMember(ApolloPlayer player) {
+            playerTeammateMap.remove(player.getUniqueId());
+
+            Apollo.getApolloModuleManager().getModule(TeammatesModule.class)
+                    .ifPresent(module -> module.playerTeamMap.remove(player.getUniqueId()));
+        }
+
         /**
          * Updates the player's color
          * This does NOT call a refresh.
@@ -166,14 +187,23 @@ public class TeammatesModule extends ApolloModule {
          * @param color  The new color
          */
         public void updatePlayerColor(ApolloPlayer player, int color) {
-            if (playerTeammateMap.containsKey(player.getUniqueId())) {
-                playerTeammateMap.put(player.getUniqueId(), playerTeammateMap.get(player.getUniqueId()).toBuilder().setColor(color).build());
+            var teammate = playerTeammateMap.get(player.getUniqueId());
+
+            if(teammate != null) {
+                playerTeammateMap.put(player.getUniqueId(), teammate.toBuilder().setColor(color).build());
             }
         }
 
         protected void addMemberNoRefresh(ApolloPlayer player, int color) {
-            playerTeammateMap.put(player.getUniqueId(), Teammate.newBuilder().setPlayer(ByteString.copyFromUtf8(player.getUniqueId().toString())).setColor(color).build());
-            Apollo.getApolloModuleManager().getModule(TeammatesModule.class).ifPresent(module -> module.playerTeamMap.put(player.getUniqueId(), teamId));
+            var teammate = Teammate.newBuilder()
+                    .setPlayer(ByteString.copyFromUtf8(player.getUniqueId().toString()))
+                    .setColor(color)
+                    .build();
+
+            playerTeammateMap.put(player.getUniqueId(), teammate);
+
+            Apollo.getApolloModuleManager().getModule(TeammatesModule.class)
+                    .ifPresent(module -> module.playerTeamMap.put(player.getUniqueId(), teamId));
         }
     }
 }

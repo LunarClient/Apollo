@@ -7,9 +7,7 @@ import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
-import com.moonsworth.apollo.api.protocol.NametagMessage;
 import com.moonsworth.apollo.api.protocol.NotificationMessage;
-import com.moonsworth.apollo.api.protocol.RenderableString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,7 @@ public class NotificationModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return new ArrayList<>();
     }
 

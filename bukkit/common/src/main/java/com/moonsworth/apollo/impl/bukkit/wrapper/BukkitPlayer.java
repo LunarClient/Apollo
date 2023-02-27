@@ -4,7 +4,6 @@ import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.bridge.ApolloLocation;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;

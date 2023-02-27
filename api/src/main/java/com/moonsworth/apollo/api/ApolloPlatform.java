@@ -24,5 +24,4 @@ public interface ApolloPlatform {
      */
     @Nullable
     ApolloPlayer tryWrapPlayer(Object player);
-
 }

@@ -10,7 +10,6 @@ import java.util.UUID;
 
 public record VelocityPlayer(Player player) implements ApolloPlayer {
 
-
     @Override
     public UUID getUniqueId() {
         return player.getUniqueId();

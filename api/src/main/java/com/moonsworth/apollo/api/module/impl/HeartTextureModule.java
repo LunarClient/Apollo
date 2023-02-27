@@ -17,7 +17,7 @@ public class HeartTextureModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return new ArrayList<>();
     }
 

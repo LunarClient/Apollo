@@ -6,9 +6,10 @@ import com.moonsworth.apollo.api.events.Event;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Getter
+@RequiredArgsConstructor
 public class EventApolloReceivePacket extends Event {
+
     private final ApolloPlayer player;
     private final Any packet;
 }

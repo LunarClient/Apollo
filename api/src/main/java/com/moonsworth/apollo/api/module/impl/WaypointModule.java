@@ -34,7 +34,7 @@ public class WaypointModule extends ApolloModule {
     }
 
     @Override
-    public List<ApolloOption> options() {
+    public List<ApolloOption<?>> options() {
         return ImmutableList.of(
             waypointsHandledByServer = new BooleanOption("waypointsHandledByServer", OptionProperty.CLIENT, false)
         );
@@ -49,7 +49,6 @@ public class WaypointModule extends ApolloModule {
     public List<ApolloPlatform.Kind> runsOn() {
         return ImmutableList.of(ApolloPlatform.Kind.SERVER);
     }
-
 
     @Override
     public void loadConfiguration(Map<String, Object> configuration) {
