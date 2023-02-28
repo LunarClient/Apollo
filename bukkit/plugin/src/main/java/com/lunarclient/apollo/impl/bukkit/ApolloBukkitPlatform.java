@@ -27,6 +27,8 @@ import com.lunarclient.apollo.module.type.Teams;
 import com.lunarclient.apollo.module.type.TeamsImpl;
 import com.lunarclient.apollo.module.type.Titles;
 import com.lunarclient.apollo.module.type.TitlesImpl;
+import com.lunarclient.apollo.module.type.TntCountdown;
+import com.lunarclient.apollo.module.type.TntCountdownImpl;
 import com.lunarclient.apollo.module.type.Waypoints;
 import com.lunarclient.apollo.module.type.WaypointsImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
@@ -70,6 +72,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
                 .addModule(Stopwatch.class, new StopwatchImpl())
                 .addModule(Teams.class, new TeamsImpl())
                 .addModule(Titles.class, new TitlesImpl())
+                .addModule(TntCountdown.class, new TntCountdownImpl())
                 .addModule(Waypoints.class, new WaypointsImpl())
                 .addModule(LegacyCombat.class);
 
