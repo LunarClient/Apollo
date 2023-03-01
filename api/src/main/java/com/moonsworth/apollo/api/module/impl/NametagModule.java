@@ -51,7 +51,12 @@ public class NametagModule extends ApolloModule {
      * @param viewer              The observer who will see the targets nametag as a lunar client nametag.
      */
     public void overrideNametag(ApolloPlayer target, List<RenderableString> lines, int indexContainingName, ApolloPlayer... viewer) {
-        var message = NametagMessage.newBuilder().setPlayerAffected(ByteString.copyFromUtf8(target.getUniqueId().toString())).addAllNametagOverride(lines).setIndexContainingPlayerName(indexContainingName).build();
+        NametagMessage message = NametagMessage.newBuilder()
+            .setPlayerAffected(ByteString.copyFromUtf8(target.getUniqueId().toString()))
+            .addAllNametagOverride(lines)
+            .setIndexContainingPlayerName(indexContainingName)
+            .build();
+
         for (ApolloPlayer player : viewer) {
             player.sendPacket(message);
         }
@@ -66,8 +71,12 @@ public class NametagModule extends ApolloModule {
      * @param viewer The observer who will see the targets nametag as normal (bukkit).
      */
     public void resetNametag(ApolloPlayer target, ApolloPlayer... viewer) {
+        NametagMessage message = NametagMessage.newBuilder()
+            .setPlayerAffected(ByteString.copyFromUtf8(target.getUniqueId().toString()))
+            .build();
+
         for (ApolloPlayer player : viewer) {
-            player.sendPacket(NametagMessage.newBuilder().setPlayerAffected(ByteString.copyFromUtf8(target.getUniqueId().toString())).build());
+            player.sendPacket(message);
         }
     }
 
@@ -78,8 +87,13 @@ public class NametagModule extends ApolloModule {
      * @param viewer The observer who will hide the targets nametag.
      */
     public void hideNametag(ApolloPlayer target, ApolloPlayer... viewer) {
+        NametagMessage message = NametagMessage.newBuilder()
+            .setPlayerAffected(ByteString.copyFromUtf8(target.getUniqueId().toString()))
+            .setHideNametag(true)
+            .build();
+
         for (ApolloPlayer player : viewer) {
-            player.sendPacket(NametagMessage.newBuilder().setPlayerAffected(ByteString.copyFromUtf8(target.getUniqueId().toString())).setHideNametag(true).build());
+            player.sendPacket(message);
         }
     }
 
