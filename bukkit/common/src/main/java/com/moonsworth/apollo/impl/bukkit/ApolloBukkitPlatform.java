@@ -77,7 +77,6 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
 
     private void registerPluginChannel() {
         Messenger messenger = getServer().getMessenger();
-
         messenger.registerOutgoingPluginChannel(this, Apollo.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this, Apollo.PLUGIN_MESSAGE_CHANNEL, (channel, player, bytes) ->
                 Apollo.getApolloPacketManager().handleIncomingPacket(player, bytes));
@@ -95,11 +94,8 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
 
     @EventHandler
     public void onRegister(PlayerRegisterChannelEvent event) {
-        if (!event.getChannel().equalsIgnoreCase(Apollo.PLUGIN_MESSAGE_CHANNEL)) {
-            return;
-        }
+        if (!event.getChannel().equalsIgnoreCase(Apollo.PLUGIN_MESSAGE_CHANNEL)) return;
         Player player = event.getPlayer();
-
         Apollo.getApolloPlayerManager().registerPlayer(player);
     }
 
@@ -107,7 +103,6 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
     public void onUnregister(PlayerUnregisterChannelEvent event) {
         if (event.getChannel().equalsIgnoreCase(Apollo.PLUGIN_MESSAGE_CHANNEL)) {
             Apollo.getApolloPlayerManager().unRegisterPlayer(event.getPlayer().getUniqueId());
-
         }
     }
 

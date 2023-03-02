@@ -4,23 +4,19 @@ option java_package = "com.moonsworth.apollo.api.protocol";
 option java_outer_classname = "ApolloProtocol";
 option java_multiple_files = true;
 
-message ModuleInit {
-  repeated string modules = 1;
+// The server mod list.
+message ServerModList {
+  repeated string mods = 1;
 }
 
-// I wanna remove repeated here, but it breaks
-message ModuleConfiguration {
-  repeated string moduleName = 1;
-  map<string, string> values = 2;
-}
+// The client mod settings message.
+message ClientModSettings {
+  message ModSettings {
+    optional bool enable = 1;
+    map<string, string> settings = 2;
+  }
 
-message ModSettings {
-  map<string, ModSetting> modSettings = 1;
-}
-
-message ModSetting {
-  bool enabled = 1;
-  map<string, string> properties = 2;
+  map<string, ModSettings> mods = 1;
 }
 
 message ClearCooldownMessage {

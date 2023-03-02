@@ -53,7 +53,6 @@ public class ApolloPlayerManager {
         if (apolloPlayer == null) {
             return;
         }
-
         this.supportedPlayers.put(apolloPlayer.getUniqueId(), apolloPlayer);
         EventBus.getBus().post(new EventApolloPlayerRegister(apolloPlayer));
     }

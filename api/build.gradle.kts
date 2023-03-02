@@ -6,7 +6,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("com.google.protobuf:protobuf-gradle-plugin:0.8.19")
+        classpath("com.google.protobuf:protobuf-gradle-plugin:0.9.2")
         classpath("software.amazon.awssdk:auth:2.17.272")
         classpath("software.amazon.awssdk:sso:2.17.272")
     }
@@ -15,7 +15,7 @@ buildscript {
 plugins {
     id("java")
     `java-library`
-    id("com.google.protobuf") version "0.8.19"
+    id("com.google.protobuf") version "0.9.2"
     id("idea")
     id("maven-publish")
 }

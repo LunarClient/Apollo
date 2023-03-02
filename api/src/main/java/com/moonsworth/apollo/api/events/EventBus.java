@@ -73,13 +73,13 @@ public class EventBus {
                         e.printStackTrace();
                     }
                 }
-
-                if(action != null && event instanceof EventCancellable cancellable && !cancellable.isCancelled()) {
-                    action.run();
-                }
-
-                return event;
             }
+
+            if(action != null && event instanceof EventCancellable cancellable && !cancellable.isCancelled()) {
+                action.run();
+            }
+
+            return event;
         } catch (Exception | Error e) {
             if (e instanceof AbstractMethodError || e instanceof IllegalAccessError) {
                 throw e;

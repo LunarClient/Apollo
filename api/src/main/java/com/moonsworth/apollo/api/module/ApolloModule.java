@@ -8,7 +8,7 @@ import com.moonsworth.apollo.api.events.EventBus;
 import com.moonsworth.apollo.api.module.receive.ApolloPacketReceiver;
 import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.options.OptionProperty;
-import com.moonsworth.apollo.api.protocol.ModuleConfiguration;
+import com.moonsworth.apollo.api.protocol.ClientModSettings;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -21,14 +21,14 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
 
     private final List<ApolloOption<?>> options = options();
 
+    private final String name;
     private boolean enabled;
-    private String name;
 
     public ApolloModule(String name) {
         this.enabled = false;
         this.name = name;
 
-        Runnable consumer = () -> Apollo.getApolloPlayerManager().getApolloPlayers().forEach(this::playerLogin);
+        Runnable consumer = () -> Apollo.getApolloPlayerManager().getApolloPlayers().forEach(this::updateSettings);
         options.forEach(option -> {
             option.onUpdate(o -> {
                 if (Apollo.getApolloPlayerManager() != null) {
@@ -79,37 +79,43 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
     public abstract List<ApolloPlatform.Kind> runsOn();
 
     /**
-     * Called when a player logs in.
-     * If this is a notifying module, the player will have already received the packet that
-     * this module is enabled, and this will be overridden to add additional details around the
-     * rules of the module.
-     * <p>
-     * An example of this could be telling the client a duration for a cool down on login instead
-     * of sending that value everytime an action to cause the cooldown is invoked.
+     * Applies the module configuration settings that need to be sent to the
+     * client, into the {@link ClientModSettings} packet.
      *
-     * @param player The player that has recently logged in.
+     * @param settings the client mod settings
      */
-    public void playerLogin(ApolloPlayer player) {
-        if (notifyPlayers() && isEnabled()) {
-            var config = ModuleConfiguration.newBuilder().addModuleName(getName());
+    public boolean applySettings(ClientModSettings.Builder settings) {
+        if (this.notifyPlayers() && this.isEnabled()) {
+            ClientModSettings.ModSettings.Builder modSettings = ClientModSettings.ModSettings.newBuilder();
             for (ApolloOption<?> option : getOptions()) {
-                if (option.get().equals(option.getDefault())) {
-                    continue;
-                }
-                if (option.getProperty() != OptionProperty.CLIENT) {
-                    continue;
-                }
-                config.putValues(option.getId(), option.get().toString());
+                if (option.get().equals(option.getDefault())) continue;
+                if (option.getProperty() != OptionProperty.CLIENT) continue;
+                modSettings.putSettings(option.getId(), option.get().toString());
             }
-            player.sendPacket(config.build());
+            if (modSettings.getSettingsCount() > 0) {
+                settings.putMods(this.getName(), modSettings.build());
+                return true;
+            }
         }
+        return false;
+    }
+
+    /**
+     * Updates the module configuration settings for the specified
+     * {@link ApolloPlayer}.
+     *
+     * @param player the player to update the settings for
+     */
+    public void updateSettings(ApolloPlayer player) {
+        final ClientModSettings.Builder settings = ClientModSettings.newBuilder();
+        if (this.applySettings(settings)) player.sendPacket(settings.build());
     }
 
     /**
      * All the events this mod needs.
      * Events get registered or unregistered when the mod gets enabled or disabled.
      */
-    private Map<Class<Event>, Consumer<Event>> events = new HashMap<>();
+    private final Map<Class<Event>, Consumer<Event>> events = new HashMap<>();
 
     public void registerAllEvents() {
         for (Map.Entry<Class<Event>, Consumer<Event>> entry : events.entrySet()) {

@@ -1,17 +1,18 @@
 package com.moonsworth.apollo.api.module;
 
-import com.google.common.reflect.ClassPath;
 import com.moonsworth.apollo.api.Apollo;
+import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.events.Listener;
 import com.moonsworth.apollo.api.events.impl.packet.EventApolloReceivePacket;
 import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerRegister;
 import com.moonsworth.apollo.api.module.impl.*;
-import com.moonsworth.apollo.api.protocol.ModuleInit;
+import com.moonsworth.apollo.api.protocol.ClientModSettings;
+import com.moonsworth.apollo.api.protocol.ServerModList;
 import lombok.Getter;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class ApolloModuleManager implements Listener {
 
@@ -32,14 +33,22 @@ public class ApolloModuleManager implements Listener {
     }
 
     private void onPlayerLogin(EventApolloPlayerRegister event) {
-        List<String> modules = new ArrayList<>();
-        moduleMap.values().stream().filter(ApolloModule::isEnabled).filter(ApolloModule::notifyPlayers).forEach(apolloModule -> {
-            modules.add(apolloModule.getName());
-        });
-        event.getPlayer().sendPacket(ModuleInit.newBuilder().addAllModules(modules).build());
-        moduleMap.values().stream().filter(ApolloModule::isEnabled).filter(ApolloModule::notifyPlayers).forEach(apolloModule -> {
-            apolloModule.playerLogin(event.getPlayer());
-        });
+        final List<String> modules = moduleMap.values().stream()
+                .filter(ApolloModule::isEnabled)
+                .filter(ApolloModule::notifyPlayers)
+                .map(ApolloModule::getName)
+                .collect(Collectors.toList());
+        event.getPlayer().sendPacket(ServerModList.newBuilder().addAllMods(modules).build());
+        this.updateSettings(event.getPlayer());
+    }
+
+    private void updateSettings(ApolloPlayer player) {
+        final ClientModSettings.Builder settings = ClientModSettings.newBuilder();
+        moduleMap.values().stream()
+                .filter(ApolloModule::isEnabled)
+                .filter(ApolloModule::notifyPlayers)
+                .forEach(module -> module.applySettings(settings));
+        if (settings.getModsCount() > 0) player.sendPacket(settings.build());
     }
 
     public void registerConfiguration(ApolloModule module) {
