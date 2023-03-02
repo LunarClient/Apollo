@@ -30,6 +30,6 @@ jobs:
       - name: Build
         run: ./gradlew publish
         env:
-          REPO_BUCKET: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          REPO_BUCKET: ${{ secrets.REPO_BUCKET }}
           REPO_ACCESS_KEY: ${{ secrets.REPO_ACCESS_KEY }}
           REPO_SECRET_KEY: ${{ secrets.REPO_SECRET_KEY }}
