@@ -9,6 +9,7 @@ import com.moonsworth.apollo.api.events.impl.player.EventApolloPlayerUnregister;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.protocol.Teammate;
+import com.moonsworth.apollo.api.protocol.TeammateClear;
 import com.moonsworth.apollo.api.protocol.TeammateMessage;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -160,6 +161,16 @@ public class TeammatesModule extends ApolloModule {
         }
 
         /**
+         * Checks if the player is in the team
+         *
+         * @param uuid The player uuid to check
+         * @return Whether the player is a part of the team
+         */
+        public boolean isMember(UUID uuid) {
+            return this.playerTeammateMap.containsKey(uuid);
+        }
+
+        /**
          * Adds a new member to the team.
          * This will force a refresh to all player locations.
          *
@@ -168,12 +179,17 @@ public class TeammatesModule extends ApolloModule {
          *               0xFF00AA80 is the standard color.
          */
         public void addMember(ApolloPlayer player, int color) {
-            addMemberNoRefresh(player, color);
-            refresh();
+            this.addMemberNoRefresh(player, color);
+            this.refresh();
         }
 
         public void removeMember(ApolloPlayer player) {
-            playerTeammateMap.remove(player.getUniqueId());
+            Teammate teammate = this.playerTeammateMap.remove(player.getUniqueId());
+            TeammateClear message = TeammateClear.newBuilder()
+                .setTeammate(teammate)
+                .build();
+
+            player.sendPacket(message);
 
             Apollo.getApolloModuleManager().getModule(TeammatesModule.class)
                     .ifPresent(module -> module.playerTeamMap.remove(player.getUniqueId()));

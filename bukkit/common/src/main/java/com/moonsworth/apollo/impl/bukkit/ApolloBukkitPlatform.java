@@ -56,6 +56,7 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
             getServer().getPluginManager().registerEvents(new KnockbackListener(combatModule), this);
             getServer().getPluginManager().registerEvents(new ArmorDurabilityListener(this, combatModule), this);
             getServer().getPluginManager().registerEvents(new RegenListener(this, combatModule), this);
+            getServer().getPluginManager().registerEvents(new TestListener(this), this);
             getServer().getPluginManager().registerEvents(new AttackFrequencyListener(combatModule), this);
         });
 

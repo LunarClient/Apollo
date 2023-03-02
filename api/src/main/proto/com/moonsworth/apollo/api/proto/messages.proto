@@ -59,6 +59,10 @@ message Teammate {
   sint32 z = 6;
 }
 
+message TeammateClear {
+  Teammate teammate = 1;
+}
+
 message HeartTextureMessage {
   /**
   Set to -1 to Remove

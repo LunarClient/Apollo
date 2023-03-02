@@ -56,30 +56,36 @@ public class EventBus {
         return this.post(event, null);
     }
 
+    private void handleCancellableEvent(Event event, Runnable action) {
+        if(action != null && event instanceof EventCancellable cancellable && !cancellable.isCancelled()) {
+            action.run();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public <T extends Event> T post(T event, Runnable action) {
         // If there is an error with getting the consumers, we want to throw that, and break.
         try {
             CopyOnWriteArrayList<Consumer<? extends Event>> consumers = eventMap.get(event.getClass());
 
-            if (consumers != null) {
-                for (Consumer<? extends Event> c : consumers) {
-                    // If there is an error with a single consumer, we want to catch that
-                    // log the error, but don't print the stack for performance(?).
-                    try {
-                        Consumer<T> consumer = (Consumer<T>) c;
-                        consumer.accept(event);
-                    } catch (Throwable e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if(action != null && event instanceof EventCancellable cancellable && !cancellable.isCancelled()) {
-                    action.run();
-                }
-
+            if(consumers == null) {
+                this.handleCancellableEvent(event, action);
                 return event;
             }
+
+            for (Consumer<? extends Event> c : consumers) {
+                // If there is an error with a single consumer, we want to catch that
+                // log the error, but don't print the stack for performance(?).
+                try {
+                    Consumer<T> consumer = (Consumer<T>) c;
+                    consumer.accept(event);
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
+            }
+
+            this.handleCancellableEvent(event, action);
+            return event;
         } catch (Exception | Error e) {
             if (e instanceof AbstractMethodError || e instanceof IllegalAccessError) {
                 throw e;
