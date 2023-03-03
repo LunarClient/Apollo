@@ -30,6 +30,6 @@ jobs:
       - name: Build
         run: ./gradlew publish
         env:
-          REPO_BUCKET: lunarclient-artifacts-repo
+          REPO_BUCKET: repo-lunarclient-com
           REPO_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY_ID }}
           REPO_SECRET_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
