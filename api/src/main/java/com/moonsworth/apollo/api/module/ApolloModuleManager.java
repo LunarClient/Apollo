@@ -1,6 +1,5 @@
 package com.moonsworth.apollo.api.module;
 
-import com.google.common.collect.Lists;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.events.Listener;
 import com.moonsworth.apollo.api.events.impl.packet.EventApolloReceivePacket;
@@ -67,7 +66,7 @@ public class ApolloModuleManager implements Listener {
         if(module.isPresent()) {
             moduleConsumer.accept(module.get());
         } else {
-            listeners.computeIfAbsent((Class<? extends ApolloModule>) clazz, aClass -> Lists.newArrayList())
+            listeners.computeIfAbsent((Class<? extends ApolloModule>) clazz, aClass -> new ArrayList<>())
                 .add((Consumer<ApolloModule>) moduleConsumer);
         }
     }
