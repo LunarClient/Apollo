@@ -7,7 +7,7 @@
 
 ## Architecture
 
-`api` contains classes available on all platforms. It defines the protocol between Lunar Client and servers / proxies.
+`api` contains classes available on all platforms. It defines the protocol between Lunar Client and servers + proxies.
 
 There are modules for different implementations of the API that are also plugins for their platform.
 These modules may contain subprojects for NMS and Mixin code as well.
