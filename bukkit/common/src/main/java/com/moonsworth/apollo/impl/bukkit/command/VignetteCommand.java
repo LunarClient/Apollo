@@ -125,7 +125,11 @@ public class VignetteCommand implements CommandExecutor {
             if (args[0].equals("observer")) {
                 var builder = CharacterOverviewMessage.newBuilder();
                 for (int i = 0; i < 10; i++) {
-                    builder.addPlayers(EventPlayer.newBuilder().setPlayerName(ByteString.copyFromUtf8("Player " + i)).setTeamOne(i % 2 == 0).setPlayerId(ByteString.copyFromUtf8(UUID.randomUUID().toString())).setCharacterSelected(CharacterType.values()[new Random().nextInt(0, 9)]).build());
+                    builder.addPlayers(EventPlayer.newBuilder()
+                        .setPlayerName(ByteString.copyFromUtf8("Player " + i))
+                        .setTeamOne(i % 2 == 0)
+                        .setPlayerId(ByteString.copyFromUtf8(UUID.randomUUID().toString()))
+                        .setCharacterSelected(CharacterType.values()[new Random().nextInt(9)]).build());
                 }
                 apolloPlayer.sendPacket(builder.build());
                 Apollo.getApolloModuleManager().getModule(EVNTModule.class).ifPresent(module -> {

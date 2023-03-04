@@ -15,7 +15,7 @@ public class ApolloPacketManager {
     private final ApolloPlatform platform;
 
     public void handleIncomingPacket(Object playerObject, byte[] packet) {
-        var player = this.platform.tryWrapPlayer(playerObject);
+        ApolloPlayer player = this.platform.tryWrapPlayer(playerObject);
 
         try {
             EventBus.getBus().post(new EventApolloReceivePacket(player, Any.parseFrom(packet)));
@@ -26,7 +26,7 @@ public class ApolloPacketManager {
 
     public void handleOutgoingPacket(ApolloPlayer player, byte[] packet) {
         try {
-            var event = new EventApolloSendPacket(player, Any.parseFrom(packet));
+            EventApolloSendPacket event = new EventApolloSendPacket(player, Any.parseFrom(packet));
             EventBus.getBus().post(event, () -> player.sendPacket(packet));
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();

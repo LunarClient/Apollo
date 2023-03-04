@@ -61,7 +61,11 @@ public class WaypointModule extends ApolloModule {
             // This is super brittle, and could be done better most likely.
             for (Map.Entry<?, ?> entry : map.entrySet()) {
                 JsonObject object = new JsonParser().parse(String.valueOf(entry.getValue())).getAsJsonObject();
-                var waypoint = Waypoint.newBuilder().setName(ByteString.copyFromUtf8(object.get("name").getAsString())).setWorld(ByteString.copyFromUtf8(object.get("world").getAsString())).build();
+                Waypoint waypoint = Waypoint.newBuilder()
+                    .setName(ByteString.copyFromUtf8(object.get("name").getAsString()))
+                    .setWorld(ByteString.copyFromUtf8(object.get("world").getAsString()))
+                    .build();
+
                 waypoints.add(AddWaypointMessage.newBuilder()
                         .setWaypoint(waypoint)
                         .setX(object.get("x").getAsInt())

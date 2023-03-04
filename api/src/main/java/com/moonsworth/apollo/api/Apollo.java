@@ -48,7 +48,7 @@ public class Apollo {
     }
 
     public void withPlayer(Object o, Consumer<ApolloPlayer> consumer) {
-        var apolloPlayer = platform.tryWrapPlayer(o);
+        ApolloPlayer apolloPlayer = platform.tryWrapPlayer(o);
         if (apolloPlayer != null) {
             consumer.accept(apolloPlayer);
         }

@@ -53,7 +53,8 @@ public class ArmorDurabilityListener implements Listener {
             final List<ItemStack> armour = explosionDamaged.get(uuid);
             // ItemStack.equals() checks material, durability and quantity to make sure nothing changed in the meantime
             // We're checking all the pieces this way just in case they're wearing two helmets or something strange
-            final List<ItemStack> matchedPieces = armour.stream().filter(piece -> piece.equals(item)).toList();
+            final List<ItemStack> matchedPieces = armour.stream().filter(piece -> piece.equals(item))
+                .collect(Collectors.toList());
             armour.removeAll(matchedPieces);
             if (!matchedPieces.isEmpty()) return;
         }

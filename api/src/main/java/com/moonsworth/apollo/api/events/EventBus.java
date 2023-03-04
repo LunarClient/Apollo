@@ -74,7 +74,7 @@ public class EventBus {
                     }
                 }
 
-                if(action != null && event instanceof EventCancellable cancellable && !cancellable.isCancelled()) {
+                if(action != null && event instanceof EventCancellable && !((EventCancellable) event).isCancelled()) {
                     action.run();
                 }
 

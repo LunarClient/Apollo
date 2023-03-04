@@ -20,10 +20,9 @@ plugins {
 group = "com.moonsworth"
 version = "1.0-SNAPSHOT"
 
-// TODO: enforce this works with Java 8
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(16))
+        languageVersion.set(JavaLanguageVersion.of(8))
     }
 }
 

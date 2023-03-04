@@ -1,6 +1,5 @@
 package com.moonsworth.apollo.api.module;
 
-import com.google.common.reflect.ClassPath;
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.events.Listener;
 import com.moonsworth.apollo.api.events.impl.packet.EventApolloReceivePacket;
@@ -9,7 +8,6 @@ import com.moonsworth.apollo.api.module.impl.*;
 import com.moonsworth.apollo.api.protocol.ModuleInit;
 import lombok.Getter;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -63,7 +61,14 @@ public class ApolloModuleManager implements Listener {
      * @param moduleConsumer The callback
      */
     public <T> void registerModuleListener(Class<T> clazz, Consumer<T> moduleConsumer) {
-        getModule(clazz).ifPresentOrElse(moduleConsumer, () -> listeners.computeIfAbsent((Class<? extends ApolloModule>) clazz, aClass -> new ArrayList<>()).add((Consumer<ApolloModule>) moduleConsumer));
+        Optional<T> module = this.getModule(clazz);
+
+        if(module.isPresent()) {
+            moduleConsumer.accept(module.get());
+        } else {
+            listeners.computeIfAbsent((Class<? extends ApolloModule>) clazz, aClass -> new ArrayList<>())
+                .add((Consumer<ApolloModule>) moduleConsumer);
+        }
     }
 
     /**
@@ -136,10 +141,9 @@ public class ApolloModuleManager implements Listener {
             }
             entry.getValue().load(config);
             if (entry.getValue() != null && Boolean.parseBoolean(config.get(entry.getKey() + ".enabled").toString())) {
-                registerModule((ApolloModule) entry.getValue());
+                registerModule(entry.getValue());
             }
         }
-
     }
 
 }

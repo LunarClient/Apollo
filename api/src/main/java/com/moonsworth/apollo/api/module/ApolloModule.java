@@ -91,7 +91,7 @@ public abstract class ApolloModule extends ApolloPacketReceiver {
      */
     public void playerLogin(ApolloPlayer player) {
         if (notifyPlayers() && isEnabled()) {
-            var config = ModuleConfiguration.newBuilder().addModuleName(getName());
+            ModuleConfiguration.Builder config = ModuleConfiguration.newBuilder().addModuleName(getName());
             for (ApolloOption<?> option : getOptions()) {
                 if (option.get().equals(option.getDefault())) {
                     continue;
