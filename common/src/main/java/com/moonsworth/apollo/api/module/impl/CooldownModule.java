@@ -8,6 +8,7 @@ import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
 import com.moonsworth.apollo.api.protocol.ClearCooldownMessage;
 import com.moonsworth.apollo.api.protocol.CooldownMessage;
+import com.moonsworth.apollo.api.protocol.RenderableIcon;
 
 import java.util.ArrayList;
 import java.util.HashMap;

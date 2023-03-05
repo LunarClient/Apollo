@@ -1,56 +1,53 @@
 package com.moonsworth.apollo.api;
 
-import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.module.ApolloModuleManager;
-import com.moonsworth.apollo.api.packet.ApolloPacketManager;
 import com.moonsworth.apollo.api.player.ApolloPlayerManager;
-import lombok.Getter;
-
-import java.util.function.Consumer;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * Main API class for Apollo.
+ * Provides static accessors to Apollo.
+ *
+ * @since 1.0.0
  */
-public class Apollo {
+public final class Apollo {
+
+    private static final ApolloPlatform platform = null;
+    private static final ApolloModuleManager moduleManager = null;
+    private static final ApolloPlayerManager playerManager = null;
 
     /**
-     * The plugin message channel that Lunar Client and Apollo talk over.
+     * Returns the {@link ApolloPlatform}.
+     *
+     * @return the platform
+     * @since 1.0.0
      */
-    public static final String PLUGIN_MESSAGE_CHANNEL = "lunarclient:apollo";
-
-    /**
-     * The currently loaded platform. This is set as early as possible.
-     */
-    @Getter
-    private static ApolloPlatform platform = null;
-    @Getter
-    private static ApolloModuleManager apolloModuleManager = null;
-    @Getter
-    private static ApolloPacketManager apolloPacketManager = null;
-    @Getter
-    private static ApolloPlayerManager apolloPlayerManager = null;
-
-    public static void setPlatform(ApolloPlatform platform) {
-        Apollo.platform = platform;
-        apolloModuleManager = new ApolloModuleManager();
-        apolloPacketManager = new ApolloPacketManager(platform);
-        apolloPlayerManager = new ApolloPlayerManager();
+    public static ApolloPlatform getPlatform() {
+        return Apollo.checkEnabled(Apollo.platform);
     }
 
     /**
-     * Registers modules for Apollo.
-     * This needs to be done very close to the start of the platform.
-     * @param clazz The module to register.
+     * Returns the {@link ApolloModuleManager}.
+     *
+     * @return the module manager
+     * @since 1.0.0
      */
-    public static <T extends ApolloModule> void using(Class<T> clazz) {
-        apolloModuleManager.register(clazz);
+    public static ApolloModuleManager getModuleManager() {
+        return Apollo.checkEnabled(Apollo.moduleManager);
     }
 
-    public void withPlayer(Object o, Consumer<ApolloPlayer> consumer) {
-        ApolloPlayer apolloPlayer = platform.tryWrapPlayer(o);
-        if (apolloPlayer != null) {
-            consumer.accept(apolloPlayer);
-        }
+    /**
+     * Returns the {@link ApolloPlayerManager}.
+     *
+     * @return the player manager
+     * @since 1.0.0
+     */
+    public static ApolloPlayerManager getPlayerManager() {
+        return Apollo.checkEnabled(Apollo.playerManager);
     }
+
+    private static <T> T checkEnabled(final @Nullable T object) {
+        if (object == null) throw new UnsupportedOperationException("Apollo has not started yet!");
+        return object;
+    }
+
 }

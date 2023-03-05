@@ -1,27 +1,28 @@
 package com.moonsworth.apollo.api;
 
-import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-
-import javax.annotation.Nullable;
-
 /**
- * A platform that supports Apollo.
+ * Represents a platform that supports Apollo.
+ *
+ * @since 1.0.0
  */
 public interface ApolloPlatform {
 
+    /**
+     * Returns this kind of platform.
+     *
+     * @return this kind of platform
+     * @since 1.0.0
+     */
     Kind getKind();
 
+    /**
+     * Represents the kind of server a platform is.
+     *
+     * @since 1.0.0
+     */
     enum Kind {
         SERVER,
-        PROXY,
+        PROXY
     }
 
-    /**
-     * Wrap a Player object with this player
-     *
-     * @param player player object to wrap
-     * @return a wrapped player object with extended functionality
-     */
-    @Nullable
-    ApolloPlayer tryWrapPlayer(Object player);
 }

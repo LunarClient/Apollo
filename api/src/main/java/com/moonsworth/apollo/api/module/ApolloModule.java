@@ -1,155 +1,56 @@
 package com.moonsworth.apollo.api.module;
 
-import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
-import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-import com.moonsworth.apollo.api.events.Event;
-import com.moonsworth.apollo.api.events.EventBus;
-import com.moonsworth.apollo.api.module.receive.ApolloPacketReceiver;
-import com.moonsworth.apollo.api.options.ApolloOption;
-import com.moonsworth.apollo.api.options.OptionProperty;
-import com.moonsworth.apollo.api.protocol.ModuleConfiguration;
-import lombok.Getter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
+import java.util.Collection;
+import java.util.Collections;
 
-@Getter
-public abstract class ApolloModule extends ApolloPacketReceiver {
-
-    private final List<ApolloOption<?>> options = options();
-
-    private boolean enabled;
-    private String name;
-
-    public ApolloModule(String name) {
-        this.enabled = false;
-        this.name = name;
-
-        Runnable consumer = () -> Apollo.getApolloPlayerManager().getApolloPlayers().forEach(this::playerLogin);
-        options.forEach(option -> {
-            option.onUpdate(o -> {
-                if (Apollo.getApolloPlayerManager() != null) {
-                    consumer.run();
-                }
-            });
-        });
-    }
+/**
+ * Represents a module for Apollo.
+ *
+ * @since 1.0.0
+ */
+public interface ApolloModule {
 
     /**
-     * Enables this ApolloModule.
-     * NOTE: Modules are enabled as they're created. Some modules will load before others!
-     * <p>
-     * Called then the module is set to be enabled.
-     * This happens before enable, but after init in ApolloConsumer.
-     */
-    public void enable() {
-        this.enabled = true;
-        registerAllEvents();
-        this.onEnable();
-    }
-
-    /**
-     * Called when the module is enabled.
-     * Not required to have logic, but avaible.
-     */
-    public void onEnable() {
-
-    }
-
-    public abstract List<ApolloOption<?>> options();
-
-    /**
-     * Determines if we notify the players in a bulk packet when they login.
-     * This is very useful for things like LegacyCombatModule where it directly determines gameplay
-     * factors from the moment the user logs in, but less useful for things like NotificationModule
-     * where the user only needs to know it's enabled once it takes an action.
+     * Returns {@code true} if the module is enabled, otherwise returns
+     * {@code false}.
      *
-     * @return The result of if this should contain a combat module
+     * @return true if the module is enabled, otherwise false
+     * @since 1.0.0
      */
-    public abstract boolean notifyPlayers();
+    boolean isEnabled();
 
     /**
-     * Determines where the specified module can run
+     * Returns the module {@link String} name.
      *
-     * @return Where the module can run
+     * @return the module name
+     * @since 1.0.0
      */
-    public abstract List<ApolloPlatform.Kind> runsOn();
+    String getName();
 
     /**
-     * Called when a player logs in.
-     * If this is a notifying module, the player will have already received the packet that
-     * this module is enabled, and this will be overridden to add additional details around the
-     * rules of the module.
-     * <p>
-     * An example of this could be telling the client a duration for a cool down on login instead
-     * of sending that value everytime an action to cause the cooldown is invoked.
+     * Returns a {@link Collection} of supported {@link ApolloPlatform.Kind}.
      *
-     * @param player The player that has recently logged in.
+     * @return a collection of supported kinds of platforms
+     * @since 1.0.0
      */
-    public void playerLogin(ApolloPlayer player) {
-        if (notifyPlayers() && isEnabled()) {
-            ModuleConfiguration.Builder config = ModuleConfiguration.newBuilder().addModuleName(getName());
-            for (ApolloOption<?> option : getOptions()) {
-                if (option.get().equals(option.getDefault())) {
-                    continue;
-                }
-                if (option.getProperty() != OptionProperty.CLIENT) {
-                    continue;
-                }
-                config.putValues(option.getId(), option.get().toString());
-            }
-            player.sendPacket(config.build());
-        }
+    default Collection<ApolloPlatform.Kind> getSupport() {
+        return Collections.singletonList(ApolloPlatform.Kind.SERVER);
     }
 
     /**
-     * All the events this mod needs.
-     * Events get registered or unregistered when the mod gets enabled or disabled.
-     */
-    private Map<Class<Event>, Consumer<Event>> events = new HashMap<>();
-
-    public void registerAllEvents() {
-        for (Map.Entry<Class<Event>, Consumer<Event>> entry : events.entrySet()) {
-            Class<Event> k = entry.getKey();
-            Consumer<Event> v = entry.getValue();
-            EventBus.getBus().register(k, v);
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    protected <T extends Event> void handle(Class<T> clazz, Consumer<T> consumer) {
-        events.put((Class<Event>) clazz, (Consumer<Event>) consumer);
-    }
-
-    /**
-     * Called at the start of loading configuration.
-     * Used to load extra configuration that isn't quite an option
+     * Returns {@code true} if the client will be notified of this module,
+     * otherwise returns {@code false}.
      *
-     * @param configuration The config map
+     * <p>Setting this to true will also send any configuration options
+     * that can be sent to the client.</p>
+     *
+     * @return true if the client should be notified, otherwise false
+     * @since 1.0.0
      */
-    protected void loadConfiguration(Map<String, Object> configuration) {
+    default boolean isClientNotify() {
+        return false;
     }
 
-    /**
-     * Loads the items from a config file.
-     *
-     * @param configuration The data from the config section in YAML
-     */
-    public void load(Map<String, Object> configuration) {
-        loadConfiguration(configuration);
-        for (ApolloOption<?> option : getOptions()) {
-            if (!configuration.containsKey(getName() + "." + option.getId())) {
-                continue;
-            }
-            try {
-                option.load(configuration.get(getName() + "." + option.getId()).toString());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
 }
-
