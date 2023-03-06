@@ -1,5 +1,6 @@
 package com.moonsworth.apollo.api;
 
+import com.moonsworth.apollo.api.bridge.ApolloItemStack;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 
 import javax.annotation.Nullable;
@@ -24,4 +25,6 @@ public interface ApolloPlatform {
      */
     @Nullable
     ApolloPlayer tryWrapPlayer(Object player);
+
+    ApolloItemStack getItemStack(Object itemStack);
 }

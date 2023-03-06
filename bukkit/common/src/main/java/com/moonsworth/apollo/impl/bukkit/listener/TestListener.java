@@ -2,7 +2,9 @@ package com.moonsworth.apollo.impl.bukkit.listener;
 
 import com.google.protobuf.ByteString;
 import com.moonsworth.apollo.api.Apollo;
+import com.moonsworth.apollo.api.bridge.ApolloItemStack;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
+import com.moonsworth.apollo.api.module.impl.SaturationModule;
 import com.moonsworth.apollo.api.module.impl.TeammatesModule;
 import com.moonsworth.apollo.api.module.impl.WaypointModule;
 import com.moonsworth.apollo.api.protocol.AddWaypointMessage;
@@ -16,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.awt.*;
 import java.util.UUID;
@@ -33,6 +36,7 @@ public class TestListener implements Listener {
 
         Apollo.using(TeammatesModule.class);
         Apollo.using(WaypointModule.class);
+        Apollo.using(SaturationModule.class);
 
         Apollo.getApolloModuleManager().getModule(TeammatesModule.class).ifPresent(module -> {
             this.teamA = module.createTeam();
@@ -113,6 +117,25 @@ public class TestListener implements Listener {
         if(message.equalsIgnoreCase("F")) {
             player.sendMessage(this.teamA.toString());
             player.sendMessage(this.teamB.toString());
+            return;
+        }
+
+        if(message.equalsIgnoreCase("G")) {
+            ItemStack item = player.getInventory().getItemInMainHand();
+            ApolloItemStack apolloItemStack = Apollo.getPlatform().getItemStack(item);
+
+            Apollo.getApolloModuleManager().getModule(SaturationModule.class).ifPresent(module -> {
+                if(module.hasCustomSaturation(apolloItemStack)) {
+                    module.applyCustomSaturation(apolloItemStack, 10);
+                    player.sendMessage(ChatColor.GREEN + "Added saturation");
+                } else {
+                    module.removeCustomSaturation(apolloItemStack);
+                    player.sendMessage(ChatColor.RED + "Removed saturation");
+                }
+
+                player.getInventory().setItemInMainHand((ItemStack) apolloItemStack.get());
+            });
+
             return;
         }
 

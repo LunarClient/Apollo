@@ -2,11 +2,13 @@ package com.moonsworth.apollo.impl.bukkit;
 
 import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.ApolloPlatform;
+import com.moonsworth.apollo.api.bridge.ApolloItemStack;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.impl.*;
 import com.moonsworth.apollo.impl.bukkit.command.KnockbackCommand;
 import com.moonsworth.apollo.impl.bukkit.command.VignetteCommand;
 import com.moonsworth.apollo.impl.bukkit.listener.*;
+import com.moonsworth.apollo.impl.bukkit.wrapper.BukkitItemStack;
 import com.moonsworth.apollo.impl.bukkit.wrapper.BukkitPlayer;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -17,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.event.player.PlayerUnregisterChannelEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
@@ -93,6 +96,14 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
         return null;
     }
 
+    @Override
+    public ApolloItemStack getItemStack(Object o) {
+        if(o instanceof ItemStack) {
+            return new BukkitItemStack((ItemStack) o);
+        }
+
+        return null;
+    }
 
     @EventHandler
     public void onRegister(PlayerRegisterChannelEvent event) {

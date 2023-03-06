@@ -8,7 +8,7 @@ plugins {
 dependencies {
     compileOnlyApi(project(":apollo-api"))
 
-    paperweight.paperDevBundle("1.19.3-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.18.2-R0.1-SNAPSHOT")
 }
 
 spigot {
