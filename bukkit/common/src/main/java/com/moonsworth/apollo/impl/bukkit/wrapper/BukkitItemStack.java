@@ -18,7 +18,8 @@ public class BukkitItemStack implements ApolloItemStack {
         CompoundTag tag = this.itemStack.getTag();
 
         if(tag != null && tag.contains("lunar")) {
-            return !tag.getString(key).isEmpty();
+            CompoundTag lunar = tag.getCompound("lunar");
+            return lunar.get(key) != null;
         }
 
         return false;
