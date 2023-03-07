@@ -120,17 +120,41 @@ public class TestListener implements Listener {
             return;
         }
 
-        if(message.equalsIgnoreCase("G")) {
+        String[] args = message.split(" ");
+        if(message.toUpperCase().startsWith("G")) {
+            float saturation = args.length > 1 ? Float.parseFloat(args[1]) : 1.0f;
+
             ItemStack item = player.getInventory().getItemInMainHand();
             ApolloItemStack apolloItemStack = Apollo.getPlatform().getItemStack(item);
 
             Apollo.getApolloModuleManager().getModule(SaturationModule.class).ifPresent(module -> {
-                if(module.hasCustomSaturation(apolloItemStack)) {
-                    module.applyCustomSaturation(apolloItemStack, 10);
-                    player.sendMessage(ChatColor.GREEN + "Added saturation");
-                } else {
-                    module.removeCustomSaturation(apolloItemStack);
+                if(module.hasCustomValue(apolloItemStack, SaturationModule.CustomKey.SATURATION)) {
+                    module.removeCustomValue(apolloItemStack, SaturationModule.CustomKey.SATURATION);
                     player.sendMessage(ChatColor.RED + "Removed saturation");
+                } else {
+                    module.applyCustomValue(apolloItemStack, SaturationModule.CustomKey.SATURATION, saturation);
+                    player.sendMessage(ChatColor.GREEN + "Added saturation " + saturation);
+                }
+
+                player.getInventory().setItemInMainHand((ItemStack) apolloItemStack.get());
+            });
+
+            return;
+        }
+
+        if(message.toUpperCase().startsWith("H")) {
+            int hunger = args.length > 1 ? Integer.parseInt(args[1]) : 1;
+
+            ItemStack item = player.getInventory().getItemInMainHand();
+            ApolloItemStack apolloItemStack = Apollo.getPlatform().getItemStack(item);
+
+            Apollo.getApolloModuleManager().getModule(SaturationModule.class).ifPresent(module -> {
+                if(module.hasCustomValue(apolloItemStack, SaturationModule.CustomKey.HUNGER)) {
+                    module.removeCustomValue(apolloItemStack, SaturationModule.CustomKey.HUNGER);
+                    player.sendMessage(ChatColor.DARK_RED + "Removed hunger");
+                } else {
+                    module.applyCustomValue(apolloItemStack, SaturationModule.CustomKey.HUNGER, hunger);
+                    player.sendMessage(ChatColor.DARK_GREEN + "Added hunger " + hunger);
                 }
 
                 player.getInventory().setItemInMainHand((ItemStack) apolloItemStack.get());

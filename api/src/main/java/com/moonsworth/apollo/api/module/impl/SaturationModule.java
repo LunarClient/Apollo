@@ -5,6 +5,8 @@ import com.moonsworth.apollo.api.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloItemStack;
 import com.moonsworth.apollo.api.module.ApolloModule;
 import com.moonsworth.apollo.api.options.ApolloOption;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,18 +32,28 @@ public class SaturationModule extends ApolloModule {
         return ImmutableList.of(ApolloPlatform.Kind.SERVER);
     }
 
-    public boolean hasCustomSaturation(ApolloItemStack itemStack) {
-        return itemStack.hasTag("saturation");
+    public boolean hasCustomValue(ApolloItemStack itemStack, CustomKey key) {
+        return itemStack.hasTag(key.getKey());
     }
 
-    public ApolloItemStack applyCustomSaturation(ApolloItemStack itemStack, float saturation) {
-        itemStack.addTag("saturation", saturation);
+    public ApolloItemStack applyCustomValue(ApolloItemStack itemStack, CustomKey key, Number value) {
+        itemStack.addTag(key.getKey(), value);
         return itemStack;
     }
 
 
-    public ApolloItemStack removeCustomSaturation(ApolloItemStack itemStack) {
-        itemStack.removeTag("saturation");
+    public ApolloItemStack removeCustomValue(ApolloItemStack itemStack, CustomKey key) {
+        itemStack.removeTag(key.getKey());
         return itemStack;
     }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum CustomKey {
+        
+        HUNGER("hunger"),
+        SATURATION("saturation");
+        
+        private final String key;
+    } 
 }

@@ -25,9 +25,14 @@ public class BukkitItemStack implements ApolloItemStack {
     }
 
     @Override
-    public void addTag(String key, float value) {
+    public void addTag(String key, Object value) {
         CompoundTag tag = new CompoundTag();
-        tag.putFloat(key, value);
+
+        if(value instanceof Float) {
+            tag.putFloat(key, (Float) value);
+        } else if(value instanceof Integer) {
+            tag.putInt(key, (Integer) value);
+        }
 
         this.itemStack.addTagElement("lunar", tag);
     }
