@@ -24,6 +24,7 @@ public class ServerRuleModule extends ApolloModule {
     private NumberOption<Integer> brightness;
 
     private NumberOption<Integer> nametagRenderDistance; // Heavily depends on the server render distance!
+    private NumberOption<Integer> chatMessageLength;
 
     public ServerRuleModule() {
         super("ServerRuleModule");
@@ -40,7 +41,8 @@ public class ServerRuleModule extends ApolloModule {
                 cpsLimit = new NumberOption<>("cpsLimit", OptionProperty.CLIENT, 20, 1, 100),
                 affectBrightness = new BooleanOption("affectBrightness", OptionProperty.CLIENT, false),
                 brightness = new NumberOption<>("brightness", OptionProperty.CLIENT, 50, 1, 10000),
-                nametagRenderDistance = new NumberOption<>("nametagRenderDistance", OptionProperty.CLIENT, 64, 1, 96)
+                nametagRenderDistance = new NumberOption<>("nametagRenderDistance", OptionProperty.CLIENT, 64, 1, 96),
+                chatMessageLength = new NumberOption<>("chatMessageLength", OptionProperty.CLIENT, 100, 1, 256)
         );
     }
 

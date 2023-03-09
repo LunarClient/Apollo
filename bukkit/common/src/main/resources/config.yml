@@ -87,7 +87,7 @@ modules:
     competitiveGame: false
     shadersDisabled: false
     disableF6Broadcasting: false # Only needed/available on 1.7 & 1.8
-    antiPortalTraps: false # work in progress
+    antiPortalTraps: false
     cpsLimiter: false # Work in progress
     cpsLimit: 20 # Work in progress
     affectBrightness: true
@@ -97,4 +97,6 @@ modules:
     # 64 is default
     # 96 is max (6 chunks).
     nametagRenderDistance: 64
+    chatMessageLength: 100
+
 
