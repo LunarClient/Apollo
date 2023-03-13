@@ -42,7 +42,7 @@ public class ServerRuleModule extends ApolloModule {
                 affectBrightness = new BooleanOption("affectBrightness", OptionProperty.CLIENT, false),
                 brightness = new NumberOption<>("brightness", OptionProperty.CLIENT, 50, 1, 10000),
                 nametagRenderDistance = new NumberOption<>("nametagRenderDistance", OptionProperty.CLIENT, 64, 1, 96),
-                chatMessageLength = new NumberOption<>("chatMessageLength", OptionProperty.CLIENT, 100, 1, 256)
+                chatMessageLength = new NumberOption<>("chatMessageLength", OptionProperty.CLIENT, 256, 1, 256)
         );
     }
 
