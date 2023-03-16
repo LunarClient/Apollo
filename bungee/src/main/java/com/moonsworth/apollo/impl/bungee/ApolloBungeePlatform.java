@@ -1,8 +1,8 @@
 package com.moonsworth.apollo.impl.bungee;
 
 import com.google.common.base.Charsets;
-import com.moonsworth.apollo.api.Apollo;
-import com.moonsworth.apollo.api.ApolloPlatform;
+import com.moonsworth.apollo.Apollo;
+import com.moonsworth.apollo.ApolloPlatform;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.events.EventBus;
 import com.moonsworth.apollo.impl.bungee.util.ConfigurationUtil;
@@ -10,7 +10,6 @@ import com.moonsworth.apollo.impl.bungee.wrapper.BungeePlayer;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PluginMessageEvent;
-import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;

@@ -1,8 +1,8 @@
 package com.moonsworth.apollo.impl.velocity;
 
 import com.google.common.base.Charsets;
-import com.moonsworth.apollo.api.Apollo;
-import com.moonsworth.apollo.api.ApolloPlatform;
+import com.moonsworth.apollo.Apollo;
+import com.moonsworth.apollo.ApolloPlatform;
 import com.google.inject.Inject;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.events.EventBus;
@@ -10,7 +10,6 @@ import com.moonsworth.apollo.impl.velocity.wrapper.VelocityPlayer;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
-import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.Player;

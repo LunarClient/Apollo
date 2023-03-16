@@ -63,6 +63,8 @@ protobuf {
 dependencies {
     compileOnlyApi(project(":apollo-api"))
 
+    compileOnly("org.jetbrains:annotations:24.0.1")
+
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
@@ -86,6 +88,9 @@ dependencies {
 
     // shaded in dependencies
     api("com.google.protobuf:protobuf-java:3.21.4")
+
+    api("org.spongepowered:configurate-core:4.1.2")
+    api("org.spongepowered:configurate-hocon:4.1.2")
 }
 
 publishing {

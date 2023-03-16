@@ -2,7 +2,6 @@ package com.moonsworth.apollo.impl.bukkit.command;
 
 import com.google.common.primitives.Ints;
 import com.google.protobuf.ByteString;
-import com.moonsworth.apollo.api.Apollo;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import com.moonsworth.apollo.api.module.impl.*;
 import com.moonsworth.apollo.api.protocol.*;

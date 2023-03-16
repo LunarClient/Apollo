@@ -1,6 +1,6 @@
 package com.moonsworth.apollo.impl.bungee.wrapper;
 
-import com.moonsworth.apollo.api.Apollo;
+import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.api.bridge.ApolloLocation;
 import com.moonsworth.apollo.api.bridge.ApolloPlayer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;

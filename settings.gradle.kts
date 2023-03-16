@@ -1,4 +1,4 @@
-rootProject.name = "apollo"
+rootProject.name = "apollo-parent"
 
 val mcVersion = startParameter.projectProperties["mc"]
 val loadAllVersions = mcVersion == null

@@ -1,6 +1,6 @@
 package com.moonsworth.apollo.impl.bukkit.v1_18.mixin;
 
-import com.moonsworth.apollo.api.Apollo;
+import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;

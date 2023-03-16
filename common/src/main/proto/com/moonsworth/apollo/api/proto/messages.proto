@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option java_package = "com.moonsworth.apollo.api.protocol";
+option java_package = "com.moonsworth.apollo.common.protocol";
 option java_outer_classname = "ApolloProtocol";
 option java_multiple_files = true;
 
@@ -23,17 +23,19 @@ message ModSetting {
   map<string, string> properties = 2;
 }
 
-message ClearCooldownMessage {
-
-}
+// Cooldown Module
 
 message CooldownMessage {
-  bytes name = 1;
+  string name = 1;
   int64 durationMs = 2;
   oneof icon {
     int32 itemId = 3;
     RenderableIcon iconLocation = 4;
   }
+}
+
+message CooldownClearMessage {
+  optional string name = 1;
 }
 
 message StaffMods {
