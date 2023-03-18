@@ -1,6 +1,8 @@
 package com.moonsworth.apollo.option;
 
 import io.leangen.geantyref.TypeToken;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import static java.util.Objects.requireNonNull;
 
@@ -13,6 +15,7 @@ import static java.util.Objects.requireNonNull;
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public abstract class OptionBuilder<T, M extends OptionBuilder<T, M, I>, I extends Option<T, M, I>> {
 
     String[] node;
@@ -20,8 +23,6 @@ public abstract class OptionBuilder<T, M extends OptionBuilder<T, M, I>, I exten
     String comment = null;
     T defaultValue = null;
     boolean notify;
-
-    OptionBuilder() {}
 
     /**
      * Sets the option node to the provided {@link String} array and returns

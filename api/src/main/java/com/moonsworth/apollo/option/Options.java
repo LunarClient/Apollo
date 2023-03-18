@@ -118,4 +118,5 @@ public final class Options implements Iterable<Option<?, ?, ?>> {
     public Iterator<Option<?, ?, ?>> iterator() {
         return this.options.values().iterator();
     }
+
 }
