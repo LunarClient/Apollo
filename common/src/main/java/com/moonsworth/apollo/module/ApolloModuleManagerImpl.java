@@ -1,5 +1,6 @@
 package com.moonsworth.apollo.module;
 
+import com.moonsworth.apollo.event.EventBus;
 import com.moonsworth.apollo.option.Option;
 import com.moonsworth.apollo.option.Options;
 import lombok.NoArgsConstructor;
@@ -42,6 +43,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
                 final Constructor<T> constructor = moduleClass.getDeclaredConstructor();
                 constructor.setAccessible(true);
                 final T module = constructor.newInstance();
+                EventBus.getBus().register(module);
                 module.enable();
                 return module;
             } catch(final Throwable throwable) {
@@ -55,6 +57,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         requireNonNull(module, "module");
         this.modules.computeIfAbsent(moduleClass, key -> {
             try {
+                EventBus.getBus().register(module);
                 module.enable();
                 return module;
             } catch(final Throwable throwable) {

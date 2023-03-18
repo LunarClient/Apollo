@@ -1,6 +1,7 @@
 package com.moonsworth.apollo.module;
 
 import com.moonsworth.apollo.ApolloPlatform;
+import com.moonsworth.apollo.event.Listener;
 import com.moonsworth.apollo.option.Options;
 import lombok.Getter;
 
@@ -15,7 +16,7 @@ import static java.util.Objects.requireNonNull;
  * @since 1.0.0
  */
 @Getter
-public abstract class ApolloModule {
+public abstract class ApolloModule implements Listener {
 
     /**
      * Returns the module {@link String} name.
@@ -55,7 +56,7 @@ public abstract class ApolloModule {
      * @since 1.0.0
      */
     public Options getOptions() {
-        return Options.empty();
+        return Options.getEmpty();
     }
 
     /**
