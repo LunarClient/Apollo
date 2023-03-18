@@ -67,15 +67,15 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
     public void loadConfiguration(final CommentedConfigurationNode node) {
         for(final ApolloModule module : this.modules.values()) {
             final CommentedConfigurationNode moduleNode = node.node(module.getName());
-            if(moduleNode == null || moduleNode.virtual()) continue;
+            if(moduleNode.virtual()) continue;
 
             final Options options = module.getOptions();
             for(final Option<?, ?, ?> option : options) {
                 final CommentedConfigurationNode optionNode = moduleNode.node((Object[]) option.getNode());
-                if(optionNode == null || optionNode.virtual()) continue;
+                if(optionNode.virtual()) continue;
 
                 try {
-                    final Object value = optionNode.get(option.getDefaultValue().getClass());
+                    final Object value = optionNode.get(option.getTypeToken());
                     options.set(option, value);
                 } catch(final Throwable throwable) {
                     throwable.printStackTrace();
@@ -84,11 +84,9 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         }
     }
 
-    public CommentedConfigurationNode saveConfiguration() {
-        final CommentedConfigurationNode node = CommentedConfigurationNode.root();
+    public void saveConfiguration(final CommentedConfigurationNode node) {
         for(final ApolloModule module : this.modules.values()) {
             final CommentedConfigurationNode moduleNode = node.node(module.getName());
-            if(moduleNode == null) continue;
 
             final Options options = module.getOptions();
             for(final Option<?, ?, ?> option : options) {
@@ -96,14 +94,12 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
                 if(optionNode == null) continue;
 
                 try {
-                    optionNode.set(option.getDefaultValue());
+                    optionNode.set(options.get(option));
                 } catch(final Throwable throwable) {
                     throwable.printStackTrace();
                 }
             }
         }
-
-        return node;
     }
 
 }

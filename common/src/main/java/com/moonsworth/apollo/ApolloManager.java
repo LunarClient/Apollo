@@ -1,8 +1,10 @@
 package com.moonsworth.apollo;
 
 import com.moonsworth.apollo.module.ApolloModuleManagerImpl;
+import com.moonsworth.apollo.network.ApolloNetworkManager;
 import com.moonsworth.apollo.player.ApolloPlayerManagerImpl;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.lang.reflect.Field;
@@ -20,6 +22,7 @@ public final class ApolloManager {
      */
     public static final String PLUGIN_MESSAGE_CHANNEL = "lunarclient:apollo";
 
+    @Getter private static ApolloNetworkManager networkManager;
     private static boolean bootstrapped = false;
 
     public static void bootstrap(final ApolloPlatform platform) {
@@ -28,6 +31,8 @@ public final class ApolloManager {
             ApolloManager.set("platform", platform);
             ApolloManager.set("moduleManager", new ApolloModuleManagerImpl());
             ApolloManager.set("playerManager", new ApolloPlayerManagerImpl());
+
+            ApolloManager.networkManager = new ApolloNetworkManager();
         } catch(final Throwable throwable) {
             throw new RuntimeException("Unable to bootstrap Apollo!", throwable);
         }

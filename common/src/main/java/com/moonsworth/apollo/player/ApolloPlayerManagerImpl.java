@@ -1,7 +1,8 @@
 package com.moonsworth.apollo.player;
 
-import com.moonsworth.apollo.player.ApolloPlayer;
-import com.moonsworth.apollo.player.ApolloPlayerManager;
+import com.moonsworth.apollo.event.EventBus;
+import com.moonsworth.apollo.event.player.ApolloRegisterPlayerEvent;
+import com.moonsworth.apollo.event.player.ApolloUnregisterPlayerEvent;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -9,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Provides the implementation for the {@link ApolloPlayerManager}.
@@ -29,6 +32,27 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
     @Override
     public Collection<ApolloPlayer> getPlayers() {
         return Collections.unmodifiableCollection(this.players.values());
+    }
+
+    public void addPlayer(final ApolloPlayer player) {
+        requireNonNull(player, "player");
+        if(this.players.putIfAbsent(player.getUniqueId(), player) == null) {
+            final EventBus.EventResult<ApolloRegisterPlayerEvent> result = EventBus.getBus().post(new ApolloRegisterPlayerEvent(player));
+            for(final Throwable throwable : result.getThrowing()) {
+                throwable.printStackTrace();
+            }
+        }
+    }
+
+    public void removePlayer(final UUID player) {
+        requireNonNull(player, "player");
+        final ApolloPlayer apolloPlayer = this.players.remove(player);
+        if(apolloPlayer != null) {
+            final EventBus.EventResult<ApolloUnregisterPlayerEvent> result = EventBus.getBus().post(new ApolloUnregisterPlayerEvent(apolloPlayer));
+            for(final Throwable throwable : result.getThrowing()) {
+                throwable.printStackTrace();
+            }
+        }
     }
 
 }

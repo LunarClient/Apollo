@@ -1,9 +1,9 @@
 package com.moonsworth.apollo.module.type;
 
-import com.moonsworth.apollo.player.ApolloPlayer;
-import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.common.protocol.CooldownClearMessage;
 import com.moonsworth.apollo.common.protocol.CooldownMessage;
+import com.moonsworth.apollo.player.AbstractApolloPlayer;
+import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Cooldown;
 
 import static java.util.Objects.requireNonNull;

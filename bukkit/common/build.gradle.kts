@@ -5,8 +5,13 @@ plugins {
     id("io.papermc.paperweight.userdev")
 }
 
+val lombokVersion: String by project
+
 dependencies {
     compileOnlyApi(project(":apollo-common"))
+
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
     paperweight.paperDevBundle("1.19.3-R0.1-SNAPSHOT")
 }
