@@ -2,7 +2,7 @@ package com.moonsworth.apollo.module;
 
 import com.moonsworth.apollo.ApolloPlatform;
 import com.moonsworth.apollo.event.Listener;
-import com.moonsworth.apollo.option.Options;
+import com.moonsworth.apollo.option.OptionsContainer;
 import lombok.Getter;
 
 import java.util.Collection;
@@ -50,13 +50,13 @@ public abstract class ApolloModule implements Listener {
     }
 
     /**
-     * Returns the {@link Options} of this module.
+     * Returns the {@link OptionsContainer} of this module.
      *
      * @return the module options
      * @since 1.0.0
      */
-    public Options getOptions() {
-        return Options.getEmpty();
+    public OptionsContainer getOptions() {
+        return OptionsContainer.getEmpty();
     }
 
     /**

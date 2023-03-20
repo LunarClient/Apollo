@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+option java_package = "com.moonsworth.apollo.protocol";
+option java_outer_classname = "ApolloProtocol";
+option java_multiple_files = true;
+
+// Module List
+// A list of modules to make the client aware of.
+
+message ModuleList {
+  repeated string modules = 1;
+}
+
+// Module Options
+// Allows the server to manipulate options on the client temporarily.
+
+message Modules {
+  map<string, ModuleOptions> modules = 1;
+}
+
+message ModuleOptions {
+  bool enabled = 1;
+  map<string, ModuleOption> options = 2;
+}
+
+message ModuleOption {
+  oneof value {
+    SetOption set = 1;
+    AddOption add = 2;
+    ReplaceOption replace = 3;
+  }
+}
+
+// Option Wrappers
+// The option wrapper will make it possible to set, add, or replace
+// specific option values.
+
+message SetOption {
+  google.protobuf.Any value = 1;
+}
+
+message AddOption {
+  google.protobuf.Any value = 1;
+}
+
+message ReplaceOption {
+  google.protobuf.Any compare = 1;
+  google.protobuf.Any update = 2;
+}

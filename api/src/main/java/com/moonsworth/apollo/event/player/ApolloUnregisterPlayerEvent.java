@@ -7,7 +7,7 @@ import lombok.Value;
 /**
  * Event for when a player is unregistered from Apollo.
  *
- * <p>This is usually posted when the a player using
+ * <p>This is usually posted when the player using
  * Lunar Client leaves the server. This is only called
  * once in the players session.</p>
  *

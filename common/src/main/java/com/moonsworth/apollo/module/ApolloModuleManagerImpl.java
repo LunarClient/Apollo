@@ -2,7 +2,7 @@ package com.moonsworth.apollo.module;
 
 import com.moonsworth.apollo.event.EventBus;
 import com.moonsworth.apollo.option.Option;
-import com.moonsworth.apollo.option.Options;
+import com.moonsworth.apollo.option.OptionsContainer;
 import lombok.NoArgsConstructor;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 
@@ -72,14 +72,14 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
             final CommentedConfigurationNode moduleNode = node.node(module.getName());
             if(moduleNode.virtual()) continue;
 
-            final Options options = module.getOptions();
-            for(final Option<?, ?, ?> option : options) {
+            final OptionsContainer optionsContainer = module.getOptions();
+            for(final Option<?, ?, ?> option : optionsContainer) {
                 final CommentedConfigurationNode optionNode = moduleNode.node((Object[]) option.getNode());
                 if(optionNode.virtual()) continue;
 
                 try {
                     final Object value = optionNode.get(option.getTypeToken());
-                    options.set(option, value);
+                    optionsContainer.set(option, value);
                 } catch(final Throwable throwable) {
                     throwable.printStackTrace();
                 }
@@ -91,13 +91,13 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         for(final ApolloModule module : this.modules.values()) {
             final CommentedConfigurationNode moduleNode = node.node(module.getName());
 
-            final Options options = module.getOptions();
-            for(final Option<?, ?, ?> option : options) {
+            final OptionsContainer optionsContainer = module.getOptions();
+            for(final Option<?, ?, ?> option : optionsContainer) {
                 final CommentedConfigurationNode optionNode = moduleNode.node((Object[]) option.getNode());
                 if(optionNode == null) continue;
 
                 try {
-                    optionNode.set(options.get(option));
+                    optionNode.set(optionsContainer.get(option));
                 } catch(final Throwable throwable) {
                     throwable.printStackTrace();
                 }

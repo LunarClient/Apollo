@@ -4,6 +4,7 @@ import com.google.protobuf.Any;
 import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.ApolloPlatform;
 import com.moonsworth.apollo.impl.bukkit.wrapper.BukkitApolloPlayer;
+import com.moonsworth.apollo.module.type.ColoredFire;
 import com.moonsworth.apollo.module.type.Cooldowns;
 import com.moonsworth.apollo.module.type.LegacyCombat;
 import com.moonsworth.apollo.ApolloManager;
@@ -40,6 +41,7 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
         ApolloManager.bootstrap(this);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
+                .addModule(ColoredFire.class)
                 .addModule(Cooldowns.class, new CooldownsImpl())
                 .addModule(LegacyCombat.class);
 
