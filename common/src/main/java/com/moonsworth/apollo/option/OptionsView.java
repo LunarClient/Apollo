@@ -1,12 +1,9 @@
 package com.moonsworth.apollo.option;
 
 import com.moonsworth.apollo.player.ApolloPlayer;
-import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -16,40 +13,21 @@ import java.util.function.BiFunction;
 
 import static java.util.Objects.requireNonNull;
 
-/**
- * Represents a container of {@link Option}s.
- *
- * @since 1.0.0
- */
-public final class OptionsContainer implements Options {
+public final class OptionsView implements Options.Single {
 
-    /**
-     * Returns an empty {@link Option}s container.
-     *
-     * @return an empty container
-     * @since 1.0.0
-     */
-    @Getter private static final OptionsContainer empty = new OptionsContainer(Collections.emptyList());
+    private final OptionsContainer container;
+    private final ApolloPlayer player;
 
-    /**
-     * Returns a new {@link Option}s container with the provided options.
-     *
-     * @param options the default options
-     * @return a new container
-     * @since 1.0.0
-     */
-    public static OptionsContainer of(final Option<?, ?, ?>... options) {
-        return new OptionsContainer(Arrays.asList(options));
-    }
-
-    private final Map<ApolloPlayer, OptionsView> views = new HashMap<>();
-    private final Map<String, Option<?, ?, ?>> options = new HashMap<>();
     private final Map<String, Object> values = new HashMap<>();
 
-    private OptionsContainer(final Collection<Option<?, ?, ?>> options) {
-        for(final Option<?, ?, ?> option : options) {
-            this.options.put(option.getKey(), option);
-        }
+    OptionsView(final OptionsContainer parent, final ApolloPlayer player) {
+        this.container = parent;
+        this.player = player;
+    }
+
+    @Override
+    public ApolloPlayer getPlayer() {
+        return this.player;
     }
 
     @Override
@@ -58,14 +36,17 @@ public final class OptionsContainer implements Options {
         requireNonNull(option, "option");
         final Object value;
         return (value = this.values.get(option.getKey())) == null
-                ? (T) option.getDefaultValue()
+                ? this.container.get(option)
                 : (T) value;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T> Optional<T> getDirect(final Option<?, ?, ?> option) {
-        return Optional.ofNullable((T) this.values.get(option.getKey()));
+        final Object value;
+        return (value = this.values.get(option.getKey())) == null
+                ? this.container.getDirect(option)
+                : Optional.of((T) value);
     }
 
     @Override
@@ -86,20 +67,24 @@ public final class OptionsContainer implements Options {
     }
 
     @Override
+    public <T> void remove(final Option<?, ?, ?> option, final @Nullable T compare) {
+        requireNonNull(option, "option");
+        requireNonNull(compare, "compare");
+        this.values.remove(option.getKey(), compare);
+    }
+
+    @Override
     public <T> void replace(final Option<?, ?, ?> option, final BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
         requireNonNull(option, "option");
         requireNonNull(remappingFunction, "remappingFunction");
         this.values.compute(option.getKey(), (key, current) -> remappingFunction.apply(option, (T) current));
     }
 
-    public OptionsView view(final ApolloPlayer player) {
-        requireNonNull(player, "player");
-        return this.views.computeIfAbsent(player, key -> new OptionsView(this, key));
-    }
-
+    @NotNull
     @Override
     public Iterator<Option<?, ?, ?>> iterator() {
-        return this.options.values().iterator();
+        // TODO: join the values here with the ones from the container for this iterator
+        return this.container.iterator();
     }
 
 }

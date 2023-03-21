@@ -49,3 +49,16 @@ message ReplaceOption {
   google.protobuf.Any compare = 1;
   google.protobuf.Any update = 2;
 }
+
+// Abstract Types
+
+message List {
+  repeated google.protobuf.Any elements = 1;
+}
+
+// Module Types
+
+message Cooldown {
+  string name = 1;
+  int64 duration = 2;
+}

@@ -2,7 +2,6 @@ package com.moonsworth.apollo.module.type;
 
 import com.moonsworth.apollo.module.ApolloModule;
 import com.moonsworth.apollo.option.Option;
-import com.moonsworth.apollo.option.OptionsContainer;
 import com.moonsworth.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
@@ -88,24 +87,21 @@ public final class LegacyCombat extends ApolloModule {
             .node("enable-projectile-damage").type(TypeToken.get(Boolean.class))
             .defaultValue(true).build();
 
-    private static final OptionsContainer OPTIONS = OptionsContainer.of(
-            LegacyCombat.DISABLE_ENTITY_CRAMMING,
-            LegacyCombat.DISABLE_ENDERPEARL_COOLDOWN,
-            LegacyCombat.DISABLE_SWING_SOUNDS,
-            LegacyCombat.DISABLE_SWEEP,
-            LegacyCombat.ENABLE_LEGACY_CRITS,
-            LegacyCombat.ENABLE_LEGACY_ATTACK_SPEED,
-            LegacyCombat.ENABLE_ARMOR_DURABILITY,
-            LegacyCombat.ENABLE_PROJECTILE_DAMAGE
-    );
+    {
+        this.optionKeys = new Option[] {
+                LegacyCombat.DISABLE_ENTITY_CRAMMING,
+                LegacyCombat.DISABLE_ENDERPEARL_COOLDOWN,
+                LegacyCombat.DISABLE_SWING_SOUNDS,
+                LegacyCombat.DISABLE_SWEEP,
+                LegacyCombat.ENABLE_LEGACY_CRITS,
+                LegacyCombat.ENABLE_LEGACY_ATTACK_SPEED,
+                LegacyCombat.ENABLE_ARMOR_DURABILITY,
+                LegacyCombat.ENABLE_PROJECTILE_DAMAGE
+        };
+    }
 
     LegacyCombat() {
         super("LegacyCombat");
-    }
-
-    @Override
-    public OptionsContainer getOptions() {
-        return LegacyCombat.OPTIONS;
     }
 
     @Override

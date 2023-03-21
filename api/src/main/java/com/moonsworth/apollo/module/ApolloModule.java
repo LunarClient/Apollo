@@ -2,8 +2,11 @@ package com.moonsworth.apollo.module;
 
 import com.moonsworth.apollo.ApolloPlatform;
 import com.moonsworth.apollo.event.Listener;
-import com.moonsworth.apollo.option.OptionsContainer;
+import com.moonsworth.apollo.option.Option;
+import com.moonsworth.apollo.option.Options;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -15,7 +18,6 @@ import static java.util.Objects.requireNonNull;
  *
  * @since 1.0.0
  */
-@Getter
 public abstract class ApolloModule implements Listener {
 
     /**
@@ -24,6 +26,7 @@ public abstract class ApolloModule implements Listener {
      * @return the module name
      * @since 1.0.0
      */
+    @Getter
     private final String name;
 
     /**
@@ -33,7 +36,27 @@ public abstract class ApolloModule implements Listener {
      * @return true if the module is enabled, otherwise false
      * @since 1.0.0
      */
+    @Getter
     private boolean enabled;
+
+    /**
+     * Returns the {@link Options.Container} of this module.
+     *
+     * @return the module options container
+     * @since 1.0.0
+     */
+    @Getter
+    @Setter(AccessLevel.PACKAGE)
+    private Options.Container options = Options.empty();
+
+    /**
+     * Returns an array of {@link Option}s in this module.
+     *
+     * @return an array of module options
+     * @since 1.0.0
+     */
+    @Getter(AccessLevel.PACKAGE)
+    protected Option<?, ?, ?>[] optionKeys = {};
 
     public ApolloModule(final String name) {
         this.name = requireNonNull(name, "name");
@@ -47,16 +70,6 @@ public abstract class ApolloModule implements Listener {
      */
     public Collection<ApolloPlatform.Kind> getSupport() {
         return Collections.singletonList(ApolloPlatform.Kind.SERVER);
-    }
-
-    /**
-     * Returns the {@link OptionsContainer} of this module.
-     *
-     * @return the module options
-     * @since 1.0.0
-     */
-    public OptionsContainer getOptions() {
-        return OptionsContainer.getEmpty();
     }
 
     /**
@@ -91,4 +104,5 @@ public abstract class ApolloModule implements Listener {
      */
     public void onEnable() {
     }
+
 }

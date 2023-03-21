@@ -41,6 +41,10 @@ public abstract class Option<T, M extends OptionBuilder<T, M, I>, I extends Opti
         return new NumberOption.NumberOptionBuilder<>();
     }
 
+    public static <T> ListOption.ListOptionBuilder<T> list() {
+        return new ListOption.ListOptionBuilder<>();
+    }
+
     /**
      * Returns the option node.
      *

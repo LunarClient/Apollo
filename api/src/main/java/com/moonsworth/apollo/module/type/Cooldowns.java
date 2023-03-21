@@ -1,9 +1,15 @@
 package com.moonsworth.apollo.module.type;
 
 import com.moonsworth.apollo.module.ApolloModule;
+import com.moonsworth.apollo.option.ListOption;
+import com.moonsworth.apollo.option.Option;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Cooldown;
+import io.leangen.geantyref.TypeToken;
 import org.jetbrains.annotations.ApiStatus;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Represents the cooldown module.
@@ -12,6 +18,14 @@ import org.jetbrains.annotations.ApiStatus;
  */
 @ApiStatus.NonExtendable
 public abstract class Cooldowns extends ApolloModule {
+
+    /**
+     * A list of cooldowns.
+     */
+    public static final ListOption<Cooldown> COOLDOWNS = Option.<Cooldown>list()
+            .node("cooldowns").type(new TypeToken<List<Cooldown>>() {})
+            .defaultValue(Collections.emptyList()).notifyClient()
+            .build();
 
     Cooldowns() {
         super("Cooldowns");

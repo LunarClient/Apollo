@@ -2,11 +2,13 @@ package com.moonsworth.apollo.module;
 
 import com.moonsworth.apollo.event.EventBus;
 import com.moonsworth.apollo.option.Option;
+import com.moonsworth.apollo.option.Options;
 import com.moonsworth.apollo.option.OptionsContainer;
 import lombok.NoArgsConstructor;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -57,6 +59,9 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         requireNonNull(module, "module");
         this.modules.computeIfAbsent(moduleClass, key -> {
             try {
+                if(module.optionKeys.length > 0) {
+                    module.setOptions(new OptionsContainer(Arrays.asList(module.optionKeys)));
+                }
                 EventBus.getBus().register(module);
                 module.enable();
                 return module;
@@ -72,7 +77,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
             final CommentedConfigurationNode moduleNode = node.node(module.getName());
             if(moduleNode.virtual()) continue;
 
-            final OptionsContainer optionsContainer = module.getOptions();
+            final Options.Container optionsContainer = module.getOptions();
             for(final Option<?, ?, ?> option : optionsContainer) {
                 final CommentedConfigurationNode optionNode = moduleNode.node((Object[]) option.getNode());
                 if(optionNode.virtual()) continue;
@@ -91,7 +96,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         for(final ApolloModule module : this.modules.values()) {
             final CommentedConfigurationNode moduleNode = node.node(module.getName());
 
-            final OptionsContainer optionsContainer = module.getOptions();
+            final Options.Container optionsContainer = module.getOptions();
             for(final Option<?, ?, ?> option : optionsContainer) {
                 final CommentedConfigurationNode optionNode = moduleNode.node((Object[]) option.getNode());
                 if(optionNode == null) continue;
