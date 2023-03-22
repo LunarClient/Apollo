@@ -25,5 +25,4 @@ public final class OptionConverters {
     public static @Nullable OptionConverter<Object, Message> get(final Class<?> objectClass) {
         return OptionConverters.objectToConverter.get(objectClass);
     }
-
 }

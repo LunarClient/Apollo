@@ -7,5 +7,4 @@ public interface OptionConverter<I, O extends Message> {
     O to(final I object) throws IllegalArgumentException;
 
     I from(final O message) throws IllegalArgumentException;
-
 }

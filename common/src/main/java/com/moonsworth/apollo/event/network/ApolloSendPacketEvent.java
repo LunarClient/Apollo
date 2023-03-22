@@ -3,17 +3,19 @@ package com.moonsworth.apollo.event.network;
 import com.google.protobuf.Any;
 import com.moonsworth.apollo.event.EventCancellable;
 import com.moonsworth.apollo.player.ApolloPlayer;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.Value;
+import lombok.experimental.NonFinal;
 
-@Getter
-@RequiredArgsConstructor
-public final class ApolloSendPacketEvent implements EventCancellable {
+@Value
+public class ApolloSendPacketEvent implements EventCancellable {
 
-    private final ApolloPlayer player;
-    private final Any packet;
+    ApolloPlayer player;
+    Any packet;
 
-    @Setter private boolean cancelled;
+    @NonFinal boolean cancelled;
 
+    @Override
+    public void setCancelled(boolean cancel) {
+        this.cancelled = cancel;
+    }
 }

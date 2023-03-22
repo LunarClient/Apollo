@@ -87,21 +87,19 @@ public final class LegacyCombat extends ApolloModule {
             .node("enable-projectile-damage").type(TypeToken.get(Boolean.class))
             .defaultValue(true).build();
 
-    {
-        this.optionKeys = new Option[] {
-                LegacyCombat.DISABLE_ENTITY_CRAMMING,
-                LegacyCombat.DISABLE_ENDERPEARL_COOLDOWN,
-                LegacyCombat.DISABLE_SWING_SOUNDS,
-                LegacyCombat.DISABLE_SWEEP,
-                LegacyCombat.ENABLE_LEGACY_CRITS,
-                LegacyCombat.ENABLE_LEGACY_ATTACK_SPEED,
-                LegacyCombat.ENABLE_ARMOR_DURABILITY,
-                LegacyCombat.ENABLE_PROJECTILE_DAMAGE
-        };
-    }
-
     LegacyCombat() {
         super("LegacyCombat");
+
+        this.registerOptions(
+            LegacyCombat.DISABLE_ENTITY_CRAMMING,
+            LegacyCombat.DISABLE_ENDERPEARL_COOLDOWN,
+            LegacyCombat.DISABLE_SWING_SOUNDS,
+            LegacyCombat.DISABLE_SWEEP,
+            LegacyCombat.ENABLE_LEGACY_CRITS,
+            LegacyCombat.ENABLE_LEGACY_ATTACK_SPEED,
+            LegacyCombat.ENABLE_ARMOR_DURABILITY,
+            LegacyCombat.ENABLE_PROJECTILE_DAMAGE
+        );
     }
 
     @Override

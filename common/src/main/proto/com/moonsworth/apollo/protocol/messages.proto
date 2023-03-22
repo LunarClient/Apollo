@@ -83,7 +83,29 @@ message ValueWrapper {
 
 // Module Types
 
+message BlockLocationMessage {
+  string world = 1;
+  sint32 x = 2;
+  sint32 y = 3;
+  sint32 z = 4;
+}
+
+message LocationMessage {
+  string world = 1;
+  double x = 2;
+  double y = 3;
+  double z = 4;
+}
+
 message CooldownMessage {
   string name = 1;
   int64 duration = 2;
+}
+
+message WaypointMessage {
+  string name = 1;
+  BlockLocationMessage location = 2;
+  sint32 color = 3;
+  bool forced = 4;
+  bool visible = 5;
 }
