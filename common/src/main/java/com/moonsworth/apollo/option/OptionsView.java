@@ -13,7 +13,7 @@ import java.util.function.BiFunction;
 
 import static java.util.Objects.requireNonNull;
 
-public final class OptionsView implements Options.Single {
+public final class OptionsView extends AbstractOptions implements Options.Single {
 
     private final OptionsContainer container;
     private final ApolloPlayer player;

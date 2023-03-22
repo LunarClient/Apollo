@@ -1,10 +1,13 @@
 package com.moonsworth.apollo.module.type;
 
-import com.moonsworth.apollo.common.protocol.CooldownClearMessage;
-import com.moonsworth.apollo.common.protocol.CooldownMessage;
-import com.moonsworth.apollo.player.AbstractApolloPlayer;
+import com.google.common.collect.Lists;
+import com.moonsworth.apollo.option.OptionConverter;
+import com.moonsworth.apollo.option.OptionConverters;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Cooldown;
+import com.moonsworth.apollo.protocol.CooldownMessage;
+
+import java.time.Duration;
 
 import static java.util.Objects.requireNonNull;
 
@@ -17,33 +20,41 @@ public final class CooldownsImpl extends Cooldowns {
 
     public CooldownsImpl() {
         super();
+
+        OptionConverters.register(Cooldown.class, CooldownMessage.getDefaultInstance(), new OptionConverter<Cooldown, CooldownMessage>() {
+            @Override
+            public CooldownMessage to(final Cooldown object) throws IllegalArgumentException {
+                return CooldownMessage.newBuilder()
+                        .setName(object.getName())
+                        .setDuration(object.getDuration().toMillis())
+                        .build();
+            }
+
+            @Override
+            public Cooldown from(final CooldownMessage message) throws IllegalArgumentException {
+                return Cooldown.of(message.getName(), Duration.ofMillis(message.getDuration()));
+            }
+        });
     }
 
     @Override
     public void sendCooldown(final ApolloPlayer player, final Cooldown cooldown) {
         requireNonNull(player, "player");
         requireNonNull(cooldown, "cooldown");
-        ((AbstractApolloPlayer) player).sendPacket(CooldownMessage.newBuilder()
-                .setName(cooldown.getName())
-                .setDurationMs(cooldown.getDuration().toMillis())
-                .build()
-        );
+        this.getOptions().set(Cooldowns.COOLDOWNS, Lists.newArrayList(cooldown));
     }
 
     @Override
     public void clearCooldown(final ApolloPlayer player, final Cooldown cooldown) {
         requireNonNull(player, "player");
         requireNonNull(cooldown, "cooldown");
-        ((AbstractApolloPlayer) player).sendPacket(CooldownClearMessage.newBuilder()
-                .setName(cooldown.getName())
-                .build()
-        );
+        this.getOptions().remove(Cooldowns.COOLDOWNS, Lists.newArrayList(cooldown));
     }
 
     @Override
     public void clearCooldowns(final ApolloPlayer player) {
         requireNonNull(player, "player");
-        ((AbstractApolloPlayer) player).sendPacket(CooldownClearMessage.getDefaultInstance());
+        this.getOptions().set(Cooldowns.COOLDOWNS, Lists.newArrayList());
     }
 
 }

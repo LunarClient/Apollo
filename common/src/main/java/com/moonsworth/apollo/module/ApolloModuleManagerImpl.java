@@ -60,7 +60,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         this.modules.computeIfAbsent(moduleClass, key -> {
             try {
                 if(module.optionKeys.length > 0) {
-                    module.setOptions(new OptionsContainer(Arrays.asList(module.optionKeys)));
+                    module.setOptions(new OptionsContainer(module.getName(), Arrays.asList(module.optionKeys)));
                 }
                 EventBus.getBus().register(module);
                 module.enable();

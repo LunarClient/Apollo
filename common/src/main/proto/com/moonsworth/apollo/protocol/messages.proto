@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/any.proto";
+import "google/protobuf/struct.proto";
 
 option java_package = "com.moonsworth.apollo.protocol";
 option java_outer_classname = "ApolloProtocol";
@@ -38,27 +39,51 @@ message ModuleOption {
 // specific option values.
 
 message SetOption {
-  google.protobuf.Any value = 1;
+  ValueWrapper value = 1;
 }
 
 message AddOption {
-  google.protobuf.Any value = 1;
+  ValueWrapper value = 1;
 }
 
 message ReplaceOption {
-  google.protobuf.Any compare = 1;
-  google.protobuf.Any update = 2;
+  ValueWrapper compare = 1;
+  ValueWrapper update = 2;
 }
 
 // Abstract Types
 
-message List {
-  repeated google.protobuf.Any elements = 1;
+message StructWrapper {
+  map<string, ValueWrapper> fields = 1;
+}
+
+message ListWrapper {
+  repeated ValueWrapper values = 1;
+}
+
+message ValueWrapper {
+  // The kind of value.
+  oneof kind {
+    // Represents a null value.
+    google.protobuf.NullValue null_value = 1;
+    // Represents a double value.
+    double number_value = 2;
+    // Represents a string value.
+    string string_value = 3;
+    // Represents a boolean value.
+    bool bool_value = 4;
+    // Represents a structured value.
+    StructWrapper struct_value = 5;
+    // Represents a repeated `Value`.
+    ListWrapper list_value = 6;
+    // Represents any value.
+    google.protobuf.Any any_value = 7;
+  }
 }
 
 // Module Types
 
-message Cooldown {
+message CooldownMessage {
   string name = 1;
   int64 duration = 2;
 }
