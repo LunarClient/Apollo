@@ -40,4 +40,11 @@ public interface ApolloPlayer {
      */
     boolean hasPermission(final String permissionNode);
 
+    /**
+     * Gets the players minecraft version.
+     *
+     * @return the players minecraft version
+     * @since 1.0.0
+     */
+    ApolloPlayerVersion getVersion();
 }

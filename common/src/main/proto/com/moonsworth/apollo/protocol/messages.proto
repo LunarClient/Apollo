@@ -102,6 +102,26 @@ message CooldownMessage {
   int64 duration = 2;
 }
 
+message NotificationMessage {
+  string title = 1;
+  string description = 2;
+  string resourceLocation = 3;
+}
+
+message TitleMessage {
+  enum Type {
+    TITLE = 0;
+    SUBTITLE = 1;
+  }
+
+  Type type = 1;
+  string message = 2;
+  float scale = 3;
+  int64 displayTime = 4;
+  int64 fadeInTime = 5;
+  int64 fadeOutTime = 6;
+}
+
 message WaypointMessage {
   string name = 1;
   BlockLocationMessage location = 2;

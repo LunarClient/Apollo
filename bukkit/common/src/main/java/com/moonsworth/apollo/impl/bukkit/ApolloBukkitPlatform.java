@@ -43,6 +43,9 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
                 .addModule(ColoredFire.class)
                 .addModule(Cooldowns.class, new CooldownsImpl())
+                .addModule(Notifications.class, new NotificationsImpl())
+                .addModule(Saturation.class, new SaturationImpl())
+                .addModule(Titles.class, new TitlesImpl())
                 .addModule(Waypoints.class, new WaypointsImpl())
                 .addModule(LegacyCombat.class);
 

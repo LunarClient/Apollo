@@ -28,4 +28,5 @@ public class Cooldown {
      */
     Duration duration;
 
+    // TODO: Add Icon
 }

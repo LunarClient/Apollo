@@ -4,12 +4,14 @@ import com.moonsworth.apollo.ApolloPlatform;
 import com.moonsworth.apollo.event.Listener;
 import com.moonsworth.apollo.option.Option;
 import com.moonsworth.apollo.option.Options;
+import com.moonsworth.apollo.player.ApolloPlayerVersion;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
 
@@ -80,6 +82,16 @@ public abstract class ApolloModule implements Listener {
      */
     public Collection<ApolloPlatform.Kind> getSupport() {
         return Collections.singletonList(ApolloPlatform.Kind.SERVER);
+    }
+
+    /**
+     * Returns a {@link Set} of supported {@link ApolloPlayerVersion}.
+     *
+     * @return a collection of supported client versions
+     * @since 1.0.0
+     */
+    public Set<ApolloPlayerVersion> getSupportedClientVersions() {
+        return ApolloPlayerVersion.getVersions();
     }
 
     /**

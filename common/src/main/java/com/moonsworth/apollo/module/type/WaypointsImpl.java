@@ -52,33 +52,25 @@ public final class WaypointsImpl extends Waypoints {
                 );
             }
         });
-
-        this.handle(ApolloRegisterPlayerEvent.class, this::handlePlayerRegister);
     }
 
     @Override
     public void addWaypoint(ApolloPlayer player, Waypoint waypoint) {
         requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
-        this.getOptions().set(Waypoints.WAYPOINTS, Lists.newArrayList(waypoint));
+        this.getOptions().get(player).set(Waypoints.WAYPOINTS, Lists.newArrayList(waypoint));
     }
 
     @Override
     public void removeWaypoint(ApolloPlayer player, Waypoint waypoint) {
         requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
-        this.getOptions().remove(Waypoints.WAYPOINTS, Lists.newArrayList(waypoint));
+        this.getOptions().get(player).remove(Waypoints.WAYPOINTS, Lists.newArrayList(waypoint));
     }
 
     @Override
     public void clearWaypoints(ApolloPlayer player) {
         requireNonNull(player, "player");
-        this.getOptions().set(Waypoints.WAYPOINTS, Lists.newArrayList());
-    }
-
-    public void handlePlayerRegister(final ApolloRegisterPlayerEvent event) {
-        ApolloPlayer player = event.getPlayer();
-
-        // Send all waypoints (Handled automatically???)
+        this.getOptions().get(player).set(Waypoints.WAYPOINTS, Lists.newArrayList());
     }
 }

@@ -6,9 +6,11 @@ import com.moonsworth.apollo.option.Option;
 import com.moonsworth.apollo.option.SimpleOption;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Waypoint;
+import com.moonsworth.apollo.world.ApolloBlockLocation;
 import io.leangen.geantyref.TypeToken;
 import org.jetbrains.annotations.ApiStatus;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,11 +23,17 @@ import java.util.List;
 public abstract class Waypoints extends ApolloModule {
 
     /**
+     * Default spawn waypoint
+     */
+    private static final Waypoint SPAWN_WAYPOINT = Waypoint.of("Spawn",
+        ApolloBlockLocation.of("world", 0, 100, 0), Color.RED, false, true);
+
+    /**
      * A list of waypoints.
      */
     public static final ListOption<Waypoint> WAYPOINTS = Option.<Waypoint>list()
         .node("waypoints").type(new TypeToken<List<Waypoint>>() {})
-        .defaultValue(Collections.emptyList()).notifyClient()
+        .defaultValue(Collections.singletonList(SPAWN_WAYPOINT)).notifyClient()
         .build();
 
     /**
