@@ -60,7 +60,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * @param <T> the value type
      * @since 1.0.0
      */
-    <T> void add(final Option<?, ?, ?> option, final @Nullable T value);
+    <T> void add(final Option<?, ?, ?> option, final T value);
 
     /**
      * Removes the provided {@code T} value for the provided {@link Option} if

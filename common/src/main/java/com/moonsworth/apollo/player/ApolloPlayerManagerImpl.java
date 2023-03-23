@@ -1,8 +1,10 @@
 package com.moonsworth.apollo.player;
 
+import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.event.EventBus;
 import com.moonsworth.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.moonsworth.apollo.event.player.ApolloUnregisterPlayerEvent;
+import com.moonsworth.apollo.option.NetworkOptions;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -41,6 +43,12 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
             for(final Throwable throwable : result.getThrowing()) {
                 throwable.printStackTrace();
             }
+
+            NetworkOptions.sendOptions(
+                    Apollo.getModuleManager().getModules(),
+                    NetworkOptions.SET_OPERATOR,
+                    player
+            );
         }
     }
 

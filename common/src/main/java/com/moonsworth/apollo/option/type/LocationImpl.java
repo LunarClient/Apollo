@@ -1,14 +1,14 @@
 package com.moonsworth.apollo.option.type;
 
+import com.moonsworth.apollo.option.NetworkOptions;
 import com.moonsworth.apollo.option.OptionConverter;
-import com.moonsworth.apollo.option.OptionConverters;
 import com.moonsworth.apollo.protocol.LocationMessage;
 import com.moonsworth.apollo.world.ApolloLocation;
 
 public final class LocationImpl {
 
     public LocationImpl() {
-        OptionConverters.register(ApolloLocation.class, LocationMessage.getDefaultInstance(), new OptionConverter<ApolloLocation, LocationMessage>() {
+        NetworkOptions.register(ApolloLocation.class, LocationMessage.getDefaultInstance(), new OptionConverter<ApolloLocation, LocationMessage>() {
             @Override
             public LocationMessage to(final ApolloLocation object) throws IllegalArgumentException {
                 return LocationMessage.newBuilder()

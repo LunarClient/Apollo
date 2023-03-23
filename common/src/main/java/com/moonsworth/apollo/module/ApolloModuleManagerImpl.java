@@ -9,6 +9,8 @@ import org.spongepowered.configurate.CommentedConfigurationNode;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -38,6 +40,11 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
                 .map(moduleClass::cast);
     }
 
+    @Override
+    public Collection<ApolloModule> getModules() {
+        return Collections.unmodifiableCollection(this.modules.values());
+    }
+
     public <T extends ApolloModule> ApolloModuleManagerImpl addModule(final Class<T> moduleClass) {
         requireNonNull(moduleClass, "moduleClass");
         this.modules.computeIfAbsent(moduleClass, key -> {
@@ -59,9 +66,9 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         requireNonNull(module, "module");
         this.modules.computeIfAbsent(moduleClass, key -> {
             try {
-                Option<?, ?, ?>[] options = module.getOptionKeys();
+                final Option<?, ?, ?>[] options = module.getOptionKeys();
                 if(options.length > 0) {
-                    module.setOptions(new OptionsContainer(module.getName(), Arrays.asList(options)));
+                    module.setOptions(new OptionsContainer(module, Arrays.asList(options)));
                 }
                 EventBus.getBus().register(module);
                 module.enable();

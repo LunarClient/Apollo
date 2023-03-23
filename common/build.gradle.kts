@@ -1,5 +1,3 @@
-import com.google.protobuf.gradle.*
-
 buildscript {
     repositories {
         gradlePluginPortal()

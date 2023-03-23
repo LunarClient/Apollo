@@ -1,8 +1,8 @@
 package com.moonsworth.apollo.module.type;
 
 import com.google.common.collect.Lists;
+import com.moonsworth.apollo.option.NetworkOptions;
 import com.moonsworth.apollo.option.OptionConverter;
-import com.moonsworth.apollo.option.OptionConverters;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Cooldown;
 import com.moonsworth.apollo.protocol.CooldownMessage;
@@ -21,7 +21,7 @@ public final class CooldownsImpl extends Cooldowns {
     public CooldownsImpl() {
         super();
 
-        OptionConverters.register(Cooldown.class, CooldownMessage.getDefaultInstance(), new OptionConverter<Cooldown, CooldownMessage>() {
+        NetworkOptions.register(Cooldown.class, CooldownMessage.getDefaultInstance(), new OptionConverter<Cooldown, CooldownMessage>() {
             @Override
             public CooldownMessage to(final Cooldown object) throws IllegalArgumentException {
                 return CooldownMessage.newBuilder()

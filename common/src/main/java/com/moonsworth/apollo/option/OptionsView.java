@@ -1,9 +1,12 @@
 package com.moonsworth.apollo.option;
 
 import com.moonsworth.apollo.player.ApolloPlayer;
-import org.jetbrains.annotations.NotNull;
+import com.moonsworth.apollo.protocol.AddOption;
+import com.moonsworth.apollo.protocol.ModuleOption;
+import com.moonsworth.apollo.protocol.SetOption;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -52,35 +55,69 @@ public final class OptionsView extends AbstractOptions implements Options.Single
     @Override
     public <T> void set(final Option<?, ?, ?> option, final @Nullable T value) {
         requireNonNull(option, "option");
+        if(!this.postUpdate(option, value)) return;
+        boolean send = false;
         if(value == null || Objects.equals(value, option.getDefaultValue())) {
-            this.values.remove(option.getKey());
+            send = this.values.remove(option.getKey()) != null;
         } else {
-            this.values.put(option.getKey(), requireNonNull(value, "value"));
+            this.values.put(option.getKey(), value);
+            send = true;
+        }
+
+        if(send) {
+            NetworkOptions.sendOption(
+                    this.container.module,
+                    option,
+                    ModuleOption.newBuilder().setSet(SetOption.newBuilder().setValue(this.wrapElement(value)).build()).build(),
+                    Collections.singleton(this.player)
+            );
         }
     }
 
     @Override
-    public <T> void add(final Option<?, ?, ?> option, final @Nullable T value) {
+    public <T> void add(final Option<?, ?, ?> option, final T value) {
         requireNonNull(option, "option");
         requireNonNull(value, "value");
-        this.values.putIfAbsent(option.getKey(), value);
+        if(!this.postUpdate(option, value)) return;
+        if(this.values.putIfAbsent(option.getKey(), value) == null) {
+            NetworkOptions.sendOption(
+                    this.container.module,
+                    option,
+                    ModuleOption.newBuilder().setAdd(AddOption.newBuilder().setValue(this.wrapElement(value)).build()).build(),
+                    Collections.singleton(this.player)
+            );
+        }
     }
 
     @Override
     public <T> void remove(final Option<?, ?, ?> option, final @Nullable T compare) {
         requireNonNull(option, "option");
         requireNonNull(compare, "compare");
-        this.values.remove(option.getKey(), compare);
+        if(!this.postUpdate(option, null)) return;
+        if(this.values.remove(option.getKey(), compare)) {
+            NetworkOptions.sendOption(
+                    this.container.module,
+                    option,
+                    ModuleOption.newBuilder().setAdd(AddOption.newBuilder().setValue(this.wrapElement(null)).build()).build(),
+                    Collections.singleton(this.player)
+            );
+        }
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> void replace(final Option<?, ?, ?> option, final BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
         requireNonNull(option, "option");
         requireNonNull(remappingFunction, "remappingFunction");
-        this.values.compute(option.getKey(), (key, current) -> remappingFunction.apply(option, (T) current));
+        final Object value = this.values.compute(option.getKey(), (key, current) -> remappingFunction.apply(option, (T) current));
+        NetworkOptions.sendOption(
+                this.container.module,
+                option,
+                ModuleOption.newBuilder().setAdd(AddOption.newBuilder().setValue(this.wrapElement(value)).build()).build(),
+                Collections.singleton(this.player)
+        );
     }
 
-    @NotNull
     @Override
     public Iterator<Option<?, ?, ?>> iterator() {
         // TODO: join the values here with the ones from the container for this iterator

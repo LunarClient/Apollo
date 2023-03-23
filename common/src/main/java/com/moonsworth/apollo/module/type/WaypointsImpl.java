@@ -3,8 +3,8 @@ package com.moonsworth.apollo.module.type;
 import com.google.common.collect.Lists;
 import com.google.protobuf.Message;
 import com.moonsworth.apollo.event.player.ApolloRegisterPlayerEvent;
+import com.moonsworth.apollo.option.NetworkOptions;
 import com.moonsworth.apollo.option.OptionConverter;
-import com.moonsworth.apollo.option.OptionConverters;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Waypoint;
 import com.moonsworth.apollo.protocol.BlockLocationMessage;
@@ -25,10 +25,10 @@ public final class WaypointsImpl extends Waypoints {
     public WaypointsImpl() {
         super();
 
-        OptionConverters.register(Waypoint.class, WaypointMessage.getDefaultInstance(), new OptionConverter<Waypoint, WaypointMessage>() {
+        NetworkOptions.register(Waypoint.class, WaypointMessage.getDefaultInstance(), new OptionConverter<Waypoint, WaypointMessage>() {
             @Override
             public WaypointMessage to(final Waypoint object) throws IllegalArgumentException {
-                OptionConverter<Object, Message> locationConverter = OptionConverters.get(ApolloBlockLocation.class); // TODO: do differently?
+                OptionConverter<Object, Message> locationConverter = NetworkOptions.get(ApolloBlockLocation.class); // TODO: do differently?
 
                 return WaypointMessage.newBuilder()
                     .setName(object.getName())
@@ -41,7 +41,7 @@ public final class WaypointsImpl extends Waypoints {
 
             @Override
             public Waypoint from(final WaypointMessage message) throws IllegalArgumentException {
-                OptionConverter<Object, Message> locationConverter = OptionConverters.get(ApolloBlockLocation.class); // TODO: do differently?
+                OptionConverter<Object, Message> locationConverter = NetworkOptions.get(ApolloBlockLocation.class); // TODO: do differently?
 
                 return Waypoint.of(
                         message.getName(),

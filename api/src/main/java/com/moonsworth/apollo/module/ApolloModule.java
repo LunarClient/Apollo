@@ -63,11 +63,12 @@ public abstract class ApolloModule implements Listener {
     }
 
     /**
-     * Registers {@link Option} options for the module
+     * Registers {@link Option}s for this module.
      *
-     * @param options option keys
+     * @param options the option keys
+     * @since 1.0.0
      */
-    public void registerOptions(Option<?, ?, ?>... options) {
+    protected void registerOptions(final Option<?, ?, ?>... options) {
         this.optionKeys = options;
     }
 
@@ -111,7 +112,7 @@ public abstract class ApolloModule implements Listener {
      *
      * @since 1.0.0
      */
-    public void onEnable() {
+    protected void onEnable() {
     }
 
 }

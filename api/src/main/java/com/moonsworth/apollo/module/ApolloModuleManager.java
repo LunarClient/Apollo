@@ -2,6 +2,7 @@ package com.moonsworth.apollo.module;
 
 import org.jetbrains.annotations.ApiStatus;
 
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -32,5 +33,13 @@ public interface ApolloModuleManager {
      * @since 1.0.0
      */
     <T extends ApolloModule> Optional<T> getModule(final Class<T> moduleClass);
+
+    /**
+     * Gets a collection of {@link ApolloModule}s.
+     *
+     * @return a list of apollo modules
+     * @since 1.0.0
+     */
+    Collection<ApolloModule> getModules();
 
 }
