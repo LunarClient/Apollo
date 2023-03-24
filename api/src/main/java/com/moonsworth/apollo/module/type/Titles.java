@@ -11,13 +11,17 @@ import java.util.Set;
 
 /**
  * Represents the title module.
+ * <p>
+ * This module represents titles added in
+ * version 1.8 (47) and is back-ported to 1.7
+ * therefore it's only supported on 1.7
  *
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
 public abstract class Titles extends ApolloModule {
 
-    public Titles() {
+    Titles() {
         super("Titles");
     }
 

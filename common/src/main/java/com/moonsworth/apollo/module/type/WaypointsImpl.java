@@ -28,7 +28,7 @@ public final class WaypointsImpl extends Waypoints {
         NetworkOptions.register(Waypoint.class, WaypointMessage.getDefaultInstance(), new OptionConverter<Waypoint, WaypointMessage>() {
             @Override
             public WaypointMessage to(final Waypoint object) throws IllegalArgumentException {
-                OptionConverter<Object, Message> locationConverter = NetworkOptions.get(ApolloBlockLocation.class); // TODO: do differently?
+                OptionConverter<Object, Message> locationConverter = NetworkOptions.get(ApolloBlockLocation.class);
 
                 return WaypointMessage.newBuilder()
                     .setName(object.getName())
@@ -41,7 +41,7 @@ public final class WaypointsImpl extends Waypoints {
 
             @Override
             public Waypoint from(final WaypointMessage message) throws IllegalArgumentException {
-                OptionConverter<Object, Message> locationConverter = NetworkOptions.get(ApolloBlockLocation.class); // TODO: do differently?
+                OptionConverter<Object, Message> locationConverter = NetworkOptions.get(ApolloBlockLocation.class);
 
                 return Waypoint.of(
                         message.getName(),

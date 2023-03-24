@@ -30,7 +30,7 @@ public abstract class Notifications extends ApolloModule {
         .defaultValue(Collections.emptyList()).notifyClient()
         .build();
 
-    public Notifications() {
+    Notifications() {
         super("Notifications");
     }
 

@@ -4,15 +4,17 @@ import com.moonsworth.apollo.module.ApolloModule;
 import com.moonsworth.apollo.world.ApolloItemStack;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the saturation module.
  *
  * @since 1.0.0
  */
+@ApiStatus.NonExtendable
 public abstract class Saturation extends ApolloModule {
 
-    public Saturation() {
+    Saturation() {
         super("Saturation");
     }
 
@@ -32,7 +34,6 @@ public abstract class Saturation extends ApolloModule {
      * @param itemStack the item stack
      * @param key the key
      * @param value the value
-     *
      * @since 1.0.0
      */
     public abstract void applyCustomValue(final ApolloItemStack itemStack, final CustomKey key, final Number value);
@@ -42,7 +43,6 @@ public abstract class Saturation extends ApolloModule {
      *
      * @param itemStack the item stack
      * @param key the key
-     *
      * @since 1.0.0
      */
     public abstract void removeCustomValue(final ApolloItemStack itemStack, final CustomKey key);

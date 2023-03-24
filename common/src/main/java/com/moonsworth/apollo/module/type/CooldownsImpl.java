@@ -56,5 +56,4 @@ public final class CooldownsImpl extends Cooldowns {
         requireNonNull(player, "player");
         this.getOptions().get(player).set(Cooldowns.COOLDOWNS, Lists.newArrayList());
     }
-
 }

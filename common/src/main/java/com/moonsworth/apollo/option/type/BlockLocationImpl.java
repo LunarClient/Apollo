@@ -22,7 +22,10 @@ public final class BlockLocationImpl {
             @Override
             public ApolloBlockLocation from(final BlockLocationMessage message) throws IllegalArgumentException {
                 return ApolloBlockLocation.of(
-                    message.getWorld(), message.getX(), message.getY(), message.getZ()
+                    message.getWorld(),
+                    message.getX(),
+                    message.getY(),
+                    message.getZ()
                 );
             }
         });

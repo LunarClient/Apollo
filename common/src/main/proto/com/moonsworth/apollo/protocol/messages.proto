@@ -83,6 +83,20 @@ message ValueWrapper {
 
 // Module Types
 
+message RenderableStringMessage {
+  enum TextDecorators {
+    OBFUSCATED = 0;
+    BOLD = 1;
+    STRIKETHROUGH = 2;
+    UNDERLINED = 3;
+    ITALIC = 4;
+  }
+  string content = 1;
+  sint32 color = 2;
+  repeated TextDecorators decoration = 3;
+  repeated RenderableStringMessage children = 4;
+}
+
 message BlockLocationMessage {
   string world = 1;
   sint32 x = 2;
@@ -97,9 +111,50 @@ message LocationMessage {
   double z = 4;
 }
 
+message BorderMessage {
+  enum Action {
+    ADD_OR_UPDATE = 0;
+    REMOVE = 1;
+  }
+
+  Action action = 1;
+  string id = 2;
+  oneof data {
+    string world = 3;
+    bool cancelEntry = 4;
+    bool cancelExit = 5;
+    bool canShrinkOrExpand = 6;
+    sint32 color = 7;
+    double minX = 8;
+    double minZ = 9;
+    double maxX = 10;
+    double maxZ = 11;
+    int32 durationTicks = 12;
+  }
+}
+
 message CooldownMessage {
   string name = 1;
   int64 duration = 2;
+}
+
+message HeartTextureMessage {
+  enum Type {
+    NONE = 0;
+    ABSORPTION = 1;
+    HEALING = 2;
+    HEALING_AND_ABSORPTION = 3;
+  }
+
+  Type type = 1;
+  int32 locationX = 2;
+}
+
+message NametagMessage {
+  string player = 1;
+  bool hide = 2;
+  repeated RenderableStringMessage nametag = 3;
+  int32 playerNameIndex = 4;
 }
 
 message NotificationMessage {
@@ -124,8 +179,10 @@ message TitleMessage {
 
 message WaypointMessage {
   string name = 1;
-  BlockLocationMessage location = 2;
-  sint32 color = 3;
-  bool forced = 4;
-  bool visible = 5;
+  oneof data {
+    BlockLocationMessage location = 2;
+    sint32 color = 3;
+    bool forced = 4;
+    bool visible = 5;
+  }
 }

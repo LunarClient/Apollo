@@ -22,7 +22,10 @@ public final class LocationImpl {
             @Override
             public ApolloLocation from(final LocationMessage message) throws IllegalArgumentException {
                 return ApolloLocation.of(
-                    message.getWorld(), message.getX(), message.getY(), message.getZ()
+                    message.getWorld(),
+                    message.getX(),
+                    message.getY(),
+                    message.getZ()
                 );
             }
         });
