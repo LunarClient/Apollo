@@ -8,8 +8,8 @@ val modules = listOfNotNull(
     "common",
     "bukkit",
     "bukkit:common",
-//    if (loadAllVersions || mcVersion == "v1_18") "bukkit:v1_18" else null,
-//    if (loadAllVersions || mcVersion == "v1_19") "bukkit:v1_19" else null,
+    if (loadAllVersions || mcVersion == "v1_18") "bukkit:v1_18" else null,
+    if (loadAllVersions || mcVersion == "v1_19") "bukkit:v1_19" else null,
 //    if (loadAllVersions) "bungee" else null,
 //    if (loadAllVersions) "velocity" else null
 )
