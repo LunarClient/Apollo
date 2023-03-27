@@ -16,9 +16,9 @@ import static java.util.Objects.requireNonNull;
  *
  * @since 1.0.0
  */
-public class BorderImpl extends Borders {
+public final class BordersImpl extends Borders {
 
-    public BorderImpl() {
+    public BordersImpl() {
         super();
 
         NetworkOptions.register(Border.class, BorderMessage.getDefaultInstance(), new OptionConverter<Border, BorderMessage>() {

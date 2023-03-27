@@ -17,12 +17,12 @@ final class EmptyOptions implements Options.Container {
     static final EmptyOptions EMPTY = new EmptyOptions();
 
     @Override
-    public <T> @Nullable T get(final Option<?, ?, ?> option) {
+    public <T, C extends Option<T, ?, ?>> @Nullable T get(final C option) {
         return null;
     }
 
     @Override
-    public <T> Optional<T> getDirect(final Option<?, ?, ?> option) {
+    public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(final C option) {
         return Optional.empty();
     }
 
@@ -62,12 +62,12 @@ final class EmptyOptions implements Options.Container {
         private final ApolloPlayer player;
 
         @Override
-        public <T> @Nullable T get(final Option<?, ?, ?> option) {
+        public <T, C extends Option<T, ?, ?>> @Nullable T get(final C option) {
             return null;
         }
 
         @Override
-        public <T> Optional<T> getDirect(final Option<?, ?, ?> option) {
+        public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(final C option) {
             return Optional.empty();
         }
 

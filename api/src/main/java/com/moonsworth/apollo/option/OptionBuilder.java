@@ -9,19 +9,19 @@ import static java.util.Objects.requireNonNull;
 /**
  * Represents an option builder.
  *
- * @param <T> the value type
+ * @param <V> the value type
  * @param <M> the option builder type
  * @param <I> the option type
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-public abstract class OptionBuilder<T, M extends OptionBuilder<T, M, I>, I extends Option<T, M, I>> {
+public abstract class OptionBuilder<V, M extends OptionBuilder<V, M, I>, I extends Option<V, M, I>> {
 
     String[] node;
-    TypeToken<T> typeToken;
+    TypeToken<V> typeToken;
     String comment = null;
-    T defaultValue = null;
+    V defaultValue = null;
     boolean notify;
 
     /**
@@ -45,7 +45,7 @@ public abstract class OptionBuilder<T, M extends OptionBuilder<T, M, I>, I exten
      * @return this builder
      * @since 1.0.0
      */
-    public M type(final TypeToken<T> typeToken) {
+    public M type(final TypeToken<V> typeToken) {
         this.typeToken = requireNonNull(typeToken, "typeToken");
         return (M) this;
     }
@@ -71,7 +71,7 @@ public abstract class OptionBuilder<T, M extends OptionBuilder<T, M, I>, I exten
      * @return this builder
      * @since 1.0.0
      */
-    public M defaultValue(final T value) {
+    public M defaultValue(final V value) {
         this.defaultValue = value;
         return (M) this;
     }

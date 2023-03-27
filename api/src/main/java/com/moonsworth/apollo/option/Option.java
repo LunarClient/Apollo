@@ -10,34 +10,34 @@ import static java.util.Objects.requireNonNull;
 /**
  * Represents an option.
  *
- * @param <T> the value type
+ * @param <V> the value type
  * @param <M> the option builder type
  * @param <I> the option type
  * @since 1.0.0
  */
 @Getter
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public abstract class Option<T, M extends OptionBuilder<T, M, I>, I extends Option<T, M, I>> {
+public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Option<V, M, I>> {
 
     /**
      * Returns a new {@link SimpleOption.SimpleOptionBuilder}.
      *
-     * @param <T> the value type
+     * @param <V> the value type
      * @return a new simple option builder
      * @since 1.0.0
      */
-    public static <T> SimpleOption.SimpleOptionBuilder<T> builder() {
+    public static <V> SimpleOption.SimpleOptionBuilder<V> builder() {
         return new SimpleOption.SimpleOptionBuilder<>();
     }
 
     /**
      * Returns a new {@link NumberOption.NumberOptionBuilder}.
      *
-     * @param <T> the value type
+     * @param <V> the value type
      * @return a new number option builder
      * @since 1.0.0
      */
-    public static <T extends Number & Comparable<T>> NumberOption.NumberOptionBuilder<T> number() {
+    public static <V extends Number & Comparable<V>> NumberOption.NumberOptionBuilder<V> number() {
         return new NumberOption.NumberOptionBuilder<>();
     }
 
@@ -59,7 +59,7 @@ public abstract class Option<T, M extends OptionBuilder<T, M, I>, I extends Opti
      * @return the value type token
      * @since 1.0.0
      */
-    TypeToken<T> typeToken;
+    TypeToken<V> typeToken;
 
     /**
      * Returns the option {@link String} comment.
@@ -75,7 +75,7 @@ public abstract class Option<T, M extends OptionBuilder<T, M, I>, I extends Opti
      * @return the option default value
      * @since 1.0.0
      */
-    T defaultValue;
+    V defaultValue;
 
     /**
      * Returns {@code true} if this option should be aware to the client,

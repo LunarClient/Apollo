@@ -2,14 +2,30 @@ package com.moonsworth.apollo.impl.bukkit;
 
 import com.google.protobuf.Any;
 import com.moonsworth.apollo.Apollo;
+import com.moonsworth.apollo.ApolloManager;
 import com.moonsworth.apollo.ApolloPlatform;
 import com.moonsworth.apollo.impl.bukkit.wrapper.BukkitApolloPlayer;
+import com.moonsworth.apollo.module.ApolloModuleManagerImpl;
+import com.moonsworth.apollo.module.type.Borders;
+import com.moonsworth.apollo.module.type.BordersImpl;
 import com.moonsworth.apollo.module.type.ColoredFire;
 import com.moonsworth.apollo.module.type.Cooldowns;
-import com.moonsworth.apollo.module.type.LegacyCombat;
-import com.moonsworth.apollo.ApolloManager;
-import com.moonsworth.apollo.module.ApolloModuleManagerImpl;
 import com.moonsworth.apollo.module.type.CooldownsImpl;
+import com.moonsworth.apollo.module.type.HeartTextureImpl;
+import com.moonsworth.apollo.module.type.HeartTextures;
+import com.moonsworth.apollo.module.type.LegacyCombat;
+import com.moonsworth.apollo.module.type.Nametags;
+import com.moonsworth.apollo.module.type.NametagsImpl;
+import com.moonsworth.apollo.module.type.Notifications;
+import com.moonsworth.apollo.module.type.NotificationsImpl;
+import com.moonsworth.apollo.module.type.Saturation;
+import com.moonsworth.apollo.module.type.SaturationImpl;
+import com.moonsworth.apollo.module.type.Teams;
+import com.moonsworth.apollo.module.type.TeamsImpl;
+import com.moonsworth.apollo.module.type.Titles;
+import com.moonsworth.apollo.module.type.TitlesImpl;
+import com.moonsworth.apollo.module.type.Waypoints;
+import com.moonsworth.apollo.module.type.WaypointsImpl;
 import com.moonsworth.apollo.player.ApolloPlayerManagerImpl;
 import lombok.Getter;
 import org.bukkit.entity.Player;
@@ -26,7 +42,7 @@ import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 /**
  * Implementation of ApolloPlatform for Bukkit-based servers.
  */
-public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, Listener {
+public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, Listener {
 
     @Getter private static ApolloBukkitPlatform instance;
 

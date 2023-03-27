@@ -39,12 +39,14 @@ public final class NetworkOptions {
         objectToConverter.put(objectClass, (OptionConverter<Object, Message>) converter);
     }
 
-    public static @Nullable OptionConverter<Object, Message> get(final String messageUrl) {
-        return NetworkOptions.messageToConverter.get(messageUrl);
+    @SuppressWarnings("unchecked")
+    public static <I, O extends Message> @Nullable OptionConverter<I, O> get(final String messageUrl) {
+        return (OptionConverter<I, O>) NetworkOptions.messageToConverter.get(messageUrl);
     }
 
-    public static @Nullable OptionConverter<Object, Message> get(final Class<?> objectClass) {
-        return NetworkOptions.objectToConverter.get(objectClass);
+    @SuppressWarnings("unchecked")
+    public static <I, O extends Message> @Nullable OptionConverter<I, O> get(final Class<? extends I> objectClass) {
+        return (OptionConverter<I, O>) NetworkOptions.objectToConverter.get(objectClass);
     }
 
     public static void sendOption(final ApolloModule module,

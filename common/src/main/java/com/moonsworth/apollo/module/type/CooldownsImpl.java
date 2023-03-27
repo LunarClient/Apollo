@@ -41,19 +41,20 @@ public final class CooldownsImpl extends Cooldowns {
     public void sendCooldown(final ApolloPlayer player, final Cooldown cooldown) {
         requireNonNull(player, "player");
         requireNonNull(cooldown, "cooldown");
-        this.getOptions().get(player).set(Cooldowns.COOLDOWNS, Lists.newArrayList(cooldown));
+        this.getOptions().set(player, Cooldowns.COOLDOWNS, Lists.newArrayList(cooldown));
     }
 
     @Override
     public void clearCooldown(final ApolloPlayer player, final Cooldown cooldown) {
         requireNonNull(player, "player");
         requireNonNull(cooldown, "cooldown");
-        this.getOptions().get(player).remove(Cooldowns.COOLDOWNS, Lists.newArrayList(cooldown));
+        this.getOptions().remove(player, Cooldowns.COOLDOWNS, Lists.newArrayList(cooldown));
     }
 
     @Override
     public void clearCooldowns(final ApolloPlayer player) {
         requireNonNull(player, "player");
-        this.getOptions().get(player).set(Cooldowns.COOLDOWNS, Lists.newArrayList());
+        this.getOptions().set(player, Cooldowns.COOLDOWNS, Lists.newArrayList());
     }
+
 }

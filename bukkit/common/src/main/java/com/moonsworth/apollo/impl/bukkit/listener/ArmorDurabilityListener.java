@@ -1,8 +1,7 @@
 package com.moonsworth.apollo.impl.bukkit.listener;
 
-import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
-import lombok.AllArgsConstructor;
+import com.moonsworth.apollo.module.type.LegacyCombat;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -16,27 +15,34 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
+import java.util.UUID;
+import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class ArmorDurabilityListener implements Listener {
+public final class ArmorDurabilityListener implements Listener {
 
     private final Map<UUID, List<ItemStack>> explosionDamaged = new WeakHashMap<>();
-    private final ApolloBukkitPlatform plugin;
-    private final LegacyCombatModule legacyCombatModule;
     private final Random random = new Random();
 
+    private final ApolloBukkitPlatform plugin;
+    private final LegacyCombat legacyCombat;
+
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onItemDamage(PlayerItemDamageEvent e) {
-        if (!legacyCombatModule.getArmorDurability().get()) {
+    public void onItemDamage(PlayerItemDamageEvent event) {
+        if(!legacyCombat.getOptions().get(LegacyCombat.ENABLE_ARMOR_DURABILITY)) {
             return;
         }
 
 
-        Player player = e.getPlayer();
+        Player player = event.getPlayer();
 
-        final ItemStack item = e.getItem();
+        final ItemStack item = event.getItem();
         final Material itemType = item.getType();
 
         // Check if it's a piece of armour they're currently wearing
@@ -59,7 +65,7 @@ public class ArmorDurabilityListener implements Listener {
             if (!matchedPieces.isEmpty()) return;
         }
 
-        int reduction = legacyCombatModule.getArmorDurabilityReduction().get();
+        int reduction = legacyCombat.getOptions().get(LegacyCombat.ARMOR_DURABILITY_REDUCTION);
 
         // 60 + (40 / (level + 1) ) % chance that durability is reduced (for each point of durability)
         final int damageChance = 60 + (40 / (item.getEnchantmentLevel(Enchantment.DURABILITY) + 1));
@@ -69,24 +75,24 @@ public class ArmorDurabilityListener implements Listener {
             reduction = 0;
         }
 
-        e.setDamage(reduction);
+        event.setDamage(reduction);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerExplosionDamage(EntityDamageEvent e) {
-        if (!legacyCombatModule.getArmorDurability().get()) {
+    public void onPlayerExplosionDamage(EntityDamageEvent event) {
+        if (!legacyCombat.getOptions().get(LegacyCombat.ENABLE_ARMOR_DURABILITY)) {
             return;
         }
-        if (e.getEntityType() != EntityType.PLAYER) {
-            return;
-        }
-        final EntityDamageEvent.DamageCause cause = e.getCause();
+
+        if (event.getEntityType() != EntityType.PLAYER) return;
+
+        final EntityDamageEvent.DamageCause cause = event.getCause();
         if (cause != EntityDamageEvent.DamageCause.BLOCK_EXPLOSION &&
                 cause != EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
             return;
         }
 
-        final Player player = (Player) e.getEntity();
+        final Player player = (Player) event.getEntity();
         final UUID uuid = player.getUniqueId();
         final List<ItemStack> armour = Arrays.stream(player.getInventory().getArmorContents()).filter(Objects::nonNull).collect(Collectors.toList());
         explosionDamaged.put(uuid, armour);

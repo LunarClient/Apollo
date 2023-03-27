@@ -2,13 +2,21 @@ package com.moonsworth.apollo.impl.bukkit.listener;
 
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableMap;
-import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
+import com.moonsworth.apollo.module.type.LegacyCombat;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FishHook;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -20,13 +28,15 @@ import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.WeakHashMap;
 
 @RequiredArgsConstructor
-public class KnockbackListener implements Listener {
+public final class KnockbackListener implements Listener {
 
-
-    private final LegacyCombatModule legacyCombatModule;
+    private final LegacyCombat legacyCombat;
 
     public static double knockbackFriction = 2.0D;
     public static double knockbackHorizontal = 0.35D;
@@ -136,9 +146,11 @@ public class KnockbackListener implements Listener {
         if (hitEntity == null) {
             return;
         }
+
         if (!(hitEntity instanceof LivingEntity livingEntity)) {
             return;
         }
+
         if (!FISHING_KNOCKBACK_NON_PLAYER_ENTITIES && !(hitEntity instanceof Player)) {
             return;
         }
@@ -170,6 +182,7 @@ public class KnockbackListener implements Listener {
         if (event.isCancelled()) {
             return;
         }
+
         boolean mainHand = true;
         ItemStack item = rodder.getInventory().getItemInMainHand();
         if (item.getType() != Material.FISHING_ROD) {
@@ -187,6 +200,7 @@ public class KnockbackListener implements Listener {
         } else {
             item.setDurability(durability);
         }
+
         livingEntity.damage(damage);
         livingEntity.setVelocity(calculateKnockbackVelocity(livingEntity.isOnGround(), hook.getLocation()));
     }
@@ -213,6 +227,7 @@ public class KnockbackListener implements Listener {
         if (e.getState() != PlayerFishEvent.State.CAUGHT_ENTITY) {
             return;
         }
+
         if (!(e.getCaught() instanceof Mob)) {
             e.getHook().remove();
             e.setCancelled(true);
@@ -221,21 +236,20 @@ public class KnockbackListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityHit(EntityDamageByEntityEvent e) {
-        if (!legacyCombatModule.getProjectileDamage().get()) {
+        if (!legacyCombat.getOptions().get(LegacyCombat.ENABLE_PROJECTILE_DAMAGE)) {
             return;
         }
 
         if (e.getDamage() != 0.0) {
             return;
         }
+
         float damage = 0.0001F;
 
         e.setDamage(damage);
         if (e.isApplicable(EntityDamageEvent.DamageModifier.ABSORPTION)) {
             e.setDamage(EntityDamageEvent.DamageModifier.ABSORPTION, 0);
         }
-
-
     }
 
 }

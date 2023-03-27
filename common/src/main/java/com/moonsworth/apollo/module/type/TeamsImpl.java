@@ -1,6 +1,5 @@
 package com.moonsworth.apollo.module.type;
 
-import com.google.protobuf.Message;
 import com.moonsworth.apollo.option.NetworkOptions;
 import com.moonsworth.apollo.option.OptionConverter;
 import com.moonsworth.apollo.player.ui.Team;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
  *
  * @since 1.0.0
  */
-public class TeamsImpl extends Teams {
+public final class TeamsImpl extends Teams {
 
     public TeamsImpl() {
         super();
@@ -26,14 +25,15 @@ public class TeamsImpl extends Teams {
         NetworkOptions.register(Team.class, TeamMessage.getDefaultInstance(), new OptionConverter<Team, TeamMessage>() {
             @Override
             public TeamMessage to(final Team object) throws IllegalArgumentException {
-                OptionConverter<Object, Message> locationConverter = NetworkOptions.get(ApolloLocation.class);
+                final OptionConverter<ApolloLocation, LocationMessage> locationConverter = NetworkOptions.get(ApolloLocation.class);
 
-                List<TeamMessage.Teammate> teammates = object.getTeammates().stream()
+                final List<TeamMessage.Teammate> teammates = object.getTeammates().stream()
                     .map(teammate -> TeamMessage.Teammate.newBuilder()
                         .setPlayer(teammate.getPlayer().toString())
                         .setColor(teammate.getColor().getRGB())
-                        .setLocation((LocationMessage) locationConverter.to(teammate.getLocation()))
-                        .build())
+                        .setLocation(locationConverter.to(teammate.getLocation()))
+                        .build()
+                    )
                     .collect(Collectors.toList());
 
                 return TeamMessage.newBuilder()
@@ -43,13 +43,13 @@ public class TeamsImpl extends Teams {
 
             @Override
             public Team from(final TeamMessage message) throws IllegalArgumentException {
-                OptionConverter<Object, Message> locationConverter = NetworkOptions.get(ApolloLocation.class);
+                final OptionConverter<ApolloLocation, LocationMessage> locationConverter = NetworkOptions.get(ApolloLocation.class);
 
-                List<Team.Teammate> teammates = message.getMembersList().stream()
+                final List<Team.Teammate> teammates = message.getMembersList().stream()
                     .map(teammate -> Team.Teammate.of(
                         UUID.fromString(teammate.getPlayer()),
                         new Color(teammate.getColor()),
-                        (ApolloLocation) locationConverter.from(teammate.getLocation())
+                        locationConverter.from(teammate.getLocation())
                     ))
                     .collect(Collectors.toList());
 
@@ -57,4 +57,5 @@ public class TeamsImpl extends Teams {
             }
         });
     }
+
 }

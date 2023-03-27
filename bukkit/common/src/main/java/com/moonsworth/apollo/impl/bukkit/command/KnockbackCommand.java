@@ -6,7 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class KnockbackCommand implements CommandExecutor {
+public final class KnockbackCommand implements CommandExecutor {
 
     private void listDefaultValues(CommandSender sender) {
         sender.sendMessage("knockbackHorizontal: " + KnockbackListener.defaultKnockbackHorizontal);

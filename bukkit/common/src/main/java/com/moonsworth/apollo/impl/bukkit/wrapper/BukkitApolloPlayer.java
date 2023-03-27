@@ -3,6 +3,7 @@ package com.moonsworth.apollo.impl.bukkit.wrapper;
 import com.moonsworth.apollo.ApolloManager;
 import com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
+import com.moonsworth.apollo.player.ApolloPlayerVersion;
 import com.moonsworth.apollo.world.ApolloLocation;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -16,6 +17,11 @@ public final class BukkitApolloPlayer extends AbstractApolloPlayer {
 
     public BukkitApolloPlayer(final Player player) {
         this.player = player;
+    }
+
+    @Override
+    public ApolloPlayerVersion getVersion() {
+        return ApolloPlayerVersion.v1_19_4;
     }
 
     @Override

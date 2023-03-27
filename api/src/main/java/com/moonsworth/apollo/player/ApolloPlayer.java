@@ -15,6 +15,14 @@ import java.util.UUID;
 public interface ApolloPlayer {
 
     /**
+     * Gets the players minecraft version.
+     *
+     * @return the players minecraft version
+     * @since 1.0.0
+     */
+    ApolloPlayerVersion getVersion();
+
+    /**
      * Gets the players unique identifier.
      *
      * @return the players unique identifier
@@ -40,11 +48,4 @@ public interface ApolloPlayer {
      */
     boolean hasPermission(final String permissionNode);
 
-    /**
-     * Gets the players minecraft version.
-     *
-     * @return the players minecraft version
-     * @since 1.0.0
-     */
-    ApolloPlayerVersion getVersion();
 }

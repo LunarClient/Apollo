@@ -41,17 +41,17 @@ public final class OptionsContainer extends AbstractOptions implements Options.C
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> @Nullable T get(final Option<?, ?, ?> option) {
+    public <T, C extends Option<T, ?, ?>> @Nullable T get(final C option) {
         requireNonNull(option, "option");
         final Object value;
         return (value = this.values.get(option.getKey())) == null
-                ? (T) option.getDefaultValue()
+                ? option.getDefaultValue()
                 : (T) value;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> Optional<T> getDirect(final Option<?, ?, ?> option) {
+    public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(final C option) {
         return Optional.ofNullable((T) this.values.get(option.getKey()));
     }
 

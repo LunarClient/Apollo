@@ -1,8 +1,6 @@
 package com.moonsworth.apollo.module.type;
 
 import com.google.common.collect.Lists;
-import com.google.protobuf.Message;
-import com.moonsworth.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.moonsworth.apollo.option.NetworkOptions;
 import com.moonsworth.apollo.option.OptionConverter;
 import com.moonsworth.apollo.player.ApolloPlayer;
@@ -28,11 +26,11 @@ public final class WaypointsImpl extends Waypoints {
         NetworkOptions.register(Waypoint.class, WaypointMessage.getDefaultInstance(), new OptionConverter<Waypoint, WaypointMessage>() {
             @Override
             public WaypointMessage to(final Waypoint object) throws IllegalArgumentException {
-                OptionConverter<Object, Message> locationConverter = NetworkOptions.get(ApolloBlockLocation.class);
+                final OptionConverter<ApolloBlockLocation, BlockLocationMessage> locationConverter = NetworkOptions.get(ApolloBlockLocation.class);
 
                 return WaypointMessage.newBuilder()
                     .setName(object.getName())
-                    .setLocation((BlockLocationMessage) locationConverter.to(object.getLocation()))
+                    .setLocation(locationConverter.to(object.getLocation()))
                     .setColor(object.getColor().getRGB())
                     .setForced(object.isForced())
                     .setVisible(object.isVisible())
@@ -41,11 +39,11 @@ public final class WaypointsImpl extends Waypoints {
 
             @Override
             public Waypoint from(final WaypointMessage message) throws IllegalArgumentException {
-                OptionConverter<Object, Message> locationConverter = NetworkOptions.get(ApolloBlockLocation.class);
+                final OptionConverter<ApolloBlockLocation, BlockLocationMessage> locationConverter = NetworkOptions.get(ApolloBlockLocation.class);
 
                 return Waypoint.of(
                         message.getName(),
-                        (ApolloBlockLocation) locationConverter.from(message.getLocation()),
+                        locationConverter.from(message.getLocation()),
                         new Color(message.getColor()),
                         message.getForced(),
                         message.getVisible()
@@ -58,19 +56,20 @@ public final class WaypointsImpl extends Waypoints {
     public void addWaypoint(ApolloPlayer player, Waypoint waypoint) {
         requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
-        this.getOptions().get(player).set(Waypoints.WAYPOINTS, Lists.newArrayList(waypoint));
+        this.getOptions().set(player, Waypoints.WAYPOINTS, Lists.newArrayList(waypoint));
     }
 
     @Override
     public void removeWaypoint(ApolloPlayer player, Waypoint waypoint) {
         requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
-        this.getOptions().get(player).remove(Waypoints.WAYPOINTS, Lists.newArrayList(waypoint));
+        this.getOptions().remove(player, Waypoints.WAYPOINTS, Lists.newArrayList(waypoint));
     }
 
     @Override
     public void clearWaypoints(ApolloPlayer player) {
         requireNonNull(player, "player");
-        this.getOptions().get(player).set(Waypoints.WAYPOINTS, Lists.newArrayList());
+        this.getOptions().set(player, Waypoints.WAYPOINTS, Lists.newArrayList());
     }
+
 }

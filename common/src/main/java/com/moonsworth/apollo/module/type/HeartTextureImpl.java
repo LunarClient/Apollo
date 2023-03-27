@@ -14,7 +14,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @since 1.0.0
  */
-public class HeartTextureImpl extends HeartTextures {
+public final class HeartTextureImpl extends HeartTextures {
 
     public HeartTextureImpl() {
         super();
@@ -42,12 +42,13 @@ public class HeartTextureImpl extends HeartTextures {
     public void sendHeartTexture(final ApolloPlayer player, final HeartTextures heartTexture) {
         requireNonNull(player, "player");
         requireNonNull(heartTexture, "heartTexture");
-        this.getOptions().get(player).set(HeartTextures.HEART_TEXTURES, Lists.newArrayList(heartTexture));
+        this.getOptions().set(player, HeartTextures.HEART_TEXTURES, Lists.newArrayList(heartTexture));
     }
 
     @Override
     public void removeHeartTexture(final ApolloPlayer player) {
         requireNonNull(player, "player");
-        this.getOptions().get(player).remove(HeartTextures.HEART_TEXTURES, Lists.newArrayList());
+        this.getOptions().remove(player, HeartTextures.HEART_TEXTURES, Lists.newArrayList());
     }
+
 }

@@ -1,9 +1,7 @@
 package com.moonsworth.apollo.module.type;
 
-import com.google.common.collect.Lists;
 import com.moonsworth.apollo.option.NetworkOptions;
 import com.moonsworth.apollo.option.OptionConverter;
-import com.moonsworth.apollo.option.Options;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Title;
 import com.moonsworth.apollo.protocol.TitleMessage;
@@ -55,4 +53,5 @@ public final class TitlesImpl extends Titles {
         requireNonNull(title, "title");
         // TODO
     }
+
 }

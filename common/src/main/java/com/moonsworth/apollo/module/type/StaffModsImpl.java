@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
-public class StaffModsImpl extends com.moonsworth.apollo.module.type.StaffMods {
+public final class StaffModsImpl extends com.moonsworth.apollo.module.type.StaffMods {
 
     public StaffModsImpl() {
         super();
@@ -61,4 +61,5 @@ public class StaffModsImpl extends com.moonsworth.apollo.module.type.StaffMods {
     public void removeAllModules(final ApolloPlayer player) {
         requireNonNull(player, "player");
     }
+
 }

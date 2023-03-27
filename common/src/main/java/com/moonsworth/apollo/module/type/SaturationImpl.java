@@ -2,7 +2,7 @@ package com.moonsworth.apollo.module.type;
 
 import com.moonsworth.apollo.world.ApolloItemStack;
 
-public class SaturationImpl extends Saturation {
+public final class SaturationImpl extends Saturation {
 
     public SaturationImpl() {
         super();
@@ -22,4 +22,5 @@ public class SaturationImpl extends Saturation {
     public void removeCustomValue(final ApolloItemStack itemStack, final CustomKey key) {
         itemStack.removeTag(key.getValue());
     }
+
 }

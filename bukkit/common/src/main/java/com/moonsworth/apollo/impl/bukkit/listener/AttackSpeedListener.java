@@ -1,6 +1,6 @@
 package com.moonsworth.apollo.impl.bukkit.listener;
 
-import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
+import com.moonsworth.apollo.module.type.LegacyCombat;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -10,14 +10,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 @RequiredArgsConstructor
-public class AttackSpeedListener implements Listener {
-    private final LegacyCombatModule legacyCombatModule;
+public final class AttackSpeedListener implements Listener {
+    private final LegacyCombat legacyCombat;
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if (!legacyCombatModule.getLegacyAttackSpeed().get()) {
+        if (!legacyCombat.getOptions().get(LegacyCombat.ENABLE_LEGACY_ATTACK_SPEED)) {
             return;
         }
+
         Player player = event.getPlayer();
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
         if (attribute == null) {
@@ -25,10 +26,9 @@ public class AttackSpeedListener implements Listener {
         }
 
         double baseValue = attribute.getBaseValue();
-        float baseAttackSpeed = legacyCombatModule.getAttackSpeed().get();
+        float baseAttackSpeed = legacyCombat.getOptions().get(LegacyCombat.ATTACK_SPEED);
 
         if (baseValue != baseAttackSpeed) {
-
             attribute.setBaseValue(baseAttackSpeed);
             event.getPlayer().saveData();
         }

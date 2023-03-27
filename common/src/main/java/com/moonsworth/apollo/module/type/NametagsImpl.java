@@ -1,6 +1,5 @@
 package com.moonsworth.apollo.module.type;
 
-import com.google.protobuf.Message;
 import com.moonsworth.apollo.option.NetworkOptions;
 import com.moonsworth.apollo.option.OptionConverter;
 import com.moonsworth.apollo.option.type.RenderableString;
@@ -20,7 +19,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @since 1.0.0
  */
-public class NametagsImpl extends Nametags {
+public final class NametagsImpl extends Nametags {
 
     public NametagsImpl() {
         super();
@@ -28,9 +27,9 @@ public class NametagsImpl extends Nametags {
         NetworkOptions.register(Nametag.class, NametagMessage.getDefaultInstance(), new OptionConverter<Nametag, NametagMessage>() {
             @Override
             public NametagMessage to(final Nametag object) throws IllegalArgumentException {
-                OptionConverter<Object, Message> renderableStringConverter = NetworkOptions.get(RenderableString.class);
-                List<RenderableStringMessage> nametag = object.getNametag().stream()
-                    .map(renderableString -> (RenderableStringMessage) renderableStringConverter.to(renderableString))
+                final OptionConverter<RenderableString, RenderableStringMessage> renderableStringConverter = NetworkOptions.get(RenderableString.class);
+                final List<RenderableStringMessage> nametag = object.getNametag().stream()
+                    .map(renderableString -> renderableStringConverter.to(renderableString))
                     .collect(Collectors.toList());
 
                 return NametagMessage.newBuilder()
@@ -43,9 +42,9 @@ public class NametagsImpl extends Nametags {
 
             @Override
             public Nametag from(final NametagMessage message) throws IllegalArgumentException {
-                OptionConverter<Object, Message> renderableStringConverter = NetworkOptions.get(RenderableString.class);
-                List<RenderableString> nametag = message.getNametagList().stream()
-                    .map(renderableString -> (RenderableString) renderableStringConverter.from(renderableString))
+                final OptionConverter<RenderableString, RenderableStringMessage> renderableStringConverter = NetworkOptions.get(RenderableString.class);
+                final List<RenderableString> nametag = message.getNametagList().stream()
+                    .map(renderableString -> renderableStringConverter.from(renderableString))
                     .collect(Collectors.toList());
 
                 return Nametag.of(
@@ -71,4 +70,5 @@ public class NametagsImpl extends Nametags {
         requireNonNull(viewers, "viewers");
         // TODO
     }
+
 }

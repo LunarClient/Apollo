@@ -35,7 +35,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> @Nullable T get(final Option<?, ?, ?> option) {
+    public <T, C extends Option<T, ?, ?>> @Nullable T get(final C option) {
         requireNonNull(option, "option");
         final Object value;
         return (value = this.values.get(option.getKey())) == null
@@ -45,7 +45,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> Optional<T> getDirect(final Option<?, ?, ?> option) {
+    public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(final C option) {
         final Object value;
         return (value = this.values.get(option.getKey())) == null
                 ? this.container.getDirect(option)
