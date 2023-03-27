@@ -163,6 +163,26 @@ message NotificationMessage {
   string resourceLocation = 3;
 }
 
+message StaffModsMessage {
+  enum Module {
+    XRAY = 0;
+  }
+
+  repeated Module modules = 1;
+}
+
+message TeamMessage {
+  message Teammate {
+    string player = 1;
+    sint32 color = 2;
+    oneof data {
+      LocationMessage location = 3;
+    }
+  }
+
+  repeated Teammate members = 1;
+}
+
 message TitleMessage {
   enum Type {
     TITLE = 0;

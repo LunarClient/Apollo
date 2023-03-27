@@ -55,6 +55,6 @@ public class RenderableString {
         BOLD,
         STRIKETHROUGH,
         UNDERLINED,
-        ITALIC;
+        ITALIC
     }
 }

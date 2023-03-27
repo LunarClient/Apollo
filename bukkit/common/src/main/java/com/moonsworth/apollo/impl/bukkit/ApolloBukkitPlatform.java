@@ -48,6 +48,7 @@ public class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, 
                 .addModule(Nametags.class, new NametagsImpl())
                 .addModule(Notifications.class, new NotificationsImpl())
                 .addModule(Saturation.class, new SaturationImpl())
+                .addModule(Teams.class, new TeamsImpl())
                 .addModule(Titles.class, new TitlesImpl())
                 .addModule(Waypoints.class, new WaypointsImpl())
                 .addModule(LegacyCombat.class);

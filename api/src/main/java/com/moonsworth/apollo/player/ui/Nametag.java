@@ -17,7 +17,7 @@ public class Nametag {
     /**
      * Returns the nametag player {@link UUID} uuid.
      *
-     * @return the heart texture type
+     * @return the player uuid
      * @since 1.0.0
      */
     UUID player;
