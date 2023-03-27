@@ -20,10 +20,11 @@ repositories {
 val lombokVersion: String by project
 
 dependencies {
+    implementation(project(":apollo-common"))
+
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
-    implementation(project(":apollo-api"))
     compileOnly(bungeecordApi("1.19-R0.1"))
 }
 
