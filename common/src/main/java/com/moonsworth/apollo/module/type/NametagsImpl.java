@@ -1,7 +1,9 @@
 package com.moonsworth.apollo.module.type;
 
+import com.google.common.collect.Lists;
 import com.moonsworth.apollo.option.NetworkOptions;
 import com.moonsworth.apollo.option.OptionConverter;
+import com.moonsworth.apollo.option.Options;
 import com.moonsworth.apollo.option.type.RenderableString;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Nametag;
@@ -61,14 +63,25 @@ public final class NametagsImpl extends Nametags {
     public void sendNametag(final Nametag nametag, final ApolloPlayer... viewers) {
         requireNonNull(nametag, "nametag");
         requireNonNull(viewers, "viewers");
-        // TODO
+
+        final Options.Container options = this.getOptions();
+        final List<Nametag> tags = Lists.newArrayList(nametag);
+
+        for(final ApolloPlayer viewer : viewers) {
+            options.set(viewer, null, tags);
+        }
     }
 
     @Override
     public void resetNametag(final Nametag nametag, final ApolloPlayer... viewers) {
         requireNonNull(nametag, "nametag");
         requireNonNull(viewers, "viewers");
-        // TODO
-    }
 
+        final Options.Container options = this.getOptions();
+        final List<Nametag> tags = Lists.newArrayList(nametag);
+
+        for(final ApolloPlayer viewer : viewers) {
+            options.remove(viewer, null, tags);
+        }
+    }
 }

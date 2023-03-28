@@ -172,15 +172,15 @@ message StaffModsMessage {
 }
 
 message TeamMessage {
-  message Teammate {
-    string player = 1;
-    sint32 color = 2;
+  message TeammateMessage {
+    sint32 color = 1;
     oneof data {
-      LocationMessage location = 3;
+      LocationMessage location = 2;
     }
   }
 
-  repeated Teammate members = 1;
+  string teamId = 1;
+  map<string, TeammateMessage> members = 2;
 }
 
 message TitleMessage {

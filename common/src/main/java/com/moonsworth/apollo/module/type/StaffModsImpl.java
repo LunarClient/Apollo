@@ -1,5 +1,6 @@
 package com.moonsworth.apollo.module.type;
 
+import com.google.common.collect.Lists;
 import com.moonsworth.apollo.option.NetworkOptions;
 import com.moonsworth.apollo.option.OptionConverter;
 import com.moonsworth.apollo.player.ApolloPlayer;
@@ -39,27 +40,33 @@ public final class StaffModsImpl extends com.moonsworth.apollo.module.type.Staff
         });
     }
 
-    // TODO
     @Override
-    public void giveModule(final ApolloPlayer player, final StaffMod.Module module) {
+    public void giveModule(final ApolloPlayer player, final StaffMod mod) {
         requireNonNull(player, "player");
-        requireNonNull(module, "module");
+        requireNonNull(mod, "mod");
+        this.getOptions().set(player, null, Lists.newArrayList(mod));
     }
 
     @Override
-    public void removeModule(final ApolloPlayer player, final StaffMod.Module module) {
+    public void removeModule(final ApolloPlayer player, final StaffMod mod) {
         requireNonNull(player, "player");
-        requireNonNull(module, "module");
+        requireNonNull(mod, "staffMod");
+        this.getOptions().remove(player, null, Lists.newArrayList(mod));
     }
 
     @Override
     public void giveAllModules(final ApolloPlayer player) {
         requireNonNull(player, "player");
+
+        final StaffMod staffMod = StaffMod.of(StaffMod.Module.getModules());
+        this.getOptions().set(player, null, Lists.newArrayList(staffMod));
     }
 
     @Override
     public void removeAllModules(final ApolloPlayer player) {
         requireNonNull(player, "player");
-    }
 
+        final StaffMod staffMod = StaffMod.of(StaffMod.Module.getModules());
+        this.getOptions().set(player, null, Lists.newArrayList(staffMod));
+    }
 }

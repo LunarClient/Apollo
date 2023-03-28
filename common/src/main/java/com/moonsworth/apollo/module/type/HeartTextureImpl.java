@@ -50,5 +50,4 @@ public final class HeartTextureImpl extends HeartTextures {
         requireNonNull(player, "player");
         this.getOptions().remove(player, HeartTextures.HEART_TEXTURES, Lists.newArrayList());
     }
-
 }

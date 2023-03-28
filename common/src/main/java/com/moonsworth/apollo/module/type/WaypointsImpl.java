@@ -71,5 +71,4 @@ public final class WaypointsImpl extends Waypoints {
         requireNonNull(player, "player");
         this.getOptions().set(player, Waypoints.WAYPOINTS, Lists.newArrayList());
     }
-
 }

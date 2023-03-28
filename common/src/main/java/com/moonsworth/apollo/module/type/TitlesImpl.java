@@ -1,5 +1,6 @@
 package com.moonsworth.apollo.module.type;
 
+import com.google.common.collect.Lists;
 import com.moonsworth.apollo.option.NetworkOptions;
 import com.moonsworth.apollo.option.OptionConverter;
 import com.moonsworth.apollo.player.ApolloPlayer;
@@ -51,7 +52,12 @@ public final class TitlesImpl extends Titles {
     public void sendTitle(final ApolloPlayer player, final Title title) {
         requireNonNull(player, "player");
         requireNonNull(title, "title");
-        // TODO
+        this.getOptions().set(player, null, Lists.newArrayList(title));
     }
 
+    @Override
+    public void sendTitleAll(final Title title) {
+        requireNonNull(title, "title");
+        this.getOptions().set(null, Lists.newArrayList(title));
+    }
 }

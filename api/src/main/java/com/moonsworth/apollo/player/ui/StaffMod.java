@@ -2,6 +2,7 @@ package com.moonsworth.apollo.player.ui;
 
 import lombok.Value;
 
+import java.util.EnumSet;
 import java.util.Set;
 
 /**
@@ -26,6 +27,12 @@ public class StaffMod {
      * @since 1.0.0
      */
     public enum Module {
-        XRAY
+        XRAY;
+
+        private static final Set<Module> MODULE_CACHE = EnumSet.allOf(Module.class);
+
+        public static Set<Module> getModules() {
+            return Module.MODULE_CACHE;
+        }
     }
 }
