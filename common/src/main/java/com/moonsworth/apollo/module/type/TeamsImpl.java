@@ -13,9 +13,11 @@ import com.moonsworth.apollo.player.ui.Team;
 import com.moonsworth.apollo.protocol.LocationMessage;
 import com.moonsworth.apollo.protocol.TeamMessage;
 import com.moonsworth.apollo.world.ApolloLocation;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.awt.*;
-import java.util.*;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
@@ -168,21 +170,19 @@ public final class TeamsImpl extends Teams {
         final ApolloPlayerManager playerManager = Apollo.getPlayerManager();
         final Options.Container options = this.getOptions();
 
-        // Hopefully this can be done in a better way
-        team.getTeammates().entrySet().stream()
-            .map(entry -> new AbstractMap.SimpleEntry<>(
+        final Map<ApolloPlayer, Team.Teammate> teammates = team.getTeammates().entrySet().stream()
+            .map(entry -> new ImmutablePair<>(
                 playerManager.getPlayer(entry.getKey()),
                 entry.getValue())
             )
             .filter(entry -> entry.getKey().isPresent())
             .collect(Collectors.toMap(
-                entry -> {
-                    ApolloPlayer player = entry.getKey().get();
-                    player.getLocation().ifPresent(entry.getValue()::setLocation);
-                    return player;
-                },
+                entry -> entry.getKey().get(),
                 Map.Entry::getValue
-            )).forEach((player, teammate) -> options.set(player, null, Lists.newArrayList(team)));
+            ));
+
+        teammates.forEach((player, teammate) -> player.getLocation().ifPresent(teammate::setLocation));
+        teammates.forEach((player, teammate) -> options.set(player, null, Lists.newArrayList(team)));
     }
 
     public void onPlayerUnregister(final ApolloUnregisterPlayerEvent event) {
