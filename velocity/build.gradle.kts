@@ -14,10 +14,11 @@ repositories {
 val lombokVersion: String by project
 
 dependencies {
+    implementation(project(":apollo-common"))
+
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
-    implementation(project(":apollo-api"))
     val velocity = "com.velocitypowered:velocity-api:3.0.1"
     compileOnly(velocity)
     annotationProcessor(velocity)
