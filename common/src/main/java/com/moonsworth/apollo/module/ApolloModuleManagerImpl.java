@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.IdentityHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,6 +53,12 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
                 final Constructor<T> constructor = moduleClass.getDeclaredConstructor();
                 constructor.setAccessible(true);
                 final T module = constructor.newInstance();
+
+                final Option<?, ?, ?>[] options = module.getOptionKeys();
+                if(options.length > 0) {
+                    module.setOptions(new OptionsContainer(module, Arrays.asList(options)));
+                }
+
                 EventBus.getBus().register(module);
                 module.enable();
                 return module;
@@ -70,6 +77,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
                 if(options.length > 0) {
                     module.setOptions(new OptionsContainer(module, Arrays.asList(options)));
                 }
+
                 EventBus.getBus().register(module);
                 module.enable();
                 return module;
@@ -82,7 +90,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
 
     public void loadConfiguration(final CommentedConfigurationNode node) {
         for(final ApolloModule module : this.modules.values()) {
-            final CommentedConfigurationNode moduleNode = node.node(module.getName());
+            final CommentedConfigurationNode moduleNode = node.node(module.getName().toLowerCase(Locale.ENGLISH));
             if(moduleNode.virtual()) continue;
 
             final Options.Container optionsContainer = module.getOptions();
@@ -102,7 +110,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
 
     public void saveConfiguration(final CommentedConfigurationNode node) {
         for(final ApolloModule module : this.modules.values()) {
-            final CommentedConfigurationNode moduleNode = node.node(module.getName());
+            final CommentedConfigurationNode moduleNode = node.node(module.getName().toLowerCase(Locale.ENGLISH));
 
             final Options.Container optionsContainer = module.getOptions();
             for(final Option<?, ?, ?> option : optionsContainer) {
@@ -110,6 +118,8 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
                 if(optionNode == null) continue;
 
                 try {
+                    if(option.getComment() != null) optionNode.comment(option.getComment());
+
                     optionNode.set(optionsContainer.get(option));
                 } catch(final Throwable throwable) {
                     throwable.printStackTrace();

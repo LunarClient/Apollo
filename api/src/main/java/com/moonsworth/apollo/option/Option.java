@@ -2,6 +2,7 @@ package com.moonsworth.apollo.option;
 
 import io.leangen.geantyref.TypeToken;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
@@ -16,6 +17,7 @@ import static java.util.Objects.requireNonNull;
  * @since 1.0.0
  */
 @Getter
+@EqualsAndHashCode
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Option<V, M, I>> {
 

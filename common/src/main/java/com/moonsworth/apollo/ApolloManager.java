@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 /**
  * Provides the instances for {@link Apollo}.
@@ -28,22 +29,17 @@ public final class ApolloManager {
     public static void bootstrap(final ApolloPlatform platform) {
         if(ApolloManager.bootstrapped) throw new IllegalStateException("Cannot bootstrap Apollo more than once!");
         try {
-            ApolloManager.set("platform", platform);
-            ApolloManager.set("moduleManager", new ApolloModuleManagerImpl());
-            ApolloManager.set("playerManager", new ApolloPlayerManagerImpl());
+            Apollo.initialize(
+                    platform,
+                    new ApolloModuleManagerImpl(),
+                    new ApolloPlayerManagerImpl()
+            );
 
             ApolloManager.networkManager = new ApolloNetworkManager();
         } catch(final Throwable throwable) {
             throw new RuntimeException("Unable to bootstrap Apollo!", throwable);
         }
         ApolloManager.bootstrapped = true;
-    }
-
-    private static void set(final String name, final Object instance) throws NoSuchFieldException, IllegalAccessException {
-        final Field field = Apollo.class.getDeclaredField(name);
-        field.setAccessible(true);
-        field.set(null, instance);
-        field.setAccessible(false);
     }
 
 }
