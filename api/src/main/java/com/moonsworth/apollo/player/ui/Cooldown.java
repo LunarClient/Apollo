@@ -1,5 +1,6 @@
 package com.moonsworth.apollo.player.ui;
 
+import com.moonsworth.apollo.option.type.RenderableIcon;
 import lombok.Value;
 
 import java.time.Duration;
@@ -28,5 +29,23 @@ public class Cooldown {
      */
     Duration duration;
 
-    // TODO: Add Icon
+    /**
+     * Returns the cooldown {@link Integer} item id.
+     * <p>
+     * You can provide the item id or the renderable icon
+     *
+     * @return the cooldown item id
+     * @since 1.0.0
+     */
+    int itemId;
+
+    /**
+     * Returns the cooldown {@link RenderableIcon}.
+     * <p>
+     * You can provide the renderable icon or the item id
+     *
+     * @return the cooldown icon
+     * @since 1.0.0
+     */
+    RenderableIcon icon;
 }
