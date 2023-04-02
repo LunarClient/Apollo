@@ -136,18 +136,16 @@ message BorderMessage {
 
   Action action = 1;
   string id = 2;
-  oneof data {
-    string world = 3;
-    bool cancelEntry = 4;
-    bool cancelExit = 5;
-    bool canShrinkOrExpand = 6;
-    sint32 color = 7;
-    double minX = 8;
-    double minZ = 9;
-    double maxX = 10;
-    double maxZ = 11;
-    int32 durationTicks = 12;
-  }
+  string world = 3;
+  bool cancelEntry = 4;
+  bool cancelExit = 5;
+  bool canShrinkOrExpand = 6;
+  sint32 color = 7;
+  double minX = 8;
+  double minZ = 9;
+  double maxX = 10;
+  double maxZ = 11;
+  int32 durationTicks = 12;
 }
 
 message CooldownMessage {
@@ -220,10 +218,8 @@ message TitleMessage {
 
 message WaypointMessage {
   string name = 1;
-  oneof data {
-    BlockLocationMessage location = 2;
-    sint32 color = 3;
-    bool forced = 4;
-    bool visible = 5;
-  }
+  BlockLocationMessage location = 2;
+  sint32 color = 3;
+  bool forced = 4;
+  bool visible = 5;
 }
