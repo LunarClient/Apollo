@@ -19,14 +19,6 @@ import java.util.List;
 @ApiStatus.NonExtendable
 public abstract class HeartTextures extends ApolloModule {
 
-    /**
-     * A list of heart textures.
-     */
-    public static final ListOption<HeartTexture> HEART_TEXTURES = Option.<HeartTexture>list()
-        .node("textures").type(new TypeToken<List<HeartTexture>>() {})
-        .defaultValue(Collections.emptyList()).notifyClient()
-        .build();
-
     HeartTextures() {
         super("HeartTexture");
     }
@@ -43,7 +35,7 @@ public abstract class HeartTextures extends ApolloModule {
      * @param heartTexture the heart texture
      * @since 1.0.0
      */
-    public abstract void sendHeartTexture(final ApolloPlayer player, final HeartTextures heartTexture);
+    public abstract void sendHeartTexture(final ApolloPlayer player, final HeartTexture heartTexture);
 
     /**
      * Removes the {@link HeartTextures} from the {@link ApolloPlayer}.

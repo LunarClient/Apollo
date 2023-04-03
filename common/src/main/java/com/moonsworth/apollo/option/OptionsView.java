@@ -4,8 +4,6 @@ import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.protocol.AddOption;
 import com.moonsworth.apollo.protocol.ModuleOption;
 import com.moonsworth.apollo.protocol.SetOption;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,6 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
+import org.jetbrains.annotations.Nullable;
 
 import static java.util.Objects.requireNonNull;
 

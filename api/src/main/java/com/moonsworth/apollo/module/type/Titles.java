@@ -3,7 +3,6 @@ package com.moonsworth.apollo.module.type;
 import com.moonsworth.apollo.module.ApolloModule;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayerVersion;
-import com.moonsworth.apollo.player.ui.Notification;
 import com.moonsworth.apollo.player.ui.Title;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -46,5 +45,5 @@ public abstract class Titles extends ApolloModule {
      * @param title the title
      * @since 1.0.0
      */
-    public abstract void sendTitleAll(final Title title);
+    public abstract void broadcastTitle(final Title title);
 }

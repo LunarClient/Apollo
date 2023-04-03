@@ -13,14 +13,6 @@ import java.awt.*;
 public class Border {
 
     /**
-     * Returns the border {@link Border.Action} action.
-     *
-     * @return the border action
-     * @since 1.0.0
-     */
-    Border.Action action;
-
-    /**
      * Returns the border {@link String} id.
      *
      * @return the border id
@@ -108,14 +100,4 @@ public class Border {
      * @since 1.0.0
      */
     int duration;
-
-    /**
-     * Represents the border action.
-     *
-     * @since 1.0.0
-     */
-    public enum Action {
-        ADD_OR_UPDATE,
-        REMOVE
-    }
 }

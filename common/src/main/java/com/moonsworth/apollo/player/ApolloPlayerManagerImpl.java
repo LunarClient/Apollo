@@ -5,7 +5,6 @@ import com.moonsworth.apollo.event.EventBus;
 import com.moonsworth.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.moonsworth.apollo.event.player.ApolloUnregisterPlayerEvent;
 import com.moonsworth.apollo.option.NetworkOptions;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;

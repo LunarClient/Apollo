@@ -1,13 +1,9 @@
 package com.moonsworth.apollo.option;
 
+import com.google.protobuf.Value;
 import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.module.ApolloModule;
 import com.moonsworth.apollo.player.ApolloPlayer;
-import com.moonsworth.apollo.protocol.AddOption;
-import com.moonsworth.apollo.protocol.ModuleOption;
-import com.moonsworth.apollo.protocol.SetOption;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
+import org.jetbrains.annotations.Nullable;
 
 import static java.util.Objects.requireNonNull;
 
@@ -71,7 +68,7 @@ public final class OptionsContainer extends AbstractOptions implements Options.C
             NetworkOptions.sendOption(
                     this.module,
                     option,
-                    ModuleOption.newBuilder().setSet(SetOption.newBuilder().setValue(this.wrapElement(value)).build()).build(),
+                    this.wrapValue(Value.newBuilder(), value),
                     Apollo.getPlayerManager().getPlayers()
             );
         }
@@ -86,7 +83,7 @@ public final class OptionsContainer extends AbstractOptions implements Options.C
             NetworkOptions.sendOption(
                     this.module,
                     option,
-                    ModuleOption.newBuilder().setAdd(AddOption.newBuilder().setValue(this.wrapElement(value)).build()).build(),
+                    this.wrapValue(Value.newBuilder(), value),
                     Apollo.getPlayerManager().getPlayers()
             );
         }
@@ -101,7 +98,7 @@ public final class OptionsContainer extends AbstractOptions implements Options.C
             NetworkOptions.sendOption(
                     this.module,
                     option,
-                    ModuleOption.newBuilder().setAdd(AddOption.newBuilder().setValue(this.wrapElement(null)).build()).build(),
+                    this.wrapValue(Value.newBuilder(), null),
                     Apollo.getPlayerManager().getPlayers()
             );
         }
@@ -116,7 +113,7 @@ public final class OptionsContainer extends AbstractOptions implements Options.C
         NetworkOptions.sendOption(
                 this.module,
                 option,
-                ModuleOption.newBuilder().setAdd(AddOption.newBuilder().setValue(this.wrapElement(value)).build()).build(),
+                this.wrapValue(Value.newBuilder(), value),
                 Apollo.getPlayerManager().getPlayers()
         );
     }

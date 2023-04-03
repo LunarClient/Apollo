@@ -1,15 +1,13 @@
 package com.moonsworth.apollo.module.type;
 
-import com.google.common.collect.Lists;
-import com.moonsworth.apollo.option.NetworkOptions;
-import com.moonsworth.apollo.option.OptionConverter;
+import com.google.protobuf.Any;
+import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Waypoint;
-import com.moonsworth.apollo.protocol.BlockLocationMessage;
-import com.moonsworth.apollo.protocol.WaypointMessage;
-import com.moonsworth.apollo.world.ApolloBlockLocation;
-
-import java.awt.*;
+import java.awt.Color;
+import lunarclient.apollo.common.MessageOperation;
+import lunarclient.apollo.common.OptionOperation;
+import lunarclient.apollo.modules.WaypointMessage;
 
 import static java.util.Objects.requireNonNull;
 
@@ -22,53 +20,60 @@ public final class WaypointsImpl extends Waypoints {
 
     public WaypointsImpl() {
         super();
-
-        NetworkOptions.register(Waypoint.class, WaypointMessage.getDefaultInstance(), new OptionConverter<Waypoint, WaypointMessage>() {
-            @Override
-            public WaypointMessage to(final Waypoint object) throws IllegalArgumentException {
-                final OptionConverter<ApolloBlockLocation, BlockLocationMessage> locationConverter = NetworkOptions.get(ApolloBlockLocation.class);
-
-                return WaypointMessage.newBuilder()
-                    .setName(object.getName())
-                    .setLocation(locationConverter.to(object.getLocation()))
-                    .setColor(object.getColor().getRGB())
-                    .setForced(object.isForced())
-                    .setVisible(object.isVisible())
-                    .build();
-            }
-
-            @Override
-            public Waypoint from(final WaypointMessage message) throws IllegalArgumentException {
-                final OptionConverter<ApolloBlockLocation, BlockLocationMessage> locationConverter = NetworkOptions.get(ApolloBlockLocation.class);
-
-                return Waypoint.of(
-                        message.getName(),
-                        locationConverter.from(message.getLocation()),
-                        new Color(message.getColor()),
-                        message.getForced(),
-                        message.getVisible()
-                );
-            }
-        });
     }
 
     @Override
-    public void addWaypoint(ApolloPlayer player, Waypoint waypoint) {
+    public void addWaypoint(final ApolloPlayer player, final Waypoint waypoint) {
         requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
-        this.getOptions().set(player, Waypoints.WAYPOINTS, Lists.newArrayList(waypoint));
+
+        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
+                .setModule(this.getName())
+                .setOperation(OptionOperation.ADD)
+                .setValue(Any.pack(this.to(waypoint)))
+                .build());
     }
 
     @Override
-    public void removeWaypoint(ApolloPlayer player, Waypoint waypoint) {
+    public void removeWaypoint(final ApolloPlayer player, final Waypoint waypoint) {
         requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
-        this.getOptions().remove(player, Waypoints.WAYPOINTS, Lists.newArrayList(waypoint));
+
+        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
+                .setModule(this.getName())
+                .setOperation(OptionOperation.REMOVE)
+                .setValue(Any.pack(this.to(waypoint)))
+                .build());
     }
 
     @Override
-    public void clearWaypoints(ApolloPlayer player) {
+    public void clearWaypoints(final ApolloPlayer player) {
         requireNonNull(player, "player");
-        this.getOptions().set(player, Waypoints.WAYPOINTS, Lists.newArrayList());
+
+        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
+                .setModule(this.getName())
+                .setOperation(OptionOperation.CLEAR)
+                .build());
+    }
+
+    private WaypointMessage to(final Waypoint waypoint) {
+        return WaypointMessage.newBuilder()
+                .setName(waypoint.getName())
+//                .setLocation(locationConverter.to(object.getLocation()))
+                .setColor(waypoint.getColor().getRGB())
+                .setForced(waypoint.isForced())
+                .setVisible(waypoint.isVisible())
+                .build();
+    }
+
+    private Waypoint from(final WaypointMessage message) {
+        return Waypoint.of(
+                message.getName(),
+                null,
+//                locationConverter.from(message.getLocation()),
+                new Color(message.getColor()),
+                message.getForced(),
+                message.getVisible()
+        );
     }
 }

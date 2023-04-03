@@ -4,9 +4,6 @@ import com.moonsworth.apollo.event.EventBus;
 import com.moonsworth.apollo.option.Option;
 import com.moonsworth.apollo.option.Options;
 import com.moonsworth.apollo.option.OptionsContainer;
-import lombok.NoArgsConstructor;
-import org.spongepowered.configurate.CommentedConfigurationNode;
-
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,6 +12,8 @@ import java.util.IdentityHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import lombok.NoArgsConstructor;
+import org.spongepowered.configurate.CommentedConfigurationNode;
 
 import static java.util.Objects.requireNonNull;
 

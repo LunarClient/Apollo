@@ -26,14 +26,6 @@ import java.util.Set;
 @ApiStatus.NonExtendable
 public abstract class Borders extends ApolloModule {
 
-    /**
-     * A list of borders.
-     */
-    public static final ListOption<Border> BORDERS = Option.<Border>list()
-        .node("borders").type(new TypeToken<List<Border>>() {})
-        .defaultValue(Collections.emptyList()).notifyClient()
-        .build();
-
     Borders() {
         super("Border");
     }
@@ -44,13 +36,13 @@ public abstract class Borders extends ApolloModule {
     }
 
     /**
-     * Adds or updates the {@link Border} to the {@link ApolloPlayer}.
+     * Adds the {@link Border} to the {@link ApolloPlayer}.
      *
      * @param player the player
      * @param border the border
      * @since 1.0.0
      */
-    public abstract void addOrUpdateBorder(final ApolloPlayer player, final Border border);
+    public abstract void addBorder(final ApolloPlayer player, final Border border);
 
     /**
      * Removes the {@link Border} from the {@link ApolloPlayer}.

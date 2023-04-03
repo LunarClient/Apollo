@@ -2,17 +2,12 @@ package com.moonsworth.apollo.module.type;
 
 import com.moonsworth.apollo.ApolloPlatform;
 import com.moonsworth.apollo.module.ApolloModule;
-import com.moonsworth.apollo.option.ListOption;
-import com.moonsworth.apollo.option.Option;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Notification;
-import io.leangen.geantyref.TypeToken;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Represents the notification module.
@@ -21,14 +16,6 @@ import java.util.List;
  */
 @ApiStatus.NonExtendable
 public abstract class Notifications extends ApolloModule {
-
-    /**
-     * A list of notifications.
-     */
-    public static final ListOption<Notification> NOTIFICATIONS = Option.<Notification>list()
-        .node("notifications").type(new TypeToken<List<Notification>>() {})
-        .defaultValue(Collections.emptyList()).notifyClient()
-        .build();
 
     Notifications() {
         super("Notifications");
@@ -46,7 +33,7 @@ public abstract class Notifications extends ApolloModule {
      * @param notification the notification
      * @since 1.0.0
      */
-    public abstract void notify(final ApolloPlayer player, final Notification notification);
+    public abstract void sendNotification(final ApolloPlayer player, final Notification notification);
 
     /**
      * Sends the {@link Notification} to all {@link ApolloPlayer}s.
@@ -54,5 +41,5 @@ public abstract class Notifications extends ApolloModule {
      * @param notification the notification
      * @since 1.0.0
      */
-    public abstract void notifyAll(final Notification notification);
+    public abstract void broadcastNotification(final Notification notification);
 }

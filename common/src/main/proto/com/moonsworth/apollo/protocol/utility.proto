@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package lunarclient.apollo.utility;
+
+import "google/protobuf/struct.proto";
+
+option java_multiple_files = true;
+
+message BlockLocation {
+  string world = 1;
+  sint32 x = 2;
+  sint32 y = 3;
+  sint32 z = 4;
+}
+
+message Location {
+  string world = 1;
+  double x = 2;
+  double y = 3;
+  double z = 4;
+}
+
+//
+
+message RenderableString {
+  enum TextDecorators {
+    OBFUSCATED = 0;
+    BOLD = 1;
+    STRIKETHROUGH = 2;
+    UNDERLINED = 3;
+    ITALIC = 4;
+  }
+  string content = 1;
+  sint32 color = 2;
+  repeated TextDecorators decoration = 3;
+  repeated RenderableString children = 4;
+}
+
+message RenderableIcon {
+  string resourceLocation = 1;
+  oneof data {
+    int32 size = 2;
+    IconSpecification specification = 3;
+  }
+}
+
+message IconSpecification {
+  float width = 1;
+  float height = 2;
+  float minU = 3;
+  float maxU = 4;
+  float minV = 5;
+  float maxV = 6;
+}

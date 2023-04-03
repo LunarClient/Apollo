@@ -29,14 +29,6 @@ public abstract class Waypoints extends ApolloModule {
         ApolloBlockLocation.of("world", 0, 100, 0), Color.RED, false, true);
 
     /**
-     * A list of waypoints.
-     */
-    public static final ListOption<Waypoint> WAYPOINTS = Option.<Waypoint>list()
-        .node("waypoints").type(new TypeToken<List<Waypoint>>() {})
-        .defaultValue(Collections.singletonList(SPAWN_WAYPOINT)).notifyClient()
-        .build();
-
-    /**
      * Lets servers handle waypoints.
      *
      * @since 1.0.0

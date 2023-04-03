@@ -13,12 +13,11 @@ import com.moonsworth.apollo.player.ui.Team;
 import com.moonsworth.apollo.protocol.LocationMessage;
 import com.moonsworth.apollo.protocol.TeamMessage;
 import com.moonsworth.apollo.world.ApolloLocation;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import static java.util.Objects.requireNonNull;
 

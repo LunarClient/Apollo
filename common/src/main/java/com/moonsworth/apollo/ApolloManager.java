@@ -7,9 +7,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 /**
  * Provides the instances for {@link Apollo}.
  *

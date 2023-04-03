@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+package lunarclient.apollo.modules;
+
+import "com/moonsworth/apollo/protocol/utility.proto";
+
+option java_multiple_files = true;
+
+// Modules
+
+message BorderMessage {
+  string id = 1;
+  string world = 2;
+  bool cancelEntry = 3;
+  bool cancelExit = 4;
+  bool canShrinkOrExpand = 5;
+  sint32 color = 6;
+  double minX = 7;
+  double minZ = 8;
+  double maxX = 9;
+  double maxZ = 10;
+  int32 durationTicks = 11;
+}
+
+message CooldownMessage {
+  string name = 1;
+  int64 duration = 2;
+  oneof icon {
+    int32 itemId = 3;
+    lunarclient.apollo.utility.RenderableIcon renderableIcon = 4;
+  }
+}
+
+message HeartTextureMessage {
+  enum Type {
+    NONE = 0;
+    ABSORPTION = 1;
+    HEALING = 2;
+    HEALING_AND_ABSORPTION = 3;
+  }
+
+  Type type = 1;
+  int32 locationX = 2;
+}
+
+message NametagMessage {
+  string player = 1;
+  bool hide = 2;
+  repeated lunarclient.apollo.utility.RenderableString nametag = 3;
+  int32 playerNameIndex = 4;
+}
+
+message NotificationMessage {
+  string title = 1;
+  string description = 2;
+  string resourceLocation = 3;
+}
+
+message StaffModsMessage {
+  enum Module {
+    XRAY = 0;
+  }
+
+  repeated Module modules = 1;
+}
+
+message TeamMessage {
+  message TeammateMessage {
+    sint32 color = 1;
+    oneof data {
+      lunarclient.apollo.utility.Location location = 2;
+    }
+  }
+
+  string teamId = 1;
+  map<string, TeammateMessage> members = 2;
+}
+
+message TitleMessage {
+  enum Type {
+    TITLE = 0;
+    SUBTITLE = 1;
+  }
+
+  Type type = 1;
+  string message = 2;
+  float scale = 3;
+  int64 displayTime = 4;
+  int64 fadeInTime = 5;
+  int64 fadeOutTime = 6;
+}
+
+message WaypointMessage {
+  string name = 1;
+  lunarclient.apollo.utility.BlockLocation location = 2;
+  sint32 color = 3;
+  bool forced = 4;
+  bool visible = 5;
+}

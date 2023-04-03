@@ -19,14 +19,6 @@ import java.util.List;
 @ApiStatus.NonExtendable
 public abstract class Cooldowns extends ApolloModule {
 
-    /**
-     * A list of cooldowns.
-     */
-    public static final ListOption<Cooldown> COOLDOWNS = Option.<Cooldown>list()
-            .node("cooldowns").type(new TypeToken<List<Cooldown>>() {})
-            .defaultValue(Collections.emptyList()).notifyClient()
-            .build();
-
     Cooldowns() {
         super("Cooldowns");
     }
