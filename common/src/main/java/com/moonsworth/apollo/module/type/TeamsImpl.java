@@ -4,20 +4,19 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.event.player.ApolloUnregisterPlayerEvent;
-import com.moonsworth.apollo.option.NetworkOptions;
-import com.moonsworth.apollo.option.OptionConverter;
 import com.moonsworth.apollo.option.Options;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayerManager;
 import com.moonsworth.apollo.player.ui.Team;
-import com.moonsworth.apollo.protocol.LocationMessage;
-import com.moonsworth.apollo.protocol.TeamMessage;
-import com.moonsworth.apollo.world.ApolloLocation;
-import java.awt.Color;
+import com.moonsworth.apollo.util.ProtoUtils;
+import lunarclient.apollo.modules.TeamMessage;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
+import java.awt.*;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import static java.util.Objects.requireNonNull;
 
@@ -38,46 +37,6 @@ public final class TeamsImpl extends Teams {
         this.teamsByPlayerUuid = Maps.newHashMap();
 
         this.handle(ApolloUnregisterPlayerEvent.class, this::onPlayerUnregister);
-
-        NetworkOptions.register(Team.class, TeamMessage.getDefaultInstance(), new OptionConverter<Team, TeamMessage>() {
-            @Override
-            public TeamMessage to(final Team object) throws IllegalArgumentException {
-                final OptionConverter<ApolloLocation, LocationMessage> locationConverter = NetworkOptions.get(ApolloLocation.class);
-
-                final Map<String, TeamMessage.TeammateMessage> teammates = object.getTeammates().entrySet().stream()
-                    .collect(Collectors.toMap(
-                        entry -> entry.getKey().toString(),
-                        entry -> TeamMessage.TeammateMessage.newBuilder()
-                            .setColor(entry.getValue().getColor().getRGB())
-                            .setLocation(locationConverter.to(entry.getValue().getLocation()))
-                            .build()
-                    ));
-
-                return TeamMessage.newBuilder()
-                    .setTeamId(object.getTeamId().toString())
-                    .putAllMembers(teammates)
-                    .build();
-            }
-
-            @Override
-            public Team from(final TeamMessage message) throws IllegalArgumentException {
-                final OptionConverter<ApolloLocation, LocationMessage> locationConverter = NetworkOptions.get(ApolloLocation.class);
-
-                final Map<UUID, Team.Teammate> teammates = message.getMembersMap().entrySet().stream()
-                    .collect(Collectors.toMap(
-                        entry -> UUID.fromString(entry.getKey()),
-                        entry -> Team.Teammate.of(
-                            new Color(entry.getValue().getColor()),
-                            locationConverter.from(entry.getValue().getLocation())
-                        )
-                    ));
-
-                return Team.of(
-                    UUID.fromString(message.getTeamId()),
-                    teammates
-                );
-            }
-        });
     }
 
     @Override
@@ -196,5 +155,37 @@ public final class TeamsImpl extends Teams {
                 this.deleteTeam(team);
             }
         }
+    }
+
+    public TeamMessage to(final Team object) throws IllegalArgumentException {
+        final List<TeamMessage.TeammateMessage> teammates = object.getTeammates().entrySet().stream()
+            .map(entry ->
+                TeamMessage.TeammateMessage.newBuilder()
+                    .setPlayerUuid(ProtoUtils.toProtoUuid(entry.getKey()))
+                    .setColor(entry.getValue().getColor().getRGB())
+                    .setLocation(ProtoUtils.toProtoLocation(entry.getValue().getLocation()))
+                    .build()
+            ).collect(Collectors.toList());
+
+        return TeamMessage.newBuilder()
+            .setTeamId(object.getTeamId().toString())
+            .addAllMembers(teammates)
+            .build();
+    }
+
+    public Team from(final TeamMessage message) throws IllegalArgumentException {
+        final Map<UUID, Team.Teammate> teammates = message.getMembersList().stream()
+            .collect(Collectors.toMap(
+                teammate -> ProtoUtils.fromProtoUuid(teammate.getPlayerUuid()),
+                teammate -> Team.Teammate.of(
+                    new Color(teammate.getColor()),
+                    ProtoUtils.fromProtoLocation(teammate.getLocation())
+                )
+            ));
+
+        return Team.of(
+            UUID.fromString(message.getTeamId()),
+            teammates
+        );
     }
 }

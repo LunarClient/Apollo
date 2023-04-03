@@ -3,6 +3,7 @@ syntax = "proto3";
 package lunarclient.apollo.modules;
 
 import "com/moonsworth/apollo/protocol/utility.proto";
+import "google/protobuf/duration.proto";
 
 option java_multiple_files = true;
 
@@ -11,23 +12,23 @@ option java_multiple_files = true;
 message BorderMessage {
   string id = 1;
   string world = 2;
-  bool cancelEntry = 3;
-  bool cancelExit = 4;
-  bool canShrinkOrExpand = 5;
+  bool cancel_entry = 3;
+  bool cancel_exit = 4;
+  bool can_shrink_or_expand = 5;
   sint32 color = 6;
-  double minX = 7;
-  double minZ = 8;
-  double maxX = 9;
-  double maxZ = 10;
-  int32 durationTicks = 11;
+  double min_x = 7;
+  double min_z = 8;
+  double max_x = 9;
+  double max_z = 10;
+  int32 duration_ticks = 11;
 }
 
 message CooldownMessage {
   string name = 1;
   int64 duration = 2;
   oneof icon {
-    int32 itemId = 3;
-    lunarclient.apollo.utility.RenderableIcon renderableIcon = 4;
+    int32 item_id = 3;
+    lunarclient.apollo.utility.RenderableIcon renderable_icon = 4;
   }
 }
 
@@ -40,20 +41,20 @@ message HeartTextureMessage {
   }
 
   Type type = 1;
-  int32 locationX = 2;
+  int32 location_x = 2;
 }
 
 message NametagMessage {
-  string player = 1;
+  lunarclient.apollo.utility.Uuid player_uuid = 1;
   bool hide = 2;
   repeated lunarclient.apollo.utility.RenderableString nametag = 3;
-  int32 playerNameIndex = 4;
+  int32 player_name_index = 4;
 }
 
 message NotificationMessage {
   string title = 1;
   string description = 2;
-  string resourceLocation = 3;
+  string resource_location = 3;
 }
 
 message StaffModsMessage {
@@ -66,14 +67,13 @@ message StaffModsMessage {
 
 message TeamMessage {
   message TeammateMessage {
-    sint32 color = 1;
-    oneof data {
-      lunarclient.apollo.utility.Location location = 2;
-    }
+    lunarclient.apollo.utility.Uuid player_uuid = 1;
+    sint32 color = 2;
+    optional lunarclient.apollo.utility.Location location = 3;
   }
 
-  string teamId = 1;
-  map<string, TeammateMessage> members = 2;
+  string team_id = 1;
+  repeated TeammateMessage members = 2;
 }
 
 message TitleMessage {
@@ -85,9 +85,9 @@ message TitleMessage {
   Type type = 1;
   string message = 2;
   float scale = 3;
-  int64 displayTime = 4;
-  int64 fadeInTime = 5;
-  int64 fadeOutTime = 6;
+  google.protobuf.Duration display_time = 4;
+  google.protobuf.Duration fade_in_time = 5;
+  google.protobuf.Duration fade_out_time = 6;
 }
 
 message WaypointMessage {

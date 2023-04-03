@@ -1,13 +1,17 @@
 package com.moonsworth.apollo.module.type;
 
 import com.google.protobuf.Any;
+import com.moonsworth.apollo.option.type.RenderableString;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Nametag;
-import java.util.UUID;
+import com.moonsworth.apollo.util.ProtoUtils;
 import lunarclient.apollo.common.MessageOperation;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.NametagMessage;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -52,28 +56,27 @@ public final class NametagsImpl extends Nametags {
 
 
     private NametagMessage to(final Nametag nametag) {
-//        final List<RenderableString> renderableStrings = nametag.getNametag().stream()
-//                .map(renderableString -> renderableStringConverter.to(renderableString))
-//                .collect(Collectors.toList());
+        final List<lunarclient.apollo.utility.RenderableString> tags = nametag.getNametag().stream()
+                .map(ProtoUtils::toProtoRenderableString)
+                .collect(Collectors.toList());
 
         return NametagMessage.newBuilder()
-                .setPlayer(nametag.getPlayer().toString())
+                .setPlayerUuid(ProtoUtils.toProtoUuid(nametag.getPlayer()))
                 .setHide(nametag.isHide())
-//                .addAllNametag(nametag)
+                .addAllNametag(tags)
                 .setPlayerNameIndex(nametag.getPlayerNameIndex())
                 .build();
     }
 
     private Nametag from(final NametagMessage message) {
-//        final List<com.moonsworth.apollo.option.type.RenderableString> nametag = message.getNametagList().stream()
-//                .map(renderableString -> renderableStringConverter.from(renderableString))
-//                .collect(Collectors.toList());
+        final List<RenderableString> nametag = message.getNametagList().stream()
+                .map(ProtoUtils::fromProtoRenderableString)
+                .collect(Collectors.toList());
 
         return Nametag.of(
-                UUID.fromString(message.getPlayer()),
+                ProtoUtils.fromProtoUuid(message.getPlayerUuid()),
                 message.getHide(),
-//                nametag,
-                null,
+                nametag,
                 message.getPlayerNameIndex()
         );
     }

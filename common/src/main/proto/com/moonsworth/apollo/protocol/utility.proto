@@ -6,6 +6,11 @@ import "google/protobuf/struct.proto";
 
 option java_multiple_files = true;
 
+message Uuid {
+  fixed64 high64 = 1;
+  fixed64 low64 = 2;
+}
+
 message BlockLocation {
   string world = 1;
   sint32 x = 2;
