@@ -6,7 +6,12 @@ import com.moonsworth.apollo.option.Option;
 import com.moonsworth.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
-public class ServerRule extends ApolloModule {
+/**
+ * Represents the server rule module.
+ *
+ * @since 1.0.0
+ */
+public final class ServerRule extends ApolloModule {
 
     /**
      * Whether the player should see a popup prior to disconnecting.

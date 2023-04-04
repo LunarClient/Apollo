@@ -1,9 +1,8 @@
 package com.moonsworth.apollo.player;
 
-import org.jetbrains.annotations.ApiStatus;
-
 import java.util.EnumSet;
 import java.util.Set;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the minecraft version the player is using.

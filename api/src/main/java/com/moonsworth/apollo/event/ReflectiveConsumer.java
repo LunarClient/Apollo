@@ -1,10 +1,9 @@
 package com.moonsworth.apollo.event;
 
-import lombok.Getter;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.Consumer;
+import lombok.Getter;
 
 final class ReflectiveConsumer<T extends Event> implements Consumer<T> {
 

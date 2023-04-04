@@ -1,9 +1,8 @@
 package com.moonsworth.apollo.option;
 
+import com.google.protobuf.Value;
+import com.moonsworth.apollo.network.NetworkOptions;
 import com.moonsworth.apollo.player.ApolloPlayer;
-import com.moonsworth.apollo.protocol.AddOption;
-import com.moonsworth.apollo.protocol.ModuleOption;
-import com.moonsworth.apollo.protocol.SetOption;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -67,7 +66,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
             NetworkOptions.sendOption(
                     this.container.module,
                     option,
-                    ModuleOption.newBuilder().setSet(SetOption.newBuilder().setValue(this.wrapElement(value)).build()).build(),
+                    this.wrapValue(Value.newBuilder(), value),
                     Collections.singleton(this.player)
             );
         }
@@ -82,7 +81,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
             NetworkOptions.sendOption(
                     this.container.module,
                     option,
-                    ModuleOption.newBuilder().setAdd(AddOption.newBuilder().setValue(this.wrapElement(value)).build()).build(),
+                    this.wrapValue(Value.newBuilder(), value),
                     Collections.singleton(this.player)
             );
         }
@@ -97,7 +96,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
             NetworkOptions.sendOption(
                     this.container.module,
                     option,
-                    ModuleOption.newBuilder().setAdd(AddOption.newBuilder().setValue(this.wrapElement(null)).build()).build(),
+                    this.wrapValue(Value.newBuilder(), null),
                     Collections.singleton(this.player)
             );
         }
@@ -112,7 +111,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
         NetworkOptions.sendOption(
                 this.container.module,
                 option,
-                ModuleOption.newBuilder().setAdd(AddOption.newBuilder().setValue(this.wrapElement(value)).build()).build(),
+                this.wrapValue(Value.newBuilder(), value),
                 Collections.singleton(this.player)
         );
     }

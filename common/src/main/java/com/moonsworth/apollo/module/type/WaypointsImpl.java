@@ -1,15 +1,14 @@
 package com.moonsworth.apollo.module.type;
 
 import com.google.protobuf.Any;
+import com.moonsworth.apollo.network.NetworkTypes;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Waypoint;
-import com.moonsworth.apollo.util.ProtoUtils;
+import java.awt.Color;
 import lunarclient.apollo.common.MessageOperation;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.WaypointMessage;
-
-import java.awt.*;
 
 import static java.util.Objects.requireNonNull;
 
@@ -61,7 +60,7 @@ public final class WaypointsImpl extends Waypoints {
     private WaypointMessage to(final Waypoint waypoint) {
         return WaypointMessage.newBuilder()
                 .setName(waypoint.getName())
-                .setLocation(ProtoUtils.toProtoBlockLocation(waypoint.getLocation()))
+                .setLocation(NetworkTypes.toBlockLocation(waypoint.getLocation()))
                 .setColor(waypoint.getColor().getRGB())
                 .setForced(waypoint.isForced())
                 .setVisible(waypoint.isVisible())
@@ -71,7 +70,7 @@ public final class WaypointsImpl extends Waypoints {
     private Waypoint from(final WaypointMessage message) {
         return Waypoint.of(
                 message.getName(),
-                ProtoUtils.fromProtoBlockLocation(message.getLocation()),
+                NetworkTypes.fromBlockLocation(message.getLocation()),
                 new Color(message.getColor()),
                 message.getForced(),
                 message.getVisible()

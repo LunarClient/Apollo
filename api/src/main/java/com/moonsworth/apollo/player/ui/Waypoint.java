@@ -1,9 +1,8 @@
 package com.moonsworth.apollo.player.ui;
 
 import com.moonsworth.apollo.world.ApolloBlockLocation;
+import java.awt.Color;
 import lombok.Value;
-
-import java.awt.*;
 
 /**
  * Represents a waypoint which can be shown on the client.

@@ -1,9 +1,8 @@
 package com.moonsworth.apollo.player.ui;
 
-import lombok.Value;
-
 import java.util.EnumSet;
 import java.util.Set;
+import lombok.Value;
 
 /**
  * Represents a staff mod that can be enabled on the client.

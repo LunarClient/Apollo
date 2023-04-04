@@ -5,13 +5,12 @@ import com.moonsworth.apollo.event.Listener;
 import com.moonsworth.apollo.option.Option;
 import com.moonsworth.apollo.option.Options;
 import com.moonsworth.apollo.player.ApolloPlayerVersion;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 import static java.util.Objects.requireNonNull;
 

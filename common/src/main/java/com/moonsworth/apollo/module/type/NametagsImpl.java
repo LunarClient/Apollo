@@ -1,17 +1,16 @@
 package com.moonsworth.apollo.module.type;
 
 import com.google.protobuf.Any;
+import com.moonsworth.apollo.network.NetworkTypes;
 import com.moonsworth.apollo.option.type.RenderableString;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Nametag;
-import com.moonsworth.apollo.util.ProtoUtils;
+import java.util.List;
+import java.util.stream.Collectors;
 import lunarclient.apollo.common.MessageOperation;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.NametagMessage;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -57,11 +56,11 @@ public final class NametagsImpl extends Nametags {
 
     private NametagMessage to(final Nametag nametag) {
         final List<lunarclient.apollo.utility.RenderableString> tags = nametag.getNametag().stream()
-                .map(ProtoUtils::toProtoRenderableString)
+                .map(NetworkTypes::toRenderableString)
                 .collect(Collectors.toList());
 
         return NametagMessage.newBuilder()
-                .setPlayerUuid(ProtoUtils.toProtoUuid(nametag.getPlayer()))
+                .setPlayerUuid(NetworkTypes.toUuid(nametag.getPlayer()))
                 .setHide(nametag.isHide())
                 .addAllNametag(tags)
                 .setPlayerNameIndex(nametag.getPlayerNameIndex())
@@ -70,11 +69,11 @@ public final class NametagsImpl extends Nametags {
 
     private Nametag from(final NametagMessage message) {
         final List<RenderableString> nametag = message.getNametagList().stream()
-                .map(ProtoUtils::fromProtoRenderableString)
+                .map(NetworkTypes::fromRenderableString)
                 .collect(Collectors.toList());
 
         return Nametag.of(
-                ProtoUtils.fromProtoUuid(message.getPlayerUuid()),
+                NetworkTypes.fromUuid(message.getPlayerUuid()),
                 message.getHide(),
                 nametag,
                 message.getPlayerNameIndex()

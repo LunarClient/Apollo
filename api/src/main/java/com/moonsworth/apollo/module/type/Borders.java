@@ -1,25 +1,18 @@
 package com.moonsworth.apollo.module.type;
 
 import com.moonsworth.apollo.module.ApolloModule;
-import com.moonsworth.apollo.option.ListOption;
-import com.moonsworth.apollo.option.Option;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayerVersion;
 import com.moonsworth.apollo.player.ui.Border;
-import io.leangen.geantyref.TypeToken;
-import org.jetbrains.annotations.ApiStatus;
-
-import java.util.Collections;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Set;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the border module.
- * <p>
- * This module represents the border added in
- * version 1.8 (47) and was back-ported to
- * therefore it's only supported on
+ *
+ * <p>This module represents the border added in version 1.8 (47) and was
+ * back-ported to therefore it's only supported on 1.7.</p>
  *
  * @since 1.0.0
  */

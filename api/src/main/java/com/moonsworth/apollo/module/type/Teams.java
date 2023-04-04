@@ -6,11 +6,10 @@ import com.moonsworth.apollo.option.SimpleOption;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Team;
 import io.leangen.geantyref.TypeToken;
-import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Map;
 import java.util.UUID;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents the team module.
@@ -60,12 +59,12 @@ public abstract class Teams extends ApolloModule {
 
     public abstract boolean removeMember(final ApolloPlayer player, final Team team);
 
-    public abstract @Nullable Team getByPlayerUuid(final UUID uuid);
+    public abstract @Nullable Team fromPlayer(final UUID uuid);
 
-    public abstract @Nullable Team getByTeamId(final UUID uuid);
-
-    public abstract void refreshTeams();
+    public abstract @Nullable Team fromTeam(final UUID uuid);
 
     public abstract void refreshTeam(final Team team);
+
+    public abstract void refreshTeams();
 }
 

@@ -1,10 +1,9 @@
 package com.moonsworth.apollo.option;
 
 import com.moonsworth.apollo.player.ApolloPlayer;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Optional;
 import java.util.function.BiFunction;
+import org.jetbrains.annotations.Nullable;
 
 public interface Options extends Iterable<Option<?, ?, ?>> {
 

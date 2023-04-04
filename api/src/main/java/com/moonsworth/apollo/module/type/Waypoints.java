@@ -1,18 +1,14 @@
 package com.moonsworth.apollo.module.type;
 
 import com.moonsworth.apollo.module.ApolloModule;
-import com.moonsworth.apollo.option.ListOption;
 import com.moonsworth.apollo.option.Option;
 import com.moonsworth.apollo.option.SimpleOption;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Waypoint;
 import com.moonsworth.apollo.world.ApolloBlockLocation;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 import org.jetbrains.annotations.ApiStatus;
-
-import java.awt.*;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Represents the waypoint module.

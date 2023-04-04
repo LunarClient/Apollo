@@ -2,10 +2,10 @@ package com.moonsworth.apollo.module.type;
 
 import com.google.protobuf.Any;
 import com.moonsworth.apollo.Apollo;
+import com.moonsworth.apollo.network.NetworkTypes;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Title;
-import com.moonsworth.apollo.util.ProtoUtils;
 import lunarclient.apollo.common.MessageOperation;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.TitleMessage;
@@ -53,9 +53,9 @@ public final class TitlesImpl extends Titles {
                 .setType(TitleMessage.Type.valueOf(title.getType().name()))
                 .setMessage(title.getMessage())
                 .setScale(title.getScale())
-                .setDisplayTime(ProtoUtils.toProtoDuration(title.getDisplayTime()))
-                .setFadeInTime(ProtoUtils.toProtoDuration(title.getFadeInTime()))
-                .setFadeOutTime(ProtoUtils.toProtoDuration(title.getFadeOutTime()))
+                .setDisplayTime(NetworkTypes.toDuration(title.getDisplayTime()))
+                .setFadeInTime(NetworkTypes.toDuration(title.getFadeInTime()))
+                .setFadeOutTime(NetworkTypes.toDuration(title.getFadeOutTime()))
                 .build();
     }
 
@@ -64,9 +64,9 @@ public final class TitlesImpl extends Titles {
                 Title.Type.valueOf(message.getType().name()),
                 message.getMessage(),
                 message.getScale(),
-                ProtoUtils.fromProtoDuration(message.getDisplayTime()),
-                ProtoUtils.fromProtoDuration(message.getFadeInTime()),
-                ProtoUtils.fromProtoDuration(message.getFadeOutTime())
+                NetworkTypes.fromDuration(message.getDisplayTime()),
+                NetworkTypes.fromDuration(message.getFadeInTime()),
+                NetworkTypes.fromDuration(message.getFadeOutTime())
         );
     }
 }

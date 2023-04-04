@@ -1,16 +1,15 @@
 package com.moonsworth.apollo.option;
 
 import com.moonsworth.apollo.player.ApolloPlayer;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Optional;
+import java.util.function.BiFunction;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.function.BiFunction;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 final class EmptyOptions implements Options.Container {

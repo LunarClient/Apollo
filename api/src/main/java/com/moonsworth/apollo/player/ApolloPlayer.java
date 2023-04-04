@@ -1,10 +1,9 @@
 package com.moonsworth.apollo.player;
 
 import com.moonsworth.apollo.world.ApolloLocation;
-import org.jetbrains.annotations.ApiStatus;
-
 import java.util.Optional;
 import java.util.UUID;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents a player on Apollo.

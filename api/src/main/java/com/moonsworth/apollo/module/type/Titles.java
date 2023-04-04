@@ -4,10 +4,9 @@ import com.moonsworth.apollo.module.ApolloModule;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayerVersion;
 import com.moonsworth.apollo.player.ui.Title;
-import org.jetbrains.annotations.ApiStatus;
-
 import java.util.EnumSet;
 import java.util.Set;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the title module.

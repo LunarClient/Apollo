@@ -1,9 +1,8 @@
 package com.moonsworth.apollo.player.ui;
 
 import com.moonsworth.apollo.option.type.RenderableIcon;
-import lombok.Value;
-
 import java.time.Duration;
+import lombok.Value;
 
 /**
  * Represents a cooldown which can be shown on the client.

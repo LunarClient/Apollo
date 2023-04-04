@@ -1,9 +1,8 @@
 package com.moonsworth.apollo.option.type;
 
-import lombok.Value;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
+import lombok.Value;
 
 /**
  * Represents a renderable string which can be shown on the client.

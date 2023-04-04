@@ -1,15 +1,14 @@
 package com.moonsworth.apollo.module.type;
 
 import com.google.protobuf.Any;
+import com.moonsworth.apollo.network.NetworkTypes;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Cooldown;
-import com.moonsworth.apollo.util.ProtoUtils;
+import java.time.Duration;
 import lunarclient.apollo.common.MessageOperation;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.CooldownMessage;
-
-import java.time.Duration;
 
 import static java.util.Objects.requireNonNull;
 
@@ -63,7 +62,7 @@ public final class CooldownsImpl extends Cooldowns {
                 .setName(cooldown.getName())
                 .setDuration(cooldown.getDuration().toMillis())
                 .setItemId(cooldown.getItemId())
-                .setRenderableIcon(ProtoUtils.toProtoRenderableIcon(cooldown.getIcon()))
+                .setRenderableIcon(NetworkTypes.toRenderableIcon(cooldown.getIcon()))
                 .build();
     }
 
@@ -72,7 +71,7 @@ public final class CooldownsImpl extends Cooldowns {
                 message.getName(),
                 Duration.ofMillis(message.getDuration()),
                 message.getItemId(),
-                ProtoUtils.fromProtoRenderableIcon(message.getRenderableIcon())
+                NetworkTypes.fromRenderableIcon(message.getRenderableIcon())
         );
     }
 }

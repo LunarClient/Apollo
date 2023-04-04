@@ -1,7 +1,10 @@
-package com.moonsworth.apollo.option;
+package com.moonsworth.apollo.network;
 
 import com.google.protobuf.Value;
 import com.moonsworth.apollo.module.ApolloModule;
+import com.moonsworth.apollo.option.AbstractOptions;
+import com.moonsworth.apollo.option.Option;
+import com.moonsworth.apollo.option.Options;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayerVersion;

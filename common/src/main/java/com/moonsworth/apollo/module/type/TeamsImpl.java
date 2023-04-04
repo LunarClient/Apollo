@@ -4,19 +4,18 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.event.player.ApolloUnregisterPlayerEvent;
+import com.moonsworth.apollo.network.NetworkTypes;
 import com.moonsworth.apollo.option.Options;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayerManager;
 import com.moonsworth.apollo.player.ui.Team;
-import com.moonsworth.apollo.util.ProtoUtils;
-import lunarclient.apollo.modules.TeamMessage;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import lunarclient.apollo.modules.TeamMessage;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import static java.util.Objects.requireNonNull;
 
@@ -66,7 +65,7 @@ public final class TeamsImpl extends Teams {
     }
 
     @Override
-    public Team getByPlayerUuid(final UUID uuid) {
+    public Team fromPlayer(final UUID uuid) {
         requireNonNull(uuid, "uuid");
         return this.teamsByPlayerUuid.get(uuid);
     }
@@ -78,7 +77,7 @@ public final class TeamsImpl extends Teams {
         requireNonNull(player, "player");
 
         final UUID uuid = player.getUniqueId();
-        final Team playerTeam = this.getByPlayerUuid(uuid);
+        final Team playerTeam = this.fromPlayer(uuid);
 
         if(playerTeam != null) return false;
 
@@ -97,7 +96,7 @@ public final class TeamsImpl extends Teams {
         requireNonNull(player, "player");
 
         final UUID uuid = player.getUniqueId();
-        final Team playerTeam = this.getByPlayerUuid(uuid);
+        final Team playerTeam = this.fromPlayer(uuid);
 
         if(!team.equals(playerTeam)) return false;
 
@@ -111,7 +110,7 @@ public final class TeamsImpl extends Teams {
     }
 
     @Override
-    public Team getByTeamId(final UUID uuid) {
+    public Team fromTeam(final UUID uuid) {
         requireNonNull(uuid, "uuid");
         return this.teamsByTeamUuid.get(uuid);
     }
@@ -161,9 +160,9 @@ public final class TeamsImpl extends Teams {
         final List<TeamMessage.TeammateMessage> teammates = object.getTeammates().entrySet().stream()
             .map(entry ->
                 TeamMessage.TeammateMessage.newBuilder()
-                    .setPlayerUuid(ProtoUtils.toProtoUuid(entry.getKey()))
+                    .setPlayerUuid(NetworkTypes.toUuid(entry.getKey()))
                     .setColor(entry.getValue().getColor().getRGB())
-                    .setLocation(ProtoUtils.toProtoLocation(entry.getValue().getLocation()))
+                    .setLocation(NetworkTypes.toLocation(entry.getValue().getLocation()))
                     .build()
             ).collect(Collectors.toList());
 
@@ -176,10 +175,10 @@ public final class TeamsImpl extends Teams {
     public Team from(final TeamMessage message) throws IllegalArgumentException {
         final Map<UUID, Team.Teammate> teammates = message.getMembersList().stream()
             .collect(Collectors.toMap(
-                teammate -> ProtoUtils.fromProtoUuid(teammate.getPlayerUuid()),
+                teammate -> NetworkTypes.fromUuid(teammate.getPlayerUuid()),
                 teammate -> Team.Teammate.of(
                     new Color(teammate.getColor()),
-                    ProtoUtils.fromProtoLocation(teammate.getLocation())
+                    NetworkTypes.fromLocation(teammate.getLocation())
                 )
             ));
 

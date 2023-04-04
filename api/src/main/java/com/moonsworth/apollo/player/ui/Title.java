@@ -1,8 +1,7 @@
 package com.moonsworth.apollo.player.ui;
 
-import lombok.Value;
-
 import java.time.Duration;
+import lombok.Value;
 
 /**
  * Represents a title which can be shown on the client.

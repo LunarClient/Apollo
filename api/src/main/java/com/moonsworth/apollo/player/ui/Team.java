@@ -4,13 +4,12 @@ import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.module.type.Teams;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.world.ApolloLocation;
+import java.awt.Color;
+import java.util.Map;
+import java.util.UUID;
 import lombok.Setter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
-
-import java.awt.*;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * Represents a team which can be shown on the client.

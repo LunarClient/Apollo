@@ -1,9 +1,8 @@
 package com.moonsworth.apollo.module;
 
-import org.jetbrains.annotations.ApiStatus;
-
 import java.util.Collection;
 import java.util.Optional;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the module manager for Apollo.

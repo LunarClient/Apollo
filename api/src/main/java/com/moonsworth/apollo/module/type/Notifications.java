@@ -4,10 +4,9 @@ import com.moonsworth.apollo.ApolloPlatform;
 import com.moonsworth.apollo.module.ApolloModule;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Notification;
-import org.jetbrains.annotations.ApiStatus;
-
 import java.util.Arrays;
 import java.util.Collection;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the notification module.

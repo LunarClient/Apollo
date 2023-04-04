@@ -1,10 +1,9 @@
 package com.moonsworth.apollo.player.ui;
 
 import com.moonsworth.apollo.option.type.RenderableString;
-import lombok.Value;
-
 import java.util.List;
 import java.util.UUID;
+import lombok.Value;
 
 /**
  * Represents a nametag which can be shown on the client.

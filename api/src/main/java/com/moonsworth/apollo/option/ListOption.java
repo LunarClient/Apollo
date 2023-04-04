@@ -1,9 +1,8 @@
 package com.moonsworth.apollo.option;
 
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 public final class ListOption<T> extends Option<List<T>, ListOption.ListOptionBuilder<T>, ListOption<T>> {
 

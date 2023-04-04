@@ -1,10 +1,9 @@
 package com.moonsworth.apollo.player;
 
-import org.jetbrains.annotations.ApiStatus;
-
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
+import org.jetbrains.annotations.ApiStatus;
 
 import static java.util.Objects.requireNonNull;
 

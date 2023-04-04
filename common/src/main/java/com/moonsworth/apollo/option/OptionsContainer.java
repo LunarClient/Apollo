@@ -3,6 +3,7 @@ package com.moonsworth.apollo.option;
 import com.google.protobuf.Value;
 import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.module.ApolloModule;
+import com.moonsworth.apollo.network.NetworkOptions;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import java.util.Collection;
 import java.util.HashMap;

@@ -1,8 +1,7 @@
 package com.moonsworth.apollo.player.ui;
 
+import java.awt.Color;
 import lombok.Value;
-
-import java.awt.*;
 
 /**
  * Represents a border which can be shown on the client.
