@@ -26,7 +26,7 @@ public final class NametagsImpl extends Nametags {
     }
 
     @Override
-    public void sendNametag(final Nametag nametag, final ApolloPlayer... viewers) {
+    public void overrideNametag(final Nametag nametag, final ApolloPlayer... viewers) {
         requireNonNull(nametag, "nametag");
         requireNonNull(viewers, "viewers");
 

@@ -4,12 +4,13 @@ import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.module.type.Teams;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.world.ApolloLocation;
-import java.awt.Color;
-import java.util.Map;
-import java.util.UUID;
 import lombok.Setter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
+
+import java.awt.*;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Represents a team which can be shown on the client.
@@ -19,8 +20,21 @@ import lombok.experimental.NonFinal;
 @Value(staticConstructor = "of")
 public class Team {
 
+    /**
+     * Returns the team {@link UUID}.
+     *
+     * @return the team uuid
+     * @since 1.0.0
+     */
     UUID teamId;
 
+    /**
+     * Returns the team {@link Map} that contains {@link UUID}
+     * player uuid as key and {@link Team.Teammate} as value.
+     *
+     * @return the teammates map
+     * @since 1.0.0
+     */
     Map<UUID, Teammate> teammates;
 
     public boolean addMember(final Team.Teammate teammate, final ApolloPlayer player) {
