@@ -1,12 +1,10 @@
 package com.moonsworth.apollo.module.type;
 
-import com.google.protobuf.Any;
 import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.network.NetworkTypes;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Title;
-import lunarclient.apollo.common.MessageOperation;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.TitleMessage;
 
@@ -28,11 +26,7 @@ public final class TitlesImpl extends Titles {
         requireNonNull(player, "player");
         requireNonNull(title, "title");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.ADD)
-                .setValue(Any.pack(this.to(title)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(title));
     }
 
     @Override
@@ -40,11 +34,7 @@ public final class TitlesImpl extends Titles {
         requireNonNull(title, "title");
 
         for(final ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
-            ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                    .setModule(this.getName())
-                    .setOperation(OptionOperation.ADD)
-                    .setValue(Any.pack(this.to(title)))
-                    .build());
+            ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(title));
         }
     }
 

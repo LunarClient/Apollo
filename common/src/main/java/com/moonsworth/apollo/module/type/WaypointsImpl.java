@@ -1,12 +1,10 @@
 package com.moonsworth.apollo.module.type;
 
-import com.google.protobuf.Any;
 import com.moonsworth.apollo.network.NetworkTypes;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Waypoint;
 import java.awt.Color;
-import lunarclient.apollo.common.MessageOperation;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.WaypointMessage;
 
@@ -28,11 +26,7 @@ public final class WaypointsImpl extends Waypoints {
         requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.ADD)
-                .setValue(Any.pack(this.to(waypoint)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(waypoint));
     }
 
     @Override
@@ -40,21 +34,14 @@ public final class WaypointsImpl extends Waypoints {
         requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.REMOVE)
-                .setValue(Any.pack(this.to(waypoint)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.REMOVE, this.to(waypoint));
     }
 
     @Override
     public void clearWaypoints(final ApolloPlayer player) {
         requireNonNull(player, "player");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.CLEAR)
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
     }
 
     private WaypointMessage to(final Waypoint waypoint) {

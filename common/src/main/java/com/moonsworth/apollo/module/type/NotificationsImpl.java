@@ -1,11 +1,9 @@
 package com.moonsworth.apollo.module.type;
 
-import com.google.protobuf.Any;
 import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Notification;
-import lunarclient.apollo.common.MessageOperation;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.NotificationMessage;
 
@@ -27,11 +25,7 @@ public final class NotificationsImpl extends Notifications {
         requireNonNull(player, "player");
         requireNonNull(notification, "notification");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.ADD)
-                .setValue(Any.pack(this.to(notification)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(notification));
     }
 
     @Override
@@ -39,11 +33,7 @@ public final class NotificationsImpl extends Notifications {
         requireNonNull(notification, "notification");
 
         for(final ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
-            ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                    .setModule(this.getName())
-                    .setOperation(OptionOperation.ADD)
-                    .setValue(Any.pack(this.to(notification)))
-                    .build());
+            ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(notification));
         }
     }
 

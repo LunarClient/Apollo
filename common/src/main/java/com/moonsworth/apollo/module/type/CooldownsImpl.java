@@ -1,12 +1,10 @@
 package com.moonsworth.apollo.module.type;
 
-import com.google.protobuf.Any;
 import com.moonsworth.apollo.network.NetworkTypes;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Cooldown;
 import java.time.Duration;
-import lunarclient.apollo.common.MessageOperation;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.CooldownMessage;
 
@@ -28,11 +26,7 @@ public final class CooldownsImpl extends Cooldowns {
         requireNonNull(player, "player");
         requireNonNull(cooldown, "cooldown");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.SET)
-                .setValue(Any.pack(this.to(cooldown)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, this.to(cooldown));
     }
 
     @Override
@@ -40,21 +34,14 @@ public final class CooldownsImpl extends Cooldowns {
         requireNonNull(player, "player");
         requireNonNull(cooldown, "cooldown");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.REMOVE)
-                .setValue(Any.pack(this.to(cooldown)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.REMOVE, this.to(cooldown));
     }
 
     @Override
     public void clearCooldowns(final ApolloPlayer player) {
         requireNonNull(player, "player");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.CLEAR)
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
     }
 
     private CooldownMessage to(final Cooldown cooldown) {

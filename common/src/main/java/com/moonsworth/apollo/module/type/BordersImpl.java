@@ -1,11 +1,9 @@
 package com.moonsworth.apollo.module.type;
 
-import com.google.protobuf.Any;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Border;
 import java.awt.Color;
-import lunarclient.apollo.common.MessageOperation;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.BorderMessage;
 
@@ -27,11 +25,7 @@ public final class BordersImpl extends Borders {
         requireNonNull(player, "player");
         requireNonNull(border, "border");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.SET)
-                .setValue(Any.pack(this.to(border)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, this.to(border));
     }
 
     @Override
@@ -39,11 +33,7 @@ public final class BordersImpl extends Borders {
         requireNonNull(player, "player");
         requireNonNull(border, "border");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.REMOVE)
-                .setValue(Any.pack(this.to(border)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.REMOVE, this.to(border));
     }
 
     private BorderMessage to(final Border border) {

@@ -1,12 +1,10 @@
 package com.moonsworth.apollo.module.type;
 
-import com.google.protobuf.Any;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.StaffMod;
 import java.util.Set;
 import java.util.stream.Collectors;
-import lunarclient.apollo.common.MessageOperation;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.StaffModsMessage;
 
@@ -23,11 +21,7 @@ public final class StaffModsImpl extends com.moonsworth.apollo.module.type.Staff
         requireNonNull(player, "player");
         requireNonNull(mod, "mod");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.ADD)
-                .setValue(Any.pack(this.to(mod)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(mod));
     }
 
     @Override
@@ -35,11 +29,7 @@ public final class StaffModsImpl extends com.moonsworth.apollo.module.type.Staff
         requireNonNull(player, "player");
         requireNonNull(mod, "staffMod");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.REMOVE)
-                .setValue(Any.pack(this.to(mod)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.REMOVE, this.to(mod));
     }
 
     @Override
@@ -47,11 +37,7 @@ public final class StaffModsImpl extends com.moonsworth.apollo.module.type.Staff
         requireNonNull(player, "player");
 
         final StaffMod mods = StaffMod.of(StaffMod.Module.getModules());
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.ADD)
-                .setValue(Any.pack(this.to(mods)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(mods));
     }
 
     @Override
@@ -59,11 +45,7 @@ public final class StaffModsImpl extends com.moonsworth.apollo.module.type.Staff
         requireNonNull(player, "player");
 
         final StaffMod mods = StaffMod.of(StaffMod.Module.getModules());
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.REMOVE)
-                .setValue(Any.pack(this.to(mods)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.REMOVE, this.to(mods));
     }
 
     private StaffModsMessage to(final StaffMod staffMod) {

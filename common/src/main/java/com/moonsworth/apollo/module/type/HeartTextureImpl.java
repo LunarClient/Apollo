@@ -1,10 +1,8 @@
 package com.moonsworth.apollo.module.type;
 
-import com.google.protobuf.Any;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.HeartTexture;
-import lunarclient.apollo.common.MessageOperation;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.HeartTextureMessage;
 
@@ -26,21 +24,14 @@ public final class HeartTextureImpl extends HeartTextures {
         requireNonNull(player, "player");
         requireNonNull(heartTexture, "heartTexture");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.SET)
-                .setValue(Any.pack(this.to(heartTexture)))
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, this.to(heartTexture));
     }
 
     @Override
     public void removeHeartTexture(final ApolloPlayer player) {
         requireNonNull(player, "player");
 
-        ((AbstractApolloPlayer) player).sendPacket(MessageOperation.newBuilder()
-                .setModule(this.getName())
-                .setOperation(OptionOperation.CLEAR)
-                .build());
+        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
     }
 
     private HeartTextureMessage to(final HeartTexture texture) {
