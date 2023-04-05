@@ -10,6 +10,7 @@ import com.moonsworth.apollo.world.ApolloBlockLocation;
 import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -35,7 +36,7 @@ public abstract class Waypoints extends ApolloModule {
     public static final ListOption<Waypoint> DEFAULT_WAYPOINTS = Option.<Waypoint>list()
             .comment("Sets the default waypoints to send to the player.")
             .node("default-waypoints").type(new TypeToken<List<Waypoint>>() {})
-            .defaultValue(new ArrayList<>()).build();
+            .defaultValue(Collections.singletonList(SPAWN_WAYPOINT)).build();
 
     /**
      * Lets servers handle waypoints.
