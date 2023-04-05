@@ -1,5 +1,7 @@
 package com.moonsworth.apollo.player;
 
+import com.moonsworth.apollo.option.Option;
+import com.moonsworth.apollo.option.Options;
 import com.moonsworth.apollo.world.ApolloLocation;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,6 +38,21 @@ public interface ApolloPlayer {
      * @since 1.0.0
      */
     Optional<ApolloLocation> getLocation();
+
+    /**
+     * Returns {@code true} if the player has the specified {@link String}
+     * permission from the provided {@link Option}, otherwise returns
+     * {@code false}.
+     *
+     * @param options the options container
+     * @param option the option
+     * @return true if the player has permission, otherwise false
+     * @since 1.0.0
+     */
+    default boolean hasPermission(Options options, Option<String, ?, ?> option) {
+        String value = options.get(option);
+        return this.hasPermission(value);
+    }
 
     /**
      * Returns {@code true} if the player has the specified {@link String}
