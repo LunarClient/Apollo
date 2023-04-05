@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  */
 public final class SimpleOption<T> extends Option<T, SimpleOption.SimpleOptionBuilder<T>, SimpleOption<T>> {
 
-    private SimpleOption(final SimpleOptionBuilder<T> builder) {
+    private SimpleOption(SimpleOptionBuilder<T> builder) {
         super(builder);
     }
 

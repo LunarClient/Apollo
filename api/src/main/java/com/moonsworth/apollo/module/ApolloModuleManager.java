@@ -20,7 +20,7 @@ public interface ApolloModuleManager {
      * @return true if the module is enabled, otherwise false
      * @since 1.0.0
      */
-    boolean isEnabled(final Class<? extends ApolloModule> moduleClass);
+    boolean isEnabled(Class<? extends ApolloModule> moduleClass);
 
     /**
      * Returns the type {@code T} {@link ApolloModule} with the specified
@@ -31,7 +31,7 @@ public interface ApolloModuleManager {
      * @return the apollo module, if present
      * @since 1.0.0
      */
-    <T extends ApolloModule> Optional<T> getModule(final Class<T> moduleClass);
+    <T extends ApolloModule> Optional<T> getModule(Class<T> moduleClass);
 
     /**
      * Gets a collection of {@link ApolloModule}s.

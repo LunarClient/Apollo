@@ -88,7 +88,7 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
      */
     boolean notify;
 
-    Option(final M builder) {
+    Option(M builder) {
         this.node = requireNonNull(builder.node, "node");
         this.typeToken = requireNonNull(builder.typeToken, "typeToken");
 

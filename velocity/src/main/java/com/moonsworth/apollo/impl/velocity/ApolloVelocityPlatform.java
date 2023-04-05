@@ -46,16 +46,16 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     private HoconConfigurationLoader configurationLoader;
 
     @Inject
-    public ApolloVelocityPlatform(final ProxyServer server,
-                                  final Logger logger,
-                                  final @DataDirectory Path dataDirectory) {
+    public ApolloVelocityPlatform(ProxyServer server,
+                                  Logger logger,
+                                  @DataDirectory Path dataDirectory) {
         this.server = server;
         this.logger = logger;
         this.dataDirectory = dataDirectory;
     }
 
     @Subscribe
-    public void onProxyInitialization(final ProxyInitializeEvent event) {
+    public void onProxyInitialization(ProxyInitializeEvent event) {
         ApolloVelocityPlatform.instance = this;
 
         ApolloManager.bootstrap(this);
@@ -80,23 +80,23 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
             this.configurationLoader.load();
 
-            final CommentedConfigurationNode root = this.configurationLoader.load();
-            final CommentedConfigurationNode modules = root.node("modules");
+            CommentedConfigurationNode root = this.configurationLoader.load();
+            CommentedConfigurationNode modules = root.node("modules");
 
             ((ApolloModuleManagerImpl) Apollo.getModuleManager()).loadConfiguration(modules);
             ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration(modules);
 
             this.configurationLoader.save(root);
-        } catch(final Throwable throwable) {
+        } catch(Throwable throwable) {
             throwable.printStackTrace();
         }
     }
 
     @Subscribe
-    public void onPluginMessage(final PluginMessageEvent event) {
+    public void onPluginMessage(PluginMessageEvent event) {
         if(event.getSource() instanceof Player player) {
             if(event.getIdentifier().getId().equals("REGISTER")) {
-                final String channels = new String(event.getData(), Charsets.UTF_8);
+                String channels = new String(event.getData(), Charsets.UTF_8);
                 if(!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
 
                 ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new VelocityApolloPlayer(player));

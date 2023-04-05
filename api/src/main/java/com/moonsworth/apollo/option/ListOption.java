@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 public final class ListOption<T> extends Option<List<T>, ListOption.ListOptionBuilder<T>, ListOption<T>> {
 
-    private ListOption(final ListOptionBuilder<T> builder) {
+    private ListOption(ListOptionBuilder<T> builder) {
         super(builder);
     }
 

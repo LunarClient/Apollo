@@ -22,7 +22,7 @@ public final class CooldownsImpl extends Cooldowns {
     }
 
     @Override
-    public void sendCooldown(final ApolloPlayer player, final Cooldown cooldown) {
+    public void sendCooldown(ApolloPlayer player, Cooldown cooldown) {
         requireNonNull(player, "player");
         requireNonNull(cooldown, "cooldown");
 
@@ -30,7 +30,7 @@ public final class CooldownsImpl extends Cooldowns {
     }
 
     @Override
-    public void clearCooldown(final ApolloPlayer player, final Cooldown cooldown) {
+    public void clearCooldown(ApolloPlayer player, Cooldown cooldown) {
         requireNonNull(player, "player");
         requireNonNull(cooldown, "cooldown");
 
@@ -38,13 +38,13 @@ public final class CooldownsImpl extends Cooldowns {
     }
 
     @Override
-    public void clearCooldowns(final ApolloPlayer player) {
+    public void clearCooldowns(ApolloPlayer player) {
         requireNonNull(player, "player");
 
         ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
     }
 
-    private CooldownMessage to(final Cooldown cooldown) {
+    private CooldownMessage to(Cooldown cooldown) {
         return CooldownMessage.newBuilder()
                 .setName(cooldown.getName())
                 .setDuration(cooldown.getDuration().toMillis())
@@ -53,7 +53,7 @@ public final class CooldownsImpl extends Cooldowns {
                 .build();
     }
 
-    private Cooldown from(final CooldownMessage message) {
+    private Cooldown from(CooldownMessage message) {
         return Cooldown.of(
                 message.getName(),
                 Duration.ofMillis(message.getDuration()),

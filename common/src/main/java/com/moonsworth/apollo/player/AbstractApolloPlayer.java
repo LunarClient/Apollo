@@ -26,10 +26,10 @@ public abstract class AbstractApolloPlayer implements ApolloPlayer {
         );
     }
 
-    public void sendPacket(final GeneratedMessageV3 message) {
+    public void sendPacket(GeneratedMessageV3 message) {
         ApolloManager.getNetworkManager().sendPacket(this, Any.pack(message));
     }
 
-    public abstract void sendPacket(final byte[] messages);
+    public abstract void sendPacket(byte[] messages);
 
 }

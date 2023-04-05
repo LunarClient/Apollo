@@ -10,7 +10,7 @@ final class ReflectiveConsumer<T extends Event> implements Consumer<T> {
     @Getter private final Object instance;
     private final Method method;
 
-    ReflectiveConsumer(final Object instance, final Method method) {
+    ReflectiveConsumer(Object instance, Method method) {
         this.instance = instance;
         this.method = method;
 
@@ -18,10 +18,10 @@ final class ReflectiveConsumer<T extends Event> implements Consumer<T> {
     }
 
     @Override
-    public void accept(final T event) {
+    public void accept(T event) {
         try {
             method.invoke(this.instance, event);
-        } catch (final IllegalAccessException | InvocationTargetException exception) {
+        } catch (IllegalAccessException | InvocationTargetException exception) {
             exception.printStackTrace();
         }
     }

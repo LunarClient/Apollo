@@ -20,7 +20,7 @@ public final class HeartTextureImpl extends HeartTextures {
     }
 
     @Override
-    public void sendHeartTexture(final ApolloPlayer player, final HeartTexture heartTexture) {
+    public void sendHeartTexture(ApolloPlayer player, HeartTexture heartTexture) {
         requireNonNull(player, "player");
         requireNonNull(heartTexture, "heartTexture");
 
@@ -28,20 +28,20 @@ public final class HeartTextureImpl extends HeartTextures {
     }
 
     @Override
-    public void removeHeartTexture(final ApolloPlayer player) {
+    public void removeHeartTexture(ApolloPlayer player) {
         requireNonNull(player, "player");
 
         ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
     }
 
-    private HeartTextureMessage to(final HeartTexture texture) {
+    private HeartTextureMessage to(HeartTexture texture) {
         return HeartTextureMessage.newBuilder()
                 .setType(HeartTextureMessage.Type.valueOf(texture.getType().name()))
                 .setLocationX(texture.getLocationX())
                 .build();
     }
 
-    private HeartTexture from(final HeartTextureMessage message) {
+    private HeartTexture from(HeartTextureMessage message) {
         return HeartTexture.of(
                 HeartTexture.Type.valueOf(message.getType().name()),
                 message.getLocationX()

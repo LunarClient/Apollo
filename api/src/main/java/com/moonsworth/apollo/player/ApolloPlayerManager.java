@@ -23,7 +23,7 @@ public interface ApolloPlayerManager {
      * @return true if the player supports apollo, otherwise false
      * @since 1.0.0
      */
-    default boolean hasSupport(final UUID playerIdentifier) {
+    default boolean hasSupport(UUID playerIdentifier) {
         requireNonNull(playerIdentifier, "playerIdentifier");
         return this.getPlayer(playerIdentifier).isPresent();
     }
@@ -36,7 +36,7 @@ public interface ApolloPlayerManager {
      * @return the apollo player, if present
      * @since 1.0.0
      */
-    Optional<ApolloPlayer> getPlayer(final UUID playerIdentifier);
+    Optional<ApolloPlayer> getPlayer(UUID playerIdentifier);
 
     /**
      * Gets a collection of {@link ApolloPlayer}s that support Apollo.

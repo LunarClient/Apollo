@@ -36,7 +36,7 @@ public abstract class Titles extends ApolloModule {
      * @param title the title
      * @since 1.0.0
      */
-    public abstract void sendTitle(final ApolloPlayer player, final Title title);
+    public abstract void sendTitle(ApolloPlayer player, Title title);
 
     /**
      * Sends the {@link Title} to all {@link ApolloPlayer}s.
@@ -44,5 +44,5 @@ public abstract class Titles extends ApolloModule {
      * @param title the title
      * @since 1.0.0
      */
-    public abstract void broadcastTitle(final Title title);
+    public abstract void broadcastTitle(Title title);
 }

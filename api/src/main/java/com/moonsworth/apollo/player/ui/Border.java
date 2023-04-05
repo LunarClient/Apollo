@@ -59,7 +59,6 @@ public class Border {
      */
     Color color;
 
-    // TODO Do we want to use a Cuboid for this?
     /**
      * Returns the border {@link Double} start x.
      *

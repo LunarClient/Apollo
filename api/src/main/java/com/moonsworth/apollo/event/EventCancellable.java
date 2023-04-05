@@ -10,6 +10,6 @@ public interface EventCancellable extends Event {
 
     boolean isCancelled();
 
-    void setCancelled(final boolean cancel);
+    void setCancelled(boolean cancel);
 
 }

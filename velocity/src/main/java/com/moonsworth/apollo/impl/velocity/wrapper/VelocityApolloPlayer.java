@@ -32,12 +32,12 @@ public final class VelocityApolloPlayer extends AbstractApolloPlayer {
     }
 
     @Override
-    public boolean hasPermission(final String permissionNode) {
+    public boolean hasPermission(String permissionNode) {
         return this.player.hasPermission(permissionNode);
     }
 
     @Override
-    public void sendPacket(final byte[] messages) {
+    public void sendPacket(byte[] messages) {
         this.player.sendPluginMessage(ApolloVelocityPlatform.PLUGIN_CHANNEL, messages);
     }
 

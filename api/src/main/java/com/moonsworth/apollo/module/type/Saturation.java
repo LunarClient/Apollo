@@ -26,7 +26,7 @@ public abstract class Saturation extends ApolloModule {
      * @return boolean true if the item has provided value
      * @since 1.0.0
      */
-    public abstract boolean hasCustomValue(final ApolloItemStack itemStack, final CustomKey key);
+    public abstract boolean hasCustomValue(ApolloItemStack itemStack, CustomKey key);
 
     /**
      * Adds the {@link CustomKey} key to the provided {@link ApolloItemStack} with {@link Number} value.
@@ -36,7 +36,7 @@ public abstract class Saturation extends ApolloModule {
      * @param value the value
      * @since 1.0.0
      */
-    public abstract void applyCustomValue(final ApolloItemStack itemStack, final CustomKey key, final Number value);
+    public abstract void applyCustomValue(ApolloItemStack itemStack, CustomKey key, Number value);
 
     /**
      * Removes the {@link CustomKey} key from the provided {@link ApolloItemStack}.
@@ -45,7 +45,7 @@ public abstract class Saturation extends ApolloModule {
      * @param key the key
      * @since 1.0.0
      */
-    public abstract void removeCustomValue(final ApolloItemStack itemStack, final CustomKey key);
+    public abstract void removeCustomValue(ApolloItemStack itemStack, CustomKey key);
 
     @Getter
     @RequiredArgsConstructor

@@ -51,19 +51,19 @@ public abstract class Teams extends ApolloModule {
 
     public abstract Team createTeam();
 
-    public abstract Team createTeam(final Map<UUID, Team.Teammate> teammates);
+    public abstract Team createTeam(Map<UUID, Team.Teammate> teammates);
 
-    public abstract boolean deleteTeam(final Team team);
+    public abstract boolean deleteTeam(Team team);
 
-    public abstract boolean addMember(final ApolloPlayer player, final Team team, final Team.Teammate teammate);
+    public abstract boolean addMember(ApolloPlayer player, Team team, Team.Teammate teammate);
 
-    public abstract boolean removeMember(final ApolloPlayer player, final Team team);
+    public abstract boolean removeMember(ApolloPlayer player, Team team);
 
-    public abstract @Nullable Team fromPlayer(final UUID uuid);
+    public abstract @Nullable Team fromPlayer(UUID uuid);
 
-    public abstract @Nullable Team fromTeam(final UUID uuid);
+    public abstract @Nullable Team fromTeam(UUID uuid);
 
-    public abstract void refreshTeam(final Team team);
+    public abstract void refreshTeam(Team team);
 
     public abstract void refreshTeams();
 }

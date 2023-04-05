@@ -41,9 +41,9 @@ public final class EventBus {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public void register(final Object instance) {
+    public void register(Object instance) {
         requireNonNull(instance, "instance");
-        for(final Method method : this.getEventMethods(instance)) {
+        for(Method method : this.getEventMethods(instance)) {
             this.events.computeIfAbsent((Class<? extends Event>) method.getParameterTypes()[0], k -> new CopyOnWriteArrayList<>())
                     .add(new ReflectiveConsumer<>(instance, method));
         }
@@ -59,7 +59,7 @@ public final class EventBus {
      * @return true if the listener was registered, otherwise false
      * @since 1.0.0
      */
-    public <T extends Event> boolean register(final Class<T> event, final Consumer<T> consumer) {
+    public <T extends Event> boolean register(Class<T> event, Consumer<T> consumer) {
         requireNonNull(event, "event");
         requireNonNull(consumer, "consumer");
         return this.events.computeIfAbsent(event, key -> new CopyOnWriteArrayList<>()).add(consumer);
@@ -72,10 +72,10 @@ public final class EventBus {
      * @param instance the event listeners instance
      * @since 1.0.0
      */
-    public void unregister(final Object instance) {
+    public void unregister(Object instance) {
         requireNonNull(instance, "instance");
-        for(final Method method : this.getEventMethods(instance)) {
-            final List<Consumer<? extends Event>> listeners = this.events.get(method.getParameterTypes()[0]);
+        for(Method method : this.getEventMethods(instance)) {
+            List<Consumer<? extends Event>> listeners = this.events.get(method.getParameterTypes()[0]);
             if(listeners != null) {
                 listeners.removeIf(consumer -> consumer instanceof ReflectiveConsumer && ((ReflectiveConsumer<?>) consumer).getInstance() == instance);
             }
@@ -92,10 +92,10 @@ public final class EventBus {
      * @return true if the listener was unregistered, otherwise false
      * @since 1.0.0
      */
-    public <T extends Event> boolean unregister(final Class<T> event, final Consumer<T> consumer) {
+    public <T extends Event> boolean unregister(Class<T> event, Consumer<T> consumer) {
         requireNonNull(event, "event");
         requireNonNull(consumer, "consumer");
-        final CopyOnWriteArrayList<Consumer<? extends Event>> consumers = this.events.get(event);
+        CopyOnWriteArrayList<Consumer<? extends Event>> consumers = this.events.get(event);
         return consumers != null && consumers.remove(consumer);
     }
 
@@ -107,15 +107,15 @@ public final class EventBus {
      * @return the event result
      * @since 1.0.0
      */
-    public <T extends Event> EventResult<T> post(final T event) {
+    public <T extends Event> EventResult<T> post(T event) {
         requireNonNull(event, "event");
-        final CopyOnWriteArrayList<Consumer<? extends Event>> consumers = this.events.get(event.getClass());
-        final List<Throwable> throwables = new ArrayList<>();
+        CopyOnWriteArrayList<Consumer<? extends Event>> consumers = this.events.get(event.getClass());
+        List<Throwable> throwables = new ArrayList<>();
         if(consumers != null) {
-            for(final Consumer<? extends Event> consumer : consumers) {
+            for(Consumer<? extends Event> consumer : consumers) {
                 try {
                     ((Consumer<T>) consumer).accept(event);
-                } catch(final Throwable throwable) {
+                } catch(Throwable throwable) {
                     throwables.add(throwable);
                 }
             }
@@ -123,7 +123,7 @@ public final class EventBus {
         return new EventResult<>(event, throwables);
     }
 
-    private List<Method> getEventMethods(final Object instance) {
+    private List<Method> getEventMethods(Object instance) {
         return Arrays.stream(instance.getClass().getDeclaredMethods())
                 .filter(method -> method.isAnnotationPresent(Listen.class)
                         && method.getParameterCount() == 1

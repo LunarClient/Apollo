@@ -47,12 +47,12 @@ public final class Apollo {
         return Apollo.checkEnabled(Apollo.playerManager);
     }
 
-    private static <T> T checkEnabled(final @Nullable T object) {
+    private static <T> T checkEnabled(@Nullable T object) {
         if (object == null) throw new UnsupportedOperationException("Apollo has not started yet!");
         return object;
     }
 
-    static void initialize(final ApolloPlatform platform, final ApolloModuleManager moduleManager, final ApolloPlayerManager playerManager) {
+    static void initialize(ApolloPlatform platform, ApolloModuleManager moduleManager, ApolloPlayerManager playerManager) {
         Apollo.platform = requireNonNull(platform, "platform");
         Apollo.moduleManager = requireNonNull(moduleManager, "moduleManager");
         Apollo.playerManager = playerManager;

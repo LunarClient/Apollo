@@ -21,7 +21,7 @@ public final class BordersImpl extends Borders {
     }
 
     @Override
-    public void addBorder(final ApolloPlayer player, final Border border) {
+    public void addBorder(ApolloPlayer player, Border border) {
         requireNonNull(player, "player");
         requireNonNull(border, "border");
 
@@ -29,14 +29,14 @@ public final class BordersImpl extends Borders {
     }
 
     @Override
-    public void removeBorder(final ApolloPlayer player, final Border border) {
+    public void removeBorder(ApolloPlayer player, Border border) {
         requireNonNull(player, "player");
         requireNonNull(border, "border");
 
         ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.REMOVE, this.to(border));
     }
 
-    private BorderMessage to(final Border border) {
+    private BorderMessage to(Border border) {
         return BorderMessage.newBuilder()
                 .setId(border.getId())
                 .setWorld(border.getWorld())
@@ -52,7 +52,7 @@ public final class BordersImpl extends Borders {
                 .build();
     }
 
-    private Border from(final BorderMessage message) {
+    private Border from(BorderMessage message) {
         return Border.of(
                 message.getId(),
                 message.getWorld(),

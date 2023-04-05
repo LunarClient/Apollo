@@ -4,7 +4,7 @@ import com.google.protobuf.Message;
 
 public interface OptionConverter<I, O extends Message> {
 
-    O to(final I object) throws IllegalArgumentException;
+    O to(I object) throws IllegalArgumentException;
 
-    I from(final O message) throws IllegalArgumentException;
+    I from(O message) throws IllegalArgumentException;
 }

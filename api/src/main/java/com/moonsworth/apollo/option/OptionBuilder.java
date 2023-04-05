@@ -32,7 +32,7 @@ public abstract class OptionBuilder<V, M extends OptionBuilder<V, M, I>, I exten
      * @return this builder
      * @since 1.0.0
      */
-    public M node(final String... key) {
+    public M node(String... key) {
         this.node = requireNonNull(key, "key");
         return (M) this;
     }
@@ -45,7 +45,7 @@ public abstract class OptionBuilder<V, M extends OptionBuilder<V, M, I>, I exten
      * @return this builder
      * @since 1.0.0
      */
-    public M type(final TypeToken<V> typeToken) {
+    public M type(TypeToken<V> typeToken) {
         this.typeToken = requireNonNull(typeToken, "typeToken");
         return (M) this;
     }
@@ -58,7 +58,7 @@ public abstract class OptionBuilder<V, M extends OptionBuilder<V, M, I>, I exten
      * @return this builder
      * @since 1.0.0
      */
-    public M comment(final String comment) {
+    public M comment(String comment) {
         this.comment = comment;
         return (M) this;
     }
@@ -71,7 +71,7 @@ public abstract class OptionBuilder<V, M extends OptionBuilder<V, M, I>, I exten
      * @return this builder
      * @since 1.0.0
      */
-    public M defaultValue(final V value) {
+    public M defaultValue(V value) {
         this.defaultValue = value;
         return (M) this;
     }

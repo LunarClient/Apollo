@@ -22,7 +22,7 @@ public final class TitlesImpl extends Titles {
     }
 
     @Override
-    public void sendTitle(final ApolloPlayer player, final Title title) {
+    public void sendTitle(ApolloPlayer player, Title title) {
         requireNonNull(player, "player");
         requireNonNull(title, "title");
 
@@ -30,15 +30,15 @@ public final class TitlesImpl extends Titles {
     }
 
     @Override
-    public void broadcastTitle(final Title title) {
+    public void broadcastTitle(Title title) {
         requireNonNull(title, "title");
 
-        for(final ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
+        for(ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
             ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(title));
         }
     }
 
-    private TitleMessage to(final Title title) {
+    private TitleMessage to(Title title) {
         return TitleMessage.newBuilder()
                 .setType(TitleMessage.Type.valueOf(title.getType().name()))
                 .setMessage(title.getMessage())
@@ -49,7 +49,7 @@ public final class TitlesImpl extends Titles {
                 .build();
     }
 
-    private Title from(final TitleMessage message) {
+    private Title from(TitleMessage message) {
         return Title.of(
                 Title.Type.valueOf(message.getType().name()),
                 message.getMessage(),

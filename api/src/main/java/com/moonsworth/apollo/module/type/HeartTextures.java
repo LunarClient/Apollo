@@ -29,7 +29,7 @@ public abstract class HeartTextures extends ApolloModule {
      * @param heartTexture the heart texture
      * @since 1.0.0
      */
-    public abstract void sendHeartTexture(final ApolloPlayer player, final HeartTexture heartTexture);
+    public abstract void sendHeartTexture(ApolloPlayer player, HeartTexture heartTexture);
 
     /**
      * Removes the {@link HeartTextures} from the {@link ApolloPlayer}.
@@ -37,5 +37,5 @@ public abstract class HeartTextures extends ApolloModule {
      * @param player the player
      * @since 1.0.0
      */
-    public abstract void removeHeartTexture(final ApolloPlayer player);
+    public abstract void removeHeartTexture(ApolloPlayer player);
 }

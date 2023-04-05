@@ -59,7 +59,7 @@ public abstract class ApolloModule implements Listener {
     @Getter(AccessLevel.PACKAGE)
     private Option<?, ?, ?>[] optionKeys = {};
 
-    public ApolloModule(final String name) {
+    public ApolloModule(String name) {
         this.name = requireNonNull(name, "name");
     }
 
@@ -69,7 +69,7 @@ public abstract class ApolloModule implements Listener {
      * @param options the option keys
      * @since 1.0.0
      */
-    protected void registerOptions(final Option<?, ?, ?>... options) {
+    protected void registerOptions(Option<?, ?, ?>... options) {
         this.optionKeys = options;
     }
 

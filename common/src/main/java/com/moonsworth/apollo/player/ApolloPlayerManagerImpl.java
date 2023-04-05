@@ -26,7 +26,7 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
     public ApolloPlayerManagerImpl() {}
 
     @Override
-    public Optional<ApolloPlayer> getPlayer(final UUID playerIdentifier) {
+    public Optional<ApolloPlayer> getPlayer(UUID playerIdentifier) {
         return Optional.ofNullable(this.players.get(playerIdentifier));
     }
 
@@ -35,11 +35,11 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
         return Collections.unmodifiableCollection(this.players.values());
     }
 
-    public void addPlayer(final ApolloPlayer player) {
+    public void addPlayer(ApolloPlayer player) {
         requireNonNull(player, "player");
         if(this.players.putIfAbsent(player.getUniqueId(), player) == null) {
-            final EventBus.EventResult<ApolloRegisterPlayerEvent> result = EventBus.getBus().post(new ApolloRegisterPlayerEvent(player));
-            for(final Throwable throwable : result.getThrowing()) {
+            EventBus.EventResult<ApolloRegisterPlayerEvent> result = EventBus.getBus().post(new ApolloRegisterPlayerEvent(player));
+            for(Throwable throwable : result.getThrowing()) {
                 throwable.printStackTrace();
             }
 
@@ -50,12 +50,12 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
         }
     }
 
-    public void removePlayer(final UUID player) {
+    public void removePlayer(UUID player) {
         requireNonNull(player, "player");
-        final ApolloPlayer apolloPlayer = this.players.remove(player);
+        ApolloPlayer apolloPlayer = this.players.remove(player);
         if(apolloPlayer != null) {
-            final EventBus.EventResult<ApolloUnregisterPlayerEvent> result = EventBus.getBus().post(new ApolloUnregisterPlayerEvent(apolloPlayer));
-            for(final Throwable throwable : result.getThrowing()) {
+            EventBus.EventResult<ApolloUnregisterPlayerEvent> result = EventBus.getBus().post(new ApolloUnregisterPlayerEvent(apolloPlayer));
+            for(Throwable throwable : result.getThrowing()) {
                 throwable.printStackTrace();
             }
         }

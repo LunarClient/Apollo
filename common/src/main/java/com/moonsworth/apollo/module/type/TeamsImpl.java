@@ -44,10 +44,10 @@ public final class TeamsImpl extends Teams {
     }
 
     @Override
-    public Team createTeam(final Map<UUID, Team.Teammate> teammates) {
+    public Team createTeam(Map<UUID, Team.Teammate> teammates) {
         requireNonNull(teammates, "teammates");
 
-        final Team team = Team.of(UUID.randomUUID(), teammates);
+        Team team = Team.of(UUID.randomUUID(), teammates);
         team.getTeammates().keySet().forEach(uuid -> this.teamsByPlayerUuid.put(uuid, team));
 
         this.teamsByTeamUuid.put(team.getTeamId(), team);
@@ -57,7 +57,7 @@ public final class TeamsImpl extends Teams {
     }
 
     @Override
-    public boolean deleteTeam(final Team team) {
+    public boolean deleteTeam(Team team) {
         requireNonNull(team, "team");
 
         team.getTeammates().keySet().forEach(this.teamsByPlayerUuid::remove);
@@ -65,19 +65,19 @@ public final class TeamsImpl extends Teams {
     }
 
     @Override
-    public Team fromPlayer(final UUID uuid) {
+    public Team fromPlayer(UUID uuid) {
         requireNonNull(uuid, "uuid");
         return this.teamsByPlayerUuid.get(uuid);
     }
 
     @Override
-    public boolean addMember(final ApolloPlayer player, final Team team, final Team.Teammate teammate) {
+    public boolean addMember(ApolloPlayer player, Team team, Team.Teammate teammate) {
         requireNonNull(team, "team");
         requireNonNull(teammate, "teammate");
         requireNonNull(player, "player");
 
-        final UUID uuid = player.getUniqueId();
-        final Team playerTeam = this.fromPlayer(uuid);
+        UUID uuid = player.getUniqueId();
+        Team playerTeam = this.fromPlayer(uuid);
 
         if(playerTeam != null) return false;
 
@@ -91,12 +91,12 @@ public final class TeamsImpl extends Teams {
     }
 
     @Override
-    public boolean removeMember(final ApolloPlayer player, final Team team) {
+    public boolean removeMember(ApolloPlayer player, Team team) {
         requireNonNull(team, "team");
         requireNonNull(player, "player");
 
-        final UUID uuid = player.getUniqueId();
-        final Team playerTeam = this.fromPlayer(uuid);
+        UUID uuid = player.getUniqueId();
+        Team playerTeam = this.fromPlayer(uuid);
 
         if(!team.equals(playerTeam)) return false;
 
@@ -110,7 +110,7 @@ public final class TeamsImpl extends Teams {
     }
 
     @Override
-    public Team fromTeam(final UUID uuid) {
+    public Team fromTeam(UUID uuid) {
         requireNonNull(uuid, "uuid");
         return this.teamsByTeamUuid.get(uuid);
     }
@@ -121,13 +121,13 @@ public final class TeamsImpl extends Teams {
     }
 
     @Override
-    public void refreshTeam(final Team team) {
+    public void refreshTeam(Team team) {
         requireNonNull(team, "team");
 
-        final ApolloPlayerManager playerManager = Apollo.getPlayerManager();
-        final Options.Container options = this.getOptions();
+        ApolloPlayerManager playerManager = Apollo.getPlayerManager();
+        Options.Container options = this.getOptions();
 
-        final Map<ApolloPlayer, Team.Teammate> teammates = team.getTeammates().entrySet().stream()
+        Map<ApolloPlayer, Team.Teammate> teammates = team.getTeammates().entrySet().stream()
             .map(entry -> new ImmutablePair<>(
                 playerManager.getPlayer(entry.getKey()),
                 entry.getValue())
@@ -142,12 +142,12 @@ public final class TeamsImpl extends Teams {
         teammates.forEach((player, teammate) -> options.set(player, null, Lists.newArrayList(team)));
     }
 
-    public void onPlayerUnregister(final ApolloUnregisterPlayerEvent event) {
-        final UUID uuid = event.getPlayer().getUniqueId();
-        final Team team = this.teamsByPlayerUuid.remove(uuid);
+    public void onPlayerUnregister(ApolloUnregisterPlayerEvent event) {
+        UUID uuid = event.getPlayer().getUniqueId();
+        Team team = this.teamsByPlayerUuid.remove(uuid);
 
         if(team != null) {
-            final Map<UUID, Team.Teammate> teammates = team.getTeammates();
+            Map<UUID, Team.Teammate> teammates = team.getTeammates();
             teammates.remove(uuid);
 
             if(this.getOptions().get(Teams.DISBAND_TEAMS_IF_EMPTY) && teammates.isEmpty()) {
@@ -156,8 +156,8 @@ public final class TeamsImpl extends Teams {
         }
     }
 
-    public TeamMessage to(final Team object) throws IllegalArgumentException {
-        final List<TeamMessage.TeammateMessage> teammates = object.getTeammates().entrySet().stream()
+    public TeamMessage to(Team object) throws IllegalArgumentException {
+        List<TeamMessage.TeammateMessage> teammates = object.getTeammates().entrySet().stream()
             .map(entry ->
                 TeamMessage.TeammateMessage.newBuilder()
                     .setPlayerUuid(NetworkTypes.toUuid(entry.getKey()))
@@ -172,8 +172,8 @@ public final class TeamsImpl extends Teams {
             .build();
     }
 
-    public Team from(final TeamMessage message) throws IllegalArgumentException {
-        final Map<UUID, Team.Teammate> teammates = message.getMembersList().stream()
+    public Team from(TeamMessage message) throws IllegalArgumentException {
+        Map<UUID, Team.Teammate> teammates = message.getMembersList().stream()
             .collect(Collectors.toMap(
                 teammate -> NetworkTypes.fromUuid(teammate.getPlayerUuid()),
                 teammate -> Team.Teammate.of(

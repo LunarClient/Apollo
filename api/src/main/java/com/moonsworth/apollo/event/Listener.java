@@ -17,7 +17,7 @@ public interface Listener {
      * @param <T> the event type
      * @since 1.0.0
      */
-    default <T extends Event> void handle(final Class<T> event, final Consumer<T> consumer) {
+    default <T extends Event> void handle(Class<T> event, Consumer<T> consumer) {
         EventBus.getBus().register(event, consumer);
     }
 

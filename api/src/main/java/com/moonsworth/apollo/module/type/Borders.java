@@ -35,7 +35,7 @@ public abstract class Borders extends ApolloModule {
      * @param border the border
      * @since 1.0.0
      */
-    public abstract void addBorder(final ApolloPlayer player, final Border border);
+    public abstract void addBorder(ApolloPlayer player, Border border);
 
     /**
      * Removes the {@link Border} from the {@link ApolloPlayer}.
@@ -44,5 +44,5 @@ public abstract class Borders extends ApolloModule {
      * @param border the border
      * @since 1.0.0
      */
-    public abstract void removeBorder(final ApolloPlayer player, final Border border);
+    public abstract void removeBorder(ApolloPlayer player, Border border);
 }

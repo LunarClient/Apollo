@@ -15,29 +15,29 @@ import org.jetbrains.annotations.Nullable;
 
 public final class NetworkOptions {
 
-    public static void sendOption(final ApolloModule module,
-                                  final Option<?, ?, ?> key,
-                                  final Value value,
-                                  final Iterable<ApolloPlayer> players) {
+    public static void sendOption(ApolloModule module,
+                                  Option<?, ?, ?> key,
+                                  Value value,
+                                  Iterable<ApolloPlayer> players) {
         if(!key.isNotify()) return;
 
-        final Modules.Builder modulesBuilder = Modules.newBuilder();
-        final ModuleConfig.Builder moduleBuilder = NetworkOptions.module(module);
+        Modules.Builder modulesBuilder = Modules.newBuilder();
+        ModuleConfig.Builder moduleBuilder = NetworkOptions.module(module);
         moduleBuilder.putOptions(key.getKey(), value);
         modulesBuilder.addModules(moduleBuilder.build());
 
-        for(final ApolloPlayer player : players) {
+        for(ApolloPlayer player : players) {
             checkPlayerVersionSupport(module, player);
 
             ((AbstractApolloPlayer) player).sendPacket(modulesBuilder.build());
         }
     }
 
-    public static void sendOptions(final Iterable<ApolloModule> modules,
-                                   final ApolloPlayer... players) {
-        for(final ApolloPlayer player : players) {
-            final Modules.Builder modulesBuilder = Modules.newBuilder();
-            for(final ApolloModule module : modules) {
+    public static void sendOptions(Iterable<ApolloModule> modules,
+                                   ApolloPlayer... players) {
+        for(ApolloPlayer player : players) {
+            Modules.Builder modulesBuilder = Modules.newBuilder();
+            for(ApolloModule module : modules) {
                 checkPlayerVersionSupport(module, player);
 
                 modulesBuilder.addModules(NetworkOptions.moduleWithOptions(
@@ -50,9 +50,9 @@ public final class NetworkOptions {
         }
     }
 
-    private static void checkPlayerVersionSupport(final ApolloModule module, final ApolloPlayer player) {
-        final Set<ApolloPlayerVersion> supportedVersions = module.getSupportedClientVersions();
-        final ApolloPlayerVersion playerVersion = player.getVersion();
+    private static void checkPlayerVersionSupport(ApolloModule module, ApolloPlayer player) {
+        Set<ApolloPlayerVersion> supportedVersions = module.getSupportedClientVersions();
+        ApolloPlayerVersion playerVersion = player.getVersion();
 
         if(!supportedVersions.contains(playerVersion)) {
             throw new IllegalStateException(String.format("Module %s doesn't support client version %s!",
@@ -60,21 +60,21 @@ public final class NetworkOptions {
         }
     }
 
-    private static ModuleConfig.Builder moduleWithOptions(final ApolloModule module,
-                                                           final @Nullable ApolloPlayer player) {
-        final ModuleConfig.Builder builder = NetworkOptions.module(module);
-        final Options options = player != null ? module.getOptions().get(player) : module.getOptions();
-        for(final Option<?, ?, ?> option : options) {
+    private static ModuleConfig.Builder moduleWithOptions(ApolloModule module,
+                                                           @Nullable ApolloPlayer player) {
+        ModuleConfig.Builder builder = NetworkOptions.module(module);
+        Options options = player != null ? module.getOptions().get(player) : module.getOptions();
+        for(Option<?, ?, ?> option : options) {
             if(!option.isNotify()) continue;
-            final Value.Builder valueBuilder = Value.newBuilder();
-            final Object value = options.get(option);
-            final Value wrapper = ((AbstractOptions) options).wrapValue(valueBuilder, value);
+            Value.Builder valueBuilder = Value.newBuilder();
+            Object value = options.get(option);
+            Value wrapper = ((AbstractOptions) options).wrapValue(valueBuilder, value);
             builder.putOptions(option.getKey(), wrapper);
         }
         return builder;
     }
 
-    private static ModuleConfig.Builder module(final ApolloModule module) {
+    private static ModuleConfig.Builder module(ApolloModule module) {
         return ModuleConfig.newBuilder()
                 .setName(module.getName())
                 .setEnable(module.isEnabled());

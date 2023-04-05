@@ -17,7 +17,7 @@ public final class StaffModsImpl extends com.moonsworth.apollo.module.type.Staff
     }
 
     @Override
-    public void giveModule(final ApolloPlayer player, final StaffMod mod) {
+    public void giveModule(ApolloPlayer player, StaffMod mod) {
         requireNonNull(player, "player");
         requireNonNull(mod, "mod");
 
@@ -25,7 +25,7 @@ public final class StaffModsImpl extends com.moonsworth.apollo.module.type.Staff
     }
 
     @Override
-    public void removeModule(final ApolloPlayer player, final StaffMod mod) {
+    public void removeModule(ApolloPlayer player, StaffMod mod) {
         requireNonNull(player, "player");
         requireNonNull(mod, "staffMod");
 
@@ -33,23 +33,23 @@ public final class StaffModsImpl extends com.moonsworth.apollo.module.type.Staff
     }
 
     @Override
-    public void giveAllModules(final ApolloPlayer player) {
+    public void giveAllModules(ApolloPlayer player) {
         requireNonNull(player, "player");
 
-        final StaffMod mods = StaffMod.of(StaffMod.Module.getModules());
+        StaffMod mods = StaffMod.of(StaffMod.Module.getModules());
         ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(mods));
     }
 
     @Override
-    public void removeAllModules(final ApolloPlayer player) {
+    public void removeAllModules(ApolloPlayer player) {
         requireNonNull(player, "player");
 
-        final StaffMod mods = StaffMod.of(StaffMod.Module.getModules());
+        StaffMod mods = StaffMod.of(StaffMod.Module.getModules());
         ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.REMOVE, this.to(mods));
     }
 
-    private StaffModsMessage to(final StaffMod staffMod) {
-        final Set<StaffModsMessage.Module> modules = staffMod.getModules().stream()
+    private StaffModsMessage to(StaffMod staffMod) {
+        Set<StaffModsMessage.Module> modules = staffMod.getModules().stream()
                 .map(module -> StaffModsMessage.Module.valueOf(module.name()))
                 .collect(Collectors.toSet());
 
@@ -58,8 +58,8 @@ public final class StaffModsImpl extends com.moonsworth.apollo.module.type.Staff
                 .build();
     }
 
-    private StaffMod from(final StaffModsMessage message) {
-        final Set<StaffMod.Module> modules = message.getModulesList().stream()
+    private StaffMod from(StaffModsMessage message) {
+        Set<StaffMod.Module> modules = message.getModulesList().stream()
                 .map(module -> StaffMod.Module.valueOf(module.name()))
                 .collect(Collectors.toSet());
 

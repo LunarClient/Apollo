@@ -26,7 +26,7 @@ public final class WaypointsImpl extends Waypoints {
     }
 
     @Override
-    public void addWaypoint(final ApolloPlayer player, final Waypoint waypoint) {
+    public void addWaypoint(ApolloPlayer player, Waypoint waypoint) {
         requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
 
@@ -34,7 +34,7 @@ public final class WaypointsImpl extends Waypoints {
     }
 
     @Override
-    public void removeWaypoint(final ApolloPlayer player, final Waypoint waypoint) {
+    public void removeWaypoint(ApolloPlayer player, Waypoint waypoint) {
         requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
 
@@ -42,14 +42,14 @@ public final class WaypointsImpl extends Waypoints {
     }
 
     @Override
-    public void clearWaypoints(final ApolloPlayer player) {
+    public void clearWaypoints(ApolloPlayer player) {
         requireNonNull(player, "player");
 
         ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
     }
 
-    private void onPlayerRegister(final ApolloRegisterPlayerEvent event) {
-        final ApolloPlayer player = event.getPlayer();
+    private void onPlayerRegister(ApolloRegisterPlayerEvent event) {
+        ApolloPlayer player = event.getPlayer();
         List<Waypoint> waypoints = this.getOptions().get(player, Waypoints.DEFAULT_WAYPOINTS);
         if(waypoints != null) {
             for(Waypoint waypoint : waypoints) {
@@ -58,7 +58,7 @@ public final class WaypointsImpl extends Waypoints {
         }
     }
 
-    private WaypointMessage to(final Waypoint waypoint) {
+    private WaypointMessage to(Waypoint waypoint) {
         return WaypointMessage.newBuilder()
                 .setName(waypoint.getName())
                 .setLocation(NetworkTypes.toBlockLocation(waypoint.getLocation()))
@@ -68,7 +68,7 @@ public final class WaypointsImpl extends Waypoints {
                 .build();
     }
 
-    private Waypoint from(final WaypointMessage message) {
+    private Waypoint from(WaypointMessage message) {
         return Waypoint.of(
                 message.getName(),
                 NetworkTypes.fromBlockLocation(message.getLocation()),

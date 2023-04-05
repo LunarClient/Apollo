@@ -16,37 +16,37 @@ final class EmptyOptions implements Options.Container {
     static final EmptyOptions EMPTY = new EmptyOptions();
 
     @Override
-    public <T, C extends Option<T, ?, ?>> @Nullable T get(final C option) {
+    public <T, C extends Option<T, ?, ?>> @Nullable T get(C option) {
         return null;
     }
 
     @Override
-    public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(final C option) {
+    public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(C option) {
         return Optional.empty();
     }
 
     @Override
-    public <T> void set(final Option<?, ?, ?> option, final @Nullable T value) {
+    public <T> void set(Option<?, ?, ?> option, @Nullable T value) {
 
     }
 
     @Override
-    public <T> void add(final Option<?, ?, ?> option, final @Nullable T value) {
+    public <T> void add(Option<?, ?, ?> option, @Nullable T value) {
 
     }
 
     @Override
-    public <T> void remove(final Option<?, ?, ?> option, final @Nullable T compare) {
+    public <T> void remove(Option<?, ?, ?> option, @Nullable T compare) {
 
     }
 
     @Override
-    public <T> void replace(final Option<?, ?, ?> option, final BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
+    public <T> void replace(Option<?, ?, ?> option, BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
 
     }
 
     @Override
-    public Single get(final ApolloPlayer player) {
+    public Single get(ApolloPlayer player) {
         return new EmptySingle(player);
     }
 
@@ -61,32 +61,32 @@ final class EmptyOptions implements Options.Container {
         private final ApolloPlayer player;
 
         @Override
-        public <T, C extends Option<T, ?, ?>> @Nullable T get(final C option) {
+        public <T, C extends Option<T, ?, ?>> @Nullable T get(C option) {
             return null;
         }
 
         @Override
-        public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(final C option) {
+        public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(C option) {
             return Optional.empty();
         }
 
         @Override
-        public <T> void set(final Option<?, ?, ?> option, final @Nullable T value) {
+        public <T> void set(Option<?, ?, ?> option, @Nullable T value) {
 
         }
 
         @Override
-        public <T> void add(final Option<?, ?, ?> option, final @Nullable T value) {
+        public <T> void add(Option<?, ?, ?> option, @Nullable T value) {
 
         }
 
         @Override
-        public <T> void remove(final Option<?, ?, ?> option, final @Nullable T compare) {
+        public <T> void remove(Option<?, ?, ?> option, @Nullable T compare) {
 
         }
 
         @Override
-        public <T> void replace(final Option<?, ?, ?> option, final BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
+        public <T> void replace(Option<?, ?, ?> option, BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
 
         }
 

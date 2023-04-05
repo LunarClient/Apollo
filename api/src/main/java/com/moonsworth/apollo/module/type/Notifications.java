@@ -32,7 +32,7 @@ public abstract class Notifications extends ApolloModule {
      * @param notification the notification
      * @since 1.0.0
      */
-    public abstract void sendNotification(final ApolloPlayer player, final Notification notification);
+    public abstract void sendNotification(ApolloPlayer player, Notification notification);
 
     /**
      * Sends the {@link Notification} to all {@link ApolloPlayer}s.
@@ -40,5 +40,5 @@ public abstract class Notifications extends ApolloModule {
      * @param notification the notification
      * @since 1.0.0
      */
-    public abstract void broadcastNotification(final Notification notification);
+    public abstract void broadcastNotification(Notification notification);
 }

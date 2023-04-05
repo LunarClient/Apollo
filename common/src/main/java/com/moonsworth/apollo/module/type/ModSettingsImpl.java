@@ -20,18 +20,18 @@ public final class ModSettingsImpl extends ModSettings {
     }
 
     @Override
-    public void sendSetting(final ApolloPlayer player, final ModSetting setting) {
+    public void sendSetting(ApolloPlayer player, ModSetting setting) {
         ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(setting));
     }
 
     @Override
-    public void broadcastSetting(final ModSetting setting) {
-        for(final ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
+    public void broadcastSetting(ModSetting setting) {
+        for(ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
             ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(setting));
         }
     }
 
-    private ModSettingMessage to(final ModSetting setting) {
+    private ModSettingMessage to(ModSetting setting) {
         return ModSettingMessage.newBuilder()
             .setModId(setting.getModId())
             .setEnabled(setting.isEnabled())
@@ -39,7 +39,7 @@ public final class ModSettingsImpl extends ModSettings {
             .build();
     }
 
-    private ModSetting from(final ModSettingMessage setting) {
+    private ModSetting from(ModSettingMessage setting) {
         return ModSetting.of(
             setting.getModId(),
             setting.getEnabled(),

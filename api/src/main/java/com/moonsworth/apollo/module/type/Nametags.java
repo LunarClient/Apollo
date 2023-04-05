@@ -25,7 +25,7 @@ public abstract class Nametags extends ApolloModule {
      * @param viewers the viewers
      * @since 1.0.0
      */
-    public abstract void overrideNametag(final Nametag nametag, final ApolloPlayer... viewers);
+    public abstract void overrideNametag(Nametag nametag, ApolloPlayer... viewers);
 
     /**
      * Resets the {@link Nametag} for the {@link ApolloPlayer}s.
@@ -34,5 +34,5 @@ public abstract class Nametags extends ApolloModule {
      * @param viewers the viewers
      * @since 1.0.0
      */
-    public abstract void resetNametag(final Nametag nametag, final ApolloPlayer... viewers);
+    public abstract void resetNametag(Nametag nametag, ApolloPlayer... viewers);
 }

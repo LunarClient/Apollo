@@ -23,29 +23,29 @@ import lunarclient.apollo.utility.Uuid;
 @UtilityClass
 public class NetworkTypes {
 
-    public Uuid toUuid(final UUID object) {
+    public Uuid toUuid(UUID object) {
         return Uuid.newBuilder()
             .setHigh64(object.getMostSignificantBits())
             .setLow64(object.getLeastSignificantBits())
             .build();
     }
 
-    public UUID fromUuid(final Uuid message) {
+    public UUID fromUuid(Uuid message) {
         return new UUID(message.getHigh64(), message.getLow64());
     }
 
-    public com.google.protobuf.Duration toDuration(final Duration object) {
+    public com.google.protobuf.Duration toDuration(Duration object) {
         return com.google.protobuf.Duration.newBuilder()
             .setSeconds(object.getSeconds())
             .setNanos(object.getNano())
             .build();
     }
 
-    public Duration fromDuration(final com.google.protobuf.Duration message) {
+    public Duration fromDuration(com.google.protobuf.Duration message) {
         return Duration.ofSeconds(message.getSeconds()).withNanos(message.getNanos());
     }
 
-    public LocationMessage toLocation(final ApolloLocation object) {
+    public LocationMessage toLocation(ApolloLocation object) {
         return LocationMessage.newBuilder()
             .setWorld(object.getWorld())
             .setX(object.getX())
@@ -54,7 +54,7 @@ public class NetworkTypes {
             .build();
     }
 
-    public ApolloLocation fromLocation(final LocationMessage message) {
+    public ApolloLocation fromLocation(LocationMessage message) {
         return ApolloLocation.of(
             message.getWorld(),
             message.getX(),
@@ -63,7 +63,7 @@ public class NetworkTypes {
         );
     }
 
-    public BlockLocationMessage toBlockLocation(final ApolloBlockLocation object) {
+    public BlockLocationMessage toBlockLocation(ApolloBlockLocation object) {
         return BlockLocationMessage.newBuilder()
             .setWorld(object.getWorld())
             .setX(object.getX())
@@ -72,7 +72,7 @@ public class NetworkTypes {
             .build();
     }
 
-    public ApolloBlockLocation fromBlockLocation(final BlockLocationMessage message) {
+    public ApolloBlockLocation fromBlockLocation(BlockLocationMessage message) {
         return ApolloBlockLocation.of(
             message.getWorld(),
             message.getX(),
@@ -81,7 +81,7 @@ public class NetworkTypes {
         );
     }
 
-    public IconSpecificationMessage toIconSpecifications(final IconSpecifications object) {
+    public IconSpecificationMessage toIconSpecifications(IconSpecifications object) {
         return IconSpecificationMessage.newBuilder()
             .setWidth(object.getWidth())
             .setHeight(object.getHeight())
@@ -92,7 +92,7 @@ public class NetworkTypes {
             .build();
     }
 
-    public IconSpecifications fromIconSpecifications(final IconSpecificationMessage message) {
+    public IconSpecifications fromIconSpecifications(IconSpecificationMessage message) {
         return IconSpecifications.of(
             message.getWidth(),
             message.getHeight(),
@@ -103,7 +103,7 @@ public class NetworkTypes {
         );
     }
 
-    public RenderableIconMessage toRenderableIcon(final RenderableIcon icon) {
+    public RenderableIconMessage toRenderableIcon(RenderableIcon icon) {
         return RenderableIconMessage.newBuilder()
             .setResourceLocation(icon.getResourceLocation())
             .setSize(icon.getSize())
@@ -111,7 +111,7 @@ public class NetworkTypes {
             .build();
     }
 
-    public RenderableIcon fromRenderableIcon(final RenderableIconMessage icon) {
+    public RenderableIcon fromRenderableIcon(RenderableIconMessage icon) {
         return RenderableIcon.of(
             icon.getResourceLocation(),
             icon.getSize(),
@@ -119,12 +119,12 @@ public class NetworkTypes {
         );
     }
 
-    public RenderableStringMessage toRenderableString(final RenderableString object) {
-        final List<RenderableStringMessage.TextDecorators> decorators = object.getDecorators()
+    public RenderableStringMessage toRenderableString(RenderableString object) {
+        List<RenderableStringMessage.TextDecorators> decorators = object.getDecorators()
             .stream().map(decorator -> RenderableStringMessage.TextDecorators.valueOf(decorator.name()))
             .collect(Collectors.toList());
 
-        final List<RenderableStringMessage> children = object.getChildren()
+        List<RenderableStringMessage> children = object.getChildren()
             .stream().map(NetworkTypes::toRenderableString)
             .collect(Collectors.toList());
 
@@ -136,12 +136,12 @@ public class NetworkTypes {
             .build();
     }
 
-    public RenderableString fromRenderableString(final RenderableStringMessage message) {
-        final List<RenderableString.TextDecorators> decorators = message.getDecorationList()
+    public RenderableString fromRenderableString(RenderableStringMessage message) {
+        List<RenderableString.TextDecorators> decorators = message.getDecorationList()
             .stream().map(decorator -> RenderableString.TextDecorators.valueOf(decorator.name()))
             .collect(Collectors.toList());
 
-        final List<RenderableString> children = message.getChildrenList()
+        List<RenderableString> children = message.getChildrenList()
             .stream().map(NetworkTypes::fromRenderableString)
             .collect(Collectors.toList());
 

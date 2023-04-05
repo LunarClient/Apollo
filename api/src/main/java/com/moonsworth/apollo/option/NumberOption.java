@@ -15,7 +15,7 @@ public final class NumberOption<T extends Number & Comparable<T>> extends Option
 
     private final T min, max;
 
-    private NumberOption(final NumberOptionBuilder<T> builder) {
+    private NumberOption(NumberOptionBuilder<T> builder) {
         super(builder);
 
         this.min = builder.min;
@@ -33,12 +33,12 @@ public final class NumberOption<T extends Number & Comparable<T>> extends Option
 
         private T min, max;
 
-        public NumberOptionBuilder<T> min(final T value) {
+        public NumberOptionBuilder<T> min(T value) {
             this.min = value;
             return this;
         }
 
-        public NumberOptionBuilder<T> max(final T value) {
+        public NumberOptionBuilder<T> max(T value) {
             this.max = value;
             return this;
         }

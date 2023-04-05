@@ -9,17 +9,17 @@ public final class SaturationImpl extends Saturation {
     }
 
     @Override
-    public boolean hasCustomValue(final ApolloItemStack itemStack, final CustomKey key) {
+    public boolean hasCustomValue(ApolloItemStack itemStack, CustomKey key) {
         return itemStack.hasTag(key.getValue());
     }
 
     @Override
-    public void applyCustomValue(final ApolloItemStack itemStack, final CustomKey key, final Number value) {
+    public void applyCustomValue(ApolloItemStack itemStack, CustomKey key, Number value) {
         itemStack.addTag(key.getValue(), value);
     }
 
     @Override
-    public void removeCustomValue(final ApolloItemStack itemStack, final CustomKey key) {
+    public void removeCustomValue(ApolloItemStack itemStack, CustomKey key) {
         itemStack.removeTag(key.getValue());
     }
 

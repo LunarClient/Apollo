@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.NametagMessage;
+import lunarclient.apollo.utility.RenderableStringMessage;
 
 import static java.util.Objects.requireNonNull;
 
@@ -24,28 +25,28 @@ public final class NametagsImpl extends Nametags {
     }
 
     @Override
-    public void overrideNametag(final Nametag nametag, final ApolloPlayer... viewers) {
+    public void overrideNametag(Nametag nametag, ApolloPlayer... viewers) {
         requireNonNull(nametag, "nametag");
         requireNonNull(viewers, "viewers");
 
-        for(final ApolloPlayer player : viewers) {
+        for(ApolloPlayer player : viewers) {
             ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(nametag));
         }
     }
 
     @Override
-    public void resetNametag(final Nametag nametag, final ApolloPlayer... viewers) {
+    public void resetNametag(Nametag nametag, ApolloPlayer... viewers) {
         requireNonNull(nametag, "nametag");
         requireNonNull(viewers, "viewers");
 
-        for(final ApolloPlayer player : viewers) {
+        for(ApolloPlayer player : viewers) {
             ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.REMOVE, this.to(nametag));
         }
     }
 
 
-    private NametagMessage to(final Nametag nametag) {
-        final List<lunarclient.apollo.utility.RenderableString> tags = nametag.getNametag().stream()
+    private NametagMessage to(Nametag nametag) {
+        List<RenderableStringMessage> tags = nametag.getNametag().stream()
                 .map(NetworkTypes::toRenderableString)
                 .collect(Collectors.toList());
 
@@ -57,8 +58,8 @@ public final class NametagsImpl extends Nametags {
                 .build();
     }
 
-    private Nametag from(final NametagMessage message) {
-        final List<RenderableString> nametag = message.getNametagList().stream()
+    private Nametag from(NametagMessage message) {
+        List<RenderableString> nametag = message.getNametagList().stream()
                 .map(NetworkTypes::fromRenderableString)
                 .collect(Collectors.toList());
 

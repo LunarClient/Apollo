@@ -29,19 +29,19 @@ public final class OptionsContainer extends AbstractOptions implements Options.C
 
     final ApolloModule module;
 
-    public OptionsContainer(final ApolloModule module, final Collection<Option<?, ?, ?>> options) {
+    public OptionsContainer(ApolloModule module, Collection<Option<?, ?, ?>> options) {
         this.module = module;
 
-        for(final Option<?, ?, ?> option : options) {
+        for(Option<?, ?, ?> option : options) {
             this.options.put(option.getKey(), option);
         }
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T, C extends Option<T, ?, ?>> @Nullable T get(final C option) {
+    public <T, C extends Option<T, ?, ?>> @Nullable T get(C option) {
         requireNonNull(option, "option");
-        final Object value;
+        Object value;
         return (value = this.values.get(option.getKey())) == null
                 ? option.getDefaultValue()
                 : (T) value;
@@ -49,12 +49,12 @@ public final class OptionsContainer extends AbstractOptions implements Options.C
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(final C option) {
+    public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(C option) {
         return Optional.ofNullable((T) this.values.get(option.getKey()));
     }
 
     @Override
-    public <T> void set(final Option<?, ?, ?> option, final @Nullable T value) {
+    public <T> void set(Option<?, ?, ?> option, @Nullable T value) {
         requireNonNull(option, "option");
         if(!this.postUpdate(option, value)) return;
         boolean send = false;
@@ -76,7 +76,7 @@ public final class OptionsContainer extends AbstractOptions implements Options.C
     }
 
     @Override
-    public <T> void add(final Option<?, ?, ?> option, final T value) {
+    public <T> void add(Option<?, ?, ?> option, T value) {
         requireNonNull(option, "option");
         requireNonNull(value, "value");
         if(!this.postUpdate(option, value)) return;
@@ -91,7 +91,7 @@ public final class OptionsContainer extends AbstractOptions implements Options.C
     }
 
     @Override
-    public <T> void remove(final Option<?, ?, ?> option, final @Nullable T compare) {
+    public <T> void remove(Option<?, ?, ?> option, @Nullable T compare) {
         requireNonNull(option, "option");
         requireNonNull(compare, "compare");
         if(!this.postUpdate(option, null)) return;
@@ -107,10 +107,10 @@ public final class OptionsContainer extends AbstractOptions implements Options.C
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> void replace(final Option<?, ?, ?> option, final BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
+    public <T> void replace(Option<?, ?, ?> option, BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
         requireNonNull(option, "option");
         requireNonNull(remappingFunction, "remappingFunction");
-        final Object value = this.values.compute(option.getKey(), (key, current) -> remappingFunction.apply(option, (T) current));
+        Object value = this.values.compute(option.getKey(), (key, current) -> remappingFunction.apply(option, (T) current));
         NetworkOptions.sendOption(
                 this.module,
                 option,

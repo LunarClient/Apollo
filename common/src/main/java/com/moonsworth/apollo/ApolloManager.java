@@ -23,7 +23,7 @@ public final class ApolloManager {
     @Getter private static ApolloNetworkManager networkManager;
     private static boolean bootstrapped = false;
 
-    public static void bootstrap(final ApolloPlatform platform) {
+    public static void bootstrap(ApolloPlatform platform) {
         if(ApolloManager.bootstrapped) throw new IllegalStateException("Cannot bootstrap Apollo more than once!");
         try {
             Apollo.initialize(
@@ -33,7 +33,7 @@ public final class ApolloManager {
             );
 
             ApolloManager.networkManager = new ApolloNetworkManager();
-        } catch(final Throwable throwable) {
+        } catch(Throwable throwable) {
             throw new RuntimeException("Unable to bootstrap Apollo!", throwable);
         }
         ApolloManager.bootstrapped = true;

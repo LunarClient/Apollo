@@ -8,16 +8,16 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractOptions implements Options {
 
-    protected boolean postUpdate(final Option<?, ?, ?> option, final @Nullable Object value) {
-        final EventBus.EventResult<ApolloUpdateOptionEvent> eventResult = EventBus.getBus().post(new ApolloUpdateOptionEvent(this, option, value));
+    protected boolean postUpdate(Option<?, ?, ?> option, @Nullable Object value) {
+        EventBus.EventResult<ApolloUpdateOptionEvent> eventResult = EventBus.getBus().post(new ApolloUpdateOptionEvent(this, option, value));
         boolean cancelled = eventResult.getEvent().isCancelled();
-        for(final Throwable throwable : eventResult.getThrowing()) {
+        for(Throwable throwable : eventResult.getThrowing()) {
             throwable.printStackTrace();
         }
         return cancelled;
     }
 
-    public Value wrapValue(final Value.Builder valueBuilder, final Object current) {
+    public Value wrapValue(Value.Builder valueBuilder, Object current) {
         if(current instanceof Number) {
             valueBuilder.setNumberValue(((Number) current).doubleValue());
         } else if(current instanceof String) {
@@ -31,7 +31,7 @@ public abstract class AbstractOptions implements Options {
         return valueBuilder.build();
     }
 
-    public @Nullable Object unwrapValue(final Value wrapper) {
+    public @Nullable Object unwrapValue(Value wrapper) {
         if(wrapper.hasNumberValue()) {
             return wrapper.getNumberValue();
         } else if(wrapper.hasStringValue()) {

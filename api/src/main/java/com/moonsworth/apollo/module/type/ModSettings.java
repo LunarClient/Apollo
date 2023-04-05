@@ -50,7 +50,7 @@ public abstract class ModSettings extends ApolloModule {
      * @param setting the mod setting
      * @since 1.0.0
      */
-    public abstract void sendSetting(final ApolloPlayer player, final ModSetting setting);
+    public abstract void sendSetting(ApolloPlayer player, ModSetting setting);
 
     /**
      * Sends the {@link ModSetting} to all {@link ApolloPlayer}s.
@@ -58,7 +58,7 @@ public abstract class ModSettings extends ApolloModule {
      * @param setting the mod setting
      * @since 1.0.0
      */
-    public abstract void broadcastSetting(final ModSetting setting);
+    public abstract void broadcastSetting(ModSetting setting);
 
     @Override
     public Collection<ApolloPlatform.Kind> getSupport() {

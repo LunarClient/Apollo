@@ -27,7 +27,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * @return the value or default if present
      * @since 1.0.0
      */
-    <T, C extends Option<T, ?, ?>> T get(final C option);
+    <T, C extends Option<T, ?, ?>> T get(C option);
 
     /**
      * Returns an {@link Optional} of the {@code T} value stored for the
@@ -40,7 +40,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * @return the optional stored value
      * @since 1.0.0
      */
-    <T, C extends Option<T, ?, ?>> Optional<T> getDirect(final C option);
+    <T, C extends Option<T, ?, ?>> Optional<T> getDirect(C option);
 
     /**
      * Sets the provided {@code T} value for the provided {@link Option}.
@@ -50,7 +50,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * @param <T> the value type
      * @since 1.0.0
      */
-    <T> void set(final Option<?, ?, ?> option, final @Nullable T value);
+    <T> void set(Option<?, ?, ?> option, @Nullable T value);
 
     /**
      * Adds the provided {@code T} value for the provided {@link Option} if it
@@ -61,7 +61,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * @param <T> the value type
      * @since 1.0.0
      */
-    <T> void add(final Option<?, ?, ?> option, final T value);
+    <T> void add(Option<?, ?, ?> option, T value);
 
     /**
      * Removes the provided {@code T} value for the provided {@link Option} if
@@ -72,7 +72,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * @param <T> the value type
      * @since 1.0.0
      */
-    <T> void remove(final Option<?, ?, ?> option, final @Nullable T compare);
+    <T> void remove(Option<?, ?, ?> option, @Nullable T compare);
 
     /**
      * Replaces the {@code T} value for the provided {@link Option} with the
@@ -83,7 +83,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * @param <T> the value type
      * @since 1.0.0
      */
-    <T> void replace(final Option<?, ?, ?> option, final BiFunction<Option<?, ?, ?>, T, T> remappingFunction);
+    <T> void replace(Option<?, ?, ?> option, BiFunction<Option<?, ?, ?>, T, T> remappingFunction);
 
     /**
      * Represents a base option container.
@@ -102,7 +102,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
          * @return the value or default if present
          * @since 1.0.0
          */
-        default <T, C extends Option<T, ?, ?>> @Nullable T get(final ApolloPlayer player, final C option) {
+        default <T, C extends Option<T, ?, ?>> @Nullable T get(ApolloPlayer player, C option) {
             return this.get(player).get(option);
         }
 
@@ -117,7 +117,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
          * @return the optional stored value
          * @since 1.0.0
          */
-        default <T, C extends Option<T, ?, ?>> Optional<T> getDirect(final ApolloPlayer player, final C option) {
+        default <T, C extends Option<T, ?, ?>> Optional<T> getDirect(ApolloPlayer player, C option) {
             return this.get(player).getDirect(option);
         }
 
@@ -131,7 +131,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
          * @param <T> the value type
          * @since 1.0.0
          */
-        default <T> void set(final ApolloPlayer player, final Option<?, ?, ?> option, final @Nullable T value) {
+        default <T> void set(ApolloPlayer player, Option<?, ?, ?> option, @Nullable T value) {
             this.get(player).set(option, value);
         }
 
@@ -145,7 +145,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
          * @param <T> the value type
          * @since 1.0.0
          */
-        default <T> void add(final ApolloPlayer player, final Option<?, ?, ?> option, final T value) {
+        default <T> void add(ApolloPlayer player, Option<?, ?, ?> option, T value) {
             this.get(player).add(option, value);
         }
 
@@ -159,7 +159,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
          * @param <T> the value type
          * @since 1.0.0
          */
-        default <T> void remove(final ApolloPlayer player, final Option<?, ?, ?> option, final @Nullable T compare) {
+        default <T> void remove(ApolloPlayer player, Option<?, ?, ?> option, @Nullable T compare) {
             this.get(player).remove(option, compare);
         }
 
@@ -173,11 +173,11 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
          * @param <T> the value type
          * @since 1.0.0
          */
-        default <T> void replace(final ApolloPlayer player, final Option<?, ?, ?> option, final BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
+        default <T> void replace(ApolloPlayer player, Option<?, ?, ?> option, BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
             this.get(player).replace(option, remappingFunction);
         }
 
-        Options.Single get(final ApolloPlayer player);
+        Options.Single get(ApolloPlayer player);
 
     }
 

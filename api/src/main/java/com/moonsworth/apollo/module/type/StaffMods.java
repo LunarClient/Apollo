@@ -27,7 +27,7 @@ public abstract class StaffMods extends ApolloModule {
      * @param mod the staff mod
      * @since 1.0.0
      */
-    public abstract void giveModule(final ApolloPlayer player, final StaffMod mod);
+    public abstract void giveModule(ApolloPlayer player, StaffMod mod);
 
     /**
      * Removes the {@link StaffMod} from the {@link ApolloPlayer}.
@@ -36,7 +36,7 @@ public abstract class StaffMods extends ApolloModule {
      * @param mod the staff mod
      * @since 1.0.0
      */
-    public abstract void removeModule(final ApolloPlayer player, final StaffMod mod);
+    public abstract void removeModule(ApolloPlayer player, StaffMod mod);
 
     /**
      * Gives all {@link StaffMod}s to the {@link ApolloPlayer}.
@@ -44,7 +44,7 @@ public abstract class StaffMods extends ApolloModule {
      * @param player the player
      * @since 1.0.0
      */
-    public abstract void giveAllModules(final ApolloPlayer player);
+    public abstract void giveAllModules(ApolloPlayer player);
 
     /**
      * Removes all {@link StaffMod}s from the {@link ApolloPlayer}.
@@ -52,5 +52,5 @@ public abstract class StaffMods extends ApolloModule {
      * @param player the player
      * @since 1.0.0
      */
-    public abstract void removeAllModules(final ApolloPlayer player);
+    public abstract void removeAllModules(ApolloPlayer player);
 }

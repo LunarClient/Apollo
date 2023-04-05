@@ -62,6 +62,6 @@ public interface ApolloPlayer {
      * @return true if the player has permission, otherwise false
      * @since 1.0.0
      */
-    boolean hasPermission(final String permissionNode);
+    boolean hasPermission(String permissionNode);
 
 }

@@ -21,7 +21,7 @@ public final class NotificationsImpl extends Notifications {
     }
 
     @Override
-    public void sendNotification(final ApolloPlayer player, final Notification notification) {
+    public void sendNotification(ApolloPlayer player, Notification notification) {
         requireNonNull(player, "player");
         requireNonNull(notification, "notification");
 
@@ -29,15 +29,15 @@ public final class NotificationsImpl extends Notifications {
     }
 
     @Override
-    public void broadcastNotification(final Notification notification) {
+    public void broadcastNotification(Notification notification) {
         requireNonNull(notification, "notification");
 
-        for(final ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
+        for(ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
             ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(notification));
         }
     }
 
-    private NotificationMessage to(final Notification notification) {
+    private NotificationMessage to(Notification notification) {
         return NotificationMessage.newBuilder()
                 .setTitle(notification.getTitle())
                 .setDescription(notification.getDescription())
@@ -45,7 +45,7 @@ public final class NotificationsImpl extends Notifications {
                 .build();
     }
 
-    private Notification from(final NotificationMessage message) {
+    private Notification from(NotificationMessage message) {
         return Notification.of(
                 message.getTitle(),
                 message.getDescription(),

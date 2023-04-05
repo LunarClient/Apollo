@@ -37,12 +37,12 @@ public class Team {
      */
     Map<UUID, Teammate> teammates;
 
-    public boolean addMember(final Team.Teammate teammate, final ApolloPlayer player) {
+    public boolean addMember(Team.Teammate teammate, ApolloPlayer player) {
         return Apollo.getModuleManager().getModule(Teams.class)
             .map(module -> module.addMember(player, this, teammate)).orElse(false);
     }
 
-    public boolean removeMember(final ApolloPlayer player) {
+    public boolean removeMember(ApolloPlayer player) {
         return Apollo.getModuleManager().getModule(Teams.class)
             .map(module -> module.removeMember(player, this)).orElse(false);
     }
