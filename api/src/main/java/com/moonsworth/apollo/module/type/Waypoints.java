@@ -1,6 +1,7 @@
 package com.moonsworth.apollo.module.type;
 
 import com.moonsworth.apollo.module.ApolloModule;
+import com.moonsworth.apollo.option.ListOption;
 import com.moonsworth.apollo.option.Option;
 import com.moonsworth.apollo.option.SimpleOption;
 import com.moonsworth.apollo.player.ApolloPlayer;
@@ -8,6 +9,8 @@ import com.moonsworth.apollo.player.ui.Waypoint;
 import com.moonsworth.apollo.world.ApolloBlockLocation;
 import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -23,6 +26,16 @@ public abstract class Waypoints extends ApolloModule {
      */
     private static final Waypoint SPAWN_WAYPOINT = Waypoint.of("Spawn",
         ApolloBlockLocation.of("world", 0, 100, 0), Color.RED, false, true);
+
+    /**
+     * Returns the default list of waypoints to show the player.
+     *
+     * @since 1.0.0
+     */
+    public static final ListOption<Waypoint> DEFAULT_WAYPOINTS = Option.<Waypoint>list()
+            .comment("Sets the default waypoints to send to the player.")
+            .node("default-waypoints").type(new TypeToken<List<Waypoint>>() {})
+            .defaultValue(new ArrayList<>()).build();
 
     /**
      * Lets servers handle waypoints.

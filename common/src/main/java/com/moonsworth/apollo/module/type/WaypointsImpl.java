@@ -1,10 +1,12 @@
 package com.moonsworth.apollo.module.type;
 
+import com.moonsworth.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.moonsworth.apollo.network.NetworkTypes;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Waypoint;
 import java.awt.Color;
+import java.util.List;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.WaypointMessage;
 
@@ -19,6 +21,8 @@ public final class WaypointsImpl extends Waypoints {
 
     public WaypointsImpl() {
         super();
+
+        this.handle(ApolloRegisterPlayerEvent.class, this::onPlayerRegister);
     }
 
     @Override
@@ -42,6 +46,16 @@ public final class WaypointsImpl extends Waypoints {
         requireNonNull(player, "player");
 
         ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
+    }
+
+    private void onPlayerRegister(final ApolloRegisterPlayerEvent event) {
+        final ApolloPlayer player = event.getPlayer();
+        List<Waypoint> waypoints = this.getOptions().get(player, Waypoints.DEFAULT_WAYPOINTS);
+        if(waypoints != null) {
+            for(Waypoint waypoint : waypoints) {
+                ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(waypoint));
+            }
+        }
     }
 
     private WaypointMessage to(final Waypoint waypoint) {
