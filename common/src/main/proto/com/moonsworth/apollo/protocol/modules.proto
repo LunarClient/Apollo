@@ -28,7 +28,7 @@ message CooldownMessage {
   int64 duration = 2;
   oneof icon {
     int32 item_id = 3;
-    lunarclient.apollo.utility.RenderableIcon renderable_icon = 4;
+    lunarclient.apollo.utility.RenderableIconMessage renderable_icon = 4;
   }
 }
 
@@ -53,7 +53,7 @@ message ModSettingMessage {
 message NametagMessage {
   lunarclient.apollo.utility.Uuid player_uuid = 1;
   bool hide = 2;
-  repeated lunarclient.apollo.utility.RenderableString nametag = 3;
+  repeated lunarclient.apollo.utility.RenderableStringMessage nametag = 3;
   int32 player_name_index = 4;
 }
 
@@ -75,7 +75,7 @@ message TeamMessage {
   message TeammateMessage {
     lunarclient.apollo.utility.Uuid player_uuid = 1;
     sint32 color = 2;
-    optional lunarclient.apollo.utility.Location location = 3;
+    optional lunarclient.apollo.utility.LocationMessage location = 3;
   }
 
   string team_id = 1;
@@ -98,7 +98,7 @@ message TitleMessage {
 
 message WaypointMessage {
   string name = 1;
-  lunarclient.apollo.utility.BlockLocation location = 2;
+  lunarclient.apollo.utility.BlockLocationMessage location = 2;
   sint32 color = 3;
   bool forced = 4;
   bool visible = 5;
