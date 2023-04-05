@@ -85,6 +85,26 @@ public final class ServerRule extends ApolloModule {
         .node("nametag-render-distance").type(TypeToken.get(Integer.class))
         .defaultValue(64).min(1).max(96).build();
 
+    /**
+     * Override max chat length.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> OVERRIDE_MAX_CHAT_LENGTH = Option.<Boolean>builder()
+        .comment("Set to 'true' to override max chat length, otherwise 'false'.")
+        .node("override-max-chat-length").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    /**
+     * Sets the max chat length amount.
+     *
+     * @since 1.0.0
+     */
+    public static final NumberOption<Integer> MAX_CHAT_LENGTH = Option.<Integer>number()
+        .comment("Set the nametag render distance amount.")
+        .node("max-chat-length").type(TypeToken.get(Integer.class))
+        .defaultValue(256).min(1).max(256).build();
+
     ServerRule() {
         super("ServerRule");
 
@@ -95,7 +115,9 @@ public final class ServerRule extends ApolloModule {
             ANTI_PORTAL_TRAPS,
             OVERRIDE_BRIGHTNESS,
             BRIGHTNESS,
-            NAMETAG_RENDER_DISTANCE
+            NAMETAG_RENDER_DISTANCE,
+            OVERRIDE_MAX_CHAT_LENGTH,
+            MAX_CHAT_LENGTH
         );
     }
 
