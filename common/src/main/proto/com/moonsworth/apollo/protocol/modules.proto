@@ -15,7 +15,7 @@ message BorderMessage {
   bool cancel_entry = 3;
   bool cancel_exit = 4;
   bool can_shrink_or_expand = 5;
-  sint32 color = 6;
+  lunarclient.apollo.utility.Color color = 6;
   double min_x = 7;
   double min_z = 8;
   double max_x = 9;
@@ -74,7 +74,7 @@ message StaffModsMessage {
 message TeamMessage {
   message TeammateMessage {
     lunarclient.apollo.utility.Uuid player_uuid = 1;
-    sint32 color = 2;
+    lunarclient.apollo.utility.Color color = 2;
     optional lunarclient.apollo.utility.LocationMessage location = 3;
   }
 
@@ -99,7 +99,7 @@ message TitleMessage {
 message WaypointMessage {
   string name = 1;
   lunarclient.apollo.utility.BlockLocationMessage location = 2;
-  sint32 color = 3;
+  lunarclient.apollo.utility.Color color = 3;
   bool forced = 4;
   bool visible = 5;
 }

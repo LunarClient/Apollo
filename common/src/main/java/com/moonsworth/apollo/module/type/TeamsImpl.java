@@ -9,13 +9,13 @@ import com.moonsworth.apollo.option.Options;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayerManager;
 import com.moonsworth.apollo.player.ui.Team;
-import java.awt.Color;
+import lunarclient.apollo.modules.TeamMessage;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import lunarclient.apollo.modules.TeamMessage;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import static java.util.Objects.requireNonNull;
 
@@ -161,7 +161,7 @@ public final class TeamsImpl extends Teams {
             .map(entry ->
                 TeamMessage.TeammateMessage.newBuilder()
                     .setPlayerUuid(NetworkTypes.toUuid(entry.getKey()))
-                    .setColor(entry.getValue().getColor().getRGB())
+                    .setColor(NetworkTypes.toColor(entry.getValue().getColor()))
                     .setLocation(NetworkTypes.toLocation(entry.getValue().getLocation()))
                     .build()
             ).collect(Collectors.toList());
@@ -177,7 +177,7 @@ public final class TeamsImpl extends Teams {
             .collect(Collectors.toMap(
                 teammate -> NetworkTypes.fromUuid(teammate.getPlayerUuid()),
                 teammate -> Team.Teammate.of(
-                    new Color(teammate.getColor()),
+                    NetworkTypes.fromColor(teammate.getColor()),
                     NetworkTypes.fromLocation(teammate.getLocation())
                 )
             ));

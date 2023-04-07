@@ -1,9 +1,9 @@
 package com.moonsworth.apollo.module.type;
 
+import com.moonsworth.apollo.network.NetworkTypes;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Border;
-import java.awt.Color;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.BorderMessage;
 
@@ -43,7 +43,7 @@ public final class BordersImpl extends Borders {
                 .setCancelEntry(border.isCancelEntry())
                 .setCancelExit(border.isCancelExit())
                 .setCanShrinkOrExpand(border.isCanShrinkOrExpand())
-                .setColor(border.getColor().getRGB())
+                .setColor(NetworkTypes.toColor(border.getColor()))
                 .setMinX(border.getMinX())
                 .setMinZ(border.getMinZ())
                 .setMaxX(border.getMaxX())
@@ -59,7 +59,7 @@ public final class BordersImpl extends Borders {
                 message.getCancelEntry(),
                 message.getCancelExit(),
                 message.getCanShrinkOrExpand(),
-                new Color(message.getColor()),
+                NetworkTypes.fromColor(message.getColor()),
                 message.getMinX(),
                 message.getMinZ(),
                 message.getMaxX(),

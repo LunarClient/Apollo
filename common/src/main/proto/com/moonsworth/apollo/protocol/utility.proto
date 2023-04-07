@@ -11,6 +11,10 @@ message Uuid {
   fixed64 low64 = 2;
 }
 
+message Color {
+  int32 color = 1;
+}
+
 message BlockLocationMessage {
   string world = 1;
   sint32 x = 2;
@@ -36,7 +40,7 @@ message RenderableStringMessage {
     ITALIC = 4;
   }
   string content = 1;
-  sint32 color = 2;
+  Color color = 2;
   repeated TextDecorators decoration = 3;
   repeated RenderableStringMessage children = 4;
 }

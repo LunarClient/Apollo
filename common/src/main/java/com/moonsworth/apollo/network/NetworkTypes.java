@@ -5,20 +5,14 @@ import com.moonsworth.apollo.option.type.RenderableIcon;
 import com.moonsworth.apollo.option.type.RenderableString;
 import com.moonsworth.apollo.world.ApolloBlockLocation;
 import com.moonsworth.apollo.world.ApolloLocation;
+import lombok.experimental.UtilityClass;
+import lunarclient.apollo.utility.*;
+
 import java.awt.Color;
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import lombok.experimental.UtilityClass;
-import lunarclient.apollo.utility.BlockLocationMessage;
-import lunarclient.apollo.utility.IconSpecificationMessage;
-import lunarclient.apollo.utility.LocationMessage;
-import lunarclient.apollo.utility.RenderableIconMessage;
-import lunarclient.apollo.utility.RenderableStringMessage;
-import lunarclient.apollo.utility.Uuid;
-
-// TODO: temp solution?
 
 @UtilityClass
 public class NetworkTypes {
@@ -32,6 +26,16 @@ public class NetworkTypes {
 
     public UUID fromUuid(Uuid message) {
         return new UUID(message.getHigh64(), message.getLow64());
+    }
+
+    public lunarclient.apollo.utility.Color toColor(Color object) {
+        return lunarclient.apollo.utility.Color.newBuilder()
+            .setColor(object.getRGB())
+            .build();
+    }
+
+    public Color fromColor(lunarclient.apollo.utility.Color message) {
+        return new Color(message.getColor());
     }
 
     public com.google.protobuf.Duration toDuration(Duration object) {
@@ -130,7 +134,7 @@ public class NetworkTypes {
 
         return RenderableStringMessage.newBuilder()
             .setContent(object.getContent())
-            .setColor(object.getColor().getRGB())
+            .setColor(NetworkTypes.toColor(object.getColor()))
             .addAllDecoration(decorators)
             .addAllChildren(children)
             .build();
@@ -147,7 +151,7 @@ public class NetworkTypes {
 
         return RenderableString.of(
             message.getContent(),
-            new Color(message.getColor()),
+            NetworkTypes.fromColor(message.getColor()),
             decorators,
             children
         );
