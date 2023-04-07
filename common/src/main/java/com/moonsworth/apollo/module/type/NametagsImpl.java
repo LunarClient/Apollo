@@ -5,11 +5,12 @@ import com.moonsworth.apollo.option.type.RenderableString;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Nametag;
-import java.util.List;
-import java.util.stream.Collectors;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.NametagMessage;
 import lunarclient.apollo.utility.RenderableStringMessage;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -35,12 +36,11 @@ public final class NametagsImpl extends Nametags {
     }
 
     @Override
-    public void resetNametag(Nametag nametag, ApolloPlayer... viewers) {
-        requireNonNull(nametag, "nametag");
+    public void resetNametag(ApolloPlayer... viewers) {
         requireNonNull(viewers, "viewers");
 
         for(ApolloPlayer player : viewers) {
-            ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.REMOVE, this.to(nametag));
+            ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
         }
     }
 

@@ -23,6 +23,11 @@ message BorderMessage {
   int32 duration_ticks = 11;
 }
 
+message ColoredFireMessage {
+  lunarclient.apollo.utility.Uuid player_uuid = 1;
+  lunarclient.apollo.utility.Color color = 2;
+}
+
 message CooldownMessage {
   string name = 1;
   int64 duration = 2;
