@@ -1,16 +1,13 @@
-name: Deploy
-
-on:
-  push:
-    branches: [trunk]
+name: Build Apollo
+on: [push]
 
 jobs:
-  deploy:
+  build:
+    name: Build Apollo
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
-    name: Deploy
 
     steps:
       - name: Checkout from GitHub
@@ -26,6 +23,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 16
-     
-      - name: Build
-        run: ./gradlew publish
+
+      - name: Gradle Build
+        run: ./gradlew build
+
+      - name: Gradle Publish
+        if: github.ref == 'refs/heads/trunk'
+        run: ./gradlew Publish
