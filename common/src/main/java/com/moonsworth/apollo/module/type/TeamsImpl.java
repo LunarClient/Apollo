@@ -1,7 +1,5 @@
 package com.moonsworth.apollo.module.type;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.event.player.ApolloUnregisterPlayerEvent;
 import com.moonsworth.apollo.network.NetworkTypes;
@@ -9,13 +7,14 @@ import com.moonsworth.apollo.option.Options;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayerManager;
 import com.moonsworth.apollo.player.ui.Team;
-import lunarclient.apollo.modules.TeamMessage;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-
+import java.util.AbstractMap;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import lunarclient.apollo.modules.TeamMessage;
 
 import static java.util.Objects.requireNonNull;
 
@@ -32,15 +31,15 @@ public final class TeamsImpl extends Teams {
     public TeamsImpl() {
         super();
 
-        this.teamsByTeamUuid = Maps.newHashMap();
-        this.teamsByPlayerUuid = Maps.newHashMap();
+        this.teamsByTeamUuid = new HashMap<>();
+        this.teamsByPlayerUuid = new HashMap<>();
 
         this.handle(ApolloUnregisterPlayerEvent.class, this::onPlayerUnregister);
     }
 
     @Override
     public Team createTeam() {
-        return this.createTeam(Maps.newHashMap());
+        return this.createTeam(new HashMap<>());
     }
 
     @Override
@@ -128,7 +127,7 @@ public final class TeamsImpl extends Teams {
         Options.Container options = this.getOptions();
 
         Map<ApolloPlayer, Team.Teammate> teammates = team.getTeammates().entrySet().stream()
-            .map(entry -> new ImmutablePair<>(
+            .map(entry -> new AbstractMap.SimpleImmutableEntry<>(
                 playerManager.getPlayer(entry.getKey()),
                 entry.getValue())
             )
@@ -139,7 +138,7 @@ public final class TeamsImpl extends Teams {
             ));
 
         teammates.forEach((player, teammate) -> player.getLocation().ifPresent(teammate::setLocation));
-        teammates.forEach((player, teammate) -> options.set(player, null, Lists.newArrayList(team)));
+        teammates.forEach((player, teammate) -> options.set(player, null, Collections.singletonList(team)));
     }
 
     public void onPlayerUnregister(ApolloUnregisterPlayerEvent event) {

@@ -99,6 +99,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
          * @param player the player
          * @param option the option
          * @param <T> the value type
+         * @param <C> the option type
          * @return the value or default if present
          * @since 1.0.0
          */
@@ -114,6 +115,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
          * @param player the player
          * @param option the option
          * @param <T> the value type
+         * @param <C> the option type
          * @return the optional stored value
          * @since 1.0.0
          */
