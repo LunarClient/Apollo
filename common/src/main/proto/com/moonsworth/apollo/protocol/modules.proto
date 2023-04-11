@@ -101,6 +101,45 @@ message TitleMessage {
   google.protobuf.Duration fade_out_time = 6;
 }
 
+message PingRequest {
+  lunarclient.apollo.utility.Uuid packet_id = 1;
+  repeated string addresses = 2;
+}
+
+message PingResponse {
+  message PingData {
+    enum State {
+      SUCCESS = 0;
+      TIMED_OUT = 1;
+    }
+
+    string address = 1;
+    State state = 2;
+    sint32 ping = 3;
+  }
+
+  lunarclient.apollo.utility.Uuid packet_id = 1;
+  repeated PingData data = 2;
+}
+
+service PingService {
+  rpc Ping(PingRequest) returns (PingResponse);
+}
+
+message TransferRequest {
+  lunarclient.apollo.utility.Uuid packet_id = 1;
+  string address = 2;
+}
+
+message TransferResponse {
+  lunarclient.apollo.utility.Uuid packet_id = 1;
+  bool accepted = 2;
+}
+
+service TransferService {
+  rpc Transfer(TransferRequest) returns (TransferResponse);
+}
+
 message WaypointMessage {
   string name = 1;
   lunarclient.apollo.utility.BlockLocationMessage location = 2;

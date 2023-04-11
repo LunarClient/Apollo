@@ -3,6 +3,7 @@ package com.moonsworth.apollo;
 import com.moonsworth.apollo.module.ApolloModuleManagerImpl;
 import com.moonsworth.apollo.network.ApolloNetworkManager;
 import com.moonsworth.apollo.player.ApolloPlayerManagerImpl;
+import com.moonsworth.apollo.roundtrip.ApolloRoundtripManager;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,8 @@ public final class ApolloManager {
             Apollo.initialize(
                     platform,
                     new ApolloModuleManagerImpl(),
-                    new ApolloPlayerManagerImpl()
+                    new ApolloPlayerManagerImpl(),
+                    new ApolloRoundtripManager()
             );
 
             ApolloManager.networkManager = new ApolloNetworkManager();
