@@ -94,7 +94,8 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
     @Subscribe
     public void onPluginMessage(PluginMessageEvent event) {
-        if(event.getSource() instanceof Player player) {
+        if(event.getSource() instanceof Player) {
+            Player player = (Player) event.getSource();
             if(event.getIdentifier().getId().equals("REGISTER")) {
                 String channels = new String(event.getData(), Charsets.UTF_8);
                 if(!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
@@ -106,7 +107,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
     @Subscribe
     public void onDisconnect(final DisconnectEvent event) {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
     }
 

@@ -13,8 +13,25 @@ import lunarclient.apollo.common.ModuleConfig;
 import lunarclient.apollo.common.Modules;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Utility class for sending options to the client.
+ *
+ * @since 1.0.0
+ */
 public final class NetworkOptions {
 
+    private NetworkOptions() {
+    }
+
+    /**
+     * Send a single option to a single player.
+     *
+     * @param module the module the option belongs to
+     * @param key the option key
+     * @param value the option value
+     * @param players the players to send the option to
+     * @since 1.0.0
+     */
     public static void sendOption(ApolloModule module,
                                   Option<?, ?, ?> key,
                                   Value value,
@@ -33,6 +50,14 @@ public final class NetworkOptions {
         }
     }
 
+    /**
+     * Sends the provided {@link ApolloModule}s options to the provided
+     * {@link ApolloPlayer}s.
+     *
+     * @param modules the modules to send the options of
+     * @param players the players to send the module options to
+     * @since 1.0.0
+     */
     public static void sendOptions(Iterable<ApolloModule> modules,
                                    ApolloPlayer... players) {
         for(ApolloPlayer player : players) {

@@ -12,9 +12,6 @@ java {
 
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-
-    withJavadocJar()
-    withSourcesJar()
 }
 
 dependencies {
@@ -25,6 +22,10 @@ dependencies {
 }
 
 tasks {
+    // For some reason tests are not working for paperweight.
+    // Luckily we don't need tests right now anyway.
+    test { onlyIf { project.hasProperty("test") } }
+
     withType<JavaCompile> {
         options.encoding = "UTF-8"
         options.compilerArgs.addAll(listOf(

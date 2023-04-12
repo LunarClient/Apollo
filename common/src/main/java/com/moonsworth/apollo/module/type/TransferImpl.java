@@ -9,14 +9,13 @@ import com.moonsworth.apollo.player.ui.network.ServerPing;
 import com.moonsworth.apollo.player.ui.network.ServerTransfer;
 import com.moonsworth.apollo.roundtrip.async.Future;
 import com.moonsworth.apollo.roundtrip.async.Handler;
+import java.util.List;
+import java.util.stream.Collectors;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.PingRequest;
 import lunarclient.apollo.modules.PingResponse;
 import lunarclient.apollo.modules.TransferRequest;
 import lunarclient.apollo.modules.TransferResponse;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 

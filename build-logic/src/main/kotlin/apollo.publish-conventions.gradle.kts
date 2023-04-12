@@ -8,8 +8,26 @@ plugins {
 // Expose version catalog
 val libs = extensions.getByType(org.gradle.accessors.dm.LibrariesForLibs::class)
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 dependencies {
     checkstyle(libs.stylecheck)
+}
+
+tasks {
+    withType<Javadoc> {
+        val minimalOptions: MinimalJavadocOptions = options
+        if (minimalOptions is StandardJavadocDocletOptions) {
+            val options: StandardJavadocDocletOptions = minimalOptions
+            options.addBooleanOption("Xdoclint:-missing", true)
+            options.addBooleanOption("html5", true)
+        }
+
+        exclude("lunarclient/**")
+    }
 }
 
 val configPath: File = rootProject.file(".checkstyle")

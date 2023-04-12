@@ -3,10 +3,9 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
-    implementation(gradleApi())
     implementation(libs.artifactregistry)
-//    implementation(libs.checkstyle)
+    implementation(libs.paperweight)
+    implementation(libs.shadow)
 }
 
 dependencies {

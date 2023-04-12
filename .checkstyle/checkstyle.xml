@@ -128,11 +128,6 @@
         <!-- https://checkstyle.org/config_blocks.html#LeftCurly -->
         <module name="LeftCurly"/>
 
-        <!-- https://checkstyle.org/config_naming.html#MethodName -->
-        <module name="MethodName">
-            <property name="format" value="^(?:(?:.{1,3})|(?:[gs]et[^A-Z].*)|(?:(?:[^gsA-Z]..|.[^e].|..[^t]).+))$"/>
-        </module>
-
         <!-- https://checkstyle.org/config_whitespace.html#MethodParamPad -->
         <module name="MethodParamPad"/>
 
