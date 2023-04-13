@@ -13,12 +13,9 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.NonExtendable
 public abstract class StaffMods extends ApolloModule {
 
-    // TODO: PermissionNodeOption
-
     StaffMods() {
         super("StaffMods");
     }
-
 
     /**
      * Gives the {@link StaffMod} to the {@link ApolloPlayer}.
@@ -53,4 +50,5 @@ public abstract class StaffMods extends ApolloModule {
      * @since 1.0.0
      */
     public abstract void removeAllModules(ApolloPlayer player);
+
 }

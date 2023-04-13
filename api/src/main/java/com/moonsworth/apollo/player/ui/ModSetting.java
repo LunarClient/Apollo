@@ -1,8 +1,7 @@
 package com.moonsworth.apollo.player.ui;
 
-import lombok.Value;
-
 import java.util.Map;
+import lombok.Value;
 
 /**
  * Represents mod settings which can sent to the client.

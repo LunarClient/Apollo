@@ -6,10 +6,9 @@ import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.network.ServerPing;
 import com.moonsworth.apollo.player.ui.network.ServerTransfer;
 import com.moonsworth.apollo.roundtrip.async.Handler;
-import org.jetbrains.annotations.ApiStatus;
-
 import java.util.Arrays;
 import java.util.Collection;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the transfer module.

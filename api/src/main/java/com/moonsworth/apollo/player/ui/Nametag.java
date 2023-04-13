@@ -39,8 +39,8 @@ public class Nametag {
 
     /**
      * Returns the nametag {@link Integer} player name index.
-     * <p>
-     * Used to attach the lunar logo
+     *
+     * <p>Used to attach the lunar logo.</p>
      *
      * @return the player name index
      * @since 1.0.0

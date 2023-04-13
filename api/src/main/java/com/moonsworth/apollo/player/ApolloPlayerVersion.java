@@ -26,6 +26,12 @@ public enum ApolloPlayerVersion {
 
     private static final Set<ApolloPlayerVersion> VERSION_CACHE = EnumSet.allOf(ApolloPlayerVersion.class);
 
+    /**
+     * Returns a {@link Set} of {@link ApolloPlayerVersion}s.
+     *
+     * @return the set of versions
+     * @since 1.0.0
+     */
     public static Set<ApolloPlayerVersion> getVersions() {
         return ApolloPlayerVersion.VERSION_CACHE;
     }

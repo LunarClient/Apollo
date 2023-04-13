@@ -1,7 +1,6 @@
 package com.moonsworth.apollo.roundtrip;
 
 import com.moonsworth.apollo.roundtrip.async.future.UncertainFuture;
-
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;

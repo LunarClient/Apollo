@@ -59,17 +59,19 @@ public final class Apollo {
         return Apollo.checkEnabled(Apollo.roundtripManager);
     }
 
-    private static <T> T checkEnabled(@Nullable T object) {
+    static void initialize(ApolloPlatform platform, ApolloModuleManager moduleManager, ApolloPlayerManager playerManager, ApolloRoundtripManager roundtripManager) {
+        Apollo.platform = requireNonNull(platform, "platform");
+        Apollo.moduleManager = requireNonNull(moduleManager, "moduleManager");
+        Apollo.playerManager = requireNonNull(playerManager, "playerManager");
+        Apollo.roundtripManager = requireNonNull(roundtripManager, "roundtripManager");
+    }
+
+    private static <T> T checkEnabled(final @Nullable T object) {
         if (object == null) throw new UnsupportedOperationException("Apollo has not started yet!");
         return object;
     }
 
-    static void initialize(ApolloPlatform platform, ApolloModuleManager moduleManager,
-                           ApolloPlayerManager playerManager, ApolloRoundtripManager roundtripManager) {
-        Apollo.platform = requireNonNull(platform, "platform");
-        Apollo.moduleManager = requireNonNull(moduleManager, "moduleManager");
-        Apollo.playerManager = playerManager;
-        Apollo.roundtripManager = requireNonNull(roundtripManager, "roundtripManager");
+    private Apollo() {
     }
 
 }

@@ -18,18 +18,17 @@ public class HeartTexture {
      */
     HeartTexture.Type type;
 
-    // Please document this better
     /**
      * Returns the heart texture {@link Integer} x location.
-     * <p>
-     * Represents the start of the x coordinate in the 'icons.png' for your
+     *
+     * <p>Represents the start of the x coordinate in the 'icons.png' for your
      * extra hearts. The image can be extended as much as needed, but keep in
-     * mind that a 1/2 heart and damage taken variation of every heart is required.
-     * <p>
-     * The location will be calculated as follows: startOfImage + (location * 2 + healing) * 9
-     * With the startOfImage being set to 16 by default.
-     * <p>
-     * For example: Poison hearts location is 4, while for Wither hearts is 7.
+     * mind that a 1/2 heart and damage taken variation of every heart is required.</p>
+     *
+     * <p>The location will be calculated as follows: startOfImage + (location * 2 + healing) * 9
+     * With the startOfImage being set to 16 by default.</p>
+     *
+     * <p>For example: Poison hearts location is 4, while for Wither hearts is 7.</p>
      *
      * @return the heart texture x location
      * @since 1.0.0
@@ -47,4 +46,5 @@ public class HeartTexture {
         HEALING,
         HEALING_AND_ABSORPTION
     }
+
 }

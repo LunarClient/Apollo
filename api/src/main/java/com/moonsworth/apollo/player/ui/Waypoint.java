@@ -38,9 +38,9 @@ public class Waypoint {
 
     /**
      * Returns the waypoint {@link Boolean} forced state.
-     * <p>
-     * If the waypoint is forced, the player can't remove
-     * the waypoint but can hide it
+     *
+     * <p>If the waypoint is forced, the player can't remove
+     * the waypoint but can hide it.</p>
      *
      * @return the waypoint forced state
      * @since 1.0.0

@@ -10,10 +10,9 @@ import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the title module.
- * <p>
- * This module represents titles added in
- * version 1.8 (47) and is back-ported to 1.7
- * therefore it's only supported on 1.7
+ *
+ * <p>This module represents titles added in version 1.8 (47) and is
+ * back-ported to 1.7 therefore it's only supported on 1.7.</p>
  *
  * @since 1.0.0
  */

@@ -12,8 +12,8 @@ public class RenderableIcon {
 
     /**
      * Returns the renderable icon {@link String} resource location.
-     * <p>
-     * Represents an icon that will appear for the player
+     *
+     * <p>Represents an icon that will appear for the player.</p>
      *
      * @return the renderable icon resource location
      * @since 1.0.0

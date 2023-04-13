@@ -43,6 +43,13 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
         return new NumberOption.NumberOptionBuilder<>();
     }
 
+    /**
+     * Returns a new {@link ListOption.ListOptionBuilder}.
+     *
+     * @param <T> the value type
+     * @return a new list option builder
+     * @since 1.0.0
+     */
     public static <T> ListOption.ListOptionBuilder<T> list() {
         return new ListOption.ListOptionBuilder<>();
     }

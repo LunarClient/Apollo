@@ -28,9 +28,9 @@ public class Notification {
 
     /**
      * Returns the notification {@link String} resource location.
-     * <p>
-     * Represents an icon that will appear for the player
-     * if empty (null) it'll display a generic info message
+     *
+     * <p>Represents an icon that will appear for the player
+     * if empty (null) it'll display a generic info message</p>
      *
      * @return the notification resource location
      * @since 1.0.0

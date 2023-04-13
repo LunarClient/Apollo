@@ -5,6 +5,11 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Represents a container of options.
+ *
+ * @since 1.0.0
+ */
 public interface Options extends Iterable<Option<?, ?, ?>> {
 
     /**
@@ -179,6 +184,13 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
             this.get(player).replace(option, remappingFunction);
         }
 
+        /**
+         * Returns the {@link Single} view for the provided {@link ApolloPlayer}.
+         *
+         * @param player the player
+         * @return the single view
+         * @since 1.0.0
+         */
         Options.Single get(ApolloPlayer player);
 
     }
@@ -190,6 +202,12 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      */
     interface Single extends Options {
 
+        /**
+         * Returns the {@link ApolloPlayer} this view is for.
+         *
+         * @return the player
+         * @since 1.0.0
+         */
         ApolloPlayer getPlayer();
 
     }
