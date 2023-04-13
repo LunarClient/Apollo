@@ -24,7 +24,7 @@ spotless {
     fun FormatExtension.applyCommon() {
         trimTrailingWhitespace()
         endWithNewline()
-        indentWithSpaces(2)
+        indentWithSpaces(4)
     }
 
     java {
