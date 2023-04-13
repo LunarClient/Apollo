@@ -1,7 +1,10 @@
+import com.diffplug.gradle.spotless.FormatExtension
+
 plugins {
     id("apollo.base-conventions")
     id("checkstyle")
     id("maven-publish")
+    id("com.diffplug.spotless")
     id("com.google.cloud.artifactregistry.gradle-plugin")
 }
 
@@ -15,6 +18,19 @@ java {
 
 dependencies {
     checkstyle(libs.stylecheck)
+}
+
+spotless {
+    fun FormatExtension.applyCommon() {
+        trimTrailingWhitespace()
+        endWithNewline()
+        indentWithSpaces(2)
+    }
+
+    java {
+        importOrderFile(rootProject.file(".spotless/lunar.importorder"))
+        applyCommon()
+    }
 }
 
 tasks {

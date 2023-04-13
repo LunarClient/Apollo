@@ -87,4 +87,5 @@ public abstract class Waypoints extends ApolloModule {
      * @since 1.0.0
      */
     public abstract void clearWaypoints(ApolloPlayer player);
+
 }

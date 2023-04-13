@@ -8,7 +8,8 @@ import com.moonsworth.apollo.impl.bukkit.wrapper.BukkitApolloPlayer;
 import com.moonsworth.apollo.module.ApolloModuleManagerImpl;
 import com.moonsworth.apollo.module.type.Borders;
 import com.moonsworth.apollo.module.type.BordersImpl;
-import com.moonsworth.apollo.module.type.ColoredFire;
+import com.moonsworth.apollo.module.type.ColoredFiresImpl;
+import com.moonsworth.apollo.module.type.ColoredFires;
 import com.moonsworth.apollo.module.type.Cooldowns;
 import com.moonsworth.apollo.module.type.CooldownsImpl;
 import com.moonsworth.apollo.module.type.HeartTextureImpl;
@@ -58,7 +59,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
                 .addModule(Borders.class, new BordersImpl())
-                .addModule(ColoredFire.class)
+                .addModule(ColoredFires.class, new ColoredFiresImpl())
                 .addModule(Cooldowns.class, new CooldownsImpl())
                 .addModule(HeartTextures.class, new HeartTextureImpl())
                 .addModule(Nametags.class, new NametagsImpl())

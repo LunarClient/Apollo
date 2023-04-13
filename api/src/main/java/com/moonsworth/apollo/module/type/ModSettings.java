@@ -72,4 +72,5 @@ public abstract class ModSettings extends ApolloModule {
     public boolean isClientNotify() {
         return true;
     }
+
 }

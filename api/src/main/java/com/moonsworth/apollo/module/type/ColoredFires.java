@@ -31,7 +31,6 @@ public abstract class ColoredFires extends ApolloModule {
      */
     public abstract void overrideFireColor(ColoredFire fire, ApolloPlayer... viewers);
 
-
     /**
      * Resets the {@link ColoredFire} for the {@link ApolloPlayer}s.
      *
@@ -39,4 +38,5 @@ public abstract class ColoredFires extends ApolloModule {
      * @since 1.0.0
      */
     public abstract void resetFireColor(ApolloPlayer... viewers);
+
 }

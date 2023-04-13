@@ -68,4 +68,3 @@ public abstract class Teams extends ApolloModule {
     public abstract void refreshTeams();
 
 }
-

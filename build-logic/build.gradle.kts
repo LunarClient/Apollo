@@ -5,6 +5,7 @@ plugins {
 dependencies {
     implementation(libs.artifactregistry)
     implementation(libs.paperweight)
+    implementation(libs.spotless)
     implementation(libs.shadow)
 }
 
