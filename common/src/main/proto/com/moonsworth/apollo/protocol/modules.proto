@@ -9,6 +9,12 @@ option java_multiple_files = true;
 
 // Modules
 
+message BeaconBeamMessage {
+  string id = 1;
+  lunarclient.apollo.utility.Color color = 2;
+  lunarclient.apollo.utility.BlockLocationMessage location = 3;
+}
+
 message BorderMessage {
   string id = 1;
   string world = 2;
@@ -47,6 +53,36 @@ message HeartTextureMessage {
 
   Type type = 1;
   int32 location_x = 2;
+}
+
+message ToggleArmorPartMessage {
+  enum Part {
+    HELMET = 0;
+    CHESTPLATE = 1;
+    LEGGINGS = 2;
+    BOOTS = 3;
+    ALL = 4;
+  }
+
+  lunarclient.apollo.utility.Uuid player_uuid = 1;
+  Part part = 2;
+  bool hidden = 3;
+}
+
+message ToggleBodyPartMessage {
+  enum Part {
+    HEAD = 0;
+    TORSO = 1;
+    LEFT_ARM = 2;
+    RIGHT_ARM = 3;
+    LEFT_LEG = 4;
+    RIGHT_LEG = 5;
+    ALL = 6;
+  }
+
+  lunarclient.apollo.utility.Uuid player_uuid = 1;
+  Part part = 2;
+  bool hidden = 3;
 }
 
 message ModSettingMessage {
@@ -101,6 +137,11 @@ message TitleMessage {
   google.protobuf.Duration fade_out_time = 6;
 }
 
+service TransferService {
+  rpc Transfer(TransferRequest) returns (TransferResponse);
+  rpc Ping(PingRequest) returns (PingResponse);
+}
+
 message PingRequest {
   lunarclient.apollo.utility.Uuid packet_id = 1;
   repeated string addresses = 2;
@@ -122,10 +163,6 @@ message PingResponse {
   repeated PingData data = 2;
 }
 
-service PingService {
-  rpc Ping(PingRequest) returns (PingResponse);
-}
-
 message TransferRequest {
   lunarclient.apollo.utility.Uuid packet_id = 1;
   string address = 2;
@@ -134,10 +171,6 @@ message TransferRequest {
 message TransferResponse {
   lunarclient.apollo.utility.Uuid packet_id = 1;
   bool accepted = 2;
-}
-
-service TransferService {
-  rpc Transfer(TransferRequest) returns (TransferResponse);
 }
 
 message WaypointMessage {
