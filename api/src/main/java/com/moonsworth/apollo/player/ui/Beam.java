@@ -1,9 +1,8 @@
 package com.moonsworth.apollo.player.ui;
 
 import com.moonsworth.apollo.world.ApolloBlockLocation;
-import lombok.Value;
-
 import java.awt.*;
+import lombok.Value;
 
 /**
  * Represents a beacon beam which can be shown on the client.

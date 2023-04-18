@@ -1,8 +1,7 @@
 package com.moonsworth.apollo.player.ui.ligament;
 
-import lombok.Value;
-
 import java.util.UUID;
+import lombok.Value;
 
 /**
  * Represents a body part which can be shown or hidden on the client.

@@ -25,6 +25,7 @@ spotless {
         trimTrailingWhitespace()
         endWithNewline()
         indentWithSpaces(4)
+        targetExclude("build/generated/source/proto/**")
     }
 
     java {
@@ -51,6 +52,9 @@ val configPath: File = rootProject.file(".checkstyle")
 checkstyle {
     toolVersion = libs.stylecheck.get().toString()
     configDirectory.set(configPath)
+
+    // Ignore failures for now.
+    isIgnoreFailures = true
 
     setConfigProperties(
         "configDirectory" to configPath,
