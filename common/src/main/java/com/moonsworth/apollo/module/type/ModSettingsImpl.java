@@ -7,6 +7,8 @@ import com.moonsworth.apollo.player.ui.ModSetting;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.ModSettingMessage;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Provides the mod settings module.
  *
@@ -20,11 +22,16 @@ public final class ModSettingsImpl extends ModSettings {
 
     @Override
     public void sendSetting(ApolloPlayer player, ModSetting setting) {
+        requireNonNull(player, "player");
+        requireNonNull(setting, "setting");
+
         ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(setting));
     }
 
     @Override
     public void broadcastSetting(ModSetting setting) {
+        requireNonNull(setting, "setting");
+
         for(ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
             ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(setting));
         }

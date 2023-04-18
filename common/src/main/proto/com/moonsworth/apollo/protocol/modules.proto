@@ -6,6 +6,7 @@ import "com/moonsworth/apollo/protocol/utility.proto";
 import "google/protobuf/duration.proto";
 
 option java_multiple_files = true;
+option java_generic_services = true;
 
 // Modules
 
@@ -83,6 +84,29 @@ message ToggleBodyPartMessage {
   lunarclient.apollo.utility.Uuid player_uuid = 1;
   Part part = 2;
   bool hidden = 3;
+}
+
+message VignetteMessage {
+  string texture = 1;
+  float opacity = 2;
+}
+
+message RainbowSheepMessage {
+  message Sheep {
+    lunarclient.apollo.utility.Uuid entity_id = 1;
+    bool rainbow = 2;
+  }
+
+  repeated Sheep sheep = 1;
+}
+
+message FlipEntityMessage {
+  message Entity {
+    lunarclient.apollo.utility.Uuid entity_id = 1;
+    bool flipped = 2;
+  }
+
+  repeated Entity entities = 1;
 }
 
 message ModSettingMessage {
