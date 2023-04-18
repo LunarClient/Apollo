@@ -92,7 +92,7 @@ public class Border {
     double maxZ;
 
     /**
-     * Returns the border {@link Integer} duration represented in ticks
+     * Returns the border {@link Integer} duration represented in ticks.
      *
      * @return the border duration
      * @since 1.0.0

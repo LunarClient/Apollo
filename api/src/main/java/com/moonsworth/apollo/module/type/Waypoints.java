@@ -22,11 +22,13 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.NonExtendable
 public abstract class Waypoints extends ApolloModule {
 
-    /**
-     * Default spawn waypoint
-     */
-    private static final Waypoint SPAWN_WAYPOINT = Waypoint.of("Spawn",
-        ApolloBlockLocation.of("world", 0, 100, 0), Color.RED, false, true);
+    private static final Waypoint SPAWN_WAYPOINT = Waypoint.of(
+        "Spawn",
+        ApolloBlockLocation.of("world", 0, 100, 0),
+        Color.RED,
+        false,
+        true
+    );
 
     /**
      * Returns the default list of waypoints to show the player.
@@ -34,9 +36,10 @@ public abstract class Waypoints extends ApolloModule {
      * @since 1.0.0
      */
     public static final ListOption<Waypoint> DEFAULT_WAYPOINTS = Option.<Waypoint>list()
-            .comment("Sets the default waypoints to send to the player.")
-            .node("default-waypoints").type(new TypeToken<List<Waypoint>>() {})
-            .defaultValue(Collections.singletonList(SPAWN_WAYPOINT)).build();
+        .comment("Sets the default waypoints to send to the player.")
+        .node("default-waypoints").type(new TypeToken<List<Waypoint>>() {})
+        .defaultValue(new ArrayList<>(Collections.singletonList(Waypoints.SPAWN_WAYPOINT)))
+        .build();
 
     /**
      * Lets servers handle waypoints.
@@ -84,4 +87,5 @@ public abstract class Waypoints extends ApolloModule {
      * @since 1.0.0
      */
     public abstract void clearWaypoints(ApolloPlayer player);
+
 }

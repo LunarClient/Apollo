@@ -1,8 +1,7 @@
 package com.moonsworth.apollo.roundtrip;
 
-import lombok.Getter;
-
 import java.util.UUID;
+import lombok.Getter;
 
 @Getter
 public class ApolloRequest<T extends ApolloResponse> {

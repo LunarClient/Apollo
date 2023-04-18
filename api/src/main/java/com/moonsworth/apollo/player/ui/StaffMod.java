@@ -26,12 +26,20 @@ public class StaffMod {
      * @since 1.0.0
      */
     public enum Module {
+
         XRAY;
 
         private static final Set<Module> MODULE_CACHE = EnumSet.allOf(Module.class);
 
+        /**
+         * Returns a {@link Set} of {@link Module}s.
+         *
+         * @return the set of modules
+         * @since 1.0.0
+         */
         public static Set<Module> getModules() {
             return Module.MODULE_CACHE;
         }
+
     }
 }

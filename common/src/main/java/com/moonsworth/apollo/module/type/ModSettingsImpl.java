@@ -1,6 +1,5 @@
 package com.moonsworth.apollo.module.type;
 
-
 import com.moonsworth.apollo.Apollo;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;

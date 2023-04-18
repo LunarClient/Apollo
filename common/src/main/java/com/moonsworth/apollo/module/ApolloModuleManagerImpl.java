@@ -45,6 +45,14 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         return Collections.unmodifiableCollection(this.modules.values());
     }
 
+    /**
+     * Adds a module to the module manager.
+     *
+     * @param moduleClass the module class
+     * @param <T> the module type
+     * @return the module manager
+     * @since 1.0.0
+     */
     public <T extends ApolloModule> ApolloModuleManagerImpl addModule(Class<T> moduleClass) {
         requireNonNull(moduleClass, "moduleClass");
         this.modules.computeIfAbsent(moduleClass, key -> {
@@ -68,7 +76,16 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         return this;
     }
 
-    public <T extends ApolloModule> ApolloModuleManagerImpl addModule(Class<T> moduleClass, T module) {
+    /**
+     * Adds a module to the module manager.
+     *
+     * @param moduleClass the module class
+     * @param module the module
+     * @param <T> the module type
+     * @return the module manager
+     * @since 1.0.0
+     */
+    public <T extends ApolloModule> ApolloModuleManagerImpl addModule(Class<T> moduleClass, final T module) {
         requireNonNull(module, "module");
         this.modules.computeIfAbsent(moduleClass, key -> {
             try {
@@ -87,6 +104,12 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         return this;
     }
 
+    /**
+     * Loads the configuration for all the loaded modules.
+     *
+     * @param node the configuration node
+     * @since 1.0.0
+     */
     public void loadConfiguration(CommentedConfigurationNode node) {
         for(ApolloModule module : this.modules.values()) {
             CommentedConfigurationNode moduleNode = node.node(module.getName().toLowerCase(Locale.ENGLISH));
@@ -107,6 +130,12 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         }
     }
 
+    /**
+     * Saves the configuration for all the loaded modules.
+     *
+     * @param node the configuration node
+     * @since 1.0.0
+     */
     public void saveConfiguration(CommentedConfigurationNode node) {
         for(ApolloModule module : this.modules.values()) {
             CommentedConfigurationNode moduleNode = node.node(module.getName().toLowerCase(Locale.ENGLISH));

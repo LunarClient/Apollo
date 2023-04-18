@@ -14,6 +14,11 @@ import org.jetbrains.annotations.Nullable;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Represents a view of a {@link OptionsContainer} for a specific {@link ApolloPlayer}.
+ *
+ * @since 1.0.0
+ */
 public final class OptionsView extends AbstractOptions implements Options.Single {
 
     private final OptionsContainer container;

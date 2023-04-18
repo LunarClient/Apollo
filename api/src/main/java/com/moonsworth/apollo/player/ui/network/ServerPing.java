@@ -2,10 +2,9 @@ package com.moonsworth.apollo.player.ui.network;
 
 import com.moonsworth.apollo.roundtrip.ApolloRequest;
 import com.moonsworth.apollo.roundtrip.ApolloResponse;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
-
-import java.util.List;
 
 /**
  * Represents a server ping which the client will ping.

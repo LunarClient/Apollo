@@ -45,8 +45,8 @@ public final class ServerRule extends ApolloModule {
 
     /**
      * Anti portal traps.
-     * <p>
-     * Allows players to open their chat while in a portal.
+     *
+     * <p>Allows players to open their chat while in a portal.</p>
      *
      * @since 1.0.0
      */
@@ -125,4 +125,5 @@ public final class ServerRule extends ApolloModule {
     public boolean isClientNotify() {
         return true;
     }
+
 }

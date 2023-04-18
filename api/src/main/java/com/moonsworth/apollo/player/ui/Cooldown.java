@@ -30,8 +30,8 @@ public class Cooldown {
 
     /**
      * Returns the cooldown {@link Integer} item id.
-     * <p>
-     * You can provide the item id or the renderable icon
+     *
+     * <p>You can provide the item id or the renderable icon.</p>
      *
      * @return the cooldown item id
      * @since 1.0.0
@@ -40,11 +40,12 @@ public class Cooldown {
 
     /**
      * Returns the cooldown {@link RenderableIcon}.
-     * <p>
-     * You can provide the renderable icon or the item id
+     *
+     * <p>You can provide the renderable icon or the item id.</p>
      *
      * @return the cooldown icon
      * @since 1.0.0
      */
     RenderableIcon icon;
+
 }

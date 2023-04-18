@@ -14,9 +14,9 @@ import static java.util.Objects.requireNonNull;
  *
  * @since 1.0.0
  */
-public class ColoredFireImpl extends ColoredFires {
+public class ColoredFiresImpl extends ColoredFires {
 
-    public ColoredFireImpl() {
+    public ColoredFiresImpl() {
         super();
     }
 

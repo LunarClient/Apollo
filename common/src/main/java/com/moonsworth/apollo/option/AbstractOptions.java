@@ -6,17 +6,21 @@ import com.moonsworth.apollo.event.EventBus;
 import com.moonsworth.apollo.event.option.ApolloUpdateOptionEvent;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Provides convenience methods for converting options to and from protobuf.
+ *
+ * @since 1.0.0
+ */
 public abstract class AbstractOptions implements Options {
 
-    protected boolean postUpdate(Option<?, ?, ?> option, @Nullable Object value) {
-        EventBus.EventResult<ApolloUpdateOptionEvent> eventResult = EventBus.getBus().post(new ApolloUpdateOptionEvent(this, option, value));
-        boolean cancelled = eventResult.getEvent().isCancelled();
-        for(Throwable throwable : eventResult.getThrowing()) {
-            throwable.printStackTrace();
-        }
-        return cancelled;
-    }
-
+    /**
+     * Wraps the provided value into a protobuf {@link Value}.
+     *
+     * @param valueBuilder the value builder
+     * @param current the current value
+     * @return the wrapped value
+     * @since 1.0.0
+     */
     public Value wrapValue(Value.Builder valueBuilder, Object current) {
         if(current instanceof Number) {
             valueBuilder.setNumberValue(((Number) current).doubleValue());
@@ -31,6 +35,13 @@ public abstract class AbstractOptions implements Options {
         return valueBuilder.build();
     }
 
+    /**
+     * Unwraps the provided protobuf {@link Value} into the appropriate object.
+     *
+     * @param wrapper the wrapped value
+     * @return the unwrapped value
+     * @since 1.0.0
+     */
     public @Nullable Object unwrapValue(Value wrapper) {
         if(wrapper.hasNumberValue()) {
             return wrapper.getNumberValue();
@@ -41,6 +52,15 @@ public abstract class AbstractOptions implements Options {
         }
 
         return null;
+    }
+
+    boolean postUpdate(Option<?, ?, ?> option, @Nullable Object value) {
+        final EventBus.EventResult<ApolloUpdateOptionEvent> eventResult = EventBus.getBus().post(new ApolloUpdateOptionEvent(this, option, value));
+        boolean cancelled = eventResult.getEvent().isCancelled();
+        for(Throwable throwable : eventResult.getThrowing()) {
+            throwable.printStackTrace();
+        }
+        return cancelled;
     }
 
 }

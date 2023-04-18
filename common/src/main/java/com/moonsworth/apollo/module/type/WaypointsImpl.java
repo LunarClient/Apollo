@@ -5,10 +5,9 @@ import com.moonsworth.apollo.network.NetworkTypes;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Waypoint;
+import java.util.List;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.WaypointMessage;
-
-import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 

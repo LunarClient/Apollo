@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.NoArgsConstructor;
 
 import static java.util.Objects.requireNonNull;
 
@@ -19,11 +20,10 @@ import static java.util.Objects.requireNonNull;
  *
  * @since 1.0.0
  */
+@NoArgsConstructor
 public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
 
     private final Map<UUID, ApolloPlayer> players = new HashMap<>();
-
-    public ApolloPlayerManagerImpl() {}
 
     @Override
     public Optional<ApolloPlayer> getPlayer(UUID playerIdentifier) {
@@ -35,6 +35,12 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
         return Collections.unmodifiableCollection(this.players.values());
     }
 
+    /**
+     * Adds a player to the player manager.
+     *
+     * @param player the player to add
+     * @since 1.0.0
+     */
     public void addPlayer(ApolloPlayer player) {
         requireNonNull(player, "player");
         if(this.players.putIfAbsent(player.getUniqueId(), player) == null) {
@@ -50,6 +56,12 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
         }
     }
 
+    /**
+     * Removes a player from the player manager.
+     *
+     * @param player the player to remove
+     * @since 1.0.0
+     */
     public void removePlayer(UUID player) {
         requireNonNull(player, "player");
         ApolloPlayer apolloPlayer = this.players.remove(player);

@@ -66,5 +66,5 @@ public abstract class Teams extends ApolloModule {
     public abstract void refreshTeam(Team team);
 
     public abstract void refreshTeams();
-}
 
+}

@@ -5,14 +5,18 @@ import com.moonsworth.apollo.option.type.RenderableIcon;
 import com.moonsworth.apollo.option.type.RenderableString;
 import com.moonsworth.apollo.world.ApolloBlockLocation;
 import com.moonsworth.apollo.world.ApolloLocation;
-import lombok.experimental.UtilityClass;
-import lunarclient.apollo.utility.*;
-
 import java.awt.Color;
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import lombok.experimental.UtilityClass;
+import lunarclient.apollo.utility.BlockLocationMessage;
+import lunarclient.apollo.utility.IconSpecificationMessage;
+import lunarclient.apollo.utility.LocationMessage;
+import lunarclient.apollo.utility.RenderableIconMessage;
+import lunarclient.apollo.utility.RenderableStringMessage;
+import lunarclient.apollo.utility.Uuid;
 
 @UtilityClass
 public class NetworkTypes {

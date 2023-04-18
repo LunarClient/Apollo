@@ -59,6 +59,12 @@ public abstract class ApolloModule implements Listener {
     @Getter(AccessLevel.PACKAGE)
     private Option<?, ?, ?>[] optionKeys = {};
 
+    /**
+     * Constructs a new {@link ApolloModule} with the given name.
+     *
+     * @param name the module name
+     * @since 1.0.0
+     */
     public ApolloModule(String name) {
         this.name = requireNonNull(name, "name");
     }

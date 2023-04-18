@@ -5,12 +5,11 @@ import com.moonsworth.apollo.option.type.RenderableString;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.Nametag;
+import java.util.List;
+import java.util.stream.Collectors;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.NametagMessage;
 import lunarclient.apollo.utility.RenderableStringMessage;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -43,7 +42,6 @@ public final class NametagsImpl extends Nametags {
             ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
         }
     }
-
 
     private NametagMessage to(Nametag nametag) {
         List<RenderableStringMessage> tags = nametag.getNametag().stream()

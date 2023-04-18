@@ -4,16 +4,13 @@ import com.moonsworth.apollo.module.ApolloModuleManagerImpl;
 import com.moonsworth.apollo.network.ApolloNetworkManager;
 import com.moonsworth.apollo.player.ApolloPlayerManagerImpl;
 import com.moonsworth.apollo.roundtrip.ApolloRoundtripManager;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * Provides the instances for {@link Apollo}.
  *
  * @since 1.0.0
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ApolloManager {
 
     /**
@@ -24,6 +21,12 @@ public final class ApolloManager {
     @Getter private static ApolloNetworkManager networkManager;
     private static boolean bootstrapped = false;
 
+    /**
+     * Bootstraps Apollo with the given {@link ApolloPlatform}.
+     *
+     * @param platform the platform
+     * @since 1.0.0
+     */
     public static void bootstrap(ApolloPlatform platform) {
         if(ApolloManager.bootstrapped) throw new IllegalStateException("Cannot bootstrap Apollo more than once!");
         try {
@@ -39,6 +42,9 @@ public final class ApolloManager {
             throw new RuntimeException("Unable to bootstrap Apollo!", throwable);
         }
         ApolloManager.bootstrapped = true;
+    }
+
+    private ApolloManager() {
     }
 
 }

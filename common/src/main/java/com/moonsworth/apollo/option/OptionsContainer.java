@@ -29,6 +29,13 @@ public final class OptionsContainer extends AbstractOptions implements Options.C
 
     final ApolloModule module;
 
+    /**
+     * Creates a new container.
+     *
+     * @param module the module
+     * @param options the options
+     * @since 1.0.0
+     */
     public OptionsContainer(ApolloModule module, Collection<Option<?, ?, ?>> options) {
         this.module = module;
 
