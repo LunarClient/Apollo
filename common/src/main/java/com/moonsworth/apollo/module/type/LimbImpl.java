@@ -3,8 +3,8 @@ package com.moonsworth.apollo.module.type;
 import com.moonsworth.apollo.network.NetworkTypes;
 import com.moonsworth.apollo.player.AbstractApolloPlayer;
 import com.moonsworth.apollo.player.ApolloPlayer;
-import com.moonsworth.apollo.player.ui.ligament.Armor;
-import com.moonsworth.apollo.player.ui.ligament.Body;
+import com.moonsworth.apollo.player.ui.limb.Armor;
+import com.moonsworth.apollo.player.ui.limb.Body;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.ToggleArmorPartMessage;
 import lunarclient.apollo.modules.ToggleBodyPartMessage;
@@ -12,13 +12,13 @@ import lunarclient.apollo.modules.ToggleBodyPartMessage;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Provides the ligaments module.
+ * Provides the limb module.
  *
  * @since 1.0.0
  */
-public class LigamentsImpl extends Ligaments {
+public class LimbImpl extends Limb {
 
-    public LigamentsImpl() {
+    public LimbImpl() {
         super();
     }
 

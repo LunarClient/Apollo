@@ -29,8 +29,6 @@ message LocationMessage {
   double z = 4;
 }
 
-//
-
 message RenderableStringMessage {
   enum TextDecorators {
     OBFUSCATED = 0;

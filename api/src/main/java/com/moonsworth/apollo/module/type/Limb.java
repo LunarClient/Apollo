@@ -2,20 +2,20 @@ package com.moonsworth.apollo.module.type;
 
 import com.moonsworth.apollo.module.ApolloModule;
 import com.moonsworth.apollo.player.ApolloPlayer;
-import com.moonsworth.apollo.player.ui.ligament.Armor;
-import com.moonsworth.apollo.player.ui.ligament.Body;
+import com.moonsworth.apollo.player.ui.limb.Armor;
+import com.moonsworth.apollo.player.ui.limb.Body;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Represents the ligament module.
+ * Represents the limb module.
  *
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
-public abstract class Ligaments extends ApolloModule {
+public abstract class Limb extends ApolloModule {
 
-    Ligaments() {
-        super("Ligaments");
+    Limb() {
+        super("Limb");
     }
 
     /**

@@ -64,7 +64,7 @@ public final class OptionsContainer extends AbstractOptions implements Options.C
     public <T> void set(Option<?, ?, ?> option, @Nullable T value) {
         requireNonNull(option, "option");
         if(!this.postUpdate(option, value)) return;
-        boolean send = false;
+        boolean send;
         if(value == null || Objects.equals(value, option.getDefaultValue())) {
             send = this.values.remove(option.getKey()) != null;
         } else {

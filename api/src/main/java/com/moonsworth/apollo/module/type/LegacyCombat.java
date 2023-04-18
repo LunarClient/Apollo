@@ -108,26 +108,51 @@ public final class LegacyCombat extends ApolloModule {
             .node("no-damage-ticks").type(TypeToken.get(Integer.class))
             .defaultValue(19).min(1).max(20).build();
 
+    /**
+     * Sets the attack speed amount.
+     *
+     * @since 1.0.0
+     */
     public static final NumberOption<Float> ATTACK_SPEED = Option.<Float>number()
             .comment("Sets the attack speed duration.")
             .node("attack-speed").type(TypeToken.get(Float.class))
             .defaultValue(16F).min(8F).max(32F).build();
 
+    /**
+     * Sets the projectile randomness offset amount.
+     *
+     * @since 1.0.0
+     */
     public static final NumberOption<Double> PROJECTILE_RANDOMNESS = Option.<Double>number()
             .comment("Sets the projectile randomness offset.")
             .node("projectile-randomness").type(TypeToken.get(Double.class))
             .defaultValue(0.1D).min(0.001D).max(1.0D).build();
 
+    /**
+     * Sets the regeneration interval.
+     *
+     * @since 1.0.0
+     */
     public static final NumberOption<Integer> REGEN_INTERVAL = Option.<Integer>number()
             .comment("Sets the regeneration interval.")
             .node("regen-interval").type(TypeToken.get(Integer.class))
             .defaultValue(3990).min(1000).max(5000).build();
 
+    /**
+     * Sets the regeneration amount.
+     *
+     * @since 1.0.0
+     */
     public static final NumberOption<Integer> REGEN_AMOUNT = Option.<Integer>number()
             .comment("Sets the regeneration amount.")
             .node("regen-amount").type(TypeToken.get(Integer.class))
             .defaultValue(1).min(0).max(5).build();
 
+    /**
+     * Sets the regeneration exhaustion amount.
+     *
+     * @since 1.0.0
+     */
     public static final NumberOption<Integer> REGEN_EXHAUSTION = Option.<Integer>number()
             .comment("Sets the regeneration exhaustion amount.")
             .node("regen-exhaustion").type(TypeToken.get(Integer.class))
@@ -144,7 +169,14 @@ public final class LegacyCombat extends ApolloModule {
             LegacyCombat.ENABLE_LEGACY_CRITS,
             LegacyCombat.ENABLE_LEGACY_ATTACK_SPEED,
             LegacyCombat.ENABLE_ARMOR_DURABILITY,
-            LegacyCombat.ENABLE_PROJECTILE_DAMAGE
+            LegacyCombat.ENABLE_PROJECTILE_DAMAGE,
+            LegacyCombat.ARMOR_DURABILITY_REDUCTION,
+            LegacyCombat.NO_DAMAGE_TICKS,
+            LegacyCombat.ATTACK_SPEED,
+            LegacyCombat.PROJECTILE_RANDOMNESS,
+            LegacyCombat.REGEN_INTERVAL,
+            LegacyCombat.REGEN_AMOUNT,
+            LegacyCombat.REGEN_EXHAUSTION
         );
     }
 

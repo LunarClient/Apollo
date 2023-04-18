@@ -1,4 +1,4 @@
-package com.moonsworth.apollo.player.ui.ligament;
+package com.moonsworth.apollo.player.ui.limb;
 
 import java.util.UUID;
 import lombok.Value;
@@ -41,6 +41,7 @@ public class Armor {
      * @since 1.0.0
      */
     public enum ArmorPart {
+
         HELMET,
         CHESTPLATE,
         LEGGINGS,
