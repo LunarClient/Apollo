@@ -1,71 +1,86 @@
 package com.moonsworth.apollo.impl.bungee;
 
 import com.google.common.base.Charsets;
-import com.moonsworth.apollo.api.Apollo;
-import com.moonsworth.apollo.api.ApolloPlatform;
-import com.moonsworth.apollo.api.bridge.ApolloPlayer;
-import com.moonsworth.apollo.api.events.EventBus;
-import com.moonsworth.apollo.impl.bungee.util.ConfigurationUtil;
-import com.moonsworth.apollo.impl.bungee.wrapper.BungeePlayer;
+import com.moonsworth.apollo.Apollo;
+import com.moonsworth.apollo.ApolloManager;
+import com.moonsworth.apollo.ApolloPlatform;
+import com.moonsworth.apollo.impl.bungee.wrapper.BungeeApolloPlayer;
+import com.moonsworth.apollo.module.ApolloModuleManagerImpl;
+import com.moonsworth.apollo.player.ApolloPlayerManagerImpl;
+import lombok.Getter;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PluginMessageEvent;
-import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.config.Configuration;
-import net.md_5.bungee.config.ConfigurationProvider;
-import net.md_5.bungee.config.YamlConfiguration;
 import net.md_5.bungee.event.EventHandler;
+import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
-import java.util.HashMap;
-import java.util.Map;
+public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform, Listener {
 
-public class ApolloBungeePlatform extends Plugin implements ApolloPlatform, Listener {
+    @Getter private static ApolloBungeePlatform instance;
+
+    private HoconConfigurationLoader configurationLoader;
 
     @Override
     public void onEnable() {
-        Apollo.setPlatform(this);
-        handleConfiguration();
-        getProxy().getPluginManager().registerListener(this, this);
+        ApolloBungeePlatform.instance = this;
 
-        getProxy().registerChannel(Apollo.PLUGIN_MESSAGE_CHANNEL);
+        this.getProxy().getPluginManager().registerListener(this, this);
+
+        ApolloManager.bootstrap(this);
+
+        this.loadConfiguration();
+
+        this.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
     }
-
-    private void handleConfiguration() {
-        Configuration modules = ConfigurationProvider.getProvider(YamlConfiguration.class).load("config.yml").getSection("modules");
-        if (modules == null) {
-            return;
-        }
-        Map<String, Object> values = new HashMap<>();
-        ConfigurationUtil.flattenConfigurationDeep(values, "", modules);
-        Apollo.getApolloModuleManager().loadConfiguration(values);
-    }
-
 
     @Override
     public Kind getKind() {
         return Kind.PROXY;
     }
 
-    @Override
-    public ApolloPlayer tryWrapPlayer(Object o) {
-        if (o instanceof ProxiedPlayer player) {
-            return Apollo.getApolloPlayerManager().getApolloPlayer(player.getUniqueId()).orElse(new BungeePlayer(player));
+    private void loadConfiguration() {
+        try {
+            if (this.configurationLoader == null) {
+                this.configurationLoader = HoconConfigurationLoader.builder()
+                        .path(this.getDataFolder().toPath().resolve("settings.conf"))
+                        .build();
+            }
+
+            this.configurationLoader.load();
+
+            CommentedConfigurationNode root = this.configurationLoader.load();
+            CommentedConfigurationNode modules = root.node("modules");
+
+            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).loadConfiguration(modules);
+            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration(modules);
+
+            this.configurationLoader.save(root);
+        } catch(final Throwable throwable) {
+            throwable.printStackTrace();
         }
-        return null;
     }
 
     @EventHandler
-    public void onRegister(PluginMessageEvent event) {
-        if (event.getReceiver() instanceof ProxyServer && event.getSender() instanceof ProxiedPlayer player) {
-            if (event.getTag().equals("REGISTER")) {
+    public void onPluginMessage(final PluginMessageEvent event) {
+        if(event.getReceiver() instanceof ProxyServer && event.getSender() instanceof ProxiedPlayer) {
+            final ProxiedPlayer player = (ProxiedPlayer) event.getSender();
+            if(event.getTag().equals("REGISTER")) {
                 String channels = new String(event.getData(), Charsets.UTF_8);
-                if (channels.contains(Apollo.PLUGIN_MESSAGE_CHANNEL)) {
-                    Apollo.getApolloPlayerManager().registerPlayer(player);
-                }
+                if(!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
+
+                ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new BungeeApolloPlayer(player));
             }
         }
+    }
+
+    @EventHandler
+    public void onDisconnect(PlayerDisconnectEvent event) {
+        ProxiedPlayer player = event.getPlayer();
+        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
     }
 
 }

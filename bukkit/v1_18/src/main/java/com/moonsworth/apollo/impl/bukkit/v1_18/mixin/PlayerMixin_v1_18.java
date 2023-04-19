@@ -1,7 +1,7 @@
 package com.moonsworth.apollo.impl.bukkit.v1_18.mixin;
 
-import com.moonsworth.apollo.api.Apollo;
-import com.moonsworth.apollo.api.module.impl.LegacyCombatModule;
+import com.moonsworth.apollo.Apollo;
+import com.moonsworth.apollo.module.type.LegacyCombat;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,7 +22,7 @@ public abstract class PlayerMixin_v1_18 {
     )
     public boolean impl$criticalSprint(Player instance) {
         // TODO: move to Mixin plugin
-        boolean legacyCrits = Apollo.getApolloModuleManager().getModule(LegacyCombatModule.class).map(legacyCombatModule -> legacyCombatModule.getLegacyCrits().get()).orElse(false);
+        boolean legacyCrits = Apollo.getModuleManager().getModule(LegacyCombat.class).map(legacyCombat -> legacyCombat.getOptions().get(LegacyCombat.ENABLE_LEGACY_CRITS)).orElse(false);
         if (legacyCrits) {
             return false;
         }

@@ -1,7 +1,6 @@
 {
   "id": "apollo",
-  "version": "0.0.0",
-  "entry": "com.moonsworth.apollo.impl.bukkit.v1_18.ApolloIgniteMod_v1_18",
+  "version": "1.0.0",
   "dependencies": [
     "ignite"
   ],

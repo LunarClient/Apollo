@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package lunarclient.apollo.common;
+
+import "google/protobuf/any.proto";
+import "google/protobuf/struct.proto";
+
+option java_multiple_files = true;
+
+// Modules
+// A list of modules to make the client aware of.
+message Modules {
+  repeated ModuleConfig modules = 1;
+}
+
+// Module Config
+// A specific modules configuration.
+message ModuleConfig {
+  string name = 1;
+  bool enable = 2;
+  map<string, google.protobuf.Value> options = 3;
+}
+
+// Message Operation
+// A module message with an operation type.
+message MessageOperation {
+  string module = 1;
+  OptionOperation operation = 2;
+  google.protobuf.Any value = 3;
+}
+
+enum OptionOperation {
+  ADD = 0;
+  SET = 1;
+  REMOVE = 2;
+  CLEAR = 3;
+}

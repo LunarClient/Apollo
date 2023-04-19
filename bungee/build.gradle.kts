@@ -1,39 +1,9 @@
-import com.moonsworth.apollo.toolchain.tasks.BuildBungee
-import fr.il_totore.manadrop.MinecraftDependencyHelper.*
-import fr.il_totore.manadrop.MinecraftRepositoryHelper.*
-
 plugins {
-    id("java")
-    id("fr.il_totore.manadrop")
+    id("apollo.platform-conventions")
 }
-
-group = "com.moonsworth"
-
-repositories {
-    mavenCentral()
-
-    spigotSnapshot()
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
-    maven("https://oss.sonatype.org/content/repositories/central")
-}
-
-val lombokVersion: String by project
 
 dependencies {
-    compileOnly("org.projectlombok:lombok:$lombokVersion")
-    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    implementation(project(":apollo-common"))
 
-    implementation(project(":apollo-api"))
-    compileOnly(bungeecordApi("1.19-R0.1"))
+    compileOnly("net.md-5:bungeecord-api:1.19-R0.1-SNAPSHOT")
 }
-
-bungee {
-    desc {
-        named("Apollo-Bungee") //Default: the project name
-        authors("Moonsworth")
-        main("com.moonsworth.apollo.impl.bungee.ApolloBungeePlatform")
-    }
-}
-
-val bungeeTask by tasks.registering(BuildBungee::class)
-tasks.processResources.get().finalizedBy(bungeeTask)
