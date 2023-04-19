@@ -162,8 +162,8 @@ message TitleMessage {
 }
 
 service TransferService {
-  rpc Transfer(TransferRequest) returns (TransferResponse);
   rpc Ping(PingRequest) returns (PingResponse);
+  rpc Transfer(TransferRequest) returns (TransferResponse);
 }
 
 message PingRequest {

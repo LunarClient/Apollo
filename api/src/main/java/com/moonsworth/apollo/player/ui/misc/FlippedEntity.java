@@ -1,8 +1,7 @@
 package com.moonsworth.apollo.player.ui.misc;
 
-import lombok.Value;
-
 import java.util.UUID;
+import lombok.Value;
 
 /**
  * Represents an entity which can be flipped.

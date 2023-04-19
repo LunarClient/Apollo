@@ -6,14 +6,13 @@ import com.moonsworth.apollo.player.ApolloPlayer;
 import com.moonsworth.apollo.player.ui.misc.FlippedEntity;
 import com.moonsworth.apollo.player.ui.misc.RainbowSheep;
 import com.moonsworth.apollo.player.ui.misc.Vignette;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.FlipEntityMessage;
 import lunarclient.apollo.modules.RainbowSheepMessage;
 import lunarclient.apollo.modules.VignetteMessage;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
