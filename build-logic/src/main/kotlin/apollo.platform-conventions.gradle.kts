@@ -5,6 +5,6 @@ plugins {
 
 tasks {
     shadowJar {
-        relocate("com.google.protobuf", "com.moonsworth.apollo.libs.protobuf")
+        relocate("com.google.protobuf", "com.lunarclient.apollo.libs.protobuf")
     }
 }

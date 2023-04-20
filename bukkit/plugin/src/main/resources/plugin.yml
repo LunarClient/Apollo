@@ -1,5 +1,5 @@
 name: Apollo-Bukkit
-main: com.moonsworth.apollo.impl.bukkit.ApolloBukkitPlatform
+main: com.lunarclient.apollo.impl.bukkit.ApolloBukkitPlatform
 version: 1.0.0-SNAPSHOT
 author: Moonsworth
 api-version: 1.18
