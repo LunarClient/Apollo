@@ -56,6 +56,12 @@ message HeartTextureMessage {
   int32 location_x = 2;
 }
 
+message HologramMessage {
+    lunarclient.apollo.utility.Uuid hologram_uuid = 1;
+    lunarclient.apollo.utility.LocationMessage location = 2;
+    repeated lunarclient.apollo.utility.RenderableStringMessage lines = 3;
+}
+
 message ToggleArmorPartMessage {
   enum Part {
     HELMET = 0;
