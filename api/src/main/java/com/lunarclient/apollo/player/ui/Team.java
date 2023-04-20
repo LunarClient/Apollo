@@ -2,9 +2,8 @@ package com.lunarclient.apollo.player.ui;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.module.type.Teams;
-import com.lunarclient.apollo.world.ApolloLocation;
 import com.lunarclient.apollo.player.ApolloPlayer;
-
+import com.lunarclient.apollo.world.ApolloLocation;
 import java.awt.Color;
 import java.util.Map;
 import java.util.UUID;

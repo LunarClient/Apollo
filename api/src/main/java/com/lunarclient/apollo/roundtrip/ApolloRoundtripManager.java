@@ -1,7 +1,6 @@
 package com.lunarclient.apollo.roundtrip;
 
 import com.lunarclient.apollo.roundtrip.async.future.UncertainFuture;
-
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;

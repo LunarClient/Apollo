@@ -2,14 +2,13 @@ package com.lunarclient.apollo.module.type;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.event.network.ApolloReceivePacketEvent;
+import com.lunarclient.apollo.network.NetworkTypes;
+import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.network.ServerPing;
 import com.lunarclient.apollo.player.ui.network.ServerTransfer;
 import com.lunarclient.apollo.roundtrip.async.Future;
 import com.lunarclient.apollo.roundtrip.async.Handler;
-import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import lunarclient.apollo.common.OptionOperation;

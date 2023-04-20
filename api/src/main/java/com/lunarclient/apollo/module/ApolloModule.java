@@ -1,9 +1,9 @@
 package com.lunarclient.apollo.module;
 
-import com.lunarclient.apollo.option.Option;
-import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.event.Listener;
+import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
 import java.util.Collection;
 import java.util.Collections;

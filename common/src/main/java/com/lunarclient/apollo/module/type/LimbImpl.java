@@ -1,10 +1,10 @@
 package com.lunarclient.apollo.module.type;
 
 import com.lunarclient.apollo.network.NetworkTypes;
+import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.limb.Armor;
 import com.lunarclient.apollo.player.ui.limb.Body;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.ToggleArmorPartMessage;
 import lunarclient.apollo.modules.ToggleBodyPartMessage;

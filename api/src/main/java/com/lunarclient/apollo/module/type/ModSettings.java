@@ -1,9 +1,9 @@
 package com.lunarclient.apollo.module.type;
 
+import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.option.ListOption;
 import com.lunarclient.apollo.option.Option;
-import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.ModSetting;
 import io.leangen.geantyref.TypeToken;

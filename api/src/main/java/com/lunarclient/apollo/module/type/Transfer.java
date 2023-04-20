@@ -1,7 +1,7 @@
 package com.lunarclient.apollo.module.type;
 
-import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.network.ServerPing;
 import com.lunarclient.apollo.player.ui.network.ServerTransfer;

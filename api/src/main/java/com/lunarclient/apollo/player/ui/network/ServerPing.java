@@ -2,7 +2,6 @@ package com.lunarclient.apollo.player.ui.network;
 
 import com.lunarclient.apollo.roundtrip.ApolloRequest;
 import com.lunarclient.apollo.roundtrip.ApolloResponse;
-
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Value;

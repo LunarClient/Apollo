@@ -5,7 +5,6 @@ import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.player.ApolloPlayer;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;

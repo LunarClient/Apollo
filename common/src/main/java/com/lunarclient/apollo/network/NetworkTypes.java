@@ -5,7 +5,6 @@ import com.lunarclient.apollo.option.type.RenderableIcon;
 import com.lunarclient.apollo.option.type.RenderableString;
 import com.lunarclient.apollo.world.ApolloBlockLocation;
 import com.lunarclient.apollo.world.ApolloLocation;
-
 import java.awt.Color;
 import java.time.Duration;
 import java.util.List;

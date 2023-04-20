@@ -1,11 +1,10 @@
 package com.lunarclient.apollo.module.type;
 
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
-import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.player.ui.Waypoint;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
-
+import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.player.ui.Waypoint;
 import java.util.List;
 import lunarclient.apollo.common.OptionOperation;
 import lunarclient.apollo.modules.WaypointMessage;

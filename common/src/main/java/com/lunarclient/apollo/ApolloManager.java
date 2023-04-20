@@ -1,9 +1,9 @@
 package com.lunarclient.apollo;
 
-import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.network.ApolloNetworkManager;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
 import lombok.Getter;
 
 /**

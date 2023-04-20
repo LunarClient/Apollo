@@ -1,7 +1,6 @@
 package com.lunarclient.apollo.player.ui;
 
 import com.lunarclient.apollo.option.type.RenderableString;
-
 import java.util.List;
 import java.util.UUID;
 import lombok.Value;

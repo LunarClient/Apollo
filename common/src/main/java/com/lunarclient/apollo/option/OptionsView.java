@@ -3,7 +3,6 @@ package com.lunarclient.apollo.option;
 import com.google.protobuf.Value;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.player.ApolloPlayer;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;

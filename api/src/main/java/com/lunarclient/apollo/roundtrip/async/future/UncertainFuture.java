@@ -1,9 +1,8 @@
 package com.lunarclient.apollo.roundtrip.async.future;
 
 import com.lunarclient.apollo.roundtrip.ApolloResponse;
-import com.lunarclient.apollo.roundtrip.async.Handler;
 import com.lunarclient.apollo.roundtrip.async.Future;
-
+import com.lunarclient.apollo.roundtrip.async.Handler;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;

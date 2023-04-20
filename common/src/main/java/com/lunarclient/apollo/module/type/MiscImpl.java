@@ -1,12 +1,11 @@
 package com.lunarclient.apollo.module.type;
 
 import com.lunarclient.apollo.network.NetworkTypes;
+import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.misc.FlippedEntity;
 import com.lunarclient.apollo.player.ui.misc.RainbowSheep;
 import com.lunarclient.apollo.player.ui.misc.Vignette;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

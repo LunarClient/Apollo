@@ -1,9 +1,8 @@
 package com.lunarclient.apollo.module.type;
 
+import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.StaffMod;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
-
 import java.util.Set;
 import java.util.stream.Collectors;
 import lunarclient.apollo.common.OptionOperation;

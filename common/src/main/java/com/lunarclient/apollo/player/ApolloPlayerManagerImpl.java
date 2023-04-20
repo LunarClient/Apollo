@@ -5,7 +5,6 @@ import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
 import com.lunarclient.apollo.network.NetworkOptions;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;

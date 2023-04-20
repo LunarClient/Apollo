@@ -2,13 +2,12 @@ package com.lunarclient.apollo.network;
 
 import com.google.protobuf.Value;
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.option.AbstractOptions;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
-import com.lunarclient.apollo.option.AbstractOptions;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
-
 import java.util.Set;
 import lunarclient.apollo.common.ModuleConfig;
 import lunarclient.apollo.common.Modules;

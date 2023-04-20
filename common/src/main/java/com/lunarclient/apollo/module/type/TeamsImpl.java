@@ -7,7 +7,6 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerManager;
 import com.lunarclient.apollo.player.ui.Team;
-
 import java.util.AbstractMap;
 import java.util.Collections;
 import java.util.HashMap;
