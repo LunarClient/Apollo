@@ -28,5 +28,5 @@ jobs:
         run: ./gradlew build
 
       - name: Gradle Publish
-        if: github.ref == 'refs/heads/trunk'
+        if: github.ref == 'refs/heads/master'
         run: ./gradlew Publish
