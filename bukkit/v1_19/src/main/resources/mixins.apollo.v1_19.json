@@ -1,6 +1,6 @@
 {
   "minVersion": "0.8",
-  "package": "com.moonsworth.apollo.impl.bukkit.v1_19.mixin",
+  "package": "com.lunarclient.apollo.impl.bukkit.v1_19.mixin",
   "target": "CLIENT",
   "required": true,
   "compatibilityLevel": "JAVA_11",
