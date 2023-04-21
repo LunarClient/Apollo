@@ -2,6 +2,7 @@ package com.lunarclient.apollo.player;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.GeneratedMessageV3;
+import com.google.protobuf.Message;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.module.ApolloModule;
@@ -18,39 +19,6 @@ import lunarclient.apollo.common.OptionOperation;
  * @since 1.0.0
  */
 public abstract class AbstractApolloPlayer implements ApolloPlayer {
-
-    /**
-     * Sends the provided message packet to the client from the provided
-     * {@link ApolloModule}.
-     *
-     * @param module the module
-     * @param operation the operation
-     * @param message the message
-     * @since 1.0.0
-     */
-    public void sendPacket(ApolloModule module, OptionOperation operation, GeneratedMessageV3 message) {
-        this.sendPacket(MessageOperation.newBuilder()
-                .setModule(module.getName())
-                .setOperation(operation)
-                .setValue(Any.pack(message))
-                .build()
-        );
-    }
-
-    /**
-     * Sends the provided operation packet to the client.
-     *
-     * @param module the module
-     * @param operation the operation
-     * @since 1.0.0
-     */
-    public void sendPacket(ApolloModule module, OptionOperation operation) {
-        this.sendPacket(MessageOperation.newBuilder()
-                .setModule(module.getName())
-                .setOperation(operation)
-                .build()
-        );
-    }
 
     public <T extends ApolloResponse> Future<T> sendRoundTripPacket(ApolloRequest<T> request, ApolloModule module,
                                                                     OptionOperation operation, GeneratedMessageV3 message) {
@@ -72,7 +40,7 @@ public abstract class AbstractApolloPlayer implements ApolloPlayer {
      * @param message the message
      * @since 1.0.0
      */
-    public void sendPacket(GeneratedMessageV3 message) {
+    public void sendPacket(Message message) {
         ApolloManager.getNetworkManager().sendPacket(this, Any.pack(message));
     }
 

@@ -1,7 +1,7 @@
 package com.lunarclient.apollo.module.type;
 
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.option.type.RenderableString;
+import com.lunarclient.apollo.option.type.Component;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.Nametag;
@@ -49,7 +49,7 @@ public final class NametagsImpl extends Nametags {
                 .collect(Collectors.toList());
 
         return NametagMessage.newBuilder()
-                .setPlayerUuid(NetworkTypes.toUuid(nametag.getPlayer()))
+                .setPlayerUuid(NetworkTypes.toProtobuf(nametag.getPlayer()))
                 .setHide(nametag.isHide())
                 .addAllNametag(tags)
                 .setPlayerNameIndex(nametag.getPlayerNameIndex())
@@ -57,12 +57,12 @@ public final class NametagsImpl extends Nametags {
     }
 
     private Nametag from(NametagMessage message) {
-        List<RenderableString> nametag = message.getNametagList().stream()
+        List<Component> nametag = message.getNametagList().stream()
                 .map(NetworkTypes::fromRenderableString)
                 .collect(Collectors.toList());
 
         return Nametag.of(
-                NetworkTypes.fromUuid(message.getPlayerUuid()),
+                NetworkTypes.fromProtobuf(message.getPlayerUuid()),
                 message.getHide(),
                 nametag,
                 message.getPlayerNameIndex()

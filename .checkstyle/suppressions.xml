@@ -3,6 +3,4 @@
 <suppressions>
     <suppress files="src[\\/]main[\\/]java[\\/]com[\\/]lunarclient[\\/]apollo[\\/]module[\\/]type[\\/].*" checks="(FilteringWriteTag|JavadocPackage|MissingJavadoc.*)"/>
     <suppress files="src[\\/]main[\\/]java[\\/]com[\\/]lunarclient[\\/]apollo[\\/]network[\\/]NetworkTypes" checks="(FilteringWriteTag|JavadocPackage|MissingJavadoc.*)"/>
-
-    <suppress files="build[\\/]generated[\\/]source[\\/]proto[\\/].*" checks="[a-zA-Z0-9]*"/>
 </suppressions>

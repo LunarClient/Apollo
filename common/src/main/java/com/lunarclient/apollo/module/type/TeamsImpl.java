@@ -159,9 +159,9 @@ public final class TeamsImpl extends Teams {
         List<TeamMessage.TeammateMessage> teammates = object.getTeammates().entrySet().stream()
             .map(entry ->
                 TeamMessage.TeammateMessage.newBuilder()
-                    .setPlayerUuid(NetworkTypes.toUuid(entry.getKey()))
-                    .setColor(NetworkTypes.toColor(entry.getValue().getColor()))
-                    .setLocation(NetworkTypes.toLocation(entry.getValue().getLocation()))
+                    .setPlayerUuid(NetworkTypes.toProtobuf(entry.getKey()))
+                    .setColor(NetworkTypes.toProtobuf(entry.getValue().getColor()))
+                    .setLocation(NetworkTypes.toProtobuf(entry.getValue().getLocation()))
                     .build()
             ).collect(Collectors.toList());
 
@@ -174,10 +174,10 @@ public final class TeamsImpl extends Teams {
     public Team from(TeamMessage message) throws IllegalArgumentException {
         Map<UUID, Team.Teammate> teammates = message.getMembersList().stream()
             .collect(Collectors.toMap(
-                teammate -> NetworkTypes.fromUuid(teammate.getPlayerUuid()),
+                teammate -> NetworkTypes.fromProtobuf(teammate.getPlayerUuid()),
                 teammate -> Team.Teammate.of(
-                    NetworkTypes.fromColor(teammate.getColor()),
-                    NetworkTypes.fromLocation(teammate.getLocation())
+                    NetworkTypes.fromProtobuf(teammate.getColor()),
+                    NetworkTypes.fromProtobuf(teammate.getLocation())
                 )
             ));
 

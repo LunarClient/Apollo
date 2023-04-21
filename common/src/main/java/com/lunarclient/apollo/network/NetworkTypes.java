@@ -1,8 +1,7 @@
 package com.lunarclient.apollo.network;
 
-import com.lunarclient.apollo.option.type.IconSpecifications;
-import com.lunarclient.apollo.option.type.RenderableIcon;
-import com.lunarclient.apollo.option.type.RenderableString;
+import com.lunarclient.apollo.common.v1.Uuid;
+import com.lunarclient.apollo.option.type.Component;
 import com.lunarclient.apollo.world.ApolloBlockLocation;
 import com.lunarclient.apollo.world.ApolloLocation;
 import java.awt.Color;
@@ -11,50 +10,44 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.experimental.UtilityClass;
-import lunarclient.apollo.utility.BlockLocationMessage;
-import lunarclient.apollo.utility.IconSpecificationMessage;
-import lunarclient.apollo.utility.LocationMessage;
-import lunarclient.apollo.utility.RenderableIconMessage;
-import lunarclient.apollo.utility.RenderableStringMessage;
-import lunarclient.apollo.utility.Uuid;
 
 @UtilityClass
 public class NetworkTypes {
 
-    public Uuid toUuid(UUID object) {
+    public Uuid toProtobuf(UUID object) {
         return Uuid.newBuilder()
             .setHigh64(object.getMostSignificantBits())
             .setLow64(object.getLeastSignificantBits())
             .build();
     }
 
-    public UUID fromUuid(Uuid message) {
+    public UUID fromProtobuf(Uuid message) {
         return new UUID(message.getHigh64(), message.getLow64());
     }
 
-    public lunarclient.apollo.utility.Color toColor(Color object) {
-        return lunarclient.apollo.utility.Color.newBuilder()
+    public com.lunarclient.apollo.common.v1.Color toProtobuf(Color object) {
+        return com.lunarclient.apollo.common.v1.Color.newBuilder()
             .setColor(object.getRGB())
             .build();
     }
 
-    public Color fromColor(lunarclient.apollo.utility.Color message) {
+    public Color fromProtobuf(com.lunarclient.apollo.common.v1.Color message) {
         return new Color(message.getColor());
     }
 
-    public com.google.protobuf.Duration toDuration(Duration object) {
+    public com.google.protobuf.Duration toProtobuf(Duration object) {
         return com.google.protobuf.Duration.newBuilder()
             .setSeconds(object.getSeconds())
             .setNanos(object.getNano())
             .build();
     }
 
-    public Duration fromDuration(com.google.protobuf.Duration message) {
+    public Duration fromProtobuf(com.google.protobuf.Duration message) {
         return Duration.ofSeconds(message.getSeconds()).withNanos(message.getNanos());
     }
 
-    public LocationMessage toLocation(ApolloLocation object) {
-        return LocationMessage.newBuilder()
+    public com.lunarclient.apollo.common.v1.Location toProtobuf(ApolloLocation object) {
+        return com.lunarclient.apollo.common.v1.Location.newBuilder()
             .setWorld(object.getWorld())
             .setX(object.getX())
             .setY(object.getY())
@@ -62,7 +55,7 @@ public class NetworkTypes {
             .build();
     }
 
-    public ApolloLocation fromLocation(LocationMessage message) {
+    public ApolloLocation fromProtobuf(com.lunarclient.apollo.common.v1.Location message) {
         return ApolloLocation.of(
             message.getWorld(),
             message.getX(),
@@ -71,8 +64,8 @@ public class NetworkTypes {
         );
     }
 
-    public BlockLocationMessage toBlockLocation(ApolloBlockLocation object) {
-        return BlockLocationMessage.newBuilder()
+    public com.lunarclient.apollo.common.v1.BlockLocation toProtobuf(ApolloBlockLocation object) {
+        return com.lunarclient.apollo.common.v1.BlockLocation.newBuilder()
             .setWorld(object.getWorld())
             .setX(object.getX())
             .setY(object.getY())
@@ -80,7 +73,7 @@ public class NetworkTypes {
             .build();
     }
 
-    public ApolloBlockLocation fromBlockLocation(BlockLocationMessage message) {
+    public ApolloBlockLocation fromProtobuf(com.lunarclient.apollo.common.v1.BlockLocation message) {
         return ApolloBlockLocation.of(
             message.getWorld(),
             message.getX(),
@@ -89,73 +82,35 @@ public class NetworkTypes {
         );
     }
 
-    public IconSpecificationMessage toIconSpecifications(IconSpecifications object) {
-        return IconSpecificationMessage.newBuilder()
-            .setWidth(object.getWidth())
-            .setHeight(object.getHeight())
-            .setMinU(object.getMinU())
-            .setMaxU(object.getMaxU())
-            .setMinV(object.getMinV())
-            .setMaxV(object.getMaxV())
-            .build();
-    }
-
-    public IconSpecifications fromIconSpecifications(IconSpecificationMessage message) {
-        return IconSpecifications.of(
-            message.getWidth(),
-            message.getHeight(),
-            message.getMinU(),
-            message.getMaxU(),
-            message.getMinV(),
-            message.getMaxV()
-        );
-    }
-
-    public RenderableIconMessage toRenderableIcon(RenderableIcon icon) {
-        return RenderableIconMessage.newBuilder()
-            .setResourceLocation(icon.getResourceLocation())
-            .setSize(icon.getSize())
-            .setSpecification(NetworkTypes.toIconSpecifications(icon.getSpecifications()))
-            .build();
-    }
-
-    public RenderableIcon fromRenderableIcon(RenderableIconMessage icon) {
-        return RenderableIcon.of(
-            icon.getResourceLocation(),
-            icon.getSize(),
-            NetworkTypes.fromIconSpecifications(icon.getSpecification())
-        );
-    }
-
-    public RenderableStringMessage toRenderableString(RenderableString object) {
-        List<RenderableStringMessage.TextDecorators> decorators = object.getDecorators()
-            .stream().map(decorator -> RenderableStringMessage.TextDecorators.valueOf(decorator.name()))
+    public com.lunarclient.apollo.common.v1.Component toProtobuf(Component object) {
+        List<com.lunarclient.apollo.common.v1.Component.TextDecorator> decorators = object.getDecorators()
+            .stream().map(decorator -> com.lunarclient.apollo.common.v1.Component.TextDecorator.valueOf("TEXT_DECORATOR_" + decorator.name()))
             .collect(Collectors.toList());
 
-        List<RenderableStringMessage> children = object.getChildren()
-            .stream().map(NetworkTypes::toRenderableString)
+        List<com.lunarclient.apollo.common.v1.Component> children = object.getChildren()
+            .stream().map(NetworkTypes::toProtobuf)
             .collect(Collectors.toList());
 
-        return RenderableStringMessage.newBuilder()
+        return com.lunarclient.apollo.common.v1.Component.newBuilder()
             .setContent(object.getContent())
-            .setColor(NetworkTypes.toColor(object.getColor()))
-            .addAllDecoration(decorators)
+            .setColor(NetworkTypes.toProtobuf(object.getColor()))
+            .addAllDecorators(decorators)
             .addAllChildren(children)
             .build();
     }
 
-    public RenderableString fromRenderableString(RenderableStringMessage message) {
-        List<RenderableString.TextDecorators> decorators = message.getDecorationList()
-            .stream().map(decorator -> RenderableString.TextDecorators.valueOf(decorator.name()))
+    public Component fromProtobuf(com.lunarclient.apollo.common.v1.Component message) {
+        List<Component.TextDecorators> decorators = message.getDecoratorsList()
+            .stream().map(decorator -> Component.TextDecorators.valueOf(decorator.name()))
             .collect(Collectors.toList());
 
-        List<RenderableString> children = message.getChildrenList()
-            .stream().map(NetworkTypes::fromRenderableString)
+        List<Component> children = message.getChildrenList()
+            .stream().map(NetworkTypes::fromProtobuf)
             .collect(Collectors.toList());
 
-        return RenderableString.of(
+        return Component.of(
             message.getContent(),
-            NetworkTypes.fromColor(message.getColor()),
+            NetworkTypes.fromProtobuf(message.getColor()),
             decorators,
             children
         );

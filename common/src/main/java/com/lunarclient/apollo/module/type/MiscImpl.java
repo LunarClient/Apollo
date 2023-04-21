@@ -34,7 +34,7 @@ public final class MiscImpl extends Misc {
 
         List<FlipEntityMessage.Entity> flippedEntities = Arrays.stream(entities).map(entity ->
             FlipEntityMessage.Entity.newBuilder()
-                .setEntityId(NetworkTypes.toUuid(entity.getEntity()))
+                .setEntityId(NetworkTypes.toProtobuf(entity.getEntity()))
                 .setFlipped(entity.isFlipped())
                 .build()
         ).collect(Collectors.toList());
@@ -64,7 +64,7 @@ public final class MiscImpl extends Misc {
 
         List<RainbowSheepMessage.Sheep> rainbowSheep = Arrays.stream(sheep).map(entity ->
             RainbowSheepMessage.Sheep.newBuilder()
-                .setEntityId(NetworkTypes.toUuid(entity.getEntity()))
+                .setEntityId(NetworkTypes.toProtobuf(entity.getEntity()))
                 .setRainbow(entity.isRainbow())
                 .build()
         ).collect(Collectors.toList());

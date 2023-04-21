@@ -38,7 +38,7 @@ public final class TransferImpl extends Transfer {
         requireNonNull(ping, "ping");
 
         PingRequest message = PingRequest.newBuilder()
-            .setPacketId(NetworkTypes.toUuid(ping.getPacketId()))
+            .setPacketId(NetworkTypes.toProtobuf(ping.getPacketId()))
             .addAllAddresses(ping.getAddresses())
             .build();
 
@@ -55,7 +55,7 @@ public final class TransferImpl extends Transfer {
         requireNonNull(transfer, "transfer");
 
         TransferRequest message = TransferRequest.newBuilder()
-            .setPacketId(NetworkTypes.toUuid(transfer.getPacketId()))
+            .setPacketId(NetworkTypes.toProtobuf(transfer.getPacketId()))
             .setAddress(transfer.getAddress())
             .build();
 

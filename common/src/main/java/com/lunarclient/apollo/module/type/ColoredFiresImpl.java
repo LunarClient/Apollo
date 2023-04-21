@@ -1,11 +1,11 @@
 package com.lunarclient.apollo.module.type;
 
+import com.lunarclient.apollo.coloredfire.v1.OverrideColoredFireMessage;
+import com.lunarclient.apollo.coloredfire.v1.ResetColoredFireMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.ColoredFire;
-import lunarclient.apollo.common.OptionOperation;
-import lunarclient.apollo.modules.ColoredFireMessage;
 
 import static java.util.Objects.requireNonNull;
 
@@ -25,8 +25,13 @@ public class ColoredFiresImpl extends ColoredFires {
         requireNonNull(fire, "fire");
         requireNonNull(viewers, "viewers");
 
-        for(ApolloPlayer player : viewers) {
-            ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(fire));
+        OverrideColoredFireMessage message = OverrideColoredFireMessage.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(fire.getPlayer()))
+            .setColor(NetworkTypes.toProtobuf(fire.getColor()))
+            .build();
+
+        for (ApolloPlayer player : viewers) {
+            ((AbstractApolloPlayer) player).sendPacket(message);
         }
     }
 
@@ -34,22 +39,9 @@ public class ColoredFiresImpl extends ColoredFires {
     public void resetFireColor(ApolloPlayer... viewers) {
         requireNonNull(viewers, "viewers");
 
-        for(ApolloPlayer player : viewers) {
-            ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
+        for (ApolloPlayer player : viewers) {
+            ((AbstractApolloPlayer) player).sendPacket(ResetColoredFireMessage.getDefaultInstance());
         }
     }
 
-    private ColoredFireMessage to(ColoredFire fire) {
-        return ColoredFireMessage.newBuilder()
-            .setPlayerUuid(NetworkTypes.toUuid(fire.getPlayer()))
-            .setColor(NetworkTypes.toColor(fire.getColor()))
-            .build();
-    }
-
-    private ColoredFire from(ColoredFireMessage message) {
-        return ColoredFire.of(
-            NetworkTypes.fromUuid(message.getPlayerUuid()),
-            NetworkTypes.fromColor(message.getColor())
-        );
-    }
 }

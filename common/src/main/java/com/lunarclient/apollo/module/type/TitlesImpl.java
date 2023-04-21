@@ -43,9 +43,9 @@ public final class TitlesImpl extends Titles {
                 .setType(TitleMessage.Type.valueOf(title.getType().name()))
                 .setMessage(title.getMessage())
                 .setScale(title.getScale())
-                .setDisplayTime(NetworkTypes.toDuration(title.getDisplayTime()))
-                .setFadeInTime(NetworkTypes.toDuration(title.getFadeInTime()))
-                .setFadeOutTime(NetworkTypes.toDuration(title.getFadeOutTime()))
+                .setDisplayTime(NetworkTypes.toProtobuf(title.getDisplayTime()))
+                .setFadeInTime(NetworkTypes.toProtobuf(title.getFadeInTime()))
+                .setFadeOutTime(NetworkTypes.toProtobuf(title.getFadeOutTime()))
                 .build();
     }
 
@@ -54,9 +54,9 @@ public final class TitlesImpl extends Titles {
                 Title.Type.valueOf(message.getType().name()),
                 message.getMessage(),
                 message.getScale(),
-                NetworkTypes.fromDuration(message.getDisplayTime()),
-                NetworkTypes.fromDuration(message.getFadeInTime()),
-                NetworkTypes.fromDuration(message.getFadeOutTime())
+                NetworkTypes.fromProtobuf(message.getDisplayTime()),
+                NetworkTypes.fromProtobuf(message.getFadeInTime()),
+                NetworkTypes.fromProtobuf(message.getFadeOutTime())
         );
     }
 }

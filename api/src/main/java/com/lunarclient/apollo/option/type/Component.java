@@ -5,12 +5,12 @@ import java.util.List;
 import lombok.Value;
 
 /**
- * Represents a renderable string which can be shown on the client.
+ * Represents a component which can be shown on the client.
  *
  * @since 1.0.0
  */
 @Value(staticConstructor = "of")
-public class RenderableString {
+public class Component {
 
     /**
      * Returns the renderable string {@link String} content.
@@ -37,12 +37,12 @@ public class RenderableString {
     List<TextDecorators> decorators;
 
     /**
-     * Returns a {@link List} of {@link RenderableString}.
+     * Returns a {@link List} of {@link Component}.
      *
      * @return the renderable string children
      * @since 1.0.0
      */
-    List<RenderableString> children;
+    List<Component> children;
 
     /**
      * Represents the text decorator.

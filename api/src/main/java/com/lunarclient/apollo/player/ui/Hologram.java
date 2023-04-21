@@ -1,6 +1,6 @@
 package com.lunarclient.apollo.player.ui;
 
-import com.lunarclient.apollo.option.type.RenderableString;
+import com.lunarclient.apollo.option.type.Component;
 import com.lunarclient.apollo.world.ApolloLocation;
 import java.util.List;
 import java.util.UUID;
@@ -31,10 +31,10 @@ public class Hologram {
     ApolloLocation location;
 
     /**
-     * Returns a {@link List} of {@link RenderableString} lines.
+     * Returns a {@link List} of {@link Component} lines.
      *
      * @return the lines
      * @since 1.0.0
      */
-    List<RenderableString> lines;
+    List<Component> lines;
 }

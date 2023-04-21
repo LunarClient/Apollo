@@ -1,6 +1,6 @@
 package com.lunarclient.apollo.player.ui;
 
-import com.lunarclient.apollo.option.type.RenderableString;
+import com.lunarclient.apollo.option.type.Component;
 import java.util.List;
 import java.util.UUID;
 import lombok.Value;
@@ -30,12 +30,12 @@ public class Nametag {
     boolean hide;
 
     /**
-     * Returns a {@link List} of {@link RenderableString} nametag.
+     * Returns a {@link List} of {@link Component} nametag.
      *
      * @return the nametag
      * @since 1.0.0
      */
-    List<RenderableString> nametag;
+    List<Component> nametag;
 
     /**
      * Returns the nametag {@link Integer} player name index.

@@ -60,8 +60,8 @@ public final class WaypointsImpl extends Waypoints {
     private WaypointMessage to(Waypoint waypoint) {
         return WaypointMessage.newBuilder()
                 .setName(waypoint.getName())
-                .setLocation(NetworkTypes.toBlockLocation(waypoint.getLocation()))
-                .setColor(NetworkTypes.toColor(waypoint.getColor()))
+                .setLocation(NetworkTypes.toProtobuf(waypoint.getLocation()))
+                .setColor(NetworkTypes.toProtobuf(waypoint.getColor()))
                 .setForced(waypoint.isForced())
                 .setVisible(waypoint.isVisible())
                 .build();
@@ -70,8 +70,8 @@ public final class WaypointsImpl extends Waypoints {
     private Waypoint from(WaypointMessage message) {
         return Waypoint.of(
                 message.getName(),
-                NetworkTypes.fromBlockLocation(message.getLocation()),
-                NetworkTypes.fromColor(message.getColor()),
+                NetworkTypes.fromProtobuf(message.getLocation()),
+                NetworkTypes.fromProtobuf(message.getColor()),
                 message.getForced(),
                 message.getVisible()
         );

@@ -29,4 +29,4 @@ jobs:
 
       - name: Gradle Publish
         if: github.ref == 'refs/heads/master'
-        run: ./gradlew Publish
+        run: ./gradlew publish

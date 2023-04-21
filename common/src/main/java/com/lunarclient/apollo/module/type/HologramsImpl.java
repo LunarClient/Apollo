@@ -51,8 +51,8 @@ public final class HologramsImpl extends Holograms {
             .collect(Collectors.toList());
 
         return HologramMessage.newBuilder()
-            .setHologramUuid(NetworkTypes.toUuid(hologram.getId()))
-            .setLocation(NetworkTypes.toLocation(hologram.getLocation()))
+            .setHologramUuid(NetworkTypes.toProtobuf(hologram.getId()))
+            .setLocation(NetworkTypes.toProtobuf(hologram.getLocation()))
             .addAllLines(lines)
             .build();
     }

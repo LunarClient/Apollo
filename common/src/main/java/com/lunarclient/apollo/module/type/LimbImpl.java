@@ -28,7 +28,7 @@ public class LimbImpl extends Limb {
         requireNonNull(armor, "armor");
 
         ToggleArmorPartMessage message = ToggleArmorPartMessage.newBuilder()
-            .setPlayerUuid(NetworkTypes.toUuid(armor.getPlayer()))
+            .setPlayerUuid(NetworkTypes.toProtobuf(armor.getPlayer()))
             .setPart(ToggleArmorPartMessage.Part.valueOf(armor.getArmorPart().name()))
             .setHidden(armor.isHidden())
             .build();
@@ -42,7 +42,7 @@ public class LimbImpl extends Limb {
         requireNonNull(body, "body");
 
         ToggleBodyPartMessage message = ToggleBodyPartMessage.newBuilder()
-            .setPlayerUuid(NetworkTypes.toUuid(body.getPlayer()))
+            .setPlayerUuid(NetworkTypes.toProtobuf(body.getPlayer()))
             .setPart(ToggleBodyPartMessage.Part.valueOf(body.getBodyPart().name()))
             .setHidden(body.isHidden())
             .build();

@@ -1,11 +1,13 @@
 package com.lunarclient.apollo.module.type;
 
+import com.google.protobuf.ByteString;
+import com.lunarclient.apollo.beam.v1.DisplayBeaconBeamMessage;
+import com.lunarclient.apollo.beam.v1.RemoveBeaconBeamMessage;
+import com.lunarclient.apollo.beam.v1.ResetBeaconBeamsMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.Beam;
-import lunarclient.apollo.common.OptionOperation;
-import lunarclient.apollo.modules.BeaconBeamMessage;
 
 import static java.util.Objects.requireNonNull;
 
@@ -25,7 +27,12 @@ public final class BeamsImpl extends Beams {
         requireNonNull(player, "player");
         requireNonNull(beam, "beam");
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, this.to(beam));
+        ((AbstractApolloPlayer) player).sendPacket(DisplayBeaconBeamMessage.newBuilder()
+            .setId(ByteString.copyFromUtf8(beam.getId()))
+            .setLocation(NetworkTypes.toProtobuf(beam.getLocation()))
+            .setColor(NetworkTypes.toProtobuf(beam.getColor()))
+            .build()
+        );
     }
 
     @Override
@@ -33,29 +40,17 @@ public final class BeamsImpl extends Beams {
         requireNonNull(player, "player");
         requireNonNull(beam, "beam");
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.REMOVE, this.to(beam));
+        ((AbstractApolloPlayer) player).sendPacket(RemoveBeaconBeamMessage.newBuilder()
+            .setId(ByteString.copyFromUtf8(beam.getId()))
+            .build()
+        );
     }
 
     @Override
     public void clearBeams(ApolloPlayer player) {
         requireNonNull(player, "player");
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
+        ((AbstractApolloPlayer) player).sendPacket(ResetBeaconBeamsMessage.getDefaultInstance());
     }
 
-    private BeaconBeamMessage to(Beam beam) {
-        return BeaconBeamMessage.newBuilder()
-            .setId(beam.getId())
-            .setColor(NetworkTypes.toColor(beam.getColor()))
-            .setLocation(NetworkTypes.toBlockLocation(beam.getLocation()))
-            .build();
-    }
-
-    private Beam from(BeaconBeamMessage message) {
-        return Beam.of(
-            message.getId(),
-            NetworkTypes.fromColor(message.getColor()),
-            NetworkTypes.fromBlockLocation(message.getLocation())
-        );
-    }
 }
