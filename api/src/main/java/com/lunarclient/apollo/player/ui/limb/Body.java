@@ -1,5 +1,6 @@
 package com.lunarclient.apollo.player.ui.limb;
 
+import java.util.Set;
 import java.util.UUID;
 import lombok.Value;
 
@@ -20,20 +21,12 @@ public class Body {
     UUID player;
 
     /**
-     * Returns the {@link BodyPart}.
+     * Returns a {@link Set} of {@link BodyPart}s.
      *
-     * @return the body part
+     * @return the body part set
      * @since 1.0.0
      */
-    BodyPart bodyPart;
-
-    /**
-     * Returns the body part {@link Boolean} hidden state.
-     *
-     * @return the body hidden state
-     * @since 1.0.0
-     */
-    boolean hidden;
+    Set<BodyPart> bodyPart;
 
     /**
      * Represents a body part.

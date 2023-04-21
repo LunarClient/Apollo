@@ -1,13 +1,14 @@
 package com.lunarclient.apollo.module.type;
 
+import com.lunarclient.apollo.limb.v1.*;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.limb.Armor;
 import com.lunarclient.apollo.player.ui.limb.Body;
-import lunarclient.apollo.common.OptionOperation;
-import lunarclient.apollo.modules.ToggleArmorPartMessage;
-import lunarclient.apollo.modules.ToggleBodyPartMessage;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
 
@@ -23,37 +24,71 @@ public class LimbImpl extends Limb {
     }
 
     @Override
-    public void toggleArmorPart(ApolloPlayer player, Armor armor) {
+    public void hideArmorPieces(ApolloPlayer player, Armor armor) {
         requireNonNull(player, "player");
         requireNonNull(armor, "armor");
 
-        ToggleArmorPartMessage message = ToggleArmorPartMessage.newBuilder()
-            .setPlayerUuid(NetworkTypes.toProtobuf(armor.getPlayer()))
-            .setPart(ToggleArmorPartMessage.Part.valueOf(armor.getArmorPart().name()))
-            .setHidden(armor.isHidden())
-            .build();
+        // TODO:
+        Set<ArmorPiece> pieces = new HashSet<>();
+//        Set<ArmorPiece> pieces = armor.getArmorPiece().stream()
+//            .map(piece -> )
+//            .collect(Collectors.toSet());
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, message);
+        ((AbstractApolloPlayer) player).sendPacket(HideArmorPiecesMessage.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(armor.getPlayer()))
+            .addAllArmorPieces(pieces)
+            .build());
     }
 
     @Override
-    public void toggleBodyPart(ApolloPlayer player, Body body) {
+    public void resetArmorPieces(ApolloPlayer player, Armor armor) {
+        requireNonNull(player, "player");
+        requireNonNull(armor, "armor");
+
+        // TODO:
+        Set<ArmorPiece> pieces = new HashSet<>();
+//        Set<ArmorPiece> pieces = armor.getArmorPiece().stream()
+//            .map(piece -> )
+//            .collect(Collectors.toSet());
+
+        ((AbstractApolloPlayer) player).sendPacket(ResetArmorPiecesMessage.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(armor.getPlayer()))
+            .addAllArmorPieces(pieces)
+            .build());
+    }
+
+    @Override
+    public void hideBodyParts(ApolloPlayer player, Body body) {
         requireNonNull(player, "player");
         requireNonNull(body, "body");
 
-        ToggleBodyPartMessage message = ToggleBodyPartMessage.newBuilder()
-            .setPlayerUuid(NetworkTypes.toProtobuf(body.getPlayer()))
-            .setPart(ToggleBodyPartMessage.Part.valueOf(body.getBodyPart().name()))
-            .setHidden(body.isHidden())
-            .build();
+        // TODO:
+        Set<BodyPart> parts = new HashSet<>();
+//        Set<ArmorPiece> pieces = armor.getArmorPiece().stream()
+//            .map(piece -> )
+//            .collect(Collectors.toSet());
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, message);
+        ((AbstractApolloPlayer) player).sendPacket(HideBodyPartMessage.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(body.getPlayer()))
+            .addAllBodyParts(parts)
+            .build());
     }
 
     @Override
-    public void clearModifications(ApolloPlayer player) {
+    public void resetBodyParts(ApolloPlayer player, Body body) {
         requireNonNull(player, "player");
+        requireNonNull(body, "body");
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
+        // TODO:
+        Set<BodyPart> parts = new HashSet<>();
+//        Set<ArmorPiece> pieces = armor.getArmorPiece().stream()
+//            .map(piece -> )
+//            .collect(Collectors.toSet());
+
+        ((AbstractApolloPlayer) player).sendPacket(ResetBodyPartMessage.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(body.getPlayer()))
+            .addAllBodyParts(parts)
+            .build());
     }
+
 }

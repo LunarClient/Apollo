@@ -23,7 +23,7 @@ public final class BeamsImpl extends Beams {
     }
 
     @Override
-    public void addBeam(ApolloPlayer player, Beam beam) {
+    public void displayBeam(ApolloPlayer player, Beam beam) {
         requireNonNull(player, "player");
         requireNonNull(beam, "beam");
 
@@ -36,18 +36,25 @@ public final class BeamsImpl extends Beams {
     }
 
     @Override
-    public void removeBeam(ApolloPlayer player, Beam beam) {
+    public void removeBeam(ApolloPlayer player, String beamId) {
         requireNonNull(player, "player");
-        requireNonNull(beam, "beam");
+        requireNonNull(beamId, "beamId");
 
         ((AbstractApolloPlayer) player).sendPacket(RemoveBeaconBeamMessage.newBuilder()
-            .setId(ByteString.copyFromUtf8(beam.getId()))
+            .setId(ByteString.copyFromUtf8(beamId))
             .build()
         );
     }
 
     @Override
-    public void clearBeams(ApolloPlayer player) {
+    public void removeBeam(ApolloPlayer player, Beam beam) {
+        requireNonNull(beam, "beam");
+
+        this.removeBeam(player, beam.getId());
+    }
+
+    @Override
+    public void resetBeams(ApolloPlayer player) {
         requireNonNull(player, "player");
 
         ((AbstractApolloPlayer) player).sendPacket(ResetBeaconBeamsMessage.getDefaultInstance());

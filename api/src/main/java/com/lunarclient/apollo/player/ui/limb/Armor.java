@@ -1,10 +1,11 @@
 package com.lunarclient.apollo.player.ui.limb;
 
+import java.util.Set;
 import java.util.UUID;
 import lombok.Value;
 
 /**
- * Represents an armor part which can be shown or hidden on the client.
+ * Represents an armor which can be shown or hidden on the client.
  *
  * @since 1.0.0
  */
@@ -20,27 +21,19 @@ public class Armor {
     UUID player;
 
     /**
-     * Returns the {@link ArmorPart}.
+     * Returns a {@link Set} of {@link ArmorPiece}s.
      *
-     * @return the armor part
+     * @return the armor piece set
      * @since 1.0.0
      */
-    ArmorPart armorPart;
-
-    /**
-     * Returns the armor part {@link Boolean} hidden state.
-     *
-     * @return the armor hidden state
-     * @since 1.0.0
-     */
-    boolean hidden;
+    Set<ArmorPiece> armorPiece;
 
     /**
      * Represents an armor part.
      *
      * @since 1.0.0
      */
-    public enum ArmorPart {
+    public enum ArmorPiece {
 
         HELMET,
         CHESTPLATE,

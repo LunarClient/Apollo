@@ -23,19 +23,20 @@ public abstract class HeartTextures extends ApolloModule {
     }
 
     /**
-     * Sends the {@link HeartTextures} to the {@link ApolloPlayer}.
+     * Overrides the {@link HeartTexture} for the {@link ApolloPlayer}.
      *
      * @param player the player
      * @param heartTexture the heart texture
      * @since 1.0.0
      */
-    public abstract void sendHeartTexture(ApolloPlayer player, HeartTexture heartTexture);
+    public abstract void overrideHeartTexture(ApolloPlayer player, HeartTexture heartTexture);
 
     /**
-     * Removes the {@link HeartTextures} from the {@link ApolloPlayer}.
+     * Resets the {@link HeartTexture} from the {@link ApolloPlayer}.
      *
      * @param player the player
      * @since 1.0.0
      */
-    public abstract void removeHeartTexture(ApolloPlayer player);
+    public abstract void resetHeartTexture(ApolloPlayer player);
+
 }

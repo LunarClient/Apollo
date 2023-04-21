@@ -18,13 +18,22 @@ public abstract class Beams extends ApolloModule {
     }
 
     /**
-     * Sends the {@link Beam} to the {@link ApolloPlayer}.
+     * Displays the {@link Beam} for the {@link ApolloPlayer}.
      *
      * @param player the player
      * @param beam the beam
      * @since 1.0.0
      */
-    public abstract void addBeam(ApolloPlayer player, Beam beam);
+    public abstract void displayBeam(ApolloPlayer player, Beam beam);
+
+    /**
+     * Removes the {@link Beam} from the {@link ApolloPlayer}.
+     *
+     * @param player the player
+     * @param beamId the beam id
+     * @since 1.0.0
+     */
+    public abstract void removeBeam(ApolloPlayer player, String beamId);
 
     /**
      * Removes the {@link Beam} from the {@link ApolloPlayer}.
@@ -36,11 +45,11 @@ public abstract class Beams extends ApolloModule {
     public abstract void removeBeam(ApolloPlayer player, Beam beam);
 
     /**
-     * Clears all {@link Beam}s from the {@link ApolloPlayer}.
+     * Resets all {@link Beam}s for the {@link ApolloPlayer}.
      *
      * @param player the player
      * @since 1.0.0
      */
-    public abstract void clearBeams(ApolloPlayer player);
+    public abstract void resetBeams(ApolloPlayer player);
 
 }

@@ -2,6 +2,12 @@ package com.lunarclient.apollo.network;
 
 import com.lunarclient.apollo.common.v1.Uuid;
 import com.lunarclient.apollo.option.type.Component;
+import com.lunarclient.apollo.option.type.bounds.Cuboid2D;
+import com.lunarclient.apollo.option.type.bounds.Cuboid3D;
+import com.lunarclient.apollo.option.type.icon.AdvancedResourceLocationIcon;
+import com.lunarclient.apollo.option.type.icon.Icon;
+import com.lunarclient.apollo.option.type.icon.ItemStackIcon;
+import com.lunarclient.apollo.option.type.icon.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.world.ApolloBlockLocation;
 import com.lunarclient.apollo.world.ApolloLocation;
 import java.awt.Color;
@@ -82,6 +88,46 @@ public class NetworkTypes {
         );
     }
 
+    public com.lunarclient.apollo.common.v1.Cuboid2D toProtobuf(Cuboid2D object) {
+        return com.lunarclient.apollo.common.v1.Cuboid2D.newBuilder()
+            .setMinX(object.getMinX())
+            .setMinZ(object.getMinZ())
+            .setMaxX(object.getMaxX())
+            .setMaxZ(object.getMaxZ())
+            .build();
+    }
+
+    public Cuboid2D fromProtobuf(com.lunarclient.apollo.common.v1.Cuboid2D message) {
+        return Cuboid2D.of(
+            message.getMinX(),
+            message.getMinZ(),
+            message.getMaxX(),
+            message.getMaxZ()
+        );
+    }
+
+    public com.lunarclient.apollo.common.v1.Cuboid3D toProtobuf(Cuboid3D object) {
+        return com.lunarclient.apollo.common.v1.Cuboid3D.newBuilder()
+            .setMinX(object.getMinX())
+            .setMinY(object.getMinY())
+            .setMinZ(object.getMinZ())
+            .setMaxX(object.getMaxX())
+            .setMaxY(object.getMaxY())
+            .setMaxZ(object.getMaxZ())
+            .build();
+    }
+
+    public Cuboid3D fromProtobuf(com.lunarclient.apollo.common.v1.Cuboid3D message) {
+        return Cuboid3D.of(
+            message.getMinX(),
+            message.getMinY(),
+            message.getMinZ(),
+            message.getMaxX(),
+            message.getMaxY(),
+            message.getMaxZ()
+        );
+    }
+
     public com.lunarclient.apollo.common.v1.Component toProtobuf(Component object) {
         List<com.lunarclient.apollo.common.v1.Component.TextDecorator> decorators = object.getDecorators()
             .stream().map(decorator -> com.lunarclient.apollo.common.v1.Component.TextDecorator.valueOf("TEXT_DECORATOR_" + decorator.name()))
@@ -114,5 +160,69 @@ public class NetworkTypes {
             decorators,
             children
         );
+    }
+
+    public com.lunarclient.apollo.common.v1.Icon toProtobuf(Icon icon) {
+        com.lunarclient.apollo.common.v1.Icon.Builder builder = com.lunarclient.apollo.common.v1.Icon.newBuilder();
+
+        if(icon instanceof ItemStackIcon) {
+            ItemStackIcon item = (ItemStackIcon) icon;
+
+            builder.setItemStack(com.lunarclient.apollo.common.v1.ItemStackIcon.newBuilder()
+                .setItemId(item.getItemId())
+                .build());
+        } else if(icon instanceof SimpleResourceLocationIcon) {
+            SimpleResourceLocationIcon simple = (SimpleResourceLocationIcon) icon;
+
+            builder.setSimpleResourceLocation(com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon.newBuilder()
+                .setResourceLocation(simple.getResourceLocation())
+                .setSize(simple.getSize())
+                .build());
+        } else if(icon instanceof AdvancedResourceLocationIcon) {
+            AdvancedResourceLocationIcon advanced = (AdvancedResourceLocationIcon) icon;
+
+            builder.setAdvancedResourceLocation(com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon.newBuilder()
+                .setResourceLocation(advanced.getResourceLocation())
+                .setWidth(advanced.getWidth())
+                .setHeight(advanced.getHeight())
+                .setMinU(advanced.getMinU())
+                .setMaxU(advanced.getMaxU())
+                .setMinV(advanced.getMinV())
+                .setMaxV(advanced.getMaxV())
+                .build());
+        }
+
+        return builder.build();
+    }
+
+    public Icon fromProtobuf(com.lunarclient.apollo.common.v1.Icon icon) {
+        if(icon.hasItemStack()) {
+            com.lunarclient.apollo.common.v1.ItemStackIcon item = icon.getItemStack();
+
+            return ItemStackIcon.of(
+                item.getItemId()
+            );
+        } else if(icon.hasSimpleResourceLocation()) {
+            com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon simple = icon.getSimpleResourceLocation();
+
+            return SimpleResourceLocationIcon.of(
+                simple.getResourceLocation(),
+                simple.getSize()
+            );
+        } else if(icon.hasAdvancedResourceLocation()) {
+            com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon advanced = icon.getAdvancedResourceLocation();
+
+            return AdvancedResourceLocationIcon.of(
+                advanced.getResourceLocation(),
+                advanced.getWidth(),
+                advanced.getHeight(),
+                advanced.getMinU(),
+                advanced.getMaxU(),
+                advanced.getMinV(),
+                advanced.getMaxV()
+            );
+        }
+
+        return null;
     }
 }

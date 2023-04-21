@@ -1,14 +1,26 @@
-package com.lunarclient.apollo.option.type;
+package com.lunarclient.apollo.option.type.icon;
 
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 /**
- * Represents a renderable icon specifications.
+ * Represents an advanced resource location icon.
  *
  * @since 1.0.0
  */
+@EqualsAndHashCode(callSuper = false)
 @Value(staticConstructor = "of")
-public class IconSpecifications {
+public class AdvancedResourceLocationIcon extends Icon {
+
+    /**
+     * Returns the icon {@link String} resource location.
+     *
+     * <p>Represents an icon that will appear for the player.</p>
+     *
+     * @return the icon resource location
+     * @since 1.0.0
+     */
+    String resourceLocation;
 
     /**
      * Returns the icon width {@link Float}.
@@ -69,4 +81,5 @@ public class IconSpecifications {
      * @since 1.0.0
      */
     float maxV;
+
 }

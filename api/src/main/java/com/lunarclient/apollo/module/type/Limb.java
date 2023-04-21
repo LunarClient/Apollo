@@ -19,29 +19,39 @@ public abstract class Limb extends ApolloModule {
     }
 
     /**
-     * Toggles the {@link Armor} for the {@link ApolloPlayer}.
+     * Hides the {@link Armor} for the {@link ApolloPlayer}.
      *
      * @param player the player
      * @param armor the armor
      * @since 1.0.0
      */
-    public abstract void toggleArmorPart(ApolloPlayer player, Armor armor);
+    public abstract void hideArmorPieces(ApolloPlayer player, Armor armor);
 
     /**
-     * Toggles the {@link Body} for the {@link ApolloPlayer}.
+     * Resets the {@link Armor} for the {@link ApolloPlayer}.
+     *
+     * @param player the player
+     * @param armor the armor
+     * @since 1.0.0
+     */
+    public abstract void resetArmorPieces(ApolloPlayer player, Armor armor);
+
+    /**
+     * Hides the {@link Body} for the {@link ApolloPlayer}.
      *
      * @param player the player
      * @param body the body
      * @since 1.0.0
      */
-    public abstract void toggleBodyPart(ApolloPlayer player, Body body);
+    public abstract void hideBodyParts(ApolloPlayer player, Body body);
 
     /**
-     * Clears {@link Armor} and {@link Body} modifications for the {@link ApolloPlayer}.
+     * Resets the {@link Body} for the {@link ApolloPlayer}.
      *
      * @param player the player
+     * @param body the body
      * @since 1.0.0
      */
-    public abstract void clearModifications(ApolloPlayer player);
+    public abstract void resetBodyParts(ApolloPlayer player, Body body);
 
 }
