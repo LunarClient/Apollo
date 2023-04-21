@@ -33,7 +33,7 @@ Maven:
     <dependency>
         <groupId>com.lunarclient</groupId>
         <artifactId>apollo-api</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <scope>provided</scope>
     </dependency>
 </dependencies>
@@ -42,7 +42,7 @@ Maven:
 Gradle:
 ```Gradle
 dependencies {
-    api 'com.lunarclient:apollo-api:1.0.0-SNAPSHOT'
+    api 'com.lunarclient:apollo-api:1.0.0'
 }
 ```
 
