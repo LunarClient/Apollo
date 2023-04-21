@@ -18,7 +18,6 @@ Maven:
 Gradle:
 ```Gradle
 repositories {
-    mavenCentral()
     maven {
         name = "lunarclient"
         url = "https://repo.lunarclient.dev"
