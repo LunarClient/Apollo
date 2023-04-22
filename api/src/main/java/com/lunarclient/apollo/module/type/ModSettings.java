@@ -46,6 +46,16 @@ public abstract class ModSettings extends ApolloModule {
         this.registerOptions(MOD_SETTINGS);
     }
 
+    @Override
+    public Collection<ApolloPlatform.Kind> getSupport() {
+        return Arrays.asList(ApolloPlatform.Kind.SERVER, ApolloPlatform.Kind.PROXY);
+    }
+
+    @Override
+    public boolean isClientNotify() {
+        return true;
+    }
+
     /**
      * Sends the {@link ModSetting} to the {@link ApolloPlayer}.
      *
@@ -62,15 +72,5 @@ public abstract class ModSettings extends ApolloModule {
      * @since 1.0.0
      */
     public abstract void broadcastSetting(ModSetting setting);
-
-    @Override
-    public Collection<ApolloPlatform.Kind> getSupport() {
-        return Arrays.asList(ApolloPlatform.Kind.SERVER, ApolloPlatform.Kind.PROXY);
-    }
-
-    @Override
-    public boolean isClientNotify() {
-        return true;
-    }
 
 }

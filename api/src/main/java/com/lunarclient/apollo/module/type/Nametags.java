@@ -5,6 +5,8 @@ import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.Nametag;
 import org.jetbrains.annotations.ApiStatus;
 
+import java.util.UUID;
+
 /**
  * Represents the nametag module.
  *
@@ -18,7 +20,7 @@ public abstract class Nametags extends ApolloModule {
     }
 
     /**
-     * Sends the {@link Nametag} to the {@link ApolloPlayer}s.
+     * Overrides the {@link Nametag} for the {@link ApolloPlayer}s.
      *
      * @param nametag the nametag
      * @param viewers the viewers
@@ -29,8 +31,27 @@ public abstract class Nametags extends ApolloModule {
     /**
      * Resets the {@link Nametag} for the {@link ApolloPlayer}s.
      *
+     * @param playerUuid the player uuid
      * @param viewers the viewers
      * @since 1.0.0
      */
-    public abstract void resetNametag(ApolloPlayer... viewers);
+    public abstract void resetNametag(UUID playerUuid, ApolloPlayer... viewers);
+
+    /**
+     * Resets the {@link Nametag} for the {@link ApolloPlayer}s.
+     *
+     * @param nametag the nametag
+     * @param viewers the viewers
+     * @since 1.0.0
+     */
+    public abstract void resetNametag(Nametag nametag, ApolloPlayer... viewers);
+
+    /**
+     * Resets all {@link Nametag}s for the {@link ApolloPlayer}.
+     *
+     * @param player the player
+     * @since 1.0.0
+     */
+    public abstract void resetNametags(ApolloPlayer player);
+
 }

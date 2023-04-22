@@ -18,7 +18,7 @@ public abstract class Cooldowns extends ApolloModule {
     }
 
     /**
-     * Displays the {@link Cooldown} for the {@link ApolloPlayer}.
+     * Displays the {@link Cooldown} to the {@link ApolloPlayer}.
      *
      * @param player the player
      * @param cooldown the cooldown
@@ -45,7 +45,7 @@ public abstract class Cooldowns extends ApolloModule {
     public abstract void removeCooldown(ApolloPlayer player, Cooldown cooldown);
 
     /**
-     * Resets all {@link Cooldown}s from the {@link ApolloPlayer}.
+     * Resets all {@link Cooldown}s for the {@link ApolloPlayer}.
      *
      * @param player the player
      * @since 1.0.0

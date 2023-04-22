@@ -30,7 +30,7 @@ public abstract class Borders extends ApolloModule {
     }
 
     /**
-     * Displays the {@link Border} for the {@link ApolloPlayer}.
+     * Displays the {@link Border} to the {@link ApolloPlayer}.
      *
      * @param player the player
      * @param border the border

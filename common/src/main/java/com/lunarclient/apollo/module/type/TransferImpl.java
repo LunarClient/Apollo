@@ -1,21 +1,21 @@
 package com.lunarclient.apollo.module.type;
 
+import com.google.protobuf.ByteString;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.event.network.ApolloReceivePacketEvent;
-import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.player.ui.network.ServerPing;
-import com.lunarclient.apollo.player.ui.network.ServerTransfer;
+import com.lunarclient.apollo.player.ui.transfer.ServerPing;
+import com.lunarclient.apollo.player.ui.transfer.ServerTransfer;
 import com.lunarclient.apollo.roundtrip.async.Future;
 import com.lunarclient.apollo.roundtrip.async.Handler;
+import com.lunarclient.apollo.transfer.v1.PingRequest;
+import com.lunarclient.apollo.transfer.v1.PingResponse;
+import com.lunarclient.apollo.transfer.v1.TransferRequest;
+import com.lunarclient.apollo.transfer.v1.TransferResponse;
+
 import java.util.List;
 import java.util.stream.Collectors;
-import lunarclient.apollo.common.OptionOperation;
-import lunarclient.apollo.modules.PingRequest;
-import lunarclient.apollo.modules.PingResponse;
-import lunarclient.apollo.modules.TransferRequest;
-import lunarclient.apollo.modules.TransferResponse;
 
 import static java.util.Objects.requireNonNull;
 
@@ -38,12 +38,12 @@ public final class TransferImpl extends Transfer {
         requireNonNull(ping, "ping");
 
         PingRequest message = PingRequest.newBuilder()
-            .setPacketId(NetworkTypes.toProtobuf(ping.getPacketId()))
-            .addAllAddresses(ping.getAddresses())
+            .setRequestId(ByteString.copyFromUtf8(ping.getPacketId().toString()))
+            .addAllServerIps(ping.getAddresses())
             .build();
 
         Future<ServerPing.Response> pingResponse = ((AbstractApolloPlayer) player)
-            .sendRoundTripPacket(ping, this, OptionOperation.ADD, message);
+            .sendRoundTripPacket(ping, message);
 
         pingResponse.onFailure(Throwable::printStackTrace);
         pingResponse.onSuccess(response);
@@ -55,12 +55,12 @@ public final class TransferImpl extends Transfer {
         requireNonNull(transfer, "transfer");
 
         TransferRequest message = TransferRequest.newBuilder()
-            .setPacketId(NetworkTypes.toProtobuf(transfer.getPacketId()))
-            .setAddress(transfer.getAddress())
+            .setRequestId(ByteString.copyFromUtf8(transfer.getPacketId().toString()))
+            .setServerIp(transfer.getAddress())
             .build();
 
         Future<ServerTransfer.Response> transferResponse = ((AbstractApolloPlayer) player)
-            .sendRoundTripPacket(transfer, this, OptionOperation.ADD, message);
+            .sendRoundTripPacket(transfer, message);
 
         transferResponse.onFailure(Throwable::printStackTrace);
         transferResponse.onSuccess(response);
@@ -68,15 +68,15 @@ public final class TransferImpl extends Transfer {
 
     public void onTransferResponse(ApolloReceivePacketEvent event) {
         event.unpackIf(TransferResponse.class).ifPresent(packet -> {
-            ServerTransfer.Response transferResponse = ServerTransfer.Response.of(packet.getAccepted());
+            ServerTransfer.Response transferResponse = ServerTransfer.Response.of(null); // TODO
             Apollo.getRoundtripManager().handleResponse(transferResponse);
         });
 
         event.unpackIf(PingResponse.class).ifPresent(packet -> {
-            List<ServerPing.Response.PingData> pingData = packet.getDataList().stream()
+            List<ServerPing.Response.PingData> pingData = packet.getPingDataList().stream()
                 .map(data -> ServerPing.Response.PingData.of(
-                    data.getAddress(),
-                    ServerPing.Response.PingData.State.valueOf(data.getState().name()),
+                    data.getServerIp(),
+                    null, // TODO
                     data.getPing()
                 )).collect(Collectors.toList());
 

@@ -48,10 +48,11 @@ public abstract class Holograms extends ApolloModule {
     public abstract void removeHologram(Hologram hologram, ApolloPlayer... viewers);
 
     /**
-     * Resets all {@link Hologram}s from the {@link ApolloPlayer}.
+     * Resets all {@link Hologram}s for the {@link ApolloPlayer}.
      *
      * @param player the player
      * @since 1.0.0
      */
     public abstract void resetHolograms(ApolloPlayer player);
+
 }

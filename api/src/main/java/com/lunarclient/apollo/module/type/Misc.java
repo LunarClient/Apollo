@@ -19,7 +19,7 @@ public abstract class Misc extends ApolloModule {
     }
 
     /**
-     * Displays the {@link Vignette} for the {@link ApolloPlayer}.
+     * Displays the {@link Vignette} to the {@link ApolloPlayer}.
      *
      * @param player the player
      * @param vignette the vignette

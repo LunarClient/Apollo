@@ -3,6 +3,7 @@ package com.lunarclient.apollo.module.type;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
+import com.lunarclient.apollo.player.ui.Nametag;
 import com.lunarclient.apollo.player.ui.Title;
 import java.util.EnumSet;
 import java.util.Set;
@@ -35,7 +36,7 @@ public abstract class Titles extends ApolloModule {
      * @param title the title
      * @since 1.0.0
      */
-    public abstract void sendTitle(ApolloPlayer player, Title title);
+    public abstract void displayTitleMessage(ApolloPlayer player, Title title);
 
     /**
      * Sends the {@link Title} to all {@link ApolloPlayer}s.
@@ -44,4 +45,13 @@ public abstract class Titles extends ApolloModule {
      * @since 1.0.0
      */
     public abstract void broadcastTitle(Title title);
+
+    /**
+     * Resets all {@link Title}s for the {@link ApolloPlayer}.
+     *
+     * @param player the player
+     * @since 1.0.0
+     */
+    public abstract void resetTitles(ApolloPlayer player);
+
 }

@@ -18,7 +18,7 @@ public abstract class Beams extends ApolloModule {
     }
 
     /**
-     * Displays the {@link Beam} for the {@link ApolloPlayer}.
+     * Displays the {@link Beam} to the {@link ApolloPlayer}.
      *
      * @param player the player
      * @param beam the beam

@@ -5,8 +5,8 @@ import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.Title;
-import lunarclient.apollo.common.OptionOperation;
-import lunarclient.apollo.modules.TitleMessage;
+import com.lunarclient.apollo.title.v1.DisplayTitleMessage;
+import com.lunarclient.apollo.title.v1.ResetTitlesMessage;
 
 import static java.util.Objects.requireNonNull;
 
@@ -22,11 +22,18 @@ public final class TitlesImpl extends Titles {
     }
 
     @Override
-    public void sendTitle(ApolloPlayer player, Title title) {
+    public void displayTitleMessage(ApolloPlayer player, Title title) {
         requireNonNull(player, "player");
         requireNonNull(title, "title");
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(title));
+        ((AbstractApolloPlayer) player).sendPacket(DisplayTitleMessage.newBuilder()
+            // TODO .setTitleType()
+            .setMessage(NetworkTypes.toProtobuf(title.getMessage()))
+            .setScale(title.getScale())
+            .setFadeInTime(NetworkTypes.toProtobuf(title.getFadeInTime()))
+            .setDisplayTime(NetworkTypes.toProtobuf(title.getDisplayTime()))
+            .setFadeOutTime(NetworkTypes.toProtobuf(title.getFadeOutTime()))
+            .build());
     }
 
     @Override
@@ -34,29 +41,14 @@ public final class TitlesImpl extends Titles {
         requireNonNull(title, "title");
 
         for(ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
-            ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(title));
+            this.displayTitleMessage(player, title);
         }
     }
 
-    private TitleMessage to(Title title) {
-        return TitleMessage.newBuilder()
-                .setType(TitleMessage.Type.valueOf(title.getType().name()))
-                .setMessage(title.getMessage())
-                .setScale(title.getScale())
-                .setDisplayTime(NetworkTypes.toProtobuf(title.getDisplayTime()))
-                .setFadeInTime(NetworkTypes.toProtobuf(title.getFadeInTime()))
-                .setFadeOutTime(NetworkTypes.toProtobuf(title.getFadeOutTime()))
-                .build();
-    }
+    @Override
+    public void resetTitles(ApolloPlayer player) {
+        requireNonNull(player, "player");
 
-    private Title from(TitleMessage message) {
-        return Title.of(
-                Title.Type.valueOf(message.getType().name()),
-                message.getMessage(),
-                message.getScale(),
-                NetworkTypes.fromProtobuf(message.getDisplayTime()),
-                NetworkTypes.fromProtobuf(message.getFadeInTime()),
-                NetworkTypes.fromProtobuf(message.getFadeOutTime())
-        );
+        ((AbstractApolloPlayer) player).sendPacket(ResetTitlesMessage.getDefaultInstance());
     }
 }

@@ -2,7 +2,6 @@ package com.lunarclient.apollo.module.type;
 
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.player.ui.StaffMod;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -18,37 +17,21 @@ public abstract class StaffMods extends ApolloModule {
     }
 
     /**
-     * Gives the {@link StaffMod} to the {@link ApolloPlayer}.
+     * Enables the {@link com.lunarclient.apollo.player.ui.StaffMods}s for the {@link ApolloPlayer}.
      *
      * @param player the player
      * @param mod the staff mod
      * @since 1.0.0
      */
-    public abstract void giveModule(ApolloPlayer player, StaffMod mod);
+    public abstract void enableStaffMods(ApolloPlayer player, com.lunarclient.apollo.player.ui.StaffMods mod);
 
     /**
-     * Removes the {@link StaffMod} from the {@link ApolloPlayer}.
+     * Disables the {@link com.lunarclient.apollo.player.ui.StaffMods} from the {@link ApolloPlayer}.
      *
      * @param player the player
      * @param mod the staff mod
      * @since 1.0.0
      */
-    public abstract void removeModule(ApolloPlayer player, StaffMod mod);
-
-    /**
-     * Gives all {@link StaffMod}s to the {@link ApolloPlayer}.
-     *
-     * @param player the player
-     * @since 1.0.0
-     */
-    public abstract void giveAllModules(ApolloPlayer player);
-
-    /**
-     * Removes all {@link StaffMod}s from the {@link ApolloPlayer}.
-     *
-     * @param player the player
-     * @since 1.0.0
-     */
-    public abstract void removeAllModules(ApolloPlayer player);
+    public abstract void disableStaffMods(ApolloPlayer player, com.lunarclient.apollo.player.ui.StaffMods mod);
 
 }
