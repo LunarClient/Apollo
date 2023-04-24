@@ -23,7 +23,7 @@ public final class StaffModsImpl extends com.lunarclient.apollo.module.type.Staf
         requireNonNull(mods, "staffMods");
 
         Set<StaffMod> staffMods = mods.getMods().stream()
-            .map(mod -> StaffMod.forNumber(mod.ordinal()))
+            .map(mod -> StaffMod.forNumber(mod.ordinal() + 1))
             .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) player).sendPacket(EnableStaffModsMessage.newBuilder()
@@ -37,7 +37,7 @@ public final class StaffModsImpl extends com.lunarclient.apollo.module.type.Staf
         requireNonNull(mods, "staffMods");
 
         Set<StaffMod> staffMods = mods.getMods().stream()
-            .map(mod -> StaffMod.forNumber(mod.ordinal()))
+            .map(mod -> StaffMod.forNumber(mod.ordinal() + 1))
             .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) player).sendPacket(DisableStaffModsMessage.newBuilder()
