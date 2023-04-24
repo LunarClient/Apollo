@@ -1,11 +1,14 @@
 package com.lunarclient.apollo.module.type;
 
+import com.google.protobuf.Value;
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
+import com.lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.player.ui.ModSetting;
-import lunarclient.apollo.common.OptionOperation;
-import lunarclient.apollo.modules.ModSettingMessage;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -21,35 +24,51 @@ public final class ModSettingsImpl extends ModSettings {
     }
 
     @Override
-    public void sendSetting(ApolloPlayer player, ModSetting setting) {
+    public void sendSettings(ApolloPlayer player, com.lunarclient.apollo.option.type.configurable.ConfigurableSettings settings) {
         requireNonNull(player, "player");
-        requireNonNull(setting, "setting");
+        requireNonNull(settings, "configurable");
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(setting));
+        ((AbstractApolloPlayer) player).sendPacket(this.toProtobuf(settings));
     }
 
     @Override
-    public void broadcastSetting(ModSetting setting) {
-        requireNonNull(setting, "setting");
+    public void resetSettings(ApolloPlayer player) {
+        requireNonNull(player, "player");
+
+        ((AbstractApolloPlayer) player).sendPacket(OverrideConfigurableSettingsMessage.getDefaultInstance());
+    }
+
+    @Override
+    public void broadcastSettings(com.lunarclient.apollo.option.type.configurable.ConfigurableSettings settings) {
+        requireNonNull(settings, "configurable");
+
+        OverrideConfigurableSettingsMessage message = this.toProtobuf(settings);
 
         for(ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
-            ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(setting));
+            ((AbstractApolloPlayer) player).sendPacket(message);
         }
     }
 
-    private ModSettingMessage to(ModSetting setting) {
-        return ModSettingMessage.newBuilder()
-            .setModId(setting.getModId())
-            .setEnabled(setting.isEnabled())
-            .putAllProperties(setting.getProperties())
+    public OverrideConfigurableSettingsMessage toProtobuf(com.lunarclient.apollo.option.type.configurable.ConfigurableSettings settings) {
+        Set<ConfigurableSettings> configurableSettings = settings.getSettings().stream()
+            .map(configurable -> {
+                Map<String, Value> properties = configurable.getProperties().entrySet().stream()
+                    .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> (Value) entry.getValue()
+                    ));
+
+                return ConfigurableSettings.newBuilder()
+                    .setLunarClientMod(configurable.getTarget())
+                    .setEnable(configurable.isEnable())
+                    .putAllProperties(properties)
+                    .build();
+            })
+            .collect(Collectors.toSet());
+
+        return OverrideConfigurableSettingsMessage.newBuilder()
+            .addAllConfigurableSettings(configurableSettings)
             .build();
     }
 
-    private ModSetting from(ModSettingMessage setting) {
-        return ModSetting.of(
-            setting.getModId(),
-            setting.getEnabled(),
-            setting.getPropertiesMap()
-        );
-    }
 }

@@ -1,9 +1,8 @@
 package com.lunarclient.apollo.player.ui;
 
 import com.lunarclient.apollo.option.type.icon.Icon;
-import lombok.Value;
-
 import java.time.Duration;
+import lombok.Value;
 
 /**
  * Represents a cooldown which can be shown on the client.

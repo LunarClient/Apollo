@@ -3,9 +3,8 @@ package com.lunarclient.apollo.module.type;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.ColoredFire;
-import org.jetbrains.annotations.ApiStatus;
-
 import java.util.UUID;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the colored fire module.

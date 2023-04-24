@@ -1,9 +1,8 @@
 package com.lunarclient.apollo.player.ui;
 
 import com.lunarclient.apollo.option.type.bounds.Cuboid2D;
-import lombok.Value;
-
 import java.awt.*;
+import lombok.Value;
 
 /**
  * Represents a border which can be shown on the client.

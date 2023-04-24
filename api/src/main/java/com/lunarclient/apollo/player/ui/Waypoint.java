@@ -1,9 +1,8 @@
 package com.lunarclient.apollo.player.ui;
 
 import com.lunarclient.apollo.world.ApolloBlockLocation;
-import lombok.Value;
-
 import java.awt.*;
+import lombok.Value;
 
 /**
  * Represents a waypoint which can be shown on the client.

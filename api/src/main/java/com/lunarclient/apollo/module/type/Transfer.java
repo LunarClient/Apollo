@@ -44,4 +44,5 @@ public abstract class Transfer extends ApolloModule {
      * @since 1.0.0
      */
     public abstract void transfer(ApolloPlayer player, ServerTransfer.Request transfer, Handler<ServerTransfer.Response> response);
+
 }

@@ -56,4 +56,5 @@ public abstract class Saturation extends ApolloModule {
 
         private final String value;
     }
+
 }

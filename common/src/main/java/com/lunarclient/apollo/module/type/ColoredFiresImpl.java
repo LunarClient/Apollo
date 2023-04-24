@@ -7,7 +7,6 @@ import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.ColoredFire;
-
 import java.util.UUID;
 
 import static java.util.Objects.requireNonNull;

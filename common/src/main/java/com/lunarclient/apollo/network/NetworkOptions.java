@@ -1,6 +1,8 @@
 package com.lunarclient.apollo.network;
 
 import com.google.protobuf.Value;
+import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
+import com.lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.option.AbstractOptions;
 import com.lunarclient.apollo.option.Option;
@@ -9,8 +11,7 @@ import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
 import java.util.Set;
-import lunarclient.apollo.common.ModuleConfig;
-import lunarclient.apollo.common.Modules;
+import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -18,10 +19,8 @@ import org.jetbrains.annotations.Nullable;
  *
  * @since 1.0.0
  */
+@UtilityClass
 public final class NetworkOptions {
-
-    private NetworkOptions() {
-    }
 
     /**
      * Send a single option to a single player.
@@ -32,16 +31,17 @@ public final class NetworkOptions {
      * @param players the players to send the option to
      * @since 1.0.0
      */
-    public static void sendOption(ApolloModule module,
+    public void sendOption(ApolloModule module,
                                   Option<?, ?, ?> key,
                                   Value value,
                                   Iterable<ApolloPlayer> players) {
         if(!key.isNotify()) return;
 
-        Modules.Builder modulesBuilder = Modules.newBuilder();
-        ModuleConfig.Builder moduleBuilder = NetworkOptions.module(module);
-        moduleBuilder.putOptions(key.getKey(), value);
-        modulesBuilder.addModules(moduleBuilder.build());
+
+        OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
+        ConfigurableSettings.Builder moduleBuilder = NetworkOptions.module(module);
+        moduleBuilder.putProperties(key.getKey(), value);
+        modulesBuilder.addConfigurableSettings(moduleBuilder.build());
 
         for(ApolloPlayer player : players) {
             checkPlayerVersionSupport(module, player);
@@ -58,14 +58,15 @@ public final class NetworkOptions {
      * @param players the players to send the module options to
      * @since 1.0.0
      */
-    public static void sendOptions(Iterable<ApolloModule> modules,
+    public void sendOptions(Iterable<ApolloModule> modules,
                                    ApolloPlayer... players) {
         for(ApolloPlayer player : players) {
-            Modules.Builder modulesBuilder = Modules.newBuilder();
+            OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
+
             for(ApolloModule module : modules) {
                 checkPlayerVersionSupport(module, player);
 
-                modulesBuilder.addModules(NetworkOptions.moduleWithOptions(
+                modulesBuilder.addConfigurableSettings(NetworkOptions.moduleWithOptions(
                         module,
                         player
                 ).build());
@@ -75,7 +76,7 @@ public final class NetworkOptions {
         }
     }
 
-    private static void checkPlayerVersionSupport(ApolloModule module, ApolloPlayer player) {
+    private void checkPlayerVersionSupport(ApolloModule module, ApolloPlayer player) {
         Set<ApolloPlayerVersion> supportedVersions = module.getSupportedClientVersions();
         ApolloPlayerVersion playerVersion = player.getVersion();
 
@@ -85,23 +86,26 @@ public final class NetworkOptions {
         }
     }
 
-    private static ModuleConfig.Builder moduleWithOptions(ApolloModule module,
+    private ConfigurableSettings.Builder moduleWithOptions(ApolloModule module,
                                                            @Nullable ApolloPlayer player) {
-        ModuleConfig.Builder builder = NetworkOptions.module(module);
+        ConfigurableSettings.Builder builder = NetworkOptions.module(module);
         Options options = player != null ? module.getOptions().get(player) : module.getOptions();
+
         for(Option<?, ?, ?> option : options) {
             if(!option.isNotify()) continue;
+
             Value.Builder valueBuilder = Value.newBuilder();
             Object value = options.get(option);
             Value wrapper = ((AbstractOptions) options).wrapValue(valueBuilder, value);
-            builder.putOptions(option.getKey(), wrapper);
+            builder.putProperties(option.getKey(), wrapper);
         }
+
         return builder;
     }
 
-    private static ModuleConfig.Builder module(ApolloModule module) {
-        return ModuleConfig.newBuilder()
-                .setName(module.getName())
+    private ConfigurableSettings.Builder module(ApolloModule module) {
+        return ConfigurableSettings.newBuilder()
+                .setApolloModule(module.getName())
                 .setEnable(module.isEnabled());
     }
 

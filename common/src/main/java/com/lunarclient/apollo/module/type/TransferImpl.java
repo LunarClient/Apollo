@@ -13,7 +13,6 @@ import com.lunarclient.apollo.transfer.v1.PingRequest;
 import com.lunarclient.apollo.transfer.v1.PingResponse;
 import com.lunarclient.apollo.transfer.v1.TransferRequest;
 import com.lunarclient.apollo.transfer.v1.TransferResponse;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,7 +67,7 @@ public final class TransferImpl extends Transfer {
 
     public void onTransferResponse(ApolloReceivePacketEvent event) {
         event.unpackIf(TransferResponse.class).ifPresent(packet -> {
-            ServerTransfer.Response transferResponse = ServerTransfer.Response.of(null); // TODO
+            ServerTransfer.Response transferResponse = ServerTransfer.Response.of(ServerTransfer.Response.Status.values()[packet.getStatusValue() - 1]);
             Apollo.getRoundtripManager().handleResponse(transferResponse);
         });
 
@@ -76,7 +75,7 @@ public final class TransferImpl extends Transfer {
             List<ServerPing.Response.PingData> pingData = packet.getPingDataList().stream()
                 .map(data -> ServerPing.Response.PingData.of(
                     data.getServerIp(),
-                    null, // TODO
+                    ServerPing.Response.PingData.Status.values()[data.getStatusValue()],
                     data.getPing()
                 )).collect(Collectors.toList());
 
@@ -84,4 +83,5 @@ public final class TransferImpl extends Transfer {
             Apollo.getRoundtripManager().handleResponse(pingResponse);
         });
     }
+
 }

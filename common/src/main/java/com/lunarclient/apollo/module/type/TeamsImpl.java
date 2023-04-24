@@ -9,7 +9,6 @@ import com.lunarclient.apollo.player.ApolloPlayerManager;
 import com.lunarclient.apollo.player.ui.Team;
 import com.lunarclient.apollo.team.v1.TeamMember;
 import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -166,4 +165,5 @@ public final class TeamsImpl extends Teams {
             }
         }
     }
+
 }

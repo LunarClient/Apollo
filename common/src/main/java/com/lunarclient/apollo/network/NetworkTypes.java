@@ -10,7 +10,7 @@ import com.lunarclient.apollo.option.type.icon.ItemStackIcon;
 import com.lunarclient.apollo.option.type.icon.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.world.ApolloBlockLocation;
 import com.lunarclient.apollo.world.ApolloLocation;
-import java.awt.Color;
+import java.awt.*;
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;

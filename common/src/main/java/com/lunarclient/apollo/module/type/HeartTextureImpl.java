@@ -1,5 +1,6 @@
 package com.lunarclient.apollo.module.type;
 
+import com.lunarclient.apollo.hearttexture.v1.HeartType;
 import com.lunarclient.apollo.hearttexture.v1.OverrideHeartTextureMessage;
 import com.lunarclient.apollo.hearttexture.v1.ResetHeartTextureMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
@@ -25,7 +26,7 @@ public final class HeartTextureImpl extends HeartTextures {
         requireNonNull(heartTexture, "heartTexture");
 
         ((AbstractApolloPlayer) player).sendPacket(OverrideHeartTextureMessage.newBuilder()
-            .setHeartType(null) // TODO: figure out best way to map enums
+            .setHeartType(HeartType.forNumber(heartTexture.getType().ordinal() + 1))
             .setLocationX(heartTexture.getLocationX())
             .build());
     }

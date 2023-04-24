@@ -8,7 +8,6 @@ import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.Nametag;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -72,4 +71,5 @@ public final class NametagsImpl extends Nametags {
 
         ((AbstractApolloPlayer) player).sendPacket(ResetNametagsMessage.getDefaultInstance());
     }
+
 }

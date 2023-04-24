@@ -24,21 +24,26 @@ public final class NotificationsImpl extends Notifications {
         requireNonNull(player, "player");
         requireNonNull(notification, "notification");
 
-        DisplayNotificationMessage message = DisplayNotificationMessage.newBuilder()
-            .setTitle(notification.getTitle())
-            .setDescription(notification.getDescription())
-            .setResourceLocation(notification.getResourceLocation())
-            .build();
-
-        ((AbstractApolloPlayer) player).sendPacket(message);
+        ((AbstractApolloPlayer) player).sendPacket(this.toProtobuf(notification));
     }
 
     @Override
     public void broadcastNotification(Notification notification) {
         requireNonNull(notification, "notification");
 
+        DisplayNotificationMessage message = this.toProtobuf(notification);
+
         for(ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
-            this.displayNotification(player, notification);
+            ((AbstractApolloPlayer) player).sendPacket(message);
         }
     }
+
+    private DisplayNotificationMessage toProtobuf(Notification notification) {
+        return DisplayNotificationMessage.newBuilder()
+            .setTitle(notification.getTitle())
+            .setDescription(notification.getDescription())
+            .setResourceLocation(notification.getResourceLocation())
+            .build();
+    }
+
 }

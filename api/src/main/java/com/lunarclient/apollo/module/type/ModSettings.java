@@ -4,14 +4,11 @@ import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.option.ListOption;
 import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.type.configurable.Configurable;
+import com.lunarclient.apollo.option.type.configurable.ConfigurableSettings;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.player.ui.ModSetting;
 import io.leangen.geantyref.TypeToken;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -22,7 +19,7 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.NonExtendable
 public abstract class ModSettings extends ApolloModule {
 
-    private static final ModSetting SKYBLOCK_ADDONS_SETTING = ModSetting.of(
+    private static final Configurable SKYBLOCK_ADDONS_SETTING = Configurable.of(
         "skyblockAddons",
         false,
         null
@@ -33,9 +30,9 @@ public abstract class ModSettings extends ApolloModule {
      *
      * @since 1.0.0
      */
-    public static final ListOption<ModSetting> MOD_SETTINGS = Option.<ModSetting>list()
+    public static final ListOption<Configurable> MOD_SETTINGS = Option.<Configurable>list()
         .comment("A list of mod settings to send to the client.")
-        .node("settings").type(new TypeToken<List<ModSetting>>() {})
+        .node("settings").type(new TypeToken<List<Configurable>>() {})
         .defaultValue(new ArrayList<>(Collections.singletonList(SKYBLOCK_ADDONS_SETTING)))
         .notifyClient()
         .build();
@@ -57,20 +54,28 @@ public abstract class ModSettings extends ApolloModule {
     }
 
     /**
-     * Sends the {@link ModSetting} to the {@link ApolloPlayer}.
+     * Sends the {@link ConfigurableSettings} to the {@link ApolloPlayer}.
      *
      * @param player the player
-     * @param setting the mod setting
+     * @param settings the settings
      * @since 1.0.0
      */
-    public abstract void sendSetting(ApolloPlayer player, ModSetting setting);
+    public abstract void sendSettings(ApolloPlayer player, ConfigurableSettings settings);
 
     /**
-     * Sends the {@link ModSetting} to all {@link ApolloPlayer}s.
+     * Resets all {@link ConfigurableSettings}s for the {@link ApolloPlayer}.
      *
-     * @param setting the mod setting
+     * @param player the player
      * @since 1.0.0
      */
-    public abstract void broadcastSetting(ModSetting setting);
+    public abstract void resetSettings(ApolloPlayer player);
+
+    /**
+     * Sends the {@link ConfigurableSettings} to all {@link ApolloPlayer}s.
+     *
+     * @param settings the settings
+     * @since 1.0.0
+     */
+    public abstract void broadcastSettings(ConfigurableSettings settings);
 
 }

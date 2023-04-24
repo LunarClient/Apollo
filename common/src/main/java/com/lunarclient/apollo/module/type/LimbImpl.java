@@ -6,9 +6,8 @@ import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.limb.Armor;
 import com.lunarclient.apollo.player.ui.limb.Body;
-
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -28,11 +27,9 @@ public class LimbImpl extends Limb {
         requireNonNull(player, "player");
         requireNonNull(armor, "armor");
 
-        // TODO:
-        Set<ArmorPiece> pieces = new HashSet<>();
-//        Set<ArmorPiece> pieces = armor.getArmorPiece().stream()
-//            .map(piece -> )
-//            .collect(Collectors.toSet());
+        Set<ArmorPiece> pieces = armor.getArmorPiece().stream()
+            .map(piece -> ArmorPiece.forNumber(piece.ordinal() + 1))
+            .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) player).sendPacket(HideArmorPiecesMessage.newBuilder()
             .setPlayerUuid(NetworkTypes.toProtobuf(armor.getPlayer()))
@@ -45,11 +42,9 @@ public class LimbImpl extends Limb {
         requireNonNull(player, "player");
         requireNonNull(armor, "armor");
 
-        // TODO:
-        Set<ArmorPiece> pieces = new HashSet<>();
-//        Set<ArmorPiece> pieces = armor.getArmorPiece().stream()
-//            .map(piece -> )
-//            .collect(Collectors.toSet());
+        Set<ArmorPiece> pieces = armor.getArmorPiece().stream()
+            .map(piece -> ArmorPiece.forNumber(piece.ordinal() + 1))
+            .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) player).sendPacket(ResetArmorPiecesMessage.newBuilder()
             .setPlayerUuid(NetworkTypes.toProtobuf(armor.getPlayer()))
@@ -62,11 +57,9 @@ public class LimbImpl extends Limb {
         requireNonNull(player, "player");
         requireNonNull(body, "body");
 
-        // TODO:
-        Set<BodyPart> parts = new HashSet<>();
-//        Set<ArmorPiece> pieces = armor.getArmorPiece().stream()
-//            .map(piece -> )
-//            .collect(Collectors.toSet());
+        Set<BodyPart> parts = body.getBodyPart().stream()
+            .map(part -> BodyPart.forNumber(part.ordinal() + 1))
+            .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) player).sendPacket(HideBodyPartMessage.newBuilder()
             .setPlayerUuid(NetworkTypes.toProtobuf(body.getPlayer()))
@@ -79,11 +72,9 @@ public class LimbImpl extends Limb {
         requireNonNull(player, "player");
         requireNonNull(body, "body");
 
-        // TODO:
-        Set<BodyPart> parts = new HashSet<>();
-//        Set<ArmorPiece> pieces = armor.getArmorPiece().stream()
-//            .map(piece -> )
-//            .collect(Collectors.toSet());
+        Set<BodyPart> parts = body.getBodyPart().stream()
+            .map(part -> BodyPart.forNumber(part.ordinal() + 1))
+            .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) player).sendPacket(ResetBodyPartMessage.newBuilder()
             .setPlayerUuid(NetworkTypes.toProtobuf(body.getPlayer()))

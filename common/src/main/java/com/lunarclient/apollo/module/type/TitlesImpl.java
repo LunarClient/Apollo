@@ -7,6 +7,7 @@ import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.Title;
 import com.lunarclient.apollo.title.v1.DisplayTitleMessage;
 import com.lunarclient.apollo.title.v1.ResetTitlesMessage;
+import com.lunarclient.apollo.title.v1.TitleType;
 
 import static java.util.Objects.requireNonNull;
 
@@ -27,7 +28,7 @@ public final class TitlesImpl extends Titles {
         requireNonNull(title, "title");
 
         ((AbstractApolloPlayer) player).sendPacket(DisplayTitleMessage.newBuilder()
-            // TODO .setTitleType()
+            .setTitleType(TitleType.forNumber(title.getType().ordinal() + 1))
             .setMessage(NetworkTypes.toProtobuf(title.getMessage()))
             .setScale(title.getScale())
             .setFadeInTime(NetworkTypes.toProtobuf(title.getFadeInTime()))
@@ -51,4 +52,5 @@ public final class TitlesImpl extends Titles {
 
         ((AbstractApolloPlayer) player).sendPacket(ResetTitlesMessage.getDefaultInstance());
     }
+
 }

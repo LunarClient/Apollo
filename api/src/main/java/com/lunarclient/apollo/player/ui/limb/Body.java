@@ -40,7 +40,6 @@ public class Body {
         LEFT_ARM,
         RIGHT_ARM,
         LEFT_LEG,
-        RIGHT_LEG,
-        ALL
+        RIGHT_LEG
     }
 }

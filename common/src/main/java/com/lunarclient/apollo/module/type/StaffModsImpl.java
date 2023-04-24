@@ -6,9 +6,8 @@ import com.lunarclient.apollo.player.ui.StaffMods;
 import com.lunarclient.apollo.staffmod.v1.DisableStaffModsMessage;
 import com.lunarclient.apollo.staffmod.v1.EnableStaffModsMessage;
 import com.lunarclient.apollo.staffmod.v1.StaffMod;
-
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -23,11 +22,9 @@ public final class StaffModsImpl extends com.lunarclient.apollo.module.type.Staf
         requireNonNull(player, "player");
         requireNonNull(mods, "staffMods");
 
-        // TODO:
-        Set<StaffMod> staffMods = new HashSet<>();
-//        Set<StaffMod> staffMods = mods.getMods().stream()
-//            .map()
-//            .collect(Collectors.toList())
+        Set<StaffMod> staffMods = mods.getMods().stream()
+            .map(mod -> StaffMod.forNumber(mod.ordinal()))
+            .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) player).sendPacket(EnableStaffModsMessage.newBuilder()
             .addAllStaffMods(staffMods)
@@ -39,14 +36,13 @@ public final class StaffModsImpl extends com.lunarclient.apollo.module.type.Staf
         requireNonNull(player, "player");
         requireNonNull(mods, "staffMods");
 
-        // TODO:
-        Set<StaffMod> staffMods = new HashSet<>();
-//        Set<StaffMod> staffMods = mods.getMods().stream()
-//            .map()
-//            .collect(Collectors.toList())
+        Set<StaffMod> staffMods = mods.getMods().stream()
+            .map(mod -> StaffMod.forNumber(mod.ordinal()))
+            .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) player).sendPacket(DisableStaffModsMessage.newBuilder()
             .addAllStaffMods(staffMods)
             .build());
     }
+
 }

@@ -8,7 +8,6 @@ import com.lunarclient.apollo.player.ui.Waypoint;
 import com.lunarclient.apollo.waypoint.v1.DisplayWaypointMessage;
 import com.lunarclient.apollo.waypoint.v1.RemoveWaypointMessage;
 import com.lunarclient.apollo.waypoint.v1.ResetWaypointsMessage;
-
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
@@ -78,4 +77,5 @@ public final class WaypointsImpl extends Waypoints {
             .setVisible(waypoint.isVisible())
             .build();
     }
+
 }

@@ -38,7 +38,6 @@ public class Armor {
         HELMET,
         CHESTPLATE,
         LEGGINGS,
-        BOOTS,
-        ALL
+        BOOTS;
     }
 }

@@ -7,7 +7,6 @@ import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.misc.Entity;
 import com.lunarclient.apollo.player.ui.misc.Vignette;
-
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;

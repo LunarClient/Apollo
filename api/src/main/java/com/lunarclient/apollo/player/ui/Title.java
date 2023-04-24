@@ -1,8 +1,7 @@
 package com.lunarclient.apollo.player.ui;
 
-import java.time.Duration;
-
 import com.lunarclient.apollo.option.type.Component;
+import java.time.Duration;
 import lombok.Value;
 
 /**

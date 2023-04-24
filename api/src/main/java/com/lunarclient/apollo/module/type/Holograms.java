@@ -4,9 +4,8 @@ import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.Cooldown;
 import com.lunarclient.apollo.player.ui.Hologram;
-import org.jetbrains.annotations.ApiStatus;
-
 import java.util.UUID;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the hologram module.

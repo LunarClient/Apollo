@@ -7,7 +7,6 @@ import com.lunarclient.apollo.hologram.v1.ResetHologramsMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.Hologram;
-
 import java.util.UUID;
 
 import static java.util.Objects.requireNonNull;

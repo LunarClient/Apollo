@@ -1,10 +1,9 @@
 package com.lunarclient.apollo.player.ui;
 
 import com.lunarclient.apollo.option.type.Component;
-import lombok.Value;
-
 import java.util.List;
 import java.util.UUID;
+import lombok.Value;
 
 /**
  * Represents a nametag which can be shown on the client.
