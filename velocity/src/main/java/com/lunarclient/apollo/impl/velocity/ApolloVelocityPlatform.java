@@ -27,7 +27,7 @@ import java.nio.file.Path;
 @Plugin(
         id = "apollo",
         name = "Apollo-Velocity",
-        version = "1.0.0",
+        version = "0.1.0-SNAPSHOT",
         url = "https://moonsworth.com",
         description = "Implementation of Apollo for Velocity",
         authors = { "Moonsworth" }
