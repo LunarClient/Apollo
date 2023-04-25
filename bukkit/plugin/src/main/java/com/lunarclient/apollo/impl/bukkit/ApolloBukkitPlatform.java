@@ -21,6 +21,8 @@ import com.lunarclient.apollo.module.type.Notifications;
 import com.lunarclient.apollo.module.type.NotificationsImpl;
 import com.lunarclient.apollo.module.type.Saturation;
 import com.lunarclient.apollo.module.type.SaturationImpl;
+import com.lunarclient.apollo.module.type.Stopwatch;
+import com.lunarclient.apollo.module.type.StopwatchImpl;
 import com.lunarclient.apollo.module.type.Teams;
 import com.lunarclient.apollo.module.type.TeamsImpl;
 import com.lunarclient.apollo.module.type.Titles;
@@ -65,6 +67,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
                 .addModule(Nametags.class, new NametagsImpl())
                 .addModule(Notifications.class, new NotificationsImpl())
                 .addModule(Saturation.class, new SaturationImpl())
+                .addModule(Stopwatch.class, new StopwatchImpl())
                 .addModule(Teams.class, new TeamsImpl())
                 .addModule(Titles.class, new TitlesImpl())
                 .addModule(Waypoints.class, new WaypointsImpl())

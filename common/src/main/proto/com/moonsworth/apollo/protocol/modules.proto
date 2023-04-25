@@ -62,6 +62,16 @@ message HologramMessage {
     repeated lunarclient.apollo.utility.RenderableStringMessage lines = 3;
 }
 
+message StopwatchActionMessage {
+    enum Action {
+        START = 0;
+        STOP = 1;
+        RESET = 2;
+    }
+
+    Action action = 1;
+}
+
 message ToggleArmorPartMessage {
   enum Part {
     HELMET = 0;
