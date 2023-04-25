@@ -29,7 +29,7 @@ public final class BukkitApolloPlayer extends AbstractApolloPlayer {
 
     @Override
     public Optional<ApolloLocation> getLocation() {
-        final Location location = this.player.getLocation();
+        Location location = this.player.getLocation();
         return Optional.of(ApolloLocation.of(
                 location.getWorld().getName(),
                 location.getX(),
@@ -39,12 +39,12 @@ public final class BukkitApolloPlayer extends AbstractApolloPlayer {
     }
 
     @Override
-    public boolean hasPermission(final String permissionNode) {
+    public boolean hasPermission(String permissionNode) {
         return this.player.hasPermission(permissionNode);
     }
 
     @Override
-    public void sendPacket(final byte[] messages) {
+    public void sendPacket(byte[] messages) {
         this.player.sendPluginMessage(ApolloBukkitPlatform.getInstance(), ApolloManager.PLUGIN_MESSAGE_CHANNEL, messages);
     }
 

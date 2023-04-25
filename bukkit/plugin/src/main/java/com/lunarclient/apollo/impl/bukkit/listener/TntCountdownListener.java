@@ -18,14 +18,14 @@ public class TntCountdownListener implements Listener {
     private final TntCountdown tntCountdownModule;
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onTntSpawn(final EntitySpawnEvent event) {
-        if(!(event.getEntity() instanceof final TNTPrimed primed)) return;
-        final int id = event.getEntity().getEntityId();
-        final int ticks = primed.getFuseTicks();
+    public void onTntSpawn(EntitySpawnEvent event) {
+        if(!(event.getEntity() instanceof TNTPrimed primed)) return;
+        int id = event.getEntity().getEntityId();
+        int ticks = primed.getFuseTicks();
 
         if(ticks != tntCountdownModule.getOptions().get(TntCountdown.TNT_TICKS)) {
-            for(final Player bukkitPlayer : event.getLocation().getNearbyPlayers(Bukkit.getSimulationDistance())) {
-                final Optional<ApolloPlayer> player = Apollo.getPlayerManager().getPlayer(bukkitPlayer.getUniqueId());
+            for(Player bukkitPlayer : event.getLocation().getNearbyPlayers(Bukkit.getSimulationDistance())) {
+                Optional<ApolloPlayer> player = Apollo.getPlayerManager().getPlayer(bukkitPlayer.getUniqueId());
                 if(player.isEmpty()) continue;
 
                 tntCountdownModule.setTntTicks(player.get(), id, ticks);
