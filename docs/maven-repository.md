@@ -71,5 +71,5 @@ Forks of various open source libraries we use and publish.
 * `org.cadixdev:mercury` (source available at https://github.com/LunarClient/Mercury)
 * `org.cadixdev:mercurymixin` (source available at https://github.com/LunarClient/MercuryMixin)
 * `org.spongepowered:mixin` (source available at https://github.com/LunarClient/Mixin)
-* `com.eliotlash.molang` (source available at https://github.com/LunarClient/particleman)
-* `software.bernie.geckolib3.core` (source available at https://github.com/LunarClient/geckolib-core)
+* `com.eliotlash.molang:particleman` (source available at https://github.com/LunarClient/particleman)
+* `software.bernie.geckolib3:core` (source available at https://github.com/LunarClient/geckolib-core)
