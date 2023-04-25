@@ -3,6 +3,10 @@ plugins {
     id("io.papermc.paperweight.userdev")
 }
 
+repositories {
+    maven("https://repo.lunarclient.dev")
+}
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
