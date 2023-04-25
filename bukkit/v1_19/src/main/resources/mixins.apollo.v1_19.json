@@ -5,8 +5,9 @@
   "required": true,
   "compatibilityLevel": "JAVA_11",
   "mixins": [
-    "PlayerMixin_v1_19",
     "LivingEntityMixin_v1_19",
+    "PlayerMixin_v1_19",
+    "PrimedTnt_v1_19",
     "ServerGamePacketListenerImplMixin_v1_19"
   ],
   "injectors": {

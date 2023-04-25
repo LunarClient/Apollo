@@ -72,6 +72,11 @@ message StopwatchActionMessage {
     Action action = 1;
 }
 
+message TntCountdownMessage {
+    int32 entityId = 1;
+    int32 ticks = 2;
+}
+
 message ToggleArmorPartMessage {
   enum Part {
     HELMET = 0;
