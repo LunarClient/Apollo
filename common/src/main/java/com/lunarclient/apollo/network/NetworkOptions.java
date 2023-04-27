@@ -11,7 +11,6 @@ import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
 import java.util.Set;
-import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -19,8 +18,11 @@ import org.jetbrains.annotations.Nullable;
  *
  * @since 1.0.0
  */
-@UtilityClass
 public final class NetworkOptions {
+
+    private NetworkOptions() {
+
+    }
 
     /**
      * Send a single option to a single player.
@@ -31,7 +33,7 @@ public final class NetworkOptions {
      * @param players the players to send the option to
      * @since 1.0.0
      */
-    public void sendOption(ApolloModule module,
+    public static void sendOption(ApolloModule module,
                                   Option<?, ?, ?> key,
                                   Value value,
                                   Iterable<ApolloPlayer> players) {
@@ -57,7 +59,7 @@ public final class NetworkOptions {
      * @param players the players to send the module options to
      * @since 1.0.0
      */
-    public void sendOptions(Iterable<ApolloModule> modules,
+    public static void sendOptions(Iterable<ApolloModule> modules,
                                    ApolloPlayer... players) {
         for(ApolloPlayer player : players) {
             OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
@@ -75,7 +77,7 @@ public final class NetworkOptions {
         }
     }
 
-    private void checkPlayerVersionSupport(ApolloModule module, ApolloPlayer player) {
+    private static void checkPlayerVersionSupport(ApolloModule module, ApolloPlayer player) {
         Set<ApolloPlayerVersion> supportedVersions = module.getSupportedClientVersions();
         ApolloPlayerVersion playerVersion = player.getVersion();
 
@@ -85,7 +87,7 @@ public final class NetworkOptions {
         }
     }
 
-    private ConfigurableSettings.Builder moduleWithOptions(ApolloModule module,
+    private static ConfigurableSettings.Builder moduleWithOptions(ApolloModule module,
                                                            @Nullable ApolloPlayer player) {
         ConfigurableSettings.Builder builder = NetworkOptions.module(module);
         Options options = player != null ? module.getOptions().get(player) : module.getOptions();
@@ -102,7 +104,7 @@ public final class NetworkOptions {
         return builder;
     }
 
-    private ConfigurableSettings.Builder module(ApolloModule module) {
+    private static ConfigurableSettings.Builder module(ApolloModule module) {
         return ConfigurableSettings.newBuilder()
                 .setApolloModule(module.getName())
                 .setEnable(module.isEnabled());

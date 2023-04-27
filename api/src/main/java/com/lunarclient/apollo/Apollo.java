@@ -66,12 +66,11 @@ public final class Apollo {
         Apollo.roundtripManager = requireNonNull(roundtripManager, "roundtripManager");
     }
 
-    private static <T> T checkEnabled(final @Nullable T object) {
+    private static <T> T checkEnabled(@Nullable T object) {
         if (object == null) throw new UnsupportedOperationException("Apollo has not started yet!");
         return object;
     }
 
-    private Apollo() {
-    }
+    private Apollo() { }
 
 }

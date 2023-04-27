@@ -40,7 +40,7 @@ public class ApolloReceivePacketEvent implements Event {
      * @return the message
      * @since 1.0.0
      */
-    public <T extends Message> Optional<T> unpackIf(Class<T> packet) {
+    public <T extends Message> Optional<T> unpack(Class<T> packet) {
         if (!this.packet.is(packet)) {
             return Optional.empty();
         }

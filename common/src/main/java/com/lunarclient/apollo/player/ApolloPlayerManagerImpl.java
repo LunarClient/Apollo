@@ -43,6 +43,7 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
      */
     public void addPlayer(ApolloPlayer player) {
         requireNonNull(player, "player");
+
         if(this.players.putIfAbsent(player.getUniqueId(), player) == null) {
             EventBus.EventResult<ApolloRegisterPlayerEvent> result = EventBus.getBus().post(new ApolloRegisterPlayerEvent(player));
             for(Throwable throwable : result.getThrowing()) {
@@ -64,6 +65,7 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
      */
     public void removePlayer(UUID player) {
         requireNonNull(player, "player");
+
         ApolloPlayer apolloPlayer = this.players.remove(player);
         if(apolloPlayer != null) {
             EventBus.EventResult<ApolloUnregisterPlayerEvent> result = EventBus.getBus().post(new ApolloUnregisterPlayerEvent(apolloPlayer));

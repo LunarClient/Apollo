@@ -30,7 +30,7 @@ public final class WaypointsImpl extends Waypoints {
         requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
 
-        ((AbstractApolloPlayer) player).sendPacket(this.to(waypoint));
+        ((AbstractApolloPlayer) player).sendPacket(this.toProtobuf(waypoint));
     }
 
     @Override
@@ -64,11 +64,11 @@ public final class WaypointsImpl extends Waypoints {
         if(waypoints == null) return;
 
         for(Waypoint waypoint : waypoints) {
-            ((AbstractApolloPlayer) player).sendPacket(this.to(waypoint));
+            ((AbstractApolloPlayer) player).sendPacket(this.toProtobuf(waypoint));
         }
     }
 
-    private DisplayWaypointMessage to(Waypoint waypoint) {
+    private DisplayWaypointMessage toProtobuf(Waypoint waypoint) {
         return DisplayWaypointMessage.newBuilder()
             .setName(waypoint.getName())
             .setLocation(NetworkTypes.toProtobuf(waypoint.getLocation()))

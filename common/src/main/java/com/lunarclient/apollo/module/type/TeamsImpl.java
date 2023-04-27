@@ -125,7 +125,6 @@ public final class TeamsImpl extends Teams {
 
         ApolloPlayerManager playerManager = Apollo.getPlayerManager();
 
-        // TODO: clean up a bit
         Map<ApolloPlayer, Team.Teammate> teammates = team.getTeammates().entrySet().stream()
             .map(entry -> new AbstractMap.SimpleImmutableEntry<>(
                 playerManager.getPlayer(entry.getKey()),
