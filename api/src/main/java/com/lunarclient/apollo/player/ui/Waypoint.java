@@ -1,7 +1,7 @@
 package com.lunarclient.apollo.player.ui;
 
 import com.lunarclient.apollo.world.ApolloBlockLocation;
-import java.awt.*;
+import java.awt.Color;
 import lombok.Value;
 
 /**

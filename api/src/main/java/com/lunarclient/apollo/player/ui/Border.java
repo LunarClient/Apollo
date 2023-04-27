@@ -1,7 +1,7 @@
 package com.lunarclient.apollo.player.ui;
 
 import com.lunarclient.apollo.option.type.bounds.Cuboid2D;
-import java.awt.*;
+import java.awt.Color;
 import lombok.Value;
 
 /**

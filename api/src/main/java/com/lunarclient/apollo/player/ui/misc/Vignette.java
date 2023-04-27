@@ -3,7 +3,7 @@ package com.lunarclient.apollo.player.ui.misc;
 import lombok.Value;
 
 /**
- * Represents a vignette which can be shown on the client
+ * Represents a vignette which can be shown on the client.
  *
  * @since 1.0.0
  */

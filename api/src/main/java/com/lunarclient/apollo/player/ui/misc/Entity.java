@@ -4,7 +4,7 @@ import java.util.UUID;
 import lombok.Value;
 
 /**
- * Represents an entity
+ * Represents an entity.
  *
  * @since 1.0.0
  */

@@ -9,20 +9,31 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Manages Apollo round-trip messages.
+ *
+ * @since 1.0.0
  */
 public class ApolloRoundtripManager {
 
     /**
      * Represents a {@link Map} of {@link UUID} packet id as a key
      * and {@link UncertainFuture} response as value.
+     *
+     * @since 1.0.0
      */
     private final Map<UUID, UncertainFuture<ApolloResponse>> listeners;
 
     /**
      * The executor for packet timeouts.
+     *
+     * @since 1.0.0
      */
     private final ScheduledThreadPoolExecutor timeoutExecutor;
 
+    /**
+     * Constructs the {@link ApolloRoundtripManager}.
+     *
+     * @since 1.0.0
+     */
     public ApolloRoundtripManager() {
         this.listeners = new ConcurrentHashMap<>();
         this.timeoutExecutor = new ScheduledThreadPoolExecutor(1);
@@ -32,6 +43,7 @@ public class ApolloRoundtripManager {
      * Handles the given {@link ApolloResponse}.
      *
      * @param response the response
+     * @since 1.0.0
      */
     public void handleResponse(ApolloResponse response) {
         UncertainFuture<ApolloResponse> future = this.listeners.remove(response.getPacketId());
@@ -47,6 +59,7 @@ public class ApolloRoundtripManager {
      * @param request the request
      * @param future the future
      * @param <T> the response type
+     * @since 1.0.0
      */
     public <T extends ApolloResponse> void registerListener(ApolloRequest<T> request, UncertainFuture<T> future) {
         UUID packetId = request.getPacketId();

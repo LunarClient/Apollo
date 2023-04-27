@@ -3,7 +3,6 @@ package com.lunarclient.apollo.module.type;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
-import com.lunarclient.apollo.player.ui.Nametag;
 import com.lunarclient.apollo.player.ui.Title;
 import java.util.EnumSet;
 import java.util.Set;

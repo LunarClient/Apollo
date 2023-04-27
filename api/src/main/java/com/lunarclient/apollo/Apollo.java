@@ -71,6 +71,8 @@ public final class Apollo {
         return object;
     }
 
-    private Apollo() { }
+    private Apollo() {
+
+    }
 
 }

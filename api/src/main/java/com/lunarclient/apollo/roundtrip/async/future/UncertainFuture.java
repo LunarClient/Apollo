@@ -13,6 +13,7 @@ import lombok.Setter;
  * operation that may or may not complete successfully.
  *
  * @param <T> the type of the response object that will be returned
+ * @since 1.0.0
  */
 @Getter @Setter
 public class UncertainFuture<T extends ApolloResponse> implements Future<T> {
@@ -20,12 +21,16 @@ public class UncertainFuture<T extends ApolloResponse> implements Future<T> {
     /**
      * A {@link Set} of success handlers that will be
      * invoked if the operation completes successfully.
+     *
+     * @since 1.0.0
      */
     private Set<Handler<T>> success = new HashSet<>();
 
     /**
      * A {@link Set} of failure handlers that will be
      * invoked if the operation does not complete successfully.
+     *
+     * @since 1.0.0
      */
     private Set<Handler<Throwable>> failure = new HashSet<>();
 
@@ -34,6 +39,7 @@ public class UncertainFuture<T extends ApolloResponse> implements Future<T> {
      * when the operation completes successfully.
      *
      * @param handler the handler
+     * @since 1.0.0
      */
     @Override
     public void onSuccess(Handler<T> handler) {
@@ -45,6 +51,7 @@ public class UncertainFuture<T extends ApolloResponse> implements Future<T> {
      * when the operation does not complete successfully.
      *
      * @param throwable the throwable
+     * @since 1.0.0
      */
     @Override
     public void onFailure(Handler<Throwable> throwable) {

@@ -8,7 +8,6 @@ import lombok.Value;
 
 /**
  * Represents a server ping which the client will ping.
- * <p>
  *
  * @since 1.0.0
  */

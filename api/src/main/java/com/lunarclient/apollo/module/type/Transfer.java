@@ -32,6 +32,7 @@ public abstract class Transfer extends ApolloModule {
      *
      * @param player the player
      * @param ping the ping request
+     * @param response the ping response
      * @since 1.0.0
      */
     public abstract void ping(ApolloPlayer player, ServerPing.Request ping, Handler<ServerPing.Response> response);
@@ -41,6 +42,7 @@ public abstract class Transfer extends ApolloModule {
      *
      * @param player the player
      * @param transfer the transfer request
+     * @param response the transfer response
      * @since 1.0.0
      */
     public abstract void transfer(ApolloPlayer player, ServerTransfer.Request transfer, Handler<ServerTransfer.Response> response);

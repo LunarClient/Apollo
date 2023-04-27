@@ -8,7 +8,11 @@ import com.lunarclient.apollo.option.type.configurable.Configurable;
 import com.lunarclient.apollo.option.type.configurable.ConfigurableSettings;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import io.leangen.geantyref.TypeToken;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
 
 /**

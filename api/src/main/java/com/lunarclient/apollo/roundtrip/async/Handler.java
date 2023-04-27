@@ -6,6 +6,7 @@ package com.lunarclient.apollo.roundtrip.async;
  * object to be invoked when the associated operation completes.
  *
  * @param <E> the type of the response object that will be handled by the callback
+ * @since 1.0.0
  */
 @FunctionalInterface
 public interface Handler<E> {
@@ -14,6 +15,7 @@ public interface Handler<E> {
      * Handles the response object passed to the callback.
      *
      * @param response the object to handle
+     * @since 1.0.0
      */
     void handle(E response);
 }

@@ -1,3 +1,10 @@
 package com.lunarclient.apollo.option.type.icon;
 
-public abstract class Icon { }
+/**
+ * The abstract base class for all icons.
+ *
+ * @since 1.0.0
+ */
+public abstract class Icon {
+
+}
