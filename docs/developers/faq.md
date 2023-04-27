@@ -1,4 +1,4 @@
-#FAQs
+# FAQs
 
 <details>
 <summary>What is the difference between the legacy Lunar Client API and Apollo API?</summary>

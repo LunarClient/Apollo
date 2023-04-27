@@ -1,4 +1,4 @@
-#Introduction
+# Introduction
 
 The Lunar Client API, known as Apollo, is a powerful tool that allows developers to create custom integrations with Lunar Client. 
 Using Apollo will allow server owners and developers to interact with Lunar Client, in ways we haven't even thought of.
@@ -8,7 +8,7 @@ This documentation will provide you with all information you'll need to know to 
 We'll cover the basics of Apollo, including how to authenticate players, how to make request and how to handle responses.
 Inside each module you'll find code snippets along with photos, videos and gifs related to certain modules to ensure you get the most out of Apollo.
 
-###Useful Links
+### Useful Links
 
 - Lunar Client: https://www.lunarclient.com/
 - Apollo Discord: https://www.lunarclient.dev/discord
