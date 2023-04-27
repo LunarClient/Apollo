@@ -1,0 +1,63 @@
+# FAQs
+
+<details>
+<summary>What is the difference between the legacy Lunar Client API and Apollo API?</summary>
+
+The legacy API was hastily created specifically for features Lunar Network needed.
+Whereas, Apollo was created with the intention to add more general functionality for all types of servers and gamemodes.
+
+</details>
+
+<details>
+<summary>Can I continue ot use the legacy Lunar Client API?</summary>
+
+Yes, as of now you're able to keep using the legacy Lunar Client API.
+However, we're no longer maintaining the legacy API, which means you won't be able to use the newest features.
+We will evenly discontinue support for the legacy API support, so it's highly recommended updating to use Apollo.
+
+</details>
+
+<details>
+<summary>Why should I use Apollo? What benefits does Apollo have for my server?</summary>
+
+Apollo offers you the chance to implement features that aren't possible in your current version of Minecraft and provide quality of life features to your players.
+As well as, multiple server-sided improvements such as chuck caching, client-side rendering, and much more.
+
+</details>
+
+<details>
+<summary>What Minecraft Versions does Apollo support?</summary>
+
+Apollo is currently set up to work with all versions that Lunar Client supports, with a single installation.
+
+</details>
+
+<details>
+<summary>Where can I download a compiled version of Apollo?</summary>
+
+You can download a compiled version of Apollo and the official Apollo implementation plugin on the [downloads page](https://www.lunarclient.dev/downloads).
+
+</details>
+
+<details>
+<summary>Can I use Apollo without any programming knowledge?</summary>
+
+Yes!
+You can [download](https://www.lunarclient.dev/downloads) the Apollo implementation plugin, and drop it into your plugins' folder.
+The Apollo implementation plugin has a prebuilt configuration file, which can be edited very easily.
+
+</details>
+
+<details>
+<summary>Can I use Apollo for free?</summary>
+
+Yes! Lunar Client has no intentions of ever charging for usage of Apollo.
+
+</details>
+
+<details>
+<summary>How can I get my server name to appear on the Lunar Client friend menu, launcher and other places?</summary>
+
+As of now, you can submit your server to the [Lunar Client ServerMappings](https://github.com/LunarClient/ServerMappings) repository on GitHub, where you'll need to provide information and branding around your server.
+
+</details>
