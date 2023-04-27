@@ -14,7 +14,7 @@ public final class AttackFrequencyListener implements Listener {
     private final LegacyCombat legacyCombat;
     @EventHandler
     public void onPlayerLogin(PlayerJoinEvent e) {
-        final Player player = e.getPlayer();
+        Player player = e.getPlayer();
         player.setMaximumNoDamageTicks(legacyCombat.getOptions().get(LegacyCombat.NO_DAMAGE_TICKS));
     }
 
@@ -25,7 +25,7 @@ public final class AttackFrequencyListener implements Listener {
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e) {
-        final Player player = e.getPlayer();
+        Player player = e.getPlayer();
         player.setMaximumNoDamageTicks(legacyCombat.getOptions().get(LegacyCombat.NO_DAMAGE_TICKS));
     }
 

@@ -1,18 +1,20 @@
 package com.lunarclient.apollo.module.type;
 
+import com.lunarclient.apollo.common.v1.Uuid;
+import com.lunarclient.apollo.misc.v1.DisplayVignetteMessage;
+import com.lunarclient.apollo.misc.v1.FlipEntityMessage;
+import com.lunarclient.apollo.misc.v1.OverrideRainbowSheepMessage;
+import com.lunarclient.apollo.misc.v1.ResetFlipedEntityMessage;
+import com.lunarclient.apollo.misc.v1.ResetRainbowSheepMessage;
+import com.lunarclient.apollo.misc.v1.ResetVignetteMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.player.ui.misc.FlippedEntity;
-import com.lunarclient.apollo.player.ui.misc.RainbowSheep;
+import com.lunarclient.apollo.player.ui.misc.Entity;
 import com.lunarclient.apollo.player.ui.misc.Vignette;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
-import lunarclient.apollo.common.OptionOperation;
-import lunarclient.apollo.modules.FlipEntityMessage;
-import lunarclient.apollo.modules.RainbowSheepMessage;
-import lunarclient.apollo.modules.VignetteMessage;
 
 import static java.util.Objects.requireNonNull;
 
@@ -28,75 +30,77 @@ public final class MiscImpl extends Misc {
     }
 
     @Override
-    public void flipEntities(ApolloPlayer player, FlippedEntity... entities) {
-        requireNonNull(player, "player");
-        requireNonNull(entities, "entities");
-
-        List<FlipEntityMessage.Entity> flippedEntities = Arrays.stream(entities).map(entity ->
-            FlipEntityMessage.Entity.newBuilder()
-                .setEntityId(NetworkTypes.toUuid(entity.getEntity()))
-                .setFlipped(entity.isFlipped())
-                .build()
-        ).collect(Collectors.toList());
-
-        FlipEntityMessage message = FlipEntityMessage.newBuilder()
-            .addAllEntities(flippedEntities)
-            .build();
-
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, message);
-    }
-
-    @Override
-    public void flipAllEntities(ApolloPlayer player) {
-        requireNonNull(player, "player");
-
-        FlipEntityMessage message = FlipEntityMessage.newBuilder()
-            .addAllEntities(null)
-            .build();
-
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, message);
-    }
-
-    @Override
-    public void rainbowSheep(ApolloPlayer player, RainbowSheep... sheep) {
-        requireNonNull(player, "player");
-        requireNonNull(sheep, "sheep");
-
-        List<RainbowSheepMessage.Sheep> rainbowSheep = Arrays.stream(sheep).map(entity ->
-            RainbowSheepMessage.Sheep.newBuilder()
-                .setEntityId(NetworkTypes.toUuid(entity.getEntity()))
-                .setRainbow(entity.isRainbow())
-                .build()
-        ).collect(Collectors.toList());
-
-        RainbowSheepMessage message = RainbowSheepMessage.newBuilder()
-            .addAllSheep(rainbowSheep)
-            .build();
-
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, message);
-    }
-
-    @Override
-    public void rainbowSheep(ApolloPlayer player) {
-        requireNonNull(player, "player");
-
-        RainbowSheepMessage message = RainbowSheepMessage.newBuilder()
-            .addAllSheep(null)
-            .build();
-
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, message);
-    }
-
-    @Override
     public void displayVignette(ApolloPlayer player, Vignette vignette) {
         requireNonNull(player, "player");
         requireNonNull(vignette, "vignette");
 
-        VignetteMessage message = VignetteMessage.newBuilder()
-            .setTexture(vignette.getResourceLocation())
+        ((AbstractApolloPlayer) player).sendPacket(DisplayVignetteMessage.newBuilder()
+            .setResourceLocation(vignette.getResourceLocation())
             .setOpacity(vignette.getOpacity())
-            .build();
-
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, message);
+            .build());
     }
+
+    @Override
+    public void resetVignette(ApolloPlayer player) {
+        requireNonNull(player, "player");
+
+        ((AbstractApolloPlayer) player).sendPacket(ResetVignetteMessage.getDefaultInstance());
+    }
+
+    @Override
+    public void overrideRainbowSheep(ApolloPlayer player, Entity... sheep) {
+        requireNonNull(player, "player");
+        requireNonNull(sheep, "sheep");
+
+        Set<Uuid> entityIds = Arrays.stream(sheep)
+            .map(entity -> NetworkTypes.toProtobuf(entity.getId()))
+            .collect(Collectors.toSet());
+
+        ((AbstractApolloPlayer) player).sendPacket(OverrideRainbowSheepMessage.newBuilder()
+            .addAllEntityId(entityIds)
+            .build());
+    }
+
+    @Override
+    public void resetRainbowSheep(ApolloPlayer player, Entity... sheep) {
+        requireNonNull(player, "player");
+        requireNonNull(sheep, "sheep");
+
+        Set<Uuid> entityIds = Arrays.stream(sheep)
+            .map(entity -> NetworkTypes.toProtobuf(entity.getId()))
+            .collect(Collectors.toSet());
+
+        ((AbstractApolloPlayer) player).sendPacket(ResetRainbowSheepMessage.newBuilder()
+            .addAllEntityId(entityIds)
+            .build());
+    }
+
+    @Override
+    public void flipEntity(ApolloPlayer player, Entity... entities) {
+        requireNonNull(player, "player");
+        requireNonNull(entities, "entities");
+
+        Set<Uuid> entityIds = Arrays.stream(entities)
+            .map(entity -> NetworkTypes.toProtobuf(entity.getId()))
+            .collect(Collectors.toSet());
+
+        ((AbstractApolloPlayer) player).sendPacket(FlipEntityMessage.newBuilder()
+            .addAllEntityId(entityIds)
+            .build());
+    }
+
+    @Override
+    public void resetFlippedEntity(ApolloPlayer player, Entity... entities) {
+        requireNonNull(player, "player");
+        requireNonNull(entities, "entities");
+
+        Set<Uuid> entityIds = Arrays.stream(entities)
+            .map(entity -> NetworkTypes.toProtobuf(entity.getId()))
+            .collect(Collectors.toSet());
+
+        ((AbstractApolloPlayer) player).sendPacket(ResetFlipedEntityMessage.newBuilder()
+            .addAllEntityId(entityIds)
+            .build());
+    }
+
 }

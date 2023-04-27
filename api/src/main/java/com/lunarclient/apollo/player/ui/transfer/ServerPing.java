@@ -1,4 +1,4 @@
-package com.lunarclient.apollo.player.ui.network;
+package com.lunarclient.apollo.player.ui.transfer;
 
 import com.lunarclient.apollo.roundtrip.ApolloRequest;
 import com.lunarclient.apollo.roundtrip.ApolloResponse;
@@ -66,18 +66,15 @@ public class ServerPing {
             String address;
 
             /**
-             * Returns the pinged server {@link State} state.
+             * Returns the pinged server {@link Status} status.
              *
-             * @return the ping state
+             * @return the ping status
              * @since 1.0.0
              */
-            State state;
+            Status status;
 
             /**
              * Returns the pinged server {@link Integer} ping.
-             * <>p</>
-             * If the {@link State} returns {@link State#TIMED_OUT},
-             * this value will be {@link Integer#MIN_VALUE}
              *
              * @return the ping
              * @since 1.0.0
@@ -89,7 +86,7 @@ public class ServerPing {
              *
              * @since 1.0.0
              */
-            public enum State {
+            public enum Status {
 
                 SUCCESS,
                 TIMED_OUT

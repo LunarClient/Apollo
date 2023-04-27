@@ -31,17 +31,17 @@ public final class RegenListener implements Listener {
             return;
         }
 
-        final Player player = (Player) e.getEntity();
+        Player player = (Player) e.getEntity();
 
         e.setCancelled(true);
 
         // Get exhaustion & saturation values before healing modifies them
-        final float previousExhaustion = player.getExhaustion();
+        float previousExhaustion = player.getExhaustion();
 
         // Check that it has been at least x seconds since last heal
-        final long currentTime = System.currentTimeMillis();
-        final boolean hasLastHealTime = healTimes.containsKey(player.getUniqueId());
-        final long lastHealTime = healTimes.computeIfAbsent(player.getUniqueId(), id -> currentTime);
+        long currentTime = System.currentTimeMillis();
+        boolean hasLastHealTime = healTimes.containsKey(player.getUniqueId());
+        long lastHealTime = healTimes.computeIfAbsent(player.getUniqueId(), id -> currentTime);
 
         // If we're skipping this heal, we must fix the exhaustion in the following tick
         if (hasLastHealTime && currentTime - lastHealTime <= legacyCombat.getOptions().get(LegacyCombat.REGEN_INTERVAL)) {
@@ -49,8 +49,8 @@ public final class RegenListener implements Listener {
             return;
         }
 
-        final double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-        final double playerHealth = player.getHealth();
+        double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+        double playerHealth = player.getHealth();
 
         if (playerHealth < maxHealth) {
             player.setHealth(Math.min(Math.max(playerHealth + legacyCombat.getOptions().get(LegacyCombat.REGEN_AMOUNT), 0.0), maxHealth));

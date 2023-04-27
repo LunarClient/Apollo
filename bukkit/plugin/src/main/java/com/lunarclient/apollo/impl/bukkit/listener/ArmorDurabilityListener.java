@@ -42,8 +42,8 @@ public final class ArmorDurabilityListener implements Listener {
 
         Player player = event.getPlayer();
 
-        final ItemStack item = event.getItem();
-        final Material itemType = item.getType();
+        ItemStack item = event.getItem();
+        Material itemType = item.getType();
 
         // Check if it's a piece of armour they're currently wearing
         if (Arrays.stream(player.getInventory().getArmorContents())
@@ -54,12 +54,12 @@ public final class ArmorDurabilityListener implements Listener {
             return;
         }
 
-        final UUID uuid = player.getUniqueId();
+        UUID uuid = player.getUniqueId();
         if (explosionDamaged.containsKey(uuid)) {
-            final List<ItemStack> armour = explosionDamaged.get(uuid);
+            List<ItemStack> armour = explosionDamaged.get(uuid);
             // ItemStack.equals() checks material, durability and quantity to make sure nothing changed in the meantime
             // We're checking all the pieces this way just in case they're wearing two helmets or something strange
-            final List<ItemStack> matchedPieces = armour.stream().filter(piece -> piece.equals(item))
+            List<ItemStack> matchedPieces = armour.stream().filter(piece -> piece.equals(item))
                 .collect(Collectors.toList());
             armour.removeAll(matchedPieces);
             if (!matchedPieces.isEmpty()) return;
@@ -68,9 +68,9 @@ public final class ArmorDurabilityListener implements Listener {
         int reduction = legacyCombat.getOptions().get(LegacyCombat.ARMOR_DURABILITY_REDUCTION);
 
         // 60 + (40 / (level + 1) ) % chance that durability is reduced (for each point of durability)
-        final int damageChance = 60 + (40 / (item.getEnchantmentLevel(Enchantment.DURABILITY) + 1));
+        int damageChance = 60 + (40 / (item.getEnchantmentLevel(Enchantment.DURABILITY) + 1));
+        int randomInt = random.nextInt(100); // between 0 (inclusive) and 100 (exclusive)
 
-        final int randomInt = random.nextInt(100); // between 0 (inclusive) and 100 (exclusive)
         if (randomInt >= damageChance) {
             reduction = 0;
         }
@@ -86,15 +86,15 @@ public final class ArmorDurabilityListener implements Listener {
 
         if (event.getEntityType() != EntityType.PLAYER) return;
 
-        final EntityDamageEvent.DamageCause cause = event.getCause();
+        EntityDamageEvent.DamageCause cause = event.getCause();
         if (cause != EntityDamageEvent.DamageCause.BLOCK_EXPLOSION &&
                 cause != EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
             return;
         }
 
-        final Player player = (Player) event.getEntity();
-        final UUID uuid = player.getUniqueId();
-        final List<ItemStack> armour = Arrays.stream(player.getInventory().getArmorContents()).filter(Objects::nonNull).collect(Collectors.toList());
+        Player player = (Player) event.getEntity();
+        UUID uuid = player.getUniqueId();
+        List<ItemStack> armour = Arrays.stream(player.getInventory().getArmorContents()).filter(Objects::nonNull).collect(Collectors.toList());
         explosionDamaged.put(uuid, armour);
 
         BukkitRunnable runnable = new BukkitRunnable() {

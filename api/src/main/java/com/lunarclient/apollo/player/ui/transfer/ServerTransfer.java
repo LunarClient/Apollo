@@ -1,4 +1,4 @@
-package com.lunarclient.apollo.player.ui.network;
+package com.lunarclient.apollo.player.ui.transfer;
 
 import com.lunarclient.apollo.roundtrip.ApolloRequest;
 import com.lunarclient.apollo.roundtrip.ApolloResponse;
@@ -40,11 +40,22 @@ public class ServerTransfer {
     public static class Response extends ApolloResponse {
 
         /**
-         * Returns the transfer response {@link Boolean} accepted state.
+         * Returns the transfer {@link Status} status.
          *
-         * @return the response accepted state
+         * @return the transfer status
          * @since 1.0.0
          */
-        boolean accepted;
+        Status status;
+
+        /**
+         * Represents the ping data state.
+         *
+         * @since 1.0.0
+         */
+        public enum Status {
+
+            ACCEPTED,
+            REJECTED
+        }
     }
 }

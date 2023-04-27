@@ -106,7 +106,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     }
 
     @Subscribe
-    public void onDisconnect(final DisconnectEvent event) {
+    public void onDisconnect(DisconnectEvent event) {
         Player player = event.getPlayer();
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
     }

@@ -32,7 +32,15 @@ public class ApolloReceivePacketEvent implements Event {
      */
     Any packet;
 
-    public <T extends Message> Optional<T> unpackIf(Class<T> packet) {
+    /**
+     * Unpacks the provided packet class.
+     *
+     * @param <T> the packet optional
+     * @param packet the apollo packet
+     * @return the message
+     * @since 1.0.0
+     */
+    public <T extends Message> Optional<T> unpack(Class<T> packet) {
         if (!this.packet.is(packet)) {
             return Optional.empty();
         }

@@ -78,7 +78,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
 
         this.loadConfiguration();
 
-        final Messenger messenger = getServer().getMessenger();
+        Messenger messenger = getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
                 (channel, player, bytes) -> this.handlePacket(player, bytes)
@@ -91,22 +91,22 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     }
 
     @EventHandler
-    public void onRegisterChannel(final PlayerRegisterChannelEvent event) {
+    public void onRegisterChannel(PlayerRegisterChannelEvent event) {
         if(!event.getChannel().equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new BukkitApolloPlayer(player));
     }
 
     @EventHandler
-    public void onUnregisterChannel(final PlayerUnregisterChannelEvent event) {
+    public void onUnregisterChannel(PlayerUnregisterChannelEvent event) {
         if(!event.getChannel().equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
     }
 
     @EventHandler
-    public void onPlayerQuit(final PlayerQuitEvent event) {
-        final Player player = event.getPlayer();
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
     }
 
@@ -120,23 +120,23 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
 
             this.configurationLoader.load();
 
-            final CommentedConfigurationNode root = this.configurationLoader.load();
-            final CommentedConfigurationNode modules = root.node("modules");
+            CommentedConfigurationNode root = this.configurationLoader.load();
+            CommentedConfigurationNode modules = root.node("modules");
 
             ((ApolloModuleManagerImpl) Apollo.getModuleManager()).loadConfiguration(modules);
             ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration(modules);
 
             this.configurationLoader.save(root);
-        } catch(final Throwable throwable) {
+        } catch(Throwable throwable) {
             throwable.printStackTrace();
         }
     }
 
-    private void handlePacket(final Player player, final byte[] bytes) {
+    private void handlePacket(Player player, byte[] bytes) {
         Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
             try {
                 ApolloManager.getNetworkManager().receivePacket(apolloPlayer, Any.parseFrom(bytes));
-            } catch(final Throwable throwable) {
+            } catch(Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         });

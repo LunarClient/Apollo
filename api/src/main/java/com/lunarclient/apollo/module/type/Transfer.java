@@ -3,8 +3,8 @@ package com.lunarclient.apollo.module.type;
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.player.ui.network.ServerPing;
-import com.lunarclient.apollo.player.ui.network.ServerTransfer;
+import com.lunarclient.apollo.player.ui.transfer.ServerPing;
+import com.lunarclient.apollo.player.ui.transfer.ServerTransfer;
 import com.lunarclient.apollo.roundtrip.async.Handler;
 import java.util.Arrays;
 import java.util.Collection;
@@ -44,4 +44,5 @@ public abstract class Transfer extends ApolloModule {
      * @since 1.0.0
      */
     public abstract void transfer(ApolloPlayer player, ServerTransfer.Request transfer, Handler<ServerTransfer.Response> response);
+
 }

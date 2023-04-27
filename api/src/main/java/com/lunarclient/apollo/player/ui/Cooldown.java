@@ -1,6 +1,6 @@
 package com.lunarclient.apollo.player.ui;
 
-import com.lunarclient.apollo.option.type.RenderableIcon;
+import com.lunarclient.apollo.option.type.icon.Icon;
 import java.time.Duration;
 import lombok.Value;
 
@@ -39,13 +39,11 @@ public class Cooldown {
     int itemId;
 
     /**
-     * Returns the cooldown {@link RenderableIcon}.
-     *
-     * <p>You can provide the renderable icon or the item id.</p>
+     * Returns the cooldown {@link Icon}.
      *
      * @return the cooldown icon
      * @since 1.0.0
      */
-    RenderableIcon icon;
+    Icon icon;
 
 }

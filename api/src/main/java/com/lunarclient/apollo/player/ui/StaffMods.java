@@ -10,35 +10,35 @@ import lombok.Value;
  * @since 1.0.0
  */
 @Value(staticConstructor = "of")
-public class StaffMod {
+public class StaffMods {
 
     /**
-     * Returns a {@link Set} of {@link Module}s.
+     * Returns a {@link Set} of {@link Mod}s.
      *
-     * @return the module set
+     * @return the mods set
      * @since 1.0.0
      */
-    Set<Module> modules;
+    Set<Mod> mods;
 
     /**
      * Represents the staff module.
      *
      * @since 1.0.0
      */
-    public enum Module {
+    public enum Mod {
 
         XRAY;
 
-        private static final Set<Module> MODULE_CACHE = EnumSet.allOf(Module.class);
+        private static final Set<Mod> MODULE_CACHE = EnumSet.allOf(Mod.class);
 
         /**
-         * Returns a {@link Set} of {@link Module}s.
+         * Returns a {@link Set} of {@link Mod}s.
          *
          * @return the set of modules
          * @since 1.0.0
          */
-        public static Set<Module> getModules() {
-            return Module.MODULE_CACHE;
+        public static Set<Mod> getMods() {
+            return Mod.MODULE_CACHE;
         }
 
     }

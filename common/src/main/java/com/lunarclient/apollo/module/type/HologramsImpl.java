@@ -1,14 +1,13 @@
 package com.lunarclient.apollo.module.type;
 
-import com.lunarclient.apollo.network.NetworkTypes;
+import com.google.protobuf.ByteString;
+import com.lunarclient.apollo.hologram.v1.DisplayHologramMessage;
+import com.lunarclient.apollo.hologram.v1.RemoveHologramMessage;
+import com.lunarclient.apollo.hologram.v1.ResetHologramsMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.Hologram;
-import java.util.List;
-import java.util.stream.Collectors;
-import lunarclient.apollo.common.OptionOperation;
-import lunarclient.apollo.modules.HologramMessage;
-import lunarclient.apollo.utility.RenderableStringMessage;
+import java.util.UUID;
 
 import static java.util.Objects.requireNonNull;
 
@@ -24,36 +23,43 @@ public final class HologramsImpl extends Holograms {
     }
 
     @Override
-    public void addOrUpdateHologram(Hologram hologram, ApolloPlayer... viewers) {
+    public void displayHologram(Hologram hologram, ApolloPlayer... viewers) {
         requireNonNull(hologram, "hologram");
         requireNonNull(viewers, "viewers");
 
-        HologramMessage message = this.to(hologram);
-        for(ApolloPlayer viewer : viewers) {
-            ((AbstractApolloPlayer) viewer).sendPacket(this, OptionOperation.ADD, message);
+        DisplayHologramMessage message = DisplayHologramMessage.newBuilder()
+            .setId(ByteString.copyFromUtf8(hologram.getId().toString()))
+            .build();
+
+        for (ApolloPlayer viewer : viewers) {
+            ((AbstractApolloPlayer) viewer).sendPacket(message);
+        }
+    }
+
+    @Override
+    public void removeHologram(UUID hologramId, ApolloPlayer... viewers) {
+        requireNonNull(hologramId, "hologramId");
+        requireNonNull(viewers, "viewers");
+
+        RemoveHologramMessage message = RemoveHologramMessage.newBuilder()
+            .setId(ByteString.copyFromUtf8(hologramId.toString()))
+            .build();
+
+        for (ApolloPlayer viewer : viewers) {
+            ((AbstractApolloPlayer) viewer).sendPacket(message);
         }
     }
 
     @Override
     public void removeHologram(Hologram hologram, ApolloPlayer... viewers) {
         requireNonNull(hologram, "hologram");
-        requireNonNull(viewers, "viewers");
 
-        HologramMessage message = this.to(hologram);
-        for(ApolloPlayer viewer : viewers) {
-            ((AbstractApolloPlayer) viewer).sendPacket(this, OptionOperation.REMOVE, message);
-        }
+        this.removeHologram(hologram.getId(), viewers);
     }
 
-    private HologramMessage to(Hologram hologram) {
-        List<RenderableStringMessage> lines = hologram.getLines().stream()
-            .map(NetworkTypes::toRenderableString)
-            .collect(Collectors.toList());
-
-        return HologramMessage.newBuilder()
-            .setHologramUuid(NetworkTypes.toUuid(hologram.getId()))
-            .setLocation(NetworkTypes.toLocation(hologram.getLocation()))
-            .addAllLines(lines)
-            .build();
+    @Override
+    public void resetHolograms(ApolloPlayer player) {
+        ((AbstractApolloPlayer) player).sendPacket(ResetHologramsMessage.getDefaultInstance());
     }
+
 }

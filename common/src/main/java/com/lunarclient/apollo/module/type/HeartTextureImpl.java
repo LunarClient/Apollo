@@ -1,10 +1,11 @@
 package com.lunarclient.apollo.module.type;
 
+import com.lunarclient.apollo.hearttexture.v1.HeartType;
+import com.lunarclient.apollo.hearttexture.v1.OverrideHeartTextureMessage;
+import com.lunarclient.apollo.hearttexture.v1.ResetHeartTextureMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.HeartTexture;
-import lunarclient.apollo.common.OptionOperation;
-import lunarclient.apollo.modules.HeartTextureMessage;
 
 import static java.util.Objects.requireNonNull;
 
@@ -20,32 +21,21 @@ public final class HeartTextureImpl extends HeartTextures {
     }
 
     @Override
-    public void sendHeartTexture(ApolloPlayer player, HeartTexture heartTexture) {
+    public void overrideHeartTexture(ApolloPlayer player, HeartTexture heartTexture) {
         requireNonNull(player, "player");
         requireNonNull(heartTexture, "heartTexture");
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, this.to(heartTexture));
+        ((AbstractApolloPlayer) player).sendPacket(OverrideHeartTextureMessage.newBuilder()
+            .setHeartType(HeartType.forNumber(heartTexture.getType().ordinal() + 1))
+            .setLocationX(heartTexture.getLocationX())
+            .build());
     }
 
     @Override
-    public void removeHeartTexture(ApolloPlayer player) {
+    public void resetHeartTexture(ApolloPlayer player) {
         requireNonNull(player, "player");
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
-    }
-
-    private HeartTextureMessage to(HeartTexture texture) {
-        return HeartTextureMessage.newBuilder()
-                .setType(HeartTextureMessage.Type.valueOf(texture.getType().name()))
-                .setLocationX(texture.getLocationX())
-                .build();
-    }
-
-    private HeartTexture from(HeartTextureMessage message) {
-        return HeartTexture.of(
-                HeartTexture.Type.valueOf(message.getType().name()),
-                message.getLocationX()
-        );
+        ((AbstractApolloPlayer) player).sendPacket(ResetHeartTextureMessage.getDefaultInstance());
     }
 
 }

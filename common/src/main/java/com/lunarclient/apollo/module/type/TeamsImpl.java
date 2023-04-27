@@ -3,18 +3,18 @@ package com.lunarclient.apollo.module.type;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerManager;
 import com.lunarclient.apollo.player.ui.Team;
+import com.lunarclient.apollo.team.v1.TeamMember;
+import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
 import java.util.AbstractMap;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import lunarclient.apollo.modules.TeamMessage;
 
 import static java.util.Objects.requireNonNull;
 
@@ -124,7 +124,6 @@ public final class TeamsImpl extends Teams {
         requireNonNull(team, "team");
 
         ApolloPlayerManager playerManager = Apollo.getPlayerManager();
-        Options.Container options = this.getOptions();
 
         Map<ApolloPlayer, Team.Teammate> teammates = team.getTeammates().entrySet().stream()
             .map(entry -> new AbstractMap.SimpleImmutableEntry<>(
@@ -138,7 +137,22 @@ public final class TeamsImpl extends Teams {
             ));
 
         teammates.forEach((player, teammate) -> player.getLocation().ifPresent(teammate::setLocation));
-        teammates.forEach((player, teammate) -> options.set(player, null, Collections.singletonList(team)));
+
+        List<TeamMember> members = teammates.entrySet().stream()
+            .map(entry ->
+                TeamMember.newBuilder()
+                    .setPlayerUuid(NetworkTypes.toProtobuf(entry.getKey().getUniqueId()))
+                    .setLocation(NetworkTypes.toProtobuf(entry.getValue().getLocation()))
+                    .setMarkerColor(NetworkTypes.toProtobuf(entry.getValue().getColor()))
+                    .build()
+            )
+            .collect(Collectors.toList());
+
+        UpdateTeamMembersMessage message = UpdateTeamMembersMessage.newBuilder()
+            .addAllMembers(members)
+            .build();
+
+        teammates.forEach((player, teammate) -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     public void onPlayerUnregister(ApolloUnregisterPlayerEvent event) {
@@ -155,35 +169,4 @@ public final class TeamsImpl extends Teams {
         }
     }
 
-    public TeamMessage to(Team object) throws IllegalArgumentException {
-        List<TeamMessage.TeammateMessage> teammates = object.getTeammates().entrySet().stream()
-            .map(entry ->
-                TeamMessage.TeammateMessage.newBuilder()
-                    .setPlayerUuid(NetworkTypes.toUuid(entry.getKey()))
-                    .setColor(NetworkTypes.toColor(entry.getValue().getColor()))
-                    .setLocation(NetworkTypes.toLocation(entry.getValue().getLocation()))
-                    .build()
-            ).collect(Collectors.toList());
-
-        return TeamMessage.newBuilder()
-            .setTeamId(object.getTeamId().toString())
-            .addAllMembers(teammates)
-            .build();
-    }
-
-    public Team from(TeamMessage message) throws IllegalArgumentException {
-        Map<UUID, Team.Teammate> teammates = message.getMembersList().stream()
-            .collect(Collectors.toMap(
-                teammate -> NetworkTypes.fromUuid(teammate.getPlayerUuid()),
-                teammate -> Team.Teammate.of(
-                    NetworkTypes.fromColor(teammate.getColor()),
-                    NetworkTypes.fromLocation(teammate.getLocation())
-                )
-            ));
-
-        return Team.of(
-            UUID.fromString(message.getTeamId()),
-            teammates
-        );
-    }
 }

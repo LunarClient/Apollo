@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.player.ui;
 
-import java.awt.Color;
+import com.lunarclient.apollo.option.type.bounds.Cuboid2D;
+import java.awt.*;
 import lombok.Value;
 
 /**
@@ -60,36 +61,12 @@ public class Border {
     Color color;
 
     /**
-     * Returns the border {@link Double} start x.
+     * Returns the border {@link Cuboid2D}.
      *
-     * @return the border start x
+     * @return the border bounds
      * @since 1.0.0
      */
-    double minX;
-
-    /**
-     * Returns the border {@link Double} start z.
-     *
-     * @return the border start z
-     * @since 1.0.0
-     */
-    double minZ;
-
-    /**
-     * Returns the border {@link Double} end x.
-     *
-     * @return the border end x
-     * @since 1.0.0
-     */
-    double maxX;
-
-    /**
-     * Returns the border {@link Double} end z.
-     *
-     * @return the border end z
-     * @since 1.0.0
-     */
-    double maxZ;
+    Cuboid2D bounds;
 
     /**
      * Returns the border {@link Integer} duration represented in ticks.

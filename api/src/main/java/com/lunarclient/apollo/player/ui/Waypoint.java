@@ -1,7 +1,7 @@
 package com.lunarclient.apollo.player.ui;
 
 import com.lunarclient.apollo.world.ApolloBlockLocation;
-import java.awt.Color;
+import java.awt.*;
 import lombok.Value;
 
 /**
@@ -37,15 +37,12 @@ public class Waypoint {
     Color color;
 
     /**
-     * Returns the waypoint {@link Boolean} forced state.
-     *
-     * <p>If the waypoint is forced, the player can't remove
-     * the waypoint but can hide it.</p>
+     * Returns the waypoint {@link Boolean} prevent removal state.
      *
      * @return the waypoint forced state
      * @since 1.0.0
      */
-    boolean forced;
+    boolean preventRemoval;
 
     /**
      * Returns the waypoint {@link Boolean} visible state.

@@ -1,5 +1,6 @@
 package com.lunarclient.apollo.player.ui;
 
+import com.lunarclient.apollo.option.type.Component;
 import java.time.Duration;
 import lombok.Value;
 
@@ -20,12 +21,12 @@ public class Title {
     Type type;
 
     /**
-     * Returns the title {@link String} message.
+     * Returns the title {@link Component} message.
      *
      * @return the title message
      * @since 1.0.0
      */
-    String message;
+    Component message;
 
     /**
      * Returns the title {@link Float} scale.

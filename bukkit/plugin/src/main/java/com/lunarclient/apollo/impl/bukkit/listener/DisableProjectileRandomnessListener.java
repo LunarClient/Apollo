@@ -48,7 +48,7 @@ public final class DisableProjectileRandomnessListener implements Listener {
     }
 
     private boolean fuzzyVectorEquals(Vector a, Vector b) {
-        final double randomness = legacyCombat.getOptions().get(LegacyCombat.PROJECTILE_RANDOMNESS);
+        double randomness = legacyCombat.getOptions().get(LegacyCombat.PROJECTILE_RANDOMNESS);
         return Math.abs(a.getX() - b.getX()) < randomness && Math.abs(a.getZ() - b.getZ()) < randomness;
     }
 

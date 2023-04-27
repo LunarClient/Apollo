@@ -63,13 +63,22 @@ public abstract class Waypoints extends ApolloModule {
     }
 
     /**
-     * Sends the {@link Waypoint} to the {@link ApolloPlayer}.
+     * Displays the {@link Waypoint} to the {@link ApolloPlayer}.
      *
      * @param player the player
      * @param waypoint the waypoint
      * @since 1.0.0
      */
-    public abstract void addWaypoint(ApolloPlayer player, Waypoint waypoint);
+    public abstract void displayWaypoint(ApolloPlayer player, Waypoint waypoint);
+
+    /**
+     * Removes the {@link Waypoint} from the {@link ApolloPlayer}.
+     *
+     * @param player the player
+     * @param waypointName the waypoint name
+     * @since 1.0.0
+     */
+    public abstract void removeWaypoint(ApolloPlayer player, String waypointName);
 
     /**
      * Removes the {@link Waypoint} from the {@link ApolloPlayer}.
@@ -81,11 +90,11 @@ public abstract class Waypoints extends ApolloModule {
     public abstract void removeWaypoint(ApolloPlayer player, Waypoint waypoint);
 
     /**
-     * Clears all {@link Waypoint}s from the {@link ApolloPlayer}.
+     * Resets all {@link Waypoint}s for the {@link ApolloPlayer}.
      *
      * @param player the player
      * @since 1.0.0
      */
-    public abstract void clearWaypoints(ApolloPlayer player);
+    public abstract void resetWaypoints(ApolloPlayer player);
 
 }

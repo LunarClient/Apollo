@@ -1,11 +1,13 @@
 package com.lunarclient.apollo.module.type;
 
+import com.lunarclient.apollo.coloredfire.v1.OverrideColoredFireMessage;
+import com.lunarclient.apollo.coloredfire.v1.ResetColoredFireMessage;
+import com.lunarclient.apollo.coloredfire.v1.ResetColoredFiresMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.ColoredFire;
-import lunarclient.apollo.common.OptionOperation;
-import lunarclient.apollo.modules.ColoredFireMessage;
+import java.util.UUID;
 
 import static java.util.Objects.requireNonNull;
 
@@ -25,31 +27,49 @@ public class ColoredFiresImpl extends ColoredFires {
         requireNonNull(fire, "fire");
         requireNonNull(viewers, "viewers");
 
-        for(ApolloPlayer player : viewers) {
-            ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(fire));
+        OverrideColoredFireMessage message = OverrideColoredFireMessage.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(fire.getPlayer()))
+            .setColor(NetworkTypes.toProtobuf(fire.getColor()))
+            .build();
+
+        for (ApolloPlayer player : viewers) {
+            ((AbstractApolloPlayer) player).sendPacket(message);
         }
     }
 
     @Override
-    public void resetFireColor(ApolloPlayer... viewers) {
+    public void resetFireColor(UUID playerUuid, ApolloPlayer... viewers) {
+        requireNonNull(playerUuid, "playerUuid");
         requireNonNull(viewers, "viewers");
 
-        for(ApolloPlayer player : viewers) {
-            ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
+        ResetColoredFireMessage message = ResetColoredFireMessage.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(playerUuid))
+            .build();
+
+        for (ApolloPlayer player : viewers) {
+            ((AbstractApolloPlayer) player).sendPacket(message);
         }
     }
 
-    private ColoredFireMessage to(ColoredFire fire) {
-        return ColoredFireMessage.newBuilder()
-            .setPlayerUuid(NetworkTypes.toUuid(fire.getPlayer()))
-            .setColor(NetworkTypes.toColor(fire.getColor()))
-            .build();
+    @Override
+    public void resetFireColor(ColoredFire fire, ApolloPlayer... viewers) {
+        requireNonNull(fire, "fire");
+
+        this.resetFireColor(fire.getPlayer(), viewers);
     }
 
-    private ColoredFire from(ColoredFireMessage message) {
-        return ColoredFire.of(
-            NetworkTypes.fromUuid(message.getPlayerUuid()),
-            NetworkTypes.fromColor(message.getColor())
-        );
+    @Override
+    public void resetFireColor(ApolloPlayer player, ApolloPlayer... viewers) {
+        requireNonNull(player, "player");
+
+        this.resetFireColor(player.getUniqueId(), viewers);
     }
+
+    @Override
+    public void resetFires(ApolloPlayer player) {
+        requireNonNull(player, "player");
+
+        ((AbstractApolloPlayer) player).sendPacket(ResetColoredFiresMessage.getDefaultInstance());
+    }
+
 }

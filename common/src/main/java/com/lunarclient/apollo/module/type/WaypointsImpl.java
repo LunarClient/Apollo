@@ -5,9 +5,10 @@ import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ui.Waypoint;
+import com.lunarclient.apollo.waypoint.v1.DisplayWaypointMessage;
+import com.lunarclient.apollo.waypoint.v1.RemoveWaypointMessage;
+import com.lunarclient.apollo.waypoint.v1.ResetWaypointsMessage;
 import java.util.List;
-import lunarclient.apollo.common.OptionOperation;
-import lunarclient.apollo.modules.WaypointMessage;
 
 import static java.util.Objects.requireNonNull;
 
@@ -25,55 +26,56 @@ public final class WaypointsImpl extends Waypoints {
     }
 
     @Override
-    public void addWaypoint(ApolloPlayer player, Waypoint waypoint) {
+    public void displayWaypoint(ApolloPlayer player, Waypoint waypoint) {
         requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(waypoint));
+        ((AbstractApolloPlayer) player).sendPacket(this.toProtobuf(waypoint));
+    }
+
+    @Override
+    public void removeWaypoint(ApolloPlayer player, String waypointName) {
+        requireNonNull(player, "player");
+        requireNonNull(waypointName, "waypointName");
+
+        ((AbstractApolloPlayer) player).sendPacket(RemoveWaypointMessage.newBuilder()
+            .setName(waypointName)
+            .build());
     }
 
     @Override
     public void removeWaypoint(ApolloPlayer player, Waypoint waypoint) {
-        requireNonNull(player, "player");
         requireNonNull(waypoint, "waypoint");
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.REMOVE, this.to(waypoint));
+        this.removeWaypoint(player, waypoint.getName());
     }
 
     @Override
-    public void clearWaypoints(ApolloPlayer player) {
+    public void resetWaypoints(ApolloPlayer player) {
         requireNonNull(player, "player");
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.CLEAR);
+        ((AbstractApolloPlayer) player).sendPacket(ResetWaypointsMessage.getDefaultInstance());
     }
 
     private void onPlayerRegister(ApolloRegisterPlayerEvent event) {
         ApolloPlayer player = event.getPlayer();
         List<Waypoint> waypoints = this.getOptions().get(player, Waypoints.DEFAULT_WAYPOINTS);
-        if(waypoints != null) {
-            for(Waypoint waypoint : waypoints) {
-                ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.ADD, this.to(waypoint));
-            }
+
+        if(waypoints == null) return;
+
+        for(Waypoint waypoint : waypoints) {
+            ((AbstractApolloPlayer) player).sendPacket(this.toProtobuf(waypoint));
         }
     }
 
-    private WaypointMessage to(Waypoint waypoint) {
-        return WaypointMessage.newBuilder()
-                .setName(waypoint.getName())
-                .setLocation(NetworkTypes.toBlockLocation(waypoint.getLocation()))
-                .setColor(NetworkTypes.toColor(waypoint.getColor()))
-                .setForced(waypoint.isForced())
-                .setVisible(waypoint.isVisible())
-                .build();
+    private DisplayWaypointMessage toProtobuf(Waypoint waypoint) {
+        return DisplayWaypointMessage.newBuilder()
+            .setName(waypoint.getName())
+            .setLocation(NetworkTypes.toProtobuf(waypoint.getLocation()))
+            .setColor(NetworkTypes.toProtobuf(waypoint.getColor()))
+            .setPreventRemoval(waypoint.isPreventRemoval())
+            .setVisible(waypoint.isVisible())
+            .build();
     }
 
-    private Waypoint from(WaypointMessage message) {
-        return Waypoint.of(
-                message.getName(),
-                NetworkTypes.fromBlockLocation(message.getLocation()),
-                NetworkTypes.fromColor(message.getColor()),
-                message.getForced(),
-                message.getVisible()
-        );
-    }
 }

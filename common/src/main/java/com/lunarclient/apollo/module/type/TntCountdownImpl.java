@@ -1,12 +1,18 @@
 package com.lunarclient.apollo.module.type;
 
+import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import lunarclient.apollo.common.OptionOperation;
-import lunarclient.apollo.modules.TntCountdownMessage;
+import com.lunarclient.apollo.player.ui.misc.Entity;
+import com.lunarclient.apollo.tntcountdown.v1.SetTntCountdownMessage;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Provides the tnt countdown module.
+ *
+ * @since 1.0.0
+ */
 public final class TntCountdownImpl extends TntCountdown {
 
     public TntCountdownImpl() {
@@ -14,17 +20,13 @@ public final class TntCountdownImpl extends TntCountdown {
     }
 
     @Override
-    public void setTntTicks(ApolloPlayer player, int entityId, int ticks) {
+    public void setTntTicks(ApolloPlayer player, Entity entity, int ticks) {
         requireNonNull(player, "player");
 
-        ((AbstractApolloPlayer) player).sendPacket(this, OptionOperation.SET, this.to(entityId, ticks));
-    }
-
-    private TntCountdownMessage to(int entityId, int ticks) {
-        return TntCountdownMessage.newBuilder()
-                .setEntityId(entityId)
-                .setTicks(ticks)
-                .build();
+        ((AbstractApolloPlayer) player).sendPacket(SetTntCountdownMessage.newBuilder()
+            .setEntityUuid(NetworkTypes.toProtobuf(entity.getId()))
+            .setDurationTicks(ticks)
+            .build());
     }
 
 }
