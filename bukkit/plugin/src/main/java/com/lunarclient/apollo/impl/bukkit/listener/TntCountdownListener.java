@@ -3,7 +3,7 @@ package com.lunarclient.apollo.impl.bukkit.listener;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.module.type.TntCountdown;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.util.Optional;
+import com.lunarclient.apollo.player.ui.misc.Entity;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,6 +13,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @RequiredArgsConstructor
 public class TntCountdownListener implements Listener {
     private final TntCountdown tntCountdownModule;
@@ -20,15 +23,15 @@ public class TntCountdownListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onTntSpawn(EntitySpawnEvent event) {
         if(!(event.getEntity() instanceof TNTPrimed primed)) return;
-        int id = event.getEntity().getEntityId();
+        UUID id = event.getEntity().getUniqueId();
         int ticks = primed.getFuseTicks();
 
-        if(ticks != tntCountdownModule.getOptions().get(TntCountdown.TNT_TICKS)) {
+        if(ticks != this.tntCountdownModule.getOptions().get(TntCountdown.TNT_TICKS)) {
             for(Player bukkitPlayer : event.getLocation().getNearbyPlayers(Bukkit.getSimulationDistance())) {
                 Optional<ApolloPlayer> player = Apollo.getPlayerManager().getPlayer(bukkitPlayer.getUniqueId());
                 if(player.isEmpty()) continue;
 
-                tntCountdownModule.setTntTicks(player.get(), id, ticks);
+                this.tntCountdownModule.setTntTicks(player.get(), Entity.of(id), ticks);
             }
         }
     }
