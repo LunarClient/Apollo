@@ -3,46 +3,75 @@
 > Last Updated: 4/27/2023
 
 ~~~~
-1.7 Visuals: one_seven_visuals
-Armor Status: armorstatus
-Auto Text HotKey: textHotKey
-Block Outline: block_outline
-Boss Bar: bossbar
-CPS Counter: CPS
-Chat: chat
-Clock: clock
-Combo Counter: combo
-Cooldowns: cooldowns
-Cordinates: coords
-Crosshair: crosshair
-DirectionHUD: directionhud
-FOV Mod: fov_mod
-FPS Counter: FPS
-FreeLook: freelook
-Hypixel Mods: hypixel_mod
-Item Physics: itemPhysic
-Item Tracker: itemTrackerChild
-Key Strokes: keystrokes
-Memory Usage: memory
-MotionBlur: motionBlur
-Mumble Link: mumble
-NickHider: nickHider
-Particle Multiplier: particleMultiplierMod
-Ping: ping
-Potion Counter: potion_counter
-Potion Effects: potioneffects
-Reach Display: range
-Saturation: saturation
-Scoreboard: scoreboard
-Screenshot Uploader: screenshot
-Scrollable Tooltips: scrollable_tooltips
-Server Address Display: serverAddressMod
-Shiny Potions: shinyPots
-Skyblock Addons: skyblockAddons
-Stopwatch: stopwatch
-Time Changer: time_changer
-Toggle Sneak/Toggle Sprint: toggleSneak
-UHC Overlay: uhc_overlay
-Waypoints: waypoints
-WordEdit CUI: worldedit_cui
+2D_ITEMS
+3D_SKINS
+ARMOR_STATUS
+AUTO_TEXT_HOTKEY
+BLOCK_OUTLINE
+BOSS_BAR
+CHAT
+CHUNK_BORDERS
+CLOCK
+COLOR_SATURATION
+COMBO_COUNTER
+COOLDOWNS
+COORDINATES
+CPS_COUNTER
+CROSSHAIR
+DAY_COUNTER
+DIRECTION_HUD
+FOG_MOD
+FOV_MOD
+FPS_COUNTER
+FREELOOK
+GLINT_COLORIZER
+HIT_BOX
+HIT_COLOR
+HURT_CAM
+HYPIXEL_MOD
+ITEM_COUNTER
+ITEM_PHYSIC
+ITEM_TRACKER
+KEY_STROKES
+LIGHTING
+MEMORY
+MENU_BLUR
+MOMENTUM
+MOTION_BLUR
+MUMBLE_LINK
+NAMETAG
+NEU
+NICK_HIDER
+ONE_SEVEN_VISUALS
+PACK_DISPLAY
+PACK_ORGANIZER
+PARTICLE_CHANGER #might need to change
+PING_DISPLAY
+PLAYTIME
+POTION_EFFECTS
+PVP_INFO
+QUICK_PLAY
+REACH_DISPLAY
+SATURATION
+SCOREBOARD
+SCREENSHOT_UPLOADER
+SCROLLABLE_TOOLTIPS
+SERVER_ADDRESS_DISPLAY
+SHINY_POTIONS
+SKYBLOCK_ADDONS
+SNAPLOOK
+SOUND_CHANGER
+STOPWATCH
+TAB_EDITOR
+TEAM_VIEW
+TIME_CHANGER
+TITLES
+TNT_COUNTDOWN
+TOGGLE_SNEAK
+UHC_OVERLAY
+WAILA
+WAYPOINTS
+WEATHER_CHANGER
+WORLDEDIT_CUI
+ZOOM
 ~~~~
