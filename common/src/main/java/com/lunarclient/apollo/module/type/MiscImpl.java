@@ -1,7 +1,12 @@
 package com.lunarclient.apollo.module.type;
 
 import com.lunarclient.apollo.common.v1.Uuid;
-import com.lunarclient.apollo.misc.v1.*;
+import com.lunarclient.apollo.misc.v1.DisplayVignetteMessage;
+import com.lunarclient.apollo.misc.v1.FlipEntityMessage;
+import com.lunarclient.apollo.misc.v1.OverrideRainbowSheepMessage;
+import com.lunarclient.apollo.misc.v1.ResetFlipedEntityMessage;
+import com.lunarclient.apollo.misc.v1.ResetRainbowSheepMessage;
+import com.lunarclient.apollo.misc.v1.ResetVignetteMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;

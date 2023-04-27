@@ -9,7 +9,11 @@ import com.lunarclient.apollo.player.ApolloPlayerManager;
 import com.lunarclient.apollo.player.ui.Team;
 import com.lunarclient.apollo.team.v1.TeamMember;
 import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;

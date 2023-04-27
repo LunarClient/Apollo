@@ -37,7 +37,6 @@ public final class NetworkOptions {
                                   Iterable<ApolloPlayer> players) {
         if(!key.isNotify()) return;
 
-
         OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
         ConfigurableSettings.Builder moduleBuilder = NetworkOptions.module(module);
         moduleBuilder.putProperties(key.getKey(), value);

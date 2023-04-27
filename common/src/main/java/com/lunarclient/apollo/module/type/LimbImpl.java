@@ -1,6 +1,11 @@
 package com.lunarclient.apollo.module.type;
 
-import com.lunarclient.apollo.limb.v1.*;
+import com.lunarclient.apollo.limb.v1.ArmorPiece;
+import com.lunarclient.apollo.limb.v1.BodyPart;
+import com.lunarclient.apollo.limb.v1.HideArmorPiecesMessage;
+import com.lunarclient.apollo.limb.v1.HideBodyPartMessage;
+import com.lunarclient.apollo.limb.v1.ResetArmorPiecesMessage;
+import com.lunarclient.apollo.limb.v1.ResetBodyPartMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;

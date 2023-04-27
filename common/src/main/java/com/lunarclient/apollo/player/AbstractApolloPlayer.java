@@ -16,6 +16,16 @@ import com.lunarclient.apollo.roundtrip.async.future.UncertainFuture;
  */
 public abstract class AbstractApolloPlayer implements ApolloPlayer {
 
+    /**
+     * Sends the provided message packet to the client
+     * with an expected {@link Future} response.
+     *
+     * @param <T> the future representing the response
+     * @param request the apollo request
+     * @param message the message
+     * @return the apollo response
+     * @since 1.0.0
+     */
     public <T extends ApolloResponse> Future<T> sendRoundTripPacket(ApolloRequest<T> request, Message message) {
         this.sendPacket(message);
 
