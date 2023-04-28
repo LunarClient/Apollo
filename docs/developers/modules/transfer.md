@@ -6,10 +6,11 @@ If used correctly, both these packets can be very powerful.
 The transfer packet will allow you to send Lunar Client players to different servers, using the IP address.
 The ping packet will allow you to ping different IP addresses to get the players current ping to that server.
 When you combine the two packets, you can do connection optimizing for your players, so they're always connected to the best server available.
-
 You can use these features to create multi-server networks, without the requirement of additional proxy setups.
-Being fully transparent, there will be a pop-up notification to the players that they're about to be transferred from one server to another.
-The players do have the option to "trust" your server, to prevent the pop-up from being displayed on future request.
+
+When you attempt to transfer a player, they're greeted with a pop-up notification warning them they're about to be transferred from one server to another.
+The player has the option to prevent the transfer by clicking "cancel" or if they wish to proceed they can click "accept" and be transferred. 
+You cannot prevent this notifcation, however players can opt-in to "trust" your server, to prevent the pop-up from being displayed on future request.
 
 <!-- insert screenshot of transfer-packet warning -->
 
