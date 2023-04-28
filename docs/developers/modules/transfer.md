@@ -10,7 +10,7 @@ You can use these features to create multi-server networks, without the requirem
 
 When you attempt to transfer a player, they're greeted with a pop-up notification warning them they're about to be transferred from one server to another.
 The player has the option to prevent the transfer by clicking "cancel" or if they wish to proceed they can click "accept" and be transferred. 
-You cannot prevent this notifcation, however players can opt-in to "trust" your server, to prevent the pop-up from being displayed on future request.
+You cannot prevent this notification, however players can opt-in to "trust" your server, to prevent the pop-up from being displayed on future request.
 
 <!-- insert screenshot of transfer-packet warning -->
 

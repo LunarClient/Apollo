@@ -6,11 +6,11 @@ Creating a border for Lunar Client players, won't only show a border around the 
 For example, you can change the world the border is displayed in, the color of the border, if players can enter or exit the border, and if the border will expand or shrink in addition to a couple more features.
 The truly neat part about this feature, is users on the 1.7 version of Lunar Client will be displayed the border, unlike in vanilla minecraft.
 
-A common use-case for the borders module, can be found on many HCF & Faction servers.
-As displayed in the screenshot below, the server is using the borders module to display a custom border with the color purple.
-The screenshot was also taken on 1.7!
+Red spawn border, to prevent combat tagged users from entering spawn.
+![Lunar Client border, red, being created around a spawn to prevent users from entry while they're combat tagged.](../../assets/red-spawn-border.png)
 
-<!-- insert photo of borders here -->
+Traditional world border, using the apollo borders module.
+![Lunar Client borders, blue, being created as a traditional world border.](../../assets/blue-traditional-world-border.png)
 
 ## Integration
 Integrating the borders module into your plugins, is very simple, as displayed in the example code below.
@@ -82,5 +82,5 @@ public void displayBorder(ApolloPlayer player, Border border) {
 <!-- Show off some unique examples of the module being used, if there are any. (promo the people who use the Apollo) -->
 ## Public Use Cases
 The borders module is currently being used on the following servers;
-* play.vipermc.net (HCF) - <!-- insert screenshot -->
-* play.minecadia.com (FACTIONS) - <!-- insert screenshot -->
+* play.vipermc.net (HCF & KitMap)
+* play.minecadia.com (HCF, KitMap & Factions)
