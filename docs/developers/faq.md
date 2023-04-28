@@ -27,7 +27,7 @@ You can view the documentation for Apollo, Lunar Client's API, on our Lunar Clie
 <details>
 <summary>Do I have to run Apollo to interact with Lunar Client?</summary>
 
-You do not need to run Apollo to interact with Lunar Client, however you do need to follow the protocols found within the Apollo.
+You do not need to run Apollo to interact with Lunar Client, however you do need to follow the protocols found within Apollo.
 Failure to follow the correct protocols will prevent features from enabling, disabling or working correctly.
 
 </details>
@@ -45,7 +45,7 @@ Alternatively, if you have the skills and knowledge, you can create the feature 
 <details>
 <summary>Where can I report issues with Apollo or Lunar Client?</summary>
 
-You can report issues on the [Apollo Repository](https://github.com/LunarClient/Apollo) issues page, on GitHub.
+You can report issues on the [Apollo repository](https://github.com/LunarClient/Apollo) issues page, on GitHub.
 If you're having an issue with Lunar Client that doesn't involve Apollo, you can create a [support ticket](https://support.lunarclient.com/).
 
 </details>
@@ -53,7 +53,7 @@ If you're having an issue with Lunar Client that doesn't involve Apollo, you can
 <details>
 <summary>Where can I contribute to Apollo?</summary>
 
-You can open a pull request on the [Apollo Repository](https://github.com/LunarClient/Apollo) page, on GitHub.
+You can open a pull request on the [Apollo repository](https://github.com/LunarClient/Apollo) page, on GitHub.
 
 </details>
 

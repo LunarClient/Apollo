@@ -1,3 +1,4 @@
+<!-- Name of Module -->
 # Beams Module
 <!-- Short paragraph that explains the module, includes 1-3 example pictures/gifs/videos -->
 ## Overview
