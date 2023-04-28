@@ -34,8 +34,7 @@ public abstract class Limb extends ApolloModule {
      * @param armor the armor
      * @since 1.0.0
      */
-    public abstract void resetArmorPieces(ApolloPlayer player,
-                                          Armor armor);
+    public abstract void resetArmorPieces(ApolloPlayer player, Armor armor);
 
     /**
      * Hides the {@link Body} for the {@link ApolloPlayer}.
