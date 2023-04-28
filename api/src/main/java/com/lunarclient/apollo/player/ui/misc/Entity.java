@@ -1,14 +1,16 @@
 package com.lunarclient.apollo.player.ui.misc;
 
 import java.util.UUID;
-import lombok.Value;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Represents an entity.
  *
  * @since 1.0.0
  */
-@Value(staticConstructor = "of")
+@Getter
+@Builder(setterPrefix = "with")
 public class Entity {
 
     /**

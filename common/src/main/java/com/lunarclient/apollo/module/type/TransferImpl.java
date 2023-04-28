@@ -67,19 +67,26 @@ public final class TransferImpl extends Transfer {
 
     public void onTransferResponse(ApolloReceivePacketEvent event) {
         event.unpack(TransferResponse.class).ifPresent(packet -> {
-            ServerTransfer.Response transferResponse = ServerTransfer.Response.of(ServerTransfer.Response.Status.values()[packet.getStatusValue() - 1]);
+            ServerTransfer.Response transferResponse = ServerTransfer.Response.builder()
+                .withStatus(ServerTransfer.Response.Status.values()[packet.getStatusValue() - 1])
+                .build();
+
             Apollo.getRoundtripManager().handleResponse(transferResponse);
         });
 
         event.unpack(PingResponse.class).ifPresent(packet -> {
             List<ServerPing.Response.PingData> pingData = packet.getPingDataList().stream()
-                .map(data -> ServerPing.Response.PingData.of(
-                    data.getServerIp(),
-                    ServerPing.Response.PingData.Status.values()[data.getStatusValue() - 1],
-                    data.getPing()
-                )).collect(Collectors.toList());
+                .map(data -> ServerPing.Response.PingData.builder()
+                        .withAddress(data.getServerIp())
+                        .withStatus(ServerPing.Response.PingData.Status.values()[data.getStatusValue() - 1])
+                        .withPing(data.getPing())
+                        .build()
+                ).collect(Collectors.toList());
 
-            ServerPing.Response pingResponse = ServerPing.Response.of(pingData);
+            ServerPing.Response pingResponse = ServerPing.Response.builder()
+                .withData(pingData)
+                .build();
+
             Apollo.getRoundtripManager().handleResponse(pingResponse);
         });
     }

@@ -31,7 +31,7 @@ public class TntCountdownListener implements Listener {
                 Optional<ApolloPlayer> player = Apollo.getPlayerManager().getPlayer(bukkitPlayer.getUniqueId());
                 if(player.isEmpty()) continue;
 
-                this.tntCountdownModule.setTntTicks(player.get(), Entity.of(id), ticks);
+                this.tntCountdownModule.setTntTicks(player.get(), Entity.builder().withId(id).build(), ticks);
             }
         }
     }

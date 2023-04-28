@@ -23,11 +23,11 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.NonExtendable
 public abstract class ModSettings extends ApolloModule {
 
-    private static final Configurable SKYBLOCK_ADDONS_SETTING = Configurable.of(
-        "skyblockAddons",
-        false,
-        null
-    );
+    private static final Configurable SKYBLOCK_ADDONS_SETTING = Configurable.builder()
+            .withTarget("skyblockAddons")
+            .withEnable(false)
+            .withProperties(null)
+            .build();
 
     /**
      * A list of mod settings.

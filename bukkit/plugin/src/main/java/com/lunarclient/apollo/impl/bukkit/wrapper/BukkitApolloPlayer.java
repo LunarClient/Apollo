@@ -30,12 +30,12 @@ public final class BukkitApolloPlayer extends AbstractApolloPlayer {
     @Override
     public Optional<ApolloLocation> getLocation() {
         Location location = this.player.getLocation();
-        return Optional.of(ApolloLocation.of(
-                location.getWorld().getName(),
-                location.getX(),
-                location.getY(),
-                location.getZ()
-        ));
+        return Optional.of(ApolloLocation.builder()
+            .withWorld(location.getWorld().getName())
+            .withX(location.getX())
+            .withY(location.getY())
+            .withZ(location.getZ())
+            .build());
     }
 
     @Override

@@ -1,15 +1,15 @@
 package com.lunarclient.apollo.option.type.icon;
 
-import lombok.EqualsAndHashCode;
-import lombok.Value;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Represents an advanced resource location icon.
  *
  * @since 1.0.0
  */
-@EqualsAndHashCode(callSuper = false)
-@Value(staticConstructor = "of")
+@Getter
+@Builder(setterPrefix = "with")
 public class AdvancedResourceLocationIcon extends Icon {
 
     /**

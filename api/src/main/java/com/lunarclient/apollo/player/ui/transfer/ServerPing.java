@@ -3,8 +3,8 @@ package com.lunarclient.apollo.player.ui.transfer;
 import com.lunarclient.apollo.roundtrip.ApolloRequest;
 import com.lunarclient.apollo.roundtrip.ApolloResponse;
 import java.util.List;
-import lombok.EqualsAndHashCode;
-import lombok.Value;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Represents a server ping which the client will ping.
@@ -18,8 +18,8 @@ public class ServerPing {
      *
      * @since 1.0.0
      */
-    @EqualsAndHashCode(callSuper = true)
-    @Value(staticConstructor = "of")
+    @Getter
+    @Builder(setterPrefix = "with")
     public static class Request extends ApolloRequest<Response> {
 
         /**
@@ -36,8 +36,8 @@ public class ServerPing {
      *
      * @since 1.0.0
      */
-    @EqualsAndHashCode(callSuper = true)
-    @Value(staticConstructor = "of")
+    @Getter
+    @Builder(setterPrefix = "with")
     public static class Response extends ApolloResponse {
 
         /**
@@ -53,7 +53,8 @@ public class ServerPing {
          *
          * @since 1.0.0
          */
-        @Value(staticConstructor = "of")
+        @Getter
+        @Builder(setterPrefix = "with")
         public static class PingData {
 
             /**

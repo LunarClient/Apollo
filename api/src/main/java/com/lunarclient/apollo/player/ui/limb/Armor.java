@@ -2,14 +2,16 @@ package com.lunarclient.apollo.player.ui.limb;
 
 import java.util.Set;
 import java.util.UUID;
-import lombok.Value;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Represents an armor which can be shown or hidden on the client.
  *
  * @since 1.0.0
  */
-@Value(staticConstructor = "of")
+@Getter
+@Builder(setterPrefix = "with")
 public class Armor {
 
     /**

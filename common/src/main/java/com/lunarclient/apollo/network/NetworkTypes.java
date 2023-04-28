@@ -64,12 +64,12 @@ public final class NetworkTypes {
     }
 
     public static ApolloLocation fromProtobuf(com.lunarclient.apollo.common.v1.Location message) {
-        return ApolloLocation.of(
-            message.getWorld(),
-            message.getX(),
-            message.getY(),
-            message.getZ()
-        );
+        return ApolloLocation.builder()
+            .withWorld(message.getWorld())
+            .withX(message.getX())
+            .withY(message.getY())
+            .withZ(message.getZ())
+            .build();
     }
 
     public static com.lunarclient.apollo.common.v1.BlockLocation toProtobuf(ApolloBlockLocation object) {
@@ -82,12 +82,12 @@ public final class NetworkTypes {
     }
 
     public static ApolloBlockLocation fromProtobuf(com.lunarclient.apollo.common.v1.BlockLocation message) {
-        return ApolloBlockLocation.of(
-            message.getWorld(),
-            message.getX(),
-            message.getY(),
-            message.getZ()
-        );
+        return ApolloBlockLocation.builder()
+            .withWorld(message.getWorld())
+            .withX(message.getX())
+            .withY(message.getY())
+            .withZ(message.getZ())
+            .build();
     }
 
     public static com.lunarclient.apollo.common.v1.Cuboid2D toProtobuf(Cuboid2D object) {
@@ -100,12 +100,12 @@ public final class NetworkTypes {
     }
 
     public static Cuboid2D fromProtobuf(com.lunarclient.apollo.common.v1.Cuboid2D message) {
-        return Cuboid2D.of(
-            message.getMinX(),
-            message.getMinZ(),
-            message.getMaxX(),
-            message.getMaxZ()
-        );
+        return Cuboid2D.builder()
+            .withMinX(message.getMinX())
+            .withMinZ(message.getMinZ())
+            .withMaxX(message.getMaxX())
+            .withMaxZ(message.getMaxZ())
+            .build();
     }
 
     public static com.lunarclient.apollo.common.v1.Cuboid3D toProtobuf(Cuboid3D object) {
@@ -120,14 +120,14 @@ public final class NetworkTypes {
     }
 
     public static Cuboid3D fromProtobuf(com.lunarclient.apollo.common.v1.Cuboid3D message) {
-        return Cuboid3D.of(
-            message.getMinX(),
-            message.getMinY(),
-            message.getMinZ(),
-            message.getMaxX(),
-            message.getMaxY(),
-            message.getMaxZ()
-        );
+        return Cuboid3D.builder()
+            .withMinX(message.getMinX())
+            .withMinY(message.getMinY())
+            .withMinZ(message.getMinZ())
+            .withMaxX(message.getMaxX())
+            .withMaxY(message.getMaxY())
+            .withMaxZ(message.getMaxZ())
+            .build();
     }
 
     public static com.lunarclient.apollo.common.v1.Component toProtobuf(Component object) {
@@ -156,12 +156,12 @@ public final class NetworkTypes {
             .stream().map(NetworkTypes::fromProtobuf)
             .collect(Collectors.toList());
 
-        return Component.of(
-            message.getContent(),
-            NetworkTypes.fromProtobuf(message.getColor()),
-            decorators,
-            children
-        );
+        return Component.builder()
+            .withContent(message.getContent())
+            .withColor(NetworkTypes.fromProtobuf(message.getColor()))
+            .withDecorators(decorators)
+            .withChildren(children)
+            .build();
     }
 
     public static com.lunarclient.apollo.common.v1.Icon toProtobuf(Icon icon) {
@@ -201,28 +201,28 @@ public final class NetworkTypes {
         if(icon.hasItemStack()) {
             com.lunarclient.apollo.common.v1.ItemStackIcon item = icon.getItemStack();
 
-            return ItemStackIcon.of(
-                item.getItemId()
-            );
+            return ItemStackIcon.builder()
+                .withItemId(item.getItemId())
+                .build();
         } else if(icon.hasSimpleResourceLocation()) {
             com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon simple = icon.getSimpleResourceLocation();
 
-            return SimpleResourceLocationIcon.of(
-                simple.getResourceLocation(),
-                simple.getSize()
-            );
+            return SimpleResourceLocationIcon.builder()
+                .withResourceLocation(simple.getResourceLocation())
+                .withSize(simple.getSize())
+                .build();
         } else if(icon.hasAdvancedResourceLocation()) {
             com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon advanced = icon.getAdvancedResourceLocation();
 
-            return AdvancedResourceLocationIcon.of(
-                advanced.getResourceLocation(),
-                advanced.getWidth(),
-                advanced.getHeight(),
-                advanced.getMinU(),
-                advanced.getMaxU(),
-                advanced.getMinV(),
-                advanced.getMaxV()
-            );
+            return AdvancedResourceLocationIcon.builder()
+                .withResourceLocation(advanced.getResourceLocation())
+                .withWidth(advanced.getWidth())
+                .withHeight(advanced.getHeight())
+                .withMinU(advanced.getMinU())
+                .withMaxU(advanced.getMaxU())
+                .withMinV(advanced.getMinV())
+                .withMaxV(advanced.getMaxV())
+                .build();
         }
 
         return null;

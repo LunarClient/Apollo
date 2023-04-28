@@ -2,14 +2,16 @@ package com.lunarclient.apollo.player.ui;
 
 import com.lunarclient.apollo.option.type.Component;
 import java.time.Duration;
-import lombok.Value;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Represents a title which can be shown on the client.
  *
  * @since 1.0.0
  */
-@Value(staticConstructor = "of")
+@Getter
+@Builder(setterPrefix = "with")
 public class Title {
 
     /**

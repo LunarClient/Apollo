@@ -7,16 +7,17 @@ import com.lunarclient.apollo.world.ApolloLocation;
 import java.awt.Color;
 import java.util.Map;
 import java.util.UUID;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.Setter;
-import lombok.Value;
-import lombok.experimental.NonFinal;
 
 /**
  * Represents a team which can be shown on the client.
  *
  * @since 1.0.0
  */
-@Value(staticConstructor = "of")
+@Getter
+@Builder(setterPrefix = "with")
 public class Team {
 
     /**
@@ -75,7 +76,8 @@ public class Team {
      *
      * @since 1.0.0
      */
-    @Value(staticConstructor = "of")
+    @Getter @Setter
+    @Builder(setterPrefix = "with")
     public static class Teammate {
 
         /**
@@ -84,7 +86,7 @@ public class Team {
          * @return the teammate color
          * @since 1.0.0
          */
-        @NonFinal @Setter Color color;
+        Color color;
 
         /**
          * Returns the teammate {@link ApolloLocation}.
@@ -96,7 +98,7 @@ public class Team {
          * @return the teammate location
          * @since 1.0.0
          */
-        @NonFinal @Setter ApolloLocation location;
+        ApolloLocation location;
     }
 
     @Override

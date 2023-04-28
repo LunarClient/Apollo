@@ -46,7 +46,11 @@ public final class TeamsImpl extends Teams {
     public Team createTeam(Map<UUID, Team.Teammate> teammates) {
         requireNonNull(teammates, "teammates");
 
-        Team team = Team.of(UUID.randomUUID(), teammates);
+        Team team = Team.builder()
+            .withTeamId(UUID.randomUUID())
+            .withTeammates(teammates)
+            .build();
+
         team.getTeammates().keySet().forEach(uuid -> this.teamsByPlayerUuid.put(uuid, team));
 
         this.teamsByTeamUuid.put(team.getTeamId(), team);

@@ -22,13 +22,18 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.NonExtendable
 public abstract class Waypoints extends ApolloModule {
 
-    private static final Waypoint SPAWN_WAYPOINT = Waypoint.of(
-        "Spawn",
-        ApolloBlockLocation.of("world", 0, 100, 0),
-        Color.RED,
-        false,
-        true
-    );
+    private static final Waypoint SPAWN_WAYPOINT = Waypoint.builder()
+        .withName("Spawn")
+        .withLocation(ApolloBlockLocation.builder()
+            .withWorld("world")
+            .withX(0)
+            .withY(100)
+            .withZ(0)
+            .build())
+        .withColor(Color.RED)
+        .withPreventRemoval(false)
+        .withVisible(true)
+        .build();
 
     /**
      * Returns the default list of waypoints to show the player.

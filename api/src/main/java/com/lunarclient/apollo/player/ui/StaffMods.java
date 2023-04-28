@@ -2,14 +2,16 @@ package com.lunarclient.apollo.player.ui;
 
 import java.util.EnumSet;
 import java.util.Set;
-import lombok.Value;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Represents a staff mod that can be enabled on the client.
  *
  * @since 1.0.0
  */
-@Value(staticConstructor = "of")
+@Getter
+@Builder(setterPrefix = "with")
 public class StaffMods {
 
     /**

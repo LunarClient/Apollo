@@ -4,14 +4,16 @@ import com.lunarclient.apollo.option.type.Component;
 import com.lunarclient.apollo.world.ApolloLocation;
 import java.util.List;
 import java.util.UUID;
-import lombok.Value;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Represents a hologram which can be shown on the client.
  *
  * @since 1.0.0
  */
-@Value(staticConstructor = "of")
+@Getter
+@Builder(setterPrefix = "with")
 public class Hologram {
 
     /**

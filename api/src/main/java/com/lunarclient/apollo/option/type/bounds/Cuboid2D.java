@@ -1,13 +1,15 @@
 package com.lunarclient.apollo.option.type.bounds;
 
-import lombok.Value;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Represents a 2D cuboid.
  *
  * @since 1.0.0
  */
-@Value(staticConstructor = "of")
+@Getter
+@Builder(setterPrefix = "with")
 public class Cuboid2D {
 
     /**

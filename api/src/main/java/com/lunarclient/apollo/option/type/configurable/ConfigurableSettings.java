@@ -1,14 +1,16 @@
 package com.lunarclient.apollo.option.type.configurable;
 
 import java.util.Set;
-import lombok.Value;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Represents configurable settings.
  *
  * @since 1.0.0
  */
-@Value(staticConstructor = "of")
+@Getter
+@Builder(setterPrefix = "with")
 public class ConfigurableSettings {
 
     /**

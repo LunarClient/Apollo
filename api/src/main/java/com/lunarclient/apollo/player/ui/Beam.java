@@ -2,14 +2,16 @@ package com.lunarclient.apollo.player.ui;
 
 import com.lunarclient.apollo.world.ApolloBlockLocation;
 import java.awt.Color;
-import lombok.Value;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Represents a beacon beam which can be shown on the client.
  *
  * @since 1.0.0
  */
-@Value(staticConstructor = "of")
+@Getter
+@Builder(setterPrefix = "with")
 public class Beam {
 
     /**

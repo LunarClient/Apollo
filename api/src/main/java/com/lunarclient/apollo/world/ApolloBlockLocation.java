@@ -1,13 +1,15 @@
 package com.lunarclient.apollo.world;
 
-import lombok.Value;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Represents a block location in the world.
  *
  * @since 1.0.0
  */
-@Value(staticConstructor = "of")
+@Getter
+@Builder(setterPrefix = "with")
 public class ApolloBlockLocation {
 
     /**
