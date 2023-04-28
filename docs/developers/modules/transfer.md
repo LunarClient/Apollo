@@ -26,7 +26,7 @@ public void {
 ```
 
 ### Client Response (Ping Packet)
-After sending a ping packet to the player, you'll get a response from the users current ping to the provided server address.
+After sending a ping packet to the player, you'll get a response from the user with their current ping to the provided server address.
 
 <!-- insert example of a response -->
 ```
