@@ -1,0 +1,22 @@
+name: Deploy Documentation
+on:
+    push:
+        paths:
+            - "docs/**"
+
+jobs:
+    deploy:
+    name: Deploy Documentation
+    runs-on: ubuntu-latest
+    permissions:
+        id-token: write
+        contents: read
+
+    steps:
+        - name: Trigger workflow dispatch
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+            workflow: deploy.yml
+            repo: LunarClient/lunarclient.dev-Build
+            inputs: '{"repository": "${{ github.repository }}", "ref": "${{ github.ref }}"}'
+            token: ${{ secrets.DISPATCH_TOKEN }}
