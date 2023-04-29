@@ -1,0 +1,23 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Protocol Buffers
+ 
+<Callout type="warning" emoji="⚠️">
+  This page describes the internals of the project. This is only relevant if you'd like to contribute to Apollo. For standard usage of Apollo, this page is not relevant.
+</Callout>
+
+## Overview
+
+Apollo uses Google's [Protocol Buffers](https://protobuf.dev/) to communicate with the client.
+
+* The generated artifacts are available on our [Maven repository](/maven-repository) as `com.lunarclient:apollo-protos`
+* The underlying `.proto` definitions are available on Buf Schema Registry, at https://buf.build/lunarclient/apollo
+
+## Contributions
+
+As all changes to the `.proto` definitions require a corresponding implementation in the client to be usable, we aren't currently allowing direct contributions to `.proto` files.
+
+## Support
+
+The usage of protocol buffers, and the generated code itself, is considered an implementation detail of Apollo. As such, we can only provide limited support to those
+wishing to use protocol buffers directly.
