@@ -2,6 +2,7 @@
 
 The Lunar Client API, known as Apollo, is a powerful tool that allows developers to create custom integrations with Lunar Client. 
 Using Apollo will allow server owners and developers to interact with Lunar Client, to integrate customized features and add quality of life features.
+
 We have a lot planned for Apollo, and are very open to suggestions and contributions.
 
 This documentation will provide you with all information you'll need to know to start integrating Apollo into your server or plugins!

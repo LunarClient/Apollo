@@ -35,7 +35,7 @@ Failure to follow the correct protocols will prevent features from enabling, dis
 <details>
 <summary>Where can I suggest new features for Apollo?</summary>
 
-You can join the Apollo [discord](https://www.lunarclient.dev/discord) and create a suggestion under #suggestions. 
+You can join the Lunar Client Developers [Discord](https://www.lunarclient.dev/discord) and create a suggestion under `#suggestions`. 
 Alternatively, if you have the skills and knowledge, you can create the feature yourself and open a pull request on the [Apollo repository](https://github.com/LunarClient/Apollo) on GitHub.
 
 </details>

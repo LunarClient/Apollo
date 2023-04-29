@@ -1,6 +1,5 @@
-# Lunar Client Mod Ids
-
-> Last Updated: 4/27/2023
+# Lunar Client Mod IDs
+Last Updated: 4/27/2023
 
 ~~~~
 2D_ITEMS
