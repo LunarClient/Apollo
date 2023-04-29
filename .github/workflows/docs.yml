@@ -20,5 +20,5 @@ jobs:
                   workflow: deploy.yml
                   repo: LunarClient/lunarclient.dev-Build
                   ref: refs/heads/master
-                  inputs: '{"repo": "${{ github.repository }}", "ref": "${{ github.ref }}" }'
+                  inputs: '{"repo": "${{ github.repository }}", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}" }'
                   token: ${{ secrets.DISPATCH_TOKEN }}
