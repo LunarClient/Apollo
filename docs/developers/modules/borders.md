@@ -34,7 +34,7 @@ public void displayBorder(ApolloPlayer player, Border border) {
     .setDurationTicks(border.getDuration())
     .build()
     );
-    }
+}
 ```
 
 <!-- example breakdown -->
