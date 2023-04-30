@@ -1,0 +1,22 @@
+{
+    "beam": "Beam",
+    "border": "Border",
+    "coloredfire": "Colored Fire",
+    "cooldown": "Cooldown",
+    "hearttexture": "Heart Texture",
+    "hologram": "Hologram",
+    "limb": "Limb",
+    "misc": "Misc",
+    "modsetting": "Mod Setting",
+    "nametag": "Nametag",
+    "notification": "Notification",
+    "saturation": "Saturation",
+    "serverrule": "Server Rule",
+    "staffmod": "Staff Mod",
+    "stopwatch": "Stopwatch",
+    "team": "Team",
+    "title": "Title",
+    "tntcountdown": "TNT Countdowns",
+    "transfer": "Transfer",
+    "waypoint": "Waypoint"
+}
