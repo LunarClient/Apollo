@@ -9,35 +9,44 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Optional;
 
-public final class TransferExample {
+public class TransferExample {
 
-    public void transferExample(Player target, String serverIp) {
-        // Normally we'd handle Optional being empty better
-        TransferModule transferModule = Apollo.getModuleManager().getModule(TransferModule.class).orElseThrow();
-        ApolloPlayer apolloPlayer = Apollo.getPlayerManager().getPlayer(target.getUniqueId()).orElseThrow();
+    private TransferModule transferModule;
 
-        transferModule.transfer(apolloPlayer, serverIp)
+    public void transferExample(Player player) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+
+        if (apolloPlayerOpt.isEmpty()) {
+            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
+            return;
+        }
+
+        transferModule.transfer(apolloPlayerOpt.get(), "mc.hypixel.net")
             .onSuccess(response -> {
                 String message = switch (response.getStatus()) {
                     case ACCEPTED -> "Transfer accepted! Goodbye!";
                     case REJECTED -> "Transfer rejected by client!";
                 };
 
-                target.sendMessage(Component.text(message, NamedTextColor.YELLOW));
+                player.sendMessage(Component.text(message, NamedTextColor.YELLOW));
             })
             .onFailure(exception -> {
-                target.sendMessage(Component.text("Internal error! Check console!"));
+                player.sendMessage(Component.text("Internal error! Check console!"));
                 exception.printStackTrace();
             });
     }
 
-    public void pingExample(Player target, List<String> serverIps) {
-        // Normally we'd handle Optional being empty better
-        TransferModule transferModule = Apollo.getModuleManager().getModule(TransferModule.class).orElseThrow();
-        ApolloPlayer apolloPlayer = Apollo.getPlayerManager().getPlayer(target.getUniqueId()).orElseThrow();
+    public void pingExample(Player player) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
 
-        transferModule.ping(apolloPlayer, serverIps)
+        if (apolloPlayerOpt.isEmpty()) {
+            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
+            return;
+        }
+
+        transferModule.ping(apolloPlayerOpt.get(), List.of("mc.hypixel.net", "minehut.com"))
             .onSuccess(response -> {
                 for (PingResponse.PingData pingData : response.getData()) {
                     String message = switch (pingData.getStatus()) {
@@ -45,11 +54,11 @@ public final class TransferExample {
                         case TIMED_OUT -> String.format("Failed to ping %s", pingData.getServerIp());
                     };
 
-                    target.sendMessage(Component.text(message, NamedTextColor.YELLOW));
+                    player.sendMessage(Component.text(message, NamedTextColor.YELLOW));
                 }
             })
             .onFailure(exception -> {
-                target.sendMessage(Component.text("Internal error! Check console!"));
+                player.sendMessage(Component.text("Internal error! Check console!"));
                 exception.printStackTrace();
             });
     }
