@@ -3,9 +3,8 @@ package com.lunarclient.apollo;
 import com.lunarclient.apollo.module.ApolloModuleManager;
 import com.lunarclient.apollo.player.ApolloPlayerManager;
 import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
+import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Provides static accessors to Apollo.
@@ -59,11 +58,11 @@ public final class Apollo {
         return Apollo.checkEnabled(Apollo.roundtripManager);
     }
 
-    static void initialize(ApolloPlatform platform, ApolloModuleManager moduleManager, ApolloPlayerManager playerManager, ApolloRoundtripManager roundtripManager) {
-        Apollo.platform = requireNonNull(platform, "platform");
-        Apollo.moduleManager = requireNonNull(moduleManager, "moduleManager");
-        Apollo.playerManager = requireNonNull(playerManager, "playerManager");
-        Apollo.roundtripManager = requireNonNull(roundtripManager, "roundtripManager");
+    static void initialize(@NonNull ApolloPlatform platform, @NonNull ApolloModuleManager moduleManager, @NonNull ApolloPlayerManager playerManager, @NonNull ApolloRoundtripManager roundtripManager) {
+        Apollo.platform = platform;
+        Apollo.moduleManager = moduleManager;
+        Apollo.playerManager = playerManager;
+        Apollo.roundtripManager = roundtripManager;
     }
 
     private static <T> T checkEnabled(@Nullable T object) {

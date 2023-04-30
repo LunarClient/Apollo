@@ -10,9 +10,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
+import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a view of a {@link OptionsContainer} for a specific {@link ApolloPlayer}.
@@ -38,8 +37,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T, C extends Option<T, ?, ?>> @Nullable T get(C option) {
-        requireNonNull(option, "option");
+    public <T, C extends Option<T, ?, ?>> @Nullable T get(@NonNull C option) {
         Object value;
         return (value = this.values.get(option.getKey())) == null
                 ? this.container.get(option)
@@ -56,8 +54,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
     }
 
     @Override
-    public <T> void set(Option<?, ?, ?> option, @Nullable T value) {
-        requireNonNull(option, "option");
+    public <T> void set(@NonNull Option<?, ?, ?> option, @Nullable T value) {
         if(!this.postUpdate(option, value)) return;
         boolean send = false;
         if(value == null || Objects.equals(value, option.getDefaultValue())) {
@@ -78,9 +75,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
     }
 
     @Override
-    public <T> void add(Option<?, ?, ?> option, T value) {
-        requireNonNull(option, "option");
-        requireNonNull(value, "value");
+    public <T> void add(@NonNull Option<?, ?, ?> option, @NonNull T value) {
         if(!this.postUpdate(option, value)) return;
         if(this.values.putIfAbsent(option.getKey(), value) == null) {
             NetworkOptions.sendOption(
@@ -93,9 +88,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
     }
 
     @Override
-    public <T> void remove(Option<?, ?, ?> option, @Nullable T compare) {
-        requireNonNull(option, "option");
-        requireNonNull(compare, "compare");
+    public <T> void remove(@NonNull Option<?, ?, ?> option, @NonNull T compare) {
         if(!this.postUpdate(option, null)) return;
         if(this.values.remove(option.getKey(), compare)) {
             NetworkOptions.sendOption(
@@ -109,9 +102,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> void replace(Option<?, ?, ?> option, BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
-        requireNonNull(option, "option");
-        requireNonNull(remappingFunction, "remappingFunction");
+    public <T> void replace(@NonNull Option<?, ?, ?> option, @NonNull BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
         Object value = this.values.compute(option.getKey(), (key, current) -> remappingFunction.apply(option, (T) current));
         NetworkOptions.sendOption(
                 this.container.module,

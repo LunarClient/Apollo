@@ -48,7 +48,7 @@ public class ApolloRoundtripManager {
     public void handleResponse(ApolloResponse response) {
         UncertainFuture<ApolloResponse> future = this.listeners.remove(response.getPacketId());
 
-        if(future != null) {
+        if (future != null) {
             future.getSuccess().forEach(handler -> handler.handle(response));
         }
     }
@@ -62,20 +62,22 @@ public class ApolloRoundtripManager {
      * @since 1.0.0
      */
     public <T extends ApolloResponse> void registerListener(ApolloRequest<T> request, UncertainFuture<T> future) {
-        UUID packetId = request.getPacketId();
+        UUID packetId = request.getRequestId();
 
         this.timeoutExecutor.schedule(() -> {
             try {
                 UncertainFuture<ApolloResponse> listener = this.listeners.remove(packetId);
 
-                if(listener != null) {
-                    future.getFailure().forEach(handler -> handler.handle(new Throwable("Timeout exceeded!")));
+                if (listener != null) {
+                    Throwable error = new Throwable("Timeout exceeded!");
+                    future.getFailure().forEach(handler -> handler.handle(error));
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }, ApolloRequest.TIMEOUT, TimeUnit.MILLISECONDS);
 
         this.listeners.put(packetId, (UncertainFuture<ApolloResponse>) future);
     }
+
 }

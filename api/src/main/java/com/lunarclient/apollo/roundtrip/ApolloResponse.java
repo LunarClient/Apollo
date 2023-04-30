@@ -18,4 +18,5 @@ public class ApolloResponse {
      * @since 1.0.0
      */
     private UUID packetId;
+
 }

@@ -3,9 +3,8 @@ package com.lunarclient.apollo.player;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.NonNull;
 import org.jetbrains.annotations.ApiStatus;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Represents the player manager for Apollo.
@@ -23,8 +22,7 @@ public interface ApolloPlayerManager {
      * @return true if the player supports apollo, otherwise false
      * @since 1.0.0
      */
-    default boolean hasSupport(UUID playerIdentifier) {
-        requireNonNull(playerIdentifier, "playerIdentifier");
+    default boolean hasSupport(@NonNull UUID playerIdentifier) {
         return this.getPlayer(playerIdentifier).isPresent();
     }
 

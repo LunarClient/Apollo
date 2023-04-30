@@ -1,93 +1,57 @@
 package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.module.type.Transfer;
+import com.lunarclient.apollo.module.transfer.PingResponse;
+import com.lunarclient.apollo.module.transfer.TransferModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.player.ui.transfer.ServerPing;
-import com.lunarclient.apollo.player.ui.transfer.ServerTransfer;
-import com.lunarclient.apollo.roundtrip.async.Handler;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Optional;
 
-public class TransferExample implements CommandExecutor {
+public final class TransferExample {
 
-    public void transferPlayer(Player target, String address) {
-        Optional<Transfer> transferModule = Apollo.getModuleManager().getModule(Transfer.class);
-        Optional<ApolloPlayer> apolloPlayer = Apollo.getPlayerManager().getPlayer(target.getUniqueId());
+    public void transferExample(Player target, String serverIp) {
+        // Normally we'd handle Optional being empty better
+        TransferModule transferModule = Apollo.getModuleManager().getModule(TransferModule.class).orElseThrow();
+        ApolloPlayer apolloPlayer = Apollo.getPlayerManager().getPlayer(target.getUniqueId()).orElseThrow();
 
-        transferModule.ifPresent(module -> apolloPlayer.ifPresent(player -> {
-            ServerTransfer.Request transferRequest = ServerTransfer.Request.builder()
-                .withAddress(address)
-                .build();
+        transferModule.transfer(apolloPlayer, serverIp)
+            .onSuccess(response -> {
+                String message = switch (response.getStatus()) {
+                    case ACCEPTED -> "Transfer accepted! Goodbye!";
+                    case REJECTED -> "Transfer rejected by client!";
+                };
 
-            Handler<ServerTransfer.Response> responseHandler = response -> {
-                switch (response.getStatus()) {
-                    case ACCEPTED -> target.sendMessage(Component.text("Transfer completed!", NamedTextColor.GREEN));
-                    case REJECTED -> target.sendMessage(Component.text("Transfer failed!", NamedTextColor.RED));
+                target.sendMessage(Component.text(message, NamedTextColor.YELLOW));
+            })
+            .onFailure(exception -> {
+                target.sendMessage(Component.text("Internal error! Check console!"));
+                exception.printStackTrace();
+            });
+    }
+
+    public void pingExample(Player target, List<String> serverIps) {
+        // Normally we'd handle Optional being empty better
+        TransferModule transferModule = Apollo.getModuleManager().getModule(TransferModule.class).orElseThrow();
+        ApolloPlayer apolloPlayer = Apollo.getPlayerManager().getPlayer(target.getUniqueId()).orElseThrow();
+
+        transferModule.ping(apolloPlayer, serverIps)
+            .onSuccess(response -> {
+                for (PingResponse.PingData pingData : response.getData()) {
+                    String message = switch (pingData.getStatus()) {
+                        case SUCCESS -> String.format("Ping to %s is %d ms.", pingData.getServerIp(), pingData.getPingMillis());
+                        case TIMED_OUT -> String.format("Failed to ping %s", pingData.getServerIp());
+                    };
+
+                    target.sendMessage(Component.text(message, NamedTextColor.YELLOW));
                 }
-            };
-
-            module.transfer(player, transferRequest, responseHandler);
-        }));
+            })
+            .onFailure(exception -> {
+                target.sendMessage(Component.text("Internal error! Check console!"));
+                exception.printStackTrace();
+            });
     }
 
-    public void pingServers(Player target, List<String> addresses, boolean transfer) {
-        Optional<Transfer> transferModule = Apollo.getModuleManager().getModule(Transfer.class);
-        Optional<ApolloPlayer> apolloPlayer = Apollo.getPlayerManager().getPlayer(target.getUniqueId());
-
-        transferModule.ifPresent(module -> apolloPlayer.ifPresent(player -> {
-            ServerPing.Request pingRequest = ServerPing.Request.builder()
-                .withAddresses(addresses)
-                .build();
-
-            Handler<ServerPing.Response> responseHandler = response -> {
-                for (ServerPing.Response.PingData pingData : response.getData()) {
-                    switch (pingData.getStatus()) {
-                        case SUCCESS -> {
-                            target.sendMessage(Component.text(String.format("Your ping for %s is %d.",
-                                pingData.getAddress(), pingData.getPing()), NamedTextColor.GREEN));
-
-                            if(transfer) {
-                                this.transferPlayer(target, pingData.getAddress());
-                                return;
-                            }
-                        }
-
-                        case TIMED_OUT -> target.sendMessage(Component.text(String.format("Ping request timed out for %s",
-                            pingData.getAddress()), NamedTextColor.RED));
-                    }
-                }
-            };
-
-            module.ping(player, pingRequest, responseHandler);
-        }));
-    }
-
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("Player only...", NamedTextColor.RED));
-            return false;
-        }
-
-        if(args.length != 2) {
-            player.sendMessage(Component.text("Usage: /ping <address> <transfer>"));
-            return false;
-        }
-
-        String address = args[0];
-        boolean transfer = Boolean.parseBoolean(args[1]);
-
-        this.pingServers(player, List.of(address), transfer);
-
-        return true;
-    }
 }

@@ -3,16 +3,16 @@ package com.lunarclient.apollo.impl.bukkit.wrapper;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.impl.bukkit.ApolloBukkitPlatform;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
-import com.lunarclient.apollo.world.ApolloLocation;
+import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public final class BukkitApolloPlayer extends AbstractApolloPlayer {
 
     private final Player player;
@@ -31,10 +31,10 @@ public final class BukkitApolloPlayer extends AbstractApolloPlayer {
     public Optional<ApolloLocation> getLocation() {
         Location location = this.player.getLocation();
         return Optional.of(ApolloLocation.builder()
-            .withWorld(location.getWorld().getName())
-            .withX(location.getX())
-            .withY(location.getY())
-            .withZ(location.getZ())
+            .world(location.getWorld().getName())
+            .x(location.getX())
+            .y(location.getY())
+            .z(location.getZ())
             .build());
     }
 

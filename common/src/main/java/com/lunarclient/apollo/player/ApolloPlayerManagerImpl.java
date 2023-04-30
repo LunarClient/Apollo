@@ -12,8 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.NoArgsConstructor;
-
-import static java.util.Objects.requireNonNull;
+import lombok.NonNull;
 
 /**
  * Provides the implementation for the {@link ApolloPlayerManager}.
@@ -41,9 +40,7 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
      * @param player the player to add
      * @since 1.0.0
      */
-    public void addPlayer(ApolloPlayer player) {
-        requireNonNull(player, "player");
-
+    public void addPlayer(@NonNull ApolloPlayer player) {
         if(this.players.putIfAbsent(player.getUniqueId(), player) == null) {
             EventBus.EventResult<ApolloRegisterPlayerEvent> result = EventBus.getBus().post(new ApolloRegisterPlayerEvent(player));
             for(Throwable throwable : result.getThrowing()) {
@@ -63,9 +60,7 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
      * @param player the player to remove
      * @since 1.0.0
      */
-    public void removePlayer(UUID player) {
-        requireNonNull(player, "player");
-
+    public void removePlayer(@NonNull UUID player) {
         ApolloPlayer apolloPlayer = this.players.remove(player);
         if(apolloPlayer != null) {
             EventBus.EventResult<ApolloUnregisterPlayerEvent> result = EventBus.getBus().post(new ApolloUnregisterPlayerEvent(apolloPlayer));

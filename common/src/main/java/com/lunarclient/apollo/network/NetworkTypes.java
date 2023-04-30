@@ -1,15 +1,15 @@
 package com.lunarclient.apollo.network;
 
+import com.lunarclient.apollo.common.Component;
+import com.lunarclient.apollo.common.cuboid.Cuboid2D;
+import com.lunarclient.apollo.common.cuboid.Cuboid3D;
+import com.lunarclient.apollo.common.icon.AdvancedResourceLocationIcon;
+import com.lunarclient.apollo.common.icon.Icon;
+import com.lunarclient.apollo.common.icon.ItemStackIcon;
+import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
+import com.lunarclient.apollo.common.location.ApolloBlockLocation;
+import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.common.v1.Uuid;
-import com.lunarclient.apollo.option.type.Component;
-import com.lunarclient.apollo.option.type.bounds.Cuboid2D;
-import com.lunarclient.apollo.option.type.bounds.Cuboid3D;
-import com.lunarclient.apollo.option.type.icon.AdvancedResourceLocationIcon;
-import com.lunarclient.apollo.option.type.icon.Icon;
-import com.lunarclient.apollo.option.type.icon.ItemStackIcon;
-import com.lunarclient.apollo.option.type.icon.SimpleResourceLocationIcon;
-import com.lunarclient.apollo.world.ApolloBlockLocation;
-import com.lunarclient.apollo.world.ApolloLocation;
 import java.awt.Color;
 import java.time.Duration;
 import java.util.List;
@@ -65,10 +65,10 @@ public final class NetworkTypes {
 
     public static ApolloLocation fromProtobuf(com.lunarclient.apollo.common.v1.Location message) {
         return ApolloLocation.builder()
-            .withWorld(message.getWorld())
-            .withX(message.getX())
-            .withY(message.getY())
-            .withZ(message.getZ())
+            .world(message.getWorld())
+            .x(message.getX())
+            .y(message.getY())
+            .z(message.getZ())
             .build();
     }
 
@@ -83,10 +83,10 @@ public final class NetworkTypes {
 
     public static ApolloBlockLocation fromProtobuf(com.lunarclient.apollo.common.v1.BlockLocation message) {
         return ApolloBlockLocation.builder()
-            .withWorld(message.getWorld())
-            .withX(message.getX())
-            .withY(message.getY())
-            .withZ(message.getZ())
+            .world(message.getWorld())
+            .x(message.getX())
+            .y(message.getY())
+            .z(message.getZ())
             .build();
     }
 
@@ -101,10 +101,10 @@ public final class NetworkTypes {
 
     public static Cuboid2D fromProtobuf(com.lunarclient.apollo.common.v1.Cuboid2D message) {
         return Cuboid2D.builder()
-            .withMinX(message.getMinX())
-            .withMinZ(message.getMinZ())
-            .withMaxX(message.getMaxX())
-            .withMaxZ(message.getMaxZ())
+            .minX(message.getMinX())
+            .minZ(message.getMinZ())
+            .maxX(message.getMaxX())
+            .maxZ(message.getMaxZ())
             .build();
     }
 
@@ -121,12 +121,12 @@ public final class NetworkTypes {
 
     public static Cuboid3D fromProtobuf(com.lunarclient.apollo.common.v1.Cuboid3D message) {
         return Cuboid3D.builder()
-            .withMinX(message.getMinX())
-            .withMinY(message.getMinY())
-            .withMinZ(message.getMinZ())
-            .withMaxX(message.getMaxX())
-            .withMaxY(message.getMaxY())
-            .withMaxZ(message.getMaxZ())
+            .minX(message.getMinX())
+            .minY(message.getMinY())
+            .minZ(message.getMinZ())
+            .maxX(message.getMaxX())
+            .maxY(message.getMaxY())
+            .maxZ(message.getMaxZ())
             .build();
     }
 
@@ -157,10 +157,10 @@ public final class NetworkTypes {
             .collect(Collectors.toList());
 
         return Component.builder()
-            .withContent(message.getContent())
-            .withColor(NetworkTypes.fromProtobuf(message.getColor()))
-            .withDecorators(decorators)
-            .withChildren(children)
+            .content(message.getContent())
+            .color(NetworkTypes.fromProtobuf(message.getColor()))
+            .decorators(decorators)
+            .children(children)
             .build();
     }
 
@@ -202,26 +202,26 @@ public final class NetworkTypes {
             com.lunarclient.apollo.common.v1.ItemStackIcon item = icon.getItemStack();
 
             return ItemStackIcon.builder()
-                .withItemId(item.getItemId())
+                .itemId(item.getItemId())
                 .build();
         } else if(icon.hasSimpleResourceLocation()) {
             com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon simple = icon.getSimpleResourceLocation();
 
             return SimpleResourceLocationIcon.builder()
-                .withResourceLocation(simple.getResourceLocation())
-                .withSize(simple.getSize())
+                .resourceLocation(simple.getResourceLocation())
+                .size(simple.getSize())
                 .build();
         } else if(icon.hasAdvancedResourceLocation()) {
             com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon advanced = icon.getAdvancedResourceLocation();
 
             return AdvancedResourceLocationIcon.builder()
-                .withResourceLocation(advanced.getResourceLocation())
-                .withWidth(advanced.getWidth())
-                .withHeight(advanced.getHeight())
-                .withMinU(advanced.getMinU())
-                .withMaxU(advanced.getMaxU())
-                .withMinV(advanced.getMinV())
-                .withMaxV(advanced.getMaxV())
+                .resourceLocation(advanced.getResourceLocation())
+                .width(advanced.getWidth())
+                .height(advanced.getHeight())
+                .minU(advanced.getMinU())
+                .maxU(advanced.getMaxU())
+                .minV(advanced.getMinV())
+                .maxV(advanced.getMaxV())
                 .build();
         }
 

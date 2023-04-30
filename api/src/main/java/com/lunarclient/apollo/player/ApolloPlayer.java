@@ -1,8 +1,8 @@
 package com.lunarclient.apollo.player;
 
+import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
-import com.lunarclient.apollo.world.ApolloLocation;
 import java.util.Optional;
 import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;

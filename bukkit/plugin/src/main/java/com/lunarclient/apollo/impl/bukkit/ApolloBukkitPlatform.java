@@ -4,33 +4,46 @@ import com.google.protobuf.Any;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.impl.bukkit.listener.TntCountdownListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.impl.bukkit.wrapper.BukkitApolloPlayer;
-import com.lunarclient.apollo.module.type.Borders;
-import com.lunarclient.apollo.module.type.BordersImpl;
-import com.lunarclient.apollo.module.type.ColoredFiresImpl;
-import com.lunarclient.apollo.module.type.ColoredFires;
-import com.lunarclient.apollo.module.type.Cooldowns;
-import com.lunarclient.apollo.module.type.CooldownsImpl;
-import com.lunarclient.apollo.module.type.HeartTextureImpl;
-import com.lunarclient.apollo.module.type.HeartTextures;
-import com.lunarclient.apollo.module.type.LegacyCombat;
-import com.lunarclient.apollo.module.type.Nametags;
-import com.lunarclient.apollo.module.type.NametagsImpl;
-import com.lunarclient.apollo.module.type.Notifications;
-import com.lunarclient.apollo.module.type.NotificationsImpl;
-import com.lunarclient.apollo.module.type.Saturation;
-import com.lunarclient.apollo.module.type.SaturationImpl;
-import com.lunarclient.apollo.module.type.Stopwatch;
-import com.lunarclient.apollo.module.type.StopwatchImpl;
-import com.lunarclient.apollo.module.type.Teams;
-import com.lunarclient.apollo.module.type.TeamsImpl;
-import com.lunarclient.apollo.module.type.Titles;
-import com.lunarclient.apollo.module.type.TitlesImpl;
-import com.lunarclient.apollo.module.type.TntCountdown;
-import com.lunarclient.apollo.module.type.TntCountdownImpl;
-import com.lunarclient.apollo.module.type.Waypoints;
-import com.lunarclient.apollo.module.type.WaypointsImpl;
+import com.lunarclient.apollo.module.beam.BeamModule;
+import com.lunarclient.apollo.module.beam.BeamModuleImpl;
+import com.lunarclient.apollo.module.border.BorderModule;
+import com.lunarclient.apollo.module.border.BorderModuleImpl;
+import com.lunarclient.apollo.module.coloredfire.ColoredFireModuleImpl;
+import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
+import com.lunarclient.apollo.module.cooldown.CooldownModule;
+import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
+import com.lunarclient.apollo.module.hearttexture.HeartTextureModuleImpl;
+import com.lunarclient.apollo.module.hearttexture.HeartTextureModule;
+import com.lunarclient.apollo.module.hologram.HologramModule;
+import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
+import com.lunarclient.apollo.module.limb.LimbModule;
+import com.lunarclient.apollo.module.limb.LimbModuleImpl;
+import com.lunarclient.apollo.module.misc.MiscModule;
+import com.lunarclient.apollo.module.misc.MiscModuleImpl;
+import com.lunarclient.apollo.module.modsetting.ModSettingModule;
+import com.lunarclient.apollo.module.modsetting.ModSettingModuleImpl;
+import com.lunarclient.apollo.module.nametag.NametagModule;
+import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
+import com.lunarclient.apollo.module.notification.NotificationModule;
+import com.lunarclient.apollo.module.notification.NotificationModuleImpl;
+import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
+import com.lunarclient.apollo.module.staffmod.StaffModModule;
+import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
+import com.lunarclient.apollo.module.transfer.TransferModule;
+import com.lunarclient.apollo.module.transfer.TransferModuleImpl;
+import com.lunarclient.apollo.module.stopwatch.StopwatchModule;
+import com.lunarclient.apollo.module.stopwatch.StopwatchModuleImpl;
+import com.lunarclient.apollo.module.team.TeamModule;
+import com.lunarclient.apollo.module.team.TeamModuleImpl;
+import com.lunarclient.apollo.module.title.TitleModule;
+import com.lunarclient.apollo.module.title.TitleModuleImpl;
+import com.lunarclient.apollo.module.tntcountdown.TntCountdownModule;
+import com.lunarclient.apollo.module.tntcountdown.TntCountdownModuleImpl;
+import com.lunarclient.apollo.module.waypoint.WaypointModule;
+import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import lombok.Getter;
 import org.bukkit.entity.Player;
@@ -39,6 +52,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.event.player.PlayerUnregisterChannelEvent;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 import org.spongepowered.configurate.CommentedConfigurationNode;
@@ -56,25 +70,28 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     @Override
     public void onEnable() {
         ApolloBukkitPlatform.instance = this;
-
-        this.getServer().getPluginManager().registerEvents(this, this);
-
         ApolloManager.bootstrap(this);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
-                .addModule(Borders.class, new BordersImpl())
-                .addModule(ColoredFires.class, new ColoredFiresImpl())
-                .addModule(Cooldowns.class, new CooldownsImpl())
-                .addModule(HeartTextures.class, new HeartTextureImpl())
-                .addModule(Nametags.class, new NametagsImpl())
-                .addModule(Notifications.class, new NotificationsImpl())
-                .addModule(Saturation.class, new SaturationImpl())
-                .addModule(Stopwatch.class, new StopwatchImpl())
-                .addModule(Teams.class, new TeamsImpl())
-                .addModule(Titles.class, new TitlesImpl())
-                .addModule(TntCountdown.class, new TntCountdownImpl())
-                .addModule(Waypoints.class, new WaypointsImpl())
-                .addModule(LegacyCombat.class);
+                .addModule(BeamModule.class, new BeamModuleImpl())
+                .addModule(BorderModule.class, new BorderModuleImpl())
+                .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
+                .addModule(CooldownModule.class, new CooldownModuleImpl())
+                .addModule(HeartTextureModule.class, new HeartTextureModuleImpl())
+                .addModule(HologramModule.class, new HologramModuleImpl())
+                .addModule(LimbModule.class, new LimbModuleImpl())
+                .addModule(MiscModule.class, new MiscModuleImpl())
+                .addModule(ModSettingModule.class, new ModSettingModuleImpl())
+                .addModule(NametagModule.class, new NametagModuleImpl())
+                .addModule(NotificationModule.class, new NotificationModuleImpl())
+                .addModule(ServerRuleModule.class)
+                .addModule(StaffModModule.class, new StaffModModuleImpl())
+                .addModule(StopwatchModule.class, new StopwatchModuleImpl())
+                .addModule(TeamModule.class, new TeamModuleImpl())
+                .addModule(TitleModule.class, new TitleModuleImpl())
+                .addModule(TntCountdownModule.class, new TntCountdownModuleImpl())
+                .addModule(TransferModule.class, new TransferModuleImpl())
+                .addModule(WaypointModule.class, new WaypointModuleImpl());
 
         this.loadConfiguration();
 
@@ -83,6 +100,13 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         messenger.registerIncomingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
                 (channel, player, bytes) -> this.handlePacket(player, bytes)
         );
+
+        PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager.registerEvents(this, this);
+        pluginManager.registerEvents(new TntCountdownListener(
+            Apollo.getModuleManager().getModule(TntCountdownModule.class).orElseThrow(),
+            Apollo.getPlayerManager()
+        ), this);
     }
 
     @Override
@@ -127,7 +151,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
             ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration(modules);
 
             this.configurationLoader.save(root);
-        } catch(Throwable throwable) {
+        } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
     }
@@ -136,7 +160,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
             try {
                 ApolloManager.getNetworkManager().receivePacket(apolloPlayer, Any.parseFrom(bytes));
-            } catch(Throwable throwable) {
+            } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         });

@@ -13,9 +13,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Provides the implementation for the {@link ApolloModuleManager}.
@@ -28,14 +27,12 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
     private final Map<Class<? extends ApolloModule>, ApolloModule> modules = new IdentityHashMap<>();
 
     @Override
-    public boolean isEnabled(Class<? extends ApolloModule> moduleClass) {
-        requireNonNull(moduleClass, "moduleClass");
+    public boolean isEnabled(@NonNull Class<? extends ApolloModule> moduleClass) {
         return this.modules.containsKey(moduleClass);
     }
 
     @Override
-    public <T extends ApolloModule> Optional<T> getModule(Class<T> moduleClass) {
-        requireNonNull(moduleClass, "moduleClass");
+    public <T extends ApolloModule> Optional<T> getModule(@NonNull Class<T> moduleClass) {
         return Optional.ofNullable(this.modules.get(moduleClass))
                 .map(moduleClass::cast);
     }
@@ -53,8 +50,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      * @return the module manager
      * @since 1.0.0
      */
-    public <T extends ApolloModule> ApolloModuleManagerImpl addModule(Class<T> moduleClass) {
-        requireNonNull(moduleClass, "moduleClass");
+    public <T extends ApolloModule> ApolloModuleManagerImpl addModule(@NonNull Class<T> moduleClass) {
         this.modules.computeIfAbsent(moduleClass, key -> {
             try {
                 Constructor<T> constructor = moduleClass.getDeclaredConstructor();
@@ -85,8 +81,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      * @return the module manager
      * @since 1.0.0
      */
-    public <T extends ApolloModule> ApolloModuleManagerImpl addModule(Class<T> moduleClass, final T module) {
-        requireNonNull(module, "module");
+    public <T extends ApolloModule> ApolloModuleManagerImpl addModule(Class<T> moduleClass, @NonNull final T module) {
         this.modules.computeIfAbsent(moduleClass, key -> {
             try {
                 Option<?, ?, ?>[] options = module.getOptionKeys();

@@ -9,12 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Value;
-
-import static java.util.Objects.requireNonNull;
+import lombok.*;
 
 /**
  * Provides a bus for {@link Event}s.
@@ -41,8 +36,7 @@ public final class EventBus {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public void register(Object instance) {
-        requireNonNull(instance, "instance");
+    public void register(@NonNull Object instance) {
         for(Method method : this.getEventMethods(instance)) {
             this.events.computeIfAbsent((Class<? extends Event>) method.getParameterTypes()[0], k -> new CopyOnWriteArrayList<>())
                     .add(new ReflectiveConsumer<>(instance, method));
@@ -59,9 +53,7 @@ public final class EventBus {
      * @return true if the listener was registered, otherwise false
      * @since 1.0.0
      */
-    public <T extends Event> boolean register(Class<T> event, Consumer<T> consumer) {
-        requireNonNull(event, "event");
-        requireNonNull(consumer, "consumer");
+    public <T extends Event> boolean register(@NonNull Class<T> event, @NonNull Consumer<T> consumer) {
         return this.events.computeIfAbsent(event, key -> new CopyOnWriteArrayList<>()).add(consumer);
     }
 
@@ -72,8 +64,7 @@ public final class EventBus {
      * @param instance the event listeners instance
      * @since 1.0.0
      */
-    public void unregister(Object instance) {
-        requireNonNull(instance, "instance");
+    public void unregister(@NonNull Object instance) {
         for(Method method : this.getEventMethods(instance)) {
             List<Consumer<? extends Event>> listeners = this.events.get(method.getParameterTypes()[0]);
             if(listeners != null) {
@@ -92,9 +83,7 @@ public final class EventBus {
      * @return true if the listener was unregistered, otherwise false
      * @since 1.0.0
      */
-    public <T extends Event> boolean unregister(Class<T> event, Consumer<T> consumer) {
-        requireNonNull(event, "event");
-        requireNonNull(consumer, "consumer");
+    public <T extends Event> boolean unregister(@NonNull Class<T> event, @NonNull Consumer<T> consumer) {
         CopyOnWriteArrayList<Consumer<? extends Event>> consumers = this.events.get(event);
         return consumers != null && consumers.remove(consumer);
     }
@@ -107,8 +96,7 @@ public final class EventBus {
      * @return the event result
      * @since 1.0.0
      */
-    public <T extends Event> EventResult<T> post(T event) {
-        requireNonNull(event, "event");
+    public <T extends Event> EventResult<T> post(@NonNull T event) {
         CopyOnWriteArrayList<Consumer<? extends Event>> consumers = this.events.get(event.getClass());
         List<Throwable> throwables = new ArrayList<>();
         if(consumers != null) {

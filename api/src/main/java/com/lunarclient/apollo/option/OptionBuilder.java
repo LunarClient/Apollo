@@ -3,8 +3,7 @@ package com.lunarclient.apollo.option;
 import io.leangen.geantyref.TypeToken;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import static java.util.Objects.requireNonNull;
+import lombok.NonNull;
 
 /**
  * Represents an option builder.
@@ -32,8 +31,8 @@ public abstract class OptionBuilder<V, M extends OptionBuilder<V, M, I>, I exten
      * @return this builder
      * @since 1.0.0
      */
-    public M node(String... key) {
-        this.node = requireNonNull(key, "key");
+    public M node(@NonNull String... key) {
+        this.node = key;
         return (M) this;
     }
 
@@ -45,8 +44,8 @@ public abstract class OptionBuilder<V, M extends OptionBuilder<V, M, I>, I exten
      * @return this builder
      * @since 1.0.0
      */
-    public M type(TypeToken<V> typeToken) {
-        this.typeToken = requireNonNull(typeToken, "typeToken");
+    public M type(@NonNull TypeToken<V> typeToken) {
+        this.typeToken = typeToken;
         return (M) this;
     }
 

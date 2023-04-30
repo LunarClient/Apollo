@@ -42,8 +42,9 @@ public class UncertainFuture<T extends ApolloResponse> implements Future<T> {
      * @since 1.0.0
      */
     @Override
-    public void onSuccess(Handler<T> handler) {
+    public UncertainFuture<T> onSuccess(Handler<T> handler) {
         this.success.add(handler);
+        return this;
     }
 
     /**
@@ -54,7 +55,9 @@ public class UncertainFuture<T extends ApolloResponse> implements Future<T> {
      * @since 1.0.0
      */
     @Override
-    public void onFailure(Handler<Throwable> throwable) {
+    public UncertainFuture<T> onFailure(Handler<Throwable> throwable) {
         this.failure.add(throwable);
+        return this;
     }
+
 }

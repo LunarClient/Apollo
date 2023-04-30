@@ -24,7 +24,7 @@ public class ApolloRequest<T extends ApolloResponse> {
      *
      * @since 1.0.0
      */
-    private final UUID packetId;
+    @Getter private final UUID requestId;
 
     /**
      * The time when the {@link ApolloRequest} was sent.
@@ -39,21 +39,8 @@ public class ApolloRequest<T extends ApolloResponse> {
      * @since 1.0.0
      */
     public ApolloRequest() {
-        this.packetId = UUID.randomUUID();
+        this.requestId = UUID.randomUUID();
         this.sentTime = System.currentTimeMillis();
     }
 
-    /**
-     * Responds to the {@link ApolloRequest} with an {@link ApolloRequest}.
-     *
-     * @param response the response
-     * @since 1.0.0
-     */
-    public void respond(ApolloResponse response) {
-        if(System.currentTimeMillis() - this.sentTime > TIMEOUT) {
-            return;
-        }
-
-        response.setPacketId(this.packetId);
-    }
 }

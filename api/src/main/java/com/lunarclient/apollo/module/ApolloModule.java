@@ -10,9 +10,8 @@ import java.util.Collections;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a module for Apollo.
@@ -65,8 +64,8 @@ public abstract class ApolloModule implements Listener {
      * @param name the module name
      * @since 1.0.0
      */
-    public ApolloModule(String name) {
-        this.name = requireNonNull(name, "name");
+    public ApolloModule(@NonNull String name) {
+        this.name = name;
     }
 
     /**

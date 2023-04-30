@@ -1,9 +1,9 @@
 package com.lunarclient.apollo.network;
 
 import com.google.protobuf.Any;
+import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
+import com.lunarclient.apollo.event.ApolloSendPacketEvent;
 import com.lunarclient.apollo.event.EventBus;
-import com.lunarclient.apollo.event.network.ApolloReceivePacketEvent;
-import com.lunarclient.apollo.event.network.ApolloSendPacketEvent;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import lombok.NoArgsConstructor;
