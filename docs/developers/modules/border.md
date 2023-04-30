@@ -70,13 +70,11 @@ public void displayBorderExample(Player player) {
 .canShrinkOrExpand(false)
 ```
 
-<!-- need someone to confirm the hex code comment -->
-
-`.color(Color)` is how you dictate the color of the border, you can use minecraft's colors or hex codes.
+`.color(java.awt.Color)` is how you dictate the color of the border. See the (colors page)[/apollo/developers/colors] for more.
 ```java
-.color(Color.YELLOW)
+.color(ApolloColors.RED)
 ```
-<!-- insert screenshot of yellow border -->
+<!-- insert screenshot of red border -->
 
 `.bounds(Cuboid2D)` is used to determine the bounds of the border, using a 2D cuboid.
 ```java
