@@ -70,7 +70,7 @@ public void displayBorderExample(Player player) {
 .canShrinkOrExpand(false)
 ```
 
-`.color(java.awt.Color)` is how you dictate the color of the border. See the (colors page)[/apollo/developers/colors] for more.
+`.color(java.awt.Color)` is how you dictate the color of the border. See the [colors page](/apollo/developers/colors) for more.
 ```java
 .color(ApolloColors.RED)
 ```
