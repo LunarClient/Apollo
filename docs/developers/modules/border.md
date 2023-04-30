@@ -14,9 +14,7 @@ The border module not only enhances Minecraft's current world border system, but
 
 ### Sample Code
 
-Used to display a border for players.
 ```java
-
 public void displayBorderExample(Player player) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
 
