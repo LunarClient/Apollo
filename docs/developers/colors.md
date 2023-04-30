@@ -43,7 +43,7 @@ The `java.awt.Color` class statically exposes some colors, although they do not 
 
 ### Available Colors
 
-Please see the [Javadocs](https://docs.oracle.com/javase/8/docs/api/java/awt/Color.html) for a comprehensive list.
+Please see the [java.awt.Color Javadocs](https://docs.oracle.com/javase/8/docs/api/java/awt/Color.html) for a comprehensive list.
 
 ### Sample Code
 
