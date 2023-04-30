@@ -9,7 +9,7 @@ to work with colors when using Apollo.
 
 The `ApolloColors` class statically exposes colors that correspond to Bukkit/Spigot's `ChatColor` enum.
 
-### Exposed Colors
+### Available Colors
 * `BLACK`
 * `DARK_BLUE`
 * `DARK_GREEN`
@@ -51,7 +51,7 @@ Please see the [java.awt.Color Javadocs](https://docs.oracle.com/javase/8/docs/a
 Beam magentaBeam = Beam.builder().color(Color.MAGENTA).build();
 ```
 
-## Available Colors
+## Custom Colors
 
 Custom colors can be created from any RGB values using `new Color(int red, int green, int blue)`, or from any hex color using `Color.decode(String hex)`
 
