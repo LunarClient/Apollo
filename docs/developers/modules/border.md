@@ -24,21 +24,21 @@ public void displayBorderExample(Player player) {
     }
 
     borderModule.displayBorder(apolloPlayerOpt.get(), Border.builder()
-    .id("pvp-tagged-spawn")
-    .world("world")
-    .cancelEntry(true)
-    .cancelExit(false)
-    .canShrinkOrExpand(false)
-    .color(Color.RED)
-    .bounds(Cuboid2D.builder()
-        .minX(-50)
-        .minZ(-50)
-        .maxX(50)
-        .maxZ(50)
-    .build()
-    )
-    .durationTicks(0)
-    .build()
+        .id("pvp-tagged-spawn")
+        .world("world")
+        .cancelEntry(true)
+        .cancelExit(false)
+        .canShrinkOrExpand(false)
+        .color(Color.RED)
+        .bounds(Cuboid2D.builder()
+            .minX(-50)
+            .minZ(-50)
+            .maxX(50)
+            .maxZ(50)
+            .build()
+        )
+        .durationTicks(0)
+        .build()
     );
 }
 ```
@@ -83,8 +83,8 @@ public void displayBorderExample(Player player) {
     .minZ(-50) // The Z value of your lowest point
     .maxX(50) // The X value of your highest point
     .maxZ(50) // The Z value of your highest point
-.build() // Calls to the builder inside of Apollo to build the cuboid
-    )
+    .build() // Calls to the builder inside of Apollo to build the cuboid
+)
 ```
 
 `.durationTicks(Integer)` is used to determine the speed of expansion or shrinkage.
