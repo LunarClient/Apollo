@@ -5,7 +5,7 @@
 Apollo exclusively uses `java.awt.Color` for all configurable colors. This page provides an outline of the most common ways
 to work with colors when using Apollo.
 
-## `ApolloColors` Predefined Colors
+## `ApolloColors` Predefined
 
 The `ApolloColors` class statically exposes colors that correspond to Bukkit/Spigot's `ChatColor` enum.
 
@@ -37,7 +37,7 @@ Border yellowBorder = Border.builder().color(ApolloColors.YELLOW).build();
 Beam purpleBeam = Beam.builder().color(ApolloColors.LIGHT_PURPLE).build();
 ```
 
-## `java.awt.Color` Predefined Colors
+## `java.awt.Color` Predefined
 
 The `java.awt.Color` class statically exposes some colors, although they do not correspond to any existing colors used in Minecraft.
 
