@@ -1,20 +1,18 @@
 # Borders Module
 
 ## Overview
-Using the border module will allow you to create and display custom borders to Lunar Client players.
-Creating a border for Lunar Client players, won't only show a border around the world, but you'll be able to customize the border in multiple different ways.
-For example, you can change the world the border is displayed in, the color of the border, if players can enter or exit the border, and if the border will expand or shrink in addition to a couple more features.
-The truly neat part about this feature, is users on the 1.7 version of Lunar Client will be displayed the border, unlike in vanilla minecraft.
 
-Red spawn border, to prevent combat tagged users from entering spawn.
-![Lunar Client border, red, being created around a spawn to prevent users from entry while they're combat tagged.](../../assets/red-spawn-border.png)
+The borders module not only enhances Minecraft's current world border system, but also backports all the improvements and vanilla features to Minecraft 1.7 players.
 
-Traditional world border, using the apollo borders module.
-![Lunar Client borders, blue, being created as a traditional world border.](../../assets/blue-traditional-world-border.png)
+* Backports all vanilla minecraft world border functionality, found in 1.8+ to the 1.7 version of Lunar Client.
+  * All vanilla features such as, preventing entry or exit and border expansion or shrinkage are supported.
+
+
+* Adds improvements to further customize the vanilla world border, in addition to being able to create and customize Lunar Client world borders.
+  * Custom border colors can be provided.
+  * Ability to generate and display multiple world borders at once.
 
 ## Integration
-Integrating the borders module into your plugins, is very simple, as displayed in the example code below.
-We've also provided a step-by-step break down, for each part that is required in the packet to create and display a border for players.
 
 <!-- include code snippet -->
 ```java
@@ -79,8 +77,7 @@ public void displayBorder(ApolloPlayer player, Border border) {
 .setDurationTicks(10)
 ```
 
-<!-- Show off some unique examples of the module being used, if there are any. (promo the people who use the Apollo) -->
 ## Public Use Cases
-The borders module is currently being used on the following servers;
-* play.vipermc.net (HCF & KitMap)
-* play.minecadia.com (HCF, KitMap & Factions)
+The borders module is currently being used on the following servers:
+* ```play.vipermc.net```
+* ```play.minecadia.com```
