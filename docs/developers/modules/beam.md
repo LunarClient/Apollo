@@ -45,7 +45,7 @@ public void displayBeamExample(Player player) {
 .id("spawn-beacon")
 ```
 
-`.color(java.awt.Color)` is how you dictate the color of the beam. See the [colors page](/apollo/developers/colors) for more.
+`.color(java.awt.Color)` is how you dictate the color of the beam. See the [colors page](/apollo/developers/utilities/colors) for more.
 ```java
 .color(ApolloColors.LIGHT_PURPLE)
 ```
