@@ -1,6 +1,9 @@
 {
     "introduction": "Introduction",
+    "downloads": "Downloads",
     "developers": "Developers",
     "server-owners": "Server Owners",
+    "license": "License",
+    "terms": "Terms of Service",
     "internals": "Internals"
 }

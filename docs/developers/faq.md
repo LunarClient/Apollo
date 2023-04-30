@@ -60,6 +60,6 @@ You can open a pull request on the [Apollo repository](https://github.com/LunarC
 <details>
 <summary>Where can I view the Apollo Terms of Service and Licensing?</summary>
 
-We've listed our [Terms of Service](https://www.lunarclient.dev/terms) and [Licensing](https://www.lunarclient.dev/license) information on the Lunar Client developers website.
+We've listed our [Terms of Service](https://www.lunarclient.dev/apollo/terms) and [Licensing](https://www.lunarclient.dev/apollo/license) information on the Lunar Client developers website.
 
 </details>

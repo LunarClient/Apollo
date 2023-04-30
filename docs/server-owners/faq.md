@@ -35,7 +35,7 @@ Apollo is currently set up to work with all versions that Lunar Client supports,
 <details>
 <summary>Where can I download a compiled version of Apollo?</summary>
 
-You can download a compiled version of Apollo and the official Apollo implementation plugin on the [downloads page](https://www.lunarclient.dev/downloads).
+You can download a compiled version of Apollo and the official Apollo implementation plugin on the [downloads page](https://www.lunarclient.dev/apollo/downloads).
 
 </details>
 
@@ -43,7 +43,7 @@ You can download a compiled version of Apollo and the official Apollo implementa
 <summary>Can I use Apollo without any programming knowledge?</summary>
 
 Yes!
-You can [download](https://www.lunarclient.dev/downloads) the Apollo implementation plugin, and drop it into your plugins' folder.
+You can [download](https://www.lunarclient.dev/apollo/downloads) the Apollo implementation plugin, and drop it into your plugins' folder.
 The Apollo implementation plugin has a prebuilt configuration file, which can be edited very easily.
 
 </details>
