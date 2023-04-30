@@ -17,32 +17,32 @@ The border module not only enhances Minecraft's current world border system, but
 Used to display a border for players.
 ```java
 
-    public void displayBorderExample(Player player) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+public void displayBorderExample(Player player) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
 
-        if (apolloPlayerOpt.isEmpty()) {
-            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-            return;
-        }
-
-        borderModule.displayBorder(apolloPlayerOpt.get(), Border.builder()
-            .id("pvp-tagged-spawn")
-            .world("world")
-            .cancelEntry(true)
-            .cancelExit(false)
-            .canShrinkOrExpand(false)
-            .color(Color.RED)
-            .bounds(Cuboid2D.builder()
-                .minX(-50)
-                .minZ(-50)
-                .maxX(50)
-                .maxZ(50)
-                .build()
-            )
-            .durationTicks(0)
-            .build()
-        );
+    if (apolloPlayerOpt.isEmpty()) {
+        player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
+        return;
     }
+
+    borderModule.displayBorder(apolloPlayerOpt.get(), Border.builder()
+    .id("pvp-tagged-spawn")
+    .world("world")
+    .cancelEntry(true)
+    .cancelExit(false)
+    .canShrinkOrExpand(false)
+    .color(Color.RED)
+    .bounds(Cuboid2D.builder()
+        .minX(-50)
+        .minZ(-50)
+        .maxX(50)
+        .maxZ(50)
+    .build()
+    )
+    .durationTicks(0)
+    .build()
+    );
+}
 ```
 
 ### `Border` Options
@@ -83,10 +83,10 @@ Used to display a border for players.
 `.bounds(Cuboid2D)` is used to determine the bounds of the border, using a 2D cuboid.
 ```java
 .bounds(Cuboid2D.builder() // Calling the 2D cuboid builder inside of Apollo
-.minX(-50) // The X value of your lowest point
-.minZ(-50) // The Z value of your lowest point
-.maxX(50) // The X value of your highest point
-.maxZ(50) // The Z value of your highest point
+    .minX(-50) // The X value of your lowest point
+    .minZ(-50) // The Z value of your lowest point
+    .maxX(50) // The X value of your highest point
+    .maxZ(50) // The Z value of your highest point
 .build() // Calls to the builder inside of Apollo to build the cuboid
     )
 ```
@@ -99,25 +99,23 @@ Used to display a border for players.
 ### Removing a specific border for a player
 
 ```java
-    public void removeBorderExample(Player player) {
-        // Getting the players UUID
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+public void removeBorderExample(Player player) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
 
-        // Removing the border with the ID "pvp-tagged-spawn" for the UUID
-        borderModule.removeBorder(apolloPlayerOpt.get(), "pvp-tagged-spawn");
-    }
+    // Removing the border with the ID "pvp-tagged-spawn" for the UUID
+    borderModule.removeBorder(apolloPlayerOpt.get(), "pvp-tagged-spawn");
+}
 ```
 
 ### Resetting all borders for a player
 
 ```java
-    public void resetBordersExample(Player player) {
-        // Getting the players UUID
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+public void resetBordersExample(Player player) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
         
-        // Resetting all borders for the UUID
-        borderModule.resetBorders(apolloPlayerOpt.get());
-    }
+    // Resetting all borders for the UUID
+    borderModule.resetBorders(apolloPlayerOpt.get());
+}
 ```
 
 ## Public Use Cases
