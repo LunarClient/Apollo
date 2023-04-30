@@ -5,14 +5,15 @@
 The borders module not only enhances Minecraft's current world border system, but also backports all the improvements and vanilla features to Minecraft 1.7 players.
 
 * Backports all vanilla minecraft world border functionality, found in 1.8+ to the 1.7 version of Lunar Client.
-  * All vanilla features such as, preventing entry or exit and border expansion or shrinkage are supported.
+  * All vanilla features such as preventing entry/exit and border expansion/shrinkage are supported.
 * Adds improvements to further customize the vanilla world border, in addition to being able to create and customize Lunar Client world borders.
   * Custom border colors can be provided.
   * Ability to generate and display multiple world borders at once.
 
 ## Integration
 
-<!-- include code snippet -->
+### Sample Code
+
 ```java
 @Override
 public void displayBorder(ApolloPlayer player, Border border) {
@@ -33,8 +34,8 @@ public void displayBorder(ApolloPlayer player, Border border) {
 }
 ```
 
-<!-- example breakdown -->
-## The Breakdown
+### `Border` Options
+
 **"setId()"** should include a unique identifier for the border.
 ```java
 .setId(ByteString.copyFromUtf8(border.getId()))
@@ -76,6 +77,6 @@ public void displayBorder(ApolloPlayer player, Border border) {
 ```
 
 ## Public Use Cases
-The borders module is currently being used on the following servers:
+Some servers known to be using the borders module are:
 * ```play.vipermc.net```
 * ```play.minecadia.com```
