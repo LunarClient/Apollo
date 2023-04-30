@@ -6,8 +6,6 @@ The borders module not only enhances Minecraft's current world border system, bu
 
 * Backports all vanilla minecraft world border functionality, found in 1.8+ to the 1.7 version of Lunar Client.
   * All vanilla features such as, preventing entry or exit and border expansion or shrinkage are supported.
-
-
 * Adds improvements to further customize the vanilla world border, in addition to being able to create and customize Lunar Client world borders.
   * Custom border colors can be provided.
   * Ability to generate and display multiple world borders at once.
