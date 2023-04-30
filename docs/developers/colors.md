@@ -2,15 +2,30 @@
 
 ## Overview
 
-Apollo exclusively uses `java.awt.Color`s for all configurable colors. This page provides an outline of the most common ways
-to work with colors when using Apollo;
+Apollo exclusively uses `java.awt.Color` for all configurable colors. This page provides an outline of the most common ways
+to work with colors when using Apollo.
 
 ## `ApolloColors` Predefined Colors
 
 The `ApolloColors` class statically exposes colors that correspond to Bukkit/Spigot's `ChatColor` enum.
 
 ### Exposed Colors
-* <p style="color: red">█</p> `RED`
+* `BLACK`
+* `DARK_BLUE`
+* `DARK_GREEN`
+* `DARK_AQUA`
+* `DARK_RED`
+* `DARK_PURPLE`
+* `GOLD`
+* `GRAY`
+* `DARK_GRAY`
+* `BLUE`
+* `GREEN`
+* `AQUA`
+* `RED`
+* `LIGHT_PURPLE`
+* `YELLOW`
+* `WHITE`
 
 ### Sample Code
 
@@ -44,12 +59,18 @@ Beam magentaBeam = Beam.builder()
 
 ## Custom Colors
 
-Custom colors can be created from any R/G/B combination using `new java.awt.Color(red, green, blue)`.
+Custom colors can be created from any R/G/B combination using `new java.awt.Color(int red, int green, int blue)`, or from any hex color using `Color.decode(String hex)`
 
 ### Sample Code
 
 ```java
 Border customBorder = Border.builder()
     .color(new Color(25, 43, 48))
+    .build();
+```
+
+```java
+Beam customBeam = Beam.builder()
+    .color(Color.decode("#FF00FF"))
     .build();
 ```
