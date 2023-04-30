@@ -57,7 +57,7 @@ public final class MiscImpl extends Misc {
             .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) player).sendPacket(OverrideRainbowSheepMessage.newBuilder()
-            .addAllEntityId(entityIds)
+            .addAllEntityIds(entityIds)
             .build());
     }
 
@@ -71,7 +71,7 @@ public final class MiscImpl extends Misc {
             .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) player).sendPacket(ResetRainbowSheepMessage.newBuilder()
-            .addAllEntityId(entityIds)
+            .addAllEntityIds(entityIds)
             .build());
     }
 
@@ -85,7 +85,7 @@ public final class MiscImpl extends Misc {
             .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) player).sendPacket(FlipEntityMessage.newBuilder()
-            .addAllEntityId(entityIds)
+            .addAllEntityIds(entityIds)
             .build());
     }
 
@@ -99,7 +99,7 @@ public final class MiscImpl extends Misc {
             .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) player).sendPacket(ResetFlipedEntityMessage.newBuilder()
-            .addAllEntityId(entityIds)
+            .addAllEntityIds(entityIds)
             .build());
     }
 
