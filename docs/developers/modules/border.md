@@ -14,63 +14,110 @@ The border module not only enhances Minecraft's current world border system, but
 
 ### Sample Code
 
+Used to display a border for players.
 ```java
-@Override
-public void displayBorder(ApolloPlayer player, Border border) {
-    ((AbstractApolloPlayer) player).sendPacket(DisplayBorderMessage.newBuilder()
-    .setId(ByteString.copyFromUtf8(border.getId()))
-    .setWorld(border.getWorld())
-    .setCancelEntry(border.isCancelEntry())
-    .setCancelExit(border.isCancelExit())
-    .setCanShrinkOrExpand(border.isCanShrinkOrExpand())
-    .setColor(NetworkTypes.toProtobuf(border.getColor()))
-    .setBounds(NetworkTypes.toProtobuf(border.getBounds()))
-    .setDurationTicks(border.getDuration())
-    .build()
-    );
-}
+
+    public void displayBorderExample(Player player) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+
+        if (apolloPlayerOpt.isEmpty()) {
+            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
+            return;
+        }
+
+        borderModule.displayBorder(apolloPlayerOpt.get(), Border.builder()
+            .id("pvp-tagged-spawn")
+            .world("world")
+            .cancelEntry(true)
+            .cancelExit(false)
+            .canShrinkOrExpand(false)
+            .color(Color.RED)
+            .bounds(Cuboid2D.builder()
+                .minX(-50)
+                .minZ(-50)
+                .maxX(50)
+                .maxZ(50)
+                .build()
+            )
+            .durationTicks(0)
+            .build()
+        );
+    }
 ```
 
 ### `Border` Options
 
-**"setId()"** should include a unique identifier for the border.
+`.id(String)` should include a unique identifier for the border. It's important when you have multiple borders in a single world.
 ```java
-.setId(ByteString.copyFromUtf8(border.getId()))
+.id("pvp-tagged-spawn")
 ```
 
-**"setWorld()"** is the world, by name, that you wish to add the border to.
+`.world(String)` is the world, by name, that you wish to add the border to.
 ```java
-.setWorld(border.getWorld())
+.world("world")
 ```
 
-**"setCancelEntry()"** is a boolean option to prevent players from entering the border, if they're outside the border bounds.
+`.cancelEntry(boolean)` is a boolean option to prevent players from entering the border, if they're outside the border bounds.
 ```java
-.setCancelExit(false)
+.cancelEntry(true)
 ```
 
-**"setCancelExit"** is a boolean option to prevent players from exiting the border, if they're currently inside the border bounds.
+`.cancelExit(boolean)` is a boolean option to prevent players from exiting the border, if they're currently inside the border bounds.
 ```java
-.setCancelExit(false)
+.cancelExit(false)
 ```
 
-**"setCanShrinkOrExpand()"** is another boolean option to determine if the border can shrink or expand.
+`.canShrinkOrExpand(boolean)` is a boolean option to control if the border has the ability to expand or shrink.
 ```java
-.setCanShrinkOrExpand(true)
+.canShrinkOrExpand(false)
 ```
 
-**"setColor()"** is how you dictate the color of the border, using hex colors.
+<!-- need someone to confirm the hex code comment -->
+
+`.color(Color)` is how you dictate the color of the border, you can use minecraft's colors or hex codes.
 ```java
-.setColor(#22000)
+.color(Color.YELLOW)
+```
+<!-- insert screenshot of yellow border -->
+
+`.bounds(Cuboid2D)` is used to determine the bounds of the border, using a 2D cuboid.
+```java
+.bounds(Cuboid2D.builder() // Calling the 2D cuboid builder inside of Apollo
+.minX(-50) // The X value of your lowest point
+.minZ(-50) // The Z value of your lowest point
+.maxX(50) // The X value of your highest point
+.maxZ(50) // The Z value of your highest point
+.build() // Calls to the builder inside of Apollo to build the cuboid
+    )
 ```
 
-**"setBounds()"** is used to determine the bounds of the border.
+`.durationTicks(Integer)` is used to determine the speed of expansion or shrinkage.
 ```java
-.setBounds(??)
+.durationTicks(0) // 20 ticks = 1 second
 ```
 
-**"setDurationTicks()"** is used to determine the speed of expansion or shrinkage.
+### Removing a specific border for a player
+
 ```java
-.setDurationTicks(10)
+    public void removeBorderExample(Player player) {
+        // Getting the players UUID
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+
+        // Removing the border with the ID "pvp-tagged-spawn" for the UUID
+        borderModule.removeBorder(apolloPlayerOpt.get(), "pvp-tagged-spawn");
+    }
+```
+
+### Resetting all borders for a player
+
+```java
+    public void resetBordersExample(Player player) {
+        // Getting the players UUID
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+        
+        // Resetting all borders for the UUID
+        borderModule.resetBorders(apolloPlayerOpt.get());
+    }
 ```
 
 ## Public Use Cases
