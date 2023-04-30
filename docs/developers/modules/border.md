@@ -98,7 +98,7 @@ public void displayBorderExample(Player player) {
 public void removeBorderExample(Player player) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
 
-    // Removing the border with the ID "pvp-tagged-spawn" for the UUID
+    // Removing the border with the ID "pvp-tagged-spawn" for the player
     borderModule.removeBorder(apolloPlayerOpt.get(), "pvp-tagged-spawn");
 }
 ```
@@ -109,7 +109,7 @@ public void removeBorderExample(Player player) {
 public void resetBordersExample(Player player) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
         
-    // Resetting all borders for the UUID
+    // Resetting all borders for the player
     borderModule.resetBorders(apolloPlayerOpt.get());
 }
 ```

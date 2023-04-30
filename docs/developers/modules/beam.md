@@ -1,44 +1,90 @@
 # Beam Module
 
 ## Overview
-The beams module will allow you to create, edit and customize beacon beams.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+The beam module allows you to create custom beams resembling beacon beams, which can be placed on your server to highlight specific points of interest.
+
+* Backports all vanilla minecraft beacon beam functionality, found on 1.8+ to the 1.7 version of Lunar Client.
+* Adds improvements to beacon beams for Lunar Client users.
+  * Customizable colors for beams, different from the vanilla minecraft colors.
+  * Exact location pinpointing for the beams to be shown on.
+  * Beams appear through blocks, unlike in vanilla minecraft.
 
 ## Integration
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-Fringilla urna porttitor rhoncus dolor purus non enim praesent elementum. Egestas sed tempus urna et. 
-Suspendisse potenti nullam ac tortor. 
-Lectus magna fringilla urna porttitor rhoncus.
+
+### Sample Code
 
 ```java
-@Override
-public void stopHostingWorld(RpcController controller, StopHostingWorldRequest request, RpcCallback<StopHostingWorldResponse> done) {
-    GameUser user = ((SimpleRpcController) controller).requireGameUser();
+public void displayBeamExample(Player player) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
 
-    // Make sure they are actually hosting
-    if (!hostedWorlds.containsKey(user.getUuid())) {
-    // TODO
-    return;
+    if (apolloPlayerOpt.isEmpty()) {
+        player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
+        return;
     }
 
-    // Remove from state
-    hostedWorlds.remove(user.getUuid());
-
-    // And respond to the client
-    done.run(StopHostingWorldResponse.getDefaultInstance());
+    beamModule.displayBeam(apolloPlayerOpt.get(), Beam.builder()
+        .id("spawn-beacon")
+        .color(Color.CYAN)
+        .location(ApolloBlockLocation.builder()
+            .world("world")
+            .x(0)
+            .y(60)
+            .z(0)
+            .build()
+        )
+        .build()
+    );
+}
 ```
 
-### Client Response
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-Est velit egestas dui id ornare arcu odio ut.
+### `Beam` Options
 
+`.id(String)` should include a unique identifier for the beam.
+```java
+.id("spawn-beacon")
 ```
-git status
-git add
-git commit
+
+`.color(java.awt.Color)` is how you dictate the color of the beam. See the [colors page](/apollo/developers/colors) for more.
+```java
+.color(ApolloColors.LIGHT_PURPLE)
+```
+
+<!-- insert screenshot of light purple beam -->
+
+`.location(ApolloBlockLocation)` used to determine the exact block you want the beam to be displayed on.
+```java
+.location(ApolloBlockLocation.builder() // Calling to ApolloBlockLocation
+    .world("world") // The world name the beam should be displayed in
+    .x(0) // The X value of the block the beam should be displayed on
+    .y(60) // The Y value of the block the beam should start at
+    .z(0) // The Z value of the block the beam should be displayed on
+    .build() // Calls the builder inside of Apollo to build the block location
+)
+```
+
+### Removing a specific beam for a player
+
+```java
+public void removeBeamExample(Player player) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+
+    // Removing the beam with the ID "spawn-beacon" for the player
+    beamModule.removeBeam(apolloPlayerOpt.get(), "spawn-beacon");
+}
+```
+
+### Resetting all beams for a player
+
+```java
+public void resetBeamsExample(Player player) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+
+    // Resetting all beams for the player
+    beamModule.resetBeams(apolloPlayerOpt.get());
+}
 ```
 
 ## Public Use Cases
+
+<!-- add public use cases -->
