@@ -2,7 +2,6 @@ package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.common.icon.ItemStackIcon;
-import com.lunarclient.apollo.example.utilities.IconExample;
 import com.lunarclient.apollo.module.cooldown.Cooldown;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
@@ -40,13 +39,7 @@ public class CooldownExample {
 
     public void resetCooldownsExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-        if (apolloPlayerOpt.isEmpty()) {
-            viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-            return;
-        }
-
-        this.cooldownModule.resetCooldowns(apolloPlayerOpt.get());
+        apolloPlayerOpt.ifPresent(this.cooldownModule::resetCooldowns);
     }
 
 }
