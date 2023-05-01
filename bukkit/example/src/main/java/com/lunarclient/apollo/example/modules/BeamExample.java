@@ -18,45 +18,30 @@ public class BeamExample {
     public void displayBeamExample(Player player) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
 
-        if (apolloPlayerOpt.isEmpty()) {
-            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-            return;
-        }
-
-        this.beamModule.displayBeam(apolloPlayerOpt.get(), Beam.builder()
-            .id("spawn-beacon")
-            .color(Color.CYAN)
-            .location(ApolloBlockLocation.builder()
-                .world("world")
-                .x(0)
-                .y(60)
-                .z(0)
+        apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
+            this.beamModule.displayBeam(apolloPlayer, Beam.builder()
+                .id("spawn-beacon")
+                .color(Color.CYAN)
+                .location(ApolloBlockLocation.builder()
+                    .world("world")
+                    .x(0)
+                    .y(60)
+                    .z(0)
+                    .build()
+                )
                 .build()
-            )
-            .build()
-        );
+            );
+        }, () -> player.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
     }
 
     public void removeBeamExample(Player player) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
-
-        if (apolloPlayerOpt.isEmpty()) {
-            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-            return;
-        }
-
-        this.beamModule.removeBeam(apolloPlayerOpt.get(), "spawn-beacon");
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.beamModule.removeBeam(apolloPlayer, "spawn-beacon"));
     }
 
     public void resetBeamsExample(Player player) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
-
-        if (apolloPlayerOpt.isEmpty()) {
-            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-            return;
-        }
-
-        this.beamModule.resetBeams(apolloPlayerOpt.get());
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.beamModule.resetBeams(apolloPlayer));
     }
 
 }

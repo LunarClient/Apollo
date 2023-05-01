@@ -18,28 +18,19 @@ public class CooldownExample {
     public void displayCooldownExample(Player player) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
 
-        if (apolloPlayerOpt.isEmpty()) {
-            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-            return;
-        }
-
-        this.cooldownModule.displayCooldown(apolloPlayerOpt.get(), Cooldown.builder()
-            .name("enderpearl-cooldown")
-            .duration(Duration.ofSeconds(15))
-            .icon(IconExample.itemStackIconExample())
-            .build()
-        );
+        apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
+            this.cooldownModule.displayCooldown(apolloPlayer, Cooldown.builder()
+                .name("enderpearl-cooldown")
+                .duration(Duration.ofSeconds(15))
+                .icon(IconExample.itemStackIconExample())
+                .build()
+            );
+        }, () -> player.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
     }
 
     public void removeCooldownExample(Player player) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
-
-        if (apolloPlayerOpt.isEmpty()) {
-            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-            return;
-        }
-
-        this.cooldownModule.removeCooldown(apolloPlayerOpt.get(), "enderpearl-cooldown");
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown"));
     }
 
     public void resetCooldownsExample(Player player) {
@@ -49,7 +40,6 @@ public class CooldownExample {
             player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
             return;
         }
-
 
         this.cooldownModule.resetCooldowns(apolloPlayerOpt.get());
     }

@@ -18,50 +18,35 @@ public class BorderExample {
     public void displayBorderExample(Player player) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
 
-        if (apolloPlayerOpt.isEmpty()) {
-            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-            return;
-        }
-
-        this.borderModule.displayBorder(apolloPlayerOpt.get(), Border.builder()
-            .id("pvp-tagged-spawn")
-            .world("world")
-            .cancelEntry(true)
-            .cancelExit(false)
-            .canShrinkOrExpand(false)
-            .color(Color.RED)
-            .bounds(Cuboid2D.builder()
-                .minX(-50)
-                .minZ(-50)
-                .maxX(50)
-                .maxZ(50)
+        apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
+            this.borderModule.displayBorder(apolloPlayer, Border.builder()
+                .id("pvp-tagged-spawn")
+                .world("world")
+                .cancelEntry(true)
+                .cancelExit(false)
+                .canShrinkOrExpand(false)
+                .color(Color.RED)
+                .bounds(Cuboid2D.builder()
+                    .minX(-50)
+                    .minZ(-50)
+                    .maxX(50)
+                    .maxZ(50)
+                    .build()
+                )
+                .durationTicks(0)
                 .build()
-            )
-            .durationTicks(0)
-            .build()
-        );
+            );
+        }, () -> player.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
     }
 
     public void removeBorderExample(Player player) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
-
-        if (apolloPlayerOpt.isEmpty()) {
-            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-            return;
-        }
-
-        this.borderModule.removeBorder(apolloPlayerOpt.get(), "pvp-tagged-spawn");
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.borderModule.removeBorder(apolloPlayerOpt.get(), "pvp-tagged-spawn"));
     }
 
     public void resetBordersExample(Player player) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
-
-        if (apolloPlayerOpt.isEmpty()) {
-            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-            return;
-        }
-
-        this.borderModule.resetBorders(apolloPlayerOpt.get());
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.borderModule.resetBorders(apolloPlayer));
     }
 
 }
