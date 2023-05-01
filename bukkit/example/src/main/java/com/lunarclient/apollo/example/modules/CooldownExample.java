@@ -39,13 +39,6 @@ public class CooldownExample {
             return;
         }
 
-        cooldownModule.removeCooldown(apolloPlayerOpt.get(), Cooldown.builder()
-            .name("enderpearl-cooldown")
-            .build()
-        );
-
-        // Or
-
         cooldownModule.removeCooldown(apolloPlayerOpt.get(), "enderpearl-cooldown");
     }
 

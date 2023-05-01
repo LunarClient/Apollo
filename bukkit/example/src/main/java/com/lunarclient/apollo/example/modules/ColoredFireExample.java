@@ -18,7 +18,8 @@ public class ColoredFireExample {
         
         coloredFireModule.overrideColoredFire(viewers,
             burningPlayer, 
-            Color.BLUE);
+            Color.BLUE
+        );
     }
 
     public void resetColoredFireExample(UUID burningPlayer) {
