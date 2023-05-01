@@ -64,7 +64,7 @@ public class SimpleResourceLocationIcon extends Icon {
 public static SimpleResourceLocationIcon simpleResourceLocationIconExample() {
     return SimpleResourceLocationIcon.builder()
         .resourceLocation("icons/server-logo.png") // Resource path location
-        .size(1) // Scale of the provided texture above
+        .size(16) // Represents both height and width
         .build();
 }
 ```

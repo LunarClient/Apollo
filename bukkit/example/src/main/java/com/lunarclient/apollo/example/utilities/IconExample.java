@@ -15,8 +15,8 @@ public class IconExample {
 
     public static SimpleResourceLocationIcon simpleResourceLocationIconExample() {
         return SimpleResourceLocationIcon.builder()
-            .resourceLocation("icons/server-logo.png")
-            .size(1)
+            .resourceLocation("icons/server-logo.png") // Resource path location
+            .size(16) // Represents both height and width
             .build();
     }
 
