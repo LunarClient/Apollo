@@ -20,59 +20,55 @@ We're going to give you a brief overview of both the ping packet and transfer pa
 ### Ping Packet
 <!-- insert code example of ping packet -->
 ```java
-public void transferPlayer(Player target, String address) {
-    Optional<Transfer> transferModule = Apollo.getModuleManager().getModule(Transfer.class);
-    Optional<ApolloPlayer> apolloPlayer = Apollo.getPlayerManager().getPlayer(target.getUniqueId());
+public void pingExample(Player player) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
 
-    transferModule.ifPresent(module -> apolloPlayer.ifPresent(player -> {
-        ServerTransfer.Request transferRequest = ServerTransfer.Request.builder()
-            .withAddress(address)
-            .build();
+    if (apolloPlayerOpt.isEmpty()) {
+        player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
+        return;
+    }
 
-        Handler<ServerTransfer.Response> responseHandler = response -> {
-            switch (response.getStatus()) {
-                case ACCEPTED -> target.sendMessage(Component.text("Transfer completed!", NamedTextColor.GREEN));
-                case REJECTED -> target.sendMessage(Component.text("Transfer failed!", NamedTextColor.RED));
+    transferModule.ping(apolloPlayerOpt.get(), List.of("mc.hypixel.net", "minehut.com"))
+        .onSuccess(response -> {
+            for (PingResponse.PingData pingData : response.getData()) {
+                String message = switch (pingData.getStatus()) {
+                    case SUCCESS -> String.format("Ping to %s is %d ms.", pingData.getServerIp(), pingData.getPingMillis());
+                    case TIMED_OUT -> String.format("Failed to ping %s", pingData.getServerIp());
+                };
+
+                player.sendMessage(Component.text(message, NamedTextColor.YELLOW));
             }
-        };
-
-        module.transfer(player, transferRequest, responseHandler);
-    }));
+        })
+        .onFailure(exception -> {
+            player.sendMessage(Component.text("Internal error! Check console!"));
+            exception.printStackTrace();
+        });
 }
 ```
 
 ### Transfer Packet
 <!-- insert code example of trasnfer packet -->
 ```java
-public void pingServers(Player target, List<String> addresses, boolean transfer) {
-    Optional<Transfer> transferModule = Apollo.getModuleManager().getModule(Transfer.class);
-    Optional<ApolloPlayer> apolloPlayer = Apollo.getPlayerManager().getPlayer(target.getUniqueId());
+public void transferExample(Player player) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
 
-    transferModule.ifPresent(module -> apolloPlayer.ifPresent(player -> {
-        ServerPing.Request pingRequest = ServerPing.Request.builder()
-            .withAddresses(addresses)
-            .build();
+    if (apolloPlayerOpt.isEmpty()) {
+        player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
+        return;
+    }
 
-        Handler<ServerPing.Response> responseHandler = response -> {
-            for (ServerPing.Response.PingData pingData : response.getData()) {
-                switch (pingData.getStatus()) {
-                    case SUCCESS -> {
-                        target.sendMessage(Component.text(String.format("Your ping for %s is %d.",
-                            pingData.getAddress(), pingData.getPing()), NamedTextColor.GREEN));
+    transferModule.transfer(apolloPlayerOpt.get(), "mc.hypixel.net")
+        .onSuccess(response -> {
+            String message = switch (response.getStatus()) {
+                case ACCEPTED -> "Transfer accepted! Goodbye!";
+                case REJECTED -> "Transfer rejected by client!";
+            };
 
-                        if(transfer) {
-                            this.transferPlayer(target, pingData.getAddress());
-                            return;
-                        }
-                    }
-
-                    case TIMED_OUT -> target.sendMessage(Component.text(String.format("Ping request timed out for %s",
-                        pingData.getAddress()), NamedTextColor.RED));
-                }
-            }
-        };
-
-        module.ping(player, pingRequest, responseHandler);
-    }));
-}
+            player.sendMessage(Component.text(message, NamedTextColor.YELLOW));
+        })
+        .onFailure(exception -> {
+            player.sendMessage(Component.text("Internal error! Check console!"));
+            exception.printStackTrace();
+        });
+    }
 ```

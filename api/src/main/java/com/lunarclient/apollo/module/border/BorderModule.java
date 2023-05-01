@@ -24,7 +24,7 @@ public abstract class BorderModule extends ApolloModule {
 
     @Override
     public Set<ApolloPlayerVersion> getSupportedClientVersions() {
-        return EnumSet.of(ApolloPlayerVersion.v1_7);
+        return EnumSet.of(ApolloPlayerVersion.v1_7, ApolloPlayerVersion.v1_8);
     }
 
     /**
