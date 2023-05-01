@@ -43,11 +43,8 @@ public void resetColoredFireExample(UUID burningPlayer) {
 ### Resetting all colored fires for all viewers
 
 ```java
-public void resetColoredFiresExample() {
-    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-
-    for (ApolloPlayer viewer : viewers) {
-        this.coloredFireModule.resetColoredFires(viewer);
-    }
+public void resetColoredFiresExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.coloredFireModule::resetColoredFires);
 }
 ```
