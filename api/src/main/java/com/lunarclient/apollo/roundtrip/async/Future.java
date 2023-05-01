@@ -16,6 +16,7 @@ public interface Future<T extends ApolloResponse> {
      * when the operation completes successfully.
      *
      * @param handler the handler
+     * @return future the future
      * @since 1.0.0
      */
     Future<T> onSuccess(Handler<T> handler);
@@ -25,6 +26,7 @@ public interface Future<T extends ApolloResponse> {
      * when the operation does not complete successfully.
      *
      * @param throwable the throwable
+     * @return future the future
      * @since 1.0.0
      */
     Future<T> onFailure(Handler<Throwable> throwable);

@@ -48,7 +48,7 @@ public class PingResponse extends ApolloResponse {
         Status status;
 
         /**
-         * Returns the pinged server {@link Integer} ping, in milliseconds
+         * Returns the pinged server {@link Integer} ping, in milliseconds.
          *
          * @return the ping
          * @since 1.0.0

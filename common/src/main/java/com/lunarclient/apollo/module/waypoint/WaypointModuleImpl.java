@@ -17,6 +17,11 @@ import lombok.NonNull;
  */
 public final class WaypointModuleImpl extends WaypointModule {
 
+    /**
+     * Creates a new instance of {@link WaypointModuleImpl}.
+     *
+     * @since 1.0.0
+     */
     public WaypointModuleImpl() {
         super();
         this.handle(ApolloRegisterPlayerEvent.class, this::onPlayerRegister);

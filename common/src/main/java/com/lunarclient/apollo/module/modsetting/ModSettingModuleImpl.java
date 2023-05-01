@@ -19,7 +19,7 @@ import lombok.NonNull;
 public final class ModSettingModuleImpl extends ModSettingModule {
 
     @Override
-    public void sendSettings(@NonNull ApolloPlayer viewer, @NonNull com.lunarclient.apollo.option.configurable.ConfigurableSettings settings) {
+    public void sendSettings(@NonNull ApolloPlayer viewer, com.lunarclient.apollo.option.configurable.@NonNull ConfigurableSettings settings) {
         ((AbstractApolloPlayer) viewer).sendPacket(this.toProtobuf(settings));
     }
 
@@ -29,7 +29,7 @@ public final class ModSettingModuleImpl extends ModSettingModule {
     }
 
     @Override
-    public void broadcastSettings(@NonNull com.lunarclient.apollo.option.configurable.ConfigurableSettings settings) {
+    public void broadcastSettings(com.lunarclient.apollo.option.configurable.@NonNull ConfigurableSettings settings) {
         OverrideConfigurableSettingsMessage message = this.toProtobuf(settings);
 
         for (ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
@@ -37,6 +37,13 @@ public final class ModSettingModuleImpl extends ModSettingModule {
         }
     }
 
+    /**
+     * Converts the {@link com.lunarclient.apollo.option.configurable.ConfigurableSettings} object to a protobuf message.
+     *
+     * @param settings the settings object
+     * @return the protobuf message
+     * @since 1.0.0
+     */
     public OverrideConfigurableSettingsMessage toProtobuf(com.lunarclient.apollo.option.configurable.ConfigurableSettings settings) {
         Set<ConfigurableSettings> configurableSettings = settings.getSettings().stream()
             .map(configurable -> {

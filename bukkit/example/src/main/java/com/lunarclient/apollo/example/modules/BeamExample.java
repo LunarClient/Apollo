@@ -23,7 +23,7 @@ public class BeamExample {
             return;
         }
 
-        beamModule.displayBeam(apolloPlayerOpt.get(), Beam.builder()
+        this.beamModule.displayBeam(apolloPlayerOpt.get(), Beam.builder()
             .id("spawn-beacon")
             .color(Color.CYAN)
             .location(ApolloBlockLocation.builder()
@@ -45,7 +45,7 @@ public class BeamExample {
             return;
         }
 
-        beamModule.removeBeam(apolloPlayerOpt.get(), "spawn-beacon");
+        this.beamModule.removeBeam(apolloPlayerOpt.get(), "spawn-beacon");
     }
 
     public void resetBeamsExample(Player player) {
@@ -56,7 +56,7 @@ public class BeamExample {
             return;
         }
 
-        beamModule.resetBeams(apolloPlayerOpt.get());
+        this.beamModule.resetBeams(apolloPlayerOpt.get());
     }
 
 }

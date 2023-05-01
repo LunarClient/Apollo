@@ -23,7 +23,7 @@ public class BorderExample {
             return;
         }
 
-        borderModule.displayBorder(apolloPlayerOpt.get(), Border.builder()
+        this.borderModule.displayBorder(apolloPlayerOpt.get(), Border.builder()
             .id("pvp-tagged-spawn")
             .world("world")
             .cancelEntry(true)
@@ -50,7 +50,7 @@ public class BorderExample {
             return;
         }
 
-        borderModule.removeBorder(apolloPlayerOpt.get(), "pvp-tagged-spawn");
+        this.borderModule.removeBorder(apolloPlayerOpt.get(), "pvp-tagged-spawn");
     }
 
     public void resetBordersExample(Player player) {
@@ -61,7 +61,7 @@ public class BorderExample {
             return;
         }
 
-        borderModule.resetBorders(apolloPlayerOpt.get());
+        this.borderModule.resetBorders(apolloPlayerOpt.get());
     }
 
 }

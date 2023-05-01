@@ -9,6 +9,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.NonNull;
 
+/**
+ * Provides the staff mod module.
+ *
+ * @since 1.0.0
+ */
 public final class StaffModModuleImpl extends StaffModModule {
 
     @Override

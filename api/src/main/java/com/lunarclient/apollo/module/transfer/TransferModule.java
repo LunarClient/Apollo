@@ -36,14 +36,14 @@ public abstract class TransferModule extends ApolloModule {
      * @since 1.0.0
      */
     public Future<PingResponse> ping(ApolloPlayer player, List<String> serverIps) {
-        return ping(player, PingRequest.builder()
+        return this.ping(player, PingRequest.builder()
             .serverIps(serverIps)
             .build()
         );
     }
 
     /**
-     * Attempts to transfer the {@link ApolloPlayer} to the given server IP
+     * Attempts to transfer the {@link ApolloPlayer} to the given server IP.
      *
      * @param player the player
      * @param serverIp the server IP to transfer to
@@ -51,7 +51,7 @@ public abstract class TransferModule extends ApolloModule {
      * @since 1.0.0
      */
     public Future<TransferResponse> transfer(ApolloPlayer player, String serverIp) {
-        return transfer(player, TransferRequest.builder()
+        return this.transfer(player, TransferRequest.builder()
             .serverIp(serverIp)
             .build()
         );

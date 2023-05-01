@@ -3,7 +3,6 @@ package com.lunarclient.apollo.event;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
-import com.lunarclient.apollo.event.Event;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Optional;
 import lombok.Value;

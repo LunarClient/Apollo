@@ -15,8 +15,8 @@ public class ColoredFireExample {
 
     public void overrideColoredFireExample(UUID burningPlayer) {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-        
-        coloredFireModule.overrideColoredFire(viewers,
+
+        this.coloredFireModule.overrideColoredFire(viewers,
             burningPlayer, 
             Color.BLUE
         );
@@ -25,14 +25,14 @@ public class ColoredFireExample {
     public void resetColoredFireExample(UUID burningPlayer) {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
 
-        coloredFireModule.resetColoredFire(viewers, burningPlayer);
+        this.coloredFireModule.resetColoredFire(viewers, burningPlayer);
     }
 
     public void resetColoredFiresExample(Player player) {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
 
         for(ApolloPlayer viewer : viewers) {
-            coloredFireModule.resetColoredFires(viewer);
+            this.coloredFireModule.resetColoredFires(viewer);
         }
     }
 

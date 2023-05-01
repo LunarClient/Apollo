@@ -23,7 +23,7 @@ public class TransferExample {
             return;
         }
 
-        transferModule.transfer(apolloPlayerOpt.get(), "mc.hypixel.net")
+        this.transferModule.transfer(apolloPlayerOpt.get(), "mc.hypixel.net")
             .onSuccess(response -> {
                 String message = switch (response.getStatus()) {
                     case ACCEPTED -> "Transfer accepted! Goodbye!";
@@ -46,7 +46,7 @@ public class TransferExample {
             return;
         }
 
-        transferModule.ping(apolloPlayerOpt.get(), List.of("mc.hypixel.net", "minehut.com"))
+        this.transferModule.ping(apolloPlayerOpt.get(), List.of("mc.hypixel.net", "minehut.com"))
             .onSuccess(response -> {
                 for (PingResponse.PingData pingData : response.getData()) {
                     String message = switch (pingData.getStatus()) {

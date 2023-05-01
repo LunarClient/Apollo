@@ -17,13 +17,14 @@ public class TeamMember {
 
     /**
      * The UUID of this team member.
+     *
      * @since 1.0.0
      */
     UUID playerUuid;
 
     /**
      * Returns the team member's assigned {@link Color} - this will be used
-     * for any markers (such as on duration HUD, above head markers, etc)
+     * for any markers (such as on duration HUD, above head markers, etc).
      *
      * @return the team member's marker color
      * @since 1.0.0

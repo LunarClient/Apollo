@@ -17,7 +17,7 @@ public final class HeartTextureModuleImpl extends HeartTextureModule {
     @Override
     public void overrideHeartTexture(@NonNull ApolloPlayer viewer, @NonNull HeartTexture texture, int locationX) {
         ((AbstractApolloPlayer) viewer).sendPacket(OverrideHeartTextureMessage.newBuilder()
-            .setHeartType(toProtobuf(texture))
+            .setHeartType(this.toProtobuf(texture))
             .setLocationX(locationX)
             .build()
         );
@@ -26,7 +26,7 @@ public final class HeartTextureModuleImpl extends HeartTextureModule {
     @Override
     public void resetHeartTexture(@NonNull ApolloPlayer viewer, @NonNull HeartTexture texture) {
         ((AbstractApolloPlayer) viewer).sendPacket(ResetHeartTextureMessage.newBuilder()
-            .setHeartType(toProtobuf(texture))
+            .setHeartType(this.toProtobuf(texture))
             .build()
         );
     }

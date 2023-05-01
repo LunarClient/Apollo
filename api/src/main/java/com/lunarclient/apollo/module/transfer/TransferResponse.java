@@ -21,6 +21,11 @@ public class TransferResponse extends ApolloResponse {
      */
     Status status;
 
+    /**
+     * Represents the transfer state.
+     *
+     * @since 1.0.0
+     */
     public enum Status {
 
         ACCEPTED,

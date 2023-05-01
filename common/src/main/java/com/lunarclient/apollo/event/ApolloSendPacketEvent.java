@@ -1,7 +1,6 @@
 package com.lunarclient.apollo.event;
 
 import com.google.protobuf.Any;
-import com.lunarclient.apollo.event.EventCancellable;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

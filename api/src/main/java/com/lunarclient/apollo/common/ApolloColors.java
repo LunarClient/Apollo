@@ -4,6 +4,8 @@ import java.awt.Color;
 
 /**
  * `java.awt.Color`s that correspond 1:1 with Bukkit's traditional `ChatColor`s
+ *
+ * @since 1.0.0
  */
 public final class ApolloColors {
 
@@ -24,6 +26,8 @@ public final class ApolloColors {
     public static final Color YELLOW = new Color(255, 255, 85);
     public static final Color WHITE = new Color(255, 255, 255);
 
-    private ApolloColors() {} // don't initialize
+    private ApolloColors() {
+
+    }
 
 }

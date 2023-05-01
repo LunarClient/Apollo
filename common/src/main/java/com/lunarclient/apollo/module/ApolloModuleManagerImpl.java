@@ -81,7 +81,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      * @return the module manager
      * @since 1.0.0
      */
-    public <T extends ApolloModule> ApolloModuleManagerImpl addModule(Class<T> moduleClass, @NonNull final T module) {
+    public <T extends ApolloModule> ApolloModuleManagerImpl addModule(Class<T> moduleClass, @NonNull T module) {
         this.modules.computeIfAbsent(moduleClass, key -> {
             try {
                 Option<?, ?, ?>[] options = module.getOptionKeys();

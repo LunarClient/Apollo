@@ -23,7 +23,7 @@ public class CooldownExample {
             return;
         }
 
-        cooldownModule.displayCooldown(apolloPlayerOpt.get(), Cooldown.builder()
+        this.cooldownModule.displayCooldown(apolloPlayerOpt.get(), Cooldown.builder()
             .name("enderpearl-cooldown")
             .duration(Duration.ofSeconds(15))
             .icon(IconExample.itemStackIconExample())
@@ -39,7 +39,7 @@ public class CooldownExample {
             return;
         }
 
-        cooldownModule.removeCooldown(apolloPlayerOpt.get(), "enderpearl-cooldown");
+        this.cooldownModule.removeCooldown(apolloPlayerOpt.get(), "enderpearl-cooldown");
     }
 
     public void resetCooldownsExample(Player player) {
@@ -51,7 +51,7 @@ public class CooldownExample {
         }
 
 
-        cooldownModule.resetCooldowns(apolloPlayerOpt.get());
+        this.cooldownModule.resetCooldowns(apolloPlayerOpt.get());
     }
 
 }

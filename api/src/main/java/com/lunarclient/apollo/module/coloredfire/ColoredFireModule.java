@@ -2,7 +2,7 @@ package com.lunarclient.apollo.module.coloredfire;
 
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.awt.*;
+import java.awt.Color;
 import java.util.Collection;
 import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;

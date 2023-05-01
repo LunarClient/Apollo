@@ -6,7 +6,7 @@ import com.lunarclient.apollo.coloredfire.v1.ResetColoredFiresMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.awt.*;
+import java.awt.Color;
 import java.util.Collection;
 import java.util.UUID;
 import lombok.NonNull;
