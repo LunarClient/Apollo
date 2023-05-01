@@ -5,7 +5,7 @@ import com.lunarclient.apollo.common.cuboid.Cuboid3D;
 
 public class CuboidExample {
 
-    public static Cuboid2D createCuboid2DExample() {
+    public static Cuboid2D cuboid2DExample() {
         return Cuboid2D.builder()
             .minX(-50)
             .minZ(-50)
@@ -14,7 +14,7 @@ public class CuboidExample {
             .build();
     }
 
-    public static Cuboid3D createCuboid3DExample() {
+    public static Cuboid3D cuboid3DExample() {
         return Cuboid3D.builder()
             .minX(-50)
             .minY(0)
