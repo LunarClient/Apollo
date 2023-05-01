@@ -36,7 +36,7 @@ public abstract class MiscModule extends ApolloModule {
     public abstract void resetVignette(ApolloPlayer viewer);
 
     /**
-     * Overrides the {@link Entity} rainbow for the {@link ApolloPlayer}.
+     * Overrides the {@link UUID} rainbow for the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
      * @param sheepUuids the UUIDs of the sheep to manipulate
@@ -45,7 +45,7 @@ public abstract class MiscModule extends ApolloModule {
     public abstract void overrideRainbowSheep(ApolloPlayer viewer, List<UUID> sheepUuids);
 
     /**
-     * Resets the {@link Entity} rainbow for the {@link ApolloPlayer}.
+     * Resets the {@link UUID} rainbow for the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
      * @param sheepUuids the UUIDs of the sheep to manipulate
@@ -54,7 +54,7 @@ public abstract class MiscModule extends ApolloModule {
     public abstract void resetRainbowSheep(ApolloPlayer viewer, List<UUID> sheepUuids);
 
     /**
-     * Flips the {@link Entity} for the {@link ApolloPlayer}.
+     * Flips the {@link UUID} for the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
      * @param entityUuids the UUIDs of the entities to flip
@@ -63,7 +63,7 @@ public abstract class MiscModule extends ApolloModule {
     public abstract void flipEntity(ApolloPlayer viewer, List<UUID> entityUuids);
 
     /**
-     * Resets the {@link Entity} flip for the {@link ApolloPlayer}.
+     * Resets the {@link UUID} flip for the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
      * @param entityUuids the UUIDs of the entities to reset (unflip)
