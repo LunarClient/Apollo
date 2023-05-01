@@ -26,6 +26,8 @@ public class HeartTextureExample {
 
     public void resetHeartTextureExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        // Removes the heart texture from the player, using heart texture type.
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.heartTextureModule.resetHeartTexture(apolloPlayer, HeartTexture.NORMAL));
     }
 
