@@ -44,10 +44,15 @@ public class Cuboid2D {
 
 ### Sample Code
 
-<!-- Add sample code for 2D cuboid -->
-
 ```java
-
+public static Cuboid2D createCuboid2DExample() {
+    return Cuboid2D.builder()
+        .minX(-50)
+        .minZ(-50)
+        .maxX(50)
+        .maxZ(50)
+        .build();
+}
 ```
 
 ## 3D Cuboid
@@ -108,8 +113,15 @@ public class Cuboid3D {
 
 ### Sample Code
 
-<!-- Add sample code for 3D cuboid -->
-
 ```java
-
+public static Cuboid3D createCuboid3DExample() {
+    return Cuboid3D.builder()
+        .minX(-50)
+        .minY(0)
+        .minZ(-50)
+        .maxX(50)
+        .maxY(256)
+        .maxZ(50)
+        .build();
+}
 ```

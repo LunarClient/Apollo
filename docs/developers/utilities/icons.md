@@ -20,10 +20,12 @@ public class ItemStackIcon extends Icon {
 
 ### Sample Code
 
-<!-- Add sample code of using ender pearl as an icon -->
-
 ```java
-
+public static ItemStackIcon itemStackIconExample() {
+    return ItemStackIcon.builder()
+        .itemId(Material.ENDER_PEARL.getId())
+        .build();
+}
 ```
 
 ## `SimpleResourceLocation` Builder
@@ -54,10 +56,13 @@ public class SimpleResourceLocationIcon extends Icon {
 
 ### Sample Code
 
-<!-- Add sample code of using a resource location to make an icon -->
-
 ```java
-
+public static SimpleResourceLocationIcon simpleResourceLocationIconExample() {
+    return SimpleResourceLocationIcon.builder()
+        .resourceLocation("icons/server-logo.png")
+        .size(1)
+        .build();
+}
 ```
 
 ## `AdvancedResourceLocationIcon` Builder
@@ -140,8 +145,16 @@ public class AdvancedResourceLocationIcon extends Icon {
 
 ### Sample Code
 
-<!-- Add sample code of using a sprite to create an icon -->
-
 ```java
-
+public static AdvancedResourceLocationIcon advancedResourceLocationIconExample() {
+    return AdvancedResourceLocationIcon.builder()
+        .resourceLocation("icons/server-sprite.png")
+        .width(512)
+        .height(512)
+        .minU(1)
+        .maxU(1)
+        .minV(1)
+        .maxV(1)
+        .build();
+}
 ```

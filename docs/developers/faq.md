@@ -1,7 +1,6 @@
 # FAQs
 
 <details>
-
 <summary>Will the legacy API still be supported and maintained?</summary>
 
 As of now, the legacy API will be supported, but will __not__ be maintained further.
