@@ -46,14 +46,15 @@ public class ApolloLocation {
 
 ### Sample Code
 
-<!-- Add some sample code for ApolloLocation -->
-
 ```java
-
-```
-
-```java
-
+public static ApolloLocation locationExample() {
+    return ApolloLocation.builder()
+        .world("world")
+        .x(50.5D)
+        .y(100)
+        .z(50.0D)
+        .build();
+}
 ```
 
 ## `ApolloBlockLocation` Builder
@@ -98,12 +99,13 @@ public class ApolloBlockLocation {
 
 ### Sample Code
 
-<!-- Add some sample code for ApolloBlockLocation -->
-
 ```java
-
-```
-
-```java
-
+public static ApolloBlockLocation blockLocationExample() {
+    return ApolloBlockLocation.builder()
+        .world("world")
+        .x(0)
+        .y(100)
+        .z(0)
+        .build();
+}
 ```
