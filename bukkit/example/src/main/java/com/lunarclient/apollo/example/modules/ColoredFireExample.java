@@ -3,9 +3,8 @@ package com.lunarclient.apollo.example.modules;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import org.bukkit.entity.Player;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -28,10 +27,10 @@ public class ColoredFireExample {
         this.coloredFireModule.resetColoredFire(viewers, burningPlayer);
     }
 
-    public void resetColoredFiresExample(Player player) {
+    public void resetColoredFiresExample() {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
 
-        for(ApolloPlayer viewer : viewers) {
+        for (ApolloPlayer viewer : viewers) {
             this.coloredFireModule.resetColoredFires(viewer);
         }
     }
