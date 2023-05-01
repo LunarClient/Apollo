@@ -37,14 +37,7 @@ public final class ModSettingModuleImpl extends ModSettingModule {
         }
     }
 
-    /**
-     * Converts the {@link com.lunarclient.apollo.option.configurable.ConfigurableSettings} object to a protobuf message.
-     *
-     * @param settings the settings object
-     * @return the protobuf message
-     * @since 1.0.0
-     */
-    public OverrideConfigurableSettingsMessage toProtobuf(com.lunarclient.apollo.option.configurable.ConfigurableSettings settings) {
+    private OverrideConfigurableSettingsMessage toProtobuf(com.lunarclient.apollo.option.configurable.ConfigurableSettings settings) {
         Set<ConfigurableSettings> configurableSettings = settings.getSettings().stream()
             .map(configurable -> {
                 Map<String, Value> properties = configurable.getProperties().entrySet().stream()

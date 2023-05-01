@@ -47,14 +47,7 @@ public final class TransferModuleImpl extends TransferModule {
         return ((AbstractApolloPlayer) player).sendRoundTripPacket(request, requestProto);
     }
 
-    /**
-     * Handles the {@link com.lunarclient.apollo.transfer.v1.TransferResponse}
-     * and the {@link com.lunarclient.apollo.transfer.v1.PingResponse}.
-     *
-     * @param event the event
-     * @since 1.0.0
-     */
-    public void onTransferResponse(ApolloReceivePacketEvent event) {
+    private void onTransferResponse(ApolloReceivePacketEvent event) {
         event.unpack(com.lunarclient.apollo.transfer.v1.TransferResponse.class).ifPresent(packet -> {
             TransferResponse transferResponse = TransferResponse.builder()
                 .status(TransferResponse.Status.values()[packet.getStatusValue() - 1])
