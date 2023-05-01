@@ -2,9 +2,12 @@
 
 ## Overview
 
-Apollo adds a user-friendly location builders that seamlessly integrate with all Apollo modules requiring location information.
+Apollo adds user-friendly location builders that seamlessly integrate with all Apollo modules requiring location information.
+
 
 ## `ApolloLocation` Builder
+
+For obtaining a highly accurate location with decimal point precision, it is recommended to utilize the `ApolloLocation` builder.
 
 ```java
 public class ApolloLocation {
@@ -58,6 +61,8 @@ public static ApolloLocation locationExample() {
 ```
 
 ## `ApolloBlockLocation` Builder
+
+For obtaining the location of a specific block, despite any discrepancies in decimal points, it is recommended to utilize the `ApolloBlockLocation` builder.
 
 ```java
 public class ApolloBlockLocation {

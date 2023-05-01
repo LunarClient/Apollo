@@ -2,7 +2,7 @@
 
 Apollo adds a cuboid builder that enables users to easily create 2D and 3D cuboids, ideal for defining location types that require these shapes.
 
-## 2D Cuboid
+## `Cuboid2D` Builder
 
 ```java
 public class Cuboid2D {
@@ -55,7 +55,7 @@ public static Cuboid2D createCuboid2DExample() {
 }
 ```
 
-## 3D Cuboid
+## `Cuboid3D` Builder
 
 ```java
 public class Cuboid3D {

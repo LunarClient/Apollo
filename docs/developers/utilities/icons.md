@@ -1,8 +1,10 @@
 # Icons
 
-Apollo adds builders for creating various types of icon entries.
+Apollo adds three different icon builders, `ItemStackIcon`, `SimpleResourceLocation` and `AdvancedResourceLocationIcon` for creating various types of icon entries.
 
 ## `ItemStackIcon` Builder
+
+The `ItemStackIcon` builder is used to assign an icon using a specified ItemStack ID. This will utilize the texture present in the player's resource pack as the icon.
 
 ```java
 public class ItemStackIcon extends Icon {
@@ -29,6 +31,8 @@ public static ItemStackIcon itemStackIconExample() {
 ```
 
 ## `SimpleResourceLocation` Builder
+
+If you're using a custom resource pack and want to create an icon, you can use the `SimpleResourceLocation` builder.
 
 ```java
 public class SimpleResourceLocationIcon extends Icon {
@@ -59,13 +63,15 @@ public class SimpleResourceLocationIcon extends Icon {
 ```java
 public static SimpleResourceLocationIcon simpleResourceLocationIconExample() {
     return SimpleResourceLocationIcon.builder()
-        .resourceLocation("icons/server-logo.png")
-        .size(1)
+        .resourceLocation("icons/server-logo.png") // Resource path location
+        .size(1) // Scale of the provided texture above
         .build();
 }
 ```
 
 ## `AdvancedResourceLocationIcon` Builder
+
+If you have a [TextureAtlas](https://en.wikipedia.org/wiki/Texture_atlas), also known as sprite-sheet or image sprite, you can use the `AdvancedResourceLocationIcon` builder.
 
 ```java
 public class AdvancedResourceLocationIcon extends Icon {
