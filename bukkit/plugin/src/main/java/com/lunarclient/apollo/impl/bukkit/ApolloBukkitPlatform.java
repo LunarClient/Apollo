@@ -5,18 +5,18 @@ import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.impl.bukkit.listener.TntCountdownListener;
-import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.impl.bukkit.wrapper.BukkitApolloPlayer;
+import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
 import com.lunarclient.apollo.module.border.BorderModule;
 import com.lunarclient.apollo.module.border.BorderModuleImpl;
-import com.lunarclient.apollo.module.coloredfire.ColoredFireModuleImpl;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
+import com.lunarclient.apollo.module.coloredfire.ColoredFireModuleImpl;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
-import com.lunarclient.apollo.module.hearttexture.HeartTextureModuleImpl;
 import com.lunarclient.apollo.module.hearttexture.HeartTextureModule;
+import com.lunarclient.apollo.module.hearttexture.HeartTextureModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
@@ -32,8 +32,6 @@ import com.lunarclient.apollo.module.notification.NotificationModuleImpl;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
-import com.lunarclient.apollo.module.transfer.TransferModule;
-import com.lunarclient.apollo.module.transfer.TransferModuleImpl;
 import com.lunarclient.apollo.module.stopwatch.StopwatchModule;
 import com.lunarclient.apollo.module.stopwatch.StopwatchModuleImpl;
 import com.lunarclient.apollo.module.team.TeamModule;
@@ -42,6 +40,8 @@ import com.lunarclient.apollo.module.title.TitleModule;
 import com.lunarclient.apollo.module.title.TitleModuleImpl;
 import com.lunarclient.apollo.module.tntcountdown.TntCountdownModule;
 import com.lunarclient.apollo.module.tntcountdown.TntCountdownModuleImpl;
+import com.lunarclient.apollo.module.transfer.TransferModule;
+import com.lunarclient.apollo.module.transfer.TransferModuleImpl;
 import com.lunarclient.apollo.module.waypoint.WaypointModule;
 import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
@@ -104,7 +104,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(this, this);
         pluginManager.registerEvents(new TntCountdownListener(
-            Apollo.getModuleManager().getModule(TntCountdownModule.class).orElseThrow(),
+            Apollo.getModuleManager().getModule(TntCountdownModule.class),
             Apollo.getPlayerManager()
         ), this);
     }

@@ -13,13 +13,13 @@ import java.util.Optional;
 
 public class TransferExample {
 
-    private TransferModule transferModule;
+    private final TransferModule transferModule = Apollo.getModuleManager().getModule(TransferModule.class);
 
-    public void transferExample(Player player) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+    public void transferExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         if (apolloPlayerOpt.isEmpty()) {
-            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
+            viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
             return;
         }
 
@@ -30,19 +30,19 @@ public class TransferExample {
                     case REJECTED -> "Transfer rejected by client!";
                 };
 
-                player.sendMessage(Component.text(message, NamedTextColor.YELLOW));
+                viewer.sendMessage(Component.text(message, NamedTextColor.YELLOW));
             })
             .onFailure(exception -> {
-                player.sendMessage(Component.text("Internal error! Check console!"));
+                viewer.sendMessage(Component.text("Internal error! Check console!"));
                 exception.printStackTrace();
             });
     }
 
-    public void pingExample(Player player) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+    public void pingExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         if (apolloPlayerOpt.isEmpty()) {
-            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
+            viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
             return;
         }
 
@@ -54,11 +54,11 @@ public class TransferExample {
                         case TIMED_OUT -> String.format("Failed to ping %s", pingData.getServerIp());
                     };
 
-                    player.sendMessage(Component.text(message, NamedTextColor.YELLOW));
+                    viewer.sendMessage(Component.text(message, NamedTextColor.YELLOW));
                 }
             })
             .onFailure(exception -> {
-                player.sendMessage(Component.text("Internal error! Check console!"));
+                viewer.sendMessage(Component.text("Internal error! Check console!"));
                 exception.printStackTrace();
             });
     }

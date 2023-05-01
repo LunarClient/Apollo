@@ -13,10 +13,10 @@ import java.util.Optional;
 
 public class CooldownExample {
 
-    private CooldownModule cooldownModule;
+    private final CooldownModule cooldownModule = Apollo.getModuleManager().getModule(CooldownModule.class);
 
-    public void displayCooldownExample(Player player) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+    public void displayCooldownExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
             this.cooldownModule.displayCooldown(apolloPlayer, Cooldown.builder()
@@ -25,19 +25,19 @@ public class CooldownExample {
                 .icon(IconExample.itemStackIconExample())
                 .build()
             );
-        }, () -> player.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
+        }, () -> viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
     }
 
-    public void removeCooldownExample(Player player) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+    public void removeCooldownExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown"));
     }
 
-    public void resetCooldownsExample(Player player) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+    public void resetCooldownsExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         if (apolloPlayerOpt.isEmpty()) {
-            player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
+            viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
             return;
         }
 

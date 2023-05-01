@@ -31,7 +31,7 @@ public interface ApolloModuleManager {
      * @return the apollo module, if present
      * @since 1.0.0
      */
-    <T extends ApolloModule> Optional<T> getModule(Class<T> moduleClass);
+    <T extends ApolloModule> T getModule(Class<T> moduleClass);
 
     /**
      * Gets a collection of {@link ApolloModule}s.

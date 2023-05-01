@@ -13,7 +13,7 @@ import java.util.List;
 
 public class HologramExample {
 
-    private HologramModule hologramModule;
+    private final HologramModule hologramModule = Apollo.getModuleManager().getModule(HologramModule.class);
 
     public void displayHologramExample() {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();

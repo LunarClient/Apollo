@@ -13,10 +13,10 @@ import java.util.Optional;
 
 public class BeamExample {
 
-    private BeamModule beamModule;
+    private final BeamModule beamModule = Apollo.getModuleManager().getModule(BeamModule.class);
 
-    public void displayBeamExample(Player player) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+    public void displayBeamExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
             this.beamModule.displayBeam(apolloPlayer, Beam.builder()
@@ -31,17 +31,17 @@ public class BeamExample {
                 )
                 .build()
             );
-        }, () -> player.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
+        }, () -> viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
     }
 
-    public void removeBeamExample(Player player) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+    public void removeBeamExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.beamModule.removeBeam(apolloPlayer, "spawn-beacon"));
     }
 
-    public void resetBeamsExample(Player player) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.beamModule.resetBeams(apolloPlayer));
+    public void resetBeamsExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        apolloPlayerOpt.ifPresent(this.beamModule::resetBeams);
     }
 
 }

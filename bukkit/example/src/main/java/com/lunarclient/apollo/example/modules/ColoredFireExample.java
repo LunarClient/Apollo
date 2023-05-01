@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class ColoredFireExample {
 
-    private ColoredFireModule coloredFireModule;
+    private final ColoredFireModule coloredFireModule = Apollo.getModuleManager().getModule(ColoredFireModule.class);
 
     public void overrideColoredFireExample(UUID burningPlayer) {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();

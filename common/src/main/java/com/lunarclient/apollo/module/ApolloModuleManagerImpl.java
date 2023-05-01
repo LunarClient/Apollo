@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
@@ -32,9 +31,9 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
     }
 
     @Override
-    public <T extends ApolloModule> Optional<T> getModule(@NonNull Class<T> moduleClass) {
-        return Optional.ofNullable(this.modules.get(moduleClass))
-                .map(moduleClass::cast);
+    @SuppressWarnings("unchecked")
+    public <T extends ApolloModule> T getModule(@NonNull Class<T> moduleClass) {
+        return (T) this.modules.get(moduleClass);
     }
 
     @Override

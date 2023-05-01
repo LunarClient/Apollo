@@ -13,10 +13,10 @@ import java.util.Optional;
 
 public class BorderExample {
 
-    private BorderModule borderModule;
+    private final BorderModule borderModule = Apollo.getModuleManager().getModule(BorderModule.class);
 
-    public void displayBorderExample(Player player) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+    public void displayBorderExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
             this.borderModule.displayBorder(apolloPlayer, Border.builder()
@@ -36,17 +36,17 @@ public class BorderExample {
                 .durationTicks(0)
                 .build()
             );
-        }, () -> player.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
+        }, () -> viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
     }
 
-    public void removeBorderExample(Player player) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+    public void removeBorderExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.borderModule.removeBorder(apolloPlayerOpt.get(), "pvp-tagged-spawn"));
     }
 
-    public void resetBordersExample(Player player) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.borderModule.resetBorders(apolloPlayer));
+    public void resetBordersExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        apolloPlayerOpt.ifPresent(this.borderModule::resetBorders);
     }
 
 }

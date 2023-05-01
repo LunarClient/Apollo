@@ -58,7 +58,8 @@ public final class Apollo {
         return Apollo.checkEnabled(Apollo.roundtripManager);
     }
 
-    static void initialize(@NonNull ApolloPlatform platform, @NonNull ApolloModuleManager moduleManager, @NonNull ApolloPlayerManager playerManager, @NonNull ApolloRoundtripManager roundtripManager) {
+    static void initialize(@NonNull ApolloPlatform platform, @NonNull ApolloModuleManager moduleManager,
+                           @NonNull ApolloPlayerManager playerManager, @NonNull ApolloRoundtripManager roundtripManager) {
         Apollo.platform = platform;
         Apollo.moduleManager = moduleManager;
         Apollo.playerManager = playerManager;
