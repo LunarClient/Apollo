@@ -76,7 +76,7 @@ public void displayBorderExample(Player player) {
 ```
 <!-- insert screenshot of red border -->
 
-`.bounds(Cuboid2D)` is used to determine the bounds of the border, using a 2D cuboid.
+`.bounds(Cuboid2D)` is used to determine the bounds of the border, using a 2D cuboid. See the [cuboids page](/apollo/developers/utilities/cuboids) for more.
 ```java
 .bounds(Cuboid2D.builder() // Calling the 2D cuboid builder inside of Apollo
     .minX(-50) // The X value of your lowest point

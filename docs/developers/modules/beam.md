@@ -52,7 +52,7 @@ public void displayBeamExample(Player player) {
 
 <!-- insert screenshot of light purple beam -->
 
-`.location(ApolloBlockLocation)` used to determine the exact block you want the beam to be displayed on.
+`.location(ApolloBlockLocation)` used to determine the exact block you want the beam to be displayed on. See the [locations utilities page](/apollo/developers/utilities/locations) for more.
 ```java
 .location(ApolloBlockLocation.builder() // Calling to ApolloBlockLocation
     .world("world") // The world name the beam should be displayed in
