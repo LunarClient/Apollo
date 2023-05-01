@@ -6,10 +6,12 @@ import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.module.hologram.Hologram;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import org.bukkit.entity.Player;
 
 import java.awt.Color;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class HologramExample {
 
@@ -42,16 +44,12 @@ public class HologramExample {
 
     public void removeHologramExample() {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-
         this.hologramModule.removeHologram(viewers, "welcome-hologram");
     }
 
-    public void resetHologramsExample() {
-        Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-
-        for (ApolloPlayer viewer : viewers) {
-            this.hologramModule.resetHolograms(viewer);
-        }
+    public void resetHologramsExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        apolloPlayerOpt.ifPresent(this.hologramModule::resetHolograms);
     }
 
 }
