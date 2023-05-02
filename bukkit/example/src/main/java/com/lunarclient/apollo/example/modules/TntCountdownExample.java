@@ -3,7 +3,6 @@ package com.lunarclient.apollo.example.modules;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.module.tntcountdown.TntCountdownModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
@@ -25,12 +24,11 @@ public class TntCountdownExample implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTntSpawn(EntitySpawnEvent event) {
-        if(event.getEntityType() != EntityType.PRIMED_TNT) return;
+        if(!(event.getEntity() instanceof TNTPrimed tnt)) return;
 
-        TNTPrimed primed = (TNTPrimed) event.getEntity();
-
-        if(primed.hasMetadata("very-special-tnt") && primed.getSource() instanceof Player player) {
-            this.setTntCountdownExample(player, primed.getUniqueId(), 5);
+        if(tnt.hasMetadata("very-special-tnt") && tnt.getSource() instanceof Player player) {
+            this.setTntCountdownExample(player, tnt.getUniqueId(), 5);
         }
     }
+
 }

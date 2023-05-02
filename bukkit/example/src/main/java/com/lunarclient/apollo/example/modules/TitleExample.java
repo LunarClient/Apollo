@@ -43,4 +43,5 @@ public class TitleExample {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(this.titleModule::resetTitles);
     }
+
 }

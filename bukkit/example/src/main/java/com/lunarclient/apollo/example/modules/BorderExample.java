@@ -40,7 +40,7 @@ public class BorderExample {
 
     public void removeBorderExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.borderModule.removeBorder(apolloPlayerOpt.get(), "pvp-tagged-spawn"));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.borderModule.removeBorder(apolloPlayer, "pvp-tagged-spawn"));
     }
 
     public void resetBordersExample(Player viewer) {
