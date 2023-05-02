@@ -8,11 +8,12 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
-public class JoinListenerExample {
+public class GeneralListenerExample {
 
-    public class JoinExample1 implements Listener {
+    // Method 1
+    public class GeneralExample1 implements Listener {
 
-        public JoinExample1() {
+        public GeneralExample1() {
             EventBus.getBus().register(this);
         }
 
@@ -22,9 +23,10 @@ public class JoinListenerExample {
         }
     }
 
-    public class JoinExample2 implements Listener {
+    // Method 2
+    public class GeneralExample2 implements Listener {
 
-        public JoinExample2() {
+        public GeneralExample2() {
             this.handle(ApolloRegisterPlayerEvent.class, this::onApolloRegister);
         }
 
