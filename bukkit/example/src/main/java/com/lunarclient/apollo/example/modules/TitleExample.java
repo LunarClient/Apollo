@@ -30,7 +30,7 @@ public class TitleExample {
         .fadeOutTime(Duration.ofMillis(300))
         .build();
 
-    public void displayTitleMessageExample(Player viewer) {
+    public void displayTitleExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, this.title));
     }
