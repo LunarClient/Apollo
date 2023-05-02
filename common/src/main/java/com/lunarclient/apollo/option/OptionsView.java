@@ -55,7 +55,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
 
     @Override
     public <T> void set(@NonNull Option<?, ?, ?> option, @Nullable T value) {
-        if(!this.postUpdate(option, value)) return;
+        if(this.postUpdate(option, value)) return;
         boolean send = false;
         if(value == null || Objects.equals(value, option.getDefaultValue())) {
             send = this.values.remove(option.getKey()) != null;
@@ -76,7 +76,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
 
     @Override
     public <T> void add(@NonNull Option<?, ?, ?> option, @NonNull T value) {
-        if(!this.postUpdate(option, value)) return;
+        if(this.postUpdate(option, value)) return;
         if(this.values.putIfAbsent(option.getKey(), value) == null) {
             NetworkOptions.sendOption(
                     this.container.module,
@@ -89,7 +89,7 @@ public final class OptionsView extends AbstractOptions implements Options.Single
 
     @Override
     public <T> void remove(@NonNull Option<?, ?, ?> option, @NonNull T compare) {
-        if(!this.postUpdate(option, null)) return;
+        if(this.postUpdate(option, null)) return;
         if(this.values.remove(option.getKey(), compare)) {
             NetworkOptions.sendOption(
                     this.container.module,
