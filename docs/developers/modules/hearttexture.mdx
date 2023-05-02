@@ -21,24 +21,13 @@ public void overrideHeartTextureExample(Player viewer) {
 }
 ```
 
-### `HeartTexture` Types
-
-{/* Test hardcore hearts && add callout later */}
-
-* `NORMAL`
-  * The vanilla red hearts you see everywhere.
-* `HEALING`
-  * ???
-* `ABSORPTION`
-  * When you have the absorption effect, you'll see golden hearts appear. These are the `ABSORPTION` heart texture.
-
 ### `overrideHeartTexture` Parameters
 
-* `UUID Player`
+1. `UUID Player`
    - The player you want to display the heart texture to.
-* `HeartTexture.TYPE`
-   - The type of heart texture you want to display, read the section above for more.
-* `Location int`
+2. `HeartTexture.TYPE`
+   - The type of heart texture you want to display. Read the [heart texture](#hearttexture-types) section for more.
+3. `Location int`
    - We aren't 100% how this part works, figure it out and open a PR.
 
 
@@ -53,3 +42,18 @@ public void resetHeartTextureExample(Player viewer) {
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.heartTextureModule.resetHeartTexture(apolloPlayer, HeartTexture.NORMAL));
 }
 ```
+
+### `resetHeartTexture` Parameters
+
+1. `UUID Player`
+    - The player you want to display the heart texture to.
+2. `HeartTexture.TYPE`
+    - The type of heart texture you want to display. Read the [heart texture](#hearttexture-types) section for more.
+
+## `HeartTexture` Types
+
+{/* Test hardcore hearts && add callout later */}
+
+* `NORMAL`
+* `HEALING`
+* `ABSORPTION`

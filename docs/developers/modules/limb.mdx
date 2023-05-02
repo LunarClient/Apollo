@@ -4,8 +4,8 @@
 
 The limb module allows you to hide the `ArmorPiece` and `BodyPart` limbs of a player.
 
-* Adds the ability to hide individual armor pieces and body parts of a player.
-  * Select certain body parts and armor pieces to hide without needing to do any complex integration.
+- Adds the ability to hide individual armor pieces and body parts of a player.
+  - Select certain body parts and armor pieces to hide without needing to do any complex integration.
 
 ## Integration
 
@@ -28,11 +28,11 @@ public void hideArmorExample(Player viewer, Player target) {
 
 #### `hideArmorPieces` Parameters
 
-* `apolloPlayer`
+1. `UUID Player`
    - The player(s) that you wish to see the hidden armor piece.
-* `UUID Target`
+2. `UUID Target`
    - The player you want to hide the armor piece of.
-* `ArmorPiece.TYPE`
+3. `ArmorPiece.TYPE`
    - The armor piece types you wish to hide on the `target` player. See the [armor pieces](#armorpiece-types) section for more.
 
 ### Resetting an armor piece of a player
@@ -54,11 +54,11 @@ public void resetArmorExample(Player viewer, Player target) {
 
 #### `resetArmorPieces` Parameters
 
-* `apolloPlayer`
+1. `UUID Player`
    - The player(s) that you want to reset the armor piece for.
-* `UUID Target`
+2. `UUID Target`
    - The player you want to reset the armor piece of.
-* `ArmorPiece.TYPE`
+3. `ArmorPiece.TYPE`
    - The type of armor piece(s) you want to reset on the `target` player. See the [armor pieces](#armorpiece-types) section for more.
 
 ### Hiding a body part of a player
@@ -80,11 +80,11 @@ public void hideBodyExample(Player viewer, Player target) {
 
 #### `hideBodyParts` Parameters
 
-* `apolloPlayer`
+1. `UUID Player`
    - The player(s) you want to see the hidden body part.
-* `UUID Target`
+2. `UUID Target`
    - The player you want to hide the body part of.
-* `BodyPart.TYPE`
+3. `BodyPart.TYPE`
    - The type of body part(s) you want to hide on the `target` player. See the [body parts](#bodyparts-types) section for more.
 
 ### Resetting a body part of a player
@@ -106,11 +106,11 @@ public void resetBodyExample(Player viewer, Player target) {
 
 #### `resetBodyParts` Parameters
 
-* `apolloPlayer`
+1. `UUID Player`
     - The player(s) you want to reset the body part for.
-* `UUID Target`
+2. `UUID Target`
     - The player you want to reset the body part of.
-* `BodyPart.TYPE`
+3. `BodyPart.TYPE`
     - The type of body part(s) you want to reset on the `target` player. See the [body parts](#bodyparts-types) section for more.
 
 ## `ArmorPiece` Types
