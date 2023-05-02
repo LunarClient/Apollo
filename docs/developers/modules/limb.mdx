@@ -1,1 +1,130 @@
 # Limb Module
+
+## Overview
+
+The limb module allows you to hide the `ArmorPiece` and `BodyPart` limbs of a player.
+
+* Adds the ability to hide individual armor pieces and body parts of a player.
+  * Select certain body parts and armor pieces to hide without needing to do any complex integration.
+
+## Integration
+
+### Hiding a armor piece of a player
+
+#### Sample Code
+
+```java
+public void hideArmorExample(Player viewer, Player target) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
+        this.limbModule.hideArmorPieces(apolloPlayer,
+            target.getUniqueId(),
+            Set.of(ArmorPiece.HELMET, ArmorPiece.LEGGINGS)
+        );
+    }, () -> viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
+}
+```
+
+#### `hideArmorPieces` Parameters
+
+1. `apolloPlayer`
+   - The player(s) that you wish to see the hidden armor piece.
+2. `UUID Target`
+   - The player you want to hide the armor piece of.
+3. `ArmorPiece.TYPE`
+   - The armor piece types you wish to hide on the `target` player. See the [armor pieces](#armorpiece-predefined-yypes) predefined section for more.
+
+### Resetting an armor piece of a player
+
+#### Sample Code
+
+```java
+public void resetArmorExample(Player viewer, Player target) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.limbModule.resetArmorPieces(apolloPlayer,
+            target.getUniqueId(),
+            Set.of(ArmorPiece.HELMET, ArmorPiece.LEGGINGS)
+        );
+    });
+}
+```
+
+#### `resetArmorPieces` Parameters
+
+1. `apolloPlayer`
+   - The player(s) that you want to reset the armor piece for.
+2. `UUID Target`
+   - The player you want to reset the armor piece of.
+3. `ArmorPiece.TYPE`
+   - The type of armor piece(s) you want to reset on the `target` player. See the [armor pieces](#armorpiece-predefined-yypes) predefined section for more.
+
+### Hiding a body part of a player
+
+#### Sample Code
+
+```java
+public void hideBodyExample(Player viewer, Player target) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
+        this.limbModule.hideBodyParts(apolloPlayer,
+            target.getUniqueId(),
+            Set.of(BodyPart.HEAD, BodyPart.RIGHT_ARM)
+        );
+    }, () -> viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
+}
+```
+
+#### `hideBodyParts` Parameters
+
+1. `apolloPlayer`
+   - The player(s) you want to see the hidden body part.
+2. `UUID Target`
+   - The player you want to hide the body part of.
+3. `BodyPart.TYPE`
+   - The type of body part(s) you want to hide on the `target` player. See the [body parts](#bodyparts-predefined-types) predefined section for more.
+
+### Resetting a body part of a player
+
+#### Sample Code
+
+```java 
+public void resetBodyExample(Player viewer, Player target) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.limbModule.resetBodyParts(apolloPlayer,
+            target.getUniqueId(),
+            Set.of(BodyPart.HEAD, BodyPart.RIGHT_ARM)
+        );
+    });
+}
+```
+
+#### `resetBodyParts` Parameters
+
+1. `apolloPlayer`
+    - The player(s) you want to reset the body part for.
+2. `UUID Target`
+    - The player you want to reset the body part of.
+3. `BodyPart.TYPE`
+    - The type of body part(s) you want to reset on the `target` player. See the [body parts](#bodyparts-predefined-types) predefined for more.
+
+## `ArmorPiece` Predefined Types
+
+* `HELMET`
+* `CHESTPLATE`
+* `LEGGINGS`
+* `BOOTS`
+
+## `BodyParts` Predefined Types
+
+* `HEAD`
+* `TORSO`
+* `LEFT_ARM`
+* `RIGHT_ARM`
+* `LEFT_LEG`
+* `RIGHT_LEG`
