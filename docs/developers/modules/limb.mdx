@@ -17,12 +17,12 @@ The limb module allows you to hide the `ArmorPiece` and `BodyPart` limbs of a pl
 public void hideArmorExample(Player viewer, Player target) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
-    apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
         this.limbModule.hideArmorPieces(apolloPlayer,
             target.getUniqueId(),
             Set.of(ArmorPiece.HELMET, ArmorPiece.LEGGINGS)
         );
-    }, () -> viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
+    });
 }
 ```
 
@@ -69,12 +69,12 @@ public void resetArmorExample(Player viewer, Player target) {
 public void hideBodyExample(Player viewer, Player target) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
-    apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
         this.limbModule.hideBodyParts(apolloPlayer,
             target.getUniqueId(),
             Set.of(BodyPart.HEAD, BodyPart.RIGHT_ARM)
         );
-    }, () -> viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
+    });
 }
 ```
 

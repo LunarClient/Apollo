@@ -15,26 +15,23 @@ The beam module allows you to create custom beams resembling beacon beams, which
 ### Sample Code
 
 ```java
-public void displayBeamExample(Player player) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+public void displayBeamExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
-    if (apolloPlayerOpt.isEmpty()) {
-        player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-        return;
-    }
-
-    beamModule.displayBeam(apolloPlayerOpt.get(), Beam.builder()
-        .id("spawn-beacon")
-        .color(Color.CYAN)
-        .location(ApolloBlockLocation.builder()
-            .world("world")
-            .x(0)
-            .y(60)
-            .z(0)
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.beamModule.displayBeam(apolloPlayer, Beam.builder()
+            .id("spawn-beacon")
+            .color(Color.CYAN)
+            .location(ApolloBlockLocation.builder()
+                .world("world")
+                .x(0)
+                .y(60)
+                .z(0)
+                .build()
+            )
             .build()
-        )
-        .build()
-    );
+        );
+    });
 }
 ```
 
@@ -69,21 +66,21 @@ public void displayBeamExample(Player player) {
 ### Removing a specific beam for a player
 
 ```java
-public void removeBeamExample(Player player) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+public void removeBeamExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
     // Removing the beam with the ID "spawn-beacon" for the player
-    beamModule.removeBeam(apolloPlayerOpt.get(), "spawn-beacon");
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.beamModule.removeBeam(apolloPlayer, "spawn-beacon"));
 }
 ```
 
 ### Resetting all beams for a player
 
 ```java
-public void resetBeamsExample(Player player) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+public void resetBeamsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
     // Resetting all beams for the player
-    beamModule.resetBeams(apolloPlayerOpt.get());
+    apolloPlayerOpt.ifPresent(this.beamModule::resetBeams);
 }
 ```

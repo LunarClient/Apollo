@@ -1,1 +1,152 @@
 # Misc Module
+
+## Overview
+
+@Trent
+
+## Integration
+
+### Display vignette to a player
+
+#### Sample Code
+
+```java
+public void displayVignetteExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.miscModule.displayVignette(apolloPlayer, Vignette.builder()
+            .resourceLocation("blocks/pumpkin.png")
+            .opacity(0.75f)
+            .build()
+        );
+    });
+}
+```
+
+### `Vignette` Options
+
+`.resourceLocation(String)` the resource location of the vignette.
+
+```java
+.resourceLocation("blocks/pumpkin.png")
+```
+
+`.opacity(ApolloLocation)` opacity of the shown vignette.
+
+```java
+.opacity(0.75f)
+```
+
+### Resetting the vignette for a player
+
+#### Sample Code
+
+```java
+public void resetVignetteExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.miscModule::resetVignette);
+}
+```
+
+### Override rainbow sheep for a player
+
+#### Sample Code
+
+```java
+public void overrideRainbowSheepExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        // Get all Sheep in players world
+        List<UUID> sheepUuids = viewer.getWorld().getEntitiesByClass(Sheep.class)
+            .stream().map(Sheep::getUniqueId).collect(Collectors.toList());
+
+        this.miscModule.overrideRainbowSheep(apolloPlayer, sheepUuids);
+    });
+}
+```
+
+### `overrideRainbowSheep` Parameters
+
+1. `ApolloPlayer viewer`
+   - The viewer.
+2. `List<UUID> sheepUuids`
+   - A list of all sheep uuid(s) you want to be rainbow.
+
+### Resetting rainbow sheep for a player
+
+#### Sample Code
+
+```java
+public void resetRainbowSheepExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        // Get all Sheep in players world
+        List<UUID> sheepUuids = viewer.getWorld().getEntitiesByClass(Sheep.class)
+            .stream().map(Sheep::getUniqueId).collect(Collectors.toList());
+
+        this.miscModule.resetRainbowSheep(apolloPlayer, sheepUuids);
+    });
+}
+```
+
+### `resetRainbowSheep` Parameters
+
+1. `ApolloPlayer viewer`
+    - The viewer.
+2. `List<UUID> sheepUuids`
+    - A list of all sheep uuid(s) you want to remove the rainbow state from.
+
+### Flip entities for a player
+
+#### Sample Code
+
+```java
+public void flipEntityExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        // Get all cows within 10 blocks of the player
+        List<UUID> entityUuids = viewer.getWorld()
+            .getNearbyEntitiesByType(Cow.class, viewer.getLocation(), 10)
+            .stream().map(Cow::getUniqueId).collect(Collectors.toList());
+
+        this.miscModule.flipEntity(apolloPlayer, sheepUuids);
+    });
+}
+```
+
+### `flipEntity` Parameters
+
+1. `ApolloPlayer viewer`
+    - The viewer.
+2. `List<UUID> entityUuids`
+    - A list of all entity uuid(s) you want to flip.
+
+### Resetting flipped entities for a player
+
+#### Sample Code
+
+```java
+public void resetFlippedEntityExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        // Get all cows within 10 blocks of the player
+        List<UUID> entityUuids = viewer.getWorld()
+            .getNearbyEntitiesByType(Cow.class, viewer.getLocation(), 10)
+            .stream().map(Cow::getUniqueId).collect(Collectors.toList());
+
+        this.miscModule.resetFlippedEntity(apolloPlayer, sheepUuids);
+    });
+}
+```
+
+### `resetFlippedEntity` Parameters
+
+1. `ApolloPlayer viewer`
+    - The viewer.
+2. `List<UUID> entityUuids`
+    - A list of all entity uuid(s) you want to reset the flip state from.

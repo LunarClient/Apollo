@@ -13,7 +13,7 @@ public void overrideColoredFireExample(UUID burningPlayer) {
     Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
 
     this.coloredFireModule.overrideColoredFire(viewers,
-        burningPlayer, 
+        burningPlayer,
         Color.BLUE
     );
 }
@@ -33,7 +33,6 @@ public void overrideColoredFireExample(UUID burningPlayer) {
 ```java
 public void resetColoredFireExample(UUID burningPlayer) {
     Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-    
     this.coloredFireModule.resetColoredFire(viewers, burningPlayer);
 }
 ```

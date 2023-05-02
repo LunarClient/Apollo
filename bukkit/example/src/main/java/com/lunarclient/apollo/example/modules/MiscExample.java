@@ -63,11 +63,11 @@ public class MiscExample {
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             // Get all cows within 10 blocks of the player
-            List<UUID> sheepUuids = viewer.getWorld()
+            List<UUID> entityUuids = viewer.getWorld()
                 .getNearbyEntitiesByType(Cow.class, viewer.getLocation(), 10)
                 .stream().map(Cow::getUniqueId).collect(Collectors.toList());
 
-            this.miscModule.flipEntity(apolloPlayer, sheepUuids);
+            this.miscModule.flipEntity(apolloPlayer, entityUuids);
         });
     }
 
@@ -76,11 +76,11 @@ public class MiscExample {
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             // Get all cows within 10 blocks of the player
-            List<UUID> sheepUuids = viewer.getWorld()
+            List<UUID> entityUuids = viewer.getWorld()
                 .getNearbyEntitiesByType(Cow.class, viewer.getLocation(), 10)
                 .stream().map(Cow::getUniqueId).collect(Collectors.toList());
 
-            this.miscModule.resetFlippedEntity(apolloPlayer, sheepUuids);
+            this.miscModule.resetFlippedEntity(apolloPlayer, entityUuids);
         });
     }
 }

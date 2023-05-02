@@ -15,31 +15,28 @@ The border module not only enhances Minecraft's current world border system, but
 ### Sample Code
 
 ```java
-public void displayBorderExample(Player player) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+public void displayBorderExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
-    if (apolloPlayerOpt.isEmpty()) {
-        player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-        return;
-    }
-
-    borderModule.displayBorder(apolloPlayerOpt.get(), Border.builder()
-        .id("pvp-tagged-spawn")
-        .world("world")
-        .cancelEntry(true)
-        .cancelExit(false)
-        .canShrinkOrExpand(false)
-        .color(Color.RED)
-        .bounds(Cuboid2D.builder()
-            .minX(-50)
-            .minZ(-50)
-            .maxX(50)
-            .maxZ(50)
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.borderModule.displayBorder(apolloPlayer, Border.builder()
+            .id("pvp-tagged-spawn")
+            .world("world")
+            .cancelEntry(true)
+            .cancelExit(false)
+            .canShrinkOrExpand(false)
+            .color(Color.RED)
+            .bounds(Cuboid2D.builder()
+                .minX(-50)
+                .minZ(-50)
+                .maxX(50)
+                .maxZ(50)
+                .build()
+            )
+            .durationTicks(0)
             .build()
-        )
-        .durationTicks(0)
-        .build()
-    );
+        );
+    });
 }
 ```
 
@@ -104,22 +101,22 @@ public void displayBorderExample(Player player) {
 ### Removing a specific border for a player
 
 ```java
-public void removeBorderExample(Player player) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+public void removeBorderExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
     // Removing the border with the ID "pvp-tagged-spawn" for the player
-    borderModule.removeBorder(apolloPlayerOpt.get(), "pvp-tagged-spawn");
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.borderModule.removeBorder(apolloPlayer, "pvp-tagged-spawn"));
 }
 ```
 
 ### Resetting all borders for a player
 
 ```java
-public void resetBordersExample(Player player) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+public void resetBordersExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
     // Resetting all borders for the player
-    borderModule.resetBorders(apolloPlayerOpt.get());
+    apolloPlayerOpt.ifPresent(this.borderModule::resetBorders);
 }
 ```
 

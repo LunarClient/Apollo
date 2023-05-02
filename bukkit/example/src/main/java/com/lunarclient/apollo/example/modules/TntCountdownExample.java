@@ -24,9 +24,9 @@ public class TntCountdownExample implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTntSpawn(EntitySpawnEvent event) {
-        if(!(event.getEntity() instanceof TNTPrimed tnt)) return;
+        if (!(event.getEntity() instanceof TNTPrimed tnt)) return;
 
-        if(tnt.hasMetadata("very-special-tnt") && tnt.getSource() instanceof Player player) {
+        if (tnt.hasMetadata("very-special-tnt") && tnt.getSource() instanceof Player player) {
             this.setTntCountdownExample(player, tnt.getUniqueId(), 5);
         }
     }

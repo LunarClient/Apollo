@@ -25,7 +25,6 @@ public class ColoredFireExample {
 
     public void resetColoredFireExample(UUID burningPlayer) {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-
         this.coloredFireModule.resetColoredFire(viewers, burningPlayer);
     }
 
