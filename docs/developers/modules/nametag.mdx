@@ -1,1 +1,76 @@
 # Nametag Module
+
+## Overview
+
+@Trent
+
+## Integration
+
+### Sample Code
+
+```java
+public void overrideNametagExample(Player target) {
+    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
+
+    this.nametagModule.overrideNametag(viewers, target.getUniqueId(), Nametag.builder()
+            .lines(List.of(
+                Component.builder()
+                    .content("[StaffMod]")
+                    .color(Color.GRAY)
+                    .build(),
+                Component.builder()
+                    .content("Vanished")
+                    .decorators(List.of(Component.TextDecorators.ITALIC))
+                    .color(Color.GREEN)
+                    .build()
+            ))
+            .build()
+        );
+}
+```
+
+### `overrideNametag` Parameters
+
+1. `Collection<ApolloPlayer> viewers`
+    - A list of all the player(s) you want to be able to see the updated nametag.
+2. `UUID target`
+    - The target players UUID.
+3. `Nametag`
+    - The nametag
+
+
+### `Nametag` Options
+
+`.lines(List<Component>)` a list of Component objects.
+
+```lines
+.lines(List.of(
+    Component.builder()
+        .content("[StaffMod]")
+        .color(Color.GRAY)
+        .build(),
+    Component.builder()
+        .content("Vanished")
+        .decorators(List.of(Component.TextDecorators.ITALIC))
+        .color(Color.GREEN)
+        .build()
+))
+```
+
+### Reset nametag for players
+
+```java
+public void resetNametagExample(Player target) {
+    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
+    this.nametagModule.resetNametag(viewers, target.getUniqueId());
+}
+```
+
+### Resetting all nametags for a player
+
+```java
+public void resetNametagsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.nametagModule::resetNametags);
+}
+```
