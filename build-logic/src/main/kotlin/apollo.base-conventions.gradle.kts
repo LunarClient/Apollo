@@ -5,6 +5,9 @@ plugins {
 // Expose version catalog
 val libs = extensions.getByType(org.gradle.accessors.dm.LibrariesForLibs::class)
 
+group = rootProject.group
+version = rootProject.version
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(11))

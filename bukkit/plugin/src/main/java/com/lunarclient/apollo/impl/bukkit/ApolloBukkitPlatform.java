@@ -95,13 +95,13 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
 
         this.loadConfiguration();
 
-        Messenger messenger = getServer().getMessenger();
+        Messenger messenger = this.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
                 (channel, player, bytes) -> this.handlePacket(player, bytes)
         );
 
-        PluginManager pluginManager = getServer().getPluginManager();
+        PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(this, this);
         pluginManager.registerEvents(new TntCountdownListener(
             Apollo.getModuleManager().getModule(TntCountdownModule.class),
