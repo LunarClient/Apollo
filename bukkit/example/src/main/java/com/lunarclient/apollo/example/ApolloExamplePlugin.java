@@ -11,6 +11,8 @@ public class ApolloExamplePlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+
+        // Register all modules & listeners
     }
 
     @Override

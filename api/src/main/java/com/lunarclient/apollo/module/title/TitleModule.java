@@ -34,7 +34,7 @@ public abstract class TitleModule extends ApolloModule {
      * @param title the title
      * @since 1.0.0
      */
-    public abstract void displayTitleMessage(ApolloPlayer viewer, Title title);
+    public abstract void displayTitle(ApolloPlayer viewer, Title title);
 
     /**
      * Sends the {@link Title} to all {@link ApolloPlayer}s.

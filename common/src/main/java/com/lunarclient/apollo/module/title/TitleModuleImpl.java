@@ -17,21 +17,16 @@ import lombok.NonNull;
 public final class TitleModuleImpl extends TitleModule {
 
     @Override
-    public void displayTitleMessage(@NonNull ApolloPlayer viewer, @NonNull Title title) {
-        ((AbstractApolloPlayer) viewer).sendPacket(DisplayTitleMessage.newBuilder()
-            .setTitleType(TitleType.forNumber(title.getType().ordinal() + 1))
-            .setMessage(NetworkTypes.toProtobuf(title.getMessage()))
-            .setScale(title.getScale())
-            .setFadeInTime(NetworkTypes.toProtobuf(title.getFadeInTime()))
-            .setDisplayTime(NetworkTypes.toProtobuf(title.getDisplayTime()))
-            .setFadeOutTime(NetworkTypes.toProtobuf(title.getFadeOutTime()))
-            .build());
+    public void displayTitle(@NonNull ApolloPlayer viewer, @NonNull Title title) {
+        ((AbstractApolloPlayer) viewer).sendPacket(this.toProtobuf(title));
     }
 
     @Override
     public void broadcastTitle(@NonNull Title title) {
+        DisplayTitleMessage message = this.toProtobuf(title);
+
         for (ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
-            this.displayTitleMessage(player, title);
+            ((AbstractApolloPlayer) player).sendPacket(message);
         }
     }
 
@@ -40,4 +35,14 @@ public final class TitleModuleImpl extends TitleModule {
         ((AbstractApolloPlayer) viewer).sendPacket(ResetTitlesMessage.getDefaultInstance());
     }
 
+    private DisplayTitleMessage toProtobuf(Title title) {
+        return DisplayTitleMessage.newBuilder()
+            .setTitleType(TitleType.forNumber(title.getType().ordinal() + 1))
+            .setMessage(NetworkTypes.toProtobuf(title.getMessage()))
+            .setScale(title.getScale())
+            .setFadeInTime(NetworkTypes.toProtobuf(title.getFadeInTime()))
+            .setDisplayTime(NetworkTypes.toProtobuf(title.getDisplayTime()))
+            .setFadeOutTime(NetworkTypes.toProtobuf(title.getFadeOutTime()))
+            .build();
+    }
 }

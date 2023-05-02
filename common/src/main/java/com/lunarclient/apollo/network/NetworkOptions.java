@@ -45,7 +45,7 @@ public final class NetworkOptions {
         modulesBuilder.addConfigurableSettings(moduleBuilder.build());
 
         for(ApolloPlayer player : players) {
-            checkPlayerVersionSupport(module, player);
+            if(!doesSupportPlayerVersion(module, player)) continue;
 
             ((AbstractApolloPlayer) player).sendPacket(modulesBuilder.build());
         }
@@ -65,7 +65,7 @@ public final class NetworkOptions {
             OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
 
             for(ApolloModule module : modules) {
-                checkPlayerVersionSupport(module, player);
+                if(!doesSupportPlayerVersion(module, player)) continue;
 
                 modulesBuilder.addConfigurableSettings(NetworkOptions.moduleWithOptions(
                         module,
@@ -77,14 +77,11 @@ public final class NetworkOptions {
         }
     }
 
-    private static void checkPlayerVersionSupport(ApolloModule module, ApolloPlayer player) {
+    private static boolean doesSupportPlayerVersion(ApolloModule module, ApolloPlayer player) {
         Set<ApolloPlayerVersion> supportedVersions = module.getSupportedClientVersions();
         ApolloPlayerVersion playerVersion = player.getVersion();
 
-        if(!supportedVersions.contains(playerVersion)) {
-            throw new IllegalStateException(String.format("Module %s doesn't support client version %s!",
-                module.getName(), playerVersion.name()));
-        }
+        return supportedVersions.contains(playerVersion);
     }
 
     private static ConfigurableSettings.Builder moduleWithOptions(ApolloModule module,
