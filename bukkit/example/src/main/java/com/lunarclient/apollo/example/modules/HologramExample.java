@@ -44,11 +44,18 @@ public class HologramExample {
 
     public void removeHologramExample() {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
+
+        /*
+         * Removes the hologram with the ID "welcome-hologram" for all
+         * players inside of the viewers collection.
+         */
         this.hologramModule.removeHologram(viewers, "welcome-hologram");
     }
 
     public void resetHologramsExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        // Resetting every hologram
         apolloPlayerOpt.ifPresent(this.hologramModule::resetHolograms);
     }
 

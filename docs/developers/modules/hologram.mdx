@@ -1,1 +1,80 @@
 # Hologram Module
+
+## Overview
+
+## Integration
+
+### Sample Code
+
+```java
+public void displayHologramExample() {
+    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
+
+    this.hologramModule.displayHologram(viewers, Hologram.builder()
+        .id("welcome-hologram")
+        .location(ApolloLocation.builder()
+            .world("world")
+            .z(5)
+            .y(100)
+            .z(0)
+            .build()
+        ).lines(List.of(
+            Component.builder()
+                .content("Welcome to my server!")
+                .color(Color.RED)
+                .decorators(List.of(Component.TextDecorators.BOLD))
+                .build(),
+            Component.builder()
+                .content("Type /help to get started!")
+                .build()
+        ))
+        .build()
+    );
+}
+```
+
+### `Hologram` Options
+
+`.id(String)` should include a unique identifier for the hologram.
+
+```java
+.id("welcome-hologram")
+```
+
+`.location(ApolloLocation)` using the `ApolloLocation` builder to create the location. See the [locations page](/apollo/developers/utilities/locations) for more.
+
+```java
+.location(ApolloLocation.builder()
+    .world("world")
+    .z(5)
+    .y(100)
+    .z(0)
+    .build()
+) 
+```
+
+
+### Removing a specific hologram for players
+
+```java
+public void removeHologramExample() {
+    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
+    
+    /*
+     * Removes the hologram with the ID "welcome-hologram" for all
+     * players inside of the viewers collection.
+     */
+    this.hologramModule.removeHologram(viewers, "welcome-hologram");
+}
+```
+
+### Resetting all holograms for a player
+
+```java
+public void resetHologramsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    
+    // Resetting every hologram for a player
+    apolloPlayerOpt.ifPresent(this.hologramModule::resetHolograms);
+}
+```
