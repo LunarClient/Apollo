@@ -5,7 +5,6 @@ import com.lunarclient.apollo.common.icon.ItemStackIcon;
 import com.lunarclient.apollo.module.cooldown.Cooldown;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -19,7 +18,7 @@ public class CooldownExample {
     public void displayCooldownExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
-        apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.cooldownModule.displayCooldown(apolloPlayer, Cooldown.builder()
                 .name("enderpearl-cooldown")
                 .duration(Duration.ofSeconds(15))
@@ -29,7 +28,7 @@ public class CooldownExample {
                 )
                 .build()
             );
-        }, () -> viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
+        });
     }
 
     public void removeCooldownExample(Player viewer) {

@@ -5,7 +5,6 @@ import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.module.beam.Beam;
 import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import java.awt.Color;
@@ -18,7 +17,7 @@ public class BeamExample {
     public void displayBeamExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
-        apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.beamModule.displayBeam(apolloPlayer, Beam.builder()
                 .id("spawn-beacon")
                 .color(Color.CYAN)
@@ -31,7 +30,7 @@ public class BeamExample {
                 )
                 .build()
             );
-        }, () -> viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
+        });
     }
 
     public void removeBeamExample(Player viewer) {

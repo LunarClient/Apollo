@@ -5,7 +5,6 @@ import com.lunarclient.apollo.common.cuboid.Cuboid2D;
 import com.lunarclient.apollo.module.border.Border;
 import com.lunarclient.apollo.module.border.BorderModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import java.awt.Color;
@@ -18,7 +17,7 @@ public class BorderExample {
     public void displayBorderExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
-        apolloPlayerOpt.ifPresentOrElse(apolloPlayer -> {
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.borderModule.displayBorder(apolloPlayer, Border.builder()
                 .id("pvp-tagged-spawn")
                 .world("world")
@@ -36,7 +35,7 @@ public class BorderExample {
                 .durationTicks(0)
                 .build()
             );
-        }, () -> viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!")));
+        });
     }
 
     public void removeBorderExample(Player viewer) {
