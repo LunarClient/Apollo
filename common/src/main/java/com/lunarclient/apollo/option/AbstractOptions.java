@@ -54,7 +54,7 @@ public abstract class AbstractOptions implements Options {
         return null;
     }
 
-    boolean postUpdate(Option<?, ?, ?> option, @Nullable Object value) {
+    protected boolean postUpdate(Option<?, ?, ?> option, @Nullable Object value) {
         final EventBus.EventResult<ApolloUpdateOptionEvent> eventResult = EventBus.getBus().post(new ApolloUpdateOptionEvent(this, option, value));
         boolean cancelled = eventResult.getEvent().isCancelled();
         for(Throwable throwable : eventResult.getThrowing()) {
