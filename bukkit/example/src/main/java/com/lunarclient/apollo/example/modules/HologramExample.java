@@ -27,8 +27,8 @@ public class HologramExample {
                 .z(5)
                 .y(100)
                 .z(0)
-                .build()
-            ).lines(List.of(
+                .build())
+            .lines(List.of(
                 Component.builder()
                     .content("Welcome to my server!")
                     .color(Color.RED)

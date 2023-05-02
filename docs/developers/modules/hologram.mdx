@@ -2,6 +2,14 @@
 
 ## Overview
 
+The hologram module enhances vanilla Minecraft's current system for holograms and backports all the improvements and vanilla features to Minecraft 1.7 players.
+
+- Backports all vanilla minecraft hologram capabilities, found in 1.8+ to the 1.7 version of Lunar Client.
+  - Added the interactivity that is provided in 1.8+ to the 1.7 version of Lunar Client.
+- Adds improvements to enhance vanilla minecraft holograms.
+  - Removes the need to do the any complex process to create holograms on 1.7 minecraft.
+  - Custom hologram colors can be provided.
+
 ## Integration
 
 ### Sample Code
@@ -17,8 +25,8 @@ public void displayHologramExample() {
             .z(5)
             .y(100)
             .z(0)
-            .build()
-        ).lines(List.of(
+            .build())
+        .lines(List.of(
             Component.builder()
                 .content("Welcome to my server!")
                 .color(Color.RED)
@@ -41,7 +49,7 @@ public void displayHologramExample() {
 .id("welcome-hologram")
 ```
 
-`.location(ApolloLocation)` using the `ApolloLocation` builder to create the location. See the [locations page](/apollo/developers/utilities/locations) for more.
+`.location(ApolloLocation)` is using the `ApolloLocation` builder to create the location. See the [locations page](/apollo/developers/utilities/locations) for more.
 
 ```java
 .location(ApolloLocation.builder()
@@ -51,6 +59,21 @@ public void displayHologramExample() {
     .z(0)
     .build()
 ) 
+```
+
+`.lines(Component)` should be a string, or a Apollo's builder in `Component` builder. See the [component builder page](/apollo/developers/utilities/components) for more.
+
+```java
+.lines(List.of(
+    Component.builder()
+    .content("Welcome to my server!")
+    .color(Color.RED)
+    .decorators(List.of(Component.TextDecorators.BOLD))
+    .build(),
+    Component.builder()
+    .content("Type /help to get started!")
+    .build()
+    ))
 ```
 
 
