@@ -77,8 +77,19 @@ public abstract class ApolloModule implements Listener {
      */
     public String getId() {
         if(this.id != null) return this.id;
-        final ModuleDefinition definition = this.getClass().getAnnotation(ModuleDefinition.class);
-        if(definition == null) throw new RuntimeException("Apollo module class must be decorated with a ModuleDefinition annotation");
+
+        Class<?> moduleClass = this.getClass();
+        ModuleDefinition definition = moduleClass.getAnnotation(ModuleDefinition.class);
+
+        if(definition == null) {
+            moduleClass = moduleClass.getSuperclass();
+            definition = moduleClass.getAnnotation(ModuleDefinition.class);
+        }
+
+        if(definition == null) {
+            throw new RuntimeException("Apollo module class " + moduleClass.getSimpleName() + " must be decorated with a ModuleDefinition annotation");
+        }
+
         return this.id = definition.id();
     }
 
