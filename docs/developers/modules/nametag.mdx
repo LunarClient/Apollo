@@ -4,7 +4,7 @@
 
 The nametag module enhances the vanilla minecraft nametag.
 
-- Adds improvements to vanilla minecrafts nametag system.
+- Adds improvements to vanilla Minecraft nametag system.
   - Allows you to have unlimited multi-line nametags for players, instead of a singular line.
 
 {/* learn callouts */}
@@ -20,7 +20,7 @@ public void overrideNametagExample(Player target) {
     this.nametagModule.overrideNametag(viewers, target.getUniqueId(), Nametag.builder()
             .lines(List.of(
                 Component.builder()
-                    .content("[StaffMod]")
+                    .content("[StaffMode]")
                     .color(Color.GRAY)
                     .build(),
                 Component.builder()
@@ -40,7 +40,7 @@ public void overrideNametagExample(Player target) {
     - A list of all the player(s) you want to be able to see the updated nametag.
 2. `UUID Target`
     - The players UUID you want to override the nametag of.
-3. Nametag
+3. `Nametag`
    - The nametag you want to display for the `target` player. It's recommended to use Apollos [component builder](/apollo/developers/utilities/components).
 
 

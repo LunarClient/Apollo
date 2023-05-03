@@ -1,1 +1,73 @@
 # Notification Module
+
+## Overview
+
+The notification module allows you to send Lunar Client notifications to players actively on your server.
+
+* Send custom notifications to Lunar Client players.
+  * Custom notification color can be provided.
+  * Custom icons can be provided.
+
+## Integration
+
+### `Notification` Builder
+
+#### Sample Code
+
+```java
+private final Notification notification = Notification.builder()
+    .title("UHC Announcement")
+    .description("UHC starts in 5 minutes...")
+    .resourceLocation("icons/golden_apple.png") // This field is optional
+    .build();
+```
+
+#### `Notifcation` Options
+
+
+`.title(String)` is the title of the notification box. Char limit: `15`
+
+{/* Find out char limit & add screenshot of notification w/ title highlighted */}
+
+```java
+.title("UHC Announcement")
+```
+
+`.description(String)` is the description displayed inside the notification box. Char limit: `15`
+
+{/* Find out char limit & add screenshot of notification w/ desc highlighted */}
+
+```java
+.description("UHC starts in 5 minutes...")
+```
+
+`.icon(SimpleResourceLocationIcon)` is how you set an icon on the notification, this field is **optional**. See the [icons utilities page](/apollo/developers/utilities/icons) to learn more about icons.
+
+```java
+
+```
+
+If this field is left empty (null) it'll display a generic info icon, as displayed here.
+
+{/* insert screenshot of generic info icon */}
+
+### Displaying a Notification for a specific player
+
+#### Sample Code
+
+```java
+public void displayNotificationExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    
+    // Sending the notifcation built by the notifcation builder example above, "uhcAnnouncement", to the player.
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.notificationModule.displayNotification(apolloPlayer, this.uhcAnnouncement));
+}
+```
+
+### Broadcasting a notification for an entire server
+
+#### Sample Code
+
+```java
+
+```

@@ -22,7 +22,7 @@ public class NametagExample {
         this.nametagModule.overrideNametag(viewers, target.getUniqueId(), Nametag.builder()
                 .lines(List.of(
                     Component.builder()
-                        .content("[StaffMod]")
+                        .content("[StaffMode]")
                         .color(Color.GRAY)
                         .build(),
                     Component.builder()
