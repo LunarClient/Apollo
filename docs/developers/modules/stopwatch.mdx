@@ -2,9 +2,12 @@
 
 ## Overview
 
-Words
+The stopwatch module allows you to control the stopwatch mod inside Lunar Client.
 
-- words
+- Ability to fully control a players stopwatch mod.
+  - Start a players stopwatch
+  - Stop a players stopwatch
+  - Reset a players stopwatch
 
 ## Integration
 
@@ -13,7 +16,10 @@ Words
 #### Sample Code
 
 ```java
-
+public void startStopwatchExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.stopwatchModule::startStopwatch);
+}
 ```
 
 ### How to stop a players stopwatch
@@ -21,7 +27,10 @@ Words
 #### Sample Code
 
 ```java
-
+public void stopStopwatchExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.stopwatchModule::stopStopwatch);
+}
 ```
 
 ### How to reset a players stopwatch
@@ -29,5 +38,8 @@ Words
 #### Sample Code
 
 ```java
-
+public void resetStopwatchExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.stopwatchModule::resetStopwatch);
+}
 ```

@@ -41,6 +41,8 @@ private final Notification notification = Notification.builder()
 .description("UHC starts in 5 minutes...")
 ```
 
+{/* convert this to an icon instead of resourceLocation? */}
+
 `.icon(SimpleResourceLocationIcon)` is how you set an icon on the notification, this field is **optional**. See the [icons utilities page](/apollo/developers/utilities/icons) to learn more about icons.
 
 ```java
@@ -69,5 +71,7 @@ public void displayNotificationExample(Player viewer) {
 #### Sample Code
 
 ```java
-
+public void broadcastNotificationExample() {
+    this.notificationModule.broadcastNotification(this.uhcAnnouncement);
+    }
 ```
