@@ -23,12 +23,12 @@ public class NametagExample {
                 .lines(List.of(
                     Component.builder()
                         .content("[StaffMode]")
+                        .decorators(List.of(Component.TextDecorators.ITALIC))
                         .color(Color.GRAY)
                         .build(),
                     Component.builder()
-                        .content("Vanished")
-                        .decorators(List.of(Component.TextDecorators.ITALIC))
-                        .color(Color.GREEN)
+                        .content(target.getName())
+                        .color(Color.RED)
                         .build()
                 ))
                 .build()
