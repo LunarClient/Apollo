@@ -1,3 +1,5 @@
+import { Callout } from 'nextra-theme-docs'
+
 # Notification Module
 
 ## Overview
@@ -24,6 +26,9 @@ private final Notification notification = Notification.builder()
 
 #### `Notifcation` Options
 
+<Callout type="warning" emoji="⚠️">
+  There are character limits for the `title` and `description` options.
+</Callout>
 
 `.title(String)` is the title of the notification box. Char limit: `15`
 

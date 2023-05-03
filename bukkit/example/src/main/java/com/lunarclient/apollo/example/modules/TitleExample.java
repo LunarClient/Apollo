@@ -17,7 +17,7 @@ public class TitleExample {
 
     private final TitleModule titleModule = Apollo.getModuleManager().getModule(TitleModule.class);
 
-    private final Title title = Title.builder()
+    private final Title helloTitle = Title.builder()
         .type(TitleType.TITLE)
         .message(Component.builder()
             .content("Hello, player!")
@@ -32,11 +32,13 @@ public class TitleExample {
 
     public void displayTitleExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, this.title));
+
+        // Displaying the title built by the title builder above, "helloTitle", to the player.
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, this.helloTitle));
     }
 
     public void broadcastTitleExample() {
-        this.titleModule.broadcastTitle(this.title);
+        this.titleModule.broadcastTitle(this.helloTitle);
     }
 
     public void resetTitlesExample(Player viewer) {

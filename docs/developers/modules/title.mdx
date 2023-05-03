@@ -1,3 +1,117 @@
+import { Callout } from 'nextra-theme-docs'
+
 # Title Module
 
-{/* Reminder: Only backports titles & subtitles to 1.7 */}
+## Overview
+
+The title module backports all vanilla `title` & `subtitle` features found in 1.8+ to 1.7 Lunar Client players.
+
+- Ability to display title-screens for players on 1.7 Lunar Client.
+  - Display titles for 1.7 Lunar Client players.
+  - Display subtitles for 1.7 Lunar Client players.
+
+<Callout type="info" emoji="🛈">
+  This module is only useful for servers that support the 1.7 versions of Minecraft.
+</Callout>
+
+## Integration
+
+### `Title` Builder
+
+#### Sample Code
+
+```java
+private final Title title = Title.builder()
+    .type(TitleType.TITLE)
+    .message(Component.builder()
+        .content("Hello, player!")
+        .color(Color.GREEN)
+        .decorators(List.of(Component.TextDecorators.BOLD))
+        .build())
+    .scale(1.0f)
+    .displayTime(Duration.ofMillis(1500L))
+    .fadeInTime(Duration.ofMillis(250))
+    .fadeOutTime(Duration.ofMillis(300))
+    .build();
+```
+
+#### `Title` Options
+
+`.type(TitleType)` is the type of title you want to display. See the [TitleType](#titletype-types) types section for more.
+
+```java
+.type(TitleType.TITLE)
+```
+
+`.message(Componnent)` is the message you want to display. See the [component builder page](/apollo/developers/utilities/components) for more.
+
+```java
+.message(Component.builder()
+    .content("Hello, player!")
+    .color(Color.GREEN)
+    .decorators(List.of(Component.TextDecorators.BOLD))
+    .build())
+```
+
+`.scale(Float)` is scale of the `message` you're displaying.
+
+```java
+.scale(1.0f)
+```
+
+`.displayTime(java.time.Duration)` is the duration you want to keep the `message` on screen. See the [java.time.Duration Javadocs](https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html) for more.
+
+```java
+.displayTime(Duration.ofMillis(1500L))
+```
+
+`.fadeInTime(java.time.Duration)` is the length of time that the `message` takes to fade in. See the [java.time.Duration Javadocs](https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html) for more.
+
+```java
+.fadeInTime(Duration.ofMillis(250))
+```
+
+`.fadeOutTime(java.time.Duration)` is the length of time that the `message` takes to fade out. See the [java.time.Duration Javadocs](https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html) for more.
+
+```java
+.fadeOutTime(Duration.ofMillis(300))
+```
+
+### Displaying a title for a player
+
+#### Sample Code
+
+```java
+public void displayTitleExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    
+    // Displaying the title built by the title builder above, "helloTitle", to the player.
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, this.helloTitle));
+}
+```
+
+### Broadcasting a title to the entire server
+
+#### Sample Code
+
+```java
+public void broadcastTitleExample() {
+        this.titleModule.broadcastTitle(this.helloTitle);
+    }
+```
+
+### Resetting all titles for a player
+
+#### Sample Code
+
+```java
+public void resetTitlesExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.titleModule::resetTitles);
+}
+```
+
+## `TitleType` Types
+
+* `TITLE`
+* `SUBTITLE`

@@ -9,9 +9,9 @@ The nametag module enhances the vanilla minecraft nametag.
 - Adds improvements to the vanilla Minecraft nametag system.
   - Allows you to have unlimited multi-line nametags for players, instead of a singular line.
 
-<Callout type="info" emoji="ℹ️">
+<Callout type="info" emoji="🛈">
   While you can add unlimited lines, it's recommended to only use `3` lines.
-  We recommend doing a line above and a line below the nametag, for the best design.
+  We recommend doing a line above and a line below the nametag.
   After a certain point, adding extra lines can start to look ugly.
 </Callout>
 
@@ -54,8 +54,6 @@ public void overrideNametagExample(Player target) {
 ### `Nametag` Options
 
 `.lines(Component)` should be a string, or Apollo's `Component` builder. See the [component builder page](/apollo/developers/utilities/components) for more.
-
-{/* callout for char limits/recommendations per line char limit */}
 
 ```java
 .lines(List.of(
