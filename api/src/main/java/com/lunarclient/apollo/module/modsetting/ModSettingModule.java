@@ -2,6 +2,7 @@ package com.lunarclient.apollo.module.modsetting;
 
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.ListOption;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.configurable.Configurable;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "mod_setting", name = "Mod Setting")
 public abstract class ModSettingModule extends ApolloModule {
 
     private static final Configurable SKYBLOCK_ADDONS_SETTING = Configurable.builder()
@@ -42,7 +44,6 @@ public abstract class ModSettingModule extends ApolloModule {
         .build();
 
     ModSettingModule() {
-        super("Mod Setting");
         this.registerOptions(MOD_SETTINGS);
     }
 

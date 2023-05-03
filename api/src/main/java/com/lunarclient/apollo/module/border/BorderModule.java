@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.border;
 
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
 import java.util.EnumSet;
@@ -16,11 +17,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "border", name = "Border")
 public abstract class BorderModule extends ApolloModule {
-
-    BorderModule() {
-        super("Border");
-    }
 
     @Override
     public Set<ApolloPlayerVersion> getSupportedClientVersions() {

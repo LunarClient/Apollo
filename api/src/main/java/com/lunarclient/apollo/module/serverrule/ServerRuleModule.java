@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.serverrule;
 
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.SimpleOption;
@@ -11,6 +12,7 @@ import io.leangen.geantyref.TypeToken;
  *
  * @since 1.0.0
  */
+@ModuleDefinition(id = "server_rule", name = "Server Rule")
 public final class ServerRuleModule extends ApolloModule {
 
     /**
@@ -106,8 +108,6 @@ public final class ServerRuleModule extends ApolloModule {
         .defaultValue(256).min(1).max(256).build();
 
     ServerRuleModule() {
-        super("Server Rule");
-
         this.registerOptions(
             COMPETITIVE_GAME,
             DISABLE_SHADERS,

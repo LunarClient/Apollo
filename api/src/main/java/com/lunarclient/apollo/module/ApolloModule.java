@@ -20,14 +20,7 @@ import lombok.Setter;
  */
 public abstract class ApolloModule implements Listener {
 
-    /**
-     * Returns the module {@link String} name.
-     *
-     * @return the module name
-     * @since 1.0.0
-     */
-    @Getter
-    private final String name;
+    private String id;
 
     /**
      * Returns {@code true} if the module is enabled, otherwise returns
@@ -59,13 +52,11 @@ public abstract class ApolloModule implements Listener {
     private Option<?, ?, ?>[] optionKeys = {};
 
     /**
-     * Constructs a new {@link ApolloModule} with the given name.
+     * Constructs a new {@link ApolloModule}.
      *
-     * @param name the module name
      * @since 1.0.0
      */
-    public ApolloModule(@NonNull String name) {
-        this.name = name;
+    protected ApolloModule() {
     }
 
     /**
@@ -76,6 +67,19 @@ public abstract class ApolloModule implements Listener {
      */
     protected void registerOptions(Option<?, ?, ?>... options) {
         this.optionKeys = options;
+    }
+
+    /**
+     * Returns the module {@link String} name.
+     *
+     * @return the module name
+     * @since 1.0.0
+     */
+    public String getId() {
+        if(this.id != null) return this.id;
+        final ModuleDefinition definition = this.getClass().getAnnotation(ModuleDefinition.class);
+        if(definition == null) throw new RuntimeException("Apollo module class must be decorated with a ModuleDefinition annotation");
+        return this.id = definition.id();
     }
 
     /**

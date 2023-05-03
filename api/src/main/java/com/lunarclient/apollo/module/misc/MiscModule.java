@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.misc;
 
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.List;
 import java.util.UUID;
@@ -12,11 +13,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "misc", name = "Misc")
 public abstract class MiscModule extends ApolloModule {
-
-    MiscModule() {
-        super("Misc");
-    }
 
     /**
      * Displays the {@link Vignette} to the {@link ApolloPlayer}.

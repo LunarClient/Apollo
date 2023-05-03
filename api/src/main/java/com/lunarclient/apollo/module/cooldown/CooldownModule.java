@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.cooldown;
 
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -10,11 +11,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "cooldown", name = "Cooldown")
 public abstract class CooldownModule extends ApolloModule {
-
-    CooldownModule() {
-        super("Cooldown");
-    }
 
     /**
      * Displays the {@link Cooldown} to the {@link ApolloPlayer}.

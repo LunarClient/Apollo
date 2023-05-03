@@ -2,6 +2,7 @@ package com.lunarclient.apollo.module.stopwatch;
 
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,11 +14,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "stopwatch", name = "Stopwatch")
 public abstract class StopwatchModule extends ApolloModule {
-
-    StopwatchModule() {
-        super("Stopwatch");
-    }
 
     @Override
     public Collection<ApolloPlatform.Kind> getSupport() {

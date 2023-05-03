@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.title;
 
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
 import java.util.EnumSet;
@@ -16,11 +17,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "title", name = "Title")
 public abstract class TitleModule extends ApolloModule {
-
-    TitleModule() {
-        super("Title");
-    }
 
     @Override
     public Set<ApolloPlayerVersion> getSupportedClientVersions() {

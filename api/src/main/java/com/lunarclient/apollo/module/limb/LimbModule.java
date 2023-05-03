@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.limb;
 
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Collection;
 import java.util.UUID;
@@ -12,11 +13,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "limb", name = "Limb")
 public abstract class LimbModule extends ApolloModule {
-
-    LimbModule() {
-        super("Limb");
-    }
 
     /**
      * Hides the {@link ArmorPiece} for the {@link ApolloPlayer}.

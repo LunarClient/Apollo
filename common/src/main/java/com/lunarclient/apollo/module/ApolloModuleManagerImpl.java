@@ -106,7 +106,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      */
     public void loadConfiguration(CommentedConfigurationNode node) {
         for(ApolloModule module : this.modules.values()) {
-            CommentedConfigurationNode moduleNode = node.node(module.getName().toLowerCase(Locale.ENGLISH));
+            CommentedConfigurationNode moduleNode = node.node(module.getId().toLowerCase(Locale.ENGLISH));
             if(moduleNode.virtual()) continue;
 
             Options.Container optionsContainer = module.getOptions();
@@ -132,7 +132,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      */
     public void saveConfiguration(CommentedConfigurationNode node) {
         for(ApolloModule module : this.modules.values()) {
-            CommentedConfigurationNode moduleNode = node.node(module.getName().toLowerCase(Locale.ENGLISH));
+            CommentedConfigurationNode moduleNode = node.node(module.getId().toLowerCase(Locale.ENGLISH));
 
             Options.Container optionsContainer = module.getOptions();
             for(Option<?, ?, ?> option : optionsContainer) {

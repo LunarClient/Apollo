@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.coloredfire;
 
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.awt.Color;
 import java.util.Collection;
@@ -13,11 +14,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "colored_fire", name = "Colored Fire")
 public abstract class ColoredFireModule extends ApolloModule {
-
-    ColoredFireModule() {
-        super("Colored Fire");
-    }
 
     @Override
     public boolean isClientNotify() {

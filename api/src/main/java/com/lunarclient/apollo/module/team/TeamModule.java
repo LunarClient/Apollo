@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.team;
 
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
@@ -11,11 +12,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "team", name = "Team")
 public abstract class TeamModule extends ApolloModule {
-
-    TeamModule() {
-        super("Team");
-    }
 
     /**
      * Upserts all team members for the given {@link ApolloPlayer}.

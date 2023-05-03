@@ -2,6 +2,7 @@ package com.lunarclient.apollo.module.waypoint;
 
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.ListOption;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.SimpleOption;
@@ -19,6 +20,7 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "waypoint", name = "Waypoint")
 public abstract class WaypointModule extends ApolloModule {
 
     private static final Waypoint SPAWN_WAYPOINT = Waypoint.builder()
@@ -56,7 +58,6 @@ public abstract class WaypointModule extends ApolloModule {
         .defaultValue(false).notifyClient().build();
 
     WaypointModule() {
-        super("Waypoint");
         this.registerOptions(WaypointModule.SERVER_HANDLES_WAYPOINTS);
     }
 

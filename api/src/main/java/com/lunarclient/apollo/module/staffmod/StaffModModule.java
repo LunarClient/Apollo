@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.staffmod;
 
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
@@ -11,11 +12,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "staff_mod", name = "Staff Mod")
 public abstract class StaffModModule extends ApolloModule {
-
-    StaffModModule() {
-        super("Staff Mod");
-    }
 
     /**
      * Enables the {@link StaffMod}s for the {@link ApolloPlayer}.

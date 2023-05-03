@@ -2,6 +2,7 @@ package com.lunarclient.apollo.module.transfer;
 
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.roundtrip.async.Future;
 import java.util.Arrays;
@@ -15,11 +16,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "transfer", name = "Transfer")
 public abstract class TransferModule extends ApolloModule {
-
-    TransferModule() {
-        super("Transfer");
-    }
 
     @Override
     public Collection<ApolloPlatform.Kind> getSupport() {

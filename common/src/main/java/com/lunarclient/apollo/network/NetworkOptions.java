@@ -103,7 +103,7 @@ public final class NetworkOptions {
 
     private static ConfigurableSettings.Builder module(ApolloModule module) {
         return ConfigurableSettings.newBuilder()
-                .setApolloModule(module.getName())
+                .setApolloModule(module.getId())
                 .setEnable(module.isEnabled());
     }
 

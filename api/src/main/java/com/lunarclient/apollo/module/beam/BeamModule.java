@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.beam;
 
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -10,11 +11,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "beam", name = "Beam")
 public abstract class BeamModule extends ApolloModule {
-
-    BeamModule() {
-        super("Beam");
-    }
 
     /**
      * Displays the {@link Beam} to the {@link ApolloPlayer}.

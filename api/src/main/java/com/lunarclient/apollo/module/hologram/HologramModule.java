@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.hologram;
 
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Collection;
 import org.jetbrains.annotations.ApiStatus;
@@ -11,11 +12,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "hologram", name = "Hologram")
 public abstract class HologramModule extends ApolloModule {
-
-    HologramModule() {
-        super("Hologram");
-    }
 
     /**
      * Adds or updates the {@link Hologram} to the {@link ApolloPlayer}s.

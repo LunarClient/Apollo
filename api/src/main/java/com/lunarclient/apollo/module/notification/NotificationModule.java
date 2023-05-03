@@ -2,6 +2,7 @@ package com.lunarclient.apollo.module.notification;
 
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,11 +14,8 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "notification", name = "Notification")
 public abstract class NotificationModule extends ApolloModule {
-
-    NotificationModule() {
-        super("Notification");
-    }
 
     @Override
     public Collection<ApolloPlatform.Kind> getSupport() {

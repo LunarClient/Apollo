@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.tntcountdown;
 
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import io.leangen.geantyref.TypeToken;
@@ -13,6 +14,7 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
+@ModuleDefinition(id = "tnt_countdown", name = "TNT Countdown")
 public abstract class TntCountdownModule extends ApolloModule {
 
     /**
@@ -26,7 +28,6 @@ public abstract class TntCountdownModule extends ApolloModule {
             .defaultValue(80).min(1).max(Integer.MAX_VALUE).build();
 
     TntCountdownModule() {
-        super("TNT Countdown");
         this.registerOptions(
             TntCountdownModule.TNT_TICKS
         );
