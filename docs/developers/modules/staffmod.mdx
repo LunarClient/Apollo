@@ -1,1 +1,53 @@
 # Staff Mod Module
+
+## Overview
+
+The staff mod module allows you to interact with Lunar Client's built in staff mods.
+
+- Ability to allow players to enable/disable the xray mod.
+
+
+## Integration
+
+### How to enable staff mods for a player
+
+#### Sample Code
+
+```java 
+public void enableStaffModsExample(Player viewer) {
+    if (!viewer.hasPermission("apollo.staff")) return;
+
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer, List.of(StaffMod.XRAY)));
+}
+```
+
+#### `enableStaffMods` Parameters
+
+1. `ApolloPlayer`
+   - The player you want to enable the staff mod for.
+2. `StaffMod.TYPE`
+   - The type of staff mod you want to enable for the `ApolloPlayer` player. See the [staff mod types](#staffmod-types) section for more.
+
+### How to disable staff mods for a player
+
+### Sample Code
+
+```java
+public void disableStaffModsExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.disableStaffMods(apolloPlayer, List.of(StaffMod.XRAY)));
+}
+```
+
+#### `disableStaffMods` Parameters
+
+1. `ApolloPlayer`
+    - The player you want to disable the staff mod for.
+2. `StaffMod.TYPE`
+    - The type of staff mod you want to disable for the `ApolloPlayer` player. See the [staff mod types](#staffmod-types) section for more.
+
+## `StaffMod` Types
+
+* `XRAY`
+

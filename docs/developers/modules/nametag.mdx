@@ -4,10 +4,10 @@
 
 The nametag module enhances the vanilla minecraft nametag.
 
-- Adds improvements to vanilla Minecraft nametag system.
+- Adds improvements to the vanilla Minecraft nametag system.
   - Allows you to have unlimited multi-line nametags for players, instead of a singular line.
 
-{/* learn callouts */}
+{/* Add callout to recommend a certain amount of lines for a nametag. */}
 
 ## Integration
 
@@ -41,12 +41,14 @@ public void overrideNametagExample(Player target) {
 2. `UUID Target`
     - The players UUID you want to override the nametag of.
 3. `Nametag`
-   - The nametag you want to display for the `target` player. It's recommended to use Apollos [component builder](/apollo/developers/utilities/components).
+     - The nametag you want to display for the `target` player. It's recommended to use Apollos [component builder](/apollo/developers/utilities/components).
 
 
 ### `Nametag` Options
 
 `.lines(Component)` should be a string, or Apollo's `Component` builder. See the [component builder page](/apollo/developers/utilities/components) for more.
+
+{/* callout for limit limits/recommendations per line char limit */}
 
 ```java
 .lines(List.of(
