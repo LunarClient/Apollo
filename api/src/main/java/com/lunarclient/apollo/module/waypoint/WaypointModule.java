@@ -58,7 +58,10 @@ public abstract class WaypointModule extends ApolloModule {
         .defaultValue(false).notifyClient().build();
 
     WaypointModule() {
-        this.registerOptions(WaypointModule.SERVER_HANDLES_WAYPOINTS);
+        this.registerOptions(
+            //WaypointModule.DEFAULT_WAYPOINTS, // TODO
+            WaypointModule.SERVER_HANDLES_WAYPOINTS
+        );
     }
 
     @Override

@@ -44,7 +44,7 @@ public abstract class ModSettingModule extends ApolloModule {
         .build();
 
     ModSettingModule() {
-        this.registerOptions(MOD_SETTINGS);
+        //this.registerOptions(MOD_SETTINGS); // TODO
     }
 
     @Override
