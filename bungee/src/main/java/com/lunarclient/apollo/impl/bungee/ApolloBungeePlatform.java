@@ -47,8 +47,8 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
         try {
             if (this.configurationLoader == null) {
                 this.configurationLoader = HoconConfigurationLoader.builder()
-                        .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
                         .path(this.getDataFolder().toPath().resolve("settings.conf"))
+                        .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
                         .build();
             }
 

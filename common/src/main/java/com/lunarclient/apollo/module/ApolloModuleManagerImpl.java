@@ -4,6 +4,7 @@ import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsContainer;
+import io.leangen.geantyref.TypeToken;
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.Collection;
@@ -142,7 +143,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
                 try {
                     if(option.getComment() != null) optionNode.comment(option.getComment());
 
-                    optionNode.set(optionsContainer.get(option));
+                    optionNode.set((TypeToken<Object>) option.getTypeToken(), optionsContainer.get(option));
                 } catch(Throwable throwable) {
                     throwable.printStackTrace();
                 }

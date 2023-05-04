@@ -75,8 +75,8 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         try {
             if (this.configurationLoader == null) {
                 this.configurationLoader = HoconConfigurationLoader.builder()
-                        .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
                         .path(this.dataDirectory.resolve("settings.conf"))
+                        .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
                         .build();
             }
 
