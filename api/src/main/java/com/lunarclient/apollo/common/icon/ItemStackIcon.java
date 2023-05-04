@@ -13,6 +13,14 @@ import lombok.Getter;
 public final class ItemStackIcon extends Icon {
 
     /**
+     * Returns the icon {@link String} item name.
+     *
+     * @return the icon item name
+     * @since 1.0.0
+     */
+    String itemName;
+
+    /**
      * Returns the icon {@link Integer} item id.
      *
      * @return the icon item id

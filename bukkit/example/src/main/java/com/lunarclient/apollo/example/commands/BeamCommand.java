@@ -1,16 +1,16 @@
 package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.BorderExample;
+import com.lunarclient.apollo.example.modules.BeamExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class BorderCommands implements CommandExecutor {
+public class BeamCommand implements CommandExecutor {
 
-    private final BorderExample borderExample = ApolloExamplePlugin.getPlugin().getBorderExample();
+    private final BeamExample beamExample = ApolloExamplePlugin.getPlugin().getBeamExample();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -20,26 +20,26 @@ public class BorderCommands implements CommandExecutor {
         }
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /border <display|remove|reset>");
+            player.sendMessage("Usage: /beam <display|remove|reset>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
             case "display" -> {
-                this.borderExample.displayBorderExample(player);
-                player.sendMessage("Displaying border....");
+                this.beamExample.displayBeamExample(player);
+                player.sendMessage("Displaying beam....");
             }
 
             case "remove" -> {
-                this.borderExample.removeBorderExample(player);
-                player.sendMessage("Removing border....");
+                this.beamExample.removeBeamExample(player);
+                player.sendMessage("Removing beam....");
             }
             case "reset" -> {
-                this.borderExample.resetBordersExample(player);
-                player.sendMessage("Reseting borders...");
+                this.beamExample.resetBeamsExample(player);
+                player.sendMessage("Reseting beams...");
             }
 
-            default -> player.sendMessage("Usage: /border <display|remove|reset>");
+            default -> player.sendMessage("Usage: /beam <display|remove|reset>");
         }
 
         return true;

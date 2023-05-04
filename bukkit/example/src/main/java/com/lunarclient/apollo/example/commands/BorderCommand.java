@@ -1,16 +1,16 @@
 package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.BeamExample;
+import com.lunarclient.apollo.example.modules.BorderExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class BeamCommands implements CommandExecutor {
+public class BorderCommand implements CommandExecutor {
 
-    private final BeamExample beamExample = ApolloExamplePlugin.getPlugin().getBeamExample();
+    private final BorderExample borderExample = ApolloExamplePlugin.getPlugin().getBorderExample();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -20,26 +20,26 @@ public class BeamCommands implements CommandExecutor {
         }
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /beam <display|remove|reset>");
+            player.sendMessage("Usage: /border <display|remove|reset>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
             case "display" -> {
-                this.beamExample.displayBeamExample(player);
-                player.sendMessage("Displaying beam....");
+                this.borderExample.displayBorderExample(player);
+                player.sendMessage("Displaying border....");
             }
 
             case "remove" -> {
-                this.beamExample.removeBeamExample(player);
-                player.sendMessage("Removing beam....");
+                this.borderExample.removeBorderExample(player);
+                player.sendMessage("Removing border....");
             }
             case "reset" -> {
-                this.beamExample.resetBeamsExample(player);
-                player.sendMessage("Reseting beams...");
+                this.borderExample.resetBordersExample(player);
+                player.sendMessage("Reseting borders...");
             }
 
-            default -> player.sendMessage("Usage: /beam <display|remove|reset>");
+            default -> player.sendMessage("Usage: /border <display|remove|reset>");
         }
 
         return true;
