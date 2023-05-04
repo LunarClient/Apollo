@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @since 1.0.0
  */
-public class ApolloRoundtripManager {
+public final class ApolloRoundtripManager {
 
     /**
      * Represents a {@link Map} of {@link UUID} packet id as a key

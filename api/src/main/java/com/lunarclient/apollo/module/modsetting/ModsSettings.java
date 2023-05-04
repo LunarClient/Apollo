@@ -1,4 +1,4 @@
-package com.lunarclient.apollo.option.configurable;
+package com.lunarclient.apollo.module.modsetting;
 
 import java.util.Set;
 import lombok.Builder;
@@ -11,14 +11,14 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class ConfigurableSettings {
+public final class ModsSettings {
 
     /**
-     * Returns a {@link Set} of {@link Configurable}s.
+     * Returns a {@link Set} of {@link ModSettings}s.
      *
      * @return the configurable set
      * @since 1.0.0
      */
-    Set<Configurable> settings;
+    Set<ModSettings> settings;
 
 }

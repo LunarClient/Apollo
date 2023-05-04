@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class SimpleResourceLocationIcon extends Icon {
+public final class SimpleResourceLocationIcon extends Icon {
 
     /**
      * Returns the icon {@link String} resource location.

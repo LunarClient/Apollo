@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -99,7 +98,7 @@ public abstract class ApolloModule implements Listener {
      * @return a collection of supported kinds of platforms
      * @since 1.0.0
      */
-    public Collection<ApolloPlatform.Kind> getSupport() {
+    public Collection<ApolloPlatform.Kind> getSupportedPlatforms() {
         return Collections.singletonList(ApolloPlatform.Kind.SERVER);
     }
 
@@ -109,7 +108,7 @@ public abstract class ApolloModule implements Listener {
      * @return a collection of supported client versions
      * @since 1.0.0
      */
-    public Set<ApolloPlayerVersion> getSupportedClientVersions() {
+    public Set<ApolloPlayerVersion> getSupportedVersions() {
         return ApolloPlayerVersion.getVersions();
     }
 

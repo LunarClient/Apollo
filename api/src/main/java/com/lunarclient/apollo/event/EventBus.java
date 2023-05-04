@@ -26,6 +26,7 @@ public final class EventBus {
     /**
      * Returns the {@link EventBus}.
      *
+     * @return the event bus
      * @since 1.0.0
      */
     @Getter private static final EventBus bus = new EventBus();

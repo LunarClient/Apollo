@@ -1,17 +1,17 @@
-package com.lunarclient.apollo.option.configurable;
+package com.lunarclient.apollo.module.modsetting;
 
 import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
 
 /**
- * Represents an configurable.
+ * Represents a mods settings.
  *
  * @since 1.0.0
  */
 @Getter
 @Builder
-public class Configurable {
+public final class ModSettings {
 
     /**
      * Returns the configurable {@link String} target.

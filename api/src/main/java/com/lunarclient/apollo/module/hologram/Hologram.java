@@ -13,7 +13,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class Hologram {
+public final class Hologram {
 
     /**
      * Returns the hologram {@link String} id.

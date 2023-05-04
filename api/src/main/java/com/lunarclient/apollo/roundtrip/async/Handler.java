@@ -18,4 +18,5 @@ public interface Handler<E> {
      * @since 1.0.0
      */
     void handle(E response);
+
 }

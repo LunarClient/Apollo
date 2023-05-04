@@ -2,14 +2,12 @@ package com.lunarclient.apollo.player;
 
 import java.util.EnumSet;
 import java.util.Set;
-import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the minecraft version the player is using.
  *
  * @since 1.0.0
  */
-@ApiStatus.NonExtendable
 public enum ApolloPlayerVersion {
 
     v1_7,
@@ -24,7 +22,7 @@ public enum ApolloPlayerVersion {
     v1_19_3,
     v1_19_4;
 
-    private static final Set<ApolloPlayerVersion> VERSION_CACHE = EnumSet.allOf(ApolloPlayerVersion.class);
+    private static final Set<ApolloPlayerVersion> VERSIONS = EnumSet.allOf(ApolloPlayerVersion.class);
 
     /**
      * Returns a {@link Set} of {@link ApolloPlayerVersion}s.
@@ -33,7 +31,7 @@ public enum ApolloPlayerVersion {
      * @since 1.0.0
      */
     public static Set<ApolloPlayerVersion> getVersions() {
-        return ApolloPlayerVersion.VERSION_CACHE;
+        return ApolloPlayerVersion.VERSIONS;
     }
 
 }

@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class TransferResponse extends ApolloResponse {
+public final class TransferResponse extends ApolloResponse {
 
     /**
      * Returns the transfer {@link Status} status.

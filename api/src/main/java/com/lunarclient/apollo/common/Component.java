@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class Component {
+public final class Component {
 
     /**
      * Returns the renderable string {@link String} content.

@@ -7,6 +7,7 @@ import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.impl.velocity.wrapper.VelocityApolloPlayer;
+import com.lunarclient.apollo.option.config.Serializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
@@ -74,6 +75,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         try {
             if (this.configurationLoader == null) {
                 this.configurationLoader = HoconConfigurationLoader.builder()
+                        .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
                         .path(this.dataDirectory.resolve("settings.conf"))
                         .build();
             }

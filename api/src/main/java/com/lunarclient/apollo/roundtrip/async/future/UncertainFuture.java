@@ -5,8 +5,7 @@ import com.lunarclient.apollo.roundtrip.async.Future;
 import com.lunarclient.apollo.roundtrip.async.Handler;
 import java.util.HashSet;
 import java.util.Set;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * Represents a {@link Future} result of an asynchronous
@@ -15,8 +14,8 @@ import lombok.Setter;
  * @param <T> the type of the response object that will be returned
  * @since 1.0.0
  */
-@Getter @Setter
-public class UncertainFuture<T extends ApolloResponse> implements Future<T> {
+@Data
+public final class UncertainFuture<T extends ApolloResponse> implements Future<T> {
 
     /**
      * A {@link Set} of success handlers that will be

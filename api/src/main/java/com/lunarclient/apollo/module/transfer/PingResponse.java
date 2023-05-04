@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class PingResponse extends ApolloResponse {
+public final class PingResponse extends ApolloResponse {
 
     /**
      * Returns a {@link List} of {@link PingData}s.

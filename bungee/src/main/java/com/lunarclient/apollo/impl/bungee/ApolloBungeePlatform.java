@@ -6,6 +6,7 @@ import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.impl.bungee.wrapper.BungeeApolloPlayer;
+import com.lunarclient.apollo.option.config.Serializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import lombok.Getter;
 import net.md_5.bungee.api.ProxyServer;
@@ -46,6 +47,7 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
         try {
             if (this.configurationLoader == null) {
                 this.configurationLoader = HoconConfigurationLoader.builder()
+                        .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
                         .path(this.getDataFolder().toPath().resolve("settings.conf"))
                         .build();
             }

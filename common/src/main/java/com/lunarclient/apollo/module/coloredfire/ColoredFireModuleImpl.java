@@ -16,7 +16,7 @@ import lombok.NonNull;
  *
  * @since 1.0.0
  */
-public class ColoredFireModuleImpl extends ColoredFireModule {
+public final class ColoredFireModuleImpl extends ColoredFireModule {
 
     @Override
     public void overrideColoredFire(@NonNull Collection<ApolloPlayer> viewers, @NonNull UUID burningPlayer, @NonNull Color color) {

@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class PingRequest extends ApolloRequest<PingResponse> {
+public final class PingRequest extends ApolloRequest<PingResponse> {
 
     /**
      * Returns a {@link List} of {@link String} server IPs.

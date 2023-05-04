@@ -13,7 +13,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class TeamMember {
+public final class TeamMember {
 
     /**
      * The UUID of this team member.

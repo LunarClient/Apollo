@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class TransferRequest extends ApolloRequest<TransferResponse> {
+public final class TransferRequest extends ApolloRequest<TransferResponse> {
 
     /**
      * Returns the transfer request {@link String} server IP.

@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class ItemStackIcon extends Icon {
+public final class ItemStackIcon extends Icon {
 
     /**
      * Returns the icon {@link Integer} item id.

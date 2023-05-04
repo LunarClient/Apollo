@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class Nametag {
+public final class Nametag {
 
     /**
      * Returns a {@link List} of {@link Component} nametag.

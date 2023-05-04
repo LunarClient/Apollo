@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class ApolloBlockLocation {
+public final class ApolloBlockLocation {
 
     /**
      * Returns the world name for this location.

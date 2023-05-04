@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class Beam {
+public final class Beam {
 
     /**
      * Returns the beam {@link String} id.

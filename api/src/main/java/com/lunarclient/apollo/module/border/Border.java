@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class Border {
+public final class Border {
 
     /**
      * Returns the border {@link String} id.

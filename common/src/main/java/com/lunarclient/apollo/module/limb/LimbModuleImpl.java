@@ -18,7 +18,7 @@ import lombok.NonNull;
  *
  * @since 1.0.0
  */
-public class LimbModuleImpl extends LimbModule {
+public final class LimbModuleImpl extends LimbModule {
 
     @Override
     public void hideArmorPieces(@NonNull ApolloPlayer viewer, @NonNull UUID playerUuid, @NonNull Collection<ArmorPiece> armorPieces) {

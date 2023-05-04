@@ -2,8 +2,8 @@ package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
-import com.lunarclient.apollo.option.configurable.Configurable;
-import com.lunarclient.apollo.option.configurable.ConfigurableSettings;
+import com.lunarclient.apollo.module.modsetting.ModSettings;
+import com.lunarclient.apollo.module.modsetting.ModsSettings;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import org.bukkit.entity.Player;
 
@@ -14,10 +14,10 @@ public class ModSettingsExample {
 
     private final ModSettingModule modSettingModule = Apollo.getModuleManager().getModule(ModSettingModule.class);
 
-    private final ConfigurableSettings settings = ConfigurableSettings.builder()
+    private final ModsSettings settings = ModsSettings.builder()
         .settings(Set.of(
             // Disables the SkyBlock Addons mod
-            Configurable.builder()
+            ModSettings.builder()
                 .target("skyblockAddons") // Mod id's can be found at (@TRENTIN)
                 .enable(false)
                 .properties(null) // Properties can be found at (@TRENTIn)

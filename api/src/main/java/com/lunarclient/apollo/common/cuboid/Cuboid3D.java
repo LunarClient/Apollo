@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class Cuboid3D {
+public final class Cuboid3D {
 
     /**
      * Returns the cuboid {@link Double} start x.

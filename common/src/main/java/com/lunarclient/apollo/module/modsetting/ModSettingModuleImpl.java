@@ -4,22 +4,40 @@ import com.google.protobuf.Value;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage;
+import com.lunarclient.apollo.option.config.Serializer;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import java.lang.reflect.Type;
+import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
+import org.spongepowered.configurate.serialize.TypeSerializer;
 
 /**
  * Provides the mod settings module.
  *
  * @since 1.0.0
  */
-public final class ModSettingModuleImpl extends ModSettingModule {
+public final class ModSettingModuleImpl extends ModSettingModule implements Serializer {
+
+    /**
+     * Creates a new instance of {@link ModSettingModuleImpl}.
+     *
+     * @since 1.0.0
+     */
+    public ModSettingModuleImpl() {
+        super();
+        this.serializer(ModSettings.class, new ModSettingSerializer());
+    }
 
     @Override
-    public void sendSettings(@NonNull ApolloPlayer viewer, com.lunarclient.apollo.option.configurable.@NonNull ConfigurableSettings settings) {
+    public void sendSettings(@NonNull ApolloPlayer viewer, @NonNull ModsSettings settings) {
         ((AbstractApolloPlayer) viewer).sendPacket(this.toProtobuf(settings));
     }
 
@@ -29,7 +47,7 @@ public final class ModSettingModuleImpl extends ModSettingModule {
     }
 
     @Override
-    public void broadcastSettings(com.lunarclient.apollo.option.configurable.@NonNull ConfigurableSettings settings) {
+    public void broadcastSettings(@NonNull ModsSettings settings) {
         OverrideConfigurableSettingsMessage message = this.toProtobuf(settings);
 
         for (ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
@@ -37,7 +55,7 @@ public final class ModSettingModuleImpl extends ModSettingModule {
         }
     }
 
-    private OverrideConfigurableSettingsMessage toProtobuf(com.lunarclient.apollo.option.configurable.ConfigurableSettings settings) {
+    private OverrideConfigurableSettingsMessage toProtobuf(ModsSettings settings) {
         Set<ConfigurableSettings> configurableSettings = settings.getSettings().stream()
             .map(configurable -> {
                 Map<String, Value> properties = configurable.getProperties().entrySet().stream()
@@ -57,6 +75,41 @@ public final class ModSettingModuleImpl extends ModSettingModule {
         return OverrideConfigurableSettingsMessage.newBuilder()
             .addAllConfigurableSettings(configurableSettings)
             .build();
+    }
+
+    private static final class ModSettingSerializer implements TypeSerializer<ModSettings> {
+        @Override
+        public ModSettings deserialize(Type type, ConfigurationNode node) throws SerializationException {
+            return ModSettings.builder()
+                .target(this.virtualNode(node, "target").getString())
+                .enable(this.virtualNode(node, "enable").getBoolean())
+                .properties(this.virtualNode(node, "properties").childrenMap().entrySet().stream()
+                    .filter(entry -> entry.getKey() instanceof String && !entry.getValue().virtual())
+                    .map(entry -> new AbstractMap.SimpleEntry<>((String) entry.getKey(), entry.getValue().raw()))
+                    .collect(Collectors.toMap(
+                        AbstractMap.SimpleEntry::getKey,
+                        AbstractMap.SimpleEntry::getValue
+                    )))
+                .build();
+        }
+
+        @Override
+        public void serialize(Type type, @Nullable ModSettings settings, ConfigurationNode node) throws SerializationException {
+            if(settings == null) {
+                node.raw(null);
+                return;
+            }
+
+            node.node("target").set(String.class, settings.getTarget());
+            node.node("enable").set(settings.isEnable());
+            node.node("properties").set(settings.getProperties());
+        }
+
+        private ConfigurationNode virtualNode(ConfigurationNode source, Object... path) throws SerializationException {
+            if(!source.hasChild(path)) throw new SerializationException("Required field " + Arrays.toString(path) + " not found!");
+            return source.node(path);
+        }
+
     }
 
 }

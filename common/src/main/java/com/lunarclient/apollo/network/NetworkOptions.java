@@ -11,7 +11,6 @@ import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
 import java.util.Set;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Utility class for sending options to the client.
@@ -78,14 +77,13 @@ public final class NetworkOptions {
     }
 
     private static boolean doesSupportPlayerVersion(ApolloModule module, ApolloPlayer player) {
-        Set<ApolloPlayerVersion> supportedVersions = module.getSupportedClientVersions();
+        Set<ApolloPlayerVersion> supportedVersions = module.getSupportedVersions();
         ApolloPlayerVersion playerVersion = player.getVersion();
 
         return supportedVersions.contains(playerVersion);
     }
 
-    private static ConfigurableSettings.Builder moduleWithOptions(ApolloModule module,
-                                                           @Nullable ApolloPlayer player) {
+    private static ConfigurableSettings.Builder moduleWithOptions(ApolloModule module, ApolloPlayer player) {
         ConfigurableSettings.Builder builder = NetworkOptions.module(module);
         Options options = player != null ? module.getOptions().get(player) : module.getOptions();
 

@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class Vignette {
+public final class Vignette {
 
     /**
      * Returns the vignette {@link String} resource location.

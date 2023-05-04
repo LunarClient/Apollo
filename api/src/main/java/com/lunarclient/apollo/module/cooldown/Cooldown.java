@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class Cooldown {
+public final class Cooldown {
 
     /**
      * Returns the cooldown {@link String} name.

@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class Title {
+public final class Title {
 
     /**
      * Returns the title {@link TitleType} type.

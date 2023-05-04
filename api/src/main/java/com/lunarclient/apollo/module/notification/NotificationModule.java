@@ -18,7 +18,7 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class NotificationModule extends ApolloModule {
 
     @Override
-    public Collection<ApolloPlatform.Kind> getSupport() {
+    public Collection<ApolloPlatform.Kind> getSupportedPlatforms() {
         return Arrays.asList(ApolloPlatform.Kind.SERVER, ApolloPlatform.Kind.PROXY);
     }
 

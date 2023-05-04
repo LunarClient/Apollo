@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class Notification {
+public final class Notification {
 
     /**
      * Returns the notification {@link String} title.

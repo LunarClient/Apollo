@@ -18,10 +18,6 @@ import java.util.stream.Collectors;
 
 public final class NetworkTypes {
 
-    private NetworkTypes() {
-
-    }
-
     public static Uuid toProtobuf(UUID object) {
         return Uuid.newBuilder()
             .setHigh64(object.getMostSignificantBits())
@@ -227,4 +223,8 @@ public final class NetworkTypes {
 
         return null;
     }
+
+    private NetworkTypes() {
+    }
+
 }

@@ -21,7 +21,7 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class TitleModule extends ApolloModule {
 
     @Override
-    public Set<ApolloPlayerVersion> getSupportedClientVersions() {
+    public Set<ApolloPlayerVersion> getSupportedVersions() {
         return EnumSet.of(ApolloPlayerVersion.v1_7);
     }
 

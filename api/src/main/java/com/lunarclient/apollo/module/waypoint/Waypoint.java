@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class Waypoint {
+public final class Waypoint {
 
     /**
      * Returns the waypoint {@link String} name.

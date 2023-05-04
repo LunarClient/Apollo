@@ -44,6 +44,7 @@ import com.lunarclient.apollo.module.transfer.TransferModule;
 import com.lunarclient.apollo.module.transfer.TransferModuleImpl;
 import com.lunarclient.apollo.module.waypoint.WaypointModule;
 import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
+import com.lunarclient.apollo.option.config.Serializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import lombok.Getter;
 import org.bukkit.entity.Player;
@@ -138,6 +139,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         try {
             if (this.configurationLoader == null) {
                 this.configurationLoader = HoconConfigurationLoader.builder()
+                        .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
                         .path(this.getDataFolder().toPath().resolve("settings.conf"))
                         .build();
             }
