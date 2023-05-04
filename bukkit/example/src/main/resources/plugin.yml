@@ -3,4 +3,10 @@ main: com.lunarclient.apollo.example.ApolloExamplePlugin
 version: 0.1.0-SNAPSHOT
 author: Moonsworth
 depend: [Apollo-Bukkit]
-api-version: 1.18
+api-version: 1.19
+
+commands:
+    beam:
+        description: "Beams!"
+    border:
+        description: "Borders!"

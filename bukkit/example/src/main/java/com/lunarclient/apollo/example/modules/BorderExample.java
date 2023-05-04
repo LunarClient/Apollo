@@ -32,7 +32,7 @@ public class BorderExample {
                     .maxZ(50)
                     .build()
                 )
-                .durationTicks(0)
+                .durationTicks(1000)
                 .build()
             );
         });
