@@ -1,1 +1,27 @@
 # TNT Countdown Module
+
+## Overview
+
+Words
+
+- bullet points words
+
+## Integration
+
+### Sample Code
+
+```java
+public void setTntCountdownExample(Player viewer, UUID tntUuid, int ticks) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.setTntCountdown(apolloPlayer, tntUuid, ticks));
+}
+```
+
+### `setTntCountdown` Parameters
+
+1. `ApolloPlayer`
+   - The player or viewer you want to display the countdown to.
+2. `tntUuid`
+   - The UUID of the tnt you want the custom countdown to be displayed above.
+3. `ticks`
+   - The amount of ticks before the tnt, `tntUuid`, has before exploding.
