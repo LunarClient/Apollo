@@ -90,10 +90,10 @@ public static Component componentExample() {
 .decorators(List.of(Component.TextDecorators.BOLD, Component.TextDecorators.UNDERLINED))
 ```
 
-`List<Component> children` needs to contain the string of text you want displayed.
+`List<Component> children` the list of extra json components to be displayed after the previous `content`. The style is inherited from the parameters above; `Color` & `TextDecorators`
 
 ```java
-.content("Hello world!")
+.children(Lists.newArrayList())
 ```
 
 
