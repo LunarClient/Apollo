@@ -6,7 +6,9 @@ plugins {
 }
 
 tasks {
-    val shadowJar = named<ShadowJar>("shadowJar")
+    val shadowJar = named<ShadowJar>("shadowJar") {
+        relocate("com.google.protobuf", "com.lunarclient.apollo.libs.protobuf")
+    }
 
     build { dependsOn(shadowJar) }
 }
