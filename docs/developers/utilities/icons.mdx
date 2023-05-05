@@ -1,13 +1,27 @@
+import { Callout } from 'nextra-theme-docs'
+
 # Icons
 
 Apollo adds three different icon builders, `ItemStackIcon`, `SimpleResourceLocation` and `AdvancedResourceLocationIcon` for creating various types of icon entries.
 
 ## `ItemStackIcon` Builder
 
-The `ItemStackIcon` builder is used to assign an icon using a specified ItemStack ID. This will utilize the texture present in the player's resource pack as the icon.
+The `ItemStackIcon` builder is used to assign an icon using a specified ItemStack name or ID. This will utilize the texture present in the player's resource pack as the icon.
+
+<Callout type="error">
+  If your server accepts players on minecraft versions higher than `1.8.8` then you need to use `itemName`.
+</Callout>
 
 ```java
-public class ItemStackIcon extends Icon {
+public final class ItemStackIcon extends Icon {
+
+    /**
+     * Returns the icon {@link String} item name.
+     *
+     * @return the icon item name
+     * @since 1.0.0
+     */
+    String itemName;
 
     /**
      * Returns the icon {@link Integer} item id.
