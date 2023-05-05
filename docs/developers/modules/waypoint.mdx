@@ -1,1 +1,94 @@
 # Waypoint Module
+
+## Overview
+
+Words
+
+- Bullet point words
+
+## Integration
+
+### Sample Code
+
+```java
+public void displayWaypointExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.waypointModule.displayWaypoint(apolloPlayer, Waypoint.builder()
+            .name("KoTH")
+            .location(ApolloBlockLocation.builder()
+                .world("world")
+                .x(500)
+                .y(100)
+                .z(500)
+                .build()
+            )
+            .color(Color.ORANGE)
+            .preventRemoval(false) // If the player can delete the waypoint
+            .visible(true)
+            .build()
+        );
+    });
+}
+```
+
+### `Waypoint` Options
+
+`.name(String)` is the name of the waypoint. Keep in mind this is displayed to players.
+
+```java
+.name("KoTH")
+```
+
+`.location(ApolloBlockLocation)` is the location of the block the waypoint should display on. See the [locations utilities page](/apollo/developers/utilities/locations) for more.
+
+```java
+.location(ApolloBlockLocation.builder()
+    .world("world") // The world the waypoint should display in
+    .x(500)
+    .y(100)
+    .z(500)
+    .build()
+)
+```
+
+`.color(java.awt.Color)` is how you dictate the color of the waypoint. See the [colors page](/apollo/developers/utilities/colors) for more.
+
+```java
+.color(Color.ORANGE)
+```
+
+`.preventRemoval(String)` sets if the player is able to delete the waypoint client-side.
+
+```java
+.preventRemoval(false) // If the player can delete the waypoint
+```
+
+`.visible(Boolean)` if the player is able to see the waypoint or not.
+
+```java
+.visible(true)
+```
+
+### Removing a specific waypoints for a player
+
+#### Sample Code
+
+```java
+public void removeWaypointExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.waypointModule.removeWaypoint(apolloPlayer, "KoTh"));
+}
+```
+
+### Resetting all waypoints for a player
+
+#### Sample Code
+
+```java
+public void resetWaypointsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.waypointModule::resetWaypoints);
+}
+```

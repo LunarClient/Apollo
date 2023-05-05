@@ -21,7 +21,7 @@ public class WaypointExample {
             this.waypointModule.displayWaypoint(apolloPlayer, Waypoint.builder()
                 .name("KoTH")
                 .location(ApolloBlockLocation.builder()
-                    .world("world")
+                    .world("world") // The world the waypoint should display in
                     .x(500)
                     .y(100)
                     .z(500)
