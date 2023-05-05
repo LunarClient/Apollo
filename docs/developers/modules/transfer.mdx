@@ -2,79 +2,9 @@
 
 ## Overview
 
-Our transfer module contains both a transfer packet and a ping packet.
-If used correctly, both these packets can be very powerful.
-The transfer packet will allow you to send Lunar Client players to different servers, using the IP address.
-The ping packet will allow you to ping different IP addresses to get the players current ping to that server.
-When you combine the two packets, you can do connection optimizing for your players, so they're always connected to the best server available.
-You can use these features to create multi-server networks, without the requirement of additional proxy setups.
-
-When you attempt to transfer a player, they're greeted with a pop-up notification warning them they're about to be transferred from one server to another.
-The player has the option to prevent the transfer by clicking "cancel" or if they wish to proceed they can click "accept" and be transferred.
-You cannot prevent this notification, however players can opt-in to "trust" your server, to prevent the pop-up from being displayed on future request.
+{/* needs to be done */}
 
 {/* insert screenshot of transfer-packet warning */}
 
 ## Integration
 
-We're going to give you a brief overview of both the ping packet and transfer packet, respectively.
-
-### Ping Packet
-
-{/* insert code example of ping packet */}
-
-```java
-public void pingExample(Player player) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
-
-    if (apolloPlayerOpt.isEmpty()) {
-        player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-        return;
-    }
-
-    transferModule.ping(apolloPlayerOpt.get(), List.of("mc.hypixel.net", "minehut.com"))
-        .onSuccess(response -> {
-            for (PingResponse.PingData pingData : response.getData()) {
-                String message = switch (pingData.getStatus()) {
-                    case SUCCESS -> String.format("Ping to %s is %d ms.", pingData.getServerIp(), pingData.getPingMillis());
-                    case TIMED_OUT -> String.format("Failed to ping %s", pingData.getServerIp());
-                };
-
-                player.sendMessage(Component.text(message, NamedTextColor.YELLOW));
-            }
-        })
-        .onFailure(exception -> {
-            player.sendMessage(Component.text("Internal error! Check console!"));
-            exception.printStackTrace();
-        });
-}
-```
-
-### Transfer Packet
-
-{/* insert code example of trasnfer packet */}
-
-```java
-public void transferExample(Player player) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
-
-    if (apolloPlayerOpt.isEmpty()) {
-        player.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-        return;
-    }
-
-    transferModule.transfer(apolloPlayerOpt.get(), "mc.hypixel.net")
-        .onSuccess(response -> {
-            String message = switch (response.getStatus()) {
-                case ACCEPTED -> "Transfer accepted! Goodbye!";
-                case REJECTED -> "Transfer rejected by client!";
-            };
-
-            player.sendMessage(Component.text(message, NamedTextColor.YELLOW));
-        })
-        .onFailure(exception -> {
-            player.sendMessage(Component.text("Internal error! Check console!"));
-            exception.printStackTrace();
-        });
-    }
-```
