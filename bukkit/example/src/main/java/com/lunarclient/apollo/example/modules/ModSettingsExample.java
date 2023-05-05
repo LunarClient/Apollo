@@ -19,7 +19,7 @@ public class ModSettingsExample {
             // Disables the SkyBlock Addons mod
             ModSettings.builder()
                 .target("skyblockAddons") // Mod id's can be found at (@TRENTIN)
-                .enable(false)
+                .enable(false) // If the mod can be enabled
                 .properties(null) // Properties can be found at (@TRENTIn)
                 .build()
         ))
@@ -27,6 +27,8 @@ public class ModSettingsExample {
 
     public void sendSettingsExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        // Sending the updated mod settings, "settings", built in the example above to the player.
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.sendSettings(apolloPlayer, this.settings));
     }
 

@@ -1,1 +1,62 @@
 # Mod Setting Module
+
+## Overview
+
+The mod setting module allows you to interact with Lunar Client players mods and settings of those mods.
+
+- Adds the ability to interact with Lunar Client mods.
+  - Ability to enable/disable mods.
+  - Ability to change, enable or disable mod settings within a mod.
+
+## Integration
+
+### `ModsSettings` Builder
+
+#### Sample Code
+
+```java
+private final ModsSettings settings = ModsSettings.builder()
+    .settings(Set.of(
+        // Disables the SkyBlock Addons mod
+        ModSettings.builder()
+            .target("SKYBLOCK_ADDONS") // The Mod ID you want to change
+            .enable(false) // If the mod can be enabled
+            .properties(null) // Properties can be found at (@TRENTIn)
+            .build()
+    ))
+    .build();
+```
+
+### Interacting with a specific players `ModSettings`
+
+#### Sample Code
+
+```java
+public void sendSettingsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    
+    // Sending the updated mod settings, "settings", built in the example above to the player.
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.sendSettings(apolloPlayer, this.settings));
+}
+```
+
+### Resetting a specific players `ModSettings`
+
+#### Sample Code
+
+```java
+public void resetSettingsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.modSettingModule::resetSettings);
+}
+```
+
+### Broadcasting a `ModSettings` change to an entire server.
+
+#### Sample Code
+
+```java
+public void broadcastSettingsExample() {
+    this.modSettingModule.broadcastSettings(this.settings);
+    }
+```
