@@ -165,10 +165,16 @@ public final class NetworkTypes {
 
         if(icon instanceof ItemStackIcon) {
             ItemStackIcon item = (ItemStackIcon) icon;
+            String itemName = item.getItemName();
 
-            builder.setItemStack(com.lunarclient.apollo.common.v1.ItemStackIcon.newBuilder()
-                .setItemId(item.getItemId())
-                .build());
+            com.lunarclient.apollo.common.v1.ItemStackIcon.Builder itemBuilder = com.lunarclient.apollo.common.v1.ItemStackIcon.newBuilder()
+                .setItemId(item.getItemId());
+
+            if(itemName != null) {
+                itemBuilder.setItemName(itemName);
+            }
+
+            builder.setItemStack(itemBuilder.build());
         } else if(icon instanceof SimpleResourceLocationIcon) {
             SimpleResourceLocationIcon simple = (SimpleResourceLocationIcon) icon;
 
@@ -198,6 +204,7 @@ public final class NetworkTypes {
             com.lunarclient.apollo.common.v1.ItemStackIcon item = icon.getItemStack();
 
             return ItemStackIcon.builder()
+                .itemName(item.getItemName())
                 .itemId(item.getItemId())
                 .build();
         } else if(icon.hasSimpleResourceLocation()) {
