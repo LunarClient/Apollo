@@ -27,8 +27,8 @@ public class TntCountdownExample implements Listener {
         if (!(event.getEntity() instanceof TNTPrimed tnt)) return;
 
         /*
-         * Checks if the tnt has the metadata "very-special-tnt" and,
-         * it was lit by a player, then to apply the custom tnt countdown timer.
+         * Checks if the TNT has the metadata "very-special-tnt" and,
+         * it was lit by a player, then to apply the custom TNT timer.
          */
 
         if (tnt.hasMetadata("very-special-tnt") && tnt.getSource() instanceof Player player) {

@@ -2,9 +2,9 @@
 
 ## Overview
 
-The TNT Countdown module allows you to interact with and set custom tnt countdown timers for the TNT Countdown mod on Lunar Client.
+The TNT Countdown module allows you to interact with and set custom TNT timers for the TNT Countdown mod on Lunar Client.
 
-- Adds the ability to set per tnt countdown timers to be displayed for players using the TNT Countdown mod.
+- Adds the ability to set per TNT timers to be displayed for players using the TNT Countdown mod.
 
 ## Integration
 
@@ -22,9 +22,9 @@ public void setTntCountdownExample(Player viewer, UUID tntUuid, int ticks) {
 1. `ApolloPlayer`
    - The player or viewer you want to display the countdown to.
 2. `tntUuid`
-   - The UUID of the tnt you want the custom countdown to be displayed above.
+   - The UUID of the TNT you want the custom countdown to be displayed above.
 3. `ticks`
-   - The amount of ticks before the tnt, `tntUuid`, has until exploding.
+   - The amount of ticks before the TNT, `tntUuid`, has until exploding.
 
 ### Applying your custom `setTntCountdown` to a TNT.
 
@@ -35,8 +35,8 @@ public void onTntSpawn(EntitySpawnEvent event) {
     if (!(event.getEntity() instanceof TNTPrimed tnt)) return;
 
     /*
-     * Checks if the tnt has the metadata "very-special-tnt" and,
-     * it was lit by a player, then to apply the custom tnt countdown timer.
+     * Checks if the TNT has the metadata "very-special-tnt" and,
+     * it was lit by a player, then to apply the custom TNT timer.
      */
     
     if (tnt.hasMetadata("very-special-tnt") && tnt.getSource() instanceof Player player) {
