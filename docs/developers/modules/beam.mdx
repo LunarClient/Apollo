@@ -47,12 +47,20 @@ public void displayBeamExample(Player viewer) {
 
 `.color(java.awt.Color)` is how you dictate the color of the beam. See the [colors page](/apollo/developers/utilities/colors) for more.
 
+<Tabs items={['java.awt.Color', 'ApolloColors', 'Custom Colors']}>
+<Tab>
+
+The `java.awt.Color` class statically exposes some colors, although they do not correspond to any existing colors used in Minecraft.
+
 ```java
-.color(ApolloColors.LIGHT_PURPLE)
+.color(Color.CYAN)
 ```
 
-<Tabs items={['ApolloColors', 'java.awt.Color', 'Custom Colors']}>
+</Tab>
+
 <Tab>
+
+The `ApolloColors` class statically exposes colors that correspond to Bukkit/Spigot's `ChatColor` enum.
 
 ```java
 .color(ApolloColors.LIGHT_PURPLE)
@@ -62,12 +70,7 @@ public void displayBeamExample(Player viewer) {
 
 <Tab>
 
-```java
-.color(Color.MAGENTA)
-```
-</Tab>
-
-<Tab>
+Custom colors can be created from any RGB values using `new Color(int red, int green, int blue)`, or from any hex color using `Color.decode(String hex)`.
 
 ```java
 .color(Color.decode("#FF00FF"))
