@@ -1,3 +1,5 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Beam Module
 
 ## Overview
@@ -48,6 +50,31 @@ public void displayBeamExample(Player viewer) {
 ```java
 .color(ApolloColors.LIGHT_PURPLE)
 ```
+
+<Tabs items={['ApolloColors', 'java.awt.Color', 'Custom Colors']}>
+<Tab>
+
+```java
+.color(ApolloColors.LIGHT_PURPLE)
+```
+
+</Tab>
+
+<Tab>
+
+```java
+.color(Color.MAGENTA)
+```
+</Tab>
+
+<Tab>
+
+```java
+.color(Color.decode("#FF00FF"))
+```
+
+</Tab>
+</Tabs>
 
 {/* insert screenshot of light purple beam */}
 
