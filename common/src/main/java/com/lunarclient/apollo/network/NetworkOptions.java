@@ -4,9 +4,9 @@ import com.google.protobuf.Value;
 import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage;
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.option.AbstractOptions;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
-import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
@@ -44,7 +44,7 @@ public final class NetworkOptions {
         modulesBuilder.addConfigurableSettings(moduleBuilder.build());
 
         for(ApolloPlayer player : players) {
-            if(!NetworkOptions.supportsVersion(module, player)) continue;
+            if(!doesSupportPlayerVersion(module, player)) continue;
 
             ((AbstractApolloPlayer) player).sendPacket(modulesBuilder.build());
         }
@@ -64,10 +64,11 @@ public final class NetworkOptions {
             OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
 
             for(ApolloModule module : modules) {
-                if(!NetworkOptions.supportsVersion(module, player)) continue;
+                if(!doesSupportPlayerVersion(module, player)) continue;
 
                 modulesBuilder.addConfigurableSettings(NetworkOptions.moduleWithOptions(
-                        module
+                        module,
+                        player
                 ).build());
             }
 
@@ -75,16 +76,23 @@ public final class NetworkOptions {
         }
     }
 
-    private static ConfigurableSettings.Builder moduleWithOptions(ApolloModule module) {
+    private static boolean doesSupportPlayerVersion(ApolloModule module, ApolloPlayer player) {
+        Set<ApolloPlayerVersion> supportedVersions = module.getSupportedVersions();
+        ApolloPlayerVersion playerVersion = player.getVersion();
+
+        return supportedVersions.contains(playerVersion);
+    }
+
+    private static ConfigurableSettings.Builder moduleWithOptions(ApolloModule module, ApolloPlayer player) {
         ConfigurableSettings.Builder builder = NetworkOptions.module(module);
-        Options options = module.getOptions();
+        Options options = player != null ? module.getOptions().get(player) : module.getOptions();
 
         for(Option<?, ?, ?> option : options) {
             if(!option.isNotify()) continue;
 
             Value.Builder valueBuilder = Value.newBuilder();
             Object value = options.get(option);
-            Value wrapper = ((OptionsImpl) options).wrapValue(valueBuilder, value);
+            Value wrapper = ((AbstractOptions) options).wrapValue(valueBuilder, value);
             builder.putProperties(option.getKey(), wrapper);
         }
 
@@ -95,13 +103,6 @@ public final class NetworkOptions {
         return ConfigurableSettings.newBuilder()
                 .setApolloModule(module.getId())
                 .setEnable(module.isEnabled());
-    }
-
-    private static boolean supportsVersion(ApolloModule module, ApolloPlayer player) {
-        Set<ApolloPlayerVersion> supportedVersions = module.getSupportedVersions();
-        ApolloPlayerVersion playerVersion = player.getVersion();
-
-        return supportedVersions.contains(playerVersion);
     }
 
 }

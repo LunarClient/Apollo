@@ -2,13 +2,9 @@ package com.lunarclient.apollo;
 
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.network.ApolloNetworkManager;
-import com.lunarclient.apollo.option.config.Serializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
-import java.nio.file.Path;
 import lombok.Getter;
-import org.spongepowered.configurate.CommentedConfigurationNode;
-import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
 /**
  * Provides the instances for {@link Apollo}.
@@ -23,9 +19,6 @@ public final class ApolloManager {
     public static final String PLUGIN_MESSAGE_CHANNEL = "lunarclient:apollo";
 
     @Getter private static ApolloNetworkManager networkManager;
-    @Getter private static CommentedConfigurationNode configurationNode;
-
-    private static HoconConfigurationLoader configurationLoader;
     private static boolean bootstrapped = false;
 
     /**
@@ -49,46 +42,6 @@ public final class ApolloManager {
             throw new RuntimeException("Unable to bootstrap Apollo!", throwable);
         }
         ApolloManager.bootstrapped = true;
-    }
-
-    /**
-     * Loads the configuration from the given {@link Path}.
-     *
-     * @param path the path
-     * @since 1.0.0
-     */
-    public static void loadConfiguration(Path path) {
-        try {
-            if(ApolloManager.configurationLoader == null) {
-                ApolloManager.configurationLoader = HoconConfigurationLoader.builder()
-                    .path(path.resolve("settings.conf"))
-                    .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
-                    .build();
-            }
-
-            ApolloManager.configurationNode = ApolloManager.configurationLoader.load();
-        } catch(Throwable throwable) {
-            throwable.printStackTrace();
-        }
-    }
-
-    /**
-     * Saves the configuration.
-     *
-     * @since 1.0.0
-     */
-    public static void saveConfiguration() {
-        try {
-            if(ApolloManager.configurationNode == null) return;
-
-            CommentedConfigurationNode modules = ApolloManager.configurationNode.node("modules");
-
-            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration(modules);
-
-            ApolloManager.configurationLoader.save(ApolloManager.configurationNode);
-        } catch(Throwable throwable) {
-            throwable.printStackTrace();
-        }
     }
 
     private ApolloManager() {

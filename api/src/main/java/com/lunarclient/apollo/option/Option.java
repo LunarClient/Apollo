@@ -55,12 +55,12 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
     }
 
     /**
-     * Returns the option path.
+     * Returns the option node.
      *
-     * @return the path string array
+     * @return the node string array
      * @since 1.0.0
      */
-    String[] path;
+    String[] node;
 
     /**
      * Returns the option {@link TypeToken} for {@code T}.
@@ -96,7 +96,7 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
     boolean notify;
 
     Option(M builder) {
-        this.path = requireNonNull(builder.node, "node");
+        this.node = requireNonNull(builder.node, "node");
         this.typeToken = requireNonNull(builder.typeToken, "typeToken");
 
         this.comment = builder.comment;
@@ -105,13 +105,13 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
     }
 
     /**
-     * Returns the key as a joined {@link String}.
+     * Returns the node as a joined {@link String}.
      *
-     * @return the key string
+     * @return a joined node string
      * @since 1.0.0
      */
     public String getKey() {
-        return String.join(".", this.getPath());
+        return String.join(".", this.getNode());
     }
 
 }

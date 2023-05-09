@@ -1,10 +1,10 @@
 package com.lunarclient.apollo.impl.bukkit.wrapper;
 
 import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.impl.bukkit.ApolloBukkitPlatform;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
+import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import lombok.AllArgsConstructor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
