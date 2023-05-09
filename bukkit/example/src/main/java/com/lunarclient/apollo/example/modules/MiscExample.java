@@ -83,4 +83,5 @@ public class MiscExample {
             this.miscModule.resetFlippedEntity(apolloPlayer, entityUuids);
         });
     }
+
 }

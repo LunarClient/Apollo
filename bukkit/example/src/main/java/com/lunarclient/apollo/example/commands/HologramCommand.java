@@ -1,17 +1,17 @@
 package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.BorderExample;
 import com.lunarclient.apollo.example.modules.CooldownExample;
+import com.lunarclient.apollo.example.modules.HologramExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class CooldownCommand implements CommandExecutor {
+public class HologramCommand implements CommandExecutor {
 
-    private final CooldownExample cooldownExample = ApolloExamplePlugin.getPlugin().getCooldownExample();
+    private final HologramExample hologramExample = ApolloExamplePlugin.getPlugin().getHologramExample();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -21,27 +21,26 @@ public class CooldownCommand implements CommandExecutor {
         }
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /cooldown <display|remove|reset>");
+            player.sendMessage("Usage: /hologram <display|remove|reset>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
             case "display" -> {
-                this.cooldownExample.displayCooldownExample(player);
+                this.hologramExample.displayHologramExample();
                 player.sendMessage("Displaying cooldown....");
             }
 
             case "remove" -> {
-                this.cooldownExample.removeCooldownExample(player);
+                this.hologramExample.removeHologramExample();
                 player.sendMessage("Removing cooldown....");
             }
-
             case "reset" -> {
-                this.cooldownExample.resetCooldownsExample(player);
+                this.hologramExample.resetHologramsExample(player);
                 player.sendMessage("Resetting cooldowns...");
             }
 
-            default -> player.sendMessage("Usage: /cooldown <display|remove|reset>");
+            default -> player.sendMessage("Usage: /hologram <display|remove|reset>");
         }
 
         return true;

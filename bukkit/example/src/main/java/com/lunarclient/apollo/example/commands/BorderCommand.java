@@ -34,9 +34,10 @@ public class BorderCommand implements CommandExecutor {
                 this.borderExample.removeBorderExample(player);
                 player.sendMessage("Removing border....");
             }
+
             case "reset" -> {
                 this.borderExample.resetBordersExample(player);
-                player.sendMessage("Reseting borders...");
+                player.sendMessage("Resetting borders...");
             }
 
             default -> player.sendMessage("Usage: /border <display|remove|reset>");

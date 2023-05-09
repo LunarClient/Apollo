@@ -4,10 +4,12 @@ import com.lunarclient.apollo.example.commands.BeamCommand;
 import com.lunarclient.apollo.example.commands.BorderCommand;
 import com.lunarclient.apollo.example.commands.ColoredFireCommand;
 import com.lunarclient.apollo.example.commands.CooldownCommand;
-import com.lunarclient.apollo.example.modules.BeamExample;
-import com.lunarclient.apollo.example.modules.BorderExample;
-import com.lunarclient.apollo.example.modules.ColoredFireExample;
-import com.lunarclient.apollo.example.modules.CooldownExample;
+import com.lunarclient.apollo.example.commands.HologramCommand;
+import com.lunarclient.apollo.example.commands.LimbCommand;
+import com.lunarclient.apollo.example.commands.MiscCommand;
+import com.lunarclient.apollo.example.commands.ModSettingsCommand;
+import com.lunarclient.apollo.example.commands.NametagCommand;
+import com.lunarclient.apollo.example.modules.*;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,6 +23,19 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private BorderExample borderExample;
     private ColoredFireExample coloredFireExample;
     private CooldownExample cooldownExample;
+    private HologramExample hologramExample;
+    private LimbExample limbExample;
+    private MiscExample miscExample;
+    private ModSettingsExample modSettingsExample;
+    private NametagExample nametagExample;
+    private NotificationExample notificationExample;
+    private StaffModExample staffModExample;
+    private StopwatchExample stopwatchExample;
+    private TeamExample teamExample;
+    private TitleExample titleExample;
+    private TntCountdownExample tntCountdownExample;
+    private TransferExample transferExample;
+    private WaypointExample waypointExample;
 
     @Override
     public void onEnable() {
@@ -40,6 +55,19 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.borderExample = new BorderExample();
         this.coloredFireExample = new ColoredFireExample();
         this.cooldownExample = new CooldownExample();
+        this.hologramExample = new HologramExample();
+        this.limbExample = new LimbExample();
+        this.miscExample = new MiscExample();
+        this.modSettingsExample = new ModSettingsExample();
+        this.nametagExample = new NametagExample();
+        this.notificationExample = new NotificationExample();
+        this.staffModExample = new StaffModExample();
+        this.stopwatchExample = new StopwatchExample();
+        this.teamExample = new TeamExample();
+        this.titleExample = new TitleExample();
+        this.tntCountdownExample = new TntCountdownExample();
+        this.transferExample = new TransferExample();
+        this.waypointExample = new WaypointExample();
     }
 
     private void registerCommands() {
@@ -47,5 +75,10 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("border").setExecutor(new BorderCommand());
         this.getCommand("coloredfire").setExecutor(new ColoredFireCommand());
         this.getCommand("cooldown").setExecutor(new CooldownCommand());
+        this.getCommand("hologram").setExecutor(new HologramCommand());
+        this.getCommand("limb").setExecutor(new LimbCommand());
+        this.getCommand("misc").setExecutor(new MiscCommand());
+        this.getCommand("modsettings").setExecutor(new ModSettingsCommand());
+        this.getCommand("nametag").setExecutor(new NametagCommand());
     }
 }

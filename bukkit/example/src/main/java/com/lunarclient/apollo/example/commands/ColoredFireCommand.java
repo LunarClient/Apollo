@@ -24,7 +24,7 @@ public class ColoredFireCommand implements CommandExecutor {
 
         if(args.length == 1 && action.equals("clear")) {
             this.coloredFireExample.resetColoredFiresExample(player);
-            player.sendMessage("Reseting colored fires...");
+            player.sendMessage("Resetting colored fires...");
             return true;
         }
 
@@ -48,7 +48,7 @@ public class ColoredFireCommand implements CommandExecutor {
 
             case "reset" -> {
                 this.coloredFireExample.resetColoredFireExample(target.getUniqueId());
-                player.sendMessage("Reseting colored fire....");
+                player.sendMessage("Resetting colored fire....");
             }
 
             default -> player.sendMessage("Usage: /coloredfire <override|reset|clear> <player>");

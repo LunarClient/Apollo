@@ -14,3 +14,13 @@ commands:
         description: "Colored Fires!"
     cooldown:
         description: "Cooldowns!"
+    hologram:
+        description: "Holograms!"
+    limb:
+        description: "Limb!"
+    misc:
+        description: "Misc!"
+    modsettings:
+        description: "ModSettings!"
+    nametag:
+        description: "Nametags!"

@@ -44,4 +44,5 @@ public class NametagExample {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(this.nametagModule::resetNametags);
     }
+
 }

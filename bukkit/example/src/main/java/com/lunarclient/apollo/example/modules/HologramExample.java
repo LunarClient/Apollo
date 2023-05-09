@@ -25,7 +25,7 @@ public class HologramExample {
             .location(ApolloLocation.builder()
                 .world("world")
                 .z(5)
-                .y(100)
+                .y(105)
                 .z(0)
                 .build())
             .lines(List.of(

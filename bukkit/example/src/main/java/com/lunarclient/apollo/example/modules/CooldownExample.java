@@ -5,7 +5,6 @@ import com.lunarclient.apollo.common.icon.ItemStackIcon;
 import com.lunarclient.apollo.module.cooldown.Cooldown;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -23,7 +22,7 @@ public class CooldownExample {
                 .name("enderpearl-cooldown")
                 .duration(Duration.ofSeconds(15))
                 .icon(ItemStackIcon.builder()
-                    .itemId(Material.ENDER_PEARL.getId())
+                    .itemName("ENDER_PEARL")
                     .build()
                 )
                 .build()

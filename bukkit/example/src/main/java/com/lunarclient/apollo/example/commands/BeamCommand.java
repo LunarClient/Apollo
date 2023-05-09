@@ -36,7 +36,7 @@ public class BeamCommand implements CommandExecutor {
             }
             case "reset" -> {
                 this.beamExample.resetBeamsExample(player);
-                player.sendMessage("Reseting beams...");
+                player.sendMessage("Resetting beams...");
             }
 
             default -> player.sendMessage("Usage: /beam <display|remove|reset>");
