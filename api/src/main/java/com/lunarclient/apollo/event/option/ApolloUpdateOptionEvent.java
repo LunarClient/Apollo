@@ -3,11 +3,13 @@ package com.lunarclient.apollo.event.option;
 import com.lunarclient.apollo.event.EventCancellable;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents an event that is fired when an option is updated.
@@ -26,6 +28,15 @@ public final class ApolloUpdateOptionEvent implements EventCancellable {
      * @since 1.0.0
      */
     private final Options container;
+
+    /**
+     * The {@link ApolloPlayer} that the option was updated for, or
+     * {@code null} if it was a global option.
+     *
+     * @return the player
+     * @since 1.0.0
+     */
+    private final @Nullable ApolloPlayer player;
 
     /**
      * The {@link Option} that was updated.

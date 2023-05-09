@@ -44,7 +44,6 @@ import com.lunarclient.apollo.module.transfer.TransferModule;
 import com.lunarclient.apollo.module.transfer.TransferModuleImpl;
 import com.lunarclient.apollo.module.waypoint.WaypointModule;
 import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
-import com.lunarclient.apollo.option.config.Serializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import lombok.Getter;
 import org.bukkit.entity.Player;
@@ -56,8 +55,6 @@ import org.bukkit.event.player.PlayerUnregisterChannelEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
-import org.spongepowered.configurate.CommentedConfigurationNode;
-import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
 /**
  * Implementation of ApolloPlatform for Bukkit-based servers.
@@ -65,8 +62,6 @@ import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, Listener {
 
     @Getter private static ApolloBukkitPlatform instance;
-
-    private HoconConfigurationLoader configurationLoader;
 
     @Override
     public void onEnable() {
@@ -94,7 +89,9 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
                 .addModule(TransferModule.class, new TransferModuleImpl())
                 .addModule(WaypointModule.class, new WaypointModuleImpl());
 
-        this.loadConfiguration();
+        ApolloManager.loadConfiguration(this.getDataFolder().toPath());
+
+        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
 
         Messenger messenger = this.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
@@ -108,6 +105,15 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
             Apollo.getModuleManager().getModule(TntCountdownModule.class),
             Apollo.getPlayerManager()
         ), this);
+
+        ApolloManager.saveConfiguration();
+    }
+
+    @Override
+    public void onDisable() {
+        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
+
+        ApolloManager.saveConfiguration();
     }
 
     @Override
@@ -133,29 +139,6 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
-    }
-
-    private void loadConfiguration() {
-        try {
-            if (this.configurationLoader == null) {
-                this.configurationLoader = HoconConfigurationLoader.builder()
-                        .path(this.getDataFolder().toPath().resolve("settings.conf"))
-                        .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
-                        .build();
-            }
-
-            this.configurationLoader.load();
-
-            CommentedConfigurationNode root = this.configurationLoader.load();
-            CommentedConfigurationNode modules = root.node("modules");
-
-            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).loadConfiguration(modules);
-            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration(modules);
-
-            this.configurationLoader.save(root);
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
     }
 
     private void handlePacket(Player player, byte[] bytes) {

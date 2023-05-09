@@ -4,9 +4,8 @@ import com.google.common.base.Charsets;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.impl.bungee.wrapper.BungeeApolloPlayer;
-import com.lunarclient.apollo.option.config.Serializers;
+import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import lombok.Getter;
 import net.md_5.bungee.api.ProxyServer;
@@ -16,7 +15,6 @@ import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
-import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
 public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform, Listener {
@@ -33,37 +31,25 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
 
         ApolloManager.bootstrap(this);
 
-        this.loadConfiguration();
+        ApolloManager.loadConfiguration(this.getDataFolder().toPath());
+
+        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
 
         this.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
+
+        ApolloManager.saveConfiguration();
+    }
+
+    @Override
+    public void onDisable() {
+        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
+
+        ApolloManager.saveConfiguration();
     }
 
     @Override
     public Kind getKind() {
         return Kind.PROXY;
-    }
-
-    private void loadConfiguration() {
-        try {
-            if (this.configurationLoader == null) {
-                this.configurationLoader = HoconConfigurationLoader.builder()
-                        .path(this.getDataFolder().toPath().resolve("settings.conf"))
-                        .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
-                        .build();
-            }
-
-            this.configurationLoader.load();
-
-            CommentedConfigurationNode root = this.configurationLoader.load();
-            CommentedConfigurationNode modules = root.node("modules");
-
-            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).loadConfiguration(modules);
-            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration(modules);
-
-            this.configurationLoader.save(root);
-        } catch(Throwable throwable) {
-            throwable.printStackTrace();
-        }
     }
 
     @EventHandler
