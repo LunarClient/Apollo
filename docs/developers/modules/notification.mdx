@@ -14,8 +14,6 @@ The notification module allows you to send Lunar Client notifications to players
 
 ### `Notification` Builder
 
-#### Sample Code
-
 ```java
 private final Notification notification = Notification.builder()
     .title("UHC Announcement")
@@ -24,7 +22,7 @@ private final Notification notification = Notification.builder()
     .build();
 ```
 
-#### `Notifcation` Options
+#### `Notification` Options
 
 <Callout type="warning" emoji="⚠️">
   There are character limits for the `title` and `description` options.
@@ -60,8 +58,6 @@ If this field is left empty (null) it'll display a generic info icon, as display
 
 ### Displaying a Notification for a specific player
 
-#### Sample Code
-
 ```java
 public void displayNotificationExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
@@ -72,8 +68,6 @@ public void displayNotificationExample(Player viewer) {
 ```
 
 ### Broadcasting a notification for an entire server
-
-#### Sample Code
 
 ```java
 public void broadcastNotificationExample() {

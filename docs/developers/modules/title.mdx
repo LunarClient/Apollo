@@ -18,8 +18,6 @@ The title module backports all vanilla `title` & `subtitle` features found in 1.
 
 ### `Title` Builder
 
-#### Sample Code
-
 ```java
 private final Title title = Title.builder()
     .type(TitleType.TITLE)
@@ -79,8 +77,6 @@ private final Title title = Title.builder()
 
 ### Displaying a title for a player
 
-#### Sample Code
-
 ```java
 public void displayTitleExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
@@ -92,8 +88,6 @@ public void displayTitleExample(Player viewer) {
 
 ### Broadcasting a title to the entire server
 
-#### Sample Code
-
 ```java
 public void broadcastTitleExample() {
         this.titleModule.broadcastTitle(this.helloTitle);
@@ -101,8 +95,6 @@ public void broadcastTitleExample() {
 ```
 
 ### Resetting all titles for a player
-
-#### Sample Code
 
 ```java
 public void resetTitlesExample(Player viewer) {

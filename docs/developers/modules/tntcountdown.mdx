@@ -8,8 +8,6 @@ The TNT Countdown module allows you to interact with and set custom TNT timers f
 
 ## Integration
 
-### Sample Code
-
 ```java
 public void setTntCountdownExample(Player viewer, UUID tntUuid, int ticks) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
@@ -28,7 +26,6 @@ public void setTntCountdownExample(Player viewer, UUID tntUuid, int ticks) {
 
 ### Applying your custom `setTntCountdown` to a TNT.
 
-### Sample Code
 ```java
 @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 public void onTntSpawn(EntitySpawnEvent event) {

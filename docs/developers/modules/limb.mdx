@@ -11,8 +11,6 @@ The limb module allows you to hide the `ArmorPiece` and `BodyPart` limbs of a pl
 
 ### Hiding an armor piece of a player
 
-#### Sample Code
-
 ```java
 public void hideArmorExample(Player viewer, Player target) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
@@ -36,8 +34,6 @@ public void hideArmorExample(Player viewer, Player target) {
    - The armor piece types you wish to hide on the `target` player. See the [armor pieces](#armorpiece-types) section for more.
 
 ### Resetting an armor piece of a player
-
-#### Sample Code
 
 ```java
 public void resetArmorExample(Player viewer, Player target) {
@@ -63,8 +59,6 @@ public void resetArmorExample(Player viewer, Player target) {
 
 ### Hiding a body part of a player
 
-#### Sample Code
-
 ```java
 public void hideBodyExample(Player viewer, Player target) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
@@ -88,8 +82,6 @@ public void hideBodyExample(Player viewer, Player target) {
    - The type of body part(s) you want to hide on the `target` player. See the [body parts](#bodyparts-types) section for more.
 
 ### Resetting a body part of a player
-
-#### Sample Code
 
 ```java 
 public void resetBodyExample(Player viewer, Player target) {

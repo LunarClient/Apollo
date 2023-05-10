@@ -12,8 +12,6 @@ The mod setting module allows you to interact with Lunar Client players mods and
 
 ### `ModsSettings` Builder
 
-#### Sample Code
-
 ```java
 private final ModsSettings settings = ModsSettings.builder()
     .settings(Set.of(
@@ -29,8 +27,6 @@ private final ModsSettings settings = ModsSettings.builder()
 
 ### Interacting with a specific players `ModSettings`
 
-#### Sample Code
-
 ```java
 public void sendSettingsExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
@@ -42,8 +38,6 @@ public void sendSettingsExample(Player viewer) {
 
 ### Resetting a specific players `ModSettings`
 
-#### Sample Code
-
 ```java
 public void resetSettingsExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
@@ -52,8 +46,6 @@ public void resetSettingsExample(Player viewer) {
 ```
 
 ### Broadcasting a `ModSettings` change to an entire server.
-
-#### Sample Code
 
 ```java
 public void broadcastSettingsExample() {
