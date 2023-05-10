@@ -5,14 +5,14 @@ import com.google.inject.Inject;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.impl.velocity.wrapper.VelocityApolloPlayer;
-import com.lunarclient.apollo.option.config.Serializers;
+import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
+import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
@@ -20,7 +20,6 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import lombok.Getter;
 import org.slf4j.Logger;
-import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
 import java.nio.file.Path;
@@ -61,37 +60,25 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
         ApolloManager.bootstrap(this);
 
-        this.loadConfiguration();
+        ApolloManager.loadConfiguration(this.dataDirectory);
+
+        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
 
         server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
+
+        ApolloManager.saveConfiguration();
+    }
+
+    @Subscribe
+    public void onProxyShutdown(ProxyShutdownEvent event) {
+        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
+
+        ApolloManager.saveConfiguration();
     }
 
     @Override
     public Kind getKind() {
         return Kind.PROXY;
-    }
-
-    private void loadConfiguration() {
-        try {
-            if (this.configurationLoader == null) {
-                this.configurationLoader = HoconConfigurationLoader.builder()
-                        .path(this.dataDirectory.resolve("settings.conf"))
-                        .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
-                        .build();
-            }
-
-            this.configurationLoader.load();
-
-            CommentedConfigurationNode root = this.configurationLoader.load();
-            CommentedConfigurationNode modules = root.node("modules");
-
-            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).loadConfiguration(modules);
-            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration(modules);
-
-            this.configurationLoader.save(root);
-        } catch(Throwable throwable) {
-            throwable.printStackTrace();
-        }
     }
 
     @Subscribe

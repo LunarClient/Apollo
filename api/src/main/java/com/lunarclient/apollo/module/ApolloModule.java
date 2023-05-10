@@ -4,22 +4,37 @@ import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.event.Listener;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.SimpleOption;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
+import io.leangen.geantyref.TypeToken;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents a module for Apollo.
  *
  * @since 1.0.0
  */
+@ApiStatus.NonExtendable
 public abstract class ApolloModule implements Listener {
 
-    private String id;
+    /**
+     * Whether to enable this module.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> ENABLE = Option.<Boolean>builder()
+        .comment("Set to 'true' to enable this module, otherwise set 'false'.")
+        .node("enable").type(TypeToken.get(Boolean.class))
+        .defaultValue(true).build();
 
     /**
      * Returns {@code true} if the module is enabled, otherwise returns
@@ -32,14 +47,14 @@ public abstract class ApolloModule implements Listener {
     private boolean enabled;
 
     /**
-     * Returns the {@link Options.Container} of this module.
+     * Returns the {@link Options} of this module.
      *
      * @return the module options container
      * @since 1.0.0
      */
     @Getter
     @Setter(AccessLevel.PACKAGE)
-    private Options.Container options = Options.empty();
+    private Options options = Options.empty();
 
     /**
      * Returns an array of {@link Option}s in this module.
@@ -48,7 +63,9 @@ public abstract class ApolloModule implements Listener {
      * @since 1.0.0
      */
     @Getter(AccessLevel.PACKAGE)
-    private Option<?, ?, ?>[] optionKeys = {};
+    private List<Option<?, ?, ?>> optionKeys = new LinkedList<>();
+
+    private String id;
 
     /**
      * Constructs a new {@link ApolloModule}.
@@ -56,6 +73,7 @@ public abstract class ApolloModule implements Listener {
      * @since 1.0.0
      */
     protected ApolloModule() {
+        this.registerOptions(ApolloModule.ENABLE);
     }
 
     /**
@@ -65,7 +83,7 @@ public abstract class ApolloModule implements Listener {
      * @since 1.0.0
      */
     protected void registerOptions(Option<?, ?, ?>... options) {
-        this.optionKeys = options;
+        this.optionKeys.addAll(Arrays.asList(options));
     }
 
     /**
@@ -138,11 +156,30 @@ public abstract class ApolloModule implements Listener {
     }
 
     /**
+     * Disables this module, if it is not already.
+     *
+     * @since 1.0.0
+     */
+    public void disable() {
+        if(!this.enabled) return;
+        this.enabled = false;
+        this.onDisable();
+    }
+
+    /**
      * Called when this module is enabled.
      *
      * @since 1.0.0
      */
     protected void onEnable() {
+    }
+
+    /**
+     * Called when this module is disabled.
+     *
+     * @since 1.0.0
+     */
+    private void onDisable() {
     }
 
 }

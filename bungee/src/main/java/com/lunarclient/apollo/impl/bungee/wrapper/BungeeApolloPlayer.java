@@ -1,9 +1,9 @@
 package com.lunarclient.apollo.impl.bungee.wrapper;
 
 import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.player.ApolloPlayerVersion;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.player.ApolloPlayerVersion;
 import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
