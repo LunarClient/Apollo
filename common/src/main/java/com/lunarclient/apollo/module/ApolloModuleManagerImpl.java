@@ -51,7 +51,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
     public void enableModules() {
         for(ApolloModule module : this.modules.values()) {
             // Load configuration options for the module.
-            module.setOptions(new OptionsImpl());
+            module.setOptions(new OptionsImpl(module));
 
             List<Option<?, ?, ?>> options = module.getOptionKeys();
             this.loadConfiguration(module, ApolloManager.getConfigurationNode(), options);
