@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.WeakHashMap;
 import java.util.function.BiFunction;
 import lombok.NonNull;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -21,7 +22,8 @@ import org.jetbrains.annotations.Nullable;
  *
  * @since 1.0.0
  */
-public final class OptionsImpl implements Options {
+@ApiStatus.NonExtendable
+public class OptionsImpl implements Options {
 
     private final Map<Option<?, ?, ?>, Object> options = Collections.synchronizedMap(new HashMap<>());
     private final Map<ApolloPlayer, Map<Option<?, ?, ?>, Object>> playerOptions = Collections.synchronizedMap(new WeakHashMap<>());
@@ -175,7 +177,7 @@ public final class OptionsImpl implements Options {
         return null;
     }
 
-    private boolean postUpdate(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {
+    protected boolean postUpdate(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {
         final EventBus.EventResult<ApolloUpdateOptionEvent> eventResult = EventBus.getBus().post(new ApolloUpdateOptionEvent(this, player, option, value));
         boolean cancelled = eventResult.getEvent().isCancelled();
         for(Throwable throwable : eventResult.getThrowing()) {
