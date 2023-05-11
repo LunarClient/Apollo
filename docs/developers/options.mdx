@@ -1,0 +1,44 @@
+# Options
+
+Options are used by the Apollo modules to manage any settings they may have to use on the server or send to the client.
+Many options set by the modules can be modified from the configuration, which will be generated when you start Apollo for the first time.
+
+Alongside changing options globally, options can be modified to only effect a specific player. This can be useful for setting a unique list of waypoints the player can see when they join for example.
+While a specific player has an option set on them, it will ignore any changes made to the options global value. You can remove the option from the specific player to make them use the global value again.
+
+## Integration
+
+### Sample Code
+
+```java
+public void setTntCountdownOptionExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    this.tntCountdownModule.getOptions().set(TntCountdownModule.TNT_TICKS, 200);
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.getOptions().set(apolloPlayer, TntCountdownModule.TNT_TICKS, 100));
+}
+```
+### Options Methods
+
+`.get(Option)` retrives the global value of the option, or the options default value if it was not set.
+
+```java
+.get(TntCountdownModule.TNT_TICKS)
+```
+
+`.get(ApolloPlayer, Option)` retrieves the player specific value of the option, or the global value if one was not set for that player.
+
+`.getDirect(Option)` retrieves the global value of the option in an `Optional`. If the global value has not been set, it will return `Optional#empty()`.
+
+```java
+.getDirect(TntCountdownModule.TNT_TICKS)
+```
+
+`.getDirect(ApolloPlayer, Option)` retrieves the player specific value of the option in an `Optional`. If the players value has not been set, it will return `Optional#empty()`.
+
+`.set(Option, Object)` sets the global value of the option. If the value is null, it will simply remove the global value.
+
+```java
+.set(TntCountdownModule.TNT_TICKS, 100)
+```
+
+`.set(ApolloPlayer, Option, Object)` sets the player specific value of the option. If the value is null, it will simply remove the player specific value.

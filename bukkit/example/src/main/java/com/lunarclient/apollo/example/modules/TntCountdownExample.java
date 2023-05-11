@@ -17,6 +17,18 @@ public class TntCountdownExample implements Listener {
 
     private final TntCountdownModule tntCountdownModule = Apollo.getModuleManager().getModule(TntCountdownModule.class);
 
+    public void setTntCountdownOptionExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        this.tntCountdownModule.getOptions().set(TntCountdownModule.TNT_TICKS, 200);
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.getOptions().set(apolloPlayer, TntCountdownModule.TNT_TICKS, 100));
+    }
+
+    public void removeTntCountdownOptionExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        this.tntCountdownModule.getOptions().remove(TntCountdownModule.TNT_TICKS, 200);
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.getOptions().remove(apolloPlayer, TntCountdownModule.TNT_TICKS, 100));
+    }
+
     public void setTntCountdownExample(Player viewer, UUID tntUuid, int ticks) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.setTntCountdown(apolloPlayer, tntUuid, ticks));

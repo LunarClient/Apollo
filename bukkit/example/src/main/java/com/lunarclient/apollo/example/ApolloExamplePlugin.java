@@ -9,6 +9,7 @@ import com.lunarclient.apollo.example.commands.LimbCommand;
 import com.lunarclient.apollo.example.commands.MiscCommand;
 import com.lunarclient.apollo.example.commands.ModSettingsCommand;
 import com.lunarclient.apollo.example.commands.NametagCommand;
+import com.lunarclient.apollo.example.commands.TntCountdownCommand;
 import com.lunarclient.apollo.example.modules.*;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -80,5 +81,6 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("misc").setExecutor(new MiscCommand());
         this.getCommand("modsettings").setExecutor(new ModSettingsCommand());
         this.getCommand("nametag").setExecutor(new NametagCommand());
+        this.getCommand("tntcountdown").setExecutor(new TntCountdownCommand());
     }
 }

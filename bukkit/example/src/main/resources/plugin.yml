@@ -24,3 +24,5 @@ commands:
         description: "ModSettings!"
     nametag:
         description: "Nametags!"
+    tntcountdown:
+        description: "TNT Countdown!"
