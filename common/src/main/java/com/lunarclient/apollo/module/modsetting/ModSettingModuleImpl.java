@@ -81,9 +81,9 @@ public final class ModSettingModuleImpl extends ModSettingModule implements Seri
         @Override
         public ModSettings deserialize(Type type, ConfigurationNode node) throws SerializationException {
             return ModSettings.builder()
-                .target(this.virtualNode(node, "target").getString())
-                .enable(this.virtualNode(node, "enable").getBoolean())
-                .properties(this.virtualNode(node, "properties").childrenMap().entrySet().stream()
+                .target(node.node("target").getString())
+                .enable(node.node("enable").getBoolean())
+                .properties(node.node("properties").childrenMap().entrySet().stream()
                     .filter(entry -> entry.getKey() instanceof String && !entry.getValue().virtual())
                     .map(entry -> new AbstractMap.SimpleEntry<>((String) entry.getKey(), entry.getValue().raw()))
                     .collect(Collectors.toMap(
@@ -103,11 +103,6 @@ public final class ModSettingModuleImpl extends ModSettingModule implements Seri
             node.node("target").set(String.class, settings.getTarget());
             node.node("enable").set(settings.isEnable());
             node.node("properties").set(settings.getProperties());
-        }
-
-        private ConfigurationNode virtualNode(ConfigurationNode source, Object... path) throws SerializationException {
-            if(!source.hasChild(path)) throw new SerializationException("Required field " + Arrays.toString(path) + " not found!");
-            return source.node(path);
         }
 
     }

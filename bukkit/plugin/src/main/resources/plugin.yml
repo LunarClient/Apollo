@@ -2,7 +2,6 @@ name: Apollo-Bukkit
 main: com.lunarclient.apollo.impl.bukkit.ApolloBukkitPlatform
 version: 0.1.0-SNAPSHOT
 author: Moonsworth
-api-version: 1.19
 commands:
     setkb:
         permission: command.setkb
