@@ -21,7 +21,7 @@ public class TntCountdownCommand implements CommandExecutor {
         }
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /beam <display|remove|reset>");
+            player.sendMessage("Usage: /tntcountdown <display|remove|reset>");
             return true;
         }
 
