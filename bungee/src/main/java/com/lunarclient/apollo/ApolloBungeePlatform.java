@@ -1,10 +1,7 @@
-package com.lunarclient.apollo.impl.bungee;
+package com.lunarclient.apollo;
 
 import com.google.common.base.Charsets;
-import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.impl.bungee.wrapper.BungeeApolloPlayer;
+import com.lunarclient.apollo.wrapper.BungeeApolloPlayer;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import lombok.Getter;

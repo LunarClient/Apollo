@@ -200,11 +200,10 @@ public class OptionsImpl implements Options {
 
     protected boolean postEvent(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {
         EventBus.EventResult<ApolloUpdateOptionEvent> eventResult = EventBus.getBus().post(new ApolloUpdateOptionEvent(this, player, option, value));
-        boolean cancelled = eventResult.getEvent().isCancelled();
         for(Throwable throwable : eventResult.getThrowing()) {
             throwable.printStackTrace();
         }
-        return cancelled;
+        return eventResult.getEvent().isCancelled();
     }
 
     protected void postPacket(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {

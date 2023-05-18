@@ -4,6 +4,7 @@ import com.lunarclient.apollo.event.EventCancellable;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
  */
 @Getter
 @RequiredArgsConstructor
-@FieldDefaults(makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public final class ApolloUpdateOptionEvent implements EventCancellable {
 
     /**
@@ -27,7 +28,7 @@ public final class ApolloUpdateOptionEvent implements EventCancellable {
      * @return the options container
      * @since 1.0.0
      */
-    private final Options container;
+    Options container;
 
     /**
      * The {@link ApolloPlayer} that the option was updated for, or
@@ -36,7 +37,7 @@ public final class ApolloUpdateOptionEvent implements EventCancellable {
      * @return the player
      * @since 1.0.0
      */
-    private final @Nullable ApolloPlayer player;
+    @Nullable ApolloPlayer player;
 
     /**
      * The {@link Option} that was updated.
@@ -44,7 +45,7 @@ public final class ApolloUpdateOptionEvent implements EventCancellable {
      * @return the option
      * @since 1.0.0
      */
-    private final Option<?, ?, ?> option;
+    Option<?, ?, ?> option;
 
     /**
      * The new value of the option.
@@ -52,8 +53,8 @@ public final class ApolloUpdateOptionEvent implements EventCancellable {
      * @return the new value
      * @since 1.0.0
      */
-    private final Object value;
+    Object value;
 
-    @NonFinal @Setter private boolean cancelled;
+    @NonFinal @Setter boolean cancelled;
 
 }

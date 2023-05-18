@@ -1,7 +1,6 @@
 package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.BeamExample;
 import com.lunarclient.apollo.example.modules.TntCountdownExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,22 +20,27 @@ public class TntCountdownCommand implements CommandExecutor {
         }
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /tntcountdown <display|remove|reset>");
+            player.sendMessage("Usage: /tntcountdown <override|set|clear>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
+            case "override" -> {
+                this.tntCountdownExample.overrideTntCountdownExample(player);
+                player.sendMessage("Overriding custom tnt countdown option...");
+            }
+
             case "set" -> {
-                this.tntCountdownExample.setTntCountdownOptionExample(player);
+                this.tntCountdownExample.setTntCountdownExample();
                 player.sendMessage("Setting custom tnt countdown option....");
             }
 
-            case "remove" -> {
-                this.tntCountdownExample.removeTntCountdownOptionExample(player);
+            case "clear" -> {
+                this.tntCountdownExample.clearTntCountdownOptionExample();
                 player.sendMessage("Removing custom tnt countdown option....");
             }
 
-            default -> player.sendMessage("Usage: /tntcountdown <set|remove>");
+            default -> player.sendMessage("Usage: /tntcountdown <override|set|clear>");
         }
 
         return true;

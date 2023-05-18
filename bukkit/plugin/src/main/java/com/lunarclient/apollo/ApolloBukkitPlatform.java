@@ -1,11 +1,7 @@
-package com.lunarclient.apollo.impl.bukkit;
+package com.lunarclient.apollo;
 
 import com.google.protobuf.Any;
-import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.impl.bukkit.listener.TntCountdownListener;
-import com.lunarclient.apollo.impl.bukkit.wrapper.BukkitApolloPlayer;
+import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
@@ -52,7 +48,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.event.player.PlayerUnregisterChannelEvent;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
@@ -67,6 +62,8 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     public void onEnable() {
         ApolloBukkitPlatform.instance = this;
         ApolloManager.bootstrap(this);
+
+        this.getServer().getPluginManager().registerEvents(this, this);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
                 .addModule(BeamModule.class, new BeamModuleImpl())
@@ -98,13 +95,6 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         messenger.registerIncomingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
                 (channel, player, bytes) -> this.handlePacket(player, bytes)
         );
-
-        PluginManager pluginManager = this.getServer().getPluginManager();
-        pluginManager.registerEvents(this, this);
-        pluginManager.registerEvents(new TntCountdownListener(
-            Apollo.getModuleManager().getModule(TntCountdownModule.class),
-            Apollo.getPlayerManager()
-        ), this);
 
         ApolloManager.saveConfiguration();
     }

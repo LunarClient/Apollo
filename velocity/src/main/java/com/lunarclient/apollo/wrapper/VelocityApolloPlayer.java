@@ -1,7 +1,7 @@
-package com.lunarclient.apollo.impl.velocity.wrapper;
+package com.lunarclient.apollo.wrapper;
 
 import com.lunarclient.apollo.common.location.ApolloLocation;
-import com.lunarclient.apollo.impl.velocity.ApolloVelocityPlatform;
+import com.lunarclient.apollo.ApolloVelocityPlatform;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerVersion;
 import com.velocitypowered.api.proxy.Player;

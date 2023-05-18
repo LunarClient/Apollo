@@ -1,11 +1,8 @@
-package com.lunarclient.apollo.impl.velocity;
+package com.lunarclient.apollo;
 
 import com.google.common.base.Charsets;
 import com.google.inject.Inject;
-import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.impl.velocity.wrapper.VelocityApolloPlayer;
+import com.lunarclient.apollo.wrapper.VelocityApolloPlayer;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.velocitypowered.api.event.Subscribe;

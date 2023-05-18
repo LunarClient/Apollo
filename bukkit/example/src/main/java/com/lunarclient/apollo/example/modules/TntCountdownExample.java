@@ -3,49 +3,34 @@ package com.lunarclient.apollo.example.modules;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.module.tntcountdown.TntCountdownModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntitySpawnEvent;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public class TntCountdownExample implements Listener {
 
     private final TntCountdownModule tntCountdownModule = Apollo.getModuleManager().getModule(TntCountdownModule.class);
 
-    public void setTntCountdownOptionExample(Player viewer) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        this.tntCountdownModule.getOptions().set(TntCountdownModule.TNT_TICKS, 200);
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.getOptions().set(apolloPlayer, TntCountdownModule.TNT_TICKS, 100));
+    public void setTntCountdownExample() {
+        this.tntCountdownModule.getOptions().set(TntCountdownModule.TNT_TICKS, 160);
     }
 
-    public void removeTntCountdownOptionExample(Player viewer) {
+    public void overrideTntCountdownExample(Player viewer) {
+        Location location = viewer.getLocation();
+        World world = viewer.getWorld();
+
+        TNTPrimed entity = world.spawn(location, TNTPrimed.class);
+
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        this.tntCountdownModule.getOptions().remove(TntCountdownModule.TNT_TICKS, 200);
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.getOptions().remove(apolloPlayer, TntCountdownModule.TNT_TICKS, 100));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.setTntCountdown(entity.getUniqueId(), 200));
     }
 
-    public void setTntCountdownExample(Player viewer, UUID tntUuid, int ticks) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.setTntCountdown(apolloPlayer, tntUuid, ticks));
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onTntSpawn(EntitySpawnEvent event) {
-        if (!(event.getEntity() instanceof TNTPrimed tnt)) return;
-
-        /*
-         * Checks if the TNT has the metadata "very-special-tnt" and,
-         * it was lit by a player, then to apply the custom TNT timer.
-         */
-
-        if (tnt.hasMetadata("very-special-tnt") && tnt.getSource() instanceof Player player) {
-            this.setTntCountdownExample(player, tnt.getUniqueId(), 5);
-        }
+    public void clearTntCountdownOptionExample() {
+        this.tntCountdownModule.getOptions().remove(TntCountdownModule.TNT_TICKS, 160);
     }
 
 }
