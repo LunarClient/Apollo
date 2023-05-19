@@ -24,7 +24,8 @@ public abstract class TntCountdownModule extends ApolloModule {
     public static final NumberOption<Integer> TNT_TICKS = NumberOption.<Integer>number()
             .comment("Set the amount of ticks before the TNT explodes.")
             .node("tnt-ticks").type(TypeToken.get(Integer.class))
-            .defaultValue(80).min(1).max(Integer.MAX_VALUE).build();
+            .defaultValue(80).min(1).max(Integer.MAX_VALUE)
+            .notifyClient().build();
 
     TntCountdownModule() {
         this.registerOptions(
