@@ -1,6 +1,8 @@
 package com.lunarclient.apollo.common;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +30,8 @@ public final class Component {
      * @return the renderable string color
      * @since 1.0.0
      */
-    Color color;
+    @Builder.Default
+    Color color = Color.WHITE;
 
     /**
      * Returns a {@link List} of {@link TextDecorators}.
@@ -36,7 +39,8 @@ public final class Component {
      * @return the renderable string decorators
      * @since 1.0.0
      */
-    List<TextDecorators> decorators;
+    @Builder.Default
+    List<TextDecorators> decorators = Collections.emptyList();
 
     /**
      * Returns a {@link List} of {@link Component}.
@@ -44,7 +48,8 @@ public final class Component {
      * @return the renderable string children
      * @since 1.0.0
      */
-    List<Component> children;
+    @Builder.Default
+    List<Component> children = Collections.emptyList();
 
     /**
      * Represents the text decorator.

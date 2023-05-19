@@ -4,9 +4,11 @@ import com.google.protobuf.ByteString;
 import com.lunarclient.apollo.hologram.v1.DisplayHologramMessage;
 import com.lunarclient.apollo.hologram.v1.RemoveHologramMessage;
 import com.lunarclient.apollo.hologram.v1.ResetHologramsMessage;
+import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Collection;
+import java.util.stream.Collectors;
 import lombok.NonNull;
 
 /**
@@ -20,6 +22,11 @@ public final class HologramModuleImpl extends HologramModule {
     public void displayHologram(@NonNull Collection<ApolloPlayer> viewers, @NonNull Hologram hologram) {
         DisplayHologramMessage message = DisplayHologramMessage.newBuilder()
             .setId(ByteString.copyFromUtf8(hologram.getId()))
+            .setLocation(NetworkTypes.toProtobuf(hologram.getLocation()))
+            .addAllLines(hologram.getLines().stream()
+                .map(NetworkTypes::toProtobuf)
+                .collect(Collectors.toList())
+            )
             .build();
 
         for (ApolloPlayer viewer : viewers) {
