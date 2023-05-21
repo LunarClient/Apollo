@@ -69,7 +69,7 @@ public void pingExample(Player viewer) {
             for (PingResponse.PingData pingData : response.getData()) {
                 String message = switch (pingData.getStatus()) {
                     
-                    // Displays successful ping request to display the server IP and the players ping to that server.
+                    // Successful ping request display the server IP and the players ping to that server.
                     case SUCCESS -> String.format("Ping to %s is %d ms.", pingData.getServerIp(), pingData.getPingMillis());
                     
                     // If the ping request times-out
