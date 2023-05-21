@@ -9,7 +9,6 @@ The saturation module allows you to interact with and set custom saturation and 
 - Ability to interact with the saturation mod of a player.
   - Ability to set custom hunger on an item.
   - Ability to set custom saturation on an item.
-  - Ability to hide both the hunger and saturation from being displayed on an item.
 
 <Callout type="info">
   This module only changes the displayed values, you'll need to change the actual hunger and saturation levels server-side.
@@ -21,26 +20,11 @@ The saturation module allows you to interact with and set custom saturation and 
 
 You set a custom NBT, with the tag `lunar{hunger:{value}` then set the `{value}` to the value of the hunger level you want to display on the item. The value should be an integer.
 
-```
-Minecraft give command
-
-/summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:cooked_beef",Count:1b,tag:{lunar:{hunger:100}}}}
-```
+{/* summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:cooked_beef",Count:1b,tag:{lunar:{hunger:100}}}} */}
 
 ### How to set custom saturation level of an item
 
 You set a custom NBT, with the tag `lunar{saturation:{value}}` then set the `{value}` to the value of the saturation level you want to display on the item. The value should be a float.
 
-```
-Minecraft give command
+{/* summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:cooked_beef",Count:1b,tag:{lunar:{saturation:100}}}} */}
 
-/summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:cooked_beef",Count:1b,tag:{lunar:{saturation:100}}}}
-```
-
-### Hiding both hunger and saturation level of an item
-
-```
-
-```
-
-{/* needs to be done */}
