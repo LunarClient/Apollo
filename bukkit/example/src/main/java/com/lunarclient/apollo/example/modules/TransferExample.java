@@ -23,10 +23,15 @@ public class TransferExample {
             return;
         }
 
+        // Sending the transfer request to the player, to transfer them to "mc.hypixel.net"
         this.transferModule.transfer(apolloPlayerOpt.get(), "mc.hypixel.net")
             .onSuccess(response -> {
                 String message = switch (response.getStatus()) {
+
+                    // If the player accepts the transfer request
                     case ACCEPTED -> "Transfer accepted! Goodbye!";
+
+                    // If the player declines the transfer request
                     case REJECTED -> "Transfer rejected by client!";
                 };
 
@@ -46,11 +51,16 @@ public class TransferExample {
             return;
         }
 
+        // Sending the ping request to the player, for the servers "mc.hypixel.net" & "minehut.com".
         this.transferModule.ping(apolloPlayerOpt.get(), List.of("mc.hypixel.net", "minehut.com"))
             .onSuccess(response -> {
                 for (PingResponse.PingData pingData : response.getData()) {
                     String message = switch (pingData.getStatus()) {
+
+                        // Displays successful ping request to display the server IP and the players ping to that server.
                         case SUCCESS -> String.format("Ping to %s is %d ms.", pingData.getServerIp(), pingData.getPingMillis());
+
+                        // If the ping request times-out
                         case TIMED_OUT -> String.format("Failed to ping %s", pingData.getServerIp());
                     };
 
