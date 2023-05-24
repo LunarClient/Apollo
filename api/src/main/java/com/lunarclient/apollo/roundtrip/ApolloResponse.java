@@ -1,14 +1,16 @@
 package com.lunarclient.apollo.roundtrip;
 
 import java.util.UUID;
-import lombok.Data;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Represents an Apollo Response.
  *
  * @since 1.0.0
  */
-@Data
+@Getter
+@SuperBuilder
 public class ApolloResponse {
 
     /**
@@ -16,6 +18,6 @@ public class ApolloResponse {
      *
      * @since 1.0.0
      */
-    private UUID packetId;
+    UUID packetId;
 
 }

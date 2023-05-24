@@ -1,7 +1,6 @@
 package com.lunarclient.apollo.common;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import lombok.Builder;

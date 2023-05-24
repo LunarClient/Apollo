@@ -1,8 +1,8 @@
 package com.lunarclient.apollo.module.transfer;
 
 import com.lunarclient.apollo.roundtrip.ApolloResponse;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Represents a server transfer response.
@@ -10,7 +10,7 @@ import lombok.Getter;
  * @since 1.0.0
  */
 @Getter
-@Builder
+@SuperBuilder
 public final class TransferResponse extends ApolloResponse {
 
     /**

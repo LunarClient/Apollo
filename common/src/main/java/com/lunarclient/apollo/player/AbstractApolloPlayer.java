@@ -31,6 +31,7 @@ public abstract class AbstractApolloPlayer implements ApolloPlayer {
 
         UncertainFuture<T> future = new UncertainFuture<>();
         Apollo.getRoundtripManager().registerListener(request, future);
+
         return future;
     }
 

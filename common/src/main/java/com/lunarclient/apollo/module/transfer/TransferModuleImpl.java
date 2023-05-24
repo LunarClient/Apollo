@@ -7,6 +7,7 @@ import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.roundtrip.async.Future;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.NonNull;
 
@@ -50,6 +51,7 @@ public final class TransferModuleImpl extends TransferModule {
     private void onTransferResponse(ApolloReceivePacketEvent event) {
         event.unpack(com.lunarclient.apollo.transfer.v1.TransferResponse.class).ifPresent(packet -> {
             TransferResponse transferResponse = TransferResponse.builder()
+                .packetId(UUID.fromString(packet.getRequestId().toStringUtf8()))
                 .status(TransferResponse.Status.values()[packet.getStatusValue() - 1])
                 .build();
 
@@ -66,6 +68,7 @@ public final class TransferModuleImpl extends TransferModule {
                 ).collect(Collectors.toList());
 
             PingResponse pingResponse = PingResponse.builder()
+                .packetId(UUID.fromString(packet.getRequestId().toStringUtf8()))
                 .data(pingData)
                 .build();
 

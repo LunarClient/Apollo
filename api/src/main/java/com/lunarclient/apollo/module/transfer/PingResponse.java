@@ -4,6 +4,7 @@ import com.lunarclient.apollo.roundtrip.ApolloResponse;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Represents the server ping response.
@@ -11,7 +12,7 @@ import lombok.Getter;
  * @since 1.0.0
  */
 @Getter
-@Builder
+@SuperBuilder
 public final class PingResponse extends ApolloResponse {
 
     /**
