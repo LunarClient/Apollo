@@ -25,3 +25,5 @@ commands:
         description: "Nametags!"
     tntcountdown:
         description: "TNT Countdown!"
+    transfer:
+        description: "Transfer!"

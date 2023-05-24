@@ -1,15 +1,6 @@
 package com.lunarclient.apollo.example;
 
-import com.lunarclient.apollo.example.commands.BeamCommand;
-import com.lunarclient.apollo.example.commands.BorderCommand;
-import com.lunarclient.apollo.example.commands.ColoredFireCommand;
-import com.lunarclient.apollo.example.commands.CooldownCommand;
-import com.lunarclient.apollo.example.commands.HologramCommand;
-import com.lunarclient.apollo.example.commands.LimbCommand;
-import com.lunarclient.apollo.example.commands.MiscCommand;
-import com.lunarclient.apollo.example.commands.ModSettingsCommand;
-import com.lunarclient.apollo.example.commands.NametagCommand;
-import com.lunarclient.apollo.example.commands.TntCountdownCommand;
+import com.lunarclient.apollo.example.commands.*;
 import com.lunarclient.apollo.example.modules.*;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -82,5 +73,6 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("modsettings").setExecutor(new ModSettingsCommand());
         this.getCommand("nametag").setExecutor(new NametagCommand());
         this.getCommand("tntcountdown").setExecutor(new TntCountdownCommand());
+        this.getCommand("transfer").setExecutor(new TransferCommand());
     }
 }
