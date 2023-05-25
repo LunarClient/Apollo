@@ -33,3 +33,5 @@ commands:
         description: "TNT Countdown!"
     transfer:
         description: "Transfer!"
+    waypoint:
+        description: "Waypoints!"

@@ -1,17 +1,17 @@
 package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.CooldownExample;
 import com.lunarclient.apollo.example.modules.HologramExample;
+import com.lunarclient.apollo.example.modules.WaypointExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class HologramCommand implements CommandExecutor {
+public class WaypointCommand implements CommandExecutor {
 
-    private final HologramExample hologramExample = ApolloExamplePlugin.getPlugin().getHologramExample();
+    private final WaypointExample waypointExample = ApolloExamplePlugin.getPlugin().getWaypointExample();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -21,26 +21,26 @@ public class HologramCommand implements CommandExecutor {
         }
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /hologram <display|remove|reset>");
+            player.sendMessage("Usage: /waypoint <display|remove|reset>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
             case "display" -> {
-                this.hologramExample.displayHologramExample();
-                player.sendMessage("Displaying hologram....");
+                this.waypointExample.displayWaypointExample(player);
+                player.sendMessage("Displaying waypoint....");
             }
 
             case "remove" -> {
-                this.hologramExample.removeHologramExample();
-                player.sendMessage("Removing hologram....");
+                this.waypointExample.removeWaypointExample(player);
+                player.sendMessage("Removing waypoint....");
             }
             case "reset" -> {
-                this.hologramExample.resetHologramsExample(player);
-                player.sendMessage("Resetting holograms...");
+                this.waypointExample.resetWaypointsExample(player);
+                player.sendMessage("Resetting waypoints...");
             }
 
-            default -> player.sendMessage("Usage: /hologram <display|remove|reset>");
+            default -> player.sendMessage("Usage: /waypoint <display|remove|reset>");
         }
 
         return true;

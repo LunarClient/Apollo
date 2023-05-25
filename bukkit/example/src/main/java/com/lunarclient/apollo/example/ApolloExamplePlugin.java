@@ -77,5 +77,6 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("title").setExecutor(new TitleCommand());
         this.getCommand("tntcountdown").setExecutor(new TntCountdownCommand());
         this.getCommand("transfer").setExecutor(new TransferCommand());
+        this.getCommand("waypoint").setExecutor(new WaypointCommand());
     }
 }

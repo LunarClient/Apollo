@@ -37,7 +37,7 @@ public class WaypointExample {
 
     public void removeWaypointExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.waypointModule.removeWaypoint(apolloPlayer, "KoTh"));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.waypointModule.removeWaypoint(apolloPlayer, "KoTH"));
     }
 
     public void resetWaypointsExample(Player viewer) {
