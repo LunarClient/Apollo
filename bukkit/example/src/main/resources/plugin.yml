@@ -23,6 +23,8 @@ commands:
         description: "ModSettings!"
     nametag:
         description: "Nametags!"
+    notification:
+        description: "Notifications!"
     tntcountdown:
         description: "TNT Countdown!"
     transfer:

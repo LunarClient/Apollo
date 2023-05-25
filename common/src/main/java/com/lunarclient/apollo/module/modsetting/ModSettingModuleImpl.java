@@ -57,17 +57,23 @@ public final class ModSettingModuleImpl extends ModSettingModule implements Seri
     private OverrideConfigurableSettingsMessage toProtobuf(ModsSettings settings) {
         Set<ConfigurableSettings> configurableSettings = settings.getSettings().stream()
             .map(configurable -> {
-                Map<String, Value> properties = configurable.getProperties().entrySet().stream()
-                    .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        entry -> (Value) entry.getValue()
-                    ));
-
-                return ConfigurableSettings.newBuilder()
+                ConfigurableSettings.Builder builder = ConfigurableSettings.newBuilder()
                     .setLunarClientMod(configurable.getTarget())
-                    .setEnable(configurable.isEnable())
-                    .putAllProperties(properties)
-                    .build();
+                    .setEnable(configurable.isEnable());
+
+                Map<String, Object> properties = configurable.getProperties();
+
+                if(properties != null) {
+                    Map<String, Value> protoProperties = properties.entrySet().stream()
+                        .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            entry -> (Value) entry.getValue()
+                        ));
+
+                    builder.putAllProperties(protoProperties);
+                }
+
+                return builder.build();
             })
             .collect(Collectors.toSet());
 
