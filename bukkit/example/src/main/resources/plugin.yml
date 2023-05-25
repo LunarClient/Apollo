@@ -25,6 +25,8 @@ commands:
         description: "Nametags!"
     notification:
         description: "Notifications!"
+    stopwatch:
+        description: "Stopwatch!"
     tntcountdown:
         description: "TNT Countdown!"
     transfer:
