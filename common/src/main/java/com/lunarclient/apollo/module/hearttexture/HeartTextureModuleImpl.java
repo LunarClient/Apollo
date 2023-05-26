@@ -1,6 +1,5 @@
 package com.lunarclient.apollo.module.hearttexture;
 
-import com.lunarclient.apollo.hearttexture.v1.HeartType;
 import com.lunarclient.apollo.hearttexture.v1.OverrideHeartTextureMessage;
 import com.lunarclient.apollo.hearttexture.v1.ResetHeartTextureMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
@@ -15,24 +14,16 @@ import lombok.NonNull;
 public final class HeartTextureModuleImpl extends HeartTextureModule {
 
     @Override
-    public void overrideHeartTexture(@NonNull ApolloPlayer viewer, @NonNull HeartTexture texture, int locationX) {
+    public void overrideHeartTexture(@NonNull ApolloPlayer viewer, int locationX, boolean hardCore) {
         ((AbstractApolloPlayer) viewer).sendPacket(OverrideHeartTextureMessage.newBuilder()
-            .setHeartType(this.toProtobuf(texture))
             .setLocationX(locationX)
+            // TODO
             .build()
         );
     }
 
     @Override
-    public void resetHeartTexture(@NonNull ApolloPlayer viewer, @NonNull HeartTexture texture) {
-        ((AbstractApolloPlayer) viewer).sendPacket(ResetHeartTextureMessage.newBuilder()
-            .setHeartType(this.toProtobuf(texture))
-            .build()
-        );
+    public void resetHeartTexture(@NonNull ApolloPlayer viewer) {
+        ((AbstractApolloPlayer) viewer).sendPacket(ResetHeartTextureMessage.getDefaultInstance());
     }
-
-    private HeartType toProtobuf(HeartTexture texture) {
-        return HeartType.forNumber(texture.ordinal() + 1);
-    }
-
 }

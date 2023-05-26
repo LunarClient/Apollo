@@ -13,6 +13,8 @@ commands:
         description: "Colored Fires!"
     cooldown:
         description: "Cooldowns!"
+    hearttexture:
+        description: "Heart Textures!"
     hologram:
         description: "Holograms!"
     limb:
