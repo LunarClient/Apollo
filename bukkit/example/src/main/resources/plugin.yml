@@ -25,6 +25,8 @@ commands:
         description: "Nametags!"
     notification:
         description: "Notifications!"
+    staffmod:
+        description: "Staff Mods!"
     stopwatch:
         description: "Stopwatch!"
     title:
