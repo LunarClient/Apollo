@@ -15,9 +15,9 @@ The TNT Countdown module allows you to interact with and set custom TNT timers f
 ## Integration
 
 ```java
-public void setTntCountdownExample(Player viewer, UUID tntUuid, int ticks) {
+public void setTntCountdownExample(Player viewer, ApolloEntity tntEntity, int ticks) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.setTntCountdown(apolloPlayer, tntUuid, ticks));
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.setTntCountdown(apolloPlayer, tntEntity, ticks));
 }
 ```
 
@@ -25,25 +25,24 @@ public void setTntCountdownExample(Player viewer, UUID tntUuid, int ticks) {
 
 1. `ApolloPlayer`
    - The player or viewer you want to display the countdown to.
-2. `tntUuid`
-   - The UUID of the TNT you want the custom countdown to be displayed above.
+2. `ApolloEntity`
+   - The TNT entity you want the custom countdown to be displayed above.
 3. `ticks`
-   - The amount of ticks before the TNT, `tntUuid`, has until exploding.
+   - The amount of ticks the TNT entity has before exploding.
 
 ### Applying your custom `setTntCountdown` to a TNT.
 
 ```java
-@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-public void onTntSpawn(EntitySpawnEvent event) {
-    if (!(event.getEntity() instanceof TNTPrimed tnt)) return;
+public void overrideTntCountdownExample(Player viewer) {
+    Location location = viewer.getLocation();
+    World world = viewer.getWorld();
 
-    /*
-     * Checks if the TNT has the metadata "very-special-tnt" and,
-     * it was lit by a player, then to apply the custom TNT timer.
-     */
-    
-    if (tnt.hasMetadata("very-special-tnt") && tnt.getSource() instanceof Player player) {
-        this.setTntCountdownExample(player, tnt.getUniqueId(), 5);
-    }
+    TNTPrimed entity = world.spawn(location, TNTPrimed.class);
+
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.setTntCountdown(
+        new ApolloEntity(entity.getEntityId(), entity.getUniqueId()),
+        200
+    ));
 }
 ```

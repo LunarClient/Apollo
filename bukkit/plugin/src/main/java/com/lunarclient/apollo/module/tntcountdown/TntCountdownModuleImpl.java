@@ -2,6 +2,7 @@ package com.lunarclient.apollo.module.tntcountdown;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloBukkitPlatform;
+import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
@@ -14,8 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
-
-import java.util.UUID;
 
 /**
  * Provides the tnt countdown module.
@@ -30,14 +29,14 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
     }
 
     @Override
-    public void setTntCountdown(UUID tntUuid, int ticks) {
-        Entity entity = Bukkit.getEntity(tntUuid);
-        if(!(entity instanceof TNTPrimed)) return;
+    public void setTntCountdown(ApolloEntity entity, int ticks) {
+        Entity target = Bukkit.getEntity(entity.getEntityUuid());
+        if(!(target instanceof TNTPrimed)) return;
 
-        ((TNTPrimed) entity).setFuseTicks(ticks);
+        ((TNTPrimed) target).setFuseTicks(ticks);
 
         SetTntCountdownMessage message = SetTntCountdownMessage.newBuilder()
-            .setEntityUuid(NetworkTypes.toProtobuf(tntUuid))
+            .setEntityId(NetworkTypes.toProtobuf(entity))
             .setDurationTicks(ticks)
             .build();
 

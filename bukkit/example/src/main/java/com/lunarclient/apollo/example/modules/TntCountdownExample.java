@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.module.tntcountdown.TntCountdownModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import org.bukkit.Location;
@@ -26,7 +27,10 @@ public class TntCountdownExample implements Listener {
         TNTPrimed entity = world.spawn(location, TNTPrimed.class);
 
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.setTntCountdown(entity.getUniqueId(), 200));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.setTntCountdown(
+            new ApolloEntity(entity.getEntityId(), entity.getUniqueId()),
+            200
+        ));
     }
 
     public void clearTntCountdownOptionExample() {

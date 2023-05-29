@@ -1,10 +1,10 @@
 package com.lunarclient.apollo.module.tntcountdown;
 
+import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.NumberOption;
 import io.leangen.geantyref.TypeToken;
-import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -41,10 +41,10 @@ public abstract class TntCountdownModule extends ApolloModule {
     /**
      * Set the amount of ticks before the specified TNT explodes.
      *
-     * @param tntUuid the UUID of the TNT entity
+     * @param entity the TNT entity
      * @param ticks the ticks until explosion
      * @since 1.0.0
      */
-    public abstract void setTntCountdown(UUID tntUuid, int ticks);
+    public abstract void setTntCountdown(ApolloEntity entity, int ticks);
 
 }

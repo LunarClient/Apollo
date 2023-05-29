@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.misc;
 
-import com.lunarclient.apollo.common.v1.Uuid;
+import com.lunarclient.apollo.common.ApolloEntity;
+import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.misc.v1.DisplayVignetteMessage;
 import com.lunarclient.apollo.misc.v1.FlipEntityMessage;
 import com.lunarclient.apollo.misc.v1.OverrideRainbowSheepMessage;
@@ -12,7 +13,6 @@ import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.NonNull;
 
@@ -37,8 +37,8 @@ public final class MiscModuleImpl extends MiscModule {
     }
 
     @Override
-    public void overrideRainbowSheep(@NonNull ApolloPlayer viewer, @NonNull List<UUID> sheepUuids) {
-        Set<Uuid> sheepUuidsProto = sheepUuids.stream()
+    public void overrideRainbowSheep(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> sheepEntities) {
+        Set<EntityId> sheepUuidsProto = sheepEntities.stream()
             .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toSet());
 
@@ -48,8 +48,8 @@ public final class MiscModuleImpl extends MiscModule {
     }
 
     @Override
-    public void resetRainbowSheep(@NonNull ApolloPlayer viewer, @NonNull List<UUID> sheepUuids) {
-        Set<Uuid> sheepUuidsProto = sheepUuids.stream()
+    public void resetRainbowSheep(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> sheepEntities) {
+        Set<EntityId> sheepUuidsProto = sheepEntities.stream()
             .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toSet());
 
@@ -59,8 +59,8 @@ public final class MiscModuleImpl extends MiscModule {
     }
 
     @Override
-    public void flipEntity(@NonNull ApolloPlayer viewer, @NonNull List<UUID> entityUuids) {
-        Set<Uuid> entityUuidsProto = entityUuids.stream()
+    public void flipEntity(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> entities) {
+        Set<EntityId> entityUuidsProto = entities.stream()
             .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toSet());
 
@@ -70,8 +70,8 @@ public final class MiscModuleImpl extends MiscModule {
     }
 
     @Override
-    public void resetFlippedEntity(@NonNull ApolloPlayer viewer, @NonNull List<UUID> entityUuids) {
-        Set<Uuid> entityUuidsProto = entityUuids.stream()
+    public void resetFlippedEntity(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> entities) {
+        Set<EntityId> entityUuidsProto = entities.stream()
             .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toSet());
 

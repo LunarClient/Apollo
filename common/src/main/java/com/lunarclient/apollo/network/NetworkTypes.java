@@ -1,5 +1,6 @@
 package com.lunarclient.apollo.network;
 
+import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.common.cuboid.Cuboid2D;
 import com.lunarclient.apollo.common.cuboid.Cuboid3D;
@@ -9,6 +10,7 @@ import com.lunarclient.apollo.common.icon.ItemStackIcon;
 import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Uuid;
 import java.awt.Color;
 import java.time.Duration;
@@ -17,6 +19,17 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public final class NetworkTypes {
+
+    public static EntityId toProtobuf(ApolloEntity object) {
+        return EntityId.newBuilder()
+            .setEntityId(object.getEntityId())
+            .setEntityUuid(NetworkTypes.toProtobuf(object.getEntityUuid()))
+            .build();
+    }
+
+    public static ApolloEntity fromProtobuf(EntityId message) {
+        return new ApolloEntity(message.getEntityId(), NetworkTypes.fromProtobuf(message.getEntityUuid()));
+    }
 
     public static Uuid toProtobuf(UUID object) {
         return Uuid.newBuilder()

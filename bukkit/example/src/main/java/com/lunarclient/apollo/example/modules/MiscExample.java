@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.module.misc.MiscModule;
 import com.lunarclient.apollo.module.misc.Vignette;
 import com.lunarclient.apollo.player.ApolloPlayer;
@@ -39,10 +40,11 @@ public class MiscExample {
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             // Get all Sheep in players world
-            List<UUID> sheepUuids = viewer.getWorld().getEntitiesByClass(Sheep.class)
-                .stream().map(Sheep::getUniqueId).collect(Collectors.toList());
+            List<ApolloEntity> sheepEntities = viewer.getWorld().getEntitiesByClass(Sheep.class)
+                .stream().map(sheep -> new ApolloEntity(sheep.getEntityId(), sheep.getUniqueId()))
+                .collect(Collectors.toList());
 
-            this.miscModule.overrideRainbowSheep(apolloPlayer, sheepUuids);
+            this.miscModule.overrideRainbowSheep(apolloPlayer, sheepEntities);
         });
     }
 
@@ -51,10 +53,11 @@ public class MiscExample {
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             // Get all Sheep in players world
-            List<UUID> sheepUuids = viewer.getWorld().getEntitiesByClass(Sheep.class)
-                .stream().map(Sheep::getUniqueId).collect(Collectors.toList());
+            List<ApolloEntity> sheepEntities = viewer.getWorld().getEntitiesByClass(Sheep.class)
+                .stream().map(sheep -> new ApolloEntity(sheep.getEntityId(), sheep.getUniqueId()))
+                .collect(Collectors.toList());
 
-            this.miscModule.resetRainbowSheep(apolloPlayer, sheepUuids);
+            this.miscModule.resetRainbowSheep(apolloPlayer, sheepEntities);
         });
     }
 
@@ -63,11 +66,12 @@ public class MiscExample {
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             // Get all cows within 10 blocks of the player
-            List<UUID> entityUuids = viewer.getWorld()
+            List<ApolloEntity> entities = viewer.getWorld()
                 .getNearbyEntitiesByType(Cow.class, viewer.getLocation(), 10)
-                .stream().map(Cow::getUniqueId).collect(Collectors.toList());
+                .stream().map(cow -> new ApolloEntity(cow.getEntityId(), cow.getUniqueId()))
+                .collect(Collectors.toList());
 
-            this.miscModule.flipEntity(apolloPlayer, entityUuids);
+            this.miscModule.flipEntity(apolloPlayer, entities);
         });
     }
 
@@ -76,11 +80,12 @@ public class MiscExample {
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             // Get all cows within 10 blocks of the player
-            List<UUID> entityUuids = viewer.getWorld()
+            List<ApolloEntity> entities = viewer.getWorld()
                 .getNearbyEntitiesByType(Cow.class, viewer.getLocation(), 10)
-                .stream().map(Cow::getUniqueId).collect(Collectors.toList());
+                .stream().map(cow -> new ApolloEntity(cow.getEntityId(), cow.getUniqueId()))
+                .collect(Collectors.toList());
 
-            this.miscModule.resetFlippedEntity(apolloPlayer, entityUuids);
+            this.miscModule.resetFlippedEntity(apolloPlayer, entities);
         });
     }
 

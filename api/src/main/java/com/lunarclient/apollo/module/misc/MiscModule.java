@@ -1,10 +1,10 @@
 package com.lunarclient.apollo.module.misc;
 
+import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.List;
-import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -34,39 +34,39 @@ public abstract class MiscModule extends ApolloModule {
     public abstract void resetVignette(ApolloPlayer viewer);
 
     /**
-     * Overrides the {@link UUID} rainbow for the {@link ApolloPlayer}.
+     * Overrides the {@link ApolloEntity} rainbow for the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
-     * @param sheepUuids the UUIDs of the sheep to manipulate
+     * @param sheepEntities the list of sheep entities
      * @since 1.0.0
      */
-    public abstract void overrideRainbowSheep(ApolloPlayer viewer, List<UUID> sheepUuids);
+    public abstract void overrideRainbowSheep(ApolloPlayer viewer, List<ApolloEntity> sheepEntities);
 
     /**
-     * Resets the {@link UUID} rainbow for the {@link ApolloPlayer}.
+     * Resets the {@link ApolloEntity} rainbow for the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
-     * @param sheepUuids the UUIDs of the sheep to manipulate
+     * @param sheepEntities the list of sheep entities to manipulate
      * @since 1.0.0
      */
-    public abstract void resetRainbowSheep(ApolloPlayer viewer, List<UUID> sheepUuids);
+    public abstract void resetRainbowSheep(ApolloPlayer viewer, List<ApolloEntity> sheepEntities);
 
     /**
-     * Flips the {@link UUID} for the {@link ApolloPlayer}.
+     * Flips the {@link ApolloEntity} for the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
-     * @param entityUuids the UUIDs of the entities to flip
+     * @param entities the entities to flip
      * @since 1.0.0
      */
-    public abstract void flipEntity(ApolloPlayer viewer, List<UUID> entityUuids);
+    public abstract void flipEntity(ApolloPlayer viewer, List<ApolloEntity> entities);
 
     /**
-     * Resets the {@link UUID} flip for the {@link ApolloPlayer}.
+     * Resets the {@link ApolloEntity} flip for the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
-     * @param entityUuids the UUIDs of the entities to reset (unflip)
+     * @param entities the entities to reset (unflip)
      * @since 1.0.0
      */
-    public abstract void resetFlippedEntity(ApolloPlayer viewer, List<UUID> entityUuids);
+    public abstract void resetFlippedEntity(ApolloPlayer viewer, List<ApolloEntity> entities);
 
 }
