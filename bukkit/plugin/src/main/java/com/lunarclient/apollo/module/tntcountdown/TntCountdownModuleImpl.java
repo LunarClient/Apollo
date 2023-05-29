@@ -35,12 +35,12 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
 
         ((TNTPrimed) target).setFuseTicks(ticks);
 
-        SetTntCountdownMessage message = SetTntCountdownMessage.newBuilder()
-            .setEntityId(NetworkTypes.toProtobuf(entity))
-            .setDurationTicks(ticks)
-            .build();
-
         for (ApolloPlayer viewer : Apollo.getPlayerManager().getPlayers()) {
+            SetTntCountdownMessage message = SetTntCountdownMessage.newBuilder()
+                .setEntityId(NetworkTypes.toProtobuf(viewer, entity))
+                .setDurationTicks(ticks)
+                .build();
+
             ((AbstractApolloPlayer) viewer).sendPacket(message);
         }
     }

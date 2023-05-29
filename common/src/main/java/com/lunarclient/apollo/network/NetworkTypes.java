@@ -12,6 +12,8 @@ import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Uuid;
+import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.player.ApolloPlayerVersion;
 import java.awt.Color;
 import java.time.Duration;
 import java.util.List;
@@ -20,11 +22,16 @@ import java.util.stream.Collectors;
 
 public final class NetworkTypes {
 
-    public static EntityId toProtobuf(ApolloEntity object) {
-        return EntityId.newBuilder()
-            .setEntityId(object.getEntityId())
-            .setEntityUuid(NetworkTypes.toProtobuf(object.getEntityUuid()))
-            .build();
+    public static EntityId toProtobuf(ApolloPlayer player, ApolloEntity object) {
+        if(player.getVersion().ordinal() < ApolloPlayerVersion.v1_12.ordinal()) {
+            return EntityId.newBuilder()
+                .setEntityId(object.getEntityId())
+                .build();
+        } else {
+            return EntityId.newBuilder()
+                .setEntityUuid(NetworkTypes.toProtobuf(object.getEntityUuid()))
+                .build();
+        }
     }
 
     public static ApolloEntity fromProtobuf(EntityId message) {
