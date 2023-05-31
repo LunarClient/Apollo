@@ -23,7 +23,7 @@ public void displayBorderExample(Player viewer) {
             .id("pvp-tagged-spawn")
             .world("world")
             .cancelEntry(true)
-            .cancelExit(false)
+            .cancelExit(true)
             .canShrinkOrExpand(false)
             .color(Color.RED)
             .bounds(Cuboid2D.builder()
@@ -63,7 +63,7 @@ public void displayBorderExample(Player viewer) {
 `.cancelExit(boolean)` is a boolean option to prevent players from exiting the border, if they're currently inside the border bounds.
 
 ```java
-.cancelExit(false)
+.cancelExit(true)
 ```
 
 `.canShrinkOrExpand(boolean)` is a boolean option to control if the border has the ability to expand or shrink.

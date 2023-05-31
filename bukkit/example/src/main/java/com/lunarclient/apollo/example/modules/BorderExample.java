@@ -22,7 +22,7 @@ public class BorderExample {
                 .id("pvp-tagged-spawn")
                 .world("world")
                 .cancelEntry(true)
-                .cancelExit(false)
+                .cancelExit(true)
                 .canShrinkOrExpand(false)
                 .color(Color.RED)
                 .bounds(Cuboid2D.builder()
