@@ -37,7 +37,7 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
 
         for (ApolloPlayer viewer : Apollo.getPlayerManager().getPlayers()) {
             SetTntCountdownMessage message = SetTntCountdownMessage.newBuilder()
-                .setEntityId(NetworkTypes.toProtobuf(viewer, entity))
+                .setEntityId(NetworkTypes.toProtobuf(entity))
                 .setDurationTicks(ticks)
                 .build();
 

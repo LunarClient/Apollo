@@ -39,7 +39,7 @@ public final class MiscModuleImpl extends MiscModule {
     @Override
     public void overrideRainbowSheep(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> sheepEntities) {
         Set<EntityId> sheepUuidsProto = sheepEntities.stream()
-            .map(entity -> NetworkTypes.toProtobuf(viewer, entity))
+            .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) viewer).sendPacket(OverrideRainbowSheepMessage.newBuilder()
@@ -50,7 +50,7 @@ public final class MiscModuleImpl extends MiscModule {
     @Override
     public void resetRainbowSheep(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> sheepEntities) {
         Set<EntityId> sheepUuidsProto = sheepEntities.stream()
-            .map(entity -> NetworkTypes.toProtobuf(viewer, entity))
+            .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) viewer).sendPacket(ResetRainbowSheepMessage.newBuilder()
@@ -61,7 +61,7 @@ public final class MiscModuleImpl extends MiscModule {
     @Override
     public void flipEntity(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> entities) {
         Set<EntityId> entityUuidsProto = entities.stream()
-            .map(entity -> NetworkTypes.toProtobuf(viewer, entity))
+            .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) viewer).sendPacket(FlipEntityMessage.newBuilder()
@@ -72,7 +72,7 @@ public final class MiscModuleImpl extends MiscModule {
     @Override
     public void resetFlippedEntity(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> entities) {
         Set<EntityId> entityUuidsProto = entities.stream()
-            .map(entity -> NetworkTypes.toProtobuf(viewer, entity))
+            .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toSet());
 
         ((AbstractApolloPlayer) viewer).sendPacket(ResetFlipedEntityMessage.newBuilder()
