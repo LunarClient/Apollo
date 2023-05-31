@@ -23,7 +23,7 @@ public class MiscExample {
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.miscModule.displayVignette(apolloPlayer, Vignette.builder()
-                .resourceLocation("blocks/pumpkin.png")
+                .resourceLocation("textures/misc/pumpkinblur.png")
                 .opacity(0.75f)
                 .build()
             );
