@@ -75,7 +75,7 @@ public final class ServerRuleModule extends ApolloModule {
     public static final NumberOption<Integer> BRIGHTNESS = Option.<Integer>number()
         .comment("Set the brightness amount.")
         .node("brightness").type(TypeToken.get(Integer.class))
-        .defaultValue(50).min(1).max(10000).build();
+        .defaultValue(50).min(1).max(10000).notifyClient().build();
 
     /**
      * Sets the nametag render distance amount.
@@ -85,7 +85,7 @@ public final class ServerRuleModule extends ApolloModule {
     public static final NumberOption<Integer> NAMETAG_RENDER_DISTANCE = Option.<Integer>number()
         .comment("Set the nametag render distance amount.")
         .node("nametag-render-distance").type(TypeToken.get(Integer.class))
-        .defaultValue(64).min(1).max(96).build();
+        .defaultValue(64).min(1).max(96).notifyClient().build();
 
     /**
      * Override max chat length.
@@ -105,7 +105,7 @@ public final class ServerRuleModule extends ApolloModule {
     public static final NumberOption<Integer> MAX_CHAT_LENGTH = Option.<Integer>number()
         .comment("Set the nametag render distance amount.")
         .node("max-chat-length").type(TypeToken.get(Integer.class))
-        .defaultValue(256).min(1).max(256).build();
+        .defaultValue(256).min(1).max(256).notifyClient().build();
 
     ServerRuleModule() {
         this.registerOptions(
