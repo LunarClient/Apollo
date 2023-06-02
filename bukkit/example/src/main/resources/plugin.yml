@@ -31,6 +31,8 @@ commands:
         description: "Staff Mods!"
     stopwatch:
         description: "Stopwatch!"
+    team:
+        description: "Teams!"
     title:
         description: "Titles!"
     tntcountdown:

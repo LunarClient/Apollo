@@ -78,6 +78,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("notification").setExecutor(new NotificationCommand());
         this.getCommand("staffmod").setExecutor(new StaffModCommand());
         this.getCommand("stopwatch").setExecutor(new StopwatchCommand());
+        this.getCommand("team").setExecutor(new TeamCommand());
         this.getCommand("title").setExecutor(new TitleCommand());
         this.getCommand("tntcountdown").setExecutor(new TntCountdownCommand());
         this.getCommand("transfer").setExecutor(new TransferCommand());
