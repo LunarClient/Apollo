@@ -2,10 +2,15 @@ package com.lunarclient.apollo.module.serverrule;
 
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.option.ListOption;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Represents the server rule module.
@@ -24,6 +29,17 @@ public final class ServerRuleModule extends ApolloModule {
         .comment("Set to 'true' to enable leaving game warning, otherwise 'false'.")
         .node("competitive-game").type(TypeToken.get(Boolean.class))
         .defaultValue(false).notifyClient().build();
+
+    /**
+     * A list of commands that will trigger the competitive popup.
+     *
+     * @since 1.0.0
+     */
+    public static final ListOption<String> COMPETITIVE_COMMANDS = Option.<String>list()
+        .comment("A list of commands that will trigger the competitive popup.")
+        .node("competitive-commands").type(new TypeToken<List<String>>() {})
+        .defaultValue(new ArrayList<>(Arrays.asList("/server", "/servers", "/hub")))
+        .notifyClient().build();
 
     /**
      * Disables shaders.
@@ -110,6 +126,7 @@ public final class ServerRuleModule extends ApolloModule {
     ServerRuleModule() {
         this.registerOptions(
             COMPETITIVE_GAME,
+            COMPETITIVE_COMMANDS,
             DISABLE_SHADERS,
             DISABLE_BROADCASTING,
             ANTI_PORTAL_TRAPS,
