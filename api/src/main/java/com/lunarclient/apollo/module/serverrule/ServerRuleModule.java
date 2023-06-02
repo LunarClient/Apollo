@@ -7,7 +7,6 @@ import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
