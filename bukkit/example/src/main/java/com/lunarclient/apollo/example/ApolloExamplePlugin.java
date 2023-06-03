@@ -22,6 +22,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private ModSettingsExample modSettingsExample;
     private NametagExample nametagExample;
     private NotificationExample notificationExample;
+    private ServerRuleExample serverRuleExample;
     private StaffModExample staffModExample;
     private StopwatchExample stopwatchExample;
     private TeamExample teamExample;
@@ -55,6 +56,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.modSettingsExample = new ModSettingsExample();
         this.nametagExample = new NametagExample();
         this.notificationExample = new NotificationExample();
+        this.serverRuleExample = new ServerRuleExample();
         this.staffModExample = new StaffModExample();
         this.stopwatchExample = new StopwatchExample();
         this.teamExample = new TeamExample();
@@ -76,6 +78,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("modsettings").setExecutor(new ModSettingsCommand());
         this.getCommand("nametag").setExecutor(new NametagCommand());
         this.getCommand("notification").setExecutor(new NotificationCommand());
+        this.getCommand("serverrule").setExecutor(new ServerRuleCommand());
         this.getCommand("staffmod").setExecutor(new StaffModCommand());
         this.getCommand("stopwatch").setExecutor(new StopwatchCommand());
         this.getCommand("team").setExecutor(new TeamCommand());
