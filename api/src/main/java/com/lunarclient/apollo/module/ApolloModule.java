@@ -1,7 +1,7 @@
 package com.lunarclient.apollo.module;
 
 import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.event.Listener;
+import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.SimpleOption;
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
-public abstract class ApolloModule implements Listener {
+public abstract class ApolloModule implements ApolloListener {
 
     /**
      * Whether to enable this module.

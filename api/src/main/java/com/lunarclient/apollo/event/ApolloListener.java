@@ -7,7 +7,7 @@ import java.util.function.Consumer;
  *
  * @since 1.0.0
  */
-public interface Listener {
+public interface ApolloListener {
 
     /**
      * Shorthand for {@link EventBus#register(Class, Consumer)}.
