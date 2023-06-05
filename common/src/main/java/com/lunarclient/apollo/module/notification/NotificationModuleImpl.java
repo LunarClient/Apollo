@@ -1,6 +1,7 @@
 package com.lunarclient.apollo.module.notification;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.notification.v1.DisplayNotificationMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
@@ -32,6 +33,7 @@ public final class NotificationModuleImpl extends NotificationModule {
             .setTitle(notification.getTitle())
             .setDescription(notification.getDescription())
             .setResourceLocation(notification.getResourceLocation())
+            .setDisplayTime(NetworkTypes.toProtobuf(notification.getDisplayTime()))
             .build();
     }
 

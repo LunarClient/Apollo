@@ -6,6 +6,7 @@ import com.lunarclient.apollo.module.notification.NotificationModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
 import java.util.Optional;
 
 public class NotificationExample {
@@ -16,6 +17,7 @@ public class NotificationExample {
         .title("UHC Announcement")
         .description("UHC starts in 5 minutes...")
         .resourceLocation("icons/golden_apple.png") // This field is optional
+        .displayTime(Duration.ofSeconds(5))
         .build();
 
     public void displayNotificationExample(Player viewer) {

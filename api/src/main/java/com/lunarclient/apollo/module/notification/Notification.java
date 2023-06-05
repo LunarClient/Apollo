@@ -1,5 +1,6 @@
 package com.lunarclient.apollo.module.notification;
 
+import java.time.Duration;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -39,4 +40,11 @@ public final class Notification {
      */
     String resourceLocation;
 
+    /**
+     * Returns the notification {@link Duration} display time.
+     *
+     * @return the notification display time
+     * @since 1.0.0
+     */
+    Duration displayTime;
 }
