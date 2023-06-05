@@ -19,6 +19,7 @@ private final Notification notification = Notification.builder()
     .title("UHC Announcement")
     .description("UHC starts in 5 minutes...")
     .resourceLocation("icons/golden_apple.png") // This field is optional
+    .displayTime(Duration.ofSeconds(5))
     .build();
 ```
 
@@ -50,6 +51,12 @@ private final Notification notification = Notification.builder()
 
 ```java
 
+```
+
+`.displayTime(java.time.Duration)` is the duration you want to keep the notification on screen. See the [java.time.Duration Javadocs](https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html) for more.
+
+```java
+.displayTime(Duration.ofSeconds(5))
 ```
 
 If this field is left empty (null) it'll display a generic info icon, as displayed here.
