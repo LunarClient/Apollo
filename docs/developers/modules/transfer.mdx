@@ -4,13 +4,13 @@ import { Callout } from 'nextra-theme-docs'
 
 ## Overview
 
-The transfer module allows you to transfer players from one server to another, without the need of additional proxy setups, using the transfer packet. We've also introduced a ping-packet to get a players ping to other servers.
+The transfer module allows you to transfer players from one server to another, without the need of additional proxy setups, using the transfer packet. We've also introduced a ping packet to get a players ping to other servers.
 
-- Adds the ability to using the `Transfer-Packet` and `Ping-Packet` on players.
+- Adds the ability to use the `Transfer Packet` and `Ping Packet` on players.
   - Ability to transfer players from one server to another
   - Ability to ping other servers, to get a players ping to those servers.
 
-When you combine the usage of the ping-packet and transfer-packet, you can do connection based optimizing for your players.
+When you combine the usage of the ping packet and transfer packet, you can do connection based optimizing for your players.
 
 <Callout type="warning">
   Players are prompted with a confirmation screen, where they can accept or decline the transfer-packet.
@@ -20,7 +20,7 @@ When you combine the usage of the ping-packet and transfer-packet, you can do co
 
 ## Integration
 
-### Using the `Transfer-Packet`
+### Using the Transfer Packet
 
 ```java
 public void transferExample(Player viewer) {
@@ -52,7 +52,7 @@ public void transferExample(Player viewer) {
 }
 ```
 
-### Using the `Ping-Packet`
+### Using the Ping Packet
 
 ```java
 public void pingExample(Player viewer) {
