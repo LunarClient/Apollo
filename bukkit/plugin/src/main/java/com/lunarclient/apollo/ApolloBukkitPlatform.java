@@ -11,8 +11,6 @@ import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModuleImpl;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
-import com.lunarclient.apollo.module.hearttexture.HeartTextureModule;
-import com.lunarclient.apollo.module.hearttexture.HeartTextureModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
@@ -70,7 +68,6 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
                 .addModule(BorderModule.class, new BorderModuleImpl())
                 .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
                 .addModule(CooldownModule.class, new CooldownModuleImpl())
-                .addModule(HeartTextureModule.class, new HeartTextureModuleImpl())
                 .addModule(HologramModule.class, new HologramModuleImpl())
                 .addModule(LimbModule.class, new LimbModuleImpl())
                 .addModule(MiscModule.class, new MiscModuleImpl())

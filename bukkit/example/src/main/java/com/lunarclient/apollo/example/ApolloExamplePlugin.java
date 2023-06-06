@@ -15,7 +15,6 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private BorderExample borderExample;
     private ColoredFireExample coloredFireExample;
     private CooldownExample cooldownExample;
-    private HeartTextureExample heartTextureExample;
     private HologramExample hologramExample;
     private LimbExample limbExample;
     private MiscExample miscExample;
@@ -49,7 +48,6 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.borderExample = new BorderExample();
         this.coloredFireExample = new ColoredFireExample();
         this.cooldownExample = new CooldownExample();
-        this.heartTextureExample = new HeartTextureExample();
         this.hologramExample = new HologramExample();
         this.limbExample = new LimbExample();
         this.miscExample = new MiscExample();
@@ -71,7 +69,6 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("border").setExecutor(new BorderCommand());
         this.getCommand("coloredfire").setExecutor(new ColoredFireCommand());
         this.getCommand("cooldown").setExecutor(new CooldownCommand());
-        this.getCommand("hearttexture").setExecutor(new HeartTextureCommand());
         this.getCommand("hologram").setExecutor(new HologramCommand());
         this.getCommand("limb").setExecutor(new LimbCommand());
         this.getCommand("misc").setExecutor(new MiscCommand());
