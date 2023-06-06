@@ -18,8 +18,22 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Utility class for converting objects to and from their
+ * corresponding Protocol Buffers representations.
+ *
+ * @since 1.0.0
+ */
 public final class NetworkTypes {
 
+    /**
+     * Converts an {@link ApolloEntity} object to
+     * an {@link EntityId} proto message.
+     *
+     * @param object the apollo entity
+     * @return the proto entity id message
+     * @since 1.0.0
+     */
     public static EntityId toProtobuf(ApolloEntity object) {
         return EntityId.newBuilder()
             .setEntityId(object.getEntityId())
@@ -27,10 +41,26 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link EntityId} proto message to
+     * an {@link ApolloEntity} object.
+     *
+     * @param message the entity id message
+     * @return the apollo entity object
+     * @since 1.0.0
+     */
     public static ApolloEntity fromProtobuf(EntityId message) {
         return new ApolloEntity(message.getEntityId(), NetworkTypes.fromProtobuf(message.getEntityUuid()));
     }
 
+    /**
+     * Converts an {@link UUID} object to
+     * an {@link Uuid} proto message.
+     *
+     * @param object the uuid
+     * @return the proto uuid message
+     * @since 1.0.0
+     */
     public static Uuid toProtobuf(UUID object) {
         return Uuid.newBuilder()
             .setHigh64(object.getMostSignificantBits())
@@ -38,20 +68,52 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link Uuid} proto message to
+     * an {@link UUID} object.
+     *
+     * @param message the uuid message
+     * @return the uuid object
+     * @since 1.0.0
+     */
     public static UUID fromProtobuf(Uuid message) {
         return new UUID(message.getHigh64(), message.getLow64());
     }
 
+    /**
+     * Converts an {@link Color} object to an
+     * {@link com.lunarclient.apollo.common.v1.Color} proto message.
+     *
+     * @param object the color
+     * @return the proto color message
+     * @since 1.0.0
+     */
     public static com.lunarclient.apollo.common.v1.Color toProtobuf(Color object) {
         return com.lunarclient.apollo.common.v1.Color.newBuilder()
             .setColor(object.getRGB())
             .build();
     }
 
+    /**
+     * Converts an {@link com.lunarclient.apollo.common.v1.Color}
+     * proto message to an {@link Color} object.
+     *
+     * @param message the color message
+     * @return the color object
+     * @since 1.0.0
+     */
     public static Color fromProtobuf(com.lunarclient.apollo.common.v1.Color message) {
         return new Color(message.getColor());
     }
 
+    /**
+     * Converts an {@link Duration} object to an
+     * {@link com.google.protobuf.Duration} proto message.
+     *
+     * @param object the duration
+     * @return the proto duration message
+     * @since 1.0.0
+     */
     public static com.google.protobuf.Duration toProtobuf(Duration object) {
         return com.google.protobuf.Duration.newBuilder()
             .setSeconds(object.getSeconds())
@@ -59,10 +121,26 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link com.google.protobuf.Duration}
+     * proto message to an {@link Duration} object.
+     *
+     * @param message the duration message
+     * @return the duration object
+     * @since 1.0.0
+     */
     public static Duration fromProtobuf(com.google.protobuf.Duration message) {
         return Duration.ofSeconds(message.getSeconds()).withNanos(message.getNanos());
     }
 
+    /**
+     * Converts an {@link ApolloLocation} object to an
+     * {@link com.lunarclient.apollo.common.v1.Location} proto message.
+     *
+     * @param object the location
+     * @return the proto location message
+     * @since 1.0.0
+     */
     public static com.lunarclient.apollo.common.v1.Location toProtobuf(ApolloLocation object) {
         return com.lunarclient.apollo.common.v1.Location.newBuilder()
             .setWorld(object.getWorld())
@@ -72,6 +150,14 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link com.lunarclient.apollo.common.v1.Location}
+     * proto message to an {@link ApolloLocation} object.
+     *
+     * @param message the location message
+     * @return the apollo location object
+     * @since 1.0.0
+     */
     public static ApolloLocation fromProtobuf(com.lunarclient.apollo.common.v1.Location message) {
         return ApolloLocation.builder()
             .world(message.getWorld())
@@ -81,6 +167,14 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link ApolloBlockLocation} object to an
+     * {@link com.lunarclient.apollo.common.v1.BlockLocation} proto message.
+     *
+     * @param object the block location
+     * @return the proto block location message
+     * @since 1.0.0
+     */
     public static com.lunarclient.apollo.common.v1.BlockLocation toProtobuf(ApolloBlockLocation object) {
         return com.lunarclient.apollo.common.v1.BlockLocation.newBuilder()
             .setWorld(object.getWorld())
@@ -90,6 +184,14 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link com.lunarclient.apollo.common.v1.BlockLocation}
+     * proto message to an {@link ApolloBlockLocation} object.
+     *
+     * @param message the block location message
+     * @return the apollo block location object
+     * @since 1.0.0
+     */
     public static ApolloBlockLocation fromProtobuf(com.lunarclient.apollo.common.v1.BlockLocation message) {
         return ApolloBlockLocation.builder()
             .world(message.getWorld())
@@ -99,6 +201,14 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link Cuboid2D} object to an
+     * {@link com.lunarclient.apollo.common.v1.Cuboid2D} proto message.
+     *
+     * @param object the cuboid 2D
+     * @return the proto cuboid 2D message
+     * @since 1.0.0
+     */
     public static com.lunarclient.apollo.common.v1.Cuboid2D toProtobuf(Cuboid2D object) {
         return com.lunarclient.apollo.common.v1.Cuboid2D.newBuilder()
             .setMinX(object.getMinX())
@@ -108,6 +218,14 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link com.lunarclient.apollo.common.v1.Cuboid2D}
+     * proto message to an {@link Cuboid2D} object.
+     *
+     * @param message the cuboid 2D message
+     * @return the cuboid 2D object
+     * @since 1.0.0
+     */
     public static Cuboid2D fromProtobuf(com.lunarclient.apollo.common.v1.Cuboid2D message) {
         return Cuboid2D.builder()
             .minX(message.getMinX())
@@ -117,6 +235,14 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link Cuboid3D} object to an
+     * {@link com.lunarclient.apollo.common.v1.Cuboid3D} proto message.
+     *
+     * @param object the cuboid 3D
+     * @return the proto cuboid 3D message
+     * @since 1.0.0
+     */
     public static com.lunarclient.apollo.common.v1.Cuboid3D toProtobuf(Cuboid3D object) {
         return com.lunarclient.apollo.common.v1.Cuboid3D.newBuilder()
             .setMinX(object.getMinX())
@@ -128,6 +254,14 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link com.lunarclient.apollo.common.v1.Cuboid3D}
+     * proto message to an {@link Cuboid3D} object.
+     *
+     * @param message the cuboid 3D message
+     * @return the cuboid 3D object
+     * @since 1.0.0
+     */
     public static Cuboid3D fromProtobuf(com.lunarclient.apollo.common.v1.Cuboid3D message) {
         return Cuboid3D.builder()
             .minX(message.getMinX())
@@ -139,6 +273,14 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link Component} object to an
+     * {@link com.lunarclient.apollo.common.v1.Component} proto message.
+     *
+     * @param object the component
+     * @return the proto component message
+     * @since 1.0.0
+     */
     public static com.lunarclient.apollo.common.v1.Component toProtobuf(Component object) {
         List<com.lunarclient.apollo.common.v1.Component.TextDecorator> decorators = object.getDecorators()
             .stream().map(decorator -> com.lunarclient.apollo.common.v1.Component.TextDecorator.forNumber(decorator.ordinal() + 1))
@@ -156,6 +298,14 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link com.lunarclient.apollo.common.v1.Component}
+     * proto message to an {@link Component} object.
+     *
+     * @param message the component message
+     * @return the component object
+     * @since 1.0.0
+     */
     public static Component fromProtobuf(com.lunarclient.apollo.common.v1.Component message) {
         List<Component.TextDecorators> decorators = message.getDecoratorsList()
             .stream().map(decorator -> Component.TextDecorators.values()[decorator.ordinal() - 1])
@@ -173,6 +323,14 @@ public final class NetworkTypes {
             .build();
     }
 
+    /**
+     * Converts an {@link Icon} object to an
+     * {@link com.lunarclient.apollo.common.v1.Icon} proto message.
+     *
+     * @param icon the icon
+     * @return the proto icon message
+     * @since 1.0.0
+     */
     public static com.lunarclient.apollo.common.v1.Icon toProtobuf(Icon icon) {
         com.lunarclient.apollo.common.v1.Icon.Builder builder = com.lunarclient.apollo.common.v1.Icon.newBuilder();
 
@@ -212,6 +370,14 @@ public final class NetworkTypes {
         return builder.build();
     }
 
+    /**
+     * Converts an {@link com.lunarclient.apollo.common.v1.Icon}
+     * proto message to an {@link Icon} object.
+     *
+     * @param icon the icon message
+     * @return the icon object
+     * @since 1.0.0
+     */
     public static Icon fromProtobuf(com.lunarclient.apollo.common.v1.Icon icon) {
         if(icon.hasItemStack()) {
             com.lunarclient.apollo.common.v1.ItemStackIcon item = icon.getItemStack();

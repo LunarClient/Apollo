@@ -37,6 +37,7 @@ public class OptionsImpl implements Options {
     /**
      * Constructs a new {@link OptionsImpl}.
      *
+     * @param module the apollo module
      * @since 1.0.0
      */
     public OptionsImpl(@Nullable ApolloModule module) {
