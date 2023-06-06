@@ -20,7 +20,7 @@ public class ServerRuleCommand implements CommandExecutor {
         }
 
         if (args.length != 2) {
-            player.sendMessage("Usage: /serverrule <antiportaltraps|nametagrenderdistance> <value>");
+            player.sendMessage("Usage: /serverrule <antiportaltraps|overridenametagrenderdistance|nametagrenderdistance> <value>");
             return true;
         }
 
@@ -30,6 +30,13 @@ public class ServerRuleCommand implements CommandExecutor {
                 this.serverRuleExample.setAntiPortalTraps(value);
 
                 player.sendMessage("Anti portal traps rule has been set to " + value);
+            }
+
+            case "overridenametagrenderdistance" -> {
+                boolean value = Boolean.parseBoolean(args[1]);
+                this.serverRuleExample.setOverrideNametagRenderDistance(value);
+
+                player.sendMessage("Override nametag render distance rule has been set to " + value);
             }
 
             case "nametagrenderdistance" -> {
@@ -46,7 +53,7 @@ public class ServerRuleCommand implements CommandExecutor {
                 player.sendMessage("Nametag render distance has been set to " + value);
             }
 
-            default -> player.sendMessage("Usage: /serverrule <antiportaltraps|nametagrenderdistance> <value>");
+            default -> player.sendMessage("Usage: /serverrule <antiportaltraps|overridenametagrenderdistance|nametagrenderdistance> <value>");
         }
 
         return true;

@@ -11,6 +11,10 @@ public class ServerRuleExample {
         this.serverRuleModule.getOptions().set(ServerRuleModule.ANTI_PORTAL_TRAPS, value);
     }
 
+    public void setOverrideNametagRenderDistance(boolean value) {
+        this.serverRuleModule.getOptions().set(ServerRuleModule.OVERRIDE_NAMETAG_RENDER_DISTANCE, value);
+    }
+
     public void setNametagRenderDistanceExample(int value) {
         this.serverRuleModule.getOptions().set(ServerRuleModule.NAMETAG_RENDER_DISTANCE, value);
     }
