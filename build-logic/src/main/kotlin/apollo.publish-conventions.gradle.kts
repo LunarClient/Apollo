@@ -53,9 +53,6 @@ checkstyle {
     toolVersion = libs.stylecheck.get().toString()
     configDirectory.set(configPath)
 
-    // Ignore failures for now.
-    isIgnoreFailures = true
-
     setConfigProperties(
         "configDirectory" to configPath,
         "severity" to "error"
