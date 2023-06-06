@@ -93,6 +93,16 @@ public final class ServerRuleModule extends ApolloModule {
         .defaultValue(50).min(1).max(10000).notifyClient().build();
 
     /**
+     * Override nametag render distance.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> OVERRIDE_NAMETAG_RENDER_DISTANCE = Option.<Boolean>builder()
+        .comment("Set to 'true' to override nametag render distance, otherwise 'false'.")
+        .node("override-nametag-render-distance").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    /**
      * Sets the nametag render distance amount.
      *
      * @since 1.0.0
@@ -131,6 +141,7 @@ public final class ServerRuleModule extends ApolloModule {
             ANTI_PORTAL_TRAPS,
             OVERRIDE_BRIGHTNESS,
             BRIGHTNESS,
+            OVERRIDE_NAMETAG_RENDER_DISTANCE,
             NAMETAG_RENDER_DISTANCE,
             OVERRIDE_MAX_CHAT_LENGTH,
             MAX_CHAT_LENGTH
