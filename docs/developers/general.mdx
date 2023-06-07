@@ -1,0 +1,33 @@
+# General
+
+### Overview
+
+@Trent please format this better
+
+## Player
+
+#### Checking if player is running Lunar Client
+
+```java
+boolean runningLunarClient = Apollo.getPlayerManager().hasSupport(player.getUniqueId());
+```
+
+#### Getting an ApolloPlayer object by player UUID
+
+```java
+Optional<ApolloPlayer> apolloPlayer = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+```
+
+#### Get all players running Lunar Client
+
+```java
+Collection<ApolloPlayer> playersRunningLunarClient = Apollo.getPlayerManager().getPlayers();
+```
+
+## Module
+
+#### Get a specific module
+
+```java
+BorderModule borderModule = Apollo.getModuleManager().getModule(BorderModule.class);
+```

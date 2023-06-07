@@ -34,7 +34,7 @@ public class ServerRuleCommand implements CommandExecutor {
 
             case "overridenametagrenderdistance" -> {
                 boolean value = Boolean.parseBoolean(args[1]);
-                this.serverRuleExample.setOverrideNametagRenderDistance(value);
+                this.serverRuleExample.setOverrideNametagRenderDistance(player, value);
 
                 player.sendMessage("Override nametag render distance rule has been set to " + value);
             }

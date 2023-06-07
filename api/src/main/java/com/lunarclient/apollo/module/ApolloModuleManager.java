@@ -24,7 +24,7 @@ public interface ApolloModuleManager {
 
     /**
      * Returns the type {@code T} {@link ApolloModule} with the specified
-     * {@link Class} if it exists, otherwise returns {@link Optional#empty()}.
+     * {@link Class} if it exists, otherwise returns null.
      *
      * @param moduleClass the module class
      * @param <T> the apollo module type

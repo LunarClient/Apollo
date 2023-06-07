@@ -1,3 +1,38 @@
 # Server Rule Module
 
-{/* needs to be done */}
+## Overview
+
+This module heavily integrates with our [Options API](apollo/developers/options)
+
+@Trent
+
+## Integration
+
+### How to toggle a specific server rule
+
+```java
+public void setAntiPortalTraps(boolean value) {
+    this.serverRuleModule.getOptions().set(ServerRuleModule.ANTI_PORTAL_TRAPS, value);
+}
+```
+
+### How to toggle a specific server rule for a specific player
+
+```java
+public void setOverrideNametagRenderDistance(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.serverRuleModule.getOptions().set(apolloPlayer, ServerRuleModule.OVERRIDE_NAMETAG_RENDER_DISTANCE, value);
+    });
+}
+```
+
+### How to change a specific server rule value
+
+```java
+public void setNametagRenderDistanceExample(int value) {
+    this.serverRuleModule.getOptions().set(ServerRuleModule.NAMETAG_RENDER_DISTANCE, value);
+}
+```
+
