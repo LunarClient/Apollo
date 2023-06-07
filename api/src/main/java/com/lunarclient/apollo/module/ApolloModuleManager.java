@@ -1,7 +1,6 @@
 package com.lunarclient.apollo.module;
 
 import java.util.Collection;
-import java.util.Optional;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
