@@ -23,14 +23,14 @@ public class TntCountdownExample implements Listener {
     public void overrideTntCountdownExample(Player viewer) {
         Location location = viewer.getLocation();
         World world = viewer.getWorld();
-
         TNTPrimed entity = world.spawn(location, TNTPrimed.class);
 
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.setTntCountdown(
-            new ApolloEntity(entity.getEntityId(), entity.getUniqueId()),
-            200
-        ));
+
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            ApolloEntity apolloEntity = new ApolloEntity(entity.getEntityId(), entity.getUniqueId());
+            this.tntCountdownModule.setTntCountdown(apolloEntity, 200);
+        });
     }
 
     public void clearTntCountdownOptionExample() {

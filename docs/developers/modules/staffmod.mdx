@@ -32,8 +32,8 @@ public void enableStaffModsExample(Player viewer) {
 
 ```java
 public void disableStaffModsExample(Player viewer) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.disableStaffMods(apolloPlayer, List.of(StaffMod.XRAY)));
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.disableStaffMods(apolloPlayer, List.of(StaffMod.XRAY)));
 }
 ```
 
