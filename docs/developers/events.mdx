@@ -1,0 +1,204 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Events
+
+## Overview
+
+Apollo provides it's own listener based event system, similar to the existing event system found in Bukkit.
+
+## List of available Apollo events
+
+<details>
+<summary>ApolloRegisterPlayerEvent</summary>
+
+#### Overview
+
+Called when the player joins the server using Lunar Client.
+
+#### Fields
+
+1. `ApolloPlayer player`
+   - The apollo player that was registered.
+
+</details>
+
+<details>
+<summary>ApolloUnregisterPlayerEvent</summary>
+
+#### Overview
+
+Called when the player leaves the server using Lunar Client.
+
+#### Fields
+
+1. `ApolloPlayer player`
+   - The apollo player that was unregistered.
+
+</details>
+
+<details>
+<summary>ApolloReceivePacketEvent</summary>
+
+#### Overview
+
+Called when the apollo player receives an apollo packet from Lunar Client.
+
+#### Fields
+
+1. `ApolloPlayer player`
+   - The apollo player that received the packet.
+2. `Any packet`
+   - The apollo packet that was received.
+
+</details>
+
+<details>
+<summary>ApolloSendPacketEvent</summary>
+
+#### Overview
+
+Called when the apollo player sends an apollo packet to Lunar Client.
+
+#### Fields
+
+1. `ApolloPlayer player`
+   - The apollo player that sent the packet.
+2. `Any packet`
+   - The apollo packet that was sent.
+
+<Callout type="info">
+  This event is cancellable.
+</Callout>
+
+</details>
+
+<details>
+<summary>ApolloUpdateOptionEvent</summary>
+
+#### Overview
+
+Called when an option is updated.
+
+#### Fields
+
+1. `Options container`
+   - The container that the option is in.
+2. `ApolloPlayer player`
+   - The apollo player the option was updated for, or null if it was a global option.
+3. `Option<?, ?, ?> option`
+   - The option that was updated.
+4. `Object value`
+   - The new value of the option.
+
+<Callout type="info">
+  This event is cancellable.
+</Callout>
+
+</details>
+
+## Integration
+
+### Sample Code (Method 1)
+
+```java
+public class GeneralExample1 implements ApolloListener {
+
+    public GeneralExample1() {
+        EventBus.getBus().register(this);
+    }
+
+    @Listen
+    public void onApolloRegister(ApolloRegisterPlayerEvent event) {
+        ((Player) event.getPlayer()).sendMessage("You have joined using LunarClient!");
+    }
+}
+```
+
+### Sample Code (Method 2)
+
+```java
+public class GeneralExample2 implements ApolloListener {
+
+    public GeneralExample2() {
+        this.handle(ApolloRegisterPlayerEvent.class, this::onApolloRegister);
+    }
+
+    public void onApolloRegister(ApolloRegisterPlayerEvent event) {
+        ((Player) event.getPlayer()).sendMessage("You have joined using LunarClient!");
+    }
+}
+```
+
+## Creating Apollo events
+
+### Creating the event class
+
+```java
+// Normal event
+public class CoolApolloEvent implements Event {
+
+    private final ApolloPlayer player;
+
+    public CoolApolloEvent(ApolloPlayer player) {
+        this.player = player;
+    }
+
+    public ApolloPlayer getPlayer() {
+        return this.player;
+    }
+}
+
+// Cancellable event
+public class CoolApolloCancellableEvent implements EventCancellable {
+
+    private final ApolloPlayer player;
+
+    private boolean cancelled;
+
+    public CoolApolloCancellableEvent(ApolloPlayer player) {
+        this.player = player;
+    }
+
+    public ApolloPlayer getPlayer() {
+        return this.player;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return this.cancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancel) {
+        this.cancelled = cancel;
+    }
+}
+```
+
+### Calling the created event
+
+```java
+// Calling a normal event
+public void callCoolApolloEvent(ApolloPlayer player) {
+    CoolApolloEvent event = new CoolApolloEvent(player);
+    EventBus.EventResult<CoolApolloEvent> result = EventBus.getBus().post(event);
+
+    for (Throwable throwable : result.getThrowing()) {
+        throwable.printStackTrace();
+    }
+}
+
+// Calling a cancellable event
+public void callCoolApolloCancellableEvent(ApolloPlayer player) {
+    CoolApolloCancellableEvent event = new CoolApolloCancellableEvent(player);
+    EventBus.EventResult<CoolApolloCancellableEvent> result = EventBus.getBus().post(event);
+
+    if (!result.getEvent().isCancelled()) {
+        // Do some action if the event is not cancelled
+    }
+
+    for (Throwable throwable : result.getThrowing()) {
+        throwable.printStackTrace();
+    }
+}
+```
