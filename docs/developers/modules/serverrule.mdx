@@ -2,9 +2,15 @@
 
 ## Overview
 
-This module heavily integrates with our [Options API](apollo/developers/options)
+The server rule module contains pre-created settings servers can enable, kind of like Minecrafts vanilla 'serverRule' command.
 
-@Trent
+This module heavily integrates with our [Options API](apollo/developers/options).
+
+- Toggle or set values for pre-created server settings.
+  - Ability to enable the competitive game popup.
+  - Ability to forcefully disable Lunar Client mod settings and shaders.
+  - Ability to override the max chat length and nametag render distance.
+  - Ability to enable the quality of life features, anti-portal-trap and disable broadcasting.
 
 ## Integration
 
@@ -51,19 +57,19 @@ public void setNametagRenderDistanceExample(int value) {
         - Default: `["/server", "/servers", "/hub"]`
 
 - __`DISABLE_SHADERS`__
-    - Disables shaders.
+    - Prevents users from enabling shaders.
     - Values
         - Type: `Boolean`
         - Default: `false`
 
 - __`DISABLE_BROADCASTING`__
-    - Disables broadcast menu (F6).
+    - Disables the broadcast to twitch menu added in 1.7 & 1.8 (F6).
     - Values
         - Type: `Boolean`
         - Default: `false`
 
 - __`ANTI_PORTAL_TRAPS`__
-    - Allows players to open their chat while in a portal.
+    - Allows players to open their chat while in a nether portal.
     - Values
         - Type: `Boolean`
         - Default: `false`

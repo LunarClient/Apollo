@@ -27,8 +27,8 @@ public void transferExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
     if (apolloPlayerOpt.isEmpty()) {
-    viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
-    return;
+        viewer.sendMessage(Component.text("Join with Lunar Client to test this feature!"));
+        return;
     }
 
     // Sending the transfer request to the player, to transfer them to "mc.hypixel.net"
