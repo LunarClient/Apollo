@@ -79,7 +79,7 @@ public void displayWaypointExample(Player viewer) {
 ```java
 public void removeWaypointExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.waypointModule.removeWaypoint(apolloPlayer, "KoTh"));
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.waypointModule.removeWaypoint(apolloPlayer, "KoTH"));
 }
 ```
 
@@ -91,3 +91,17 @@ public void resetWaypointsExample(Player viewer) {
     apolloPlayerOpt.ifPresent(this.waypointModule::resetWaypoints);
 }
 ```
+
+## Available options
+
+- __`SERVER_HANDLES_WAYPOINTS`__
+    - Lets servers handle waypoints.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DEFAULT_WAYPOINTS`__
+    - Sets the default waypoints to send to the player.
+    - Values
+        - Type: `List<Waypoint>`
+        - Default: ``
