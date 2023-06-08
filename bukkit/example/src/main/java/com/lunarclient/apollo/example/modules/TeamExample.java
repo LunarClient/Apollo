@@ -7,11 +7,7 @@ import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.module.team.TeamMember;
 import com.lunarclient.apollo.module.team.TeamModule;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.awt.*;
@@ -22,7 +18,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class TeamExample implements Listener {
+public class TeamExample {
 
     private final TeamModule teamModule = Apollo.getModuleManager().getModule(TeamModule.class);
 
@@ -31,8 +27,6 @@ public class TeamExample implements Listener {
 
     public TeamExample() {
         new TeamUpdateTask();
-
-        Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
     }
 
     public Optional<Team> getByPlayerUuid(UUID playerUuid) {
@@ -58,8 +52,6 @@ public class TeamExample implements Listener {
         }
     }
 
-    @Getter
-    @RequiredArgsConstructor
     public class Team {
 
         private final UUID teamId;
@@ -83,6 +75,7 @@ public class TeamExample implements Listener {
                 .ifPresent(teamModule::resetTeamMembers);
         }
 
+        // The refresh method used for updating members locations
         public void refresh() {
             var teammates = this.members.stream().filter(Objects::nonNull)
                 .map(member -> {
@@ -104,8 +97,31 @@ public class TeamExample implements Listener {
             this.members.forEach(member -> Apollo.getPlayerManager().getPlayer(member.getUniqueId())
                 .ifPresent(apolloPlayer -> teamModule.updateTeamMembers(apolloPlayer, teammates)));
         }
+
+        public UUID getTeamId() {
+            return this.teamId;
+        }
+
+        public Set<Player> getMembers() {
+            return this.members;
+        }
+
+        @Override
+        public boolean equals(Object object) {
+            if (this == object) return true;
+            if (object == null || object.getClass() != this.getClass()) return false;
+
+            Team team = (Team) object;
+            return this.teamId.equals(team.getTeamId());
+        }
+
+        @Override
+        public int hashCode() {
+            return this.teamId.hashCode();
+        }
     }
 
+    // Updates players location every 2 ticks (100ms)
     public class TeamUpdateTask extends BukkitRunnable {
 
         public TeamUpdateTask() {
