@@ -51,6 +51,16 @@ public final class ServerRuleModule extends ApolloModule {
         .defaultValue(false).notifyClient().build();
 
     /**
+     * Disables chunk reloading (F3 + A).
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> DISABLE_CHUNK_RELOADING = Option.<Boolean>builder()
+        .comment("Set to 'true' to disable chunk reloading, otherwise 'false'.")
+        .node("disable-chunk-reloading").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    /**
      * Disables broadcast menu (F6).
      *
      * @since 1.0.0
@@ -137,6 +147,7 @@ public final class ServerRuleModule extends ApolloModule {
             COMPETITIVE_GAME,
             COMPETITIVE_COMMANDS,
             DISABLE_SHADERS,
+            DISABLE_CHUNK_RELOADING,
             DISABLE_BROADCASTING,
             ANTI_PORTAL_TRAPS,
             OVERRIDE_BRIGHTNESS,
