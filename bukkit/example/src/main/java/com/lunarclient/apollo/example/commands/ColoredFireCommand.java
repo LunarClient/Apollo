@@ -20,9 +20,7 @@ public class ColoredFireCommand implements CommandExecutor {
             return true;
         }
 
-        var action = args[0].toLowerCase();
-
-        if(args.length == 1 && action.equals("clear")) {
+        if (args.length == 1 && args[0].equalsIgnoreCase("clear")) {
             this.coloredFireExample.resetColoredFiresExample(player);
             player.sendMessage("Resetting colored fires...");
             return true;
