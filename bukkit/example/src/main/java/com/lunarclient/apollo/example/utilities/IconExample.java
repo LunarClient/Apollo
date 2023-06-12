@@ -7,9 +7,15 @@ import org.bukkit.Material;
 
 public class IconExample {
 
-    public static ItemStackIcon itemStackIconExample() {
+    public static ItemStackIcon itemStackIdIconExample() {
         return ItemStackIcon.builder()
             .itemId(Material.ENDER_PEARL.getId())
+            .build();
+    }
+
+    public static ItemStackIcon itemStackNameIconExample() {
+        return ItemStackIcon.builder()
+            .itemName("ENDER_PEARL")
             .build();
     }
 

@@ -39,9 +39,15 @@ public final class ItemStackIcon extends Icon {
 ### Sample Code
 
 ```java
-public static ItemStackIcon itemStackIconExample() {
+public static ItemStackIcon itemStackIdIconExample() {
     return ItemStackIcon.builder()
         .itemId(Material.ENDER_PEARL.getId())
+        .build();
+}
+
+public static ItemStackIcon itemStackNameIconExample() {
+    return ItemStackIcon.builder()
+        .itemName("ENDER_PEARL")
         .build();
 }
 ```
