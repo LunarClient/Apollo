@@ -51,7 +51,7 @@ public final class ServerRuleModule extends ApolloModule {
         .defaultValue(false).notifyClient().build();
 
     /**
-     * Disables chunk reloading (F3 + A).
+     * Disables chunk reloading (F3 + A) and disables shaders reload while using Iris (R).
      *
      * @since 1.0.0
      */
