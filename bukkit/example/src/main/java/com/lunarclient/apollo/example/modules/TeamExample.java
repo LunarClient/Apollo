@@ -78,7 +78,7 @@ public class TeamExample {
 
         // The refresh method used for updating members locations
         public void refresh() {
-            var teammates = this.members.stream().filter(Objects::nonNull)
+            var teammates = this.members.stream().filter(Player::isOnline)
                 .map(member -> {
                     var location = member.getLocation();
 
