@@ -3,6 +3,7 @@ package com.lunarclient.apollo.example.modules;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.module.team.TeamMember;
@@ -83,6 +84,10 @@ public class TeamExample {
 
                     return TeamMember.builder()
                         .playerUuid(member.getUniqueId())
+                        .displayName(Component.builder()
+                            .content(member.getName())
+                            .color(Color.WHITE)
+                            .build())
                         .markerColor(Color.WHITE)
                         .location(ApolloLocation.builder()
                             .world(location.getWorld().getName())

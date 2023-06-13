@@ -20,6 +20,7 @@ public final class TeamModuleImpl extends TeamModule {
         List<com.lunarclient.apollo.team.v1.TeamMember> teamMembersProto = teamMembers.stream()
             .map(teamMember -> com.lunarclient.apollo.team.v1.TeamMember.newBuilder()
                 .setPlayerUuid(NetworkTypes.toProtobuf(teamMember.getPlayerUuid()))
+                .setPlayerDisplayName(NetworkTypes.toProtobuf(teamMember.getDisplayName()))
                 .setLocation(NetworkTypes.toProtobuf(teamMember.getLocation()))
                 .setMarkerColor(NetworkTypes.toProtobuf(teamMember.getMarkerColor()))
                 .build()
