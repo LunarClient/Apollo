@@ -9,8 +9,6 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.player.ApolloPlayerVersion;
-import java.util.Set;
 
 /**
  * Utility class for sending options to the client.
@@ -44,8 +42,6 @@ public final class NetworkOptions {
         modulesBuilder.addConfigurableSettings(moduleBuilder.build());
 
         for(ApolloPlayer player : players) {
-            if(!NetworkOptions.supportsVersion(module, player)) continue;
-
             ((AbstractApolloPlayer) player).sendPacket(modulesBuilder.build());
         }
     }
@@ -64,8 +60,6 @@ public final class NetworkOptions {
             OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
 
             for(ApolloModule module : modules) {
-                if(!NetworkOptions.supportsVersion(module, player)) continue;
-
                 modulesBuilder.addConfigurableSettings(NetworkOptions.moduleWithOptions(
                         module
                 ).build());
@@ -96,12 +90,4 @@ public final class NetworkOptions {
                 .setApolloModule(module.getId())
                 .setEnable(module.isEnabled());
     }
-
-    private static boolean supportsVersion(ApolloModule module, ApolloPlayer player) {
-        Set<ApolloPlayerVersion> supportedVersions = module.getSupportedVersions();
-        ApolloPlayerVersion playerVersion = player.getVersion();
-
-        return supportedVersions.contains(playerVersion);
-    }
-
 }

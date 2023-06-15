@@ -5,14 +5,12 @@ import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.SimpleOption;
-import com.lunarclient.apollo.player.ApolloPlayerVersion;
 import io.leangen.geantyref.TypeToken;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -118,16 +116,6 @@ public abstract class ApolloModule implements ApolloListener {
      */
     public Collection<ApolloPlatform.Kind> getSupportedPlatforms() {
         return Collections.singletonList(ApolloPlatform.Kind.SERVER);
-    }
-
-    /**
-     * Returns a {@link Set} of supported {@link ApolloPlayerVersion}.
-     *
-     * @return a collection of supported client versions
-     * @since 1.0.0
-     */
-    public Set<ApolloPlayerVersion> getSupportedVersions() {
-        return ApolloPlayerVersion.getVersions();
     }
 
     /**

@@ -16,14 +16,6 @@ import org.jetbrains.annotations.ApiStatus;
 public interface ApolloPlayer {
 
     /**
-     * Gets the players minecraft version.
-     *
-     * @return the players minecraft version
-     * @since 1.0.0
-     */
-    ApolloPlayerVersion getVersion();
-
-    /**
      * Gets the players unique identifier.
      *
      * @return the players unique identifier

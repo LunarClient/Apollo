@@ -3,27 +3,19 @@ package com.lunarclient.apollo.module.border;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.player.ApolloPlayerVersion;
-import java.util.EnumSet;
-import java.util.Set;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the border module.
  *
- * <p>This module represents the border added in version 1.8 (47) and was
- * back-ported to therefore it's only supported on 1.7.</p>
+ * <p>This module represents the border added in
+ * version 1.8 (47) and was back-ported to 1.7.</p>
  *
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
 @ModuleDefinition(id = "border", name = "Border")
 public abstract class BorderModule extends ApolloModule {
-
-    @Override
-    public Set<ApolloPlayerVersion> getSupportedVersions() {
-        return EnumSet.of(ApolloPlayerVersion.v1_7, ApolloPlayerVersion.v1_8);
-    }
 
     /**
      * Displays the {@link Border} to the {@link ApolloPlayer}.

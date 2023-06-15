@@ -4,7 +4,6 @@ import com.lunarclient.apollo.ApolloBukkitPlatform;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
-import com.lunarclient.apollo.player.ApolloPlayerVersion;
 import lombok.AllArgsConstructor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -16,11 +15,6 @@ import java.util.UUID;
 public final class BukkitApolloPlayer extends AbstractApolloPlayer {
 
     private final Player player;
-
-    @Override
-    public ApolloPlayerVersion getVersion() {
-        return ApolloPlayerVersion.v1_19_4;
-    }
 
     @Override
     public UUID getUniqueId() {
