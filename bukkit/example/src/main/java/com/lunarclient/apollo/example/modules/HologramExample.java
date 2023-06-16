@@ -1,5 +1,6 @@
 package com.lunarclient.apollo.example.modules;
 
+import com.google.common.collect.Lists;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.common.location.ApolloLocation;
@@ -8,9 +9,8 @@ import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import org.bukkit.entity.Player;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 public class HologramExample {
@@ -28,11 +28,11 @@ public class HologramExample {
                 .y(105)
                 .z(0)
                 .build())
-            .lines(List.of(
+            .lines(Lists.newArrayList(
                 Component.builder()
                     .content("Welcome to my server!")
                     .color(Color.RED)
-                    .decorators(List.of(Component.TextDecorators.BOLD))
+                    .decorators(Lists.newArrayList(Component.TextDecorators.BOLD, Component.TextDecorators.UNDERLINED))
                     .build(),
                 Component.builder()
                     .content("Type /help to get started!")

@@ -14,10 +14,12 @@ public class StopwatchCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 1) {
             player.sendMessage("Usage: /stopwatch <start|stop|reset>");
@@ -25,22 +27,25 @@ public class StopwatchCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "start" -> {
+            case "start": {
                 this.stopwatchExample.startStopwatchExample(player);
                 player.sendMessage("Starting stopwatch....");
+                break;
             }
 
-            case "stop" -> {
+            case "stop": {
                 this.stopwatchExample.stopStopwatchExample(player);
                 player.sendMessage("Stopping stopwatch....");
+                break;
             }
 
-            case "reset" -> {
+            case "reset": {
                 this.stopwatchExample.resetStopwatchExample(player);
                 player.sendMessage("Resetting stopwatch....");
+                break;
             }
 
-            default -> player.sendMessage("Usage: /stopwatch <start|stop|reset>");
+            default: player.sendMessage("Usage: /stopwatch <start|stop|reset>");
         }
 
         return true;

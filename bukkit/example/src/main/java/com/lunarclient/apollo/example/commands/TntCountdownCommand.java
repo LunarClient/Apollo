@@ -14,10 +14,12 @@ public class TntCountdownCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 1) {
             player.sendMessage("Usage: /tntcountdown <override|set|clear>");
@@ -25,22 +27,25 @@ public class TntCountdownCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "override" -> {
+            case "override": {
                 this.tntCountdownExample.overrideTntCountdownExample(player);
                 player.sendMessage("Overriding custom tnt countdown option...");
+                break;
             }
 
-            case "set" -> {
+            case "set": {
                 this.tntCountdownExample.setTntCountdownExample();
                 player.sendMessage("Setting custom tnt countdown option....");
+                break;
             }
 
-            case "clear" -> {
+            case "clear": {
                 this.tntCountdownExample.clearTntCountdownOptionExample();
                 player.sendMessage("Removing custom tnt countdown option....");
+                break;
             }
 
-            default -> player.sendMessage("Usage: /tntcountdown <override|set|clear>");
+            default: player.sendMessage("Usage: /tntcountdown <override|set|clear>");
         }
 
         return true;

@@ -14,10 +14,12 @@ public class TransferCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 1) {
             player.sendMessage("Usage: /transfer <transfer|ping>");
@@ -25,17 +27,19 @@ public class TransferCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "transfer" -> {
+            case "transfer": {
                 this.transferExample.transferExample(player);
                 player.sendMessage("Transferring player...");
+                break;
             }
 
-            case "ping" -> {
+            case "ping": {
                 this.transferExample.pingExample(player);
                 player.sendMessage("Pinging....");
+                break;
             }
 
-            default -> player.sendMessage("Usage: /transfer <transfer|ping>");
+            default: player.sendMessage("Usage: /transfer <transfer|ping>");
         }
 
         return true;

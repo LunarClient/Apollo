@@ -14,10 +14,12 @@ public class NotificationCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 1) {
             player.sendMessage("Usage: /notification <display|broadcast>");
@@ -25,17 +27,19 @@ public class NotificationCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "display" -> {
+            case "display": {
                 this.notificationExample.displayNotificationExample(player);
                 player.sendMessage("Displaying notification....");
+                break;
             }
 
-            case "broadcast" -> {
+            case "broadcast": {
                 this.notificationExample.broadcastNotificationExample();
                 player.sendMessage("Broadcasting notification....");
+                break;
             }
 
-            default -> player.sendMessage("Usage: /notification <display|broadcast>");
+            default: player.sendMessage("Usage: /notification <display|broadcast>");
         }
 
         return true;

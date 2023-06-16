@@ -8,12 +8,13 @@ import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.module.team.TeamMember;
 import com.lunarclient.apollo.module.team.TeamModule;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.awt.*;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -39,14 +40,14 @@ public class TeamExample {
     }
 
     public Team createTeam() {
-        var team = new Team();
+        Team team = new Team();
         this.teamsByTeamId.put(team.getTeamId(), team);
 
         return team;
     }
 
     public void deleteTeam(UUID teamId) {
-        var team = this.teamsByTeamId.remove(teamId);
+        Team team = this.teamsByTeamId.remove(teamId);
 
         if (team != null) {
             team.getMembers().forEach(team::removeMember);
@@ -78,9 +79,9 @@ public class TeamExample {
 
         // The refresh method used for updating members locations
         public void refresh() {
-            var teammates = this.members.stream().filter(Player::isOnline)
+            List<TeamMember> teammates = this.members.stream().filter(Player::isOnline)
                 .map(member -> {
-                    var location = member.getLocation();
+                    Location location = member.getLocation();
 
                     return TeamMember.builder()
                         .playerUuid(member.getUniqueId())

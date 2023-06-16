@@ -1,7 +1,6 @@
 package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.BorderExample;
 import com.lunarclient.apollo.example.modules.CooldownExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,10 +14,12 @@ public class CooldownCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 1) {
             player.sendMessage("Usage: /cooldown <display|remove|reset>");
@@ -26,22 +27,24 @@ public class CooldownCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "display" -> {
+            case "display": {
                 this.cooldownExample.displayCooldownExample(player);
                 player.sendMessage("Displaying cooldown....");
+                break;
             }
 
-            case "remove" -> {
+            case "remove": {
                 this.cooldownExample.removeCooldownExample(player);
                 player.sendMessage("Removing cooldown....");
+                break;
             }
 
-            case "reset" -> {
+            case "reset": {
                 this.cooldownExample.resetCooldownsExample(player);
                 player.sendMessage("Resetting cooldowns...");
             }
 
-            default -> player.sendMessage("Usage: /cooldown <display|remove|reset>");
+            default: player.sendMessage("Usage: /cooldown <display|remove|reset>");
         }
 
         return true;

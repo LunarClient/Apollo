@@ -14,10 +14,12 @@ public class StaffModCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 1) {
             player.sendMessage("Usage: /staffmod <enable|disable>");
@@ -25,17 +27,19 @@ public class StaffModCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "enable" -> {
+            case "enable": {
                 this.staffModExample.enableStaffModsExample(player);
                 player.sendMessage("Enabling staff mods....");
+                break;
             }
 
-            case "disable" -> {
+            case "disable": {
                 this.staffModExample.disableStaffModsExample(player);
                 player.sendMessage("Disabling staff mods....");
+                break;
             }
 
-            default -> player.sendMessage("Usage: /staffmod <enable|disable>");
+            default: player.sendMessage("Usage: /staffmod <enable|disable>");
         }
 
         return true;

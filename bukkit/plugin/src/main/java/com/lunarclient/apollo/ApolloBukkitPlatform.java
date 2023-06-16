@@ -111,21 +111,20 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     @EventHandler
     public void onRegisterChannel(PlayerRegisterChannelEvent event) {
         if(!event.getChannel().equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
-        Player player = event.getPlayer();
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new BukkitApolloPlayer(player));
+
+        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new BukkitApolloPlayer(event.getPlayer()));
     }
 
     @EventHandler
     public void onUnregisterChannel(PlayerUnregisterChannelEvent event) {
         if(!event.getChannel().equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
-        Player player = event.getPlayer();
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
+
+        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(event.getPlayer().getUniqueId());
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
+        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(event.getPlayer().getUniqueId());
     }
 
     private void handlePacket(Player player, byte[] bytes) {

@@ -1,7 +1,6 @@
 package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.CooldownExample;
 import com.lunarclient.apollo.example.modules.HologramExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,10 +14,12 @@ public class HologramCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 1) {
             player.sendMessage("Usage: /hologram <display|remove|reset>");
@@ -26,21 +27,25 @@ public class HologramCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "display" -> {
+            case "display": {
                 this.hologramExample.displayHologramExample();
                 player.sendMessage("Displaying hologram....");
+                break;
             }
 
-            case "remove" -> {
+            case "remove": {
                 this.hologramExample.removeHologramExample();
                 player.sendMessage("Removing hologram....");
-            }
-            case "reset" -> {
-                this.hologramExample.resetHologramsExample(player);
-                player.sendMessage("Resetting holograms...");
+                break;
             }
 
-            default -> player.sendMessage("Usage: /hologram <display|remove|reset>");
+            case "reset": {
+                this.hologramExample.resetHologramsExample(player);
+                player.sendMessage("Resetting holograms...");
+                break;
+            }
+
+            default: player.sendMessage("Usage: /hologram <display|remove|reset>");
         }
 
         return true;

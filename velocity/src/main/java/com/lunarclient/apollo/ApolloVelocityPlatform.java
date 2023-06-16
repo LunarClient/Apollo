@@ -56,7 +56,6 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         ApolloVelocityPlatform.instance = this;
 
         ApolloManager.bootstrap(this);
-
         ApolloManager.loadConfiguration(this.dataDirectory);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
@@ -80,15 +79,14 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
     @Subscribe
     public void onPluginMessage(PluginMessageEvent event) {
-        if(event.getSource() instanceof Player) {
-            Player player = (Player) event.getSource();
-            if(event.getIdentifier().getId().equals("REGISTER")) {
-                String channels = new String(event.getData(), Charsets.UTF_8);
-                if(!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
+        if (!event.getIdentifier().getId().equals("REGISTER")) return;
+        if (!(event.getSource() instanceof Player)) return;
 
-                ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new VelocityApolloPlayer(player));
-            }
-        }
+        String channels = new String(event.getData(), Charsets.UTF_8);
+        if(!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
+
+        Player player = (Player) event.getSource();
+        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new VelocityApolloPlayer(player));
     }
 
     @Subscribe

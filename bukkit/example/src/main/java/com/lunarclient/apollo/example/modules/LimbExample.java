@@ -7,8 +7,8 @@ import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import org.bukkit.entity.Player;
 
+import java.util.EnumSet;
 import java.util.Optional;
-import java.util.Set;
 
 public class LimbExample {
 
@@ -20,7 +20,7 @@ public class LimbExample {
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.limbModule.hideArmorPieces(apolloPlayer,
                 target.getUniqueId(),
-                Set.of(ArmorPiece.HELMET, ArmorPiece.LEGGINGS)
+                EnumSet.of(ArmorPiece.HELMET, ArmorPiece.LEGGINGS)
             );
         });
     }
@@ -31,7 +31,7 @@ public class LimbExample {
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.limbModule.resetArmorPieces(apolloPlayer,
                 target.getUniqueId(),
-                Set.of(ArmorPiece.HELMET, ArmorPiece.LEGGINGS)
+                EnumSet.of(ArmorPiece.HELMET, ArmorPiece.LEGGINGS)
             );
         });
     }
@@ -42,7 +42,7 @@ public class LimbExample {
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.limbModule.hideBodyParts(apolloPlayer,
                 target.getUniqueId(),
-                Set.of(BodyPart.HEAD, BodyPart.RIGHT_ARM)
+                EnumSet.of(BodyPart.HEAD, BodyPart.RIGHT_ARM)
             );
         });
     }
@@ -53,7 +53,7 @@ public class LimbExample {
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.limbModule.resetBodyParts(apolloPlayer,
                 target.getUniqueId(),
-                Set.of(BodyPart.HEAD, BodyPart.RIGHT_ARM)
+                EnumSet.of(BodyPart.HEAD, BodyPart.RIGHT_ARM)
             );
         });
     }

@@ -1,5 +1,6 @@
 package com.lunarclient.apollo.example.modules;
 
+import com.google.common.collect.Sets;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.module.modsetting.ModSettings;
@@ -8,14 +9,13 @@ import com.lunarclient.apollo.player.ApolloPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
-import java.util.Set;
 
 public class ModSettingsExample {
 
     private final ModSettingModule modSettingModule = Apollo.getModuleManager().getModule(ModSettingModule.class);
 
     private final ModsSettings settings = ModsSettings.builder()
-        .settings(Set.of(
+        .settings(Sets.newHashSet(
             // Disables the SkyBlock Addons mod
             ModSettings.builder()
                 .target("skyblockAddons") // Mod id's can be found at (@TRENTIN)

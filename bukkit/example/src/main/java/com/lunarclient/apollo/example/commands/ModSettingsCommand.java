@@ -1,7 +1,6 @@
 package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.MiscExample;
 import com.lunarclient.apollo.example.modules.ModSettingsExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,10 +14,12 @@ public class ModSettingsCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 1) {
             player.sendMessage("Usage: /modsettings <send|reset|broadcast>");
@@ -26,22 +27,25 @@ public class ModSettingsCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "send" -> {
+            case "send": {
                 this.modSettingsExample.sendSettingsExample(player);
                 player.sendMessage("Sending settings....");
+                break;
             }
 
-            case "reset" -> {
+            case "reset": {
                 this.modSettingsExample.resetSettingsExample(player);
                 player.sendMessage("Resetting settings....");
+                break;
             }
 
-            case "broadcast" -> {
+            case "broadcast": {
                 this.modSettingsExample.broadcastSettingsExample();
                 player.sendMessage("Broadcasting settings....");
+                break;
             }
 
-            default -> player.sendMessage("Usage: /modsettings <send|reset|broadcast>");
+            default: player.sendMessage("Usage: /modsettings <send|reset|broadcast>");
         }
 
         return true;

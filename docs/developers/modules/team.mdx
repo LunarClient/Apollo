@@ -32,14 +32,14 @@ public Optional<Team> getByTeamId(UUID teamId) {
 }
 
 public Team createTeam() {
-    var team = new Team();
+    Team team = new Team();
     this.teamsByTeamId.put(team.getTeamId(), team);
 
     return team;
 }
 
 public void deleteTeam(UUID teamId) {
-    var team = this.teamsByTeamId.remove(teamId);
+    Team team = this.teamsByTeamId.remove(teamId);
 
     if (team != null) {
         team.getMembers().forEach(team::removeMember);
@@ -71,9 +71,9 @@ public class Team {
 
     // The refresh method used for updating members locations
     public void refresh() {
-        var teammates = this.members.stream().filter(Player::isOnline)
+        List<TeamMember> teammates = this.members.stream().filter(Player::isOnline)
             .map(member -> {
-                var location = member.getLocation();
+                Location location = member.getLocation();
 
                 return TeamMember.builder()
                     .playerUuid(member.getUniqueId())

@@ -14,10 +14,12 @@ public class TitleCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 1) {
             player.sendMessage("Usage: /title <display|broadcast|reset>");
@@ -25,22 +27,25 @@ public class TitleCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "display" -> {
+            case "display": {
                 this.titleExample.displayTitleExample(player);
                 player.sendMessage("Displaying title....");
+                break;
             }
 
-            case "broadcast" -> {
+            case "broadcast": {
                 this.titleExample.broadcastTitleExample();
                 player.sendMessage("Broadcasting title....");
+                break;
             }
 
-            case "reset" -> {
+            case "reset": {
                 this.titleExample.resetTitlesExample(player);
                 player.sendMessage("Resetting titles....");
+                break;
             }
 
-            default -> player.sendMessage("Usage: /title <display|broadcast|reset>");
+            default: player.sendMessage("Usage: /title <display|broadcast|reset>");
         }
 
         return true;

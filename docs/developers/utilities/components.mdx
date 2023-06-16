@@ -64,7 +64,7 @@ public static Component componentExample() {
     return Component.builder()
         .content("Hello world!")
         .color(Color.GREEN)
-        .decorators(List.of(Component.TextDecorators.BOLD, Component.TextDecorators.UNDERLINED))
+        .decorators(Lists.newArrayList(Component.TextDecorators.BOLD, Component.TextDecorators.UNDERLINED))
         .children(Lists.newArrayList())
         .build();
 }

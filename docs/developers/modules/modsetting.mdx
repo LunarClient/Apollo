@@ -14,7 +14,7 @@ The mod setting module allows you to interact with Lunar Client players mods and
 
 ```java
 private final ModsSettings settings = ModsSettings.builder()
-    .settings(Set.of(
+    .settings(Sets.newHashSet(
         // Disables the SkyBlock Addons mod
         ModSettings.builder()
             .target("SKYBLOCK_ADDONS") // The Mod ID you want to change

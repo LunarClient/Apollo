@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.lunarclient.apollo.common.Component;
 
 import java.awt.*;
-import java.util.List;
 
 public class ComponentExample {
 
@@ -12,7 +11,7 @@ public class ComponentExample {
         return Component.builder()
             .content("Hello world!")
             .color(Color.GREEN)
-            .decorators(List.of(Component.TextDecorators.BOLD, Component.TextDecorators.UNDERLINED))
+            .decorators(Lists.newArrayList(Component.TextDecorators.BOLD, Component.TextDecorators.UNDERLINED))
             .children(Lists.newArrayList())
             .build();
     }

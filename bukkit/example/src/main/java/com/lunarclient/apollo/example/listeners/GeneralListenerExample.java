@@ -1,14 +1,12 @@
 package com.lunarclient.apollo.example.listeners;
 
+import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.event.Event;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.EventCancellable;
 import com.lunarclient.apollo.event.Listen;
-import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 public class GeneralListenerExample {

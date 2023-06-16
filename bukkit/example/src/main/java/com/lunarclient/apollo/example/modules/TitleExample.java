@@ -1,5 +1,6 @@
 package com.lunarclient.apollo.example.modules;
 
+import com.google.common.collect.Lists;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.module.title.Title;
@@ -8,9 +9,8 @@ import com.lunarclient.apollo.module.title.TitleType;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import org.bukkit.entity.Player;
 
-import java.awt.Color;
+import java.awt.*;
 import java.time.Duration;
-import java.util.List;
 import java.util.Optional;
 
 public class TitleExample {
@@ -22,7 +22,7 @@ public class TitleExample {
         .message(Component.builder()
             .content("Hello, player!")
             .color(Color.GREEN)
-            .decorators(List.of(Component.TextDecorators.BOLD))
+            .decorators(Lists.newArrayList(Component.TextDecorators.BOLD))
             .build())
         .scale(1.0f)
         .displayTime(Duration.ofMillis(1500L))

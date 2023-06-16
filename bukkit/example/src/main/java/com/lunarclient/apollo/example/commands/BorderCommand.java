@@ -14,10 +14,12 @@ public class BorderCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 1) {
             player.sendMessage("Usage: /border <display|remove|reset>");
@@ -25,22 +27,25 @@ public class BorderCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "display" -> {
+            case "display": {
                 this.borderExample.displayBorderExample(player);
                 player.sendMessage("Displaying border....");
+                break;
             }
 
-            case "remove" -> {
+            case "remove": {
                 this.borderExample.removeBorderExample(player);
                 player.sendMessage("Removing border....");
+                break;
             }
 
-            case "reset" -> {
+            case "reset": {
                 this.borderExample.resetBordersExample(player);
                 player.sendMessage("Resetting borders...");
+                break;
             }
 
-            default -> player.sendMessage("Usage: /border <display|remove|reset>");
+            default: player.sendMessage("Usage: /border <display|remove|reset>");
         }
 
         return true;

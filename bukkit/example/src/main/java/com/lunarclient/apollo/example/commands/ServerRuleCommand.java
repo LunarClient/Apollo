@@ -14,10 +14,12 @@ public class ServerRuleCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 2) {
             player.sendMessage("Usage: /serverrule <antiportaltraps|overridenametagrenderdistance|nametagrenderdistance> <value>");
@@ -25,21 +27,23 @@ public class ServerRuleCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "antiportaltraps" -> {
+            case "antiportaltraps": {
                 boolean value = Boolean.parseBoolean(args[1]);
                 this.serverRuleExample.setAntiPortalTraps(value);
 
                 player.sendMessage("Anti portal traps rule has been set to " + value);
+                break;
             }
 
-            case "overridenametagrenderdistance" -> {
+            case "overridenametagrenderdistance": {
                 boolean value = Boolean.parseBoolean(args[1]);
                 this.serverRuleExample.setOverrideNametagRenderDistance(player, value);
 
                 player.sendMessage("Override nametag render distance rule has been set to " + value);
+                break;
             }
 
-            case "nametagrenderdistance" -> {
+            case "nametagrenderdistance": {
                 int value;
 
                 try {
@@ -51,9 +55,10 @@ public class ServerRuleCommand implements CommandExecutor {
 
                 this.serverRuleExample.setNametagRenderDistanceExample(value);
                 player.sendMessage("Nametag render distance has been set to " + value);
+                break;
             }
 
-            default -> player.sendMessage("Usage: /serverrule <antiportaltraps|overridenametagrenderdistance|nametagrenderdistance> <value>");
+            default: player.sendMessage("Usage: /serverrule <antiportaltraps|overridenametagrenderdistance|nametagrenderdistance> <value>");
         }
 
         return true;

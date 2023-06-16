@@ -17,7 +17,7 @@ public void enableStaffModsExample(Player viewer) {
     if (!viewer.hasPermission("apollo.staff")) return;
 
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer, List.of(StaffMod.XRAY)));
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY)));
 }
 ```
 
@@ -33,7 +33,7 @@ public void enableStaffModsExample(Player viewer) {
 ```java
 public void disableStaffModsExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.disableStaffMods(apolloPlayer, List.of(StaffMod.XRAY)));
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.disableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY)));
 }
 ```
 

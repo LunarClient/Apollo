@@ -14,10 +14,12 @@ public class BeamCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 1) {
             player.sendMessage("Usage: /beam <display|remove|reset>");
@@ -25,21 +27,25 @@ public class BeamCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "display" -> {
+            case "display": {
                 this.beamExample.displayBeamExample(player);
                 player.sendMessage("Displaying beam....");
+                break;
             }
 
-            case "remove" -> {
+            case "remove": {
                 this.beamExample.removeBeamExample(player);
                 player.sendMessage("Removing beam....");
-            }
-            case "reset" -> {
-                this.beamExample.resetBeamsExample(player);
-                player.sendMessage("Resetting beams...");
+                break;
             }
 
-            default -> player.sendMessage("Usage: /beam <display|remove|reset>");
+            case "reset": {
+                this.beamExample.resetBeamsExample(player);
+                player.sendMessage("Resetting beams...");
+                break;
+            }
+
+            default: player.sendMessage("Usage: /beam <display|remove|reset>");
         }
 
         return true;

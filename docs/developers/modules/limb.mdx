@@ -18,7 +18,7 @@ public void hideArmorExample(Player viewer, Player target) {
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
         this.limbModule.hideArmorPieces(apolloPlayer,
             target.getUniqueId(),
-            Set.of(ArmorPiece.HELMET, ArmorPiece.LEGGINGS)
+            EnumSet.of(ArmorPiece.HELMET, ArmorPiece.LEGGINGS)
         );
     });
 }
@@ -42,7 +42,7 @@ public void resetArmorExample(Player viewer, Player target) {
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
         this.limbModule.resetArmorPieces(apolloPlayer,
             target.getUniqueId(),
-            Set.of(ArmorPiece.HELMET, ArmorPiece.LEGGINGS)
+            EnumSet.of(ArmorPiece.HELMET, ArmorPiece.LEGGINGS)
         );
     });
 }
@@ -66,7 +66,7 @@ public void hideBodyExample(Player viewer, Player target) {
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
         this.limbModule.hideBodyParts(apolloPlayer,
             target.getUniqueId(),
-            Set.of(BodyPart.HEAD, BodyPart.RIGHT_ARM)
+            EnumSet.of(BodyPart.HEAD, BodyPart.RIGHT_ARM)
         );
     });
 }
@@ -90,7 +90,7 @@ public void resetBodyExample(Player viewer, Player target) {
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
         this.limbModule.resetBodyParts(apolloPlayer,
             target.getUniqueId(),
-            Set.of(BodyPart.HEAD, BodyPart.RIGHT_ARM)
+            EnumSet.of(BodyPart.HEAD, BodyPart.RIGHT_ARM)
         );
     });
 }

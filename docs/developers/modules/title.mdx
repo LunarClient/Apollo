@@ -19,12 +19,12 @@ The title module backports all vanilla `title` & `subtitle` features found in 1.
 ### `Title` Builder
 
 ```java
-private final Title title = Title.builder()
+private final Title helloTitle = Title.builder()
     .type(TitleType.TITLE)
     .message(Component.builder()
         .content("Hello, player!")
         .color(Color.GREEN)
-        .decorators(List.of(Component.TextDecorators.BOLD))
+        .decorators(Lists.newArrayList(Component.TextDecorators.BOLD))
         .build())
     .scale(1.0f)
     .displayTime(Duration.ofMillis(1500L))

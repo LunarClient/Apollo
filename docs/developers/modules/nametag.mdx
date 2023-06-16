@@ -25,10 +25,10 @@ public void overrideNametagExample(Player target) {
     Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
 
     this.nametagModule.overrideNametag(viewers, target.getUniqueId(), Nametag.builder()
-            .lines(List.of(
+            .lines(Lists.newArrayList(
                 Component.builder()
                     .content("[StaffMode]")
-                    .decorators(List.of(Component.TextDecorators.ITALIC))
+                    .decorators(Collections.singletonList(Component.TextDecorators.ITALIC))
                     .color(Color.GRAY)
                     .build(),
                 Component.builder()

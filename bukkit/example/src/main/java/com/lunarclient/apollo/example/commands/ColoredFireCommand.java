@@ -15,10 +15,12 @@ public class ColoredFireCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length == 1 && args[0].equalsIgnoreCase("clear")) {
             this.coloredFireExample.resetColoredFiresExample(player);
@@ -31,7 +33,7 @@ public class ColoredFireCommand implements CommandExecutor {
             return true;
         }
 
-        var target = Bukkit.getPlayer(args[1]);
+        Player target = Bukkit.getPlayer(args[1]);
 
         if(target == null) {
             player.sendMessage("Player '" + args[1] + "' not found!");
@@ -39,17 +41,19 @@ public class ColoredFireCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "override" -> {
+            case "override": {
                 this.coloredFireExample.overrideColoredFireExample(target.getUniqueId());
                 player.sendMessage("Displaying colored fire....");
+                break;
             }
 
-            case "reset" -> {
+            case "reset": {
                 this.coloredFireExample.resetColoredFireExample(target.getUniqueId());
                 player.sendMessage("Resetting colored fire....");
+                break;
             }
 
-            default -> player.sendMessage("Usage: /coloredfire <override|reset|clear> <player>");
+            default: player.sendMessage("Usage: /coloredfire <override|reset|clear> <player>");
         }
 
         return true;

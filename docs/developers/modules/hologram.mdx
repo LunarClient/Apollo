@@ -23,14 +23,14 @@ public void displayHologramExample() {
         .location(ApolloLocation.builder()
             .world("world")
             .z(5)
-            .y(100)
+            .y(105)
             .z(0)
             .build())
-        .lines(List.of(
+        .lines(Lists.newArrayList(
             Component.builder()
                 .content("Welcome to my server!")
                 .color(Color.RED)
-                .decorators(List.of(Component.TextDecorators.BOLD))
+                .decorators(Lists.newArrayList(Component.TextDecorators.BOLD, Component.TextDecorators.UNDERLINED))
                 .build(),
             Component.builder()
                 .content("Type /help to get started!")

@@ -6,7 +6,7 @@ import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import org.bukkit.entity.Player;
 
-import java.util.List;
+import java.util.Collections;
 import java.util.Optional;
 
 public class StaffModExample {
@@ -17,12 +17,12 @@ public class StaffModExample {
         if (!viewer.hasPermission("apollo.staff")) return;
 
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer, List.of(StaffMod.XRAY)));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY)));
     }
 
     public void disableStaffModsExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.disableStaffMods(apolloPlayer, List.of(StaffMod.XRAY)));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.disableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY)));
     }
 
 }

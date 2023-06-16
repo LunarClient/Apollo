@@ -14,10 +14,12 @@ public class MiscCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (args.length != 1) {
             player.sendMessage("Usage: /misc <displayVignette|resetVignette|overrideSheep|resetSheep|flipEntities|resetFlippedEntities>");
@@ -25,37 +27,43 @@ public class MiscCommand implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "displayvignette" -> {
+            case "displayvignette": {
                 this.miscExample.displayVignetteExample(player);
                 player.sendMessage("Displaying vignette....");
+                break;
             }
 
-            case "resetvignette" -> {
+            case "resetvignette": {
                 this.miscExample.resetVignetteExample(player);
                 player.sendMessage("Resetting vignette....");
+                break;
             }
 
-            case "overridesheep" -> {
+            case "overridesheep": {
                 this.miscExample.overrideRainbowSheepExample(player);
                 player.sendMessage("Overriding rainbow sheep....");
+                break;
             }
 
-            case "resetsheep" -> {
+            case "resetsheep": {
                 this.miscExample.resetRainbowSheepExample(player);
                 player.sendMessage("Resetting rainbow sheep....");
+                break;
             }
 
-            case "flipentities" -> {
+            case "flipentities": {
                 this.miscExample.flipEntityExample(player);
                 player.sendMessage("Flipping entities....");
+                break;
             }
 
-            case "resetflippedentities" -> {
+            case "resetflippedentities": {
                 this.miscExample.resetFlippedEntityExample(player);
                 player.sendMessage("Resetting flipped entities....");
+                break;
             }
 
-            default -> player.sendMessage("Usage: /misc <displayVignette|resetVignette|overrideSheep|resetSheep|flipEntities|resetFlippedEntities>");
+            default: player.sendMessage("Usage: /misc <displayVignette|resetVignette|overrideSheep|resetSheep|flipEntities|resetFlippedEntities>");
         }
 
         return true;
