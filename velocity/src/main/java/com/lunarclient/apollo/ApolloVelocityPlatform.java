@@ -17,7 +17,6 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import lombok.Getter;
 import org.slf4j.Logger;
-import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
 import java.nio.file.Path;
 
@@ -36,18 +35,12 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     @Getter private static ApolloVelocityPlatform instance;
 
     private final ProxyServer server;
-    private final Logger logger;
     private final Path dataDirectory;
-
-
-    private HoconConfigurationLoader configurationLoader;
 
     @Inject
     public ApolloVelocityPlatform(ProxyServer server,
-                                  Logger logger,
                                   @DataDirectory Path dataDirectory) {
         this.server = server;
-        this.logger = logger;
         this.dataDirectory = dataDirectory;
     }
 

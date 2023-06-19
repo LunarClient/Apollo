@@ -12,13 +12,10 @@ import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
-import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
 public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform, Listener {
 
     @Getter private static ApolloBungeePlatform instance;
-
-    private HoconConfigurationLoader configurationLoader;
 
     @Override
     public void onEnable() {

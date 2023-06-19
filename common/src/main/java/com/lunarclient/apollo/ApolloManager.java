@@ -8,7 +8,8 @@ import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
 import java.nio.file.Path;
 import lombok.Getter;
 import org.spongepowered.configurate.CommentedConfigurationNode;
-import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
+import org.spongepowered.configurate.yaml.NodeStyle;
+import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 /**
  * Provides the instances for {@link Apollo}.
@@ -25,7 +26,7 @@ public final class ApolloManager {
     @Getter private static ApolloNetworkManager networkManager;
     @Getter private static CommentedConfigurationNode configurationNode;
 
-    private static HoconConfigurationLoader configurationLoader;
+    private static YamlConfigurationLoader configurationLoader;
     private static boolean bootstrapped = false;
 
     /**
@@ -60,8 +61,9 @@ public final class ApolloManager {
     public static void loadConfiguration(Path path) {
         try {
             if(ApolloManager.configurationLoader == null) {
-                ApolloManager.configurationLoader = HoconConfigurationLoader.builder()
-                    .path(path.resolve("settings.conf"))
+                ApolloManager.configurationLoader = YamlConfigurationLoader.builder()
+                    .nodeStyle(NodeStyle.BLOCK)
+                    .path(path.resolve("settings.yml"))
                     .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
                     .build();
             }

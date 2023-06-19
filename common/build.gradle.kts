@@ -6,5 +6,5 @@ dependencies {
     api(project(":apollo-api"))
     api("com.lunarclient:apollo-protos:1.0-SNAPSHOT")
     api(libs.configurate.core)
-    api(libs.configurate.hocon)
+    api(libs.configurate.yaml)
 }

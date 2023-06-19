@@ -9,7 +9,7 @@ import io.leangen.geantyref.TypeToken;
 import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.IdentityHashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -25,7 +25,7 @@ import org.spongepowered.configurate.CommentedConfigurationNode;
 @NoArgsConstructor
 public final class ApolloModuleManagerImpl implements ApolloModuleManager {
 
-    private final Map<Class<? extends ApolloModule>, ApolloModule> modules = new IdentityHashMap<>();
+    private final Map<Class<? extends ApolloModule>, ApolloModule> modules = new LinkedHashMap<>();
 
     @Override
     public boolean isEnabled(@NonNull Class<? extends ApolloModule> moduleClass) {
