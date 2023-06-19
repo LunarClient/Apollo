@@ -39,4 +39,28 @@ public final class Hologram {
      */
     List<Component> lines;
 
+    /**
+     * Returns the hologram {@link Boolean} show through walls state.
+     *
+     * @return the hologram show through walls state
+     * @since 1.0.0
+     */
+    boolean showThroughWalls;
+
+    /**
+     * Returns the hologram {@link Boolean} show shadow state.
+     *
+     * @return the hologram show shadow state
+     * @since 1.0.0
+     */
+    boolean showShadow;
+
+    /**
+     * Returns the hologram {@link Boolean} show background state.
+     *
+     * @return the hologram show background state
+     * @since 1.0.0
+     */
+    boolean showBackground;
+
 }

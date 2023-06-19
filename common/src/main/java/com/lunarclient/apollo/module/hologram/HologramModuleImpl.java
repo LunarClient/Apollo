@@ -27,6 +27,9 @@ public final class HologramModuleImpl extends HologramModule {
                 .map(NetworkTypes::toProtobuf)
                 .collect(Collectors.toList())
             )
+            .setShowThroughWalls(hologram.isShowThroughWalls())
+            .setShowShadow(hologram.isShowShadow())
+            .setShowBackground(hologram.isShowBackground())
             .build();
 
         for (ApolloPlayer viewer : viewers) {

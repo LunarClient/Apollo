@@ -38,6 +38,9 @@ public class HologramExample {
                     .content("Type /help to get started!")
                     .build()
             ))
+            .showThroughWalls(true)
+            .showShadow(false)
+            .showBackground(true)
             .build()
         );
     }

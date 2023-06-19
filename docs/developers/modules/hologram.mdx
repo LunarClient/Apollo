@@ -36,6 +36,9 @@ public void displayHologramExample() {
                 .content("Type /help to get started!")
                 .build()
         ))
+        .showThroughWalls(true)
+        .showShadow(false)
+        .showBackground(true)
         .build()
     );
 }
@@ -74,6 +77,24 @@ public void displayHologramExample() {
         .content("Type /help to get started!")
         .build()
     ))
+```
+
+`.showThroughWalls(Boolean)` if the player is able to see the hologram through walls.
+
+```java
+.showThroughWalls(true)
+```
+
+`.showShadow(Boolean)` if the player is able to see the hologram shadow.
+
+```java
+.showShadow(false)
+```
+
+`.showBackground(Boolean)` if the player is able to see the hologram background.
+
+```java
+.showBackground(true)
 ```
 
 
