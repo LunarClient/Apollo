@@ -69,27 +69,29 @@ public class Team {
             .ifPresent(teamModule::resetTeamMembers);
     }
 
+    private TeamMember createTeamMember(Player member) {
+        Location location = member.getLocation();
+
+        return TeamMember.builder()
+            .playerUuid(member.getUniqueId())
+            .displayName(Component.builder()
+                .content(member.getName())
+                .color(Color.WHITE)
+                .build())
+            .markerColor(Color.WHITE)
+            .location(ApolloLocation.builder()
+                .world(location.getWorld().getName())
+                .x(location.getX())
+                .y(location.getY())
+                .z(location.getZ())
+                .build())
+            .build();
+    }
+
     // The refresh method used for updating members locations
     public void refresh() {
         List<TeamMember> teammates = this.members.stream().filter(Player::isOnline)
-            .map(member -> {
-                Location location = member.getLocation();
-
-                return TeamMember.builder()
-                    .playerUuid(member.getUniqueId())
-                    .displayName(Component.builder()
-                        .content(member.getName())
-                        .color(Color.WHITE)
-                        .build())
-                    .markerColor(Color.WHITE)
-                    .location(ApolloLocation.builder()
-                        .world(location.getWorld().getName())
-                        .x(location.getX())
-                        .y(location.getY())
-                        .z(location.getZ())
-                        .build())
-                    .build();
-            })
+            .map(this::createTeamMember)
             .collect(Collectors.toList());
 
         this.members.forEach(member -> Apollo.getPlayerManager().getPlayer(member.getUniqueId())
@@ -105,11 +107,11 @@ public class Team {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || object.getClass() != this.getClass()) return false;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || other.getClass() != this.getClass()) return false;
 
-        Team team = (Team) object;
+        Team team = (Team) other;
         return this.teamId.equals(team.getTeamId());
     }
 
