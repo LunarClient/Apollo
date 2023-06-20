@@ -1,6 +1,8 @@
 package com.lunarclient.apollo;
 
 import com.google.protobuf.Any;
+import com.lunarclient.apollo.module.anticheat.AntiCheatImpl;
+import com.lunarclient.apollo.module.anticheat.AntiCheatModule;
 import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.beam.BeamModule;
@@ -64,6 +66,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         this.getServer().getPluginManager().registerEvents(this, this);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
+                .addModule(AntiCheatModule.class, new AntiCheatImpl())
                 .addModule(BeamModule.class, new BeamModuleImpl())
                 .addModule(BorderModule.class, new BorderModuleImpl())
                 .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
