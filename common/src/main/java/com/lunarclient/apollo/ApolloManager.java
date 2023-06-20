@@ -21,7 +21,7 @@ public final class ApolloManager {
     /**
      * The plugin message channel that Lunar Client and Apollo talk over.
      */
-    public static final String PLUGIN_MESSAGE_CHANNEL = "lunarclient:apollo";
+    public static final String PLUGIN_MESSAGE_CHANNEL = "lunar:apollo";
 
     @Getter private static ApolloNetworkManager networkManager;
     @Getter private static CommentedConfigurationNode configurationNode;
