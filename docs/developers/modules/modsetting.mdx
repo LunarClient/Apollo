@@ -19,10 +19,30 @@ private final ModsSettings settings = ModsSettings.builder()
         ModSettings.builder()
             .target("SKYBLOCK_ADDONS") // The Mod ID you want to change
             .enable(false) // If the mod can be enabled
-            .properties(null) // Properties can be found at (@TRENTIn)
+            .properties(null)
             .build()
     ))
     .build();
+```
+
+#### `ModSettings` Options
+
+`.target(String)` should include the name of Mod ID you're trying to modify. See the [Mod ID page](/apollo/server-owners/mod-ids) for more.
+
+```java
+.target("SKYBLOCK_ADDONS")
+```
+
+`.enable(boolean)` should be set to true or false depending on if you want the mod to be enabled.
+
+```java
+.enable(false)
+```
+
+`.properties(String)` should be the list of a property you're trying to edit.
+
+```java
+.properties(null)
 ```
 
 ### Interacting with a specific players `ModSettings`

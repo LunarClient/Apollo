@@ -18,9 +18,9 @@ public class ModSettingsExample {
         .settings(Sets.newHashSet(
             // Disables the SkyBlock Addons mod
             ModSettings.builder()
-                .target("skyblockAddons") // Mod id's can be found at (@TRENTIN)
+                .target("skyblockAddons") // The Mod ID you want to change
                 .enable(false) // If the mod can be enabled
-                .properties(null) // Properties can be found at (@TRENTIn)
+                .properties(null)
                 .build()
         ))
         .build();
