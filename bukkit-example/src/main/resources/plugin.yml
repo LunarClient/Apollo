@@ -19,6 +19,8 @@ commands:
         description: "Holograms!"
     limb:
         description: "Limb!"
+    modsettings:
+        description: "ModSettings!"
     nametag:
         description: "Nametags!"
     notification:
