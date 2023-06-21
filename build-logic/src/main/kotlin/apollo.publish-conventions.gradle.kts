@@ -20,20 +20,6 @@ dependencies {
     checkstyle(libs.stylecheck)
 }
 
-spotless {
-    fun FormatExtension.applyCommon() {
-        trimTrailingWhitespace()
-        endWithNewline()
-        indentWithSpaces(4)
-        targetExclude("build/generated/source/proto/**")
-    }
-
-    java {
-        importOrderFile(rootProject.file(".spotless/lunar.importorder"))
-        applyCommon()
-    }
-}
-
 tasks {
     withType<Javadoc> {
         val minimalOptions: MinimalJavadocOptions = options
