@@ -19,8 +19,6 @@ commands:
         description: "Limb!"
     misc:
         description: "Misc!"
-    modsettings:
-        description: "ModSettings!"
     nametag:
         description: "Nametags!"
     notification:

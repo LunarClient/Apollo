@@ -41,7 +41,6 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private HologramExample hologramExample;
     private LimbExample limbExample;
     private MiscExample miscExample;
-    private ModSettingsExample modSettingsExample;
     private NametagExample nametagExample;
     private NotificationExample notificationExample;
     private ServerRuleExample serverRuleExample;
@@ -74,7 +73,6 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.hologramExample = new HologramExample();
         this.limbExample = new LimbExample();
         this.miscExample = new MiscExample();
-        this.modSettingsExample = new ModSettingsExample();
         this.nametagExample = new NametagExample();
         this.notificationExample = new NotificationExample();
         this.serverRuleExample = new ServerRuleExample();
@@ -95,7 +93,6 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("hologram").setExecutor(new HologramCommand());
         this.getCommand("limb").setExecutor(new LimbCommand());
         this.getCommand("misc").setExecutor(new MiscCommand());
-        this.getCommand("modsettings").setExecutor(new ModSettingsCommand());
         this.getCommand("nametag").setExecutor(new NametagCommand());
         this.getCommand("notification").setExecutor(new NotificationCommand());
         this.getCommand("serverrule").setExecutor(new ServerRuleCommand());

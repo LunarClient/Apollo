@@ -39,8 +39,6 @@ import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
 import com.lunarclient.apollo.module.misc.MiscModule;
 import com.lunarclient.apollo.module.misc.MiscModuleImpl;
-import com.lunarclient.apollo.module.modsetting.ModSettingModule;
-import com.lunarclient.apollo.module.modsetting.ModSettingModuleImpl;
 import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
 import com.lunarclient.apollo.module.notification.NotificationModule;
@@ -94,7 +92,6 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
                 .addModule(HologramModule.class, new HologramModuleImpl())
                 .addModule(LimbModule.class, new LimbModuleImpl())
                 .addModule(MiscModule.class, new MiscModuleImpl())
-                .addModule(ModSettingModule.class, new ModSettingModuleImpl())
                 .addModule(NametagModule.class, new NametagModuleImpl())
                 .addModule(NotificationModule.class, new NotificationModuleImpl())
                 .addModule(ServerRuleModule.class)
