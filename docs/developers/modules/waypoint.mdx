@@ -1,3 +1,5 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Waypoint Module
 
 ## Overview
@@ -58,9 +60,39 @@ public void displayWaypointExample(Player viewer) {
 
 `.color(java.awt.Color)` is how you dictate the color of the waypoint. See the [colors page](/apollo/developers/utilities/colors) for more.
 
+**Color Types**
+
+<Tabs items={['Java Presets', 'Minecraft Presets', 'Hex & RGB']}>
+<Tab>
+
+The `java.awt.Color` class statically exposes some colors, although they do not correspond to any existing colors used in Minecraft.
+
 ```java
-.color(Color.ORANGE)
+.color(Color.CYAN)
 ```
+
+</Tab>
+
+<Tab>
+
+The `ApolloColors` class statically exposes colors that correspond to Bukkit/Spigot's `ChatColor` enum.
+
+```java
+.color(ApolloColors.LIGHT_PURPLE)
+```
+
+</Tab>
+
+<Tab>
+
+Custom colors can be created from any RGB values using `new Color(int red, int green, int blue)`, or from any hex color using `Color.decode(String hex)`.
+
+```java
+.color(Color.decode("#FF00FF"))
+```
+
+</Tab>
+</Tabs>
 
 `.preventRemoval(String)` sets if the player is able to delete the waypoint client-side.
 
