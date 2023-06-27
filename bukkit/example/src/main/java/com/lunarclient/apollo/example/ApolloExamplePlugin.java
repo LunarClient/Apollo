@@ -38,9 +38,9 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private BorderExample borderExample;
     private ColoredFireExample coloredFireExample;
     private CooldownExample cooldownExample;
+    private EntityExample entityExample;
     private HologramExample hologramExample;
     private LimbExample limbExample;
-    private MiscExample miscExample;
     private NametagExample nametagExample;
     private NotificationExample notificationExample;
     private ServerRuleExample serverRuleExample;
@@ -50,6 +50,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private TitleExample titleExample;
     private TntCountdownExample tntCountdownExample;
     private TransferExample transferExample;
+    private VignetteExample vignetteExample;
     private WaypointExample waypointExample;
 
     @Override
@@ -70,9 +71,9 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.borderExample = new BorderExample();
         this.coloredFireExample = new ColoredFireExample();
         this.cooldownExample = new CooldownExample();
+        this.entityExample = new EntityExample();
         this.hologramExample = new HologramExample();
         this.limbExample = new LimbExample();
-        this.miscExample = new MiscExample();
         this.nametagExample = new NametagExample();
         this.notificationExample = new NotificationExample();
         this.serverRuleExample = new ServerRuleExample();
@@ -82,6 +83,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.titleExample = new TitleExample();
         this.tntCountdownExample = new TntCountdownExample();
         this.transferExample = new TransferExample();
+        this.vignetteExample = new VignetteExample();
         this.waypointExample = new WaypointExample();
     }
 
@@ -90,9 +92,9 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("border").setExecutor(new BorderCommand());
         this.getCommand("coloredfire").setExecutor(new ColoredFireCommand());
         this.getCommand("cooldown").setExecutor(new CooldownCommand());
+        this.getCommand("entity").setExecutor(new EntityCommand());
         this.getCommand("hologram").setExecutor(new HologramCommand());
         this.getCommand("limb").setExecutor(new LimbCommand());
-        this.getCommand("misc").setExecutor(new MiscCommand());
         this.getCommand("nametag").setExecutor(new NametagCommand());
         this.getCommand("notification").setExecutor(new NotificationCommand());
         this.getCommand("serverrule").setExecutor(new ServerRuleCommand());
@@ -102,6 +104,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("title").setExecutor(new TitleCommand());
         this.getCommand("tntcountdown").setExecutor(new TntCountdownCommand());
         this.getCommand("transfer").setExecutor(new TransferCommand());
+        this.getCommand("vignette").setExecutor(new VignetteCommand());
         this.getCommand("waypoint").setExecutor(new WaypointCommand());
     }
 }

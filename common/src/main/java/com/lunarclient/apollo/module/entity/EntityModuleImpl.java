@@ -21,16 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.misc;
+package com.lunarclient.apollo.module.entity;
 
 import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.common.v1.EntityId;
-import com.lunarclient.apollo.misc.v1.DisplayVignetteMessage;
-import com.lunarclient.apollo.misc.v1.FlipEntityMessage;
-import com.lunarclient.apollo.misc.v1.OverrideRainbowSheepMessage;
-import com.lunarclient.apollo.misc.v1.ResetFlipedEntityMessage;
-import com.lunarclient.apollo.misc.v1.ResetRainbowSheepMessage;
-import com.lunarclient.apollo.misc.v1.ResetVignetteMessage;
+import com.lunarclient.apollo.entity.v1.FlipEntityMessage;
+import com.lunarclient.apollo.entity.v1.OverrideRainbowSheepMessage;
+import com.lunarclient.apollo.entity.v1.ResetFlipedEntityMessage;
+import com.lunarclient.apollo.entity.v1.ResetRainbowSheepMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
@@ -40,24 +38,11 @@ import java.util.stream.Collectors;
 import lombok.NonNull;
 
 /**
- * Provides the misc module.
+ * Provides the entity module.
  *
  * @since 1.0.0
  */
-public final class MiscModuleImpl extends MiscModule {
-
-    @Override
-    public void displayVignette(@NonNull ApolloPlayer viewer, @NonNull Vignette vignette) {
-        ((AbstractApolloPlayer) viewer).sendPacket(DisplayVignetteMessage.newBuilder()
-            .setResourceLocation(vignette.getResourceLocation())
-            .setOpacity(vignette.getOpacity())
-            .build());
-    }
-
-    @Override
-    public void resetVignette(@NonNull ApolloPlayer viewer) {
-        ((AbstractApolloPlayer) viewer).sendPacket(ResetVignetteMessage.getDefaultInstance());
-    }
+public final class EntityModuleImpl extends EntityModule {
 
     @Override
     public void overrideRainbowSheep(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> sheepEntities) {

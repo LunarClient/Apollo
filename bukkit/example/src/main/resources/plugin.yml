@@ -13,12 +13,12 @@ commands:
         description: "Colored Fires!"
     cooldown:
         description: "Cooldowns!"
+    entity:
+        description: "Entity!"
     hologram:
         description: "Holograms!"
     limb:
         description: "Limb!"
-    misc:
-        description: "Misc!"
     nametag:
         description: "Nametags!"
     notification:
@@ -37,5 +37,7 @@ commands:
         description: "TNT Countdown!"
     transfer:
         description: "Transfer!"
+    vignette:
+        description: "Vignette!"
     waypoint:
         description: "Waypoints!"

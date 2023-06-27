@@ -33,12 +33,12 @@ import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModuleImpl;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
+import com.lunarclient.apollo.module.entity.EntityModule;
+import com.lunarclient.apollo.module.entity.EntityModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
-import com.lunarclient.apollo.module.misc.MiscModule;
-import com.lunarclient.apollo.module.misc.MiscModuleImpl;
 import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
 import com.lunarclient.apollo.module.notification.NotificationModule;
@@ -56,6 +56,8 @@ import com.lunarclient.apollo.module.tntcountdown.TntCountdownModule;
 import com.lunarclient.apollo.module.tntcountdown.TntCountdownModuleImpl;
 import com.lunarclient.apollo.module.transfer.TransferModule;
 import com.lunarclient.apollo.module.transfer.TransferModuleImpl;
+import com.lunarclient.apollo.module.vignette.VignetteModule;
+import com.lunarclient.apollo.module.vignette.VignetteModuleImpl;
 import com.lunarclient.apollo.module.waypoint.WaypointModule;
 import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
@@ -89,9 +91,9 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
                 .addModule(BorderModule.class, new BorderModuleImpl())
                 .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
                 .addModule(CooldownModule.class, new CooldownModuleImpl())
+                .addModule(EntityModule.class, new EntityModuleImpl())
                 .addModule(HologramModule.class, new HologramModuleImpl())
                 .addModule(LimbModule.class, new LimbModuleImpl())
-                .addModule(MiscModule.class, new MiscModuleImpl())
                 .addModule(NametagModule.class, new NametagModuleImpl())
                 .addModule(NotificationModule.class, new NotificationModuleImpl())
                 .addModule(ServerRuleModule.class)
@@ -101,6 +103,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
                 .addModule(TitleModule.class, new TitleModuleImpl())
                 .addModule(TntCountdownModule.class, new TntCountdownModuleImpl())
                 .addModule(TransferModule.class, new TransferModuleImpl())
+                .addModule(VignetteModule.class, new VignetteModuleImpl())
                 .addModule(WaypointModule.class, new WaypointModuleImpl());
 
         ApolloManager.loadConfiguration(this.getDataFolder().toPath());

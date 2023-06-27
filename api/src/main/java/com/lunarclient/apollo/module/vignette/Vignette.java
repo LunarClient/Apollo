@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.misc;
+package com.lunarclient.apollo.module.vignette;
 
 import lombok.Builder;
 import lombok.Getter;

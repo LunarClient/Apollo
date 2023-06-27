@@ -3,9 +3,9 @@
     "border": "Border",
     "coloredfire": "Colored Fire",
     "cooldown": "Cooldown",
+    "entity": "Entity",
     "hologram": "Hologram",
     "limb": "Limb",
-    "misc": "Misc",
     "nametag": "Nametag",
     "notification": "Notification",
     "saturation": "Saturation",
@@ -16,5 +16,6 @@
     "title": "Title",
     "tntcountdown": "TNT Countdown",
     "transfer": "Transfer",
+    "vignette": "Vignette",
     "waypoint": "Waypoint"
 }

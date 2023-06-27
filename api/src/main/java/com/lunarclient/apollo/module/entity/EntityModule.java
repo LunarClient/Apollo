@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.misc;
+package com.lunarclient.apollo.module.entity;
 
 import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.module.ApolloModule;
@@ -31,30 +31,13 @@ import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Represents the misc module.
+ * Represents the entity module.
  *
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
-@ModuleDefinition(id = "misc", name = "Misc")
-public abstract class MiscModule extends ApolloModule {
-
-    /**
-     * Displays the {@link Vignette} to the {@link ApolloPlayer}.
-     *
-     * @param viewer the player who is receiving the packet
-     * @param vignette the vignette
-     * @since 1.0.0
-     */
-    public abstract void displayVignette(ApolloPlayer viewer, Vignette vignette);
-
-    /**
-     * Resets the {@link Vignette} for the {@link ApolloPlayer}.
-     *
-     * @param viewer the player who is receiving the packet
-     * @since 1.0.0
-     */
-    public abstract void resetVignette(ApolloPlayer viewer);
+@ModuleDefinition(id = "entity", name = "Entity")
+public abstract class EntityModule extends ApolloModule {
 
     /**
      * Overrides the {@link ApolloEntity} rainbow for the {@link ApolloPlayer}.
