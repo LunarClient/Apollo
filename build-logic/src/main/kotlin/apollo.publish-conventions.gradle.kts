@@ -1,10 +1,6 @@
-import com.diffplug.gradle.spotless.FormatExtension
-
 plugins {
     id("apollo.base-conventions")
-    id("checkstyle")
     id("maven-publish")
-    id("com.diffplug.spotless")
     id("com.google.cloud.artifactregistry.gradle-plugin")
 }
 
@@ -14,10 +10,6 @@ val libs = extensions.getByType(org.gradle.accessors.dm.LibrariesForLibs::class)
 java {
     withSourcesJar()
     withJavadocJar()
-}
-
-dependencies {
-    checkstyle(libs.stylecheck)
 }
 
 tasks {
@@ -31,18 +23,6 @@ tasks {
 
         exclude("lunarclient/**")
     }
-}
-
-val configPath: File = rootProject.file(".checkstyle")
-
-checkstyle {
-    toolVersion = libs.stylecheck.get().toString()
-    configDirectory.set(configPath)
-
-    setConfigProperties(
-        "configDirectory" to configPath,
-        "severity" to "error"
-    )
 }
 
 publishing {

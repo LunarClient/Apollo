@@ -6,6 +6,7 @@ import java.util.stream.Collectors
 
 plugins {
     `java-library`
+    id("checkstyle")
     id("com.diffplug.spotless")
 }
 
@@ -26,6 +27,8 @@ java {
 
 dependencies {
     compileOnly(libs.jetbrains.annotations)
+
+    checkstyle(libs.stylecheck)
 
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
@@ -67,6 +70,18 @@ spotless {
         importOrderFile(rootProject.file(".spotless/lunar.importorder"))
         applyCommon()
     }
+}
+
+val configPath: File = rootProject.file(".checkstyle")
+
+checkstyle {
+    toolVersion = libs.stylecheck.get().toString()
+    configDirectory.set(configPath)
+
+    setConfigProperties(
+        "configDirectory" to configPath,
+        "severity" to "error"
+    )
 }
 
 tasks {
