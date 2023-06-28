@@ -1,10 +1,13 @@
 # Apollo
+![Build Status](https://img.shields.io/github/actions/workflow/status/LunarClient/Apollo/.github/workflows/deploy.yml)
+[![Discord](https://img.shields.io/discord/1080556677004271666?logo=discord&label=discord)](https://discord.gg/ww4UhsPNwf)
 
 Apollo is a powerful tool that allows developers to create custom integrations with Lunar Client.
 
-New downloads, wiki, and more are available at [lunarclient.dev](https://lunarclient.dev/apollo/introduction).
+You can find the latest downloads, wiki, and more at [lunarclient.dev](https://lunarclient.dev/apollo/introduction).
 
-Creating custom integrations for Apollo requires adding the Apollo API as a dependency from our [maven repository](https://lunarclient.dev/maven-repository) to your project.
+Creating custom integrations for Apollo requires adding the Apollo API as a dependency from our [maven repository](https://lunarclient.dev/maven-repository) 
+to your project.
 
 ## Building
 
@@ -12,11 +15,11 @@ Apollo uses [Gradle](https://gradle.org/) to handle dependencies and compile the
 
 **Prerequisites**
 
-- Java 17 or newer
+- Java 17 JDK or newer
 
 **Compiling**
 
-The source will be compiled for Java 8.
+Running the following will compile the Apollo source for Java 8.
 
 ```shell
 ./gradlew build
@@ -29,7 +32,7 @@ The output jars can be found in the `build/libs` directory relative to each plat
 
 ## Examples
 
-An example plugin can be compiled which provides a variety of commands that allows you to try different features Apollo provides.
+An example plugin can be compiled to provide a variety of commands that allow you to try different features Apollo provides.
 When compiled the output jar can be found in the directory `bukkit/example/build/libs`.
 
 ## Contributing
@@ -37,11 +40,11 @@ When compiled the output jar can be found in the directory `bukkit/example/build
 The Apollo project is split into several modules.
 
 - **API** - The publicly available interface for developers wishing to create custom integrations with Lunar Client.
-- **Common** - The abstraction used by the platforms to reduce duplicate code and implement the protocol with Lunar Client.
+- **Common** - The abstraction used by platform modules to reduce duplicate code and implement the protocol for Lunar Client.
 - **Bukkit, BungeeCord, Velocity** - Are modules that implement the common module for each respective platform.
 
-Contributions can be made to Apollo by creating a pull request, which can include improvements and fixes. For new feature ideas please consider
-creating an [issue](https://github.com/LunarClient/Apollo/issues) or joining our [discord](https://discord.gg/ww4UhsPNwf).
+Contributions can be made to Apollo by creating a pull request for improvements or fixes. For new feature ideas please consider making a 
+suggestion by creating an [issue](https://github.com/LunarClient/Apollo/issues) or joining our [discord](https://discord.gg/ww4UhsPNwf).
 
 ## License
 
