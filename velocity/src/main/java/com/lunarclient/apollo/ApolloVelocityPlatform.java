@@ -74,7 +74,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
 
-        server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
+        this.server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
 
         ApolloManager.saveConfiguration();
     }

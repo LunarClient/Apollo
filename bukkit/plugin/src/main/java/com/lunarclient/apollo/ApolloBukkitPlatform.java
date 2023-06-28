@@ -72,9 +72,6 @@ import org.bukkit.event.player.PlayerUnregisterChannelEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
-/**
- * Implementation of ApolloPlatform for Bukkit-based servers.
- */
 public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, Listener {
 
     @Getter private static ApolloBukkitPlatform instance;
