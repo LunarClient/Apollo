@@ -68,7 +68,10 @@ public class NametagCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /nametag <override|reset|clear>");
+            default: {
+                player.sendMessage("Usage: /nametag <override|reset|clear>");
+                break;
+            }
         }
 
         return true;

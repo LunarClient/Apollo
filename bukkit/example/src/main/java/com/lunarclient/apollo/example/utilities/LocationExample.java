@@ -26,7 +26,7 @@ package com.lunarclient.apollo.example.utilities;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 
-public class LocationExample {
+public final class LocationExample {
 
     public static ApolloBlockLocation blockLocationExample() {
         return ApolloBlockLocation.builder()
@@ -44,6 +44,9 @@ public class LocationExample {
             .y(100)
             .z(50.0D)
             .build();
+    }
+
+    private LocationExample() {
     }
 
 }

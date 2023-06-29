@@ -31,7 +31,7 @@ import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.module.team.TeamMember;
 import com.lunarclient.apollo.module.team.TeamModule;
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -88,15 +88,15 @@ public class TeamExample {
 
         public void addMember(Player player) {
             this.members.add(player);
-            teamsByPlayerUuid.put(player.getUniqueId(), this);
+            TeamExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
         }
 
         public void removeMember(Player player) {
             this.members.remove(player);
-            teamsByPlayerUuid.remove(player.getUniqueId());
+            TeamExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
 
             Apollo.getPlayerManager().getPlayer(player.getUniqueId())
-                .ifPresent(teamModule::resetTeamMembers);
+                .ifPresent(TeamExample.this.teamModule::resetTeamMembers);
         }
 
         private TeamMember createTeamMember(Player member) {
@@ -125,7 +125,7 @@ public class TeamExample {
                 .collect(Collectors.toList());
 
             this.members.forEach(member -> Apollo.getPlayerManager().getPlayer(member.getUniqueId())
-                .ifPresent(apolloPlayer -> teamModule.updateTeamMembers(apolloPlayer, teammates)));
+                .ifPresent(apolloPlayer -> TeamExample.this.teamModule.updateTeamMembers(apolloPlayer, teammates)));
         }
 
         public UUID getTeamId() {
@@ -138,8 +138,13 @@ public class TeamExample {
 
         @Override
         public boolean equals(Object other) {
-            if (this == other) return true;
-            if (other == null || other.getClass() != this.getClass()) return false;
+            if (this == other) {
+                return true;
+            }
+
+            if (other == null || other.getClass() != this.getClass()) {
+                return false;
+            }
 
             Team team = (Team) other;
             return this.teamId.equals(team.getTeamId());
@@ -160,7 +165,7 @@ public class TeamExample {
 
         @Override
         public void run() {
-            teamsByTeamId.values().forEach(Team::refresh);
+            TeamExample.this.teamsByTeamId.values().forEach(Team::refresh);
         }
     }
 }

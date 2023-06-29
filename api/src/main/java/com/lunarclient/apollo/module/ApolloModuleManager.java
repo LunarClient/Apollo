@@ -49,7 +49,7 @@ public interface ApolloModuleManager {
      * {@link Class} if it exists, otherwise returns null.
      *
      * @param moduleClass the module class
-     * @param <T> the apollo module type
+     * @param <T>         the apollo module type
      * @return the apollo module, if present
      * @since 1.0.0
      */

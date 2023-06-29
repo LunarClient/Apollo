@@ -41,7 +41,7 @@ public abstract class BeamModule extends ApolloModule {
      * Displays the {@link Beam} to the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
-     * @param beam the beam
+     * @param beam   the beam
      * @since 1.0.0
      */
     public abstract void displayBeam(ApolloPlayer viewer, Beam beam);
@@ -59,7 +59,7 @@ public abstract class BeamModule extends ApolloModule {
      * Removes the {@link Beam} from the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
-     * @param beam the beam
+     * @param beam   the beam
      * @since 1.0.0
      */
     public abstract void removeBeam(ApolloPlayer viewer, Beam beam);

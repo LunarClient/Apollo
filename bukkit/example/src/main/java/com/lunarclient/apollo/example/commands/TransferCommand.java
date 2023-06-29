@@ -62,7 +62,10 @@ public class TransferCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /transfer <transfer|ping>");
+            default: {
+                player.sendMessage("Usage: /transfer <transfer|ping>");
+                break;
+            }
         }
 
         return true;

@@ -23,8 +23,42 @@
  */
 package com.lunarclient.apollo.example;
 
-import com.lunarclient.apollo.example.commands.*;
-import com.lunarclient.apollo.example.modules.*;
+import com.lunarclient.apollo.example.commands.BeamCommand;
+import com.lunarclient.apollo.example.commands.BorderCommand;
+import com.lunarclient.apollo.example.commands.ColoredFireCommand;
+import com.lunarclient.apollo.example.commands.CooldownCommand;
+import com.lunarclient.apollo.example.commands.EntityCommand;
+import com.lunarclient.apollo.example.commands.HologramCommand;
+import com.lunarclient.apollo.example.commands.LimbCommand;
+import com.lunarclient.apollo.example.commands.NametagCommand;
+import com.lunarclient.apollo.example.commands.NotificationCommand;
+import com.lunarclient.apollo.example.commands.ServerRuleCommand;
+import com.lunarclient.apollo.example.commands.StaffModCommand;
+import com.lunarclient.apollo.example.commands.StopwatchCommand;
+import com.lunarclient.apollo.example.commands.TeamCommand;
+import com.lunarclient.apollo.example.commands.TitleCommand;
+import com.lunarclient.apollo.example.commands.TntCountdownCommand;
+import com.lunarclient.apollo.example.commands.TransferCommand;
+import com.lunarclient.apollo.example.commands.VignetteCommand;
+import com.lunarclient.apollo.example.commands.WaypointCommand;
+import com.lunarclient.apollo.example.modules.BeamExample;
+import com.lunarclient.apollo.example.modules.BorderExample;
+import com.lunarclient.apollo.example.modules.ColoredFireExample;
+import com.lunarclient.apollo.example.modules.CooldownExample;
+import com.lunarclient.apollo.example.modules.EntityExample;
+import com.lunarclient.apollo.example.modules.HologramExample;
+import com.lunarclient.apollo.example.modules.LimbExample;
+import com.lunarclient.apollo.example.modules.NametagExample;
+import com.lunarclient.apollo.example.modules.NotificationExample;
+import com.lunarclient.apollo.example.modules.ServerRuleExample;
+import com.lunarclient.apollo.example.modules.StaffModExample;
+import com.lunarclient.apollo.example.modules.StopwatchExample;
+import com.lunarclient.apollo.example.modules.TeamExample;
+import com.lunarclient.apollo.example.modules.TitleExample;
+import com.lunarclient.apollo.example.modules.TntCountdownExample;
+import com.lunarclient.apollo.example.modules.TransferExample;
+import com.lunarclient.apollo.example.modules.VignetteExample;
+import com.lunarclient.apollo.example.modules.WaypointExample;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 

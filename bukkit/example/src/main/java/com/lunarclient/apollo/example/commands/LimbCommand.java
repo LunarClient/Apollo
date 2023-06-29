@@ -52,7 +52,7 @@ public class LimbCommand implements CommandExecutor {
 
         Player target = Bukkit.getPlayer(args[1]);
 
-        if(target == null) {
+        if (target == null) {
             player.sendMessage("Player '" + args[1] + "' not found!");
             return true;
         }
@@ -82,7 +82,10 @@ public class LimbCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /limb <hideArmor|resetArmor|hideBody|resetBody>");
+            default: {
+                player.sendMessage("Usage: /limb <hideArmor|resetArmor|hideBody|resetBody>");
+                break;
+            }
         }
 
         return true;

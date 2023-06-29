@@ -26,7 +26,7 @@ package com.lunarclient.apollo.example.utilities;
 import com.lunarclient.apollo.common.cuboid.Cuboid2D;
 import com.lunarclient.apollo.common.cuboid.Cuboid3D;
 
-public class CuboidExample {
+public final class CuboidExample {
 
     public static Cuboid2D cuboid2DExample() {
         return Cuboid2D.builder()
@@ -46,6 +46,9 @@ public class CuboidExample {
             .maxY(256)
             .maxZ(50)
             .build();
+    }
+
+    private CuboidExample() {
     }
 
 }

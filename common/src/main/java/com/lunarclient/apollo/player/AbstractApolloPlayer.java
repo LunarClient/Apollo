@@ -43,7 +43,7 @@ public abstract class AbstractApolloPlayer implements ApolloPlayer {
      * Sends the provided message packet to the client
      * with an expected {@link Future} response.
      *
-     * @param <T> the future representing the response
+     * @param <T>     the future representing the response
      * @param request the apollo request
      * @param message the message
      * @return the apollo response

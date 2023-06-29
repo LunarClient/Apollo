@@ -44,7 +44,7 @@ public abstract class TitleModule extends ApolloModule {
      * Sends the {@link Title} to the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
-     * @param title the title
+     * @param title  the title
      * @since 1.0.0
      */
     public abstract void displayTitle(ApolloPlayer viewer, Title title);

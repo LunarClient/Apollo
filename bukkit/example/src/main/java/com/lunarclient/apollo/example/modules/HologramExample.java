@@ -30,7 +30,7 @@ import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.module.hologram.Hologram;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.awt.*;
+import java.awt.Color;
 import java.util.Collection;
 import java.util.Optional;
 import org.bukkit.entity.Player;

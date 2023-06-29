@@ -42,7 +42,7 @@ public abstract class EntityModule extends ApolloModule {
     /**
      * Overrides the {@link ApolloEntity} rainbow for the {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer        the player who is receiving the packet
      * @param sheepEntities the list of sheep entities
      * @since 1.0.0
      */
@@ -51,7 +51,7 @@ public abstract class EntityModule extends ApolloModule {
     /**
      * Resets the {@link ApolloEntity} rainbow for the {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer        the player who is receiving the packet
      * @param sheepEntities the list of sheep entities to manipulate
      * @since 1.0.0
      */
@@ -60,7 +60,7 @@ public abstract class EntityModule extends ApolloModule {
     /**
      * Flips the {@link ApolloEntity} for the {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer   the player who is receiving the packet
      * @param entities the entities to flip
      * @since 1.0.0
      */
@@ -69,7 +69,7 @@ public abstract class EntityModule extends ApolloModule {
     /**
      * Resets the {@link ApolloEntity} flip for the {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer   the player who is receiving the packet
      * @param entities the entities to reset (unflip)
      * @since 1.0.0
      */

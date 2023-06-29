@@ -42,16 +42,19 @@ public final class ApolloNetworkManager {
     /**
      * Sends an {@link Any} message packet to the provided player.
      *
-     * @param player the player to send the packet to
+     * @param player  the player to send the packet to
      * @param message the message to send
      * @since 1.0.0
      */
     public void sendPacket(ApolloPlayer player, Any message) {
-        EventBus.EventResult<ApolloSendPacketEvent> result = EventBus.getBus().post(new ApolloSendPacketEvent(player, message));
-        if(!result.getEvent().isCancelled()) {
+        EventBus.EventResult<ApolloSendPacketEvent> result = EventBus.getBus()
+            .post(new ApolloSendPacketEvent(player, message));
+
+        if (!result.getEvent().isCancelled()) {
             ((AbstractApolloPlayer) player).sendPacket(message.toByteArray());
         }
-        for(Throwable throwable : result.getThrowing()) {
+
+        for (Throwable throwable : result.getThrowing()) {
             throwable.printStackTrace();
         }
     }
@@ -59,13 +62,15 @@ public final class ApolloNetworkManager {
     /**
      * Receives an {@link Any} message packet from the provided player.
      *
-     * @param player the player to receive the packet from
+     * @param player  the player to receive the packet from
      * @param message the message to receive
      * @since 1.0.0
      */
     public void receivePacket(ApolloPlayer player, Any message) {
-        EventBus.EventResult<ApolloReceivePacketEvent> result = EventBus.getBus().post(new ApolloReceivePacketEvent(player, message));
-        for(Throwable throwable : result.getThrowing()) {
+        EventBus.EventResult<ApolloReceivePacketEvent> result = EventBus.getBus()
+            .post(new ApolloReceivePacketEvent(player, message));
+
+        for (Throwable throwable : result.getThrowing()) {
             throwable.printStackTrace();
         }
     }

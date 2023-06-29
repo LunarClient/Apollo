@@ -35,9 +35,9 @@ public interface ApolloListener {
     /**
      * Shorthand for {@link EventBus#register(Class, Consumer)}.
      *
-     * @param event the event class
+     * @param event    the event class
      * @param consumer the listener
-     * @param <T> the event type
+     * @param <T>      the event type
      * @since 1.0.0
      */
     default <T extends Event> void handle(Class<T> event, Consumer<T> consumer) {

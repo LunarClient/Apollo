@@ -30,7 +30,7 @@ import com.lunarclient.apollo.module.title.Title;
 import com.lunarclient.apollo.module.title.TitleModule;
 import com.lunarclient.apollo.module.title.TitleType;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.awt.*;
+import java.awt.Color;
 import java.time.Duration;
 import java.util.Optional;
 import org.bukkit.entity.Player;

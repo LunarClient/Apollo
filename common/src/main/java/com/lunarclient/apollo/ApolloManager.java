@@ -59,17 +59,20 @@ public final class ApolloManager {
      * @since 1.0.0
      */
     public static void bootstrap(ApolloPlatform platform) {
-        if(ApolloManager.bootstrapped) throw new IllegalStateException("Cannot bootstrap Apollo more than once!");
+        if (ApolloManager.bootstrapped) {
+            throw new IllegalStateException("Cannot bootstrap Apollo more than once!");
+        }
+
         try {
             Apollo.initialize(
-                    platform,
-                    new ApolloModuleManagerImpl(),
-                    new ApolloPlayerManagerImpl(),
-                    new ApolloRoundtripManager()
+                platform,
+                new ApolloModuleManagerImpl(),
+                new ApolloPlayerManagerImpl(),
+                new ApolloRoundtripManager()
             );
 
             ApolloManager.networkManager = new ApolloNetworkManager();
-        } catch(Throwable throwable) {
+        } catch (Throwable throwable) {
             throw new RuntimeException("Unable to bootstrap Apollo!", throwable);
         }
         ApolloManager.bootstrapped = true;
@@ -83,7 +86,7 @@ public final class ApolloManager {
      */
     public static void loadConfiguration(Path path) {
         try {
-            if(ApolloManager.configurationLoader == null) {
+            if (ApolloManager.configurationLoader == null) {
                 ApolloManager.configurationLoader = YamlConfigurationLoader.builder()
                     .nodeStyle(NodeStyle.BLOCK)
                     .path(path.resolve("settings.yml"))
@@ -92,7 +95,7 @@ public final class ApolloManager {
             }
 
             ApolloManager.configurationNode = ApolloManager.configurationLoader.load();
-        } catch(Throwable throwable) {
+        } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
     }
@@ -104,14 +107,16 @@ public final class ApolloManager {
      */
     public static void saveConfiguration() {
         try {
-            if(ApolloManager.configurationNode == null) return;
+            if (ApolloManager.configurationNode == null) {
+                return;
+            }
 
             CommentedConfigurationNode modules = ApolloManager.configurationNode.node("modules");
 
             ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration(modules);
 
             ApolloManager.configurationLoader.save(ApolloManager.configurationNode);
-        } catch(Throwable throwable) {
+        } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
     }

@@ -40,7 +40,7 @@ public abstract class VignetteModule extends ApolloModule {
     /**
      * Displays the {@link Vignette} to the {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer   the player who is receiving the packet
      * @param vignette the vignette
      * @since 1.0.0
      */

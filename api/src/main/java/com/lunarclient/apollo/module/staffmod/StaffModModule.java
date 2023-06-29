@@ -42,7 +42,7 @@ public abstract class StaffModModule extends ApolloModule {
      * Enables the {@link StaffMod}s for the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
-     * @param mods the staff mods
+     * @param mods   the staff mods
      * @since 1.0.0
      */
     public abstract void enableStaffMods(ApolloPlayer viewer, List<StaffMod> mods);
@@ -51,7 +51,7 @@ public abstract class StaffModModule extends ApolloModule {
      * Disables the {@link StaffMod} from the {@link ApolloPlayer}.
      *
      * @param viewer the player who is receiving the packet
-     * @param mods the staff mods
+     * @param mods   the staff mods
      * @since 1.0.0
      */
     public abstract void disableStaffMods(ApolloPlayer viewer, List<StaffMod> mods);

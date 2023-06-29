@@ -68,7 +68,10 @@ public class TntCountdownCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /tntcountdown <override|set|clear>");
+            default: {
+                player.sendMessage("Usage: /tntcountdown <override|set|clear>");
+                break;
+            }
         }
 
         return true;

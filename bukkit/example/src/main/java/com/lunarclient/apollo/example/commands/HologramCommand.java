@@ -68,7 +68,10 @@ public class HologramCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /hologram <display|remove|reset>");
+            default: {
+                player.sendMessage("Usage: /hologram <display|remove|reset>");
+                break;
+            }
         }
 
         return true;

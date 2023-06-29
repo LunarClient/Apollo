@@ -62,7 +62,10 @@ public class VignetteCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /vignette <displayVignette|resetVignette>");
+            default: {
+                player.sendMessage("Usage: /vignette <displayVignette|resetVignette>");
+                break;
+            }
         }
 
         return true;

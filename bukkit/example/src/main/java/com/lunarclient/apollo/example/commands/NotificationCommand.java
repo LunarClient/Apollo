@@ -62,7 +62,10 @@ public class NotificationCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /notification <display|broadcast>");
+            default: {
+                player.sendMessage("Usage: /notification <display|broadcast>");
+                break;
+            }
         }
 
         return true;

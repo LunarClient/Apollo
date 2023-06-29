@@ -48,9 +48,9 @@ public abstract class ColoredFireModule extends ApolloModule {
     /**
      * Overrides the burning fire color for the burningPlayer, visible by the viewers.
      *
-     * @param viewers the players who are receiving the packet
+     * @param viewers       the players who are receiving the packet
      * @param burningPlayer the UUID of the player whose burning color will be overwrote
-     * @param color the new color burningPlayer should burn in.
+     * @param color         the new color burningPlayer should burn in.
      * @since 1.0.0
      */
     public abstract void overrideColoredFire(Collection<ApolloPlayer> viewers, UUID burningPlayer, Color color);
@@ -58,7 +58,7 @@ public abstract class ColoredFireModule extends ApolloModule {
     /**
      * Resets the burning fire color for the burningPlayer, visible by the viewers.
      *
-     * @param viewers the players who are receiving the packet
+     * @param viewers       the players who are receiving the packet
      * @param burningPlayer the UUID of the player whose burning color was overwrote
      * @since 1.0.0
      */

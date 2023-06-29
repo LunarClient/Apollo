@@ -70,12 +70,22 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
 
     @EventHandler
     public void onPluginMessage(PluginMessageEvent event) {
-        if (!(event.getReceiver() instanceof ProxyServer)) return;
-        if (!(event.getSender() instanceof ProxiedPlayer)) return;
-        if (!event.getTag().equals("REGISTER")) return;
+        if (!(event.getReceiver() instanceof ProxyServer)) {
+            return;
+        }
+
+        if (!(event.getSender() instanceof ProxiedPlayer)) {
+            return;
+        }
+
+        if (!event.getTag().equals("REGISTER")) {
+            return;
+        }
 
         String channels = new String(event.getData(), Charsets.UTF_8);
-        if(!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
+        if (!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
+            return;
+        }
 
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new BungeeApolloPlayer(player));

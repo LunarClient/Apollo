@@ -90,7 +90,10 @@ public final class Apollo {
     }
 
     private static <T> T checkEnabled(@Nullable T object) {
-        if (object == null) throw new UnsupportedOperationException("Apollo has not started yet!");
+        if (object == null) {
+            throw new UnsupportedOperationException("Apollo has not started yet!");
+        }
+
         return object;
     }
 

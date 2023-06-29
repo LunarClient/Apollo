@@ -72,6 +72,7 @@ public class TeamCommand implements CommandExecutor {
                 default: {
                     player.sendMessage("Usage: /team <create|delete>");
                     player.sendMessage("Usage: /team <addMember|removeMember> <player>");
+                    break;
                 }
             }
 
@@ -81,7 +82,7 @@ public class TeamCommand implements CommandExecutor {
         if (args.length == 2) {
             Player target = Bukkit.getPlayer(args[1]);
 
-            if(target == null) {
+            if (target == null) {
                 player.sendMessage("Player '" + args[1] + "' not found!");
                 return true;
             }
@@ -116,6 +117,7 @@ public class TeamCommand implements CommandExecutor {
                 default: {
                     player.sendMessage("Usage: /team <create|delete>");
                     player.sendMessage("Usage: /team <addMember|removeMember> <player>");
+                    break;
                 }
             }
 

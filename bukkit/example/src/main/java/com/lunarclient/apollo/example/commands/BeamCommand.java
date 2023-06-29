@@ -68,7 +68,10 @@ public class BeamCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /beam <display|remove|reset>");
+            default: {
+                player.sendMessage("Usage: /beam <display|remove|reset>");
+                break;
+            }
         }
 
         return true;

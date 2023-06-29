@@ -95,7 +95,7 @@ public abstract class WaypointModule extends ApolloModule {
     /**
      * Displays the {@link Waypoint} to the {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer   the player who is receiving the packet
      * @param waypoint the waypoint
      * @since 1.0.0
      */
@@ -104,7 +104,7 @@ public abstract class WaypointModule extends ApolloModule {
     /**
      * Removes the {@link Waypoint} from the {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer       the player who is receiving the packet
      * @param waypointName the waypoint name
      * @since 1.0.0
      */
@@ -113,7 +113,7 @@ public abstract class WaypointModule extends ApolloModule {
     /**
      * Removes the {@link Waypoint} from the {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer   the player who is receiving the packet
      * @param waypoint the waypoint
      * @since 1.0.0
      */

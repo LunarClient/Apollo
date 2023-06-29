@@ -41,7 +41,8 @@ public class ServerRuleExample {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
-            this.serverRuleModule.getOptions().set(apolloPlayer, ServerRuleModule.OVERRIDE_NAMETAG_RENDER_DISTANCE, value);
+            this.serverRuleModule.getOptions()
+                .set(apolloPlayer, ServerRuleModule.OVERRIDE_NAMETAG_RENDER_DISTANCE, value);
         });
     }
 

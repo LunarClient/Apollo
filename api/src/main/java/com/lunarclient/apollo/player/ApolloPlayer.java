@@ -60,7 +60,7 @@ public interface ApolloPlayer {
      * {@code false}.
      *
      * @param options the options container
-     * @param option the option
+     * @param option  the option
      * @return true if the player has permission, otherwise false
      * @since 1.0.0
      */

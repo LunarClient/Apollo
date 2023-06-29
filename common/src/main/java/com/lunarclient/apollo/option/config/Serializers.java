@@ -39,9 +39,9 @@ public final class Serializers {
     /**
      * Registers the provided {@link TypeSerializer} for the provided object.
      *
-     * @param type the object class
+     * @param type       the object class
      * @param serializer the type serializer
-     * @param <T> the object type
+     * @param <T>        the object type
      * @since 1.0.0
      */
     public static <T> void register(@NonNull Class<T> type, @NonNull TypeSerializer<T> serializer) {

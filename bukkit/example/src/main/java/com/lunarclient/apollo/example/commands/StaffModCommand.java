@@ -62,7 +62,10 @@ public class StaffModCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /staffmod <enable|disable>");
+            default: {
+                player.sendMessage("Usage: /staffmod <enable|disable>");
+                break;
+            }
         }
 
         return true;

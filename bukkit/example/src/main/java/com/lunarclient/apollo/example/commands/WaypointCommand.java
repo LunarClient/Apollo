@@ -67,7 +67,10 @@ public class WaypointCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /waypoint <display|remove|reset>");
+            default: {
+                player.sendMessage("Usage: /waypoint <display|remove|reset>");
+                break;
+            }
         }
 
         return true;

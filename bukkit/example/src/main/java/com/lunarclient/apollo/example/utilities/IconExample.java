@@ -28,7 +28,7 @@ import com.lunarclient.apollo.common.icon.ItemStackIcon;
 import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
 import org.bukkit.Material;
 
-public class IconExample {
+public final class IconExample {
 
     public static ItemStackIcon itemStackIdIconExample() {
         return ItemStackIcon.builder()
@@ -59,6 +59,9 @@ public class IconExample {
             .minV(1)
             .maxV(1)
             .build();
+    }
+
+    private IconExample() {
     }
 
 }

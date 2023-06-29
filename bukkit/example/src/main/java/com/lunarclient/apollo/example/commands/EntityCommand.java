@@ -74,7 +74,10 @@ public class EntityCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /entity <overrideSheep|resetSheep|flipEntities|resetFlippedEntities>");
+            default: {
+                player.sendMessage("Usage: /entity <overrideSheep|resetSheep|flipEntities|resetFlippedEntities>");
+                break;
+            }
         }
 
         return true;

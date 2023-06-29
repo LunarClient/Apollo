@@ -41,7 +41,7 @@ public abstract class TeamModule extends ApolloModule {
     /**
      * Upserts all team members for the given {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer      the player who is receiving the packet
      * @param teamMembers all current team members of the viewer
      * @since 1.0.0
      */

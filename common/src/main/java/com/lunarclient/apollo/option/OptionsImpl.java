@@ -98,8 +98,11 @@ public class OptionsImpl implements Options {
     @Override
     public <T> void set(@NonNull Option<?, ?, ?> option, @Nullable T value) {
         Object nextValue = value == null ? option.getDefaultValue() : value;
-        if(this.postEvent(option, null, nextValue)) return;
-        if(Objects.equals(nextValue, option.getDefaultValue())) {
+        if (this.postEvent(option, null, nextValue)) {
+            return;
+        }
+
+        if (Objects.equals(nextValue, option.getDefaultValue())) {
             this.options.remove(option);
         } else {
             this.options.put(option, value);
@@ -112,11 +115,16 @@ public class OptionsImpl implements Options {
     public <T> void set(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @Nullable T value) {
         Object globalValue = this.get(option);
         Object nextValue = value == null ? globalValue : value;
-        if(this.postEvent(option, player, nextValue)) return;
-        if(Objects.equals(value, globalValue)) {
-            this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>())).remove(option);
+        if (this.postEvent(option, player, nextValue)) {
+            return;
+        }
+
+        if (Objects.equals(value, globalValue)) {
+            this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+                .remove(option);
         } else {
-            this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>())).put(option, value);
+            this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+                .put(option, value);
         }
 
         this.postPacket(option, player, nextValue);
@@ -124,7 +132,10 @@ public class OptionsImpl implements Options {
 
     @Override
     public <T> void add(@NonNull Option<?, ?, ?> option, @NonNull T value) {
-        if(this.postEvent(option, null, value)) return;
+        if (this.postEvent(option, null, value)) {
+            return;
+        }
+
         this.options.put(option, value);
 
         this.postPacket(option, null, value);
@@ -132,15 +143,22 @@ public class OptionsImpl implements Options {
 
     @Override
     public <T> void add(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @NonNull T value) {
-        if(this.postEvent(option, player, value)) return;
-        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>())).put(option, value);
+        if (this.postEvent(option, player, value)) {
+            return;
+        }
+
+        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+            .put(option, value);
 
         this.postPacket(option, player, value);
     }
 
     @Override
     public <T> void remove(@NonNull Option<?, ?, ?> option, @Nullable T compare) {
-        if(this.postEvent(option, null, option.getDefaultValue())) return;
+        if (this.postEvent(option, null, option.getDefaultValue())) {
+            return;
+        }
+
         this.options.remove(option, compare);
 
         this.postPacket(option, null, option.getDefaultValue());
@@ -148,8 +166,12 @@ public class OptionsImpl implements Options {
 
     @Override
     public <T> void remove(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @Nullable T compare) {
-        if(this.postEvent(option, player, this.get(option))) return;
-        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>())).remove(option, compare);
+        if (this.postEvent(option, player, this.get(option))) {
+            return;
+        }
+
+        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+            .remove(option, compare);
 
         this.postPacket(option, player, option.getDefaultValue());
     }
@@ -159,7 +181,10 @@ public class OptionsImpl implements Options {
     public <T> void replace(@NonNull Option<?, ?, ?> option, @NonNull BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
         this.options.replaceAll((k, v) -> {
             T value = remappingFunction.apply(option, (T) v);
-            if(this.postEvent(option, null, value)) return null;
+            if (this.postEvent(option, null, value)) {
+                return null;
+            }
+
             this.postPacket(option, null, value);
             return value;
         });
@@ -168,12 +193,16 @@ public class OptionsImpl implements Options {
     @Override
     @SuppressWarnings("unchecked")
     public <T> void replace(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @NonNull BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
-        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>())).replaceAll((k, v) -> {
-            T value = remappingFunction.apply(option, (T) v);
-            if(this.postEvent(option, player, value)) return null;
-            this.postPacket(option, player, value);
-            return value;
-        });
+        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+            .replaceAll((k, v) -> {
+                T value = remappingFunction.apply(option, (T) v);
+                if (this.postEvent(option, player, value)) {
+                    return null;
+                }
+
+                this.postPacket(option, player, value);
+                return value;
+            });
     }
 
     @Override
@@ -185,16 +214,16 @@ public class OptionsImpl implements Options {
      * Wraps the provided value into a protobuf {@link Value}.
      *
      * @param valueBuilder the value builder
-     * @param current the current value
+     * @param current      the current value
      * @return the wrapped value
      * @since 1.0.0
      */
     public Value wrapValue(Value.Builder valueBuilder, @Nullable Object current) {
-        if(current instanceof Number) {
+        if (current instanceof Number) {
             valueBuilder.setNumberValue(((Number) current).doubleValue());
-        } else if(current instanceof String) {
+        } else if (current instanceof String) {
             valueBuilder.setStringValue((String) current);
-        } else if(current instanceof Boolean) {
+        } else if (current instanceof Boolean) {
             valueBuilder.setBoolValue((Boolean) current);
         } else {
             valueBuilder.setNullValue(NullValue.NULL_VALUE);
@@ -211,11 +240,11 @@ public class OptionsImpl implements Options {
      * @since 1.0.0
      */
     public @Nullable Object unwrapValue(Value wrapper) {
-        if(wrapper.hasNumberValue()) {
+        if (wrapper.hasNumberValue()) {
             return wrapper.getNumberValue();
-        } else if(wrapper.hasStringValue()) {
+        } else if (wrapper.hasStringValue()) {
             return wrapper.getStringValue();
-        } else if(wrapper.hasBoolValue()) {
+        } else if (wrapper.hasBoolValue()) {
             return wrapper.getBoolValue();
         }
 
@@ -223,16 +252,24 @@ public class OptionsImpl implements Options {
     }
 
     protected boolean postEvent(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {
-        EventBus.EventResult<ApolloUpdateOptionEvent> eventResult = EventBus.getBus().post(new ApolloUpdateOptionEvent(this, player, option, value));
-        for(Throwable throwable : eventResult.getThrowing()) {
+        EventBus.EventResult<ApolloUpdateOptionEvent> eventResult = EventBus.getBus()
+            .post(new ApolloUpdateOptionEvent(this, player, option, value));
+
+        for (Throwable throwable : eventResult.getThrowing()) {
             throwable.printStackTrace();
         }
+
         return eventResult.getEvent().isCancelled();
     }
 
     protected void postPacket(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {
-        if(!option.isNotify()) return;
-        Collection<ApolloPlayer> players = player == null ? Apollo.getPlayerManager().getPlayers() : Collections.singleton(player);
+        if (!option.isNotify()) {
+            return;
+        }
+
+        Collection<ApolloPlayer> players = player == null ? Apollo.getPlayerManager()
+            .getPlayers() : Collections.singleton(player);
+
         Value valueWrapper = this.wrapValue(Value.newBuilder(), value);
         NetworkOptions.sendOption(this.module, option, valueWrapper, players);
     }

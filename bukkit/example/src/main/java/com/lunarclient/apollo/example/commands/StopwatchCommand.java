@@ -68,7 +68,10 @@ public class StopwatchCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /stopwatch <start|stop|reset>");
+            default: {
+                player.sendMessage("Usage: /stopwatch <start|stop|reset>");
+                break;
+            }
         }
 
         return true;

@@ -36,7 +36,9 @@ public class StaffModExample {
     private final StaffModModule staffModModule = Apollo.getModuleManager().getModule(StaffModModule.class);
 
     public void enableStaffModsExample(Player viewer) {
-        if (!viewer.hasPermission("apollo.staff")) return;
+        if (!viewer.hasPermission("apollo.staff")) {
+            return;
+        }
 
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY)));

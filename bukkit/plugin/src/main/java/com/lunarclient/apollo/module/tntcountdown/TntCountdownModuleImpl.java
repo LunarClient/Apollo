@@ -48,13 +48,15 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
 
     @Override
     protected void onEnable() {
-       Bukkit.getPluginManager().registerEvents(this, ApolloBukkitPlatform.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, ApolloBukkitPlatform.getInstance());
     }
 
     @Override
     public void setTntCountdown(ApolloEntity entity, int ticks) {
         Entity target = Bukkit.getEntity(entity.getEntityUuid());
-        if(!(target instanceof TNTPrimed)) return;
+        if (!(target instanceof TNTPrimed)) {
+            return;
+        }
 
         ((TNTPrimed) target).setFuseTicks(ticks);
 
@@ -71,13 +73,18 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTntSpawn(EntitySpawnEvent event) {
         // We only care about TNT
-        if(event.getEntityType() != EntityType.PRIMED_TNT) return;
+        if (event.getEntityType() != EntityType.PRIMED_TNT) {
+            return;
+        }
 
         TNTPrimed primed = (TNTPrimed) event.getEntity();
         int customFuse = this.getOptions().get(TntCountdownModule.TNT_TICKS);
 
         // We only care about TNT with a non-standard fuse as well.
-        if(primed.getFuseTicks() == customFuse) return;
+        if (primed.getFuseTicks() == customFuse) {
+            return;
+        }
+
         primed.setFuseTicks(customFuse);
     }
 

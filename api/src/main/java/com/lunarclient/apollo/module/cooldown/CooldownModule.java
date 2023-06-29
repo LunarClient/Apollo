@@ -40,7 +40,7 @@ public abstract class CooldownModule extends ApolloModule {
     /**
      * Displays the {@link Cooldown} to the {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer   the player who is receiving the packet
      * @param cooldown the cooldown
      * @since 1.0.0
      */
@@ -49,7 +49,7 @@ public abstract class CooldownModule extends ApolloModule {
     /**
      * Removes the {@link Cooldown} from the {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer       the player who is receiving the packet
      * @param cooldownName the cooldown name
      * @since 1.0.0
      */
@@ -58,7 +58,7 @@ public abstract class CooldownModule extends ApolloModule {
     /**
      * Removes the {@link Cooldown} from the {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer   the player who is receiving the packet
      * @param cooldown the cooldown
      * @since 1.0.0
      */

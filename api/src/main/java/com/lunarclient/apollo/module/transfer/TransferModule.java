@@ -48,10 +48,11 @@ public abstract class TransferModule extends ApolloModule {
     }
 
     // Simple implementations for the full version below
+
     /**
      * Sends the {@link PingRequest} to the {@link ApolloPlayer}.
      *
-     * @param player the player
+     * @param player    the player
      * @param serverIps all server IPs to ping
      * @return future to be listened to for errors/success
      * @since 1.0.0
@@ -66,7 +67,7 @@ public abstract class TransferModule extends ApolloModule {
     /**
      * Attempts to transfer the {@link ApolloPlayer} to the given server IP.
      *
-     * @param player the player
+     * @param player   the player
      * @param serverIp the server IP to transfer to
      * @return future to be listened to for errors/success
      * @since 1.0.0
@@ -81,7 +82,7 @@ public abstract class TransferModule extends ApolloModule {
     /**
      * Sends the {@link PingRequest} to the {@link ApolloPlayer}.
      *
-     * @param player the player
+     * @param player  the player
      * @param request the ping request
      * @return future to be listened to for errors/success
      * @since 1.0.0
@@ -91,7 +92,7 @@ public abstract class TransferModule extends ApolloModule {
     /**
      * Sends the {@link TransferRequest} to the {@link ApolloPlayer}.
      *
-     * @param player the player
+     * @param player  the player
      * @param request the transfer request
      * @return future to be listened to for errors/success
      * @since 1.0.0

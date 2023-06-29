@@ -48,7 +48,7 @@ public abstract class NotificationModule extends ApolloModule {
     /**
      * Displays the {@link Notification} to the {@link ApolloPlayer}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param viewer       the player who is receiving the packet
      * @param notification the notification
      * @since 1.0.0
      */

@@ -81,7 +81,10 @@ public class ServerRuleCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /serverrule <antiportaltraps|overridenametagrenderdistance|nametagrenderdistance> <value>");
+            default: {
+                player.sendMessage("Usage: /serverrule <antiportaltraps|overridenametagrenderdistance|nametagrenderdistance> <value>");
+                break;
+            }
         }
 
         return true;

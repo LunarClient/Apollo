@@ -306,7 +306,8 @@ public final class NetworkTypes {
      */
     public static com.lunarclient.apollo.common.v1.Component toProtobuf(Component object) {
         List<com.lunarclient.apollo.common.v1.Component.TextDecorator> decorators = object.getDecorators()
-            .stream().map(decorator -> com.lunarclient.apollo.common.v1.Component.TextDecorator.forNumber(decorator.ordinal() + 1))
+            .stream()
+            .map(decorator -> com.lunarclient.apollo.common.v1.Component.TextDecorator.forNumber(decorator.ordinal() + 1))
             .collect(Collectors.toList());
 
         List<com.lunarclient.apollo.common.v1.Component> children = object.getChildren()
@@ -357,26 +358,26 @@ public final class NetworkTypes {
     public static com.lunarclient.apollo.common.v1.Icon toProtobuf(Icon icon) {
         com.lunarclient.apollo.common.v1.Icon.Builder builder = com.lunarclient.apollo.common.v1.Icon.newBuilder();
 
-        if(icon instanceof ItemStackIcon) {
+        if (icon instanceof ItemStackIcon) {
             ItemStackIcon item = (ItemStackIcon) icon;
             String itemName = item.getItemName();
 
             com.lunarclient.apollo.common.v1.ItemStackIcon.Builder itemBuilder = com.lunarclient.apollo.common.v1.ItemStackIcon.newBuilder()
                 .setItemId(item.getItemId());
 
-            if(itemName != null) {
+            if (itemName != null) {
                 itemBuilder.setItemName(itemName);
             }
 
             builder.setItemStack(itemBuilder.build());
-        } else if(icon instanceof SimpleResourceLocationIcon) {
+        } else if (icon instanceof SimpleResourceLocationIcon) {
             SimpleResourceLocationIcon simple = (SimpleResourceLocationIcon) icon;
 
             builder.setSimpleResourceLocation(com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon.newBuilder()
                 .setResourceLocation(simple.getResourceLocation())
                 .setSize(simple.getSize())
                 .build());
-        } else if(icon instanceof AdvancedResourceLocationIcon) {
+        } else if (icon instanceof AdvancedResourceLocationIcon) {
             AdvancedResourceLocationIcon advanced = (AdvancedResourceLocationIcon) icon;
 
             builder.setAdvancedResourceLocation(com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon.newBuilder()
@@ -402,21 +403,21 @@ public final class NetworkTypes {
      * @since 1.0.0
      */
     public static Icon fromProtobuf(com.lunarclient.apollo.common.v1.Icon icon) {
-        if(icon.hasItemStack()) {
+        if (icon.hasItemStack()) {
             com.lunarclient.apollo.common.v1.ItemStackIcon item = icon.getItemStack();
 
             return ItemStackIcon.builder()
                 .itemName(item.getItemName())
                 .itemId(item.getItemId())
                 .build();
-        } else if(icon.hasSimpleResourceLocation()) {
+        } else if (icon.hasSimpleResourceLocation()) {
             com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon simple = icon.getSimpleResourceLocation();
 
             return SimpleResourceLocationIcon.builder()
                 .resourceLocation(simple.getResourceLocation())
                 .size(simple.getSize())
                 .build();
-        } else if(icon.hasAdvancedResourceLocation()) {
+        } else if (icon.hasAdvancedResourceLocation()) {
             com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon advanced = icon.getAdvancedResourceLocation();
 
             return AdvancedResourceLocationIcon.builder()

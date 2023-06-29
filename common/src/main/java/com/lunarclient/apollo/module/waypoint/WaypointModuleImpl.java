@@ -123,7 +123,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
 
         @Override
         public void serialize(Type type, @Nullable Waypoint waypoint, ConfigurationNode node) throws SerializationException {
-            if(waypoint == null) {
+            if (waypoint == null) {
                 node.raw(null);
                 return;
             }
@@ -139,7 +139,10 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
         }
 
         private ConfigurationNode virtualNode(ConfigurationNode source, Object... path) throws SerializationException {
-            if(!source.hasChild(path)) throw new SerializationException("Required field " + Arrays.toString(path) + " not found!");
+            if (!source.hasChild(path)) {
+                throw new SerializationException("Required field " + Arrays.toString(path) + " not found!");
+            }
+
             return source.node(path);
         }
 

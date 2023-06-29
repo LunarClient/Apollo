@@ -64,15 +64,16 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
      * @since 1.0.0
      */
     public void addPlayer(@NonNull ApolloPlayer player) {
-        if(this.players.putIfAbsent(player.getUniqueId(), player) == null) {
-            EventBus.EventResult<ApolloRegisterPlayerEvent> result = EventBus.getBus().post(new ApolloRegisterPlayerEvent(player));
-            for(Throwable throwable : result.getThrowing()) {
+        if (this.players.putIfAbsent(player.getUniqueId(), player) == null) {
+            EventBus.EventResult<ApolloRegisterPlayerEvent> result = EventBus.getBus()
+                .post(new ApolloRegisterPlayerEvent(player));
+            for (Throwable throwable : result.getThrowing()) {
                 throwable.printStackTrace();
             }
 
             NetworkOptions.sendOptions(
-                    Apollo.getModuleManager().getModules(),
-                    player
+                Apollo.getModuleManager().getModules(),
+                player
             );
         }
     }
@@ -85,9 +86,10 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
      */
     public void removePlayer(@NonNull UUID player) {
         ApolloPlayer apolloPlayer = this.players.remove(player);
-        if(apolloPlayer != null) {
-            EventBus.EventResult<ApolloUnregisterPlayerEvent> result = EventBus.getBus().post(new ApolloUnregisterPlayerEvent(apolloPlayer));
-            for(Throwable throwable : result.getThrowing()) {
+        if (apolloPlayer != null) {
+            EventBus.EventResult<ApolloUnregisterPlayerEvent> result = EventBus.getBus()
+                .post(new ApolloUnregisterPlayerEvent(apolloPlayer));
+            for (Throwable throwable : result.getThrowing()) {
                 throwable.printStackTrace();
             }
         }

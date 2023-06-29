@@ -68,7 +68,10 @@ public class BorderCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /border <display|remove|reset>");
+            default: {
+                player.sendMessage("Usage: /border <display|remove|reset>");
+                break;
+            }
         }
 
         return true;

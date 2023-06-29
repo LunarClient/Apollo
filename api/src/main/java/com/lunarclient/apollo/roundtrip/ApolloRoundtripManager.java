@@ -80,10 +80,11 @@ public final class ApolloRoundtripManager {
      * Registers an {@link UncertainFuture} for an {@link ApolloRequest}.
      *
      * @param request the request
-     * @param future the future
-     * @param <T> the response type
+     * @param future  the future
+     * @param <T>     the response type
      * @since 1.0.0
      */
+    @SuppressWarnings("unchecked")
     public <T extends ApolloResponse> void registerListener(ApolloRequest<T> request, UncertainFuture<T> future) {
         UUID packetId = request.getRequestId();
 

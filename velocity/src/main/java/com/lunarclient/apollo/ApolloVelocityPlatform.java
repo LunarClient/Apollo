@@ -42,12 +42,12 @@ import java.nio.file.Path;
 import lombok.Getter;
 
 @Plugin(
-        id = "apollo",
-        name = "Apollo-Velocity",
-        version = "0.1.0-SNAPSHOT",
-        url = "https://moonsworth.com",
-        description = "Implementation of Apollo for Velocity",
-        authors = { "Moonsworth" }
+    id = "apollo",
+    name = "Apollo-Velocity",
+    version = "0.1.0-SNAPSHOT",
+    url = "https://moonsworth.com",
+    description = "Implementation of Apollo for Velocity",
+    authors = {"Moonsworth"}
 )
 public final class ApolloVelocityPlatform implements ApolloPlatform {
 
@@ -93,11 +93,18 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
     @Subscribe
     public void onPluginMessage(PluginMessageEvent event) {
-        if (!event.getIdentifier().getId().equals("REGISTER")) return;
-        if (!(event.getSource() instanceof Player)) return;
+        if (!event.getIdentifier().getId().equals("REGISTER")) {
+            return;
+        }
+
+        if (!(event.getSource() instanceof Player)) {
+            return;
+        }
 
         String channels = new String(event.getData(), Charsets.UTF_8);
-        if(!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
+        if (!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
+            return;
+        }
 
         Player player = (Player) event.getSource();
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new VelocityApolloPlayer(player));

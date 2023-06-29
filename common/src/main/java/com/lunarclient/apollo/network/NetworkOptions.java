@@ -47,9 +47,9 @@ public final class NetworkOptions {
     /**
      * Send a single option to a single player.
      *
-     * @param module the module the option belongs to
-     * @param key the option key
-     * @param value the option value
+     * @param module  the module the option belongs to
+     * @param key     the option key
+     * @param value   the option value
      * @param players the players to send the option to
      * @since 1.0.0
      */
@@ -57,14 +57,16 @@ public final class NetworkOptions {
                                   Option<?, ?, ?> key,
                                   Value value,
                                   Iterable<ApolloPlayer> players) {
-        if(!key.isNotify()) return;
+        if (!key.isNotify()) {
+            return;
+        }
 
         OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
         ConfigurableSettings.Builder moduleBuilder = NetworkOptions.module(module);
         moduleBuilder.putProperties(key.getKey(), value);
         modulesBuilder.addConfigurableSettings(moduleBuilder.build());
 
-        for(ApolloPlayer player : players) {
+        for (ApolloPlayer player : players) {
             ((AbstractApolloPlayer) player).sendPacket(modulesBuilder.build());
         }
     }
@@ -79,12 +81,12 @@ public final class NetworkOptions {
      */
     public static void sendOptions(Iterable<ApolloModule> modules,
                                    ApolloPlayer... players) {
-        for(ApolloPlayer player : players) {
+        for (ApolloPlayer player : players) {
             OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
 
-            for(ApolloModule module : modules) {
+            for (ApolloModule module : modules) {
                 modulesBuilder.addConfigurableSettings(NetworkOptions.moduleWithOptions(
-                        module
+                    module
                 ).build());
             }
 
@@ -96,8 +98,10 @@ public final class NetworkOptions {
         ConfigurableSettings.Builder builder = NetworkOptions.module(module);
         Options options = module.getOptions();
 
-        for(Option<?, ?, ?> option : options) {
-            if(!option.isNotify()) continue;
+        for (Option<?, ?, ?> option : options) {
+            if (!option.isNotify()) {
+                continue;
+            }
 
             Value.Builder valueBuilder = Value.newBuilder();
             Object value = options.get(option);
@@ -110,7 +114,7 @@ public final class NetworkOptions {
 
     private static ConfigurableSettings.Builder module(ApolloModule module) {
         return ConfigurableSettings.newBuilder()
-                .setApolloModule(module.getId())
-                .setEnable(module.isEnabled());
+            .setApolloModule(module.getId())
+            .setEnable(module.isEnabled());
     }
 }

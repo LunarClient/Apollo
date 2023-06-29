@@ -57,7 +57,7 @@ public class ApolloReceivePacketEvent implements Event {
     /**
      * Unpacks the provided packet class.
      *
-     * @param <T> the packet optional
+     * @param <T>    the packet optional
      * @param packet the apollo packet
      * @return the message
      * @since 1.0.0

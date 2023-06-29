@@ -114,17 +114,19 @@ public abstract class ApolloModule implements ApolloListener {
      * @since 1.0.0
      */
     public String getId() {
-        if(this.id != null) return this.id;
+        if (this.id != null) {
+            return this.id;
+        }
 
         Class<?> moduleClass = this.getClass();
         ModuleDefinition definition = moduleClass.getAnnotation(ModuleDefinition.class);
 
-        if(definition == null) {
+        if (definition == null) {
             moduleClass = moduleClass.getSuperclass();
             definition = moduleClass.getAnnotation(ModuleDefinition.class);
         }
 
-        if(definition == null) {
+        if (definition == null) {
             throw new RuntimeException("Apollo module class " + moduleClass.getSimpleName() + " must be decorated with a ModuleDefinition annotation");
         }
 
@@ -161,7 +163,10 @@ public abstract class ApolloModule implements ApolloListener {
      * @since 1.0.0
      */
     public void enable() {
-        if(this.enabled) return;
+        if (this.enabled) {
+            return;
+        }
+
         this.enabled = true;
         this.onEnable();
     }
@@ -172,7 +177,10 @@ public abstract class ApolloModule implements ApolloListener {
      * @since 1.0.0
      */
     public void disable() {
-        if(!this.enabled) return;
+        if (!this.enabled) {
+            return;
+        }
+
         this.enabled = false;
         this.onDisable();
     }

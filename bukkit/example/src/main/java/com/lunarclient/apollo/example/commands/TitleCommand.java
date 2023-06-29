@@ -68,7 +68,10 @@ public class TitleCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /title <display|broadcast|reset>");
+            default: {
+                player.sendMessage("Usage: /title <display|broadcast|reset>");
+                break;
+            }
         }
 
         return true;

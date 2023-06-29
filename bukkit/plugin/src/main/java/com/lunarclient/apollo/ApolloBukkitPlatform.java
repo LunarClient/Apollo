@@ -84,24 +84,24 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         this.getServer().getPluginManager().registerEvents(this, this);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
-                .addModule(BeamModule.class, new BeamModuleImpl())
-                .addModule(BorderModule.class, new BorderModuleImpl())
-                .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
-                .addModule(CooldownModule.class, new CooldownModuleImpl())
-                .addModule(EntityModule.class, new EntityModuleImpl())
-                .addModule(HologramModule.class, new HologramModuleImpl())
-                .addModule(LimbModule.class, new LimbModuleImpl())
-                .addModule(NametagModule.class, new NametagModuleImpl())
-                .addModule(NotificationModule.class, new NotificationModuleImpl())
-                .addModule(ServerRuleModule.class)
-                .addModule(StaffModModule.class, new StaffModModuleImpl())
-                .addModule(StopwatchModule.class, new StopwatchModuleImpl())
-                .addModule(TeamModule.class, new TeamModuleImpl())
-                .addModule(TitleModule.class, new TitleModuleImpl())
-                .addModule(TntCountdownModule.class, new TntCountdownModuleImpl())
-                .addModule(TransferModule.class, new TransferModuleImpl())
-                .addModule(VignetteModule.class, new VignetteModuleImpl())
-                .addModule(WaypointModule.class, new WaypointModuleImpl());
+            .addModule(BeamModule.class, new BeamModuleImpl())
+            .addModule(BorderModule.class, new BorderModuleImpl())
+            .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
+            .addModule(CooldownModule.class, new CooldownModuleImpl())
+            .addModule(EntityModule.class, new EntityModuleImpl())
+            .addModule(HologramModule.class, new HologramModuleImpl())
+            .addModule(LimbModule.class, new LimbModuleImpl())
+            .addModule(NametagModule.class, new NametagModuleImpl())
+            .addModule(NotificationModule.class, new NotificationModuleImpl())
+            .addModule(ServerRuleModule.class)
+            .addModule(StaffModModule.class, new StaffModModuleImpl())
+            .addModule(StopwatchModule.class, new StopwatchModuleImpl())
+            .addModule(TeamModule.class, new TeamModuleImpl())
+            .addModule(TitleModule.class, new TitleModuleImpl())
+            .addModule(TntCountdownModule.class, new TntCountdownModuleImpl())
+            .addModule(TransferModule.class, new TransferModuleImpl())
+            .addModule(VignetteModule.class, new VignetteModuleImpl())
+            .addModule(WaypointModule.class, new WaypointModuleImpl());
 
         ApolloManager.loadConfiguration(this.getDataFolder().toPath());
 
@@ -110,7 +110,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         Messenger messenger = this.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
-                (channel, player, bytes) -> this.handlePacket(player, bytes)
+            (channel, player, bytes) -> this.handlePacket(player, bytes)
         );
 
         ApolloManager.saveConfiguration();
@@ -130,14 +130,18 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
 
     @EventHandler
     public void onRegisterChannel(PlayerRegisterChannelEvent event) {
-        if(!event.getChannel().equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
+        if (!event.getChannel().equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
+            return;
+        }
 
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new BukkitApolloPlayer(event.getPlayer()));
     }
 
     @EventHandler
     public void onUnregisterChannel(PlayerUnregisterChannelEvent event) {
-        if(!event.getChannel().equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) return;
+        if (!event.getChannel().equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
+            return;
+        }
 
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(event.getPlayer().getUniqueId());
     }

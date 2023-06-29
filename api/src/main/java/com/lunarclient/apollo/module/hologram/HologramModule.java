@@ -42,7 +42,7 @@ public abstract class HologramModule extends ApolloModule {
      * Adds or updates the {@link Hologram} to the {@link ApolloPlayer}s.
      *
      * @param hologram the hologram
-     * @param viewers the viewers
+     * @param viewers  the viewers
      * @since 1.0.0
      */
     public abstract void displayHologram(Collection<ApolloPlayer> viewers, Hologram hologram);
@@ -51,7 +51,7 @@ public abstract class HologramModule extends ApolloModule {
      * Removes the {@link Hologram} for the {@link ApolloPlayer}s.
      *
      * @param hologramId the hologram id
-     * @param viewers the viewers
+     * @param viewers    the viewers
      * @since 1.0.0
      */
     public abstract void removeHologram(Collection<ApolloPlayer> viewers, String hologramId);
@@ -59,7 +59,7 @@ public abstract class HologramModule extends ApolloModule {
     /**
      * Removes the {@link Hologram} for the {@link ApolloPlayer}s.
      *
-     * @param viewers the players who are receiving the packet
+     * @param viewers  the players who are receiving the packet
      * @param hologram the hologram
      * @since 1.0.0
      */

@@ -42,9 +42,9 @@ public abstract class NametagModule extends ApolloModule {
     /**
      * Overrides the {@link Nametag} for the {@link ApolloPlayer}s.
      *
-     * @param viewers the viewers
+     * @param viewers    the viewers
      * @param playerUuid the player whose nametag we are manipulating
-     * @param nametag the nametag
+     * @param nametag    the nametag
      * @since 1.0.0
      */
     public abstract void overrideNametag(Collection<ApolloPlayer> viewers, UUID playerUuid, Nametag nametag);
@@ -52,7 +52,7 @@ public abstract class NametagModule extends ApolloModule {
     /**
      * Resets the {@link Nametag} for the {@link ApolloPlayer}s.
      *
-     * @param viewers the viewers
+     * @param viewers    the viewers
      * @param playerUuid the player whose nametag we are manipulating
      * @since 1.0.0
      */

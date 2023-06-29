@@ -58,7 +58,7 @@ public class ColoredFireCommand implements CommandExecutor {
 
         Player target = Bukkit.getPlayer(args[1]);
 
-        if(target == null) {
+        if (target == null) {
             player.sendMessage("Player '" + args[1] + "' not found!");
             return true;
         }
@@ -76,7 +76,10 @@ public class ColoredFireCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /coloredfire <override|reset|clear> <player>");
+            default: {
+                player.sendMessage("Usage: /coloredfire <override|reset|clear> <player>");
+                break;
+            }
         }
 
         return true;
