@@ -14,7 +14,9 @@ The staff mod module allows you to interact with Lunar Client's built in staff m
 
 ```java 
 public void enableStaffModsExample(Player viewer) {
-    if (!viewer.hasPermission("apollo.staff")) return;
+    if (!viewer.hasPermission("apollo.staff")) {
+        return;
+    }
 
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY)));
