@@ -41,6 +41,11 @@ import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import java.nio.file.Path;
 import lombok.Getter;
 
+/**
+ * The Velocity implementation plugin.
+ *
+ * @since 1.0.0
+ */
 @Plugin(
     id = "apollo",
     name = "Apollo-Velocity",
@@ -59,14 +64,14 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     private final Path dataDirectory;
 
     @Inject
-    public ApolloVelocityPlatform(ProxyServer server,
-                                  @DataDirectory Path dataDirectory) {
+    private ApolloVelocityPlatform(ProxyServer server,
+                                   @DataDirectory Path dataDirectory) {
         this.server = server;
         this.dataDirectory = dataDirectory;
     }
 
     @Subscribe
-    public void onProxyInitialization(ProxyInitializeEvent event) {
+    private void onProxyInitialization(ProxyInitializeEvent event) {
         ApolloVelocityPlatform.instance = this;
 
         ApolloManager.bootstrap(this);
@@ -80,7 +85,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     }
 
     @Subscribe
-    public void onProxyShutdown(ProxyShutdownEvent event) {
+    private void onProxyShutdown(ProxyShutdownEvent event) {
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
 
         ApolloManager.saveConfiguration();
@@ -92,7 +97,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     }
 
     @Subscribe
-    public void onPluginMessage(PluginMessageEvent event) {
+    private void onPluginMessage(PluginMessageEvent event) {
         if (!event.getIdentifier().getId().equals("REGISTER")) {
             return;
         }
@@ -111,7 +116,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     }
 
     @Subscribe
-    public void onDisconnect(DisconnectEvent event) {
+    private void onDisconnect(DisconnectEvent event) {
         Player player = event.getPlayer();
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
     }

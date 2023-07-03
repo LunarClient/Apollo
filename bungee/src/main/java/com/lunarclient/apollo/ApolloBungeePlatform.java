@@ -36,6 +36,11 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
 
+/**
+ * The Bungee platform plugin.
+ *
+ * @since 1.0.0
+ */
 public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform, Listener {
 
     @Getter private static ApolloBungeePlatform instance;
@@ -69,7 +74,7 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
     }
 
     @EventHandler
-    public void onPluginMessage(PluginMessageEvent event) {
+    private void onPluginMessage(PluginMessageEvent event) {
         if (!(event.getReceiver() instanceof ProxyServer)) {
             return;
         }
@@ -92,7 +97,7 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
     }
 
     @EventHandler
-    public void onDisconnect(PlayerDisconnectEvent event) {
+    private void onDisconnect(PlayerDisconnectEvent event) {
         ProxiedPlayer player = event.getPlayer();
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
     }

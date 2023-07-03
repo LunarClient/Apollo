@@ -26,11 +26,17 @@ package com.lunarclient.apollo.wrapper;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+/**
+ * The Bungee implementation of {@link ApolloPlayer}.
+ *
+ * @since 1.0.0
+ */
 @RequiredArgsConstructor
 public final class BungeeApolloPlayer extends AbstractApolloPlayer {
 

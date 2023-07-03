@@ -71,7 +71,7 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onTntSpawn(EntitySpawnEvent event) {
+    private void onTntSpawn(EntitySpawnEvent event) {
         // We only care about TNT
         if (event.getEntityType() != EntityType.PRIMED_TNT) {
             return;

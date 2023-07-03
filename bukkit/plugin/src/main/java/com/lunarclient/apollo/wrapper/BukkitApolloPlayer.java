@@ -27,12 +27,18 @@ import com.lunarclient.apollo.ApolloBukkitPlatform;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+/**
+ * The Bukkit implementation of {@link ApolloPlayer}.
+ *
+ * @since 1.0.0
+ */
 @AllArgsConstructor
 public final class BukkitApolloPlayer extends AbstractApolloPlayer {
 

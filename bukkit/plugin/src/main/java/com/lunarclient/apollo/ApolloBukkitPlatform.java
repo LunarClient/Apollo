@@ -72,6 +72,11 @@ import org.bukkit.event.player.PlayerUnregisterChannelEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
+/**
+ * The Bukkit platform plugin.
+ *
+ * @since 1.0.0
+ */
 public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, Listener {
 
     @Getter private static ApolloBukkitPlatform instance;
@@ -129,7 +134,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     }
 
     @EventHandler
-    public void onRegisterChannel(PlayerRegisterChannelEvent event) {
+    private void onRegisterChannel(PlayerRegisterChannelEvent event) {
         if (!event.getChannel().equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
             return;
         }
@@ -138,7 +143,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     }
 
     @EventHandler
-    public void onUnregisterChannel(PlayerUnregisterChannelEvent event) {
+    private void onUnregisterChannel(PlayerUnregisterChannelEvent event) {
         if (!event.getChannel().equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
             return;
         }
@@ -147,7 +152,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
+    private void onPlayerQuit(PlayerQuitEvent event) {
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(event.getPlayer().getUniqueId());
     }
 
