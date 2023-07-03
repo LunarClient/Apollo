@@ -16,7 +16,7 @@ public void overrideRainbowSheepExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
-        // Get all Sheep in players world
+        // Get all Sheep in the player's world
         List<UUID> sheepUuids = viewer.getWorld().getEntitiesByClass(Sheep.class)
             .stream().map(Sheep::getUniqueId).collect(Collectors.toList());
 

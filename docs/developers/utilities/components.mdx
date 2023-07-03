@@ -2,7 +2,7 @@
 
 ## Overview
 
-Apollo adds the ability to seemingly create different text components using the `Component` builder.
+Apollo implements a streamlined version of [Minecraft's JSON text format](https://minecraft.fandom.com/wiki/Raw_JSON_text_format) optimized for consistent rendering on all Minecraft versions. Most notably, features like translatable text are removed in favor of server-side localizations, and arbitrary RGB colors (added in vanilla Minecraft 1.16) are enabled on all versions of Lunar Client.
 
 ## `Component` Builder
 
@@ -78,7 +78,7 @@ public static Component componentExample() {
 .content("Hello world!")
 ```
 
-`Color color` is how you dictate the color of the text. See the [colors page](/apollo/developers/utilities/colors) for more.
+`Color color` is how you dictate the color of the text. See the [colors page](/apollo/developers/utilities/colors) for more. Arbitrary RGB colors are supported on all Minecraft versions with Lunar Client.
 
 ```java
 .color(Color.GREEN)
