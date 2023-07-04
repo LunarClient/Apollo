@@ -42,7 +42,7 @@ public class EntityExample {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
-            // Get all Sheep in players world
+            // Get all Sheep in the player's world
             List<ApolloEntity> sheepEntities = viewer.getWorld().getEntitiesByClass(Sheep.class)
                 .stream().map(sheep -> new ApolloEntity(sheep.getEntityId(), sheep.getUniqueId()))
                 .collect(Collectors.toList());
@@ -55,7 +55,7 @@ public class EntityExample {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
-            // Get all Sheep in players world
+            // Get all Sheep in the player's world
             List<ApolloEntity> sheepEntities = viewer.getWorld().getEntitiesByClass(Sheep.class)
                 .stream().map(sheep -> new ApolloEntity(sheep.getEntityId(), sheep.getUniqueId()))
                 .collect(Collectors.toList());
