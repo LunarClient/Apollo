@@ -39,12 +39,12 @@ final class EmptyOptions implements Options {
 
     @Override
     public <T, C extends Option<T, ?, ?>> @Nullable T get(C option) {
-        return null;
+        return option.getDefaultValue();
     }
 
     @Override
     public <T, C extends Option<T, ?, ?>> @Nullable T get(ApolloPlayer player, C option) {
-        return null;
+        return option.getDefaultValue();
     }
 
     @Override
