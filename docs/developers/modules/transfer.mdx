@@ -59,6 +59,10 @@ public void transferExample(Player viewer) {
 
 ### Using the Ping Packet
 
+<Callout type="info">
+  You can provide up to `10` different addresses per ping packet.
+</Callout>
+
 ```java
 public void pingExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
