@@ -2,7 +2,7 @@ name: Apollo-Example
 main: com.lunarclient.apollo.example.ApolloExamplePlugin
 version: 0.1.0-SNAPSHOT
 author: Moonsworth
-depend: [Apollo-Bukkit]
+depend: [ Apollo-Bukkit ]
 
 commands:
     beam:

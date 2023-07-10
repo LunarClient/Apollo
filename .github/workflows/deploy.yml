@@ -1,33 +1,59 @@
 name: Build Apollo
-on: [push]
+on: [ push ]
 
 jobs:
-  build:
-    name: Build Apollo
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
+    build:
+        # Only run on PRs if the source branch is on someone else's repository.
+        if: "${{ github.event_name != 'pull_request' || github.repository != github.event.pull_request.head.repo.full_name }}"
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write
+            contents: read
 
-    steps:
-      - name: Checkout from GitHub
-        uses: actions/checkout@v3
+        steps:
+        -   name: Checkout from GitHub
+            uses: actions/checkout@v3
 
-      - name: Configure Google Cloud credentials
-        uses: google-github-actions/auth@v1
-        with:
-          workload_identity_provider: 'projects/271010089174/locations/global/workloadIdentityPools/github/providers/github-oidc'
-          service_account: 'github-actions@moonsworth-299m4oir.iam.gserviceaccount.com'
+        -   name: Configure Google Cloud credentials
+            uses: google-github-actions/auth@v1
+            with:
+                workload_identity_provider: 'projects/271010089174/locations/global/workloadIdentityPools/github/providers/github-oidc'
+                service_account: 'github-actions@moonsworth-299m4oir.iam.gserviceaccount.com'
 
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: "zulu"
-          java-version: 16
+        -   name: Setup Java
+            uses: actions/setup-java@v3
+            with:
+                distribution: "zulu"
+                java-version: 16
 
-      - name: Gradle Build
-        run: ./gradlew build
+        -   name: Gradle Build
+            run: ./gradlew build
 
-      - name: Gradle Publish
-        if: github.ref == 'refs/heads/master'
-        run: ./gradlew publish
+        -   name: Determine Version
+            run: echo "VERSION=$(./gradlew properties | awk '/^version:/ { print $2; }')" >> $GITHUB_ENV
+
+        -   name: Determine Status
+            run: |
+                if [ "$($VERSION | grep '\-SNAPSHOT')" ]; then
+                    echo "STATUS=snapshot" >> $GITHUB_ENV
+                else
+                    echo "STATUS=release" >> $GITHUB_ENV
+                fi
+
+        -   name: Gradle Publish
+            if: "${{ github.ref == 'refs/heads/master' }}"
+            run: ./gradlew publish
+
+        -   name: Gradle Release
+            if: "${{ github.ref == 'refs/heads/master' && env.STATUS == 'release' }}"
+            uses: softprops/action-gh-release@v1
+            with:
+                draft: false
+                prerelease: false
+                name: "Apollo v${{ env.VERSION }}"
+                tag_name: "v${{ env.VERSION }}"
+                generate_release_notes: true
+                files: |
+                    bukkit/build/libs/apollo-bukkit-${{ env.VERSION }}.jar
+                    bungee/build/libs/apollo-bungee-${{ env.VERSION }}.jar
+                    velocity/build/libs/apollo-velocity-${{ env.VERSION }}.jar

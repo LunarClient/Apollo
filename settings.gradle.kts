@@ -34,8 +34,8 @@ val loadAllVersions = mcVersion == null
 listOfNotNull(
     "api",
     "common",
-    "bukkit:plugin",
-    "bukkit:example",
+    "bukkit",
+    "bukkit-example",
     if (loadAllVersions) "bungee" else null,
     if (loadAllVersions) "velocity" else null
 ).forEach {
