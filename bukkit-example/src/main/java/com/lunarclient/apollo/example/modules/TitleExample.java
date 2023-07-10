@@ -59,10 +59,6 @@ public class TitleExample {
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, this.helloTitle));
     }
 
-    public void broadcastTitleExample() {
-        this.titleModule.broadcastTitle(this.helloTitle);
-    }
-
     public void resetTitlesExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(this.titleModule::resetTitles);

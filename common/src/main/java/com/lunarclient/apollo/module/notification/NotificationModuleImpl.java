@@ -23,11 +23,10 @@
  */
 package com.lunarclient.apollo.module.notification;
 
-import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.notification.v1.DisplayNotificationMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import lombok.NonNull;
 
 /**
@@ -38,26 +37,15 @@ import lombok.NonNull;
 public final class NotificationModuleImpl extends NotificationModule {
 
     @Override
-    public void displayNotification(@NonNull ApolloPlayer viewer, @NonNull Notification notification) {
-        ((AbstractApolloPlayer) viewer).sendPacket(this.toProtobuf(notification));
-    }
-
-    @Override
-    public void broadcastNotification(@NonNull Notification notification) {
-        DisplayNotificationMessage message = this.toProtobuf(notification);
-
-        for (ApolloPlayer player : Apollo.getPlayerManager().getPlayers()) {
-            ((AbstractApolloPlayer) player).sendPacket(message);
-        }
-    }
-
-    private DisplayNotificationMessage toProtobuf(Notification notification) {
-        return DisplayNotificationMessage.newBuilder()
+    public void displayNotification(@NonNull Audience audience, @NonNull Notification notification) {
+        DisplayNotificationMessage message = DisplayNotificationMessage.newBuilder()
             .setTitle(notification.getTitle())
             .setDescription(notification.getDescription())
             .setResourceLocation(notification.getResourceLocation())
             .setDisplayTime(NetworkTypes.toProtobuf(notification.getDisplayTime()))
             .build();
+
+        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

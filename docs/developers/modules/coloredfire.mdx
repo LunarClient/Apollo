@@ -12,7 +12,7 @@ The colored fire module allows you to modify the color of the flames that appear
 public void overrideColoredFireExample(UUID burningPlayer) {
     Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
 
-    this.coloredFireModule.overrideColoredFire(viewers,
+    this.coloredFireModule.overrideColoredFire(Audience.of(viewers),
         burningPlayer,
         Color.BLUE
     );
@@ -33,7 +33,7 @@ public void overrideColoredFireExample(UUID burningPlayer) {
 ```java
 public void resetColoredFireExample(UUID burningPlayer) {
     Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-    this.coloredFireModule.resetColoredFire(viewers, burningPlayer);
+    this.coloredFireModule.resetColoredFire(Audience.of(viewers), burningPlayer);
 }
 ```
 

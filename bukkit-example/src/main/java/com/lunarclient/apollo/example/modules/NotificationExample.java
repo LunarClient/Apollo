@@ -47,8 +47,4 @@ public class NotificationExample {
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.notificationModule.displayNotification(apolloPlayer, this.uhcAnnouncement));
     }
 
-    public void broadcastNotificationExample() {
-        this.notificationModule.broadcastNotification(this.uhcAnnouncement);
-    }
-
 }

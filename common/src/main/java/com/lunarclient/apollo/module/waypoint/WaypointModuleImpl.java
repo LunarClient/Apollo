@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.module.waypoint;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.network.NetworkTypes;
@@ -61,25 +62,29 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
     }
 
     @Override
-    public void displayWaypoint(@NonNull ApolloPlayer viewer, @NonNull Waypoint waypoint) {
-        ((AbstractApolloPlayer) viewer).sendPacket(this.toProtobuf(waypoint));
+    public void displayWaypoint(@NonNull Audience audience, @NonNull Waypoint waypoint) {
+        DisplayWaypointMessage message = this.toProtobuf(waypoint);
+        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeWaypoint(@NonNull ApolloPlayer viewer, @NonNull String waypointName) {
-        ((AbstractApolloPlayer) viewer).sendPacket(RemoveWaypointMessage.newBuilder()
+    public void removeWaypoint(@NonNull Audience audience, @NonNull String waypointName) {
+        RemoveWaypointMessage message = RemoveWaypointMessage.newBuilder()
             .setName(waypointName)
-            .build());
+            .build();
+
+        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeWaypoint(@NonNull ApolloPlayer viewer, @NonNull Waypoint waypoint) {
-        this.removeWaypoint(viewer, waypoint.getName());
+    public void removeWaypoint(@NonNull Audience audience, @NonNull Waypoint waypoint) {
+        this.removeWaypoint(audience, waypoint.getName());
     }
 
     @Override
-    public void resetWaypoints(@NonNull ApolloPlayer viewer) {
-        ((AbstractApolloPlayer) viewer).sendPacket(ResetWaypointsMessage.getDefaultInstance());
+    public void resetWaypoints(@NonNull Audience audience) {
+        ResetWaypointsMessage message = ResetWaypointsMessage.getDefaultInstance();
+        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     private void onPlayerRegister(ApolloRegisterPlayerEvent event) {

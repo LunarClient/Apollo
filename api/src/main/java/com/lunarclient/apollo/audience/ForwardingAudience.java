@@ -21,35 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.vignette;
+package com.lunarclient.apollo.audience;
 
-import com.lunarclient.apollo.audience.Audience;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
-import com.lunarclient.apollo.vignette.v1.DisplayVignetteMessage;
-import com.lunarclient.apollo.vignette.v1.ResetVignetteMessage;
-import lombok.NonNull;
+import java.util.function.Consumer;
 
-/**
- * Provides the vignette module.
- *
- * @since 1.0.0
- */
-public final class VignetteModuleImpl extends VignetteModule {
+@FunctionalInterface
+public interface ForwardingAudience extends Audience {
 
-    @Override
-    public void displayVignette(@NonNull Audience audience, @NonNull Vignette vignette) {
-        DisplayVignetteMessage message = DisplayVignetteMessage.newBuilder()
-            .setResourceLocation(vignette.getResourceLocation())
-            .setOpacity(vignette.getOpacity())
-            .build();
+    Iterable<? extends Audience> audiences();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    default void forEachAudience(Consumer<? super Audience> action) {
+        for (Audience audience : this.audiences()) {
+            action.accept(audience);
+        }
     }
-
-    @Override
-    public void resetVignette(@NonNull Audience audience) {
-        ResetVignetteMessage message = ResetVignetteMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
-    }
-
 }

@@ -45,7 +45,7 @@ public class TitleCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /title <display|broadcast|reset>");
+            player.sendMessage("Usage: /title <display|reset>");
             return true;
         }
 
@@ -56,12 +56,6 @@ public class TitleCommand implements CommandExecutor {
                 break;
             }
 
-            case "broadcast": {
-                this.titleExample.broadcastTitleExample();
-                player.sendMessage("Broadcasting title....");
-                break;
-            }
-
             case "reset": {
                 this.titleExample.resetTitlesExample(player);
                 player.sendMessage("Resetting titles....");
@@ -69,7 +63,7 @@ public class TitleCommand implements CommandExecutor {
             }
 
             default: {
-                player.sendMessage("Usage: /title <display|broadcast|reset>");
+                player.sendMessage("Usage: /title <display|reset>");
                 break;
             }
         }

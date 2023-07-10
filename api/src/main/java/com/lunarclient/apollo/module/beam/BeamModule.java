@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.beam;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -38,38 +38,38 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class BeamModule extends ApolloModule {
 
     /**
-     * Displays the {@link Beam} to the {@link ApolloPlayer}.
+     * Displays the {@link Beam} to the {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
-     * @param beam   the beam
+     * @param audience the audience that is receiving the packet
+     * @param beam     the beam
      * @since 1.0.0
      */
-    public abstract void displayBeam(ApolloPlayer viewer, Beam beam);
+    public abstract void displayBeam(Audience audience, Beam beam);
 
     /**
-     * Removes the {@link Beam} from the {@link ApolloPlayer}.
+     * Removes the {@link Beam} from the {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
-     * @param beamId the beam id
+     * @param audience the audience that is receiving the packet
+     * @param beamId   the beam id
      * @since 1.0.0
      */
-    public abstract void removeBeam(ApolloPlayer viewer, String beamId);
+    public abstract void removeBeam(Audience audience, String beamId);
 
     /**
-     * Removes the {@link Beam} from the {@link ApolloPlayer}.
+     * Removes the {@link Beam} from the {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
-     * @param beam   the beam
+     * @param audience the audience that is receiving the packet
+     * @param beam     the beam
      * @since 1.0.0
      */
-    public abstract void removeBeam(ApolloPlayer viewer, Beam beam);
+    public abstract void removeBeam(Audience audience, Beam beam);
 
     /**
-     * Resets all {@link Beam}s for the {@link ApolloPlayer}.
+     * Resets all {@link Beam}s for the {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param audience the audience that is receiving the packet
      * @since 1.0.0
      */
-    public abstract void resetBeams(ApolloPlayer viewer);
+    public abstract void resetBeams(Audience audience);
 
 }

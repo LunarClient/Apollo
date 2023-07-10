@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.team;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -39,20 +39,20 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class TeamModule extends ApolloModule {
 
     /**
-     * Upserts all team members for the given {@link ApolloPlayer}.
+     * Upserts all team members for the given {@link Audience}.
      *
-     * @param viewer      the player who is receiving the packet
+     * @param audience    the audience that is receiving the packet
      * @param teamMembers all current team members of the viewer
      * @since 1.0.0
      */
-    public abstract void updateTeamMembers(ApolloPlayer viewer, List<TeamMember> teamMembers);
+    public abstract void updateTeamMembers(Audience audience, List<TeamMember> teamMembers);
 
     /**
-     * Resets all team members for the given {@link ApolloPlayer}.
+     * Resets all team members for the given {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param audience the audience that is receiving the packet
      * @since 1.0.0
      */
-    public abstract void resetTeamMembers(ApolloPlayer viewer);
+    public abstract void resetTeamMembers(Audience audience);
 
 }

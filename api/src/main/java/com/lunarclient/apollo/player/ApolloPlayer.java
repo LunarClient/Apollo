@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.player;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
@@ -36,7 +37,7 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
-public interface ApolloPlayer {
+public interface ApolloPlayer extends Audience {
 
     /**
      * Gets the players unique identifier.

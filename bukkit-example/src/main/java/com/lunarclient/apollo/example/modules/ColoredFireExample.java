@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.awt.Color;
@@ -39,7 +40,7 @@ public class ColoredFireExample {
     public void overrideColoredFireExample(UUID burningPlayer) {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
 
-        this.coloredFireModule.overrideColoredFire(viewers,
+        this.coloredFireModule.overrideColoredFire(Audience.of(viewers),
             burningPlayer,
             Color.BLUE
         );
@@ -47,7 +48,7 @@ public class ColoredFireExample {
 
     public void resetColoredFireExample(UUID burningPlayer) {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-        this.coloredFireModule.resetColoredFire(viewers, burningPlayer);
+        this.coloredFireModule.resetColoredFire(Audience.of(viewers), burningPlayer);
     }
 
     public void resetColoredFiresExample(Player viewer) {

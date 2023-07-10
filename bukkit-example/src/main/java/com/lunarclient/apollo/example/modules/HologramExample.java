@@ -25,6 +25,7 @@ package com.lunarclient.apollo.example.modules;
 
 import com.google.common.collect.Lists;
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.module.hologram.Hologram;
@@ -42,7 +43,7 @@ public class HologramExample {
     public void displayHologramExample() {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
 
-        this.hologramModule.displayHologram(viewers, Hologram.builder()
+        this.hologramModule.displayHologram(Audience.of(viewers), Hologram.builder()
             .id("welcome-hologram")
             .location(ApolloLocation.builder()
                 .world("world")
@@ -74,7 +75,7 @@ public class HologramExample {
          * Removes the hologram with the ID "welcome-hologram" for all
          * players inside of the viewers collection.
          */
-        this.hologramModule.removeHologram(viewers, "welcome-hologram");
+        this.hologramModule.removeHologram(Audience.of(viewers), "welcome-hologram");
     }
 
     public void resetHologramsExample(Player viewer) {

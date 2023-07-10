@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.module.notification;
 
 import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
@@ -48,18 +49,10 @@ public abstract class NotificationModule extends ApolloModule {
     /**
      * Displays the {@link Notification} to the {@link ApolloPlayer}.
      *
-     * @param viewer       the player who is receiving the packet
+     * @param audience     the audience that is receiving the packet
      * @param notification the notification
      * @since 1.0.0
      */
-    public abstract void displayNotification(ApolloPlayer viewer, Notification notification);
-
-    /**
-     * Displays the {@link Notification} to all {@link ApolloPlayer}s.
-     *
-     * @param notification the notification
-     * @since 1.0.0
-     */
-    public abstract void broadcastNotification(Notification notification);
+    public abstract void displayNotification(Audience audience, Notification notification);
 
 }

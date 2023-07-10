@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.title;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -41,28 +41,20 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class TitleModule extends ApolloModule {
 
     /**
-     * Sends the {@link Title} to the {@link ApolloPlayer}.
+     * Sends the {@link Title} to the {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
-     * @param title  the title
+     * @param audience the audience that is receiving the packet
+     * @param title    the title
      * @since 1.0.0
      */
-    public abstract void displayTitle(ApolloPlayer viewer, Title title);
+    public abstract void displayTitle(Audience audience, Title title);
 
     /**
-     * Sends the {@link Title} to all {@link ApolloPlayer}s.
+     * Resets all {@link Title}s for the {@link Audience}.
      *
-     * @param title the title
+     * @param audience the audience that is receiving the packet
      * @since 1.0.0
      */
-    public abstract void broadcastTitle(Title title);
-
-    /**
-     * Resets all {@link Title}s for the {@link ApolloPlayer}.
-     *
-     * @param viewer the player who is receiving the packet
-     * @since 1.0.0
-     */
-    public abstract void resetTitles(ApolloPlayer viewer);
+    public abstract void resetTitles(Audience audience);
 
 }

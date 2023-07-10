@@ -73,11 +73,3 @@ public void displayNotificationExample(Player viewer) {
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.notificationModule.displayNotification(apolloPlayer, this.uhcAnnouncement));
 }
 ```
-
-### Broadcasting a notification for an entire server
-
-```java
-public void broadcastNotificationExample() {
-    this.notificationModule.broadcastNotification(this.uhcAnnouncement);
-}
-```

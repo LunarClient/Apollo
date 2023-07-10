@@ -23,10 +23,9 @@
  */
 package com.lunarclient.apollo.module.hologram;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.player.ApolloPlayer;
-import java.util.Collection;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -39,38 +38,38 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class HologramModule extends ApolloModule {
 
     /**
-     * Adds or updates the {@link Hologram} to the {@link ApolloPlayer}s.
+     * Adds or updates the {@link Hologram} to the {@link Audience}.
      *
      * @param hologram the hologram
-     * @param viewers  the viewers
+     * @param audience the audience that is receiving the packet
      * @since 1.0.0
      */
-    public abstract void displayHologram(Collection<ApolloPlayer> viewers, Hologram hologram);
+    public abstract void displayHologram(Audience audience, Hologram hologram);
 
     /**
-     * Removes the {@link Hologram} for the {@link ApolloPlayer}s.
+     * Removes the {@link Hologram} for the {@link Audience}.
      *
      * @param hologramId the hologram id
-     * @param viewers    the viewers
+     * @param audience   the audience that is receiving the packet
      * @since 1.0.0
      */
-    public abstract void removeHologram(Collection<ApolloPlayer> viewers, String hologramId);
+    public abstract void removeHologram(Audience audience, String hologramId);
 
     /**
-     * Removes the {@link Hologram} for the {@link ApolloPlayer}s.
+     * Removes the {@link Hologram} for the {@link Audience}.
      *
-     * @param viewers  the players who are receiving the packet
+     * @param audience the audience that is receiving the packet
      * @param hologram the hologram
      * @since 1.0.0
      */
-    public abstract void removeHologram(Collection<ApolloPlayer> viewers, Hologram hologram);
+    public abstract void removeHologram(Audience audience, Hologram hologram);
 
     /**
-     * Resets all {@link Hologram}s for the {@link ApolloPlayer}.
+     * Resets all {@link Hologram}s for the {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param audience the audience that is receiving the packet
      * @since 1.0.0r
      */
-    public abstract void resetHolograms(ApolloPlayer viewer);
+    public abstract void resetHolograms(Audience audience);
 
 }

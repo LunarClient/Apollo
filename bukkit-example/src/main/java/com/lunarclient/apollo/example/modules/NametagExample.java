@@ -25,6 +25,7 @@ package com.lunarclient.apollo.example.modules;
 
 import com.google.common.collect.Lists;
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.module.nametag.Nametag;
 import com.lunarclient.apollo.module.nametag.NametagModule;
@@ -42,7 +43,7 @@ public class NametagExample {
     public void overrideNametagExample(Player target) {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
 
-        this.nametagModule.overrideNametag(viewers, target.getUniqueId(), Nametag.builder()
+        this.nametagModule.overrideNametag(Audience.of(viewers), target.getUniqueId(), Nametag.builder()
             .lines(Lists.newArrayList(
                 Component.builder()
                     .content("[StaffMode]")
@@ -60,7 +61,7 @@ public class NametagExample {
 
     public void resetNametagExample(Player target) {
         Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-        this.nametagModule.resetNametag(viewers, target.getUniqueId());
+        this.nametagModule.resetNametag(Audience.of(viewers), target.getUniqueId());
     }
 
     public void resetNametagsExample(Player viewer) {

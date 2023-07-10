@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.staffmod;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -39,21 +39,21 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class StaffModModule extends ApolloModule {
 
     /**
-     * Enables the {@link StaffMod}s for the {@link ApolloPlayer}.
+     * Enables the {@link StaffMod}s for the {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
-     * @param mods   the staff mods
+     * @param audience the audience that is receiving the packet
+     * @param mods     the staff mods
      * @since 1.0.0
      */
-    public abstract void enableStaffMods(ApolloPlayer viewer, List<StaffMod> mods);
+    public abstract void enableStaffMods(Audience audience, List<StaffMod> mods);
 
     /**
-     * Disables the {@link StaffMod} from the {@link ApolloPlayer}.
+     * Disables the {@link StaffMod} from the {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
-     * @param mods   the staff mods
+     * @param audience the audience that is receiving the packet
+     * @param mods     the staff mods
      * @since 1.0.0
      */
-    public abstract void disableStaffMods(ApolloPlayer viewer, List<StaffMod> mods);
+    public abstract void disableStaffMods(Audience audience, List<StaffMod> mods);
 
 }

@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.module.entity;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.entity.v1.FlipEntityMessage;
@@ -31,7 +32,6 @@ import com.lunarclient.apollo.entity.v1.ResetFlipedEntityMessage;
 import com.lunarclient.apollo.entity.v1.ResetRainbowSheepMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,47 +45,55 @@ import lombok.NonNull;
 public final class EntityModuleImpl extends EntityModule {
 
     @Override
-    public void overrideRainbowSheep(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> sheepEntities) {
+    public void overrideRainbowSheep(@NonNull Audience audience, @NonNull List<ApolloEntity> sheepEntities) {
         Set<EntityId> sheepUuidsProto = sheepEntities.stream()
             .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toSet());
 
-        ((AbstractApolloPlayer) viewer).sendPacket(OverrideRainbowSheepMessage.newBuilder()
+        OverrideRainbowSheepMessage message = OverrideRainbowSheepMessage.newBuilder()
             .addAllEntityIds(sheepUuidsProto)
-            .build());
+            .build();
+
+        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void resetRainbowSheep(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> sheepEntities) {
+    public void resetRainbowSheep(@NonNull Audience audience, @NonNull List<ApolloEntity> sheepEntities) {
         Set<EntityId> sheepUuidsProto = sheepEntities.stream()
             .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toSet());
 
-        ((AbstractApolloPlayer) viewer).sendPacket(ResetRainbowSheepMessage.newBuilder()
+        ResetRainbowSheepMessage message = ResetRainbowSheepMessage.newBuilder()
             .addAllEntityIds(sheepUuidsProto)
-            .build());
+            .build();
+
+        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void flipEntity(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> entities) {
+    public void flipEntity(@NonNull Audience audience, @NonNull List<ApolloEntity> entities) {
         Set<EntityId> entityUuidsProto = entities.stream()
             .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toSet());
 
-        ((AbstractApolloPlayer) viewer).sendPacket(FlipEntityMessage.newBuilder()
+        FlipEntityMessage message = FlipEntityMessage.newBuilder()
             .addAllEntityIds(entityUuidsProto)
-            .build());
+            .build();
+
+        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void resetFlippedEntity(@NonNull ApolloPlayer viewer, @NonNull List<ApolloEntity> entities) {
+    public void resetFlippedEntity(@NonNull Audience audience, @NonNull List<ApolloEntity> entities) {
         Set<EntityId> entityUuidsProto = entities.stream()
             .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toSet());
 
-        ((AbstractApolloPlayer) viewer).sendPacket(ResetFlipedEntityMessage.newBuilder()
+        ResetFlipedEntityMessage message = ResetFlipedEntityMessage.newBuilder()
             .addAllEntityIds(entityUuidsProto)
-            .build());
+            .build();
+
+        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }
