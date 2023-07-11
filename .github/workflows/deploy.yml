@@ -34,7 +34,7 @@ jobs:
 
         -   name: Determine Status
             run: |
-                if [ "$($VERSION | grep '\-SNAPSHOT')" ]; then
+                if [ "$(echo $VERSION | grep '\-SNAPSHOT')" ]; then
                     echo "STATUS=snapshot" >> $GITHUB_ENV
                 else
                     echo "STATUS=release" >> $GITHUB_ENV
