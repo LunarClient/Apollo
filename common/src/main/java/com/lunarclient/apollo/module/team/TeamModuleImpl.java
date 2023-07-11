@@ -26,6 +26,7 @@ package com.lunarclient.apollo.module.team;
 import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.team.v1.ResetTeamMembersMessage;
 import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,7 +60,7 @@ public final class TeamModuleImpl extends TeamModule {
 
     @Override
     public void resetTeamMembers(@NonNull Audience audience) {
-        UpdateTeamMembersMessage message = UpdateTeamMembersMessage.getDefaultInstance();
+        ResetTeamMembersMessage message = ResetTeamMembersMessage.getDefaultInstance();
         audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 

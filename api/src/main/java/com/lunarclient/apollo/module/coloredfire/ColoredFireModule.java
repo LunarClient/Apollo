@@ -26,7 +26,6 @@ package com.lunarclient.apollo.module.coloredfire;
 import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import java.awt.Color;
 import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;
@@ -65,7 +64,7 @@ public abstract class ColoredFireModule extends ApolloModule {
     public abstract void resetColoredFire(Audience audience, UUID burningPlayer);
 
     /**
-     * Resets all colored fire overrides for the given {@link ApolloPlayer}.
+     * Resets all colored fire overrides for the given {@link Audience}.
      *
      * @param audience the audience that is receiving the packet
      * @since 1.0.0

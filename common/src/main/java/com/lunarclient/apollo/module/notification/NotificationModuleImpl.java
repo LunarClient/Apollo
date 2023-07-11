@@ -26,6 +26,7 @@ package com.lunarclient.apollo.module.notification;
 import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.notification.v1.DisplayNotificationMessage;
+import com.lunarclient.apollo.notification.v1.ResetNotificationsMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import lombok.NonNull;
 
@@ -45,6 +46,12 @@ public final class NotificationModuleImpl extends NotificationModule {
             .setDisplayTime(NetworkTypes.toProtobuf(notification.getDisplayTime()))
             .build();
 
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void resetNotifications(@NonNull Audience audience) {
+        ResetNotificationsMessage message = ResetNotificationsMessage.getDefaultInstance();
         audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 

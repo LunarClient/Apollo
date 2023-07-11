@@ -68,7 +68,7 @@ public abstract class BorderModule extends ApolloModule {
     public abstract void removeBorder(Audience audience, Border border);
 
     /**
-     * Resets all {@link BorderModule}s for the {@link Audience}.
+     * Resets all {@link Border}s for the {@link Audience}.
      *
      * @param audience the audience that is receiving the packet
      * @since 1.0.0
