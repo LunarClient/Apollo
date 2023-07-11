@@ -40,19 +40,19 @@ public final class StopwatchModuleImpl extends StopwatchModule {
     @Override
     public void startStopwatch(@NonNull Audience audience) {
         StartStopwatchMessage message = StartStopwatchMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
     public void stopStopwatch(@NonNull Audience audience) {
         StopStopwatchMessage message = StopStopwatchMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
     public void resetStopwatch(@NonNull Audience audience) {
         ResetStopwatchMessage message = ResetStopwatchMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

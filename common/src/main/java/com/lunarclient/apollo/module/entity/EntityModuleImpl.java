@@ -54,7 +54,7 @@ public final class EntityModuleImpl extends EntityModule {
             .addAllEntityIds(sheepUuidsProto)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -67,7 +67,7 @@ public final class EntityModuleImpl extends EntityModule {
             .addAllEntityIds(sheepUuidsProto)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -80,7 +80,7 @@ public final class EntityModuleImpl extends EntityModule {
             .addAllEntityIds(entityUuidsProto)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -93,7 +93,7 @@ public final class EntityModuleImpl extends EntityModule {
             .addAllEntityIds(entityUuidsProto)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

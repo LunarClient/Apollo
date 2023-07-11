@@ -49,7 +49,7 @@ public final class StaffModModuleImpl extends StaffModModule {
             .addAllStaffMods(staffModsProto)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -62,7 +62,7 @@ public final class StaffModModuleImpl extends StaffModModule {
             .addAllStaffMods(staffModsProto)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     private com.lunarclient.apollo.staffmod.v1.StaffMod toProtobuf(StaffMod staffMod) {

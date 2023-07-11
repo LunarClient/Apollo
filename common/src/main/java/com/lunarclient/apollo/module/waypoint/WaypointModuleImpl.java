@@ -64,7 +64,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
     @Override
     public void displayWaypoint(@NonNull Audience audience, @NonNull Waypoint waypoint) {
         DisplayWaypointMessage message = this.toProtobuf(waypoint);
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -73,7 +73,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
             .setName(waypointName)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -84,7 +84,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
     @Override
     public void resetWaypoints(@NonNull Audience audience) {
         ResetWaypointsMessage message = ResetWaypointsMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     private void onPlayerRegister(ApolloRegisterPlayerEvent event) {

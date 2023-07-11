@@ -22,9 +22,7 @@ The nametag module enhances the vanilla Minecraft nametag.
 
 ```java
 public void overrideNametagExample(Player target) {
-    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-
-    this.nametagModule.overrideNametag(Audience.of(viewers), target.getUniqueId(), Nametag.builder()
+    this.nametagModule.overrideNametag(Audience.ofEveryone(), target.getUniqueId(), Nametag.builder()
         .lines(Lists.newArrayList(
             Component.builder()
                 .content("[StaffMode]")
@@ -72,8 +70,7 @@ public void overrideNametagExample(Player target) {
 
 ```java
 public void resetNametagExample(Player target) {
-    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-    this.nametagModule.resetNametag(Audience.of(viewers), target.getUniqueId());
+    this.nametagModule.resetNametag(Audience.ofEveryone(), target.getUniqueId());
 }
 ```
 

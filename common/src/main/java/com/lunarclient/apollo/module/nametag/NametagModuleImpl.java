@@ -53,7 +53,7 @@ public final class NametagModuleImpl extends NametagModule {
             .addAllLines(lines)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -62,13 +62,13 @@ public final class NametagModuleImpl extends NametagModule {
             .setPlayerUuid(NetworkTypes.toProtobuf(playerUuid))
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
     public void resetNametags(@NonNull Audience audience) {
         ResetNametagsMessage message = ResetNametagsMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

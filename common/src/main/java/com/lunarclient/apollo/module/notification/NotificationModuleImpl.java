@@ -45,7 +45,7 @@ public final class NotificationModuleImpl extends NotificationModule {
             .setDisplayTime(NetworkTypes.toProtobuf(notification.getDisplayTime()))
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

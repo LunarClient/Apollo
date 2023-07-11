@@ -23,15 +23,47 @@
  */
 package com.lunarclient.apollo.audience;
 
+import com.lunarclient.apollo.Apollo;
 import java.util.function.Consumer;
 
+/**
+ * Represents a group of recipients.
+ *
+ * @since 1.0.0
+ */
 public interface Audience {
 
+    /**
+     * Creates a {@link ForwardingAudience} instance
+     * from a collection of individual audience members.
+     *
+     * @param audiences the collection of audiences
+     * @return a {@code ForwardingAudience} instance representing the given audiences
+     * @since 1.0.0
+     */
     static ForwardingAudience of(Iterable<? extends Audience> audiences) {
         return () -> audiences;
     }
 
-    default void forEachAudience(Consumer<? super Audience> action) {
+    /**
+     * Creates a {@link ForwardingAudience} instance
+     * representing all available apollo players.
+     *
+     * @return a {@code ForwardingAudience} instance representing all apollo players
+     * @since 1.0.0
+     */
+    static ForwardingAudience ofEveryone() {
+        return () -> Apollo.getPlayerManager().getPlayers();
+    }
+
+    /**
+     * Performs the given action on this audience.
+     *
+     * @param action the action
+     * @since 1.0.0
+     */
+    default void forEach(Consumer<? super Audience> action) {
         action.accept(this);
     }
+
 }

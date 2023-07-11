@@ -54,7 +54,7 @@ public final class LimbModuleImpl extends LimbModule {
             .addAllArmorPieces(pieces)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -68,7 +68,7 @@ public final class LimbModuleImpl extends LimbModule {
             .addAllArmorPieces(pieces)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -82,7 +82,7 @@ public final class LimbModuleImpl extends LimbModule {
             .addAllBodyParts(parts)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -96,7 +96,7 @@ public final class LimbModuleImpl extends LimbModule {
             .addAllBodyParts(parts)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     private com.lunarclient.apollo.limb.v1.ArmorPiece toProtobuf(ArmorPiece armorPiece) {

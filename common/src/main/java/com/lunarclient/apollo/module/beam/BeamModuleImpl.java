@@ -47,7 +47,7 @@ public final class BeamModuleImpl extends BeamModule {
             .setColor(NetworkTypes.toProtobuf(beam.getColor()))
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -56,7 +56,7 @@ public final class BeamModuleImpl extends BeamModule {
             .setId(ByteString.copyFromUtf8(beamId))
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -67,7 +67,7 @@ public final class BeamModuleImpl extends BeamModule {
     @Override
     public void resetBeams(@NonNull Audience audience) {
         ResetBeaconBeamsMessage message = ResetBeaconBeamsMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

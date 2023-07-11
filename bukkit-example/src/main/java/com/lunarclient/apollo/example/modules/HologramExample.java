@@ -32,7 +32,6 @@ import com.lunarclient.apollo.module.hologram.Hologram;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.awt.Color;
-import java.util.Collection;
 import java.util.Optional;
 import org.bukkit.entity.Player;
 
@@ -41,9 +40,7 @@ public class HologramExample {
     private final HologramModule hologramModule = Apollo.getModuleManager().getModule(HologramModule.class);
 
     public void displayHologramExample() {
-        Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-
-        this.hologramModule.displayHologram(Audience.of(viewers), Hologram.builder()
+        this.hologramModule.displayHologram(Audience.ofEveryone(), Hologram.builder()
             .id("welcome-hologram")
             .location(ApolloLocation.builder()
                 .world("world")
@@ -69,13 +66,11 @@ public class HologramExample {
     }
 
     public void removeHologramExample() {
-        Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-
         /*
          * Removes the hologram with the ID "welcome-hologram" for all
-         * players inside of the viewers collection.
+         * players inside the viewers collection.
          */
-        this.hologramModule.removeHologram(Audience.of(viewers), "welcome-hologram");
+        this.hologramModule.removeHologram(Audience.ofEveryone(), "welcome-hologram");
     }
 
     public void resetHologramsExample(Player viewer) {

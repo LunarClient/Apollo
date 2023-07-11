@@ -43,13 +43,13 @@ public final class VignetteModuleImpl extends VignetteModule {
             .setOpacity(vignette.getOpacity())
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
     public void resetVignette(@NonNull Audience audience) {
         ResetVignetteMessage message = ResetVignetteMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

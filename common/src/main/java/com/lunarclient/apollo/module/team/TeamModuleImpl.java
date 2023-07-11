@@ -54,13 +54,13 @@ public final class TeamModuleImpl extends TeamModule {
             .addAllMembers(teamMembersProto)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
     public void resetTeamMembers(@NonNull Audience audience) {
         UpdateTeamMembersMessage message = UpdateTeamMembersMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

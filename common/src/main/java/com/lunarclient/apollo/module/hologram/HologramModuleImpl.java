@@ -54,7 +54,7 @@ public final class HologramModuleImpl extends HologramModule {
             .setShowBackground(hologram.isShowBackground())
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -63,7 +63,7 @@ public final class HologramModuleImpl extends HologramModule {
             .setId(ByteString.copyFromUtf8(hologramId))
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -74,7 +74,7 @@ public final class HologramModuleImpl extends HologramModule {
     @Override
     public void resetHolograms(@NonNull Audience audience) {
         ResetHologramsMessage message = ResetHologramsMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

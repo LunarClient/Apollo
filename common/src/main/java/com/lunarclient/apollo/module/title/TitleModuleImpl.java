@@ -49,13 +49,13 @@ public final class TitleModuleImpl extends TitleModule {
             .setFadeOutTime(NetworkTypes.toProtobuf(title.getFadeOutTime()))
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
     public void resetTitles(@NonNull Audience audience) {
         ResetTitlesMessage message = ResetTitlesMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

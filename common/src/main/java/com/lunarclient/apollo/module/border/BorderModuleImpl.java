@@ -52,7 +52,7 @@ public final class BorderModuleImpl extends BorderModule {
             .setDurationTicks(border.getDurationTicks())
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -61,7 +61,7 @@ public final class BorderModuleImpl extends BorderModule {
             .setId(ByteString.copyFromUtf8(borderId))
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -72,7 +72,7 @@ public final class BorderModuleImpl extends BorderModule {
     @Override
     public void resetBorders(@NonNull Audience audience) {
         ResetBordersMessage message = ResetBordersMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

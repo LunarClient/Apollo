@@ -47,7 +47,7 @@ public final class ColoredFireModuleImpl extends ColoredFireModule {
             .setColor(NetworkTypes.toProtobuf(color))
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -56,13 +56,13 @@ public final class ColoredFireModuleImpl extends ColoredFireModule {
             .setPlayerUuid(NetworkTypes.toProtobuf(burningPlayer))
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
     public void resetColoredFires(@NonNull Audience audience) {
         ResetColoredFiresMessage message = ResetColoredFiresMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

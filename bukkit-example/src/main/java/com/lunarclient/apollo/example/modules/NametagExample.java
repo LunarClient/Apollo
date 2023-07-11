@@ -31,7 +31,6 @@ import com.lunarclient.apollo.module.nametag.Nametag;
 import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.awt.Color;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import org.bukkit.entity.Player;
@@ -41,9 +40,7 @@ public class NametagExample {
     private final NametagModule nametagModule = Apollo.getModuleManager().getModule(NametagModule.class);
 
     public void overrideNametagExample(Player target) {
-        Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-
-        this.nametagModule.overrideNametag(Audience.of(viewers), target.getUniqueId(), Nametag.builder()
+        this.nametagModule.overrideNametag(Audience.ofEveryone(), target.getUniqueId(), Nametag.builder()
             .lines(Lists.newArrayList(
                 Component.builder()
                     .content("[StaffMode]")
@@ -60,8 +57,7 @@ public class NametagExample {
     }
 
     public void resetNametagExample(Player target) {
-        Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-        this.nametagModule.resetNametag(Audience.of(viewers), target.getUniqueId());
+        this.nametagModule.resetNametag(Audience.ofEveryone(), target.getUniqueId());
     }
 
     public void resetNametagsExample(Player viewer) {

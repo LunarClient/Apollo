@@ -46,7 +46,7 @@ public final class CooldownModuleImpl extends CooldownModule {
             .setIcon(NetworkTypes.toProtobuf(cooldown.getIcon()))
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -55,7 +55,7 @@ public final class CooldownModuleImpl extends CooldownModule {
             .setName(cooldownName)
             .build();
 
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
@@ -66,7 +66,7 @@ public final class CooldownModuleImpl extends CooldownModule {
     @Override
     public void resetCooldowns(@NonNull Audience audience) {
         ResetCooldownsMessage message = ResetCooldownsMessage.getDefaultInstance();
-        audience.forEachAudience(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

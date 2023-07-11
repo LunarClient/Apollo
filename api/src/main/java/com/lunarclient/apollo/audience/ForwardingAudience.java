@@ -25,14 +25,33 @@ package com.lunarclient.apollo.audience;
 
 import java.util.function.Consumer;
 
+/**
+ * Represents an audience that forwards actions to audience members.
+ *
+ * @since 1.0.0
+ */
 @FunctionalInterface
 public interface ForwardingAudience extends Audience {
 
+    /**
+     * Retrieves the individual audience members
+     * that this forwarding audience represents.
+     *
+     * @return an iterable containing audience members
+     * @since 1.0.0
+     */
     Iterable<? extends Audience> audiences();
 
-    default void forEachAudience(Consumer<? super Audience> action) {
+    /**
+     * Performs the given action on each individual audience member.
+     *
+     * @param action the action
+     * @since 1.0.0
+     */
+    default void forEach(Consumer<? super Audience> action) {
         for (Audience audience : this.audiences()) {
             action.accept(audience);
         }
     }
+
 }
