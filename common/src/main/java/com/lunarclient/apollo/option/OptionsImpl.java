@@ -23,7 +23,6 @@
  */
 package com.lunarclient.apollo.option;
 
-import com.google.protobuf.NullValue;
 import com.google.protobuf.Value;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.event.EventBus;
@@ -31,6 +30,7 @@ import com.lunarclient.apollo.event.option.ApolloUpdateOptionEvent;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -181,6 +181,10 @@ public class OptionsImpl implements Options {
     public <T> void replace(@NonNull Option<?, ?, ?> option, @NonNull BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
         this.options.replaceAll((k, v) -> {
             T value = remappingFunction.apply(option, (T) v);
+            if (value == null) {
+                value = (T) option.getDefaultValue();
+            }
+
             if (this.postEvent(option, null, value)) {
                 return null;
             }
@@ -196,6 +200,10 @@ public class OptionsImpl implements Options {
         this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
             .replaceAll((k, v) -> {
                 T value = remappingFunction.apply(option, (T) v);
+                if (value == null) {
+                    value = (T) option.getDefaultValue();
+                }
+
                 if (this.postEvent(option, player, value)) {
                     return null;
                 }
@@ -214,19 +222,24 @@ public class OptionsImpl implements Options {
      * Wraps the provided value into a protobuf {@link Value}.
      *
      * @param valueBuilder the value builder
+     * @param type         the value type
      * @param current      the current value
      * @return the wrapped value
      * @since 1.0.0
      */
-    public Value wrapValue(Value.Builder valueBuilder, @Nullable Object current) {
-        if (current instanceof Number) {
-            valueBuilder.setNumberValue(((Number) current).doubleValue());
-        } else if (current instanceof String) {
-            valueBuilder.setStringValue((String) current);
-        } else if (current instanceof Boolean) {
-            valueBuilder.setBoolValue((Boolean) current);
-        } else {
-            valueBuilder.setNullValue(NullValue.NULL_VALUE);
+    public Value wrapValue(Value.Builder valueBuilder, Type type, Object current) {
+        if (type instanceof Class) {
+            final Class<?> clazz = (Class<?>) type;
+
+            if (clazz.isEnum()) {
+                valueBuilder.setStringValue(((Enum<?>) current).name());
+            } else if (Number.class.isAssignableFrom(clazz)) {
+                valueBuilder.setNumberValue(((Number) current).doubleValue());
+            } else if (String.class.isAssignableFrom(clazz)) {
+                valueBuilder.setStringValue((String) current);
+            } else if (Boolean.class.isAssignableFrom(clazz)) {
+                valueBuilder.setBoolValue((Boolean) current);
+            }
         }
 
         return valueBuilder.build();
@@ -236,16 +249,24 @@ public class OptionsImpl implements Options {
      * Unwraps the provided protobuf {@link Value} into the appropriate object.
      *
      * @param wrapper the wrapped value
+     * @param type    the wrapped type
      * @return the unwrapped value
      * @since 1.0.0
      */
-    public @Nullable Object unwrapValue(Value wrapper) {
-        if (wrapper.hasNumberValue()) {
-            return wrapper.getNumberValue();
-        } else if (wrapper.hasStringValue()) {
-            return wrapper.getStringValue();
-        } else if (wrapper.hasBoolValue()) {
-            return wrapper.getBoolValue();
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public @Nullable Object unwrapValue(Value wrapper, Type type) {
+        if (type instanceof Class) {
+            final Class<?> clazz = (Class<?>) type;
+
+            if (clazz.isEnum() && wrapper.hasStringValue()) {
+                return Enum.valueOf((Class<? extends Enum>) clazz, wrapper.getStringValue());
+            } else if (Number.class.isAssignableFrom(clazz) && wrapper.hasNumberValue()) {
+                return wrapper.getNumberValue();
+            } else if (String.class.isAssignableFrom(clazz) && wrapper.hasStringValue()) {
+                return wrapper.getStringValue();
+            } else if (Boolean.class.isAssignableFrom(clazz) && wrapper.hasBoolValue()) {
+                return wrapper.getBoolValue();
+            }
         }
 
         return null;
@@ -262,7 +283,7 @@ public class OptionsImpl implements Options {
         return eventResult.getEvent().isCancelled();
     }
 
-    protected void postPacket(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {
+    protected void postPacket(Option<?, ?, ?> option, @Nullable ApolloPlayer player, Object value) {
         if (!option.isNotify()) {
             return;
         }
@@ -270,7 +291,7 @@ public class OptionsImpl implements Options {
         Collection<ApolloPlayer> players = player == null ? Apollo.getPlayerManager()
             .getPlayers() : Collections.singleton(player);
 
-        Value valueWrapper = this.wrapValue(Value.newBuilder(), value);
+        Value valueWrapper = this.wrapValue(Value.newBuilder(), option.getTypeToken().getType(), value);
         NetworkOptions.sendOption(this.module, option, valueWrapper, players);
     }
 
