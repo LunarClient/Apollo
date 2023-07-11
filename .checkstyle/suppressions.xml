@@ -3,4 +3,7 @@
 <suppressions>
     <!-- don't require javadocs on platform modules -->
     <suppress files="bukkit-example[\\/]src[\\/]main[\\/]java[\\/].*" checks="(FilteringWriteTag|MissingJavadoc.*)"/>
+
+    <!-- ignore checkstyle conflicts with configurate -->
+    <suppress files="common[\\/]src[\\/]main[\\/]java[\\/]org[\\/]spongepowered[\\/]configurate[\\/]yaml[\\/].*" checks="[a-zA-Z0-9]*"/>
 </suppressions>
