@@ -45,7 +45,7 @@ public class NotificationCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /notification <display>");
+            player.sendMessage("Usage: /notification <display|reset>");
             return true;
         }
 
@@ -56,8 +56,14 @@ public class NotificationCommand implements CommandExecutor {
                 break;
             }
 
+            case "reset": {
+                this.notificationExample.resetNotificationsExample(player);
+                player.sendMessage("Resetting notifications...");
+                break;
+            }
+
             default: {
-                player.sendMessage("Usage: /notification <display>");
+                player.sendMessage("Usage: /notification <display|reset>");
                 break;
             }
         }

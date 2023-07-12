@@ -73,3 +73,12 @@ public void displayNotificationExample(Player viewer) {
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.notificationModule.displayNotification(apolloPlayer, this.uhcAnnouncement));
 }
 ```
+
+### Resetting all notifications for a player
+
+```java
+public void resetNotificationsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.notificationModule::resetNotifications);
+}
+```
