@@ -23,7 +23,6 @@
  */
 package com.lunarclient.apollo.module.beam;
 
-import com.google.protobuf.ByteString;
 import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.beam.v1.DisplayBeaconBeamMessage;
 import com.lunarclient.apollo.beam.v1.RemoveBeaconBeamMessage;
@@ -42,7 +41,7 @@ public final class BeamModuleImpl extends BeamModule {
     @Override
     public void displayBeam(@NonNull Audience audience, @NonNull Beam beam) {
         DisplayBeaconBeamMessage message = DisplayBeaconBeamMessage.newBuilder()
-            .setId(ByteString.copyFromUtf8(beam.getId()))
+            .setId(beam.getId())
             .setLocation(NetworkTypes.toProtobuf(beam.getLocation()))
             .setColor(NetworkTypes.toProtobuf(beam.getColor()))
             .build();
@@ -53,7 +52,7 @@ public final class BeamModuleImpl extends BeamModule {
     @Override
     public void removeBeam(@NonNull Audience audience, @NonNull String beamId) {
         RemoveBeaconBeamMessage message = RemoveBeaconBeamMessage.newBuilder()
-            .setId(ByteString.copyFromUtf8(beamId))
+            .setId(beamId)
             .build();
 
         audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));

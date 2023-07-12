@@ -23,7 +23,6 @@
  */
 package com.lunarclient.apollo.module.border;
 
-import com.google.protobuf.ByteString;
 import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.border.v1.DisplayBorderMessage;
 import com.lunarclient.apollo.border.v1.RemoveBorderMessage;
@@ -42,7 +41,7 @@ public final class BorderModuleImpl extends BorderModule {
     @Override
     public void displayBorder(@NonNull Audience audience, @NonNull Border border) {
         DisplayBorderMessage message = DisplayBorderMessage.newBuilder()
-            .setId(ByteString.copyFromUtf8(border.getId()))
+            .setId(border.getId())
             .setWorld(border.getWorld())
             .setCancelEntry(border.isCancelEntry())
             .setCancelExit(border.isCancelExit())
@@ -58,7 +57,7 @@ public final class BorderModuleImpl extends BorderModule {
     @Override
     public void removeBorder(@NonNull Audience audience, @NonNull String borderId) {
         RemoveBorderMessage message = RemoveBorderMessage.newBuilder()
-            .setId(ByteString.copyFromUtf8(borderId))
+            .setId(borderId)
             .build();
 
         audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));

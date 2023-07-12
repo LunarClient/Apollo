@@ -23,7 +23,6 @@
  */
 package com.lunarclient.apollo.module.hologram;
 
-import com.google.protobuf.ByteString;
 import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.hologram.v1.DisplayHologramMessage;
 import com.lunarclient.apollo.hologram.v1.RemoveHologramMessage;
@@ -43,7 +42,7 @@ public final class HologramModuleImpl extends HologramModule {
     @Override
     public void displayHologram(@NonNull Audience audience, @NonNull Hologram hologram) {
         DisplayHologramMessage message = DisplayHologramMessage.newBuilder()
-            .setId(ByteString.copyFromUtf8(hologram.getId()))
+            .setId(hologram.getId())
             .setLocation(NetworkTypes.toProtobuf(hologram.getLocation()))
             .addAllLines(hologram.getLines().stream()
                 .map(NetworkTypes::toProtobuf)
@@ -60,7 +59,7 @@ public final class HologramModuleImpl extends HologramModule {
     @Override
     public void removeHologram(@NonNull Audience audience, @NonNull String hologramId) {
         RemoveHologramMessage message = RemoveHologramMessage.newBuilder()
-            .setId(ByteString.copyFromUtf8(hologramId))
+            .setId(hologramId)
             .build();
 
         audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
