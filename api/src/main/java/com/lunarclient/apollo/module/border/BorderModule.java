@@ -52,7 +52,7 @@ public abstract class BorderModule extends ApolloModule {
     /**
      * Removes the {@link Border} from the {@link Audience}.
      *
-     * @param audience the player who is receiving the packet
+     * @param audience the audience that is receiving the packet
      * @param borderId the border id
      * @since 1.0.0
      */
