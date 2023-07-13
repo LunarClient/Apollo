@@ -105,7 +105,7 @@ public final class NetworkOptions {
 
             Value.Builder valueBuilder = Value.newBuilder();
             Object value = options.get(option);
-            Value wrapper = ((OptionsImpl) options).wrapValue(valueBuilder, value);
+            Value wrapper = ((OptionsImpl) options).wrapValue(valueBuilder, option.getTypeToken().getType(), value);
             builder.putProperties(option.getKey(), wrapper);
         }
 
