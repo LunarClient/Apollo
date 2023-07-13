@@ -1,1 +1,81 @@
-{/* Add info */}
+import { DownloadList } from "@lunarclient/marketing-download-list";
+import { faWindows } from "@fortawesome/free-brands-svg-icons/faWindows";
+
+<h1 style="text-align: center;">Download Apollo</h1>
+
+<p style="text-align: center;">Below you can download the latest release of Apollo for Bukkit, BungeeCord and Velocity.</p>
+
+<br />
+
+<DownloadList
+    downloadOptions={[
+        {
+            backgroundImage: "http://cdn.backgroundhost.com/backgrounds/subtlepatterns/black_scales.png",
+            customIcon: <img width={250} src="/bukkit.png" />,
+            title: "Bukkit",
+            subtitle: "",
+            button: [
+                {
+                    text: "Download",
+                    onClick: () => {
+                        alert("Windows");
+                    },
+                },
+            ],
+            CSS: {
+                "> svg:first-child": {
+                    width: "112px",
+                },
+                svg: {
+                    width: "16px",
+                },
+            },
+        },
+        {
+            backgroundImage: "http://cdn.backgroundhost.com/backgrounds/subtlepatterns/black_scales.png",
+            customIcon: <img width={250} src="/bungee.png" />,
+            title: "Bungee",
+            subtitle: "",
+            button: [
+                {
+                    text: "Download",
+                    onClick: () => {
+                        alert("Windows");
+                    },
+                },
+            ],
+            CSS: {
+                "> svg:first-child": {
+                    width: "112px",
+                },
+                svg: {
+                    width: "16px",
+                },
+            },
+        },
+        {
+            backgroundImage: "http://cdn.backgroundhost.com/backgrounds/subtlepatterns/black_scales.png",
+            customIcon: <img width={250} src="/velocity.png" />,
+            title: "Velocity",
+            subtitle: "",
+            button: [
+                {
+                    text: "Download",
+                    onClick: () => {
+                        alert("Windows");
+                    },
+                },
+            ],
+            CSS: {
+                "> svg:first-child": {
+                    width: "112px",
+                },
+                svg: {
+                    width: "16px",
+                },
+            },
+        },
+    ]}
+/>
+
+<p style="text-align: center;">For earlier releases of Apollo, please visit our [GitHub Releases page](https://github.com/LunarClient/Apollo/releases).</p>
