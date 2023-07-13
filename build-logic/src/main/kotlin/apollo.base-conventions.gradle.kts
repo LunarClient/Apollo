@@ -39,7 +39,8 @@ spotless {
         trimTrailingWhitespace()
         endWithNewline()
         indentWithSpaces(4)
-        targetExclude("build/generated/source/proto/**")
+        targetExclude("**/build/generated/source/proto/**/*.*")
+        targetExclude("**/org/spongepowered/configurate/yaml/**/*.*")
     }
 
     fun formatLicense(): String {
@@ -66,8 +67,8 @@ spotless {
     }
 
     java {
-        licenseHeader(formatLicense())
         importOrderFile(rootProject.file(".spotless/lunar.importorder"))
+        licenseHeader(formatLicense())
         applyCommon()
     }
 }
