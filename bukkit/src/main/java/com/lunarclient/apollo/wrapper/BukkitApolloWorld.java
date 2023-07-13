@@ -23,36 +23,42 @@
  */
 package com.lunarclient.apollo.wrapper;
 
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.audience.Audience;
+import com.lunarclient.apollo.audience.ForwardingAudience;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.world.ApolloWorld;
+import java.util.Collection;
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import org.bukkit.World;
 
 /**
- * The Bungee implementation of {@link ApolloPlayer}.
+ * The Bukkit implementation of {@link ApolloWorld}.
  *
  * @since 1.0.0
  */
-@RequiredArgsConstructor
-public final class BungeeApolloPlayer extends AbstractApolloPlayer {
+@AllArgsConstructor
+public final class BukkitApolloWorld implements ApolloWorld, ForwardingAudience {
 
-    private final ProxiedPlayer player;
+    private final World world;
 
     @Override
     public UUID getUniqueId() {
-        return this.player.getUniqueId();
+        return this.world.getUID();
     }
 
     @Override
-    public boolean hasPermission(String permissionNode) {
-        return this.player.hasPermission(permissionNode);
+    public Collection<ApolloPlayer> getPlayers() {
+        return this.world.getPlayers().stream()
+            .flatMap(player -> Apollo.getPlayerManager().getPlayer(player.getUniqueId()).stream())
+            .collect(Collectors.toList());
     }
 
     @Override
-    public void sendPacket(byte[] messages) {
-        this.player.sendData(ApolloManager.PLUGIN_MESSAGE_CHANNEL, messages);
+    public Iterable<? extends Audience> audiences() {
+        return this.getPlayers();
     }
 
 }

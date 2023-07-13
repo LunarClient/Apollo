@@ -23,15 +23,18 @@
  */
 package com.lunarclient.apollo.wrapper;
 
+import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloBukkitPlatform;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.world.ApolloWorld;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
@@ -47,6 +50,14 @@ public final class BukkitApolloPlayer extends AbstractApolloPlayer {
     @Override
     public UUID getUniqueId() {
         return this.player.getUniqueId();
+    }
+
+    @Override
+    public Optional<ApolloWorld> getWorld() {
+        World world = this.player.getWorld();
+        UUID worldIdentifier = world.getUID();
+
+        return Apollo.getWorldManager().getWorld(worldIdentifier);
     }
 
     @Override

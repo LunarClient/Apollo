@@ -21,38 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.wrapper;
+package com.lunarclient.apollo.world;
 
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import java.util.Collection;
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
- * The Bungee implementation of {@link ApolloPlayer}.
+ * Represents a world which a player can exist on.
  *
  * @since 1.0.0
  */
-@RequiredArgsConstructor
-public final class BungeeApolloPlayer extends AbstractApolloPlayer {
+@ApiStatus.NonExtendable
+public interface ApolloWorld extends Audience {
 
-    private final ProxiedPlayer player;
+    /**
+     * Returns the {@link UUID} world identifier.
+     *
+     * @return the world unique identifier
+     * @since 1.0.0
+     */
+    UUID getUniqueId();
 
-    @Override
-    public UUID getUniqueId() {
-        return this.player.getUniqueId();
-    }
-
-    @Override
-    public boolean hasPermission(String permissionNode) {
-        return this.player.hasPermission(permissionNode);
-    }
-
-    @Override
-    public void sendPacket(byte[] messages) {
-        this.player.sendData(ApolloManager.PLUGIN_MESSAGE_CHANNEL, messages);
-    }
+    /**
+     * Gets an unmodifiable collection of {@link ApolloPlayer}s that support
+     * Apollo.
+     *
+     * @return an immutable collection of apollo players
+     * @since 1.0.0
+     */
+    Collection<ApolloPlayer> getPlayers();
 
 }

@@ -21,38 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.wrapper;
+package com.lunarclient.apollo.world;
 
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
-import com.lunarclient.apollo.player.ApolloPlayer;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 /**
- * The Bungee implementation of {@link ApolloPlayer}.
+ * Provides the implementation for the {@link ApolloWorldManager}.
  *
  * @since 1.0.0
  */
-@RequiredArgsConstructor
-public final class BungeeApolloPlayer extends AbstractApolloPlayer {
+@NoArgsConstructor
+public final class ApolloWorldManagerImpl implements ApolloWorldManager {
 
-    private final ProxiedPlayer player;
+    private final Map<UUID, ApolloWorld> worlds = new HashMap<>();
 
     @Override
-    public UUID getUniqueId() {
-        return this.player.getUniqueId();
+    public Optional<ApolloWorld> getWorld(@NonNull UUID worldIdentifier) {
+        return Optional.ofNullable(this.worlds.get(worldIdentifier));
     }
 
     @Override
-    public boolean hasPermission(String permissionNode) {
-        return this.player.hasPermission(permissionNode);
+    public Collection<ApolloWorld> getWorlds() {
+        return Collections.unmodifiableCollection(this.worlds.values());
     }
 
-    @Override
-    public void sendPacket(byte[] messages) {
-        this.player.sendData(ApolloManager.PLUGIN_MESSAGE_CHANNEL, messages);
+    /**
+     * Adds a world to the world manager.
+     *
+     * @param world the world to add
+     * @since 1.0.0
+     */
+    public void addWorld(@NonNull ApolloWorld world) {
+        this.worlds.putIfAbsent(world.getUniqueId(), world);
+    }
+
+    /**
+     * Removes a world from the world manager.
+     *
+     * @param world the world to remove
+     * @since 1.0.0
+     */
+    public void removeWorld(@NonNull UUID world) {
+        this.worlds.remove(world);
     }
 
 }

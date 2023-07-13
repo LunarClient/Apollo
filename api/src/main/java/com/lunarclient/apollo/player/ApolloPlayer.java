@@ -27,6 +27,7 @@ import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.world.ApolloWorld;
 import java.util.Optional;
 import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;
@@ -46,6 +47,14 @@ public interface ApolloPlayer extends Audience {
      * @since 1.0.0
      */
     UUID getUniqueId();
+
+    /**
+     * Gets the players current world.
+     *
+     * @return the players current world
+     * @since 1.0.0
+     */
+    Optional<ApolloWorld> getWorld();
 
     /**
      * Gets the players current location.
