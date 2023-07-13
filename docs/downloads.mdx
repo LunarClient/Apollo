@@ -1,11 +1,14 @@
 import { DownloadList } from "@lunarclient/marketing-download-list";
 import { faWindows } from "@fortawesome/free-brands-svg-icons/faWindows";
+import { Text } from "@moonsworth/text";
 
-<h1 style="text-align: center;">Download Apollo</h1>
+<Text textAlign="center" fontFamily="secondary" color="rgba(226,232,240)" fontSize="30px" CSS={{ marginBottom: "20px", marginTop: "35px" }}>
+    Download Apollo
+</Text>
 
-<p style="text-align: center;">Below you can download the latest release of Apollo for Bukkit, BungeeCord and Velocity.</p>
-
-<br />
+<Text textAlign="center" color="rgba(226,232,240)" fontSize="18px" CSS={{ marginBottom: "20px" }}>
+    Below you can download the latest release of Apollo for Bukkit, BungeeCord and Velocity.
+</Text>
 
 <DownloadList
     downloadOptions={[
@@ -78,4 +81,6 @@ import { faWindows } from "@fortawesome/free-brands-svg-icons/faWindows";
     ]}
 />
 
-<p style="text-align: center;">For earlier releases of Apollo, please visit our [GitHub Releases page](https://github.com/LunarClient/Apollo/releases).</p>
+<Text textAlign="center" color="rgba(226,232,240)" fontSize="18px" CSS={{ marginTop: "10px" }}>
+    For earlier releases of Apollo, please visit our [GitHub Releases page](https://github.com/LunarClient/Apollo/releases).
+</Text>
