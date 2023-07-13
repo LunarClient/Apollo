@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.vignette;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -38,20 +38,20 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class VignetteModule extends ApolloModule {
 
     /**
-     * Displays the {@link Vignette} to the {@link ApolloPlayer}.
+     * Displays the {@link Vignette} to the {@link Audience}.
      *
-     * @param viewer   the player who is receiving the packet
+     * @param audience the audience that is receiving the packet
      * @param vignette the vignette
      * @since 1.0.0
      */
-    public abstract void displayVignette(ApolloPlayer viewer, Vignette vignette);
+    public abstract void displayVignette(Audience audience, Vignette vignette);
 
     /**
-     * Resets the {@link Vignette} for the {@link ApolloPlayer}.
+     * Resets the {@link Vignette} for the {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param audience the audience that is receiving the packet
      * @since 1.0.0
      */
-    public abstract void resetVignette(ApolloPlayer viewer);
+    public abstract void resetVignette(Audience audience);
 
 }

@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.border;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -41,38 +41,38 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class BorderModule extends ApolloModule {
 
     /**
-     * Displays the {@link Border} to the {@link ApolloPlayer}.
+     * Displays the {@link Border} to the {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
-     * @param border the border
+     * @param audience the audience that is receiving the packet
+     * @param border   the border
      * @since 1.0.0
      */
-    public abstract void displayBorder(ApolloPlayer viewer, Border border);
+    public abstract void displayBorder(Audience audience, Border border);
 
     /**
-     * Removes the {@link Border} from the {@link ApolloPlayer}.
+     * Removes the {@link Border} from the {@link Audience}.
      *
-     * @param viewer   the player who is receiving the packet
+     * @param audience the audience that is receiving the packet
      * @param borderId the border id
      * @since 1.0.0
      */
-    public abstract void removeBorder(ApolloPlayer viewer, String borderId);
+    public abstract void removeBorder(Audience audience, String borderId);
 
     /**
-     * Removes the {@link Border} from the {@link ApolloPlayer}.
+     * Removes the {@link Border} from the {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
-     * @param border the border
+     * @param audience the audience that is receiving the packet
+     * @param border   the border
      * @since 1.0.0
      */
-    public abstract void removeBorder(ApolloPlayer viewer, Border border);
+    public abstract void removeBorder(Audience audience, Border border);
 
     /**
-     * Resets all {@link BorderModule}s for the {@link ApolloPlayer}.
+     * Resets all {@link Border}s for the {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param audience the audience that is receiving the packet
      * @since 1.0.0
      */
-    public abstract void resetBorders(ApolloPlayer viewer);
+    public abstract void resetBorders(Audience audience);
 
 }

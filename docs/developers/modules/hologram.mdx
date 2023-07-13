@@ -16,9 +16,7 @@ The hologram module enhances vanilla Minecraft's current system for holograms an
 
 ```java
 public void displayHologramExample() {
-    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-
-    this.hologramModule.displayHologram(viewers, Hologram.builder()
+    this.hologramModule.displayHologram(Audience.ofEveryone(), Hologram.builder()
         .id("welcome-hologram")
         .location(ApolloLocation.builder()
             .world("world")
@@ -102,13 +100,11 @@ public void displayHologramExample() {
 
 ```java
 public void removeHologramExample() {
-    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-
     /*
      * Removes the hologram with the ID "welcome-hologram" for all
-     * players inside of the viewers collection.
+     * players inside the viewers collection.
      */
-    this.hologramModule.removeHologram(viewers, "welcome-hologram");
+    this.hologramModule.removeHologram(Audience.ofEveryone(), "welcome-hologram");
 }
 ```
 

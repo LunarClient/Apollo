@@ -21,35 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.modules;
+package com.lunarclient.apollo.world;
 
-import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.audience.Audience;
-import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.awt.Color;
-import java.util.Optional;
-import java.util.UUID;
-import org.bukkit.entity.Player;
+import java.util.Collection;
+import org.jetbrains.annotations.ApiStatus;
 
-public class ColoredFireExample {
+/**
+ * Represents a world which a player can exist on.
+ *
+ * @since 1.0.0
+ */
+@ApiStatus.NonExtendable
+public interface ApolloWorld extends Audience {
 
-    private final ColoredFireModule coloredFireModule = Apollo.getModuleManager().getModule(ColoredFireModule.class);
+    /**
+     * Returns the {@link String} world name.
+     *
+     * @return the world unique identifier
+     * @since 1.0.0
+     */
+    String getName();
 
-    public void overrideColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.overrideColoredFire(Audience.ofEveryone(),
-            burningPlayer,
-            Color.BLUE
-        );
-    }
-
-    public void resetColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.resetColoredFire(Audience.ofEveryone(), burningPlayer);
-    }
-
-    public void resetColoredFiresExample(Player viewer) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(this.coloredFireModule::resetColoredFires);
-    }
+    /**
+     * Gets an unmodifiable collection of {@link ApolloPlayer}s that support
+     * Apollo.
+     *
+     * @return an immutable collection of apollo players
+     * @since 1.0.0
+     */
+    Collection<ApolloPlayer> getPlayers();
 
 }

@@ -61,7 +61,9 @@ import com.lunarclient.apollo.module.vignette.VignetteModuleImpl;
 import com.lunarclient.apollo.module.waypoint.WaypointModule;
 import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
+import com.lunarclient.apollo.wrapper.BukkitApolloWorld;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -69,6 +71,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.event.player.PlayerUnregisterChannelEvent;
+import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
@@ -131,6 +135,16 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     @Override
     public Kind getKind() {
         return Kind.SERVER;
+    }
+
+    @EventHandler
+    private void onWorldLoad(WorldLoadEvent event) {
+        ((ApolloWorldManagerImpl) Apollo.getWorldManager()).addWorld(new BukkitApolloWorld(event.getWorld()));
+    }
+
+    @EventHandler
+    private void onWorldUnload(WorldUnloadEvent event) {
+        ((ApolloWorldManagerImpl) Apollo.getWorldManager()).removeWorld(event.getWorld().getName());
     }
 
     @EventHandler

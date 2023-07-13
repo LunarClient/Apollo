@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.limb;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Collection;
 import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;
@@ -40,43 +40,43 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class LimbModule extends ApolloModule {
 
     /**
-     * Hides the {@link ArmorPiece} for the {@link ApolloPlayer}.
+     * Hides the {@link ArmorPiece} for the {@link Audience}.
      *
-     * @param viewer      the player who is receiving the packet
+     * @param audience    the audience that is receiving the packet
      * @param playerUuid  the player whose armor we will be manipulating
      * @param armorPieces the armor pieces to hide
      * @since 1.0.0
      */
-    public abstract void hideArmorPieces(ApolloPlayer viewer, UUID playerUuid, Collection<ArmorPiece> armorPieces);
+    public abstract void hideArmorPieces(Audience audience, UUID playerUuid, Collection<ArmorPiece> armorPieces);
 
     /**
-     * Resets the {@link ArmorPiece} for the {@link ApolloPlayer}.
+     * Resets the {@link ArmorPiece} for the {@link Audience}.
      *
-     * @param viewer      the player who is receiving the packet
+     * @param audience    the audience that is receiving the packet
      * @param playerUuid  the player whose armor we will be manipulating
      * @param armorPieces the armor pieces to reset (show)
      * @since 1.0.0
      */
-    public abstract void resetArmorPieces(ApolloPlayer viewer, UUID playerUuid, Collection<ArmorPiece> armorPieces);
+    public abstract void resetArmorPieces(Audience audience, UUID playerUuid, Collection<ArmorPiece> armorPieces);
 
     /**
-     * Hides the {@link BodyPart} for the {@link ApolloPlayer}.
+     * Hides the {@link BodyPart} for the {@link Audience}.
      *
-     * @param viewer     the player who is receiving the packet
+     * @param audience   the audience that is receiving the packet
      * @param playerUuid the player whose body we will be manipulating
      * @param bodyParts  the body parts to hide
      * @since 1.0.0
      */
-    public abstract void hideBodyParts(ApolloPlayer viewer, UUID playerUuid, Collection<BodyPart> bodyParts);
+    public abstract void hideBodyParts(Audience audience, UUID playerUuid, Collection<BodyPart> bodyParts);
 
     /**
-     * Resets the {@link BodyPart} for the {@link ApolloPlayer}.
+     * Resets the {@link BodyPart} for the {@link Audience}.
      *
-     * @param viewer     the player who is receiving the packet
+     * @param audience   the audience that is receiving the packet
      * @param playerUuid the player whose body we will be manipulating
      * @param bodyParts  the body parts to reset (show)
      * @since 1.0.0
      */
-    public abstract void resetBodyParts(ApolloPlayer viewer, UUID playerUuid, Collection<BodyPart> bodyParts);
+    public abstract void resetBodyParts(Audience audience, UUID playerUuid, Collection<BodyPart> bodyParts);
 
 }

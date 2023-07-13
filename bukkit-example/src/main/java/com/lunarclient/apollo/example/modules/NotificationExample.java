@@ -47,8 +47,9 @@ public class NotificationExample {
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.notificationModule.displayNotification(apolloPlayer, this.uhcAnnouncement));
     }
 
-    public void broadcastNotificationExample() {
-        this.notificationModule.broadcastNotification(this.uhcAnnouncement);
+    public void resetNotificationsExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        apolloPlayerOpt.ifPresent(this.notificationModule::resetNotifications);
     }
 
 }

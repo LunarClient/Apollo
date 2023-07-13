@@ -23,13 +23,12 @@
  */
 package com.lunarclient.apollo.module.border;
 
-import com.google.protobuf.ByteString;
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.border.v1.DisplayBorderMessage;
 import com.lunarclient.apollo.border.v1.RemoveBorderMessage;
 import com.lunarclient.apollo.border.v1.ResetBordersMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import lombok.NonNull;
 
 /**
@@ -40,9 +39,9 @@ import lombok.NonNull;
 public final class BorderModuleImpl extends BorderModule {
 
     @Override
-    public void displayBorder(@NonNull ApolloPlayer viewer, @NonNull Border border) {
-        ((AbstractApolloPlayer) viewer).sendPacket(DisplayBorderMessage.newBuilder()
-            .setId(ByteString.copyFromUtf8(border.getId()))
+    public void displayBorder(@NonNull Audience audience, @NonNull Border border) {
+        DisplayBorderMessage message = DisplayBorderMessage.newBuilder()
+            .setId(border.getId())
             .setWorld(border.getWorld())
             .setCancelEntry(border.isCancelEntry())
             .setCancelExit(border.isCancelExit())
@@ -50,26 +49,29 @@ public final class BorderModuleImpl extends BorderModule {
             .setColor(NetworkTypes.toProtobuf(border.getColor()))
             .setBounds(NetworkTypes.toProtobuf(border.getBounds()))
             .setDurationTicks(border.getDurationTicks())
-            .build()
-        );
+            .build();
+
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeBorder(@NonNull ApolloPlayer viewer, @NonNull String borderId) {
-        ((AbstractApolloPlayer) viewer).sendPacket(RemoveBorderMessage.newBuilder()
-            .setId(ByteString.copyFromUtf8(borderId))
-            .build()
-        );
+    public void removeBorder(@NonNull Audience audience, @NonNull String borderId) {
+        RemoveBorderMessage message = RemoveBorderMessage.newBuilder()
+            .setId(borderId)
+            .build();
+
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeBorder(@NonNull ApolloPlayer viewer, @NonNull Border border) {
-        this.removeBorder(viewer, border.getId());
+    public void removeBorder(@NonNull Audience audience, @NonNull Border border) {
+        this.removeBorder(audience, border.getId());
     }
 
     @Override
-    public void resetBorders(@NonNull ApolloPlayer viewer) {
-        ((AbstractApolloPlayer) viewer).sendPacket(ResetBordersMessage.getDefaultInstance());
+    public void resetBorders(@NonNull Audience audience) {
+        ResetBordersMessage message = ResetBordersMessage.getDefaultInstance();
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

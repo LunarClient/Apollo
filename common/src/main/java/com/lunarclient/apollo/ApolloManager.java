@@ -28,6 +28,7 @@ import com.lunarclient.apollo.network.ApolloNetworkManager;
 import com.lunarclient.apollo.option.config.Serializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
+import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import java.nio.file.Path;
 import lombok.Getter;
 import org.spongepowered.configurate.CommentedConfigurationNode;
@@ -67,6 +68,7 @@ public final class ApolloManager {
             Apollo.initialize(
                 platform,
                 new ApolloModuleManagerImpl(),
+                new ApolloWorldManagerImpl(),
                 new ApolloPlayerManagerImpl(),
                 new ApolloRoundtripManager()
             );

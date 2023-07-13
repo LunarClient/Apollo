@@ -23,11 +23,10 @@
  */
 package com.lunarclient.apollo.module.coloredfire;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import java.awt.Color;
-import java.util.Collection;
 import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -48,28 +47,28 @@ public abstract class ColoredFireModule extends ApolloModule {
     /**
      * Overrides the burning fire color for the burningPlayer, visible by the viewers.
      *
-     * @param viewers       the players who are receiving the packet
+     * @param audience      the audience that is receiving the packet
      * @param burningPlayer the UUID of the player whose burning color will be overwrote
      * @param color         the new color burningPlayer should burn in.
      * @since 1.0.0
      */
-    public abstract void overrideColoredFire(Collection<ApolloPlayer> viewers, UUID burningPlayer, Color color);
+    public abstract void overrideColoredFire(Audience audience, UUID burningPlayer, Color color);
 
     /**
      * Resets the burning fire color for the burningPlayer, visible by the viewers.
      *
-     * @param viewers       the players who are receiving the packet
+     * @param audience      the audience that is receiving the packet
      * @param burningPlayer the UUID of the player whose burning color was overwrote
      * @since 1.0.0
      */
-    public abstract void resetColoredFire(Collection<ApolloPlayer> viewers, UUID burningPlayer);
+    public abstract void resetColoredFire(Audience audience, UUID burningPlayer);
 
     /**
-     * Resets all colored fire overrides for the given {@link ApolloPlayer}.
+     * Resets all colored fire overrides for the given {@link Audience}.
      *
-     * @param viewer the player who is receiving the packet
+     * @param audience the audience that is receiving the packet
      * @since 1.0.0
      */
-    public abstract void resetColoredFires(ApolloPlayer viewer);
+    public abstract void resetColoredFires(Audience audience);
 
 }

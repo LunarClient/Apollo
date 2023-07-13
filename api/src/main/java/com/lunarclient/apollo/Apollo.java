@@ -26,6 +26,7 @@ package com.lunarclient.apollo;
 import com.lunarclient.apollo.module.ApolloModuleManager;
 import com.lunarclient.apollo.player.ApolloPlayerManager;
 import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
+import com.lunarclient.apollo.world.ApolloWorldManager;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,6 +39,7 @@ public final class Apollo {
 
     private static ApolloPlatform platform = null;
     private static ApolloModuleManager moduleManager = null;
+    private static ApolloWorldManager worldManager = null;
     private static ApolloPlayerManager playerManager = null;
     private static ApolloRoundtripManager roundtripManager = null;
 
@@ -62,6 +64,16 @@ public final class Apollo {
     }
 
     /**
+     * Returns the {@link ApolloWorldManager}.
+     *
+     * @return the world manager
+     * @since 1.0.0
+     */
+    public static ApolloWorldManager getWorldManager() {
+        return Apollo.checkEnabled(Apollo.worldManager);
+    }
+
+    /**
      * Returns the {@link ApolloPlayerManager}.
      *
      * @return the player manager
@@ -82,9 +94,11 @@ public final class Apollo {
     }
 
     static void initialize(@NonNull ApolloPlatform platform, @NonNull ApolloModuleManager moduleManager,
-                           @NonNull ApolloPlayerManager playerManager, @NonNull ApolloRoundtripManager roundtripManager) {
+                           @NonNull ApolloWorldManager worldManager, @NonNull ApolloPlayerManager playerManager,
+                           @NonNull ApolloRoundtripManager roundtripManager) {
         Apollo.platform = platform;
         Apollo.moduleManager = moduleManager;
+        Apollo.worldManager = worldManager;
         Apollo.playerManager = playerManager;
         Apollo.roundtripManager = roundtripManager;
     }

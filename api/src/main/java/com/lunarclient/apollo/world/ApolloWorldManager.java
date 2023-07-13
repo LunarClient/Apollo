@@ -21,35 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.modules;
+package com.lunarclient.apollo.world;
 
-import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.audience.Audience;
-import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
-import com.lunarclient.apollo.player.ApolloPlayer;
-import java.awt.Color;
+import java.util.Collection;
 import java.util.Optional;
-import java.util.UUID;
-import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 
-public class ColoredFireExample {
+/**
+ * Represents the world manager for Apollo.
+ *
+ * @since 1.0.0
+ */
+@ApiStatus.NonExtendable
+public interface ApolloWorldManager {
 
-    private final ColoredFireModule coloredFireModule = Apollo.getModuleManager().getModule(ColoredFireModule.class);
+    /**
+     * Gets the {@link ApolloWorld} for the specified {@link String} name
+     * if it exists, otherwise returns {@link Optional#empty()}.
+     *
+     * @param world the platform world
+     * @return the apollo world, if present
+     * @since 1.0.0
+     */
+    Optional<ApolloWorld> getWorld(String world);
 
-    public void overrideColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.overrideColoredFire(Audience.ofEveryone(),
-            burningPlayer,
-            Color.BLUE
-        );
-    }
-
-    public void resetColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.resetColoredFire(Audience.ofEveryone(), burningPlayer);
-    }
-
-    public void resetColoredFiresExample(Player viewer) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(this.coloredFireModule::resetColoredFires);
-    }
+    /**
+     * Gets an unmodifiable collection of {@link ApolloWorld}s that support
+     * Apollo.
+     *
+     * @return an immutable collection of apollo worlds
+     * @since 1.0.0
+     */
+    Collection<ApolloWorld> getWorlds();
 
 }

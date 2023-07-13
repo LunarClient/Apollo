@@ -21,35 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.modules;
+package com.lunarclient.apollo.audience;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.audience.Audience;
-import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
-import com.lunarclient.apollo.player.ApolloPlayer;
-import java.awt.Color;
-import java.util.Optional;
-import java.util.UUID;
-import org.bukkit.entity.Player;
+import java.util.function.Consumer;
 
-public class ColoredFireExample {
+/**
+ * Represents a group of recipients.
+ *
+ * @since 1.0.0
+ */
+public interface Audience {
 
-    private final ColoredFireModule coloredFireModule = Apollo.getModuleManager().getModule(ColoredFireModule.class);
-
-    public void overrideColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.overrideColoredFire(Audience.ofEveryone(),
-            burningPlayer,
-            Color.BLUE
-        );
+    /**
+     * Creates a {@link ForwardingAudience} instance
+     * from a collection of individual audience members.
+     *
+     * @param audiences the collection of audiences
+     * @return a {@code ForwardingAudience} instance representing the given audiences
+     * @since 1.0.0
+     */
+    static ForwardingAudience of(Iterable<? extends Audience> audiences) {
+        return () -> audiences;
     }
 
-    public void resetColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.resetColoredFire(Audience.ofEveryone(), burningPlayer);
+    /**
+     * Creates a {@link ForwardingAudience} instance
+     * representing all available apollo players.
+     *
+     * @return a {@code ForwardingAudience} instance representing all apollo players
+     * @since 1.0.0
+     */
+    static ForwardingAudience ofEveryone() {
+        return () -> Apollo.getPlayerManager().getPlayers();
     }
 
-    public void resetColoredFiresExample(Player viewer) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(this.coloredFireModule::resetColoredFires);
+    /**
+     * Performs the given action on this audience.
+     *
+     * @param action the action
+     * @since 1.0.0
+     */
+    default void forEach(Consumer<? super Audience> action) {
+        action.accept(this);
     }
 
 }

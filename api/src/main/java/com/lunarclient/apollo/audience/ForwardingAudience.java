@@ -21,35 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.modules;
+package com.lunarclient.apollo.audience;
 
-import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.audience.Audience;
-import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
-import com.lunarclient.apollo.player.ApolloPlayer;
-import java.awt.Color;
-import java.util.Optional;
-import java.util.UUID;
-import org.bukkit.entity.Player;
+import java.util.function.Consumer;
 
-public class ColoredFireExample {
+/**
+ * Represents an audience that forwards actions to audience members.
+ *
+ * @since 1.0.0
+ */
+@FunctionalInterface
+public interface ForwardingAudience extends Audience {
 
-    private final ColoredFireModule coloredFireModule = Apollo.getModuleManager().getModule(ColoredFireModule.class);
+    /**
+     * Retrieves the individual audience members
+     * that this forwarding audience represents.
+     *
+     * @return an iterable containing audience members
+     * @since 1.0.0
+     */
+    Iterable<? extends Audience> audiences();
 
-    public void overrideColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.overrideColoredFire(Audience.ofEveryone(),
-            burningPlayer,
-            Color.BLUE
-        );
-    }
-
-    public void resetColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.resetColoredFire(Audience.ofEveryone(), burningPlayer);
-    }
-
-    public void resetColoredFiresExample(Player viewer) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(this.coloredFireModule::resetColoredFires);
+    /**
+     * Performs the given action on each individual audience member.
+     *
+     * @param action the action
+     * @since 1.0.0
+     */
+    default void forEach(Consumer<? super Audience> action) {
+        for (Audience audience : this.audiences()) {
+            action.accept(audience);
+        }
     }
 
 }

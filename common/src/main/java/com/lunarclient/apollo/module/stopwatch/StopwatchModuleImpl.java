@@ -23,8 +23,8 @@
  */
 package com.lunarclient.apollo.module.stopwatch;
 
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.stopwatch.v1.ResetStopwatchMessage;
 import com.lunarclient.apollo.stopwatch.v1.StartStopwatchMessage;
 import com.lunarclient.apollo.stopwatch.v1.StopStopwatchMessage;
@@ -38,18 +38,21 @@ import lombok.NonNull;
 public final class StopwatchModuleImpl extends StopwatchModule {
 
     @Override
-    public void startStopwatch(@NonNull ApolloPlayer viewer) {
-        ((AbstractApolloPlayer) viewer).sendPacket(StartStopwatchMessage.getDefaultInstance());
+    public void startStopwatch(@NonNull Audience audience) {
+        StartStopwatchMessage message = StartStopwatchMessage.getDefaultInstance();
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void stopStopwatch(@NonNull ApolloPlayer viewer) {
-        ((AbstractApolloPlayer) viewer).sendPacket(StopStopwatchMessage.getDefaultInstance());
+    public void stopStopwatch(@NonNull Audience audience) {
+        StopStopwatchMessage message = StopStopwatchMessage.getDefaultInstance();
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void resetStopwatch(@NonNull ApolloPlayer viewer) {
-        ((AbstractApolloPlayer) viewer).sendPacket(ResetStopwatchMessage.getDefaultInstance());
+    public void resetStopwatch(@NonNull Audience audience) {
+        ResetStopwatchMessage message = ResetStopwatchMessage.getDefaultInstance();
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

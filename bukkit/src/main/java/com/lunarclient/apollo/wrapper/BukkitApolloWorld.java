@@ -21,35 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.modules;
+package com.lunarclient.apollo.wrapper;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.audience.Audience;
-import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
+import com.lunarclient.apollo.audience.ForwardingAudience;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.awt.Color;
-import java.util.Optional;
-import java.util.UUID;
-import org.bukkit.entity.Player;
+import com.lunarclient.apollo.world.ApolloWorld;
+import java.util.Collection;
+import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import org.bukkit.World;
 
-public class ColoredFireExample {
+/**
+ * The Bukkit implementation of {@link ApolloWorld}.
+ *
+ * @since 1.0.0
+ */
+@AllArgsConstructor
+public final class BukkitApolloWorld implements ApolloWorld, ForwardingAudience {
 
-    private final ColoredFireModule coloredFireModule = Apollo.getModuleManager().getModule(ColoredFireModule.class);
+    private final World world;
 
-    public void overrideColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.overrideColoredFire(Audience.ofEveryone(),
-            burningPlayer,
-            Color.BLUE
-        );
+    @Override
+    public String getName() {
+        return this.world.getName();
     }
 
-    public void resetColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.resetColoredFire(Audience.ofEveryone(), burningPlayer);
+    @Override
+    public Collection<ApolloPlayer> getPlayers() {
+        return this.world.getPlayers().stream()
+            .flatMap(player -> Apollo.getPlayerManager().getPlayer(player.getUniqueId()).stream())
+            .collect(Collectors.toList());
     }
 
-    public void resetColoredFiresExample(Player viewer) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(this.coloredFireModule::resetColoredFires);
+    @Override
+    public Iterable<? extends Audience> audiences() {
+        return this.getPlayers();
     }
 
 }

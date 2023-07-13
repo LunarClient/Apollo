@@ -74,10 +74,11 @@ public void displayNotificationExample(Player viewer) {
 }
 ```
 
-### Broadcasting a notification for an entire server
+### Resetting all notifications for a player
 
 ```java
-public void broadcastNotificationExample() {
-    this.notificationModule.broadcastNotification(this.uhcAnnouncement);
+public void resetNotificationsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.notificationModule::resetNotifications);
 }
 ```

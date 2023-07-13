@@ -10,9 +10,7 @@ The colored fire module allows you to modify the color of the flames that appear
 
 ```java
 public void overrideColoredFireExample(UUID burningPlayer) {
-    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-
-    this.coloredFireModule.overrideColoredFire(viewers,
+    this.coloredFireModule.overrideColoredFire(Audience.ofEveryone(),
         burningPlayer,
         Color.BLUE
     );
@@ -21,7 +19,7 @@ public void overrideColoredFireExample(UUID burningPlayer) {
 
 ### `overrideColoredFire` Parameters
 
-1. `Collection<ApolloPlayer> viewers`
+1. `Audience audience`
    - A list of all the player(s) you want to be able to see the updated fire color.
 2. `UUID target`
    - The player or living entity you want to display the updated fire color on.
@@ -32,8 +30,7 @@ public void overrideColoredFireExample(UUID burningPlayer) {
 
 ```java
 public void resetColoredFireExample(UUID burningPlayer) {
-    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-    this.coloredFireModule.resetColoredFire(viewers, burningPlayer);
+    this.coloredFireModule.resetColoredFire(Audience.ofEveryone(), burningPlayer);
 }
 ```
 

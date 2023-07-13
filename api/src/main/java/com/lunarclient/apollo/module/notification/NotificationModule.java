@@ -24,9 +24,9 @@
 package com.lunarclient.apollo.module.notification;
 
 import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Arrays;
 import java.util.Collection;
 import org.jetbrains.annotations.ApiStatus;
@@ -46,20 +46,20 @@ public abstract class NotificationModule extends ApolloModule {
     }
 
     /**
-     * Displays the {@link Notification} to the {@link ApolloPlayer}.
+     * Displays the {@link Notification} to the {@link Audience}.
      *
-     * @param viewer       the player who is receiving the packet
+     * @param audience     the audience that is receiving the packet
      * @param notification the notification
      * @since 1.0.0
      */
-    public abstract void displayNotification(ApolloPlayer viewer, Notification notification);
+    public abstract void displayNotification(Audience audience, Notification notification);
 
     /**
-     * Displays the {@link Notification} to all {@link ApolloPlayer}s.
+     * Resets all {@link Notification}s for the {@link Audience}.
      *
-     * @param notification the notification
+     * @param audience the audience that is receiving the packet
      * @since 1.0.0
      */
-    public abstract void broadcastNotification(Notification notification);
+    public abstract void resetNotifications(Audience audience);
 
 }

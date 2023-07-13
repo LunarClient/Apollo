@@ -21,35 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.modules;
+package com.lunarclient.apollo.world;
 
-import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.audience.Audience;
-import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
-import com.lunarclient.apollo.player.ApolloPlayer;
-import java.awt.Color;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
-import org.bukkit.entity.Player;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
-public class ColoredFireExample {
+/**
+ * Provides the implementation for the {@link ApolloWorldManager}.
+ *
+ * @since 1.0.0
+ */
+@NoArgsConstructor
+public final class ApolloWorldManagerImpl implements ApolloWorldManager {
 
-    private final ColoredFireModule coloredFireModule = Apollo.getModuleManager().getModule(ColoredFireModule.class);
+    private final Map<String, ApolloWorld> worlds = new HashMap<>();
 
-    public void overrideColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.overrideColoredFire(Audience.ofEveryone(),
-            burningPlayer,
-            Color.BLUE
-        );
+    @Override
+    public Optional<ApolloWorld> getWorld(@NonNull String world) {
+        return Optional.ofNullable(this.worlds.get(world));
     }
 
-    public void resetColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.resetColoredFire(Audience.ofEveryone(), burningPlayer);
+    @Override
+    public Collection<ApolloWorld> getWorlds() {
+        return Collections.unmodifiableCollection(this.worlds.values());
     }
 
-    public void resetColoredFiresExample(Player viewer) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(this.coloredFireModule::resetColoredFires);
+    /**
+     * Adds a world to the world manager.
+     *
+     * @param world the world to add
+     * @since 1.0.0
+     */
+    public void addWorld(@NonNull ApolloWorld world) {
+        this.worlds.putIfAbsent(world.getName(), world);
+    }
+
+    /**
+     * Removes a world from the world manager.
+     *
+     * @param world the world to remove
+     * @since 1.0.0
+     */
+    public void removeWorld(@NonNull String world) {
+        this.worlds.remove(world);
     }
 
 }

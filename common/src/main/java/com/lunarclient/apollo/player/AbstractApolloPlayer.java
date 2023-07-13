@@ -27,10 +27,13 @@ import com.google.protobuf.Any;
 import com.google.protobuf.Message;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.roundtrip.ApolloRequest;
 import com.lunarclient.apollo.roundtrip.ApolloResponse;
 import com.lunarclient.apollo.roundtrip.async.Future;
 import com.lunarclient.apollo.roundtrip.async.future.UncertainFuture;
+import com.lunarclient.apollo.world.ApolloWorld;
+import java.util.Optional;
 
 /**
  * Provides convenience methods for sending packets to the client.
@@ -38,6 +41,16 @@ import com.lunarclient.apollo.roundtrip.async.future.UncertainFuture;
  * @since 1.0.0
  */
 public abstract class AbstractApolloPlayer implements ApolloPlayer {
+
+    @Override
+    public Optional<ApolloWorld> getWorld() {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<ApolloLocation> getLocation() {
+        return Optional.empty();
+    }
 
     /**
      * Sends the provided message packet to the client
