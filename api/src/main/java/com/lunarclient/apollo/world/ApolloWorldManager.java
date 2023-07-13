@@ -25,7 +25,6 @@ package com.lunarclient.apollo.world;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -37,14 +36,14 @@ import org.jetbrains.annotations.ApiStatus;
 public interface ApolloWorldManager {
 
     /**
-     * Gets the {@link ApolloWorld} for the specified {@link UUID} if it
-     * exists, otherwise returns {@link Optional#empty()}.
+     * Gets the {@link ApolloWorld} for the specified {@link String} name
+     * if it exists, otherwise returns {@link Optional#empty()}.
      *
-     * @param worldIdentifier the platform world
+     * @param world the platform world
      * @return the apollo world, if present
      * @since 1.0.0
      */
-    Optional<ApolloWorld> getWorld(UUID worldIdentifier);
+    Optional<ApolloWorld> getWorld(String world);
 
     /**
      * Gets an unmodifiable collection of {@link ApolloWorld}s that support

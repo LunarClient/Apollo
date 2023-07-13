@@ -26,7 +26,6 @@ package com.lunarclient.apollo.world;
 import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Collection;
-import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -38,12 +37,12 @@ import org.jetbrains.annotations.ApiStatus;
 public interface ApolloWorld extends Audience {
 
     /**
-     * Returns the {@link UUID} world identifier.
+     * Returns the {@link String} world name.
      *
      * @return the world unique identifier
      * @since 1.0.0
      */
-    UUID getUniqueId();
+    String getName();
 
     /**
      * Gets an unmodifiable collection of {@link ApolloPlayer}s that support

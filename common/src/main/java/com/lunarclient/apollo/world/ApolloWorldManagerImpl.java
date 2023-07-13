@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
@@ -40,11 +39,11 @@ import lombok.NonNull;
 @NoArgsConstructor
 public final class ApolloWorldManagerImpl implements ApolloWorldManager {
 
-    private final Map<UUID, ApolloWorld> worlds = new HashMap<>();
+    private final Map<String, ApolloWorld> worlds = new HashMap<>();
 
     @Override
-    public Optional<ApolloWorld> getWorld(@NonNull UUID worldIdentifier) {
-        return Optional.ofNullable(this.worlds.get(worldIdentifier));
+    public Optional<ApolloWorld> getWorld(@NonNull String world) {
+        return Optional.ofNullable(this.worlds.get(world));
     }
 
     @Override
@@ -59,7 +58,7 @@ public final class ApolloWorldManagerImpl implements ApolloWorldManager {
      * @since 1.0.0
      */
     public void addWorld(@NonNull ApolloWorld world) {
-        this.worlds.putIfAbsent(world.getUniqueId(), world);
+        this.worlds.putIfAbsent(world.getName(), world);
     }
 
     /**
@@ -68,7 +67,7 @@ public final class ApolloWorldManagerImpl implements ApolloWorldManager {
      * @param world the world to remove
      * @since 1.0.0
      */
-    public void removeWorld(@NonNull UUID world) {
+    public void removeWorld(@NonNull String world) {
         this.worlds.remove(world);
     }
 

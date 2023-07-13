@@ -144,7 +144,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
 
     @EventHandler
     private void onWorldUnload(WorldUnloadEvent event) {
-        ((ApolloWorldManagerImpl) Apollo.getWorldManager()).removeWorld(event.getWorld().getUID());
+        ((ApolloWorldManagerImpl) Apollo.getWorldManager()).removeWorld(event.getWorld().getName());
     }
 
     @EventHandler

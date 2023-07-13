@@ -55,9 +55,8 @@ public final class BukkitApolloPlayer extends AbstractApolloPlayer {
     @Override
     public Optional<ApolloWorld> getWorld() {
         World world = this.player.getWorld();
-        UUID worldIdentifier = world.getUID();
 
-        return Apollo.getWorldManager().getWorld(worldIdentifier);
+        return Apollo.getWorldManager().getWorld(world.getName());
     }
 
     @Override

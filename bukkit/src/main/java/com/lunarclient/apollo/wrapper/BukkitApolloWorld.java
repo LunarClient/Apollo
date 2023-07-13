@@ -29,7 +29,6 @@ import com.lunarclient.apollo.audience.ForwardingAudience;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.world.ApolloWorld;
 import java.util.Collection;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.bukkit.World;
@@ -45,8 +44,8 @@ public final class BukkitApolloWorld implements ApolloWorld, ForwardingAudience 
     private final World world;
 
     @Override
-    public UUID getUniqueId() {
-        return this.world.getUID();
+    public String getName() {
+        return this.world.getName();
     }
 
     @Override
