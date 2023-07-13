@@ -104,7 +104,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
             .setLocation(NetworkTypes.toProtobuf(waypoint.getLocation()))
             .setColor(NetworkTypes.toProtobuf(waypoint.getColor()))
             .setPreventRemoval(waypoint.isPreventRemoval())
-            .setVisible(waypoint.isVisible())
+            .setHidden(waypoint.isHidden())
             .build();
     }
 
@@ -122,7 +122,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
                 )
                 .color(Color.decode(this.virtualNode(node, "color").getString("#FFFFFF")))
                 .preventRemoval(this.virtualNode(node, "prevent-removal").getBoolean())
-                .visible(this.virtualNode(node, "visible").getBoolean())
+                .hidden(this.virtualNode(node, "hidden").getBoolean())
                 .build();
         }
 
@@ -140,7 +140,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
             node.node("location", "z").set(waypoint.getLocation().getZ());
             node.node("color").set(String.format("#%06X", (0xFFFFFF & waypoint.getColor().getRGB())));
             node.node("prevent-removal").set(waypoint.isPreventRemoval());
-            node.node("visible").set(waypoint.isVisible());
+            node.node("hidden").set(waypoint.isHidden());
         }
 
         private ConfigurationNode virtualNode(ConfigurationNode source, Object... path) throws SerializationException {

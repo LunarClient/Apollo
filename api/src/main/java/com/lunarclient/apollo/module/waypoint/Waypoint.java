@@ -70,11 +70,11 @@ public final class Waypoint {
     boolean preventRemoval;
 
     /**
-     * Returns the waypoint {@link Boolean} visible state.
+     * Returns the waypoint {@link Boolean} hidden state.
      *
-     * @return the waypoint visibility state
+     * @return the waypoint hidden state
      * @since 1.0.0
      */
-    boolean visible;
+    boolean hidden;
 
 }

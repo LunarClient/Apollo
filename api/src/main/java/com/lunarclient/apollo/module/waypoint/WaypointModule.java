@@ -56,7 +56,7 @@ public abstract class WaypointModule extends ApolloModule {
             .build())
         .color(Color.RED)
         .preventRemoval(false)
-        .visible(true)
+        .hidden(false)
         .build();
 
     /**

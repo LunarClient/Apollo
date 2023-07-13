@@ -51,7 +51,7 @@ public class WaypointExample {
                 )
                 .color(Color.ORANGE)
                 .preventRemoval(false) // If the player can delete the waypoint
-                .visible(true)
+                .hidden(false)
                 .build()
             );
         });
