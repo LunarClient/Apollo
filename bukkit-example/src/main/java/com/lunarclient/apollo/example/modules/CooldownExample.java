@@ -54,15 +54,11 @@ public class CooldownExample {
 
     public void removeCooldownExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-        // Removing the cooldown with the name "enderpearl-cooldown" from the player
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown"));
     }
 
     public void resetCooldownsExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-        // Resetting all cooldowns for the player
         apolloPlayerOpt.ifPresent(this.cooldownModule::resetCooldowns);
     }
 

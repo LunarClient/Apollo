@@ -54,8 +54,6 @@ public class TitleExample {
 
     public void displayTitleExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-        // Displaying the title built by the title builder above, "helloTitle", to the player.
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, this.helloTitle));
     }
 

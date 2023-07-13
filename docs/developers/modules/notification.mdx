@@ -68,8 +68,6 @@ If this field is left empty (null) it'll display a generic info icon, as display
 ```java
 public void displayNotificationExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    
-    // Sending the notifcation built by the notifcation builder example above, "uhcAnnouncement", to the player.
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.notificationModule.displayNotification(apolloPlayer, this.uhcAnnouncement));
 }
 ```

@@ -57,15 +57,11 @@ public class BeamExample {
 
     public void removeBeamExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-        // Removing the beam with the ID "spawn-beacon" for the player
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.beamModule.removeBeam(apolloPlayer, "spawn-beacon"));
     }
 
     public void resetBeamsExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-        // Resetting all beams for the player
         apolloPlayerOpt.ifPresent(this.beamModule::resetBeams);
     }
 
