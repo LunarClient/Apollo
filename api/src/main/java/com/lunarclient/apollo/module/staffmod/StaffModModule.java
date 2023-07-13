@@ -48,7 +48,7 @@ public abstract class StaffModModule extends ApolloModule {
     public abstract void enableStaffMods(Audience audience, List<StaffMod> mods);
 
     /**
-     * Disables the {@link StaffMod} from the {@link Audience}.
+     * Disables the {@link StaffMod}s from the {@link Audience}.
      *
      * @param audience the audience that is receiving the packet
      * @param mods     the staff mods
@@ -56,4 +56,19 @@ public abstract class StaffModModule extends ApolloModule {
      */
     public abstract void disableStaffMods(Audience audience, List<StaffMod> mods);
 
+    /**
+     * Enables all {@link StaffMod}s for the {@link Audience}.
+     *
+     * @param audience the audience that is receiving the packet
+     * @since 1.0.0
+     */
+    public abstract void enableAllStaffMods(Audience audience);
+
+    /**
+     * Disables all {@link StaffMod}s from the {@link Audience}.
+     *
+     * @param audience the audience that is receiving the packet
+     * @since 1.0.0
+     */
+    public abstract void disableAllStaffMods(Audience audience);
 }

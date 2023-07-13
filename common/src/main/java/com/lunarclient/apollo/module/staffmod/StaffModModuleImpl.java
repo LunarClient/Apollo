@@ -27,6 +27,7 @@ import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.staffmod.v1.DisableStaffModsMessage;
 import com.lunarclient.apollo.staffmod.v1.EnableStaffModsMessage;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -38,6 +39,18 @@ import lombok.NonNull;
  * @since 1.0.0
  */
 public final class StaffModModuleImpl extends StaffModModule {
+
+    private final Set<com.lunarclient.apollo.staffmod.v1.StaffMod> staffMods = Arrays.stream(StaffMod.values())
+        .map(this::toProtobuf)
+        .collect(Collectors.toSet());
+
+    private final EnableStaffModsMessage enableAllStaffModsMessage = EnableStaffModsMessage.newBuilder()
+        .addAllStaffMods(this.staffMods)
+        .build();
+
+    private final DisableStaffModsMessage disableAllStaffModsMessage = DisableStaffModsMessage.newBuilder()
+        .addAllStaffMods(this.staffMods)
+        .build();
 
     @Override
     public void enableStaffMods(@NonNull Audience audience, @NonNull List<StaffMod> mods) {
@@ -63,6 +76,16 @@ public final class StaffModModuleImpl extends StaffModModule {
             .build();
 
         audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void enableAllStaffMods(@NonNull Audience audience) {
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(this.enableAllStaffModsMessage));
+    }
+
+    @Override
+    public void disableAllStaffMods(@NonNull Audience audience) {
+        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(this.disableAllStaffModsMessage));
     }
 
     private com.lunarclient.apollo.staffmod.v1.StaffMod toProtobuf(StaffMod staffMod) {
