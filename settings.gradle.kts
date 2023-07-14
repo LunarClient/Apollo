@@ -10,13 +10,14 @@ pluginManagement {
             mavenContent { snapshotsOnly() }
         }
         gradlePluginPortal()
+        maven("https://repo.jpenilla.xyz/snapshots")
     }
 }
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         mavenCentral()
         maven("https://repo.lunarclient.dev")

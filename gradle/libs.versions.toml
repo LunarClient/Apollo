@@ -8,7 +8,7 @@ configurate = "4.2.0-SNAPSHOT"
 geantyref = "1.3.11"
 jetbrains = "24.0.1"
 lombok = "1.18.26"
-paperweight = "1.5.4"
+buildtools = "1.0.0-SNAPSHOT"
 shadow = "7.1.2"
 spotless = "6.13.0"
 velocity = "3.0.1"
@@ -33,7 +33,7 @@ velocity = { module = "com.velocitypowered:velocity-api", version.ref = "velocit
 # build
 artifactregistry = { module = "gradle.plugin.com.google.cloud.artifactregistry:artifactregistry-gradle-plugin", version.ref = "artifactregistry" }
 checkstyle = { module = "com.puppycrawl.tools:checkstyle", version.ref = "checkstyle" }
-paperweight = { module = "io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin", version.ref = "paperweight" }
+buildtools = { module = "xyz.jpenilla.special-gradle:xyz.jpenilla.special-gradle.gradle.plugin", version.ref = "buildtools" }
 spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 shadow = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "shadow" }
 

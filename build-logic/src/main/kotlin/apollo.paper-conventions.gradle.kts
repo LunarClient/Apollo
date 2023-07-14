@@ -1,27 +1,13 @@
 plugins {
     id("apollo.base-conventions")
-    id("io.papermc.paperweight.userdev")
-}
-
-repositories {
-    maven("https://repo.lunarclient.dev")
+    id("xyz.jpenilla.special-gradle")
 }
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(8))
     }
 
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
-tasks {
-    build {
-        dependsOn(reobfJar)
-    }
-
-    reobfJar {
-        remapperArgs.add("--mixin")
-    }
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }

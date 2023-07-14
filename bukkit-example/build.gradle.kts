@@ -1,9 +1,16 @@
 plugins {
-    id("apollo.paper-conventions")
+    id("apollo.base-conventions")
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 dependencies {
     compileOnlyApi(project(":apollo-api"))
-
-    paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
 }
