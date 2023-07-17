@@ -24,9 +24,9 @@
 package com.lunarclient.apollo.wrapper;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.audience.Audience;
-import com.lunarclient.apollo.audience.ForwardingAudience;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.recipients.ForwardingRecipients;
+import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.world.ApolloWorld;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -39,7 +39,7 @@ import org.bukkit.World;
  * @since 1.0.0
  */
 @AllArgsConstructor
-public final class BukkitApolloWorld implements ApolloWorld, ForwardingAudience {
+public final class BukkitApolloWorld implements ApolloWorld, ForwardingRecipients {
 
     private final World world;
 
@@ -56,7 +56,7 @@ public final class BukkitApolloWorld implements ApolloWorld, ForwardingAudience 
     }
 
     @Override
-    public Iterable<? extends Audience> audiences() {
+    public Iterable<? extends Recipients> recipients() {
         return this.getPlayers();
     }
 

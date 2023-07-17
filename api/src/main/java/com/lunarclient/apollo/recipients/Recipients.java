@@ -21,37 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.audience;
+package com.lunarclient.apollo.recipients;
 
+import com.lunarclient.apollo.Apollo;
 import java.util.function.Consumer;
 
 /**
- * Represents an audience that forwards actions to audience members.
+ * Represents a group of recipients.
  *
  * @since 1.0.0
  */
-@FunctionalInterface
-public interface ForwardingAudience extends Audience {
+public interface Recipients {
 
     /**
-     * Retrieves the individual audience members
-     * that this forwarding audience represents.
+     * Creates a {@link ForwardingRecipients} instance
+     * from a collection of individual recipients.
      *
-     * @return an iterable containing audience members
+     * @param recipients the collection of recipients
+     * @return a {@code ForwardingRecipients} instance representing the given recipients
      * @since 1.0.0
      */
-    Iterable<? extends Audience> audiences();
+    static ForwardingRecipients of(Iterable<? extends Recipients> recipients) {
+        return () -> recipients;
+    }
 
     /**
-     * Performs the given action on each individual audience member.
+     * Creates a {@link ForwardingRecipients} instance
+     * representing all available apollo players.
+     *
+     * @return a {@code ForwardingRecipients} instance representing all apollo players
+     * @since 1.0.0
+     */
+    static ForwardingRecipients ofEveryone() {
+        return () -> Apollo.getPlayerManager().getPlayers();
+    }
+
+    /**
+     * Performs the given action on recipients.
      *
      * @param action the action
      * @since 1.0.0
      */
-    default void forEach(Consumer<? super Audience> action) {
-        for (Audience audience : this.audiences()) {
-            action.accept(audience);
-        }
+    default void forEach(Consumer<? super Recipients> action) {
+        action.accept(this);
     }
 
 }

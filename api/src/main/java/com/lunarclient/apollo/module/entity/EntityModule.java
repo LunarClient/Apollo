@@ -23,10 +23,10 @@
  */
 package com.lunarclient.apollo.module.entity;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -40,39 +40,39 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class EntityModule extends ApolloModule {
 
     /**
-     * Overrides the {@link ApolloEntity} rainbow for the {@link Audience}.
+     * Overrides the {@link ApolloEntity} rainbow for the {@link Recipients}.
      *
-     * @param audience      the audience that is receiving the packet
+     * @param recipients    the recipients that are receiving the packet
      * @param sheepEntities the list of sheep entities
      * @since 1.0.0
      */
-    public abstract void overrideRainbowSheep(Audience audience, List<ApolloEntity> sheepEntities);
+    public abstract void overrideRainbowSheep(Recipients recipients, List<ApolloEntity> sheepEntities);
 
     /**
-     * Resets the {@link ApolloEntity} rainbow for the {@link Audience}.
+     * Resets the {@link ApolloEntity} rainbow for the {@link Recipients}.
      *
-     * @param audience      the audience that is receiving the packet
+     * @param recipients    the recipients that are receiving the packet
      * @param sheepEntities the list of sheep entities to manipulate
      * @since 1.0.0
      */
-    public abstract void resetRainbowSheep(Audience audience, List<ApolloEntity> sheepEntities);
+    public abstract void resetRainbowSheep(Recipients recipients, List<ApolloEntity> sheepEntities);
 
     /**
-     * Flips the {@link ApolloEntity} for the {@link Audience}.
+     * Flips the {@link ApolloEntity} for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param entities the entities to flip
+     * @param recipients the recipients that are receiving the packet
+     * @param entities   the entities to flip
      * @since 1.0.0
      */
-    public abstract void flipEntity(Audience audience, List<ApolloEntity> entities);
+    public abstract void flipEntity(Recipients recipients, List<ApolloEntity> entities);
 
     /**
-     * Resets the {@link ApolloEntity} flip for the {@link Audience}.
+     * Resets the {@link ApolloEntity} flip for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param entities the entities to reset (unflip)
+     * @param recipients the recipients that are receiving the packet
+     * @param entities   the entities to reset (unflip)
      * @since 1.0.0
      */
-    public abstract void resetFlippedEntity(Audience audience, List<ApolloEntity> entities);
+    public abstract void resetFlippedEntity(Recipients recipients, List<ApolloEntity> entities);
 
 }

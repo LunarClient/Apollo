@@ -23,13 +23,13 @@
  */
 package com.lunarclient.apollo.module.nametag;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.common.v1.Component;
 import com.lunarclient.apollo.nametag.v1.OverrideNametagMessage;
 import com.lunarclient.apollo.nametag.v1.ResetNametagMessage;
 import com.lunarclient.apollo.nametag.v1.ResetNametagsMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -43,7 +43,7 @@ import lombok.NonNull;
 public final class NametagModuleImpl extends NametagModule {
 
     @Override
-    public void overrideNametag(@NonNull Audience audience, @NonNull UUID playerUuid, @NonNull Nametag nametag) {
+    public void overrideNametag(@NonNull Recipients recipients, @NonNull UUID playerUuid, @NonNull Nametag nametag) {
         List<Component> lines = nametag.getLines().stream()
             .map(NetworkTypes::toProtobuf)
             .collect(Collectors.toList());
@@ -53,22 +53,22 @@ public final class NametagModuleImpl extends NametagModule {
             .addAllLines(lines)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void resetNametag(@NonNull Audience audience, @NonNull UUID playerUuid) {
+    public void resetNametag(@NonNull Recipients recipients, @NonNull UUID playerUuid) {
         ResetNametagMessage message = ResetNametagMessage.newBuilder()
             .setPlayerUuid(NetworkTypes.toProtobuf(playerUuid))
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void resetNametags(@NonNull Audience audience) {
+    public void resetNametags(@NonNull Recipients recipients) {
         ResetNametagsMessage message = ResetNametagsMessage.getDefaultInstance();
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

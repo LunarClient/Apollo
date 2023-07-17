@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.border;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.recipients.Recipients;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -41,38 +41,38 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class BorderModule extends ApolloModule {
 
     /**
-     * Displays the {@link Border} to the {@link Audience}.
+     * Displays the {@link Border} to the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param border   the border
+     * @param recipients the recipients that are receiving the packet
+     * @param border     the border
      * @since 1.0.0
      */
-    public abstract void displayBorder(Audience audience, Border border);
+    public abstract void displayBorder(Recipients recipients, Border border);
 
     /**
-     * Removes the {@link Border} from the {@link Audience}.
+     * Removes the {@link Border} from the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param borderId the border id
+     * @param recipients the recipients that are receiving the packet
+     * @param borderId   the border id
      * @since 1.0.0
      */
-    public abstract void removeBorder(Audience audience, String borderId);
+    public abstract void removeBorder(Recipients recipients, String borderId);
 
     /**
-     * Removes the {@link Border} from the {@link Audience}.
+     * Removes the {@link Border} from the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param border   the border
+     * @param recipients the recipients that are receiving the packet
+     * @param border     the border
      * @since 1.0.0
      */
-    public abstract void removeBorder(Audience audience, Border border);
+    public abstract void removeBorder(Recipients recipients, Border border);
 
     /**
-     * Resets all {@link Border}s for the {@link Audience}.
+     * Resets all {@link Border}s for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0
      */
-    public abstract void resetBorders(Audience audience);
+    public abstract void resetBorders(Recipients recipients);
 
 }

@@ -23,13 +23,13 @@
  */
 package com.lunarclient.apollo.module.waypoint;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.ListOption;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.SimpleOption;
+import com.lunarclient.apollo.recipients.Recipients;
 import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -93,38 +93,38 @@ public abstract class WaypointModule extends ApolloModule {
     }
 
     /**
-     * Displays the {@link Waypoint} to the {@link Audience}.
+     * Displays the {@link Waypoint} to the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param waypoint the waypoint
+     * @param recipients the recipients that are receiving the packet
+     * @param waypoint   the waypoint
      * @since 1.0.0
      */
-    public abstract void displayWaypoint(Audience audience, Waypoint waypoint);
+    public abstract void displayWaypoint(Recipients recipients, Waypoint waypoint);
 
     /**
-     * Removes the {@link Waypoint} from the {@link Audience}.
+     * Removes the {@link Waypoint} from the {@link Recipients}.
      *
-     * @param audience     the audience that is receiving the packet
+     * @param recipients   the recipients that are receiving the packet
      * @param waypointName the waypoint name
      * @since 1.0.0
      */
-    public abstract void removeWaypoint(Audience audience, String waypointName);
+    public abstract void removeWaypoint(Recipients recipients, String waypointName);
 
     /**
-     * Removes the {@link Waypoint} from the {@link Audience}.
+     * Removes the {@link Waypoint} from the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param waypoint the waypoint
+     * @param recipients the recipients that are receiving the packet
+     * @param waypoint   the waypoint
      * @since 1.0.0
      */
-    public abstract void removeWaypoint(Audience audience, Waypoint waypoint);
+    public abstract void removeWaypoint(Recipients recipients, Waypoint waypoint);
 
     /**
-     * Resets all {@link Waypoint}s for the {@link Audience}.
+     * Resets all {@link Waypoint}s for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0
      */
-    public abstract void resetWaypoints(Audience audience);
+    public abstract void resetWaypoints(Recipients recipients);
 
 }

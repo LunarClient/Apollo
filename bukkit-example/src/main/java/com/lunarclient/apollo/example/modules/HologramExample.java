@@ -25,12 +25,12 @@ package com.lunarclient.apollo.example.modules;
 
 import com.google.common.collect.Lists;
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.module.hologram.Hologram;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.awt.Color;
 import java.util.Optional;
 import org.bukkit.entity.Player;
@@ -40,7 +40,7 @@ public class HologramExample {
     private final HologramModule hologramModule = Apollo.getModuleManager().getModule(HologramModule.class);
 
     public void displayHologramExample() {
-        this.hologramModule.displayHologram(Audience.ofEveryone(), Hologram.builder()
+        this.hologramModule.displayHologram(Recipients.ofEveryone(), Hologram.builder()
             .id("welcome-hologram")
             .location(ApolloLocation.builder()
                 .world("world")
@@ -66,7 +66,7 @@ public class HologramExample {
     }
 
     public void removeHologramExample() {
-        this.hologramModule.removeHologram(Audience.ofEveryone(), "welcome-hologram");
+        this.hologramModule.removeHologram(Recipients.ofEveryone(), "welcome-hologram");
     }
 
     public void resetHologramsExample(Player viewer) {

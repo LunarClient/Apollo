@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.nametag;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -39,30 +39,30 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class NametagModule extends ApolloModule {
 
     /**
-     * Overrides the {@link Nametag} for the {@link Audience}.
+     * Overrides the {@link Nametag} for the {@link Recipients}.
      *
-     * @param audience   the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @param playerUuid the player whose nametag we are manipulating
      * @param nametag    the nametag
      * @since 1.0.0
      */
-    public abstract void overrideNametag(Audience audience, UUID playerUuid, Nametag nametag);
+    public abstract void overrideNametag(Recipients recipients, UUID playerUuid, Nametag nametag);
 
     /**
-     * Resets the {@link Nametag} for the {@link Audience}.
+     * Resets the {@link Nametag} for the {@link Recipients}.
      *
-     * @param audience   the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @param playerUuid the player whose nametag we are manipulating
      * @since 1.0.0
      */
-    public abstract void resetNametag(Audience audience, UUID playerUuid);
+    public abstract void resetNametag(Recipients recipients, UUID playerUuid);
 
     /**
-     * Resets all {@link Nametag}s for the {@link Audience}.
+     * Resets all {@link Nametag}s for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0
      */
-    public abstract void resetNametags(Audience audience);
+    public abstract void resetNametags(Recipients recipients);
 
 }

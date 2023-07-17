@@ -23,12 +23,12 @@
  */
 package com.lunarclient.apollo.module.beam;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.beam.v1.DisplayBeaconBeamMessage;
 import com.lunarclient.apollo.beam.v1.RemoveBeaconBeamMessage;
 import com.lunarclient.apollo.beam.v1.ResetBeaconBeamsMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 
 /**
@@ -39,34 +39,34 @@ import lombok.NonNull;
 public final class BeamModuleImpl extends BeamModule {
 
     @Override
-    public void displayBeam(@NonNull Audience audience, @NonNull Beam beam) {
+    public void displayBeam(@NonNull Recipients recipients, @NonNull Beam beam) {
         DisplayBeaconBeamMessage message = DisplayBeaconBeamMessage.newBuilder()
             .setId(beam.getId())
             .setLocation(NetworkTypes.toProtobuf(beam.getLocation()))
             .setColor(NetworkTypes.toProtobuf(beam.getColor()))
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeBeam(@NonNull Audience audience, @NonNull String beamId) {
+    public void removeBeam(@NonNull Recipients recipients, @NonNull String beamId) {
         RemoveBeaconBeamMessage message = RemoveBeaconBeamMessage.newBuilder()
             .setId(beamId)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeBeam(@NonNull Audience audience, @NonNull Beam beam) {
-        this.removeBeam(audience, beam.getId());
+    public void removeBeam(@NonNull Recipients recipients, @NonNull Beam beam) {
+        this.removeBeam(recipients, beam.getId());
     }
 
     @Override
-    public void resetBeams(@NonNull Audience audience) {
+    public void resetBeams(@NonNull Recipients recipients) {
         ResetBeaconBeamsMessage message = ResetBeaconBeamsMessage.getDefaultInstance();
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

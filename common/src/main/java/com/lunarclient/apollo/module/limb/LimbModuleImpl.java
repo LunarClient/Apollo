@@ -23,13 +23,13 @@
  */
 package com.lunarclient.apollo.module.limb;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.limb.v1.HideArmorPiecesMessage;
 import com.lunarclient.apollo.limb.v1.HideBodyPartMessage;
 import com.lunarclient.apollo.limb.v1.ResetArmorPiecesMessage;
 import com.lunarclient.apollo.limb.v1.ResetBodyPartMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
@@ -44,7 +44,7 @@ import lombok.NonNull;
 public final class LimbModuleImpl extends LimbModule {
 
     @Override
-    public void hideArmorPieces(@NonNull Audience audience, @NonNull UUID playerUuid, @NonNull Collection<ArmorPiece> armorPieces) {
+    public void hideArmorPieces(@NonNull Recipients recipients, @NonNull UUID playerUuid, @NonNull Collection<ArmorPiece> armorPieces) {
         Set<com.lunarclient.apollo.limb.v1.ArmorPiece> pieces = armorPieces.stream()
             .map(this::toProtobuf)
             .collect(Collectors.toSet());
@@ -54,11 +54,11 @@ public final class LimbModuleImpl extends LimbModule {
             .addAllArmorPieces(pieces)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void resetArmorPieces(@NonNull Audience audience, @NonNull UUID playerUuid, @NonNull Collection<ArmorPiece> armorPieces) {
+    public void resetArmorPieces(@NonNull Recipients recipients, @NonNull UUID playerUuid, @NonNull Collection<ArmorPiece> armorPieces) {
         Set<com.lunarclient.apollo.limb.v1.ArmorPiece> pieces = armorPieces.stream()
             .map(this::toProtobuf)
             .collect(Collectors.toSet());
@@ -68,11 +68,11 @@ public final class LimbModuleImpl extends LimbModule {
             .addAllArmorPieces(pieces)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void hideBodyParts(@NonNull Audience audience, @NonNull UUID playerUuid, @NonNull Collection<BodyPart> bodyParts) {
+    public void hideBodyParts(@NonNull Recipients recipients, @NonNull UUID playerUuid, @NonNull Collection<BodyPart> bodyParts) {
         Set<com.lunarclient.apollo.limb.v1.BodyPart> parts = bodyParts.stream()
             .map(this::toProtobuf)
             .collect(Collectors.toSet());
@@ -82,11 +82,11 @@ public final class LimbModuleImpl extends LimbModule {
             .addAllBodyParts(parts)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void resetBodyParts(@NonNull Audience audience, @NonNull UUID playerUuid, @NonNull Collection<BodyPart> bodyParts) {
+    public void resetBodyParts(@NonNull Recipients recipients, @NonNull UUID playerUuid, @NonNull Collection<BodyPart> bodyParts) {
         Set<com.lunarclient.apollo.limb.v1.BodyPart> parts = bodyParts.stream()
             .map(this::toProtobuf)
             .collect(Collectors.toSet());
@@ -96,7 +96,7 @@ public final class LimbModuleImpl extends LimbModule {
             .addAllBodyParts(parts)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     private com.lunarclient.apollo.limb.v1.ArmorPiece toProtobuf(ArmorPiece armorPiece) {

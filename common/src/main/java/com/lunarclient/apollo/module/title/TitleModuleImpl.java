@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.title;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.title.v1.DisplayTitleMessage;
 import com.lunarclient.apollo.title.v1.ResetTitlesMessage;
 import com.lunarclient.apollo.title.v1.TitleType;
@@ -39,7 +39,7 @@ import lombok.NonNull;
 public final class TitleModuleImpl extends TitleModule {
 
     @Override
-    public void displayTitle(@NonNull Audience audience, @NonNull Title title) {
+    public void displayTitle(@NonNull Recipients recipients, @NonNull Title title) {
         DisplayTitleMessage message = DisplayTitleMessage.newBuilder()
             .setTitleType(TitleType.forNumber(title.getType().ordinal() + 1))
             .setMessage(NetworkTypes.toProtobuf(title.getMessage()))
@@ -49,13 +49,13 @@ public final class TitleModuleImpl extends TitleModule {
             .setFadeOutTime(NetworkTypes.toProtobuf(title.getFadeOutTime()))
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void resetTitles(@NonNull Audience audience) {
+    public void resetTitles(@NonNull Recipients recipients) {
         ResetTitlesMessage message = ResetTitlesMessage.getDefaultInstance();
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

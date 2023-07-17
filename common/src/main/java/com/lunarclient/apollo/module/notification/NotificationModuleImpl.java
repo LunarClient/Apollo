@@ -23,11 +23,11 @@
  */
 package com.lunarclient.apollo.module.notification;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.notification.v1.DisplayNotificationMessage;
 import com.lunarclient.apollo.notification.v1.ResetNotificationsMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 
 /**
@@ -38,7 +38,7 @@ import lombok.NonNull;
 public final class NotificationModuleImpl extends NotificationModule {
 
     @Override
-    public void displayNotification(@NonNull Audience audience, @NonNull Notification notification) {
+    public void displayNotification(@NonNull Recipients recipients, @NonNull Notification notification) {
         DisplayNotificationMessage message = DisplayNotificationMessage.newBuilder()
             .setTitle(notification.getTitle())
             .setDescription(notification.getDescription())
@@ -46,13 +46,13 @@ public final class NotificationModuleImpl extends NotificationModule {
             .setDisplayTime(NetworkTypes.toProtobuf(notification.getDisplayTime()))
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void resetNotifications(@NonNull Audience audience) {
+    public void resetNotifications(@NonNull Recipients recipients) {
         ResetNotificationsMessage message = ResetNotificationsMessage.getDefaultInstance();
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

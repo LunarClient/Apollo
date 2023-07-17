@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.hologram;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.recipients.Recipients;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -38,38 +38,38 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class HologramModule extends ApolloModule {
 
     /**
-     * Adds or updates the {@link Hologram} to the {@link Audience}.
+     * Adds or updates the {@link Hologram} to the {@link Recipients}.
      *
-     * @param hologram the hologram
-     * @param audience the audience that is receiving the packet
+     * @param hologram   the hologram
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0
      */
-    public abstract void displayHologram(Audience audience, Hologram hologram);
+    public abstract void displayHologram(Recipients recipients, Hologram hologram);
 
     /**
-     * Removes the {@link Hologram} for the {@link Audience}.
+     * Removes the {@link Hologram} for the {@link Recipients}.
      *
      * @param hologramId the hologram id
-     * @param audience   the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0
      */
-    public abstract void removeHologram(Audience audience, String hologramId);
+    public abstract void removeHologram(Recipients recipients, String hologramId);
 
     /**
-     * Removes the {@link Hologram} for the {@link Audience}.
+     * Removes the {@link Hologram} for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param hologram the hologram
+     * @param recipients the recipients that are receiving the packet
+     * @param hologram   the hologram
      * @since 1.0.0
      */
-    public abstract void removeHologram(Audience audience, Hologram hologram);
+    public abstract void removeHologram(Recipients recipients, Hologram hologram);
 
     /**
-     * Resets all {@link Hologram}s for the {@link Audience}.
+     * Resets all {@link Hologram}s for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0r
      */
-    public abstract void resetHolograms(Audience audience);
+    public abstract void resetHolograms(Recipients recipients);
 
 }

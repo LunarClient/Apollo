@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.beam;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.recipients.Recipients;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -38,38 +38,38 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class BeamModule extends ApolloModule {
 
     /**
-     * Displays the {@link Beam} to the {@link Audience}.
+     * Displays the {@link Beam} to the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param beam     the beam
+     * @param recipients the recipients that are receiving the packet
+     * @param beam       the beam
      * @since 1.0.0
      */
-    public abstract void displayBeam(Audience audience, Beam beam);
+    public abstract void displayBeam(Recipients recipients, Beam beam);
 
     /**
-     * Removes the {@link Beam} from the {@link Audience}.
+     * Removes the {@link Beam} from the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param beamId   the beam id
+     * @param recipients the recipients that are receiving the packet
+     * @param beamId     the beam id
      * @since 1.0.0
      */
-    public abstract void removeBeam(Audience audience, String beamId);
+    public abstract void removeBeam(Recipients recipients, String beamId);
 
     /**
-     * Removes the {@link Beam} from the {@link Audience}.
+     * Removes the {@link Beam} from the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param beam     the beam
+     * @param recipients the recipients that are receiving the packet
+     * @param beam       the beam
      * @since 1.0.0
      */
-    public abstract void removeBeam(Audience audience, Beam beam);
+    public abstract void removeBeam(Recipients recipients, Beam beam);
 
     /**
-     * Resets all {@link Beam}s for the {@link Audience}.
+     * Resets all {@link Beam}s for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0
      */
-    public abstract void resetBeams(Audience audience);
+    public abstract void resetBeams(Recipients recipients);
 
 }

@@ -23,12 +23,12 @@
  */
 package com.lunarclient.apollo.module.hologram;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.hologram.v1.DisplayHologramMessage;
 import com.lunarclient.apollo.hologram.v1.RemoveHologramMessage;
 import com.lunarclient.apollo.hologram.v1.ResetHologramsMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.util.stream.Collectors;
 import lombok.NonNull;
 
@@ -40,7 +40,7 @@ import lombok.NonNull;
 public final class HologramModuleImpl extends HologramModule {
 
     @Override
-    public void displayHologram(@NonNull Audience audience, @NonNull Hologram hologram) {
+    public void displayHologram(@NonNull Recipients recipients, @NonNull Hologram hologram) {
         DisplayHologramMessage message = DisplayHologramMessage.newBuilder()
             .setId(hologram.getId())
             .setLocation(NetworkTypes.toProtobuf(hologram.getLocation()))
@@ -53,27 +53,27 @@ public final class HologramModuleImpl extends HologramModule {
             .setShowBackground(hologram.isShowBackground())
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeHologram(@NonNull Audience audience, @NonNull String hologramId) {
+    public void removeHologram(@NonNull Recipients recipients, @NonNull String hologramId) {
         RemoveHologramMessage message = RemoveHologramMessage.newBuilder()
             .setId(hologramId)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeHologram(@NonNull Audience audience, @NonNull Hologram hologram) {
-        this.removeHologram(audience, hologram.getId());
+    public void removeHologram(@NonNull Recipients recipients, @NonNull Hologram hologram) {
+        this.removeHologram(recipients, hologram.getId());
     }
 
     @Override
-    public void resetHolograms(@NonNull Audience audience) {
+    public void resetHolograms(@NonNull Recipients recipients) {
         ResetHologramsMessage message = ResetHologramsMessage.getDefaultInstance();
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

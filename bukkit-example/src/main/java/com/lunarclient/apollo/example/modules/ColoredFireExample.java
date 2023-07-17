@@ -24,9 +24,9 @@
 package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.awt.Color;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,14 +37,14 @@ public class ColoredFireExample {
     private final ColoredFireModule coloredFireModule = Apollo.getModuleManager().getModule(ColoredFireModule.class);
 
     public void overrideColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.overrideColoredFire(Audience.ofEveryone(),
+        this.coloredFireModule.overrideColoredFire(Recipients.ofEveryone(),
             burningPlayer,
             Color.BLUE
         );
     }
 
     public void resetColoredFireExample(UUID burningPlayer) {
-        this.coloredFireModule.resetColoredFire(Audience.ofEveryone(), burningPlayer);
+        this.coloredFireModule.resetColoredFire(Recipients.ofEveryone(), burningPlayer);
     }
 
     public void resetColoredFiresExample(Player viewer) {

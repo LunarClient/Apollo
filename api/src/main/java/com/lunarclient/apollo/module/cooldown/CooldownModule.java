@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.cooldown;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.recipients.Recipients;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -38,38 +38,38 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class CooldownModule extends ApolloModule {
 
     /**
-     * Displays the {@link Cooldown} to the {@link Audience}.
+     * Displays the {@link Cooldown} to the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param cooldown the cooldown
+     * @param recipients the recipients that are receiving the packet
+     * @param cooldown   the cooldown
      * @since 1.0.0
      */
-    public abstract void displayCooldown(Audience audience, Cooldown cooldown);
+    public abstract void displayCooldown(Recipients recipients, Cooldown cooldown);
 
     /**
-     * Removes the {@link Cooldown} from the {@link Audience}.
+     * Removes the {@link Cooldown} from the {@link Recipients}.
      *
-     * @param audience     the audience that is receiving the packet
+     * @param recipients   the recipients that are receiving the packet
      * @param cooldownName the cooldown name
      * @since 1.0.0
      */
-    public abstract void removeCooldown(Audience audience, String cooldownName);
+    public abstract void removeCooldown(Recipients recipients, String cooldownName);
 
     /**
-     * Removes the {@link Cooldown} from the {@link Audience}.
+     * Removes the {@link Cooldown} from the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param cooldown the cooldown
+     * @param recipients the recipients that are receiving the packet
+     * @param cooldown   the cooldown
      * @since 1.0.0
      */
-    public abstract void removeCooldown(Audience audience, Cooldown cooldown);
+    public abstract void removeCooldown(Recipients recipients, Cooldown cooldown);
 
     /**
-     * Resets all {@link Cooldown}s for the {@link Audience}.
+     * Resets all {@link Cooldown}s for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0
      */
-    public abstract void resetCooldowns(Audience audience);
+    public abstract void resetCooldowns(Recipients recipients);
 
 }

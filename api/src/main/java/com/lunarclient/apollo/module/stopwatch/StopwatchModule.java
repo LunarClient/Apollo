@@ -24,9 +24,9 @@
 package com.lunarclient.apollo.module.stopwatch;
 
 import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.util.Arrays;
 import java.util.Collection;
 import org.jetbrains.annotations.ApiStatus;
@@ -46,27 +46,27 @@ public abstract class StopwatchModule extends ApolloModule {
     }
 
     /**
-     * Starts the stopwatch for the {@link Audience}.
+     * Starts the stopwatch for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0
      */
-    public abstract void startStopwatch(Audience audience);
+    public abstract void startStopwatch(Recipients recipients);
 
     /**
-     * Stops the stopwatch for the {@link Audience}.
+     * Stops the stopwatch for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0
      */
-    public abstract void stopStopwatch(Audience audience);
+    public abstract void stopStopwatch(Recipients recipients);
 
     /**
-     * Resets the stopwatch for the {@link Audience}.
+     * Resets the stopwatch for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0
      */
-    public abstract void resetStopwatch(Audience audience);
+    public abstract void resetStopwatch(Recipients recipients);
 
 }

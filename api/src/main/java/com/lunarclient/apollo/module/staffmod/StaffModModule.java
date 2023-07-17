@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.staffmod;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -39,36 +39,36 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class StaffModModule extends ApolloModule {
 
     /**
-     * Enables the {@link StaffMod}s for the {@link Audience}.
+     * Enables the {@link StaffMod}s for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param mods     the staff mods
+     * @param recipients the recipients that are receiving the packet
+     * @param mods       the staff mods
      * @since 1.0.0
      */
-    public abstract void enableStaffMods(Audience audience, List<StaffMod> mods);
+    public abstract void enableStaffMods(Recipients recipients, List<StaffMod> mods);
 
     /**
-     * Disables the {@link StaffMod}s from the {@link Audience}.
+     * Disables the {@link StaffMod}s from the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
-     * @param mods     the staff mods
+     * @param recipients the recipients that are receiving the packet
+     * @param mods       the staff mods
      * @since 1.0.0
      */
-    public abstract void disableStaffMods(Audience audience, List<StaffMod> mods);
+    public abstract void disableStaffMods(Recipients recipients, List<StaffMod> mods);
 
     /**
-     * Enables all {@link StaffMod}s for the {@link Audience}.
+     * Enables all {@link StaffMod}s for the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0
      */
-    public abstract void enableAllStaffMods(Audience audience);
+    public abstract void enableAllStaffMods(Recipients recipients);
 
     /**
-     * Disables all {@link StaffMod}s from the {@link Audience}.
+     * Disables all {@link StaffMod}s from the {@link Recipients}.
      *
-     * @param audience the audience that is receiving the packet
+     * @param recipients the recipients that are receiving the packet
      * @since 1.0.0
      */
-    public abstract void disableAllStaffMods(Audience audience);
+    public abstract void disableAllStaffMods(Recipients recipients);
 }

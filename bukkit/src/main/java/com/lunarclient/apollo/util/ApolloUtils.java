@@ -24,11 +24,11 @@
 package com.lunarclient.apollo.util;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerManager;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -71,13 +71,13 @@ public final class ApolloUtils {
     }
 
     /**
-     * Converts a {@link Collection} of {@link Player}s to an {@link Audience}.
+     * Converts a {@link Collection} of {@link Player}s to an {@link Recipients}.
      *
      * @param players  the players.
-     * @return the audience object containing the converted ApolloPlayer objects.
+     * @return the recipients object containing the converted ApolloPlayer objects.
      * @since 1.0.0
      */
-    public static Audience getAudienceFrom(Collection<Player> players) {
+    public static Recipients getRecipientsFrom(Collection<Player> players) {
         ApolloPlayerManager playerManager = Apollo.getPlayerManager();
         List<ApolloPlayer> apolloPlayers = players.stream()
             .map(player -> playerManager.getPlayer(player.getUniqueId()))
@@ -85,7 +85,7 @@ public final class ApolloUtils {
             .map(Optional::get)
             .collect(Collectors.toList());
 
-        return Audience.of(apolloPlayers);
+        return Recipients.of(apolloPlayers);
     }
 
     /**

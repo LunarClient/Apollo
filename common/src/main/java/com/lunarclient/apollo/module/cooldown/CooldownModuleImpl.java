@@ -23,12 +23,12 @@
  */
 package com.lunarclient.apollo.module.cooldown;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.cooldown.v1.DisplayCooldownMessage;
 import com.lunarclient.apollo.cooldown.v1.RemoveCooldownMessage;
 import com.lunarclient.apollo.cooldown.v1.ResetCooldownsMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 
 /**
@@ -39,34 +39,34 @@ import lombok.NonNull;
 public final class CooldownModuleImpl extends CooldownModule {
 
     @Override
-    public void displayCooldown(@NonNull Audience audience, @NonNull Cooldown cooldown) {
+    public void displayCooldown(@NonNull Recipients recipients, @NonNull Cooldown cooldown) {
         DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
             .setName(cooldown.getName())
             .setDuration(NetworkTypes.toProtobuf(cooldown.getDuration()))
             .setIcon(NetworkTypes.toProtobuf(cooldown.getIcon()))
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeCooldown(@NonNull Audience audience, @NonNull String cooldownName) {
+    public void removeCooldown(@NonNull Recipients recipients, @NonNull String cooldownName) {
         RemoveCooldownMessage message = RemoveCooldownMessage.newBuilder()
             .setName(cooldownName)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeCooldown(@NonNull Audience audience, @NonNull Cooldown cooldown) {
-        this.removeCooldown(audience, cooldown.getName());
+    public void removeCooldown(@NonNull Recipients recipients, @NonNull Cooldown cooldown) {
+        this.removeCooldown(recipients, cooldown.getName());
     }
 
     @Override
-    public void resetCooldowns(@NonNull Audience audience) {
+    public void resetCooldowns(@NonNull Recipients recipients) {
         ResetCooldownsMessage message = ResetCooldownsMessage.getDefaultInstance();
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

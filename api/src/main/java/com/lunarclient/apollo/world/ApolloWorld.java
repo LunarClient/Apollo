@@ -23,8 +23,8 @@
  */
 package com.lunarclient.apollo.world;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.util.Collection;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -34,7 +34,7 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
-public interface ApolloWorld extends Audience {
+public interface ApolloWorld extends Recipients {
 
     /**
      * Returns the {@link String} world name.

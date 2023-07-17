@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.team;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.team.v1.ResetTeamMembersMessage;
 import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
 import java.util.List;
@@ -40,7 +40,7 @@ import lombok.NonNull;
 public final class TeamModuleImpl extends TeamModule {
 
     @Override
-    public void updateTeamMembers(@NonNull Audience audience, @NonNull List<TeamMember> teamMembers) {
+    public void updateTeamMembers(@NonNull Recipients recipients, @NonNull List<TeamMember> teamMembers) {
         List<com.lunarclient.apollo.team.v1.TeamMember> teamMembersProto = teamMembers.stream()
             .map(teamMember -> com.lunarclient.apollo.team.v1.TeamMember.newBuilder()
                 .setPlayerUuid(NetworkTypes.toProtobuf(teamMember.getPlayerUuid()))
@@ -55,13 +55,13 @@ public final class TeamModuleImpl extends TeamModule {
             .addAllMembers(teamMembersProto)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void resetTeamMembers(@NonNull Audience audience) {
+    public void resetTeamMembers(@NonNull Recipients recipients) {
         ResetTeamMembersMessage message = ResetTeamMembersMessage.getDefaultInstance();
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }

@@ -23,13 +23,13 @@
  */
 package com.lunarclient.apollo.module.waypoint;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.option.config.Serializer;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.waypoint.v1.DisplayWaypointMessage;
 import com.lunarclient.apollo.waypoint.v1.RemoveWaypointMessage;
 import com.lunarclient.apollo.waypoint.v1.ResetWaypointsMessage;
@@ -62,29 +62,29 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
     }
 
     @Override
-    public void displayWaypoint(@NonNull Audience audience, @NonNull Waypoint waypoint) {
+    public void displayWaypoint(@NonNull Recipients recipients, @NonNull Waypoint waypoint) {
         DisplayWaypointMessage message = this.toProtobuf(waypoint);
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeWaypoint(@NonNull Audience audience, @NonNull String waypointName) {
+    public void removeWaypoint(@NonNull Recipients recipients, @NonNull String waypointName) {
         RemoveWaypointMessage message = RemoveWaypointMessage.newBuilder()
             .setName(waypointName)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeWaypoint(@NonNull Audience audience, @NonNull Waypoint waypoint) {
-        this.removeWaypoint(audience, waypoint.getName());
+    public void removeWaypoint(@NonNull Recipients recipients, @NonNull Waypoint waypoint) {
+        this.removeWaypoint(recipients, waypoint.getName());
     }
 
     @Override
-    public void resetWaypoints(@NonNull Audience audience) {
+    public void resetWaypoints(@NonNull Recipients recipients) {
         ResetWaypointsMessage message = ResetWaypointsMessage.getDefaultInstance();
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     private void onPlayerRegister(ApolloRegisterPlayerEvent event) {

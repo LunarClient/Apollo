@@ -23,8 +23,8 @@
  */
 package com.lunarclient.apollo.module.staffmod;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.staffmod.v1.DisableStaffModsMessage;
 import com.lunarclient.apollo.staffmod.v1.EnableStaffModsMessage;
 import java.util.Arrays;
@@ -53,7 +53,7 @@ public final class StaffModModuleImpl extends StaffModModule {
         .build();
 
     @Override
-    public void enableStaffMods(@NonNull Audience audience, @NonNull List<StaffMod> mods) {
+    public void enableStaffMods(@NonNull Recipients recipients, @NonNull List<StaffMod> mods) {
         Set<com.lunarclient.apollo.staffmod.v1.StaffMod> staffModsProto = mods.stream()
             .map(this::toProtobuf)
             .collect(Collectors.toSet());
@@ -62,11 +62,11 @@ public final class StaffModModuleImpl extends StaffModModule {
             .addAllStaffMods(staffModsProto)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void disableStaffMods(@NonNull Audience audience, @NonNull List<StaffMod> mods) {
+    public void disableStaffMods(@NonNull Recipients recipients, @NonNull List<StaffMod> mods) {
         Set<com.lunarclient.apollo.staffmod.v1.StaffMod> staffModsProto = mods.stream()
             .map(this::toProtobuf)
             .collect(Collectors.toSet());
@@ -75,17 +75,17 @@ public final class StaffModModuleImpl extends StaffModModule {
             .addAllStaffMods(staffModsProto)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void enableAllStaffMods(@NonNull Audience audience) {
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(this.enableAllStaffModsMessage));
+    public void enableAllStaffMods(@NonNull Recipients recipients) {
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(this.enableAllStaffModsMessage));
     }
 
     @Override
-    public void disableAllStaffMods(@NonNull Audience audience) {
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(this.disableAllStaffModsMessage));
+    public void disableAllStaffMods(@NonNull Recipients recipients) {
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(this.disableAllStaffModsMessage));
     }
 
     private com.lunarclient.apollo.staffmod.v1.StaffMod toProtobuf(StaffMod staffMod) {

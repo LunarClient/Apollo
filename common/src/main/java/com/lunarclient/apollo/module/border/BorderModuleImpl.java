@@ -23,12 +23,12 @@
  */
 package com.lunarclient.apollo.module.border;
 
-import com.lunarclient.apollo.audience.Audience;
 import com.lunarclient.apollo.border.v1.DisplayBorderMessage;
 import com.lunarclient.apollo.border.v1.RemoveBorderMessage;
 import com.lunarclient.apollo.border.v1.ResetBordersMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 
 /**
@@ -39,7 +39,7 @@ import lombok.NonNull;
 public final class BorderModuleImpl extends BorderModule {
 
     @Override
-    public void displayBorder(@NonNull Audience audience, @NonNull Border border) {
+    public void displayBorder(@NonNull Recipients recipients, @NonNull Border border) {
         DisplayBorderMessage message = DisplayBorderMessage.newBuilder()
             .setId(border.getId())
             .setWorld(border.getWorld())
@@ -51,27 +51,27 @@ public final class BorderModuleImpl extends BorderModule {
             .setDurationTicks(border.getDurationTicks())
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeBorder(@NonNull Audience audience, @NonNull String borderId) {
+    public void removeBorder(@NonNull Recipients recipients, @NonNull String borderId) {
         RemoveBorderMessage message = RemoveBorderMessage.newBuilder()
             .setId(borderId)
             .build();
 
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeBorder(@NonNull Audience audience, @NonNull Border border) {
-        this.removeBorder(audience, border.getId());
+    public void removeBorder(@NonNull Recipients recipients, @NonNull Border border) {
+        this.removeBorder(recipients, border.getId());
     }
 
     @Override
-    public void resetBorders(@NonNull Audience audience) {
+    public void resetBorders(@NonNull Recipients recipients) {
         ResetBordersMessage message = ResetBordersMessage.getDefaultInstance();
-        audience.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
 }
