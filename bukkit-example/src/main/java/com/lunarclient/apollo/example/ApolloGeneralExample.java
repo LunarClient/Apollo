@@ -26,8 +26,10 @@ package com.lunarclient.apollo.example;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.module.border.BorderModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.bukkit.entity.Player;
 
 public class ApolloGeneralExample {
@@ -46,5 +48,21 @@ public class ApolloGeneralExample {
 
         // Get a specific module
         BorderModule borderModule = Apollo.getModuleManager().getModule(BorderModule.class);
+
+        // Creating recipients with a single Apollo Player
+        apolloPlayer.ifPresent(apolloPlayerObject -> {
+            Recipients recipients = apolloPlayerObject;
+        });
+
+        // Creating recipients with all players running Lunar Client
+        Recipients allRecipients = Recipients.ofEveryone();
+
+        // Creating recipients with all players running Lunar Client with names shorter than 6 characters
+        Recipients filteredRecipients = Recipients.of(
+            Apollo.getPlayerManager().getPlayers().stream()
+                .filter(online -> online.getName().length() < 6)
+                .collect(Collectors.toList())
+        );
     }
+
 }

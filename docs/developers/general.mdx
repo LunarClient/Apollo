@@ -34,3 +34,29 @@ Collection<ApolloPlayer> playersRunningLunarClient = Apollo.getPlayerManager().g
 ```java
 BorderModule borderModule = Apollo.getModuleManager().getModule(BorderModule.class);
 ```
+
+### Recipients
+
+#### Creating recipients with a single Apollo Player
+
+```java
+apolloPlayer.ifPresent(apolloPlayerObject -> {
+    Recipients recipients = apolloPlayerObject;
+});
+```
+
+#### Creating recipients with all players running Lunar Client
+
+```java
+Recipients allRecipients = Recipients.ofEveryone();
+```
+
+#### Creating recipients with all players running Lunar Client with names shorter than 6 characters
+
+```java
+Recipients filteredRecipients = Recipients.of(
+    Apollo.getPlayerManager().getPlayers().stream()
+        .filter(online -> online.getName().length() < 6)
+        .collect(Collectors.toList())
+);
+```

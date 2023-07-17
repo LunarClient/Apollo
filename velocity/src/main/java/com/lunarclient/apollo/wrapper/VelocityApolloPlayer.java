@@ -46,6 +46,11 @@ public final class VelocityApolloPlayer extends AbstractApolloPlayer {
     }
 
     @Override
+    public String getName() {
+        return this.player.getUsername();
+    }
+
+    @Override
     public boolean hasPermission(String permissionNode) {
         return this.player.hasPermission(permissionNode);
     }

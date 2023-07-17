@@ -49,6 +49,14 @@ public interface ApolloPlayer extends Recipients {
     UUID getUniqueId();
 
     /**
+     * Gets the players name.
+     *
+     * @return the players name
+     * @since 1.0.0
+     */
+    String getName();
+
+    /**
      * Gets the players current world.
      *
      * @return the players current world

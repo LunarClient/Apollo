@@ -46,6 +46,11 @@ public final class BungeeApolloPlayer extends AbstractApolloPlayer {
     }
 
     @Override
+    public String getName() {
+        return this.player.getName();
+    }
+
+    @Override
     public boolean hasPermission(String permissionNode) {
         return this.player.hasPermission(permissionNode);
     }

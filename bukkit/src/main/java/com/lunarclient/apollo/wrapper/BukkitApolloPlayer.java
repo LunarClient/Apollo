@@ -53,6 +53,11 @@ public final class BukkitApolloPlayer extends AbstractApolloPlayer {
     }
 
     @Override
+    public String getName() {
+        return this.player.getName();
+    }
+
+    @Override
     public Optional<ApolloWorld> getWorld() {
         World world = this.player.getWorld();
 
