@@ -39,17 +39,17 @@ import lombok.Getter;
 public final class Component {
 
     /**
-     * Returns the renderable string {@link String} content.
+     * Returns the component {@link String} content.
      *
-     * @return the renderable string content
+     * @return the component content
      * @since 1.0.0
      */
     String content;
 
     /**
-     * Returns the renderable string {@link Color}.
+     * Returns the component {@link Color}.
      *
-     * @return the renderable string color
+     * @return the component color
      * @since 1.0.0
      */
     @Builder.Default
@@ -58,7 +58,7 @@ public final class Component {
     /**
      * Returns a {@link List} of {@link TextDecorators}.
      *
-     * @return the renderable string decorators
+     * @return the component decorators
      * @since 1.0.0
      */
     @Builder.Default
@@ -67,7 +67,7 @@ public final class Component {
     /**
      * Returns a {@link List} of {@link Component}.
      *
-     * @return the renderable string children
+     * @return the component children
      * @since 1.0.0
      */
     @Builder.Default

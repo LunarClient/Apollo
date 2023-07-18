@@ -38,7 +38,7 @@ public final class Vignette {
     /**
      * Returns the vignette {@link String} resource location.
      *
-     * <p>Represents an icon that will appear for the player.</p>
+     * <p>Represents a path to an icon that will appear for the player.</p>
      *
      * @return the resource location
      * @since 1.0.0

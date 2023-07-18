@@ -56,6 +56,9 @@ public final class Cooldown {
     /**
      * Returns the cooldown {@link Icon}.
      *
+     * <p>Can be any of the icons found in {@link com.lunarclient.apollo.common.icon} package,
+     * for the most common use case, use {@link com.lunarclient.apollo.common.icon.ItemStackIcon}.</p>
+     *
      * @return the cooldown icon
      * @since 1.0.0
      */

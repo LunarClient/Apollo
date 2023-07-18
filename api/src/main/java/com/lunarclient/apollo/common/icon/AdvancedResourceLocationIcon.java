@@ -29,6 +29,9 @@ import lombok.Getter;
 /**
  * Represents an advanced resource location icon.
  *
+ * <p>The primary use case for this is rendering images from a
+ * sprite-sheet, also known as image sprite.</p>
+ *
  * @since 1.0.0
  */
 @Getter
@@ -38,7 +41,7 @@ public final class AdvancedResourceLocationIcon extends Icon {
     /**
      * Returns the icon {@link String} resource location.
      *
-     * <p>Represents an icon that will appear for the player.</p>
+     * <p>Represents a path to an icon that will appear for the player.</p>
      *
      * @return the icon resource location
      * @since 1.0.0

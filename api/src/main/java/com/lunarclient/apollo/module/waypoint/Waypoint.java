@@ -64,6 +64,8 @@ public final class Waypoint {
     /**
      * Returns the waypoint {@link Boolean} prevent removal state.
      *
+     * <p>Decides whether the player can delete the waypoint or not.</p>
+     *
      * @return the waypoint forced state
      * @since 1.0.0
      */
@@ -71,6 +73,9 @@ public final class Waypoint {
 
     /**
      * Returns the waypoint {@link Boolean} hidden state.
+     *
+     * <p>Decides whether the waypoint is hidden by default,
+     * players can still show and hide the waypoint in the Waypoint UI</p>
      *
      * @return the waypoint hidden state
      * @since 1.0.0

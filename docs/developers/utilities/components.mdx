@@ -10,36 +10,39 @@ Apollo implements a streamlined version of [Minecraft's JSON text format](https:
 public class Component {
 
     /**
-     * Returns the renderable string {@link String} content.
+     * Returns the component {@link String} content.
      *
-     * @return the renderable string content
+     * @return the component content
      * @since 1.0.0
      */
     String content;
 
     /**
-     * Returns the renderable string {@link Color}.
+     * Returns the component {@link Color}.
      *
-     * @return the renderable string color
+     * @return the component color
      * @since 1.0.0
      */
-    Color color;
+    @Builder.Default
+    Color color = Color.WHITE;
 
     /**
      * Returns a {@link List} of {@link TextDecorators}.
      *
-     * @return the renderable string decorators
+     * @return the component decorators
      * @since 1.0.0
      */
-    List<TextDecorators> decorators;
+    @Builder.Default
+    List<TextDecorators> decorators = Collections.emptyList();
 
     /**
      * Returns a {@link List} of {@link Component}.
      *
-     * @return the renderable string children
+     * @return the component children
      * @since 1.0.0
      */
-    List<Component> children;
+    @Builder.Default
+    List<Component> children = Collections.emptyList();
 
     /**
      * Represents the text decorator.

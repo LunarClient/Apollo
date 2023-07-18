@@ -38,7 +38,7 @@ public final class SimpleResourceLocationIcon extends Icon {
     /**
      * Returns the icon {@link String} resource location.
      *
-     * <p>Represents an icon that will appear for the player.</p>
+     * <p>Represents a path to an icon that will appear for the player.</p>
      *
      * @return the icon resource location
      * @since 1.0.0
@@ -47,6 +47,8 @@ public final class SimpleResourceLocationIcon extends Icon {
 
     /**
      * Returns the icon {@link Integer} size.
+     *
+     * <p>Size of the image height and width (in pixels).</p>
      *
      * @return the icon size
      * @since 1.0.0
