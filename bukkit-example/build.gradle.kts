@@ -12,5 +12,7 @@ java {
 }
 
 dependencies {
+    compileOnly(libs.bukkit.api)
+
     compileOnlyApi(project(":apollo-api"))
 }

@@ -19,11 +19,12 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
-        mavenCentral()
         maven("https://repo.lunarclient.dev")
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
         maven("https://us-maven.pkg.dev/moonsworth-299m4oir/maven-public")
+        mavenCentral()
+        mavenLocal()
     }
 }
 

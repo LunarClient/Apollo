@@ -2,13 +2,12 @@ metadata.format.version = "1.1"
 
 [versions]
 artifactregistry = "2.2.0"
+bukkit = "1.8.8-R0.1-SNAPSHOT"
 bungee = "1.19-R0.1-SNAPSHOT"
-checkstyle = "10.9.3"
 configurate = "4.2.0-SNAPSHOT"
 geantyref = "1.3.11"
 jetbrains = "24.0.1"
 lombok = "1.18.26"
-buildtools = "1.0.0-SNAPSHOT"
 shadow = "7.1.2"
 spotless = "6.13.0"
 velocity = "3.0.1"
@@ -24,6 +23,10 @@ geantyref = { module = "io.leangen.geantyref:geantyref", version.ref = "geantyre
 configurate-core = { module = "org.spongepowered:configurate-core", version.ref = "configurate" }
 configurate-yaml = { module = "org.spongepowered:configurate-yaml", version.ref = "configurate" }
 
+# bukkit
+bukkit-api = { module = "org.spigotmc:spigot-api", version.ref = "bukkit" }
+bukkit = { module = "org.spigotmc:spigot", version.ref = "bukkit" }
+
 # bungee
 bungee = { module = "net.md-5:bungeecord-api", version.ref = "bungee" }
 
@@ -32,9 +35,7 @@ velocity = { module = "com.velocitypowered:velocity-api", version.ref = "velocit
 
 # build
 artifactregistry = { module = "gradle.plugin.com.google.cloud.artifactregistry:artifactregistry-gradle-plugin", version.ref = "artifactregistry" }
-checkstyle = { module = "com.puppycrawl.tools:checkstyle", version.ref = "checkstyle" }
-buildtools = { module = "xyz.jpenilla.special-gradle:xyz.jpenilla.special-gradle.gradle.plugin", version.ref = "buildtools" }
 spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 shadow = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "shadow" }
 
-stylecheck = "ca.stellardrift:stylecheck:0.2.0"
+stylecheck = "ca.stellardrift:stylecheck:0.1"

@@ -246,9 +246,6 @@
         #####################
         -->
 
-        <!-- https://gitlab.com/stellardrift/stylecheck/-/blob/trunk/src/main/java/ca/stellardrift/stylecheck/AnnotationsCloseToType.java -->
-        <module name="AnnotationsCloseToType"/>
-
         <!-- https://checkstyle.org/config_javadoc.html#WriteTag -->
         <!-- https://gitlab.com/stellardrift/stylecheck/-/blob/trunk/src/main/java/ca/stellardrift/stylecheck/FilteringWriteTag.java -->
         <module name="FilteringWriteTag">

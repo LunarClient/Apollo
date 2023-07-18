@@ -4,13 +4,12 @@ plugins {
 
 dependencies {
     implementation(libs.artifactregistry)
-    implementation(libs.buildtools)
     implementation(libs.spotless)
     implementation(libs.shadow)
 }
 
 dependencies {
-    compileOnly(files(libs::class.java.protectionDomain.codeSource.location))
+    compileOnly(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
 }
 
 java {

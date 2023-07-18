@@ -1,5 +1,4 @@
 plugins {
-    id("apollo.paper-conventions")
     id("apollo.platform-conventions")
 }
 
@@ -13,17 +12,9 @@ java {
 }
 
 dependencies {
+    compileOnly(libs.bukkit.api)
+    compileOnly(libs.bukkit)
+
     implementation(project(":apollo-api"))
     implementation(project(":apollo-common"))
-}
-
-specialGradle {
-    minecraftVersion.set("1.8.8")
-    specialSourceVersion.set("1.10.0")
-}
-
-tasks {
-    build {
-        dependsOn(productionMappedJar)
-    }
 }
