@@ -26,6 +26,13 @@ jobs:
                 distribution: "zulu"
                 java-version: 8
 
+        -   name: Setup BuildTools
+            run: |
+                mkdir ~/buildtools
+                cd ~/buildtools
+                wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -O BuildTools.jar
+                java -jar BuildTools.jar --rev 1.8.8
+
         -   name: Gradle Build
             run: ./gradlew build
 
