@@ -65,22 +65,26 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
 
     @Override
     public void setTntCountdown(ApolloEntity entity, int ticks) {
+        TNTPrimed target = null;
         if (TntCountdownModuleImpl.entityGetter != null) {
             try {
-                TntCountdownModuleImpl.entityGetter.invoke(null, entity.getEntityUuid());
+                target = (TNTPrimed) TntCountdownModuleImpl.entityGetter.invoke(null, entity.getEntityUuid());
             } catch (Throwable throwable) {
                 throwable.printStackTrace();
             }
         } else {
             for (World world : Bukkit.getWorlds()) {
-                for (TNTPrimed target : world.getEntitiesByClass(TNTPrimed.class)) {
-                    if (target.getUniqueId().equals(entity.getEntityUuid())) {
-                        continue;
+                for (TNTPrimed compare : world.getEntitiesByClass(TNTPrimed.class)) {
+                    if (compare.getUniqueId().equals(entity.getEntityUuid())) {
+                        target = compare;
+                        break;
                     }
-
-                    target.setFuseTicks(ticks);
                 }
             }
+        }
+
+        if (target != null) {
+            target.setFuseTicks(ticks);
         }
 
         SetTntCountdownMessage message = SetTntCountdownMessage.newBuilder()
