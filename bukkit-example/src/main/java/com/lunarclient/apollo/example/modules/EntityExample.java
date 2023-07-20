@@ -70,8 +70,9 @@ public class EntityExample {
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             // Get all cows within 10 blocks of the player
             List<ApolloEntity> entities = viewer.getWorld()
-                .getNearbyEntitiesByType(Cow.class, viewer.getLocation(), 10)
-                .stream().map(cow -> new ApolloEntity(cow.getEntityId(), cow.getUniqueId()))
+                .getNearbyEntities(viewer.getLocation(), 10, 10, 10)
+                .stream().filter(entity -> entity instanceof Cow)
+                .map(cow -> new ApolloEntity(cow.getEntityId(), cow.getUniqueId()))
                 .collect(Collectors.toList());
 
             this.entityModule.flipEntity(apolloPlayer, entities);
@@ -84,8 +85,9 @@ public class EntityExample {
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             // Get all cows within 10 blocks of the player
             List<ApolloEntity> entities = viewer.getWorld()
-                .getNearbyEntitiesByType(Cow.class, viewer.getLocation(), 10)
-                .stream().map(cow -> new ApolloEntity(cow.getEntityId(), cow.getUniqueId()))
+                .getNearbyEntities(viewer.getLocation(), 10, 10, 10)
+                .stream().filter(entity -> entity instanceof Cow)
+                .map(cow -> new ApolloEntity(cow.getEntityId(), cow.getUniqueId()))
                 .collect(Collectors.toList());
 
             this.entityModule.resetFlippedEntity(apolloPlayer, entities);

@@ -29,6 +29,7 @@ import com.lunarclient.apollo.recipients.ForwardingRecipients;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.world.ApolloWorld;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.bukkit.World;
@@ -51,7 +52,9 @@ public final class BukkitApolloWorld implements ApolloWorld, ForwardingRecipient
     @Override
     public Collection<ApolloPlayer> getPlayers() {
         return this.world.getPlayers().stream()
-            .flatMap(player -> Apollo.getPlayerManager().getPlayer(player.getUniqueId()).stream())
+            .map(player -> Apollo.getPlayerManager().getPlayer(player.getUniqueId()))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
             .collect(Collectors.toList());
     }
 

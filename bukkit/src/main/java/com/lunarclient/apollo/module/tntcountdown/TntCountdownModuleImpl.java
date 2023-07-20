@@ -30,8 +30,10 @@ import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.tntcountdown.v1.SetTntCountdownMessage;
+import java.lang.reflect.Method;
+import java.util.UUID;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
@@ -46,6 +48,16 @@ import org.bukkit.event.entity.EntitySpawnEvent;
  */
 public final class TntCountdownModuleImpl extends TntCountdownModule implements Listener {
 
+    private static Method entityGetter;
+
+    static {
+        try {
+            TntCountdownModuleImpl.entityGetter = Bukkit.class.getDeclaredMethod("getEntity", UUID.class);
+        } catch (Throwable throwable) {
+            // Ignore for legacy versions.
+        }
+    }
+
     @Override
     protected void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, ApolloBukkitPlatform.getInstance());
@@ -53,12 +65,27 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
 
     @Override
     public void setTntCountdown(ApolloEntity entity, int ticks) {
-        Entity target = Bukkit.getEntity(entity.getEntityUuid());
-        if (!(target instanceof TNTPrimed)) {
-            return;
+        TNTPrimed target = null;
+        if (TntCountdownModuleImpl.entityGetter != null) {
+            try {
+                target = (TNTPrimed) TntCountdownModuleImpl.entityGetter.invoke(null, entity.getEntityUuid());
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        } else {
+            for (World world : Bukkit.getWorlds()) {
+                for (TNTPrimed compare : world.getEntitiesByClass(TNTPrimed.class)) {
+                    if (compare.getUniqueId().equals(entity.getEntityUuid())) {
+                        target = compare;
+                        break;
+                    }
+                }
+            }
         }
 
-        ((TNTPrimed) target).setFuseTicks(ticks);
+        if (target != null) {
+            target.setFuseTicks(ticks);
+        }
 
         SetTntCountdownMessage message = SetTntCountdownMessage.newBuilder()
             .setEntityId(NetworkTypes.toProtobuf(entity))
