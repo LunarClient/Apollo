@@ -1,17 +1,11 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
-    id("apollo.platform-conventions")
+    id("apollo.shadow-conventions")
 }
 
 dependencies {
-    implementation(project(":apollo-api"))
-    implementation(project(":apollo-common"))
+    api(projects.apolloApi)
+    api(projects.apolloCommon)
 
     compileOnly(libs.velocity)
     annotationProcessor(libs.velocity)
-}
-
-tasks.named<ShadowJar>("shadowJar") {
-    archiveFileName.set("${project.name}-${project.version}.jar")
 }

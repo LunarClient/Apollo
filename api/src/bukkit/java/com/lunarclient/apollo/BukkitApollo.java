@@ -21,9 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.util;
+package com.lunarclient.apollo;
 
-import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.player.ApolloPlayer;
@@ -35,49 +34,49 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
- * Utility class for converting objects to and from
- * their corresponding Bukkit representations with
- * additional helper methods for easier integration.
+ * Utility class for converting objects to and from their corresponding Bukkit
+ * representations with additional helper methods for easier integration.
  *
  * @since 1.0.0
  */
-public final class ApolloUtils {
+public final class BukkitApollo {
 
     /**
      * Runs a specified operation for a {@link Player}.
      *
-     * @param player         the player.
-     * @param playerConsumer the operation to be performed.
+     * @param player         the player
+     * @param playerConsumer the operation to be performed
      * @since 1.0.0
      */
-    public static void runForPlayer(Player player, Consumer<ApolloPlayer> playerConsumer) {
+    public static void runForPlayer(@NonNull Player player, @NonNull Consumer<ApolloPlayer> playerConsumer) {
         runForPlayer(player.getUniqueId(), playerConsumer);
     }
 
     /**
      * Runs a specified operation for a {@link ApolloPlayer} from the provided {@link UUID}.
      *
-     * @param playerUuid     the player.
-     * @param playerConsumer the operation to be performed.
+     * @param playerUuid     the player
+     * @param playerConsumer the operation to be performed
      * @since 1.0.0
      */
-    public static void runForPlayer(UUID playerUuid, Consumer<ApolloPlayer> playerConsumer) {
+    public static void runForPlayer(@NonNull UUID playerUuid, @NonNull Consumer<ApolloPlayer> playerConsumer) {
         Apollo.getPlayerManager().getPlayer(playerUuid).ifPresent(playerConsumer);
     }
 
     /**
      * Converts a {@link Collection} of {@link Player}s to an {@link Recipients}.
      *
-     * @param players  the players.
-     * @return the recipients object containing the converted ApolloPlayer objects.
+     * @param players the players
+     * @return the recipients object containing the converted ApolloPlayer objects
      * @since 1.0.0
      */
-    public static Recipients getRecipientsFrom(Collection<Player> players) {
+    public static Recipients getRecipientsFrom(@NonNull Collection<Player> players) {
         ApolloPlayerManager playerManager = Apollo.getPlayerManager();
         List<ApolloPlayer> apolloPlayers = players.stream()
             .map(player -> playerManager.getPlayer(player.getUniqueId()))
@@ -91,11 +90,11 @@ public final class ApolloUtils {
     /**
      * Converts a {@link Location} to an {@link ApolloLocation} object.
      *
-     * @param location the location.
-     * @return the converted apollo location object.
+     * @param location the location
+     * @return the converted apollo location object
      * @since 1.0.0
      */
-    public static ApolloLocation toApolloLocation(Location location) {
+    public static ApolloLocation toApolloLocation(@NonNull Location location) {
         return ApolloLocation.builder()
             .world(location.getWorld().getName())
             .x(location.getX())
@@ -107,11 +106,11 @@ public final class ApolloUtils {
     /**
      * Converts a {@link Location} to an {@link ApolloBlockLocation} object.
      *
-     * @param location the location.
-     * @return the converted apollo block location object.
+     * @param location the location
+     * @return the converted apollo block location object
      * @since 1.0.0
      */
-    public static ApolloBlockLocation toApolloBlockLocation(Location location) {
+    public static ApolloBlockLocation toApolloBlockLocation(@NonNull Location location) {
         return ApolloBlockLocation.builder()
             .world(location.getWorld().getName())
             .x(location.getBlockX())
@@ -123,11 +122,11 @@ public final class ApolloUtils {
     /**
      * Converts a {@link ApolloLocation} to an {@link Location} object.
      *
-     * @param location the apollo location.
-     * @return the converted location object.
+     * @param location the apollo location
+     * @return the converted location object
      * @since 1.0.0
      */
-    public static Location toBukkitLocation(ApolloLocation location) {
+    public static Location toBukkitLocation(@NonNull ApolloLocation location) {
         return new Location(
             Bukkit.getWorld(location.getWorld()),
             location.getX(),
@@ -139,11 +138,11 @@ public final class ApolloUtils {
     /**
      * Converts a {@link ApolloBlockLocation} to an {@link Location} object.
      *
-     * @param location the apollo block location.
-     * @return the converted location object.
+     * @param location the apollo block location
+     * @return the converted location object
      * @since 1.0.0
      */
-    public static Location toBukkitLocation(ApolloBlockLocation location) {
+    public static Location toBukkitLocation(@NonNull ApolloBlockLocation location) {
         return new Location(
             Bukkit.getWorld(location.getWorld()),
             location.getX(),
@@ -152,7 +151,7 @@ public final class ApolloUtils {
         );
     }
 
-    private ApolloUtils() {
+    private BukkitApollo() {
     }
 
 }

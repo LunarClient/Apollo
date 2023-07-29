@@ -17,12 +17,8 @@ group = rootProject.group
 version = rootProject.version
 
 java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
-
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    javaTarget(8)
+    withSourcesJar()
 }
 
 dependencies {
@@ -86,15 +82,24 @@ checkstyle {
 }
 
 tasks {
-    // For some reason tests are not working for paperweight.
-    // Luckily we don't need tests right now anyway.
-    test { onlyIf { project.hasProperty("test") } }
+    javadoc {
+        val minimalOptions: MinimalJavadocOptions = options
+        options.encoding("UTF-8")
 
-    withType<JavaCompile> {
+        if (minimalOptions is StandardJavadocDocletOptions) {
+            val options: StandardJavadocDocletOptions = minimalOptions
+            options.addStringOption("Xdoclint:none", "-quiet")
+        }
+
+        exclude("lunarclient/**")
+    }
+
+    compileJava {
         options.encoding = "UTF-8"
         options.compilerArgs.addAll(listOf(
-            "-parameters",
-            "-Xlint:all"
+            "-nowarn",
+            "-Xlint:-unchecked",
+            "-Xlint:-deprecation"
         ))
     }
 }

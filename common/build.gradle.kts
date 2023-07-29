@@ -3,8 +3,10 @@ plugins {
 }
 
 dependencies {
-    api(project(":apollo-api"))
-    api("com.lunarclient:apollo-protos:1.0-SNAPSHOT")
+    api(projects.apolloApi)
+    api(libs.protobuf)
     api(libs.configurate.core)
     api(libs.configurate.yaml)
 }
+
+publishJar()

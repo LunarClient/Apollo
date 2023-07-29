@@ -48,7 +48,7 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
     private final Map<UUID, ApolloPlayer> players = new HashMap<>();
 
     @Override
-    public Optional<ApolloPlayer> getPlayer(UUID playerIdentifier) {
+    public Optional<ApolloPlayer> getPlayer(@NonNull UUID playerIdentifier) {
         return Optional.ofNullable(this.players.get(playerIdentifier));
     }
 
