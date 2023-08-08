@@ -45,7 +45,7 @@ public class VignetteCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /vignette <displayVignette|resetVignette");
+            player.sendMessage("Usage: /vignette <displayVignette|resetVignette>");
             return true;
         }
 
