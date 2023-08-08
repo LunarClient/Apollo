@@ -1,4 +1,5 @@
 plugins {
+    id("apollo.shadow-conventions")
     id("apollo.publish-conventions")
 }
 
@@ -15,4 +16,4 @@ dependencies {
     "velocityCompileOnly"(libs.velocity)
 }
 
-publishJar()
+publishShadowJar()

@@ -5,5 +5,7 @@ plugins {
 dependencies {
     compileOnly(libs.bukkit.api)
 
-    compileOnlyApi(projects.apolloApi)
+    compileOnlyApi(projects.apolloApi) {
+        targetConfiguration = "shadow"
+    }
 }

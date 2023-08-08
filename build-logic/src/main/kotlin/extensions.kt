@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.publish.PublishingExtension
@@ -27,7 +28,7 @@ fun Project.createPlatformSources(vararg names: String) {
             }.get()
         })
 
-        tasks.named<Jar>("jar") {
+        tasks.named<ShadowJar>("shadowJar") {
             platformSources.forEach {
                 from(it.output)
             }

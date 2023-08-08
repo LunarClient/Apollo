@@ -17,7 +17,7 @@ tasks {
 //        archiveFileName.set("${project.name}-${project.version}.jar")
     }
 
-    build {
+    assemble {
         dependsOn(shadowJar)
     }
 }
