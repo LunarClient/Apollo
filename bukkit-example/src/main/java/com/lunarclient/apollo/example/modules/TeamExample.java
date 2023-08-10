@@ -38,11 +38,15 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class TeamExample {
+public class TeamExample implements Listener {
 
     private final TeamModule teamModule = Apollo.getModuleManager().getModule(TeamModule.class);
 
@@ -51,6 +55,19 @@ public class TeamExample {
 
     public TeamExample() {
         new TeamUpdateTask();
+
+        Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
+    }
+
+    @EventHandler
+    private void onPlayerQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+
+        this.getByPlayerUuid(player.getUniqueId()).ifPresent(team -> {
+            if (team.getMembers().size() == 1) {
+                this.deleteTeam(team.getTeamId());
+            }
+        });
     }
 
     public Optional<Team> getByPlayerUuid(UUID playerUuid) {
@@ -156,11 +173,11 @@ public class TeamExample {
         }
     }
 
-    // Updates players location every 2 ticks (100ms)
+    // Updates players location every 1 tick (50ms)
     public class TeamUpdateTask extends BukkitRunnable {
 
         public TeamUpdateTask() {
-            this.runTaskTimerAsynchronously(ApolloExamplePlugin.getPlugin(), 2L, 2L);
+            this.runTaskTimerAsynchronously(ApolloExamplePlugin.getPlugin(), 1L, 1L);
         }
 
         @Override

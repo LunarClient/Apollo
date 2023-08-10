@@ -49,6 +49,13 @@ public class TeamCommand implements CommandExecutor {
         if (args.length == 1) {
             switch (args[0].toLowerCase()) {
                 case "create": {
+                    Optional<TeamExample.Team> teamOpt = this.teamExample.getByPlayerUuid(player.getUniqueId());
+
+                    if (teamOpt.isPresent()) {
+                        player.sendMessage("You already have a team...");
+                        break;
+                    }
+
                     TeamExample.Team team = this.teamExample.createTeam();
                     team.addMember(player);
 
@@ -62,10 +69,10 @@ public class TeamCommand implements CommandExecutor {
                     if (teamOpt.isPresent()) {
                         this.teamExample.deleteTeam(teamOpt.get().getTeamId());
                         player.sendMessage("Deleting team...");
-                    } else {
-                        player.sendMessage("No team found...");
+                        break;
                     }
 
+                    player.sendMessage("No team found...");
                     break;
                 }
 
@@ -87,30 +94,39 @@ public class TeamCommand implements CommandExecutor {
                 return true;
             }
 
+            Optional<TeamExample.Team> teamOpt = this.teamExample.getByPlayerUuid(player.getUniqueId());
+            Optional<TeamExample.Team> targetTeamOpt = this.teamExample.getByPlayerUuid(target.getUniqueId());
+
             switch (args[0].toLowerCase()) {
                 case "addmember": {
-                    Optional<TeamExample.Team> teamOpt = this.teamExample.getByPlayerUuid(player.getUniqueId());
+                    if (targetTeamOpt.isPresent()) {
+                        player.sendMessage("Player " + target.getName() + " already has a team...");
+                        break;
+                    }
 
                     if (teamOpt.isPresent()) {
                         teamOpt.get().addMember(target);
                         player.sendMessage("Added " + target.getName() + " to your team...");
-                    } else {
-                        player.sendMessage("No team found...");
+                        break;
                     }
 
+                    player.sendMessage("No team found...");
                     break;
                 }
 
                 case "removemember": {
-                    Optional<TeamExample.Team> teamOpt = this.teamExample.getByPlayerUuid(player.getUniqueId());
+                    if (!targetTeamOpt.isPresent()) {
+                        player.sendMessage("Player " + target.getName() + " doesn't have a team...");
+                        break;
+                    }
 
                     if (teamOpt.isPresent()) {
                         teamOpt.get().removeMember(target);
                         player.sendMessage("Removed " + target.getName() + " from your team...");
-                    } else {
-                        player.sendMessage("No team found...");
+                        break;
                     }
 
+                    player.sendMessage("No team found...");
                     break;
                 }
 
