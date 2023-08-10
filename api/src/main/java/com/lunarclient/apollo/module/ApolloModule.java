@@ -134,7 +134,7 @@ public abstract class ApolloModule implements ApolloListener {
     }
 
     /**
-     * Returns a {@link Collection} of supported {@link ApolloPlatform.Kind}.
+     * Returns a {@link Collection} of supported {@link com.lunarclient.apollo.ApolloPlatform.Kind}.
      *
      * @return a collection of supported kinds of platforms
      * @since 1.0.0
