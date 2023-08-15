@@ -12,7 +12,7 @@ fun JavaPluginExtension.javaTarget(version: Int) {
     toolchain.languageVersion.set(JavaLanguageVersion.of(version))
 }
 
-fun Project.createPlatformSources(vararg names: String) {
+fun Project.createApiSources(vararg names: String) {
     extensions.configure<JavaPluginExtension> {
         val commonsCompileOnly by configurations.register("commonsCompileOnly")
 

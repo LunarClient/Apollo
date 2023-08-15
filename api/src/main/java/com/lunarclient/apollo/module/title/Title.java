@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.module.title;
 
-import com.lunarclient.apollo.common.Component;
+import com.lunarclient.apollo.common.ApolloComponent;
 import java.time.Duration;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,12 +46,12 @@ public final class Title {
     TitleType type;
 
     /**
-     * Returns the title {@link Component} message.
+     * Returns the title {@link ApolloComponent} message.
      *
      * @return the title message
      * @since 1.0.0
      */
-    Component message;
+    ApolloComponent message;
 
     /**
      * Returns the title {@link Float} scale.

@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.module.hologram;
 
-import com.lunarclient.apollo.common.Component;
+import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import java.util.List;
 import lombok.Builder;
@@ -55,12 +55,12 @@ public final class Hologram {
     ApolloLocation location;
 
     /**
-     * Returns a {@link List} of {@link Component} lines.
+     * Returns a {@link List} of {@link ApolloComponent} lines.
      *
      * @return the lines
      * @since 1.0.0
      */
-    List<Component> lines;
+    List<ApolloComponent> lines;
 
     /**
      * Returns the hologram {@link Boolean} show through walls state.

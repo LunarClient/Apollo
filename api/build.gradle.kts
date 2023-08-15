@@ -3,9 +3,11 @@ plugins {
     id("apollo.publish-conventions")
 }
 
-createPlatformSources("bukkit", "bungee", "velocity")
+createApiSources("bukkit", "bungee", "velocity")
 
 dependencies {
+    compileOnlyApi(projects.extra.apolloExtraAdventure4)
+
     api(libs.geantyref)
 
     "commonsCompileOnly"(libs.jetbrains.annotations)

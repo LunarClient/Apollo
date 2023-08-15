@@ -5,6 +5,7 @@ import java.util.regex.Pattern
 import java.util.stream.Collectors
 
 plugins {
+    java
     `java-library`
     id("checkstyle")
     id("com.diffplug.spotless")

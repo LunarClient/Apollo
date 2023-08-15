@@ -23,67 +23,46 @@
  */
 package com.lunarclient.apollo.common;
 
-import java.awt.Color;
-import java.util.Collections;
-import java.util.List;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.NonNull;
+import lombok.Value;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 
 /**
  * Represents a component which can be shown on the client.
  *
  * @since 1.0.0
  */
-@Getter
-@Builder
-public final class Component {
+@Value
+public class ApolloComponent {
 
     /**
-     * Returns the component {@link String} content.
+     * Returns a new component from the provided JSON {@link String}.
      *
-     * @return the component content
+     * @param json the json string for this component
+     * @return the component from the json string
      * @since 1.0.0
      */
-    String content;
+    public static ApolloComponent fromJson(@NonNull String json) {
+        return new ApolloComponent(GsonComponentSerializer.gson().deserializeOrNull(json));
+    }
 
     /**
-     * Returns the component {@link Color}.
+     * Returns the {@link Component} contents.
      *
-     * @return the component color
+     * @return the component contents
      * @since 1.0.0
      */
-    @Builder.Default
-    Color color = Color.WHITE;
+    Component content;
 
     /**
-     * Returns a {@link List} of {@link TextDecorators}.
+     * Returns this component as a JSON {@link String}.
      *
-     * @return the component decorators
+     * @return the json string for this component
      * @since 1.0.0
      */
-    @Builder.Default
-    List<TextDecorators> decorators = Collections.emptyList();
-
-    /**
-     * Returns a {@link List} of {@link Component}.
-     *
-     * @return the component children
-     * @since 1.0.0
-     */
-    @Builder.Default
-    List<Component> children = Collections.emptyList();
-
-    /**
-     * Represents the text decorator.
-     *
-     * @since 1.0.0
-     */
-    public enum TextDecorators {
-        OBFUSCATED,
-        BOLD,
-        STRIKETHROUGH,
-        UNDERLINED,
-        ITALIC
+    public String toJson() {
+        return GsonComponentSerializer.gson().serialize(this.content);
     }
 
 }

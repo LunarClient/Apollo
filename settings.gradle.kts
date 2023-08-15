@@ -33,6 +33,7 @@ val mcVersion = startParameter.projectProperties["mc"]
 val loadAllVersions = mcVersion == null
 
 listOfNotNull(
+    "extra:adventure4",
     "api",
     "common",
     "bukkit",

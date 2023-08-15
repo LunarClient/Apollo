@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.module.nametag;
 
-import com.lunarclient.apollo.common.Component;
+import com.lunarclient.apollo.common.ApolloComponent;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,11 +38,11 @@ import lombok.Getter;
 public final class Nametag {
 
     /**
-     * Returns a {@link List} of {@link Component} nametag.
+     * Returns a {@link List} of {@link ApolloComponent} nametag.
      *
      * @return the nametag
      * @since 1.0.0
      */
-    List<Component> lines;
+    List<ApolloComponent> lines;
 
 }

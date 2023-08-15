@@ -1,6 +1,7 @@
 metadata.format.version = "1.1"
 
 [versions]
+adventure = "4.14.0"
 artifactregistry = "2.2.0"
 bukkit = "1.8.8-R0.1-SNAPSHOT"
 bungee = "1.19-R0.1-SNAPSHOT"
@@ -17,6 +18,12 @@ velocity = "3.0.1"
 [libraries]
 jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+
+# adventure
+adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
+adventure-textserializergson = { module = "net.kyori:adventure-text-serializer-gson", version.ref = "adventure" }
+adventure-textserializergson-legacy = { module = "net.kyori:adventure-text-serializer-gson-legacy-impl", version.ref = "adventure" }
+adventure-textserializer-legacy = { module = "net.kyori:adventure-text-serializer-legacy", version.ref = "adventure" }
 
 # api
 geantyref = { module = "io.leangen.geantyref:geantyref", version.ref = "geantyref" }
@@ -43,3 +50,7 @@ shadow = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref
 idea = { module = "gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext", version.ref = "idea" }
 
 stylecheck = "ca.stellardrift:stylecheck:0.1"
+
+[bundles]
+
+adventure = ["adventure-api", "adventure-textserializergson", "adventure-textserializergson-legacy", "adventure-textserializer-legacy"]
