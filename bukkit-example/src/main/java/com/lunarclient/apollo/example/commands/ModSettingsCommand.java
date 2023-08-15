@@ -68,7 +68,10 @@ public class ModSettingsCommand implements CommandExecutor {
                 break;
             }
 
-            default: player.sendMessage("Usage: /modsettings <send|reset|broadcast>");
+            default: {
+                player.sendMessage("Usage: /modsettings <send|reset|broadcast>");
+                break;
+            }
         }
 
         return true;
