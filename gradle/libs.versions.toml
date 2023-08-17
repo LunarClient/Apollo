@@ -6,6 +6,7 @@ bukkit = "1.8.8-R0.1-SNAPSHOT"
 bungee = "1.19-R0.1-SNAPSHOT"
 configurate = "4.2.0-SNAPSHOT"
 geantyref = "1.3.11"
+idea = "1.1.7"
 jetbrains = "24.0.1"
 lombok = "1.18.26"
 protobuf = "1.0-SNAPSHOT"
@@ -39,5 +40,6 @@ velocity = { module = "com.velocitypowered:velocity-api", version.ref = "velocit
 artifactregistry = { module = "gradle.plugin.com.google.cloud.artifactregistry:artifactregistry-gradle-plugin", version.ref = "artifactregistry" }
 spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 shadow = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "shadow" }
+idea = { module = "gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext", version.ref = "idea" }
 
 stylecheck = "ca.stellardrift:stylecheck:0.1"
