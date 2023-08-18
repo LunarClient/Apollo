@@ -24,10 +24,9 @@
 package com.lunarclient.apollo;
 
 import com.google.protobuf.Any;
+import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.anticheat.AntiCheatImpl;
 import com.lunarclient.apollo.module.anticheat.AntiCheatModule;
-import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
-import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
 import com.lunarclient.apollo.module.border.BorderModule;
