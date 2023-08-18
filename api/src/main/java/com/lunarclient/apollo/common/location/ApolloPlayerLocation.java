@@ -21,15 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.anticheat;
+package com.lunarclient.apollo.common.location;
+
+import lombok.Builder;
+import lombok.Getter;
 
 /**
- * Provides the anti cheat module.
+ * Represents a player location in the world.
  *
  * @since 1.0.0
  */
-public final class AntiCheatImpl extends AntiCheatModule {
+@Getter
+@Builder
+public final class ApolloPlayerLocation {
 
+    /**
+     * Returns the {@link ApolloLocation} for this player.
+     *
+     * @return the apollo location
+     * @since 1.0.0
+     */
+    ApolloLocation location;
 
+    /**
+     * Returns the {@code float} yaw for this player location.
+     *
+     * @return the yaw
+     * @since 1.0.0
+     */
+    float yaw;
+
+    /**
+     * Returns the {@code float} pitch for this player location.
+     *
+     * @return the pitch
+     * @since 1.0.0
+     */
+    float pitch;
 
 }

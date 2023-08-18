@@ -33,6 +33,7 @@ import com.lunarclient.apollo.common.icon.ItemStackIcon;
 import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Uuid;
 import java.awt.Color;
@@ -221,6 +222,38 @@ public final class NetworkTypes {
             .x(message.getX())
             .y(message.getY())
             .z(message.getZ())
+            .build();
+    }
+
+    /**
+     * Converts an {@link ApolloPlayerLocation} object to an
+     * {@link com.lunarclient.apollo.common.v1.PlayerLocation} proto message.
+     *
+     * @param object the player location
+     * @return the proto player location message
+     * @since 1.0.0
+     */
+    public static com.lunarclient.apollo.common.v1.PlayerLocation toProtobuf(ApolloPlayerLocation object) {
+        return com.lunarclient.apollo.common.v1.PlayerLocation.newBuilder()
+            .setLocation(NetworkTypes.toProtobuf(object.getLocation()))
+            .setYaw(object.getYaw())
+            .setPitch(object.getPitch())
+            .build();
+    }
+
+    /**
+     * Converts an {@link com.lunarclient.apollo.common.v1.PlayerLocation}
+     * proto message to an {@link ApolloPlayerLocation} object.
+     *
+     * @param message the player location message
+     * @return the apollo player location object
+     * @since 1.0.0
+     */
+    public static ApolloPlayerLocation fromProtobuf(com.lunarclient.apollo.common.v1.PlayerLocation message) {
+        return ApolloPlayerLocation.builder()
+            .location(NetworkTypes.fromProtobuf(message.getLocation()))
+            .yaw(message.getYaw())
+            .pitch(message.getPitch())
             .build();
     }
 
