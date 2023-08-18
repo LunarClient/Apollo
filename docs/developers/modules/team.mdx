@@ -8,7 +8,7 @@ The team module will allow you to interact with the Team View mod in Lunar Clien
 
 - Interact with the Team View mod
   - Create, delete and update teams
-  - Enables the team marker to display for a player
+  - Enables displaying a marker above the head of teammates
   - Set custom team marker color
 
 ## Integration
@@ -21,6 +21,19 @@ private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
 
 public TeamExample() {
     new TeamUpdateTask();
+
+    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
+}
+
+@EventHandler
+private void onPlayerQuit(PlayerQuitEvent event) {
+    Player player = event.getPlayer();
+
+    this.getByPlayerUuid(player.getUniqueId()).ifPresent(team -> {
+        if (team.getMembers().size() == 1) {
+            this.deleteTeam(team.getTeamId());
+        }
+    });
 }
 
 public Optional<Team> getByPlayerUuid(UUID playerUuid) {
@@ -58,15 +71,15 @@ public class Team {
 
     public void addMember(Player player) {
         this.members.add(player);
-        teamsByPlayerUuid.put(player.getUniqueId(), this);
+        TeamExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
     }
 
     public void removeMember(Player player) {
         this.members.remove(player);
-        teamsByPlayerUuid.remove(player.getUniqueId());
+        TeamExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
 
         Apollo.getPlayerManager().getPlayer(player.getUniqueId())
-            .ifPresent(teamModule::resetTeamMembers);
+            .ifPresent(TeamExample.this.teamModule::resetTeamMembers);
     }
 
     private TeamMember createTeamMember(Player member) {
@@ -95,7 +108,7 @@ public class Team {
             .collect(Collectors.toList());
 
         this.members.forEach(member -> Apollo.getPlayerManager().getPlayer(member.getUniqueId())
-            .ifPresent(apolloPlayer -> teamModule.updateTeamMembers(apolloPlayer, teammates)));
+            .ifPresent(apolloPlayer -> TeamExample.this.teamModule.updateTeamMembers(apolloPlayer, teammates)));
     }
 
     public UUID getTeamId() {
@@ -108,8 +121,13 @@ public class Team {
 
     @Override
     public boolean equals(Object other) {
-        if (this == other) return true;
-        if (other == null || other.getClass() != this.getClass()) return false;
+        if (this == other) {
+            return true;
+        }
+
+        if (other == null || other.getClass() != this.getClass()) {
+            return false;
+        }
 
         Team team = (Team) other;
         return this.teamId.equals(team.getTeamId());
@@ -121,16 +139,16 @@ public class Team {
     }
 }
 
-// Updates players location every 2 ticks (100ms)
+// Updates players location every 1 tick (50ms)
 public class TeamUpdateTask extends BukkitRunnable {
 
     public TeamUpdateTask() {
-        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getPlugin(), 2L, 2L);
+        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getPlugin(), 1L, 1L);
     }
 
     @Override
     public void run() {
-        teamsByTeamId.values().forEach(Team::refresh);
+        TeamExample.this.teamsByTeamId.values().forEach(Team::refresh);
     }
 }
 ```

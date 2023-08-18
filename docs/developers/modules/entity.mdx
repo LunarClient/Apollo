@@ -1,0 +1,109 @@
+# Entity Module
+
+## Overview
+
+The entity module allows you to interact with entities client-sided.
+
+- Adds the ability to render rainbow sheep, client side instead of server-sided.
+- Adds the ability to flip entities, without doing anything server-sided.
+
+## Integration
+
+### Override rainbow sheep for a player
+
+```java
+public void overrideRainbowSheepExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        // Get all Sheep in the player's world
+        List<UUID> sheepUuids = viewer.getWorld().getEntitiesByClass(Sheep.class)
+            .stream().map(Sheep::getUniqueId).collect(Collectors.toList());
+
+        this.entityModule.overrideRainbowSheep(apolloPlayer, sheepUuids);
+    });
+}
+```
+
+#### `overrideRainbowSheep` Parameters
+
+1. `ApolloPlayer Viewer`
+   - The player you want to view the rainbow sheep.
+2. `List<ApolloEntity> sheepEntities`
+   - A list of all sheep entities you want to be rainbow.
+
+#### Resetting rainbow sheep for a player
+
+```java
+public void resetRainbowSheepExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        // Get all Sheep in the player's world
+        List<ApolloEntity> sheepEntities = viewer.getWorld().getEntitiesByClass(Sheep.class)
+            .stream().map(sheep -> new ApolloEntity(sheep.getEntityId(), sheep.getUniqueId()))
+            .collect(Collectors.toList());
+
+        this.entityModule.overrideRainbowSheep(apolloPlayer, sheepEntities);
+    });
+}
+```
+
+#### `resetRainbowSheep` Parameters
+
+1. `ApolloPlayer Viewer`
+   - The player you want to reset the rainbow sheep for.
+2. `List<ApolloEntity> sheepEntities`
+   - A list of all sheep entities you want to remove the rainbow state from.
+
+### Flip entities for a player
+
+```java
+public void flipEntityExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        // Get all cows within 10 blocks of the player
+        List<ApolloEntity> entities = viewer.getWorld()
+            .getNearbyEntities(viewer.getLocation(), 10, 10, 10)
+            .stream().filter(entity -> entity instanceof Cow)
+            .map(cow -> new ApolloEntity(cow.getEntityId(), cow.getUniqueId()))
+            .collect(Collectors.toList());
+
+        this.entityModule.flipEntity(apolloPlayer, entities);
+    });
+}
+```
+
+#### `flipEntity` Parameters
+
+1. `ApolloPlayer Viewer`
+   - The player you want to see the flipped entity.
+2. `List<ApolloEntity> entities`
+   - A list of all entities you want to flip.
+
+#### Resetting flipped entities for a player
+
+```java
+public void resetFlippedEntityExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        // Get all cows within 10 blocks of the player
+        List<ApolloEntity> entities = viewer.getWorld()
+            .getNearbyEntities(viewer.getLocation(), 10, 10, 10)
+            .stream().filter(entity -> entity instanceof Cow)
+            .map(cow -> new ApolloEntity(cow.getEntityId(), cow.getUniqueId()))
+            .collect(Collectors.toList());
+
+        this.entityModule.resetFlippedEntity(apolloPlayer, entities);
+    });
+}
+```
+
+#### `resetFlippedEntity` Parameters
+
+1. `ApolloPlayer Viewer`
+   - The player you want to reset the flipped entity for.
+2. `List<ApolloEntity> entities`
+   - A list of all entities you want to reset the flip state from.

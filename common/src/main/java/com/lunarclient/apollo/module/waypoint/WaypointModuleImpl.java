@@ -1,3 +1,26 @@
+/*
+ * This file is part of Apollo, licensed under the MIT License.
+ *
+ * Copyright (c) 2023 Moonsworth
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.lunarclient.apollo.module.waypoint;
 
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
@@ -6,6 +29,7 @@ import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.option.config.Serializer;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.waypoint.v1.DisplayWaypointMessage;
 import com.lunarclient.apollo.waypoint.v1.RemoveWaypointMessage;
 import com.lunarclient.apollo.waypoint.v1.ResetWaypointsMessage;
@@ -38,25 +62,29 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
     }
 
     @Override
-    public void displayWaypoint(@NonNull ApolloPlayer viewer, @NonNull Waypoint waypoint) {
-        ((AbstractApolloPlayer) viewer).sendPacket(this.toProtobuf(waypoint));
+    public void displayWaypoint(@NonNull Recipients recipients, @NonNull Waypoint waypoint) {
+        DisplayWaypointMessage message = this.toProtobuf(waypoint);
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeWaypoint(@NonNull ApolloPlayer viewer, @NonNull String waypointName) {
-        ((AbstractApolloPlayer) viewer).sendPacket(RemoveWaypointMessage.newBuilder()
+    public void removeWaypoint(@NonNull Recipients recipients, @NonNull String waypointName) {
+        RemoveWaypointMessage message = RemoveWaypointMessage.newBuilder()
             .setName(waypointName)
-            .build());
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void removeWaypoint(@NonNull ApolloPlayer viewer, @NonNull Waypoint waypoint) {
-        this.removeWaypoint(viewer, waypoint.getName());
+    public void removeWaypoint(@NonNull Recipients recipients, @NonNull Waypoint waypoint) {
+        this.removeWaypoint(recipients, waypoint.getName());
     }
 
     @Override
-    public void resetWaypoints(@NonNull ApolloPlayer viewer) {
-        ((AbstractApolloPlayer) viewer).sendPacket(ResetWaypointsMessage.getDefaultInstance());
+    public void resetWaypoints(@NonNull Recipients recipients) {
+        ResetWaypointsMessage message = ResetWaypointsMessage.getDefaultInstance();
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     private void onPlayerRegister(ApolloRegisterPlayerEvent event) {
@@ -76,7 +104,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
             .setLocation(NetworkTypes.toProtobuf(waypoint.getLocation()))
             .setColor(NetworkTypes.toProtobuf(waypoint.getColor()))
             .setPreventRemoval(waypoint.isPreventRemoval())
-            .setVisible(waypoint.isVisible())
+            .setHidden(waypoint.isHidden())
             .build();
     }
 
@@ -94,13 +122,13 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
                 )
                 .color(Color.decode(this.virtualNode(node, "color").getString("#FFFFFF")))
                 .preventRemoval(this.virtualNode(node, "prevent-removal").getBoolean())
-                .visible(this.virtualNode(node, "visible").getBoolean())
+                .hidden(this.virtualNode(node, "hidden").getBoolean())
                 .build();
         }
 
         @Override
         public void serialize(Type type, @Nullable Waypoint waypoint, ConfigurationNode node) throws SerializationException {
-            if(waypoint == null) {
+            if (waypoint == null) {
                 node.raw(null);
                 return;
             }
@@ -112,11 +140,14 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
             node.node("location", "z").set(waypoint.getLocation().getZ());
             node.node("color").set(String.format("#%06X", (0xFFFFFF & waypoint.getColor().getRGB())));
             node.node("prevent-removal").set(waypoint.isPreventRemoval());
-            node.node("visible").set(waypoint.isVisible());
+            node.node("hidden").set(waypoint.isHidden());
         }
 
         private ConfigurationNode virtualNode(ConfigurationNode source, Object... path) throws SerializationException {
-            if(!source.hasChild(path)) throw new SerializationException("Required field " + Arrays.toString(path) + " not found!");
+            if (!source.hasChild(path)) {
+                throw new SerializationException("Required field " + Arrays.toString(path) + " not found!");
+            }
+
             return source.node(path);
         }
 

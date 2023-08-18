@@ -1,3 +1,5 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Border Module
 
 ## Overview
@@ -74,28 +76,58 @@ public void displayBorderExample(Player viewer) {
 
 `.color(java.awt.Color)` is how you dictate the color of the border. See the [colors page](/apollo/developers/utilities/colors) for more.
 
+**Color Types**
+
+<Tabs items={['Java Presets', 'Minecraft Presets', 'Hex & RGB']}>
+<Tab>
+
+The `java.awt.Color` class statically exposes some colors, although they do not correspond to any existing colors used in Minecraft.
+
 ```java
-.color(ApolloColors.RED)
+.color(Color.CYAN)
 ```
+
+</Tab>
+
+<Tab>
+
+The `ApolloColors` class statically exposes colors that correspond to Bukkit/Spigot's `ChatColor` enum.
+
+```java
+.color(ApolloColors.LIGHT_PURPLE)
+```
+
+</Tab>
+
+<Tab>
+
+Custom colors can be created from any RGB values using `new Color(int red, int green, int blue)`, or from any hex color using `Color.decode(String hex)`.
+
+```java
+.color(Color.decode("#FF00FF"))
+```
+
+</Tab>
+</Tabs>
 
 {/* insert screenshot of red border */}
 
 `.bounds(Cuboid2D)` is used to determine the bounds of the border, using a 2D cuboid. See the [cuboids page](/apollo/developers/utilities/cuboids) for more.
 
 ```java
-.bounds(Cuboid2D.builder() // Calling the 2D cuboid builder inside of Apollo
-    .minX(-50) // The X value of your lowest point
-    .minZ(-50) // The Z value of your lowest point
-    .maxX(50) // The X value of your highest point
-    .maxZ(50) // The Z value of your highest point
-    .build() // Calls to the builder inside of Apollo to build the cuboid
+.bounds(Cuboid2D.builder()
+    .minX(-50)
+    .minZ(-50)
+    .maxX(50)
+    .maxZ(50)
+    .build()
 )
 ```
 
 `.durationTicks(Integer)` is used to determine the speed of expansion or shrinkage.
 
 ```java
-.durationTicks(0) // 20 ticks = 1 second
+.durationTicks(0)
 ```
 
 ### Removing a specific border for a player
@@ -103,8 +135,6 @@ public void displayBorderExample(Player viewer) {
 ```java
 public void removeBorderExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-    // Removing the border with the ID "pvp-tagged-spawn" for the player
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.borderModule.removeBorder(apolloPlayer, "pvp-tagged-spawn"));
 }
 ```
@@ -114,15 +144,6 @@ public void removeBorderExample(Player viewer) {
 ```java
 public void resetBordersExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-    // Resetting all borders for the player
     apolloPlayerOpt.ifPresent(this.borderModule::resetBorders);
 }
 ```
-
-## Public Use Cases
-
-Some servers known to be using the border module are:
-
--   `play.vipermc.net`
--   `play.minecadia.com`

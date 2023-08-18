@@ -1,3 +1,26 @@
+/*
+ * This file is part of Apollo, licensed under the MIT License.
+ *
+ * Copyright (c) 2023 Moonsworth
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.lunarclient.apollo.module;
 
 import com.lunarclient.apollo.ApolloPlatform;
@@ -91,17 +114,19 @@ public abstract class ApolloModule implements ApolloListener {
      * @since 1.0.0
      */
     public String getId() {
-        if(this.id != null) return this.id;
+        if (this.id != null) {
+            return this.id;
+        }
 
         Class<?> moduleClass = this.getClass();
         ModuleDefinition definition = moduleClass.getAnnotation(ModuleDefinition.class);
 
-        if(definition == null) {
+        if (definition == null) {
             moduleClass = moduleClass.getSuperclass();
             definition = moduleClass.getAnnotation(ModuleDefinition.class);
         }
 
-        if(definition == null) {
+        if (definition == null) {
             throw new RuntimeException("Apollo module class " + moduleClass.getSimpleName() + " must be decorated with a ModuleDefinition annotation");
         }
 
@@ -109,7 +134,7 @@ public abstract class ApolloModule implements ApolloListener {
     }
 
     /**
-     * Returns a {@link Collection} of supported {@link ApolloPlatform.Kind}.
+     * Returns a {@link Collection} of supported {@link com.lunarclient.apollo.ApolloPlatform.Kind}.
      *
      * @return a collection of supported kinds of platforms
      * @since 1.0.0
@@ -138,7 +163,10 @@ public abstract class ApolloModule implements ApolloListener {
      * @since 1.0.0
      */
     public void enable() {
-        if(this.enabled) return;
+        if (this.enabled) {
+            return;
+        }
+
         this.enabled = true;
         this.onEnable();
     }
@@ -149,7 +177,10 @@ public abstract class ApolloModule implements ApolloListener {
      * @since 1.0.0
      */
     public void disable() {
-        if(!this.enabled) return;
+        if (!this.enabled) {
+            return;
+        }
+
         this.enabled = false;
         this.onDisable();
     }

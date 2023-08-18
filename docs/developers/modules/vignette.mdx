@@ -1,0 +1,48 @@
+# Vignette Module
+
+## Overview
+
+The vignette module gives the ability to apply a full-screen image overlay with transparency to the player's view.
+
+- Adds the ability to display a custom vignette for players
+
+## Integration
+
+### Display vignette to a player
+
+```java
+public void displayVignetteExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.vignetteModule.displayVignette(apolloPlayer, Vignette.builder()
+            .resourceLocation("blocks/pumpkin.png")
+            .opacity(0.75f)
+            .build()
+        );
+    });
+}
+```
+
+#### `Vignette` Options
+
+`.resourceLocation(String)` is the resource location of the vignette.
+
+```java
+.resourceLocation("blocks/pumpkin.png")
+```
+
+`.opacity(Float)` is the opacity of the shown vignette.
+
+```java
+.opacity(0.75f)
+```
+
+#### Resetting the vignette for a player
+
+```java
+public void resetVignetteExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.vignetteModule::resetVignette);
+}
+```

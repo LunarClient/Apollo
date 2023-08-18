@@ -4,6 +4,7 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         gradlePluginPortal()
+        maven("https://repo.jpenilla.xyz/snapshots")
     }
 
     versionCatalogs {

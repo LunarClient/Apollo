@@ -86,12 +86,12 @@ Custom colors can be created from any RGB values using `new Color(int red, int g
 `.location(ApolloBlockLocation)` used to determine the exact block you want the beam to be displayed on. See the [locations utilities page](/apollo/developers/utilities/locations) for more.
 
 ```java
-.location(ApolloBlockLocation.builder() // Calling to ApolloBlockLocation
-    .world("world") // The world name the beam should be displayed in
-    .x(0) // The X value of the block the beam should be displayed on
-    .y(60) // The Y value of the block the beam should start at
-    .z(0) // The Z value of the block the beam should be displayed on
-    .build() // Calls the builder inside of Apollo to build the block location
+.location(ApolloBlockLocation.builder()
+    .world("world")
+    .x(0)
+    .y(60)
+    .z(0)
+    .build()
 )
 ```
 
@@ -100,8 +100,6 @@ Custom colors can be created from any RGB values using `new Color(int red, int g
 ```java
 public void removeBeamExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-    // Removing the beam with the ID "spawn-beacon" for the player
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.beamModule.removeBeam(apolloPlayer, "spawn-beacon"));
 }
 ```
@@ -111,8 +109,6 @@ public void removeBeamExample(Player viewer) {
 ```java
 public void resetBeamsExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-    // Resetting all beams for the player
     apolloPlayerOpt.ifPresent(this.beamModule::resetBeams);
 }
 ```

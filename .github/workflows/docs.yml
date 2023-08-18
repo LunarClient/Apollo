@@ -7,18 +7,19 @@ on:
 
 jobs:
     deploy:
-        name: Deploy Documentation
+        # Only run on PRs if the source branch is on someone else's repository.
+        if: "${{ github.event_name != 'pull_request' || github.repository != github.event.pull_request.head.repo.full_name }}"
         runs-on: ubuntu-latest
         permissions:
             id-token: write
             contents: read
 
         steps:
-            - name: Trigger workflow dispatch
+            - name: Trigger Documentation Deploy
               uses: benc-uk/workflow-dispatch@v1
               with:
                   workflow: deploy.yml
                   repo: LunarClient/lunarclient.dev-Build
                   ref: refs/heads/master
-                  inputs: '{"repo": "${{ github.repository }}", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}" }'
+                  inputs: '{"repo": "${{ github.repository }}", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
                   token: ${{ secrets.DISPATCH_TOKEN }}

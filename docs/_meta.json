@@ -1,10 +1,9 @@
 {
     "introduction": "Introduction",
     "downloads": "Downloads",
-    "supported-platforms": "Supported Platforms",
     "developers": "Developers",
     "server-owners": "Server Owners",
     "license": "License",
-    "terms": "Terms of Service",
+    "acceptable-use": "Acceptable Use",
     "internals": "Internals"
 }

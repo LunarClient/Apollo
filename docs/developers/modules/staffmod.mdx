@@ -5,7 +5,7 @@
 The staff mod module allows you to interact with Lunar Client's built in staff mods.
 
 - Ability to grant and remove staff mods found in Lunar Client for players.
-  - Ability to allow players to enable/disable the xray mod.
+  - Ability to allow players to enable/disable the X-ray mod.
 
 
 ## Integration
@@ -14,7 +14,9 @@ The staff mod module allows you to interact with Lunar Client's built in staff m
 
 ```java 
 public void enableStaffModsExample(Player viewer) {
-    if (!viewer.hasPermission("apollo.staff")) return;
+    if (!viewer.hasPermission("apollo.staff")) {
+        return;
+    }
 
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY)));

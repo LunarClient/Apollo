@@ -1,8 +1,10 @@
+import { Callout } from 'nextra-theme-docs'
+
 # Server Rule Module
 
 ## Overview
 
-The server rule module contains pre-created settings servers can enable, kind of like Minecrafts vanilla 'serverRule' command.
+The server rule module contains pre-created settings servers can enable or disable, comparable to Minecraft's `/gamerule` command.
 
 This module heavily integrates with our [Options API](apollo/developers/options).
 
@@ -79,6 +81,10 @@ public void setNametagRenderDistanceExample(int value) {
     - Values
         - Type: `Boolean`
         - Default: `false`
+
+<Callout type="warning">
+  You'll need to disable the lighting mod in Lunar Client to control the players brightness levels.
+</Callout>
 
 - __`OVERRIDE_BRIGHTNESS`__
     - Whether to use brightness value set in the `BRIGHTNESS` option.

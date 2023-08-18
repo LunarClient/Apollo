@@ -1,3 +1,26 @@
+/*
+ * This file is part of Apollo, licensed under the MIT License.
+ *
+ * Copyright (c) 2023 Moonsworth
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.lunarclient.apollo.module;
 
 import com.lunarclient.apollo.ApolloManager;
@@ -49,7 +72,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      * @since 1.0.0
      */
     public void enableModules() {
-        for(ApolloModule module : this.modules.values()) {
+        for (ApolloModule module : this.modules.values()) {
             // Load configuration options for the module.
             module.setOptions(new OptionsImpl(module));
 
@@ -57,7 +80,9 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
             this.loadConfiguration(module, ApolloManager.getConfigurationNode(), options);
 
             // Enable the module if it is able to.
-            if(module.isEnabled() || !module.getOptions().get(ApolloModule.ENABLE)) continue;
+            if (module.isEnabled() || !module.getOptions().get(ApolloModule.ENABLE)) {
+                continue;
+            }
 
             EventBus.getBus().register(module);
             module.enable();
@@ -70,8 +95,11 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      * @since 1.0.0
      */
     public void disableModules() {
-        for(ApolloModule module : this.modules.values()) {
-            if(!module.isEnabled()) continue;
+        for (ApolloModule module : this.modules.values()) {
+            if (!module.isEnabled()) {
+                continue;
+            }
+
             EventBus.getBus().unregister(module);
             module.disable();
         }
@@ -81,7 +109,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      * Adds a module to the module manager.
      *
      * @param moduleClass the module class
-     * @param <T> the module type
+     * @param <T>         the module type
      * @return the module manager
      * @since 1.0.0
      */
@@ -91,7 +119,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
                 Constructor<T> constructor = moduleClass.getDeclaredConstructor();
                 constructor.setAccessible(true);
                 return constructor.newInstance();
-            } catch(Throwable throwable) {
+            } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         });
@@ -102,8 +130,8 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      * Adds a module to the module manager.
      *
      * @param moduleClass the module class
-     * @param module the module
-     * @param <T> the module type
+     * @param module      the module
+     * @param <T>         the module type
      * @return the module manager
      * @since 1.0.0
      */
@@ -120,19 +148,23 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      */
     @SuppressWarnings("unchecked")
     public void saveConfiguration(CommentedConfigurationNode node) {
-        for(ApolloModule module : this.modules.values()) {
+        for (ApolloModule module : this.modules.values()) {
             CommentedConfigurationNode moduleNode = node.node(module.getId().toLowerCase(Locale.ENGLISH));
 
             Options optionsContainer = module.getOptions();
-            for(Option<?, ?, ?> option : module.getOptionKeys()) {
+            for (Option<?, ?, ?> option : module.getOptionKeys()) {
                 CommentedConfigurationNode optionNode = moduleNode.node((Object[]) option.getPath());
-                if(optionNode == null) continue;
+                if (optionNode == null) {
+                    continue;
+                }
 
                 try {
-                    if(option.getComment() != null) optionNode.comment(option.getComment());
+                    if (option.getComment() != null) {
+                        optionNode.comment(option.getComment());
+                    }
 
                     optionNode.set((TypeToken<Object>) option.getTypeToken(), optionsContainer.get(option));
-                } catch(Throwable throwable) {
+                } catch (Throwable throwable) {
                     throwable.printStackTrace();
                 }
             }
@@ -142,17 +174,21 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
     private void loadConfiguration(ApolloModule module, CommentedConfigurationNode node, List<Option<?, ?, ?>> options) {
         CommentedConfigurationNode modules = node.node("modules");
         CommentedConfigurationNode moduleNode = modules.node(module.getId().toLowerCase(Locale.ENGLISH));
-        if(moduleNode.virtual()) return;
+        if (moduleNode.virtual()) {
+            return;
+        }
 
         Options optionsContainer = module.getOptions();
-        for(Option<?, ?, ?> option : options) {
+        for (Option<?, ?, ?> option : options) {
             CommentedConfigurationNode optionNode = moduleNode.node((Object[]) option.getPath());
-            if(optionNode.virtual()) continue;
+            if (optionNode.virtual()) {
+                continue;
+            }
 
             try {
                 Object value = optionNode.get(option.getTypeToken());
                 optionsContainer.set(option, value);
-            } catch(Throwable throwable) {
+            } catch (Throwable throwable) {
                 throwable.printStackTrace();
             }
         }

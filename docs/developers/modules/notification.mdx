@@ -4,7 +4,7 @@ import { Callout } from 'nextra-theme-docs'
 
 ## Overview
 
-The notification module allows you to send Lunar Client notifications to players actively on your server.
+The notification module allows you to send Lunar Client notifications to players actively on your server. Lunar Client notifications appear in the upper right of the user's screen.
 
 - Send custom notifications to Lunar Client players.
   - Custom notification color can be provided.
@@ -68,16 +68,15 @@ If this field is left empty (null) it'll display a generic info icon, as display
 ```java
 public void displayNotificationExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    
-    // Sending the notifcation built by the notifcation builder example above, "uhcAnnouncement", to the player.
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.notificationModule.displayNotification(apolloPlayer, this.uhcAnnouncement));
 }
 ```
 
-### Broadcasting a notification for an entire server
+### Resetting all notifications for a player
 
 ```java
-public void broadcastNotificationExample() {
-    this.notificationModule.broadcastNotification(this.uhcAnnouncement);
+public void resetNotificationsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.notificationModule::resetNotifications);
 }
 ```

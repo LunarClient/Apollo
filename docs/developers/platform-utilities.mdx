@@ -1,0 +1,87 @@
+# Platform Utilities
+
+Platform utility classes provide helpful platform specific methods to improve your experience when creating an Apollo integration.
+
+The following utility classes are available for each respective platform: `BukkitApollo`, `BungeeApollo`, `VelocityApollo`
+
+<Callout type="error">
+  You must ensure these methods are only used on the platform they're intended for, otherwise you will encounter errors from missing
+  platform specific dependencies.
+</Callout>
+
+## `runForPlayer` Method
+
+The `runForPlayer` method is a shorthand for converting a player instance from the platform to an `ApolloPlayer` to run an operation in a `Consumer`.
+
+```java
+public void runPlayerExample(Player player) {
+    BukkitApollo.runForPlayer(player, apolloPlayer -> {
+        /* Operation goes here! */
+    });
+}
+```
+
+## `getRecipientsFrom` Method
+
+The `getRecipientsFrom` method is a shorthand for converting a collection of player instances from the platform to a collection of `Recipients`.
+
+```java
+public void runRecipientsExample(Collection<Player> players, UUID burningPlayer) {
+    Recipients recipients = BukkitApollo.getRecipientsFrom(players);
+    this.coloredFireModule.overrideColoredFire(recipients,
+        burningPlayer,
+        Color.BLUE
+    );
+}
+```
+
+## `toApolloLocation` Method
+
+The `toApolloLocation` method is a way of converting a `Location` to an `ApolloLocation`.
+
+```java
+public void runLocationExample(Location location) {
+    ApolloLocation apolloLocation = BukkitApollo.toApolloLocation(location);
+
+    this.hologramModule.displayHologram(Recipients.ofEveryone(), Hologram.builder()
+        .id("welcome-hologram")
+        .location(apolloLocation)
+        .lines(Lists.newArrayList(
+            Component.builder()
+                .content("Welcome to my server!")
+                .color(Color.RED)
+                .decorators(Lists.newArrayList(Component.TextDecorators.BOLD, Component.TextDecorators.UNDERLINED))
+                .build(),
+            Component.builder()
+                .content("Type /help to get started!")
+                .build()
+        ))
+        .showThroughWalls(true)
+        .showShadow(false)
+        .showBackground(true)
+        .build()
+    );
+}
+```
+
+## `toApolloBlockLocation` Method
+
+The `toApolloBlockLocation` method is a way of converting a platform specific `Location` to an `ApolloBlockLocation`.
+
+```java
+public void runBlockLocationExample(ApolloPlayer apolloPlayer, Location location) {
+    ApolloBlockLocation apolloLocation = BukkitApollo.toApolloBlockLocation(location);
+
+    this.waypointModule.displayWaypoint(apolloPlayer, Waypoint.builder()
+        .name("KoTH")
+        .location(apolloLocation)
+        .color(Color.ORANGE)
+        .preventRemoval(false) // If the player can delete the waypoint
+        .hidden(false)
+        .build()
+    );
+}
+```
+## `toBukkitLocation` Method
+
+The `toBukkitLocation` method is a way of converting an `ApolloLocation` or `ApolloBlockLocation` back to a platform specific `Location`.

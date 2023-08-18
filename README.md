@@ -1,31 +1,52 @@
 # Apollo
+![Build Status](https://img.shields.io/github/actions/workflow/status/LunarClient/Apollo/.github/workflows/deploy.yml)
+[![Discord](https://img.shields.io/discord/1080556677004271666?logo=discord&label=discord)](https://discord.gg/ww4UhsPNwf)
 
-**Apollo** is an API for interacting with Lunar Client players from a server or proxy.
+Apollo is a powerful tool that allows developers to create custom integrations with Lunar Client.
 
-* Do not shade the API unless you provide docs
+You can find the latest downloads, wiki, and more at [lunarclient.dev](https://lunarclient.dev/apollo/introduction).
 
+Creating custom integrations for Apollo requires adding the Apollo API as a dependency from our [maven repository](https://lunarclient.dev/maven-repository) 
+to your project.
 
-## Architecture
+## Building
 
-`api` contains classes available on all platforms. It defines the protocol between Lunar Client and servers + proxies.
+Apollo uses [Gradle](https://gradle.org/) to handle dependencies and compile the project.
 
-There are modules for different implementations of the API that are also plugins for their platform.
-These modules may contain subprojects for NMS and Mixin code as well.
+**Prerequisites**
 
-### Bukkit
+- Java 8 JDK
+- Build Tools for Spigot 1.8.8
 
-The Bukkit implementation is split into an Ignite mod and a Bukkit plugin.
+**Compiling**
+
+Running the following will compile the Apollo source for Java 8.
 
 ```shell
-# Build jar of the Bukkit plugin
-./gradlew :apollo-bukkit:apollo-bukkit-common:build
-
-# Build jar of the 1.1X Ignite mod
-./gradlew :apollo-bukkit:apollo-bukkit-v1_18:build
-./gradlew :apollo-bukkit:apollo-bukkit-v1_19:build
-
-# ignite mods:
-jar -tf bukkit/v1_18/build/libs/apollo-bukkit-v1_18.jar
-# bukkit plugin:
-jar -tf bukkit/common/build/libs/apollo-bukkit-common.jar
+./gradlew build
 ```
+The output jars can be found in the `build/libs` directory relative to each platform.
+
+- Bukkit: `bukkit/plugin/build/libs`
+- BungeeCord: `bungee/build/libs`
+- Velocity: `velocity/build/libs`
+
+## Examples
+
+An example plugin can be compiled to provide a variety of commands that allow you to try different features Apollo provides.
+When compiled the output jar can be found in the directory `bukkit/example/build/libs`.
+
+## Contributing
+
+The Apollo project is split into several modules.
+
+- **API** - The publicly available interface for developers wishing to create custom integrations with Lunar Client.
+- **Common** - The abstraction used by platform modules to reduce duplicate code and implement the protocol for Lunar Client.
+- **Bukkit, BungeeCord, Velocity** - Are modules that implement the common module for each respective platform.
+
+Contributions can be made to Apollo by creating a pull request for improvements or fixes. For new feature ideas please consider making a 
+suggestion by creating an [issue](https://github.com/LunarClient/Apollo/issues) or joining our [discord](https://discord.gg/ww4UhsPNwf).
+
+## License
+
+Apollo is licensed under the [MIT license](https://github.com/LunarClient/Apollo/blob/master/license.txt).

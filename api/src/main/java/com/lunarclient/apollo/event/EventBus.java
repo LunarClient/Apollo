@@ -1,3 +1,26 @@
+/*
+ * This file is part of Apollo, licensed under the MIT License.
+ *
+ * Copyright (c) 2023 Moonsworth
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.lunarclient.apollo.event;
 
 import java.lang.reflect.Method;
@@ -42,9 +65,9 @@ public final class EventBus {
      */
     @SuppressWarnings("unchecked")
     public void register(@NonNull Object instance) {
-        for(Method method : this.getEventMethods(instance)) {
+        for (Method method : this.getEventMethods(instance)) {
             this.events.computeIfAbsent((Class<? extends Event>) method.getParameterTypes()[0], k -> new CopyOnWriteArrayList<>())
-                    .add(new ReflectiveConsumer<>(instance, method));
+                .add(new ReflectiveConsumer<>(instance, method));
         }
     }
 
@@ -52,9 +75,9 @@ public final class EventBus {
      * Registers the provided {@link Consumer} as an event listener for the
      * provided event class of type {@code T}.
      *
-     * @param event the event class
+     * @param event    the event class
      * @param consumer the listener
-     * @param <T> the event type
+     * @param <T>      the event type
      * @return true if the listener was registered, otherwise false
      * @since 1.0.0
      */
@@ -70,9 +93,9 @@ public final class EventBus {
      * @since 1.0.0
      */
     public void unregister(@NonNull Object instance) {
-        for(Method method : this.getEventMethods(instance)) {
+        for (Method method : this.getEventMethods(instance)) {
             List<Consumer<? extends Event>> listeners = this.events.get(method.getParameterTypes()[0]);
-            if(listeners != null) {
+            if (listeners != null) {
                 listeners.removeIf(consumer -> consumer instanceof ReflectiveConsumer && ((ReflectiveConsumer<?>) consumer).getInstance() == instance);
             }
         }
@@ -82,9 +105,9 @@ public final class EventBus {
      * Unregisters the provided {@link Consumer} for the provided event class
      * of type {@code T}.
      *
-     * @param event the event class
+     * @param event    the event class
      * @param consumer the listener
-     * @param <T> the event type
+     * @param <T>      the event type
      * @return true if the listener was unregistered, otherwise false
      * @since 1.0.0
      */
@@ -97,18 +120,19 @@ public final class EventBus {
      * Posts the provided {@code T} event to listeners.
      *
      * @param event the event
-     * @param <T> the event type
+     * @param <T>   the event type
      * @return the event result
      * @since 1.0.0
      */
+    @SuppressWarnings("unchecked")
     public <T extends Event> EventResult<T> post(@NonNull T event) {
         CopyOnWriteArrayList<Consumer<? extends Event>> consumers = this.events.get(event.getClass());
         List<Throwable> throwables = new ArrayList<>();
-        if(consumers != null) {
-            for(Consumer<? extends Event> consumer : consumers) {
+        if (consumers != null) {
+            for (Consumer<? extends Event> consumer : consumers) {
                 try {
                     ((Consumer<T>) consumer).accept(event);
-                } catch(Throwable throwable) {
+                } catch (Throwable throwable) {
                     throwables.add(throwable);
                 }
             }
@@ -118,11 +142,11 @@ public final class EventBus {
 
     private List<Method> getEventMethods(Object instance) {
         return Arrays.stream(instance.getClass().getDeclaredMethods())
-                .filter(method -> method.isAnnotationPresent(Listen.class)
-                        && method.getParameterCount() == 1
-                        && Event.class.isAssignableFrom(method.getParameterTypes()[0])
-                )
-                .collect(Collectors.toList());
+            .filter(method -> method.isAnnotationPresent(Listen.class)
+                && method.getParameterCount() == 1
+                && Event.class.isAssignableFrom(method.getParameterTypes()[0])
+            )
+            .collect(Collectors.toList());
     }
 
     /**

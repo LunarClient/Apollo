@@ -1,3 +1,26 @@
+/*
+ * This file is part of Apollo, licensed under the MIT License.
+ *
+ * Copyright (c) 2023 Moonsworth
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.lunarclient.apollo.option;
 
 import com.lunarclient.apollo.player.ApolloPlayer;
@@ -27,8 +50,8 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * it exists, or the default value.
      *
      * @param option the option
-     * @param <T> the value type
-     * @param <C> the option type
+     * @param <T>    the value type
+     * @param <C>    the option type
      * @return the value or default if present
      * @since 1.0.0
      */
@@ -40,8 +63,8 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      *
      * @param player the player
      * @param option the option
-     * @param <T> the value type
-     * @param <C> the option type
+     * @param <T>    the value type
+     * @param <C>    the option type
      * @return the value or default if present
      * @since 1.0.0
      */
@@ -53,8 +76,8 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * {@link Optional#empty()}.
      *
      * @param option the option
-     * @param <T> the value type
-     * @param <C> the option type
+     * @param <T>    the value type
+     * @param <C>    the option type
      * @return the optional stored value
      * @since 1.0.0
      */
@@ -67,8 +90,8 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      *
      * @param player the player
      * @param option the option
-     * @param <T> the value type
-     * @param <C> the option type
+     * @param <T>    the value type
+     * @param <C>    the option type
      * @return the optional stored value
      * @since 1.0.0
      */
@@ -78,8 +101,8 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * Sets the provided {@code T} value for the provided {@link Option}.
      *
      * @param option the option
-     * @param value the value
-     * @param <T> the value type
+     * @param value  the value
+     * @param <T>    the value type
      * @since 1.0.0
      */
     <T> void set(Option<?, ?, ?> option, @Nullable T value);
@@ -90,8 +113,8 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      *
      * @param player the player
      * @param option the option
-     * @param value the value
-     * @param <T> the value type
+     * @param value  the value
+     * @param <T>    the value type
      * @since 1.0.0
      */
     <T> void set(ApolloPlayer player, Option<?, ?, ?> option, @Nullable T value);
@@ -101,8 +124,8 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * does not already exist.
      *
      * @param option the option
-     * @param value the value
-     * @param <T> the value type
+     * @param value  the value
+     * @param <T>    the value type
      * @since 1.0.0
      */
     <T> void add(Option<?, ?, ?> option, T value);
@@ -113,8 +136,8 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      *
      * @param player the player
      * @param option the option
-     * @param value the value
-     * @param <T> the value type
+     * @param value  the value
+     * @param <T>    the value type
      * @since 1.0.0
      */
     <T> void add(ApolloPlayer player, Option<?, ?, ?> option, T value);
@@ -123,9 +146,9 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * Removes the provided {@code T} value for the provided {@link Option} if
      * it equals the provided value.
      *
-     * @param option the option
+     * @param option  the option
      * @param compare the value to compare to
-     * @param <T> the value type
+     * @param <T>     the value type
      * @since 1.0.0
      */
     <T> void remove(Option<?, ?, ?> option, @Nullable T compare);
@@ -134,10 +157,10 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * Removes the provided {@code T} value for the provided {@link ApolloPlayer}
      * and {@link Option} if it equals the provided value.
      *
-     * @param player the player
-     * @param option the option
+     * @param player  the player
+     * @param option  the option
      * @param compare the value to compare to
-     * @param <T> the value type
+     * @param <T>     the value type
      * @since 1.0.0
      */
     <T> void remove(ApolloPlayer player, Option<?, ?, ?> option, @Nullable T compare);
@@ -146,9 +169,9 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * Replaces the {@code T} value for the provided {@link Option} with the
      * output of the provided function.
      *
-     * @param option the option
+     * @param option            the option
      * @param remappingFunction the function
-     * @param <T> the value type
+     * @param <T>               the value type
      * @since 1.0.0
      */
     <T> void replace(Option<?, ?, ?> option, BiFunction<Option<?, ?, ?>, T, T> remappingFunction);
@@ -157,10 +180,10 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * Replaces the {@code T} value for the provided {@link ApolloPlayer} and
      * {@link Option} with the output of the provided function.
      *
-     * @param player the player
-     * @param option the option
+     * @param player            the player
+     * @param option            the option
      * @param remappingFunction the function
-     * @param <T> the value type
+     * @param <T>               the value type
      * @since 1.0.0
      */
     <T> void replace(ApolloPlayer player, Option<?, ?, ?> option, BiFunction<Option<?, ?, ?>, T, T> remappingFunction);

@@ -1,4 +1,4 @@
-import { Callout } from 'nextra-theme-docs'
+import { Callout } from "nextra-theme-docs";
 
 # Events
 
@@ -11,88 +11,74 @@ Apollo provides its own listener based event system, similar to the existing eve
 <details>
 <summary>ApolloRegisterPlayerEvent</summary>
 
-#### Overview
+#### ApolloRegisterPlayerEvent
 
-Called when the player joins the server using Lunar Client.
+_Called when the player joins the server using Lunar Client._
 
-#### Fields
-
-1. `ApolloPlayer player`
-   - The Apollo player that was registered.
+| Field                 | Description                            |
+| --------------------- | -------------------------------------- |
+| `ApolloPlayer player` | The Apollo player that was registered. |
 
 </details>
 
 <details>
 <summary>ApolloUnregisterPlayerEvent</summary>
 
-#### Overview
+#### ApolloUnregisterPlayerEvent
 
-Called when the player leaves the server using Lunar Client.
+_Called when the player leaves the server using Lunar Client._
 
-#### Fields
-
-1. `ApolloPlayer player`
-   - The Apollo player that was unregistered.
+| Field                 | Description                              |
+| --------------------- | ---------------------------------------- |
+| `ApolloPlayer player` | The Apollo player that was unregistered. |
 
 </details>
 
 <details>
 <summary>ApolloReceivePacketEvent</summary>
 
-#### Overview
+#### ApolloReceivePacketEvent
 
-Called when the Apollo player receives an Apollo packet from Lunar Client.
+_Called when the Apollo player receives an Apollo packet from Lunar Client._
 
-#### Fields
-
-1. `ApolloPlayer player`
-   - The Apollo player that received the packet.
-2. `Any packet`
-   - The Apollo packet that was received.
+| Field                 | Description                                 |
+| --------------------- | ------------------------------------------- |
+| `ApolloPlayer player` | The Apollo player that received the packet. |
+| `Any packet`          | The Apollo packet that was received.        |
 
 </details>
 
 <details>
 <summary>ApolloSendPacketEvent</summary>
 
-#### Overview
+#### ApolloSendPacketEvent
 
-Called when the Apollo player sends an Apollo packet to Lunar Client.
+_Called when the Apollo player sends an Apollo packet to Lunar Client._
 
-#### Fields
+| Field                 | Description                             |
+| --------------------- | --------------------------------------- |
+| `ApolloPlayer player` | The Apollo player that sent the packet. |
+| `Any packet`          | The Apollo packet that was sent.        |
 
-1. `ApolloPlayer player`
-   - The Apollo player that sent the packet.
-2. `Any packet`
-   - The Apollo packet that was sent.
-
-<Callout type="info">
-  This event is cancellable.
-</Callout>
+<Callout type="info">This event is cancellable.</Callout>
 
 </details>
 
 <details>
 <summary>ApolloUpdateOptionEvent</summary>
 
-#### Overview
+#### ApolloUpdateOptionEvent
 
-Called when an option is updated.
+_Called when an option is updated._
 
-#### Fields
+| Field                    | Description                                                                      |
+| ------------------------ | -------------------------------------------------------------------------------- |
+| `Options container`      | The container that the option is in.                                             |
+| `ApolloPlayer player`    | The Apollo player the option was updated for, or null if it was a global option. |
+| `Option<?, ?, ?> option` | The option that was updated.                                                     |
+| `Object value`           | The new value of the option.                                                     |
 
-1. `Options container`
-   - The container that the option is in.
-2. `ApolloPlayer player`
-   - The Apollo player the option was updated for, or null if it was a global option.
-3. `Option<?, ?, ?> option`
-   - The option that was updated.
-4. `Object value`
-   - The new value of the option.
-
-<Callout type="info">
-  This event is cancellable.
-</Callout>
+<Callout type="info">This event is cancellable.</Callout>
 
 </details>
 

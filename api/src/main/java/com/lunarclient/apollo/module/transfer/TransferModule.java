@@ -1,3 +1,26 @@
+/*
+ * This file is part of Apollo, licensed under the MIT License.
+ *
+ * Copyright (c) 2023 Moonsworth
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.lunarclient.apollo.module.transfer;
 
 import com.lunarclient.apollo.ApolloPlatform;
@@ -25,10 +48,11 @@ public abstract class TransferModule extends ApolloModule {
     }
 
     // Simple implementations for the full version below
+
     /**
      * Sends the {@link PingRequest} to the {@link ApolloPlayer}.
      *
-     * @param player the player
+     * @param player    the player
      * @param serverIps all server IPs to ping
      * @return future to be listened to for errors/success
      * @since 1.0.0
@@ -43,7 +67,7 @@ public abstract class TransferModule extends ApolloModule {
     /**
      * Attempts to transfer the {@link ApolloPlayer} to the given server IP.
      *
-     * @param player the player
+     * @param player   the player
      * @param serverIp the server IP to transfer to
      * @return future to be listened to for errors/success
      * @since 1.0.0
@@ -58,7 +82,7 @@ public abstract class TransferModule extends ApolloModule {
     /**
      * Sends the {@link PingRequest} to the {@link ApolloPlayer}.
      *
-     * @param player the player
+     * @param player  the player
      * @param request the ping request
      * @return future to be listened to for errors/success
      * @since 1.0.0
@@ -68,7 +92,7 @@ public abstract class TransferModule extends ApolloModule {
     /**
      * Sends the {@link TransferRequest} to the {@link ApolloPlayer}.
      *
-     * @param player the player
+     * @param player  the player
      * @param request the transfer request
      * @return future to be listened to for errors/success
      * @since 1.0.0

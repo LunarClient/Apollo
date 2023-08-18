@@ -8,9 +8,9 @@ The transfer module allows you to transfer players from one server to another, w
 
 - Adds the ability to use the `Transfer Packet` and `Ping Packet` on players.
   - Ability to transfer players from one server to another
-  - Ability to ping other servers, to get a players ping to those servers.
+  - Ability to ping other servers, to get a players ping time to those servers.
 
-When you combine the usage of the ping packet and transfer packet, you can do connection based optimizing for your players.
+When you combine the usage of the ping packet and transfer packet, you can do connection-based optimizing for your players.
 
 <Callout type="warning">
   Players are prompted with a confirmation screen, where they can accept or decline the transfer-packet.
@@ -58,6 +58,10 @@ public void transferExample(Player viewer) {
 ```
 
 ### Using the Ping Packet
+
+<Callout type="info">
+  You can provide up to `10` different addresses per ping packet.
+</Callout>
 
 ```java
 public void pingExample(Player viewer) {

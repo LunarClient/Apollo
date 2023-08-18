@@ -22,28 +22,26 @@ The nametag module enhances the vanilla Minecraft nametag.
 
 ```java
 public void overrideNametagExample(Player target) {
-    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-
-    this.nametagModule.overrideNametag(viewers, target.getUniqueId(), Nametag.builder()
-            .lines(Lists.newArrayList(
-                Component.builder()
-                    .content("[StaffMode]")
-                    .decorators(Collections.singletonList(Component.TextDecorators.ITALIC))
-                    .color(Color.GRAY)
-                    .build(),
-                Component.builder()
-                    .content(target.getName())
-                    .color(Color.RED)
-                    .build()
-            ))
-            .build()
-        );
+    this.nametagModule.overrideNametag(Recipients.ofEveryone(), target.getUniqueId(), Nametag.builder()
+        .lines(Lists.newArrayList(
+            Component.builder()
+                .content("[StaffMode]")
+                .decorators(Collections.singletonList(Component.TextDecorators.ITALIC))
+                .color(Color.GRAY)
+                .build(),
+            Component.builder()
+                .content(target.getName())
+                .color(Color.RED)
+                .build()
+        ))
+        .build()
+    );
 }
 ```
 
 ### `overrideNametag` Parameters
 
-1. `Collection<ApolloPlayer> viewers`
+1. `Recipients recipients`
    - A list of all the player(s) you want to be able to see the updated nametag.
 2. `UUID Target`
    - The players UUID you want to override the nametag of.
@@ -72,8 +70,7 @@ public void overrideNametagExample(Player target) {
 
 ```java
 public void resetNametagExample(Player target) {
-    Collection<ApolloPlayer> viewers = Apollo.getPlayerManager().getPlayers();
-    this.nametagModule.resetNametag(viewers, target.getUniqueId());
+    this.nametagModule.resetNametag(Recipients.ofEveryone(), target.getUniqueId());
 }
 ```
 

@@ -1,6 +1,28 @@
+/*
+ * This file is part of Apollo, licensed under the MIT License.
+ *
+ * Copyright (c) 2023 Moonsworth
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.lunarclient.apollo.option;
 
-import com.google.protobuf.NullValue;
 import com.google.protobuf.Value;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.event.EventBus;
@@ -8,6 +30,7 @@ import com.lunarclient.apollo.event.option.ApolloUpdateOptionEvent;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -75,8 +98,11 @@ public class OptionsImpl implements Options {
     @Override
     public <T> void set(@NonNull Option<?, ?, ?> option, @Nullable T value) {
         Object nextValue = value == null ? option.getDefaultValue() : value;
-        if(this.postEvent(option, null, nextValue)) return;
-        if(Objects.equals(nextValue, option.getDefaultValue())) {
+        if (this.postEvent(option, null, nextValue)) {
+            return;
+        }
+
+        if (Objects.equals(nextValue, option.getDefaultValue())) {
             this.options.remove(option);
         } else {
             this.options.put(option, value);
@@ -89,11 +115,16 @@ public class OptionsImpl implements Options {
     public <T> void set(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @Nullable T value) {
         Object globalValue = this.get(option);
         Object nextValue = value == null ? globalValue : value;
-        if(this.postEvent(option, player, nextValue)) return;
-        if(Objects.equals(value, globalValue)) {
-            this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>())).remove(option);
+        if (this.postEvent(option, player, nextValue)) {
+            return;
+        }
+
+        if (Objects.equals(value, globalValue)) {
+            this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+                .remove(option);
         } else {
-            this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>())).put(option, value);
+            this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+                .put(option, value);
         }
 
         this.postPacket(option, player, nextValue);
@@ -101,7 +132,10 @@ public class OptionsImpl implements Options {
 
     @Override
     public <T> void add(@NonNull Option<?, ?, ?> option, @NonNull T value) {
-        if(this.postEvent(option, null, value)) return;
+        if (this.postEvent(option, null, value)) {
+            return;
+        }
+
         this.options.put(option, value);
 
         this.postPacket(option, null, value);
@@ -109,15 +143,22 @@ public class OptionsImpl implements Options {
 
     @Override
     public <T> void add(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @NonNull T value) {
-        if(this.postEvent(option, player, value)) return;
-        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>())).put(option, value);
+        if (this.postEvent(option, player, value)) {
+            return;
+        }
+
+        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+            .put(option, value);
 
         this.postPacket(option, player, value);
     }
 
     @Override
     public <T> void remove(@NonNull Option<?, ?, ?> option, @Nullable T compare) {
-        if(this.postEvent(option, null, option.getDefaultValue())) return;
+        if (this.postEvent(option, null, option.getDefaultValue())) {
+            return;
+        }
+
         this.options.remove(option, compare);
 
         this.postPacket(option, null, option.getDefaultValue());
@@ -125,8 +166,12 @@ public class OptionsImpl implements Options {
 
     @Override
     public <T> void remove(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @Nullable T compare) {
-        if(this.postEvent(option, player, this.get(option))) return;
-        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>())).remove(option, compare);
+        if (this.postEvent(option, player, this.get(option))) {
+            return;
+        }
+
+        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+            .remove(option, compare);
 
         this.postPacket(option, player, option.getDefaultValue());
     }
@@ -136,7 +181,14 @@ public class OptionsImpl implements Options {
     public <T> void replace(@NonNull Option<?, ?, ?> option, @NonNull BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
         this.options.replaceAll((k, v) -> {
             T value = remappingFunction.apply(option, (T) v);
-            if(this.postEvent(option, null, value)) return null;
+            if (value == null) {
+                value = (T) option.getDefaultValue();
+            }
+
+            if (this.postEvent(option, null, value)) {
+                return null;
+            }
+
             this.postPacket(option, null, value);
             return value;
         });
@@ -145,12 +197,20 @@ public class OptionsImpl implements Options {
     @Override
     @SuppressWarnings("unchecked")
     public <T> void replace(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @NonNull BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
-        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>())).replaceAll((k, v) -> {
-            T value = remappingFunction.apply(option, (T) v);
-            if(this.postEvent(option, player, value)) return null;
-            this.postPacket(option, player, value);
-            return value;
-        });
+        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+            .replaceAll((k, v) -> {
+                T value = remappingFunction.apply(option, (T) v);
+                if (value == null) {
+                    value = (T) option.getDefaultValue();
+                }
+
+                if (this.postEvent(option, player, value)) {
+                    return null;
+                }
+
+                this.postPacket(option, player, value);
+                return value;
+            });
     }
 
     @Override
@@ -162,19 +222,24 @@ public class OptionsImpl implements Options {
      * Wraps the provided value into a protobuf {@link Value}.
      *
      * @param valueBuilder the value builder
-     * @param current the current value
+     * @param type         the value type
+     * @param current      the current value
      * @return the wrapped value
      * @since 1.0.0
      */
-    public Value wrapValue(Value.Builder valueBuilder, @Nullable Object current) {
-        if(current instanceof Number) {
-            valueBuilder.setNumberValue(((Number) current).doubleValue());
-        } else if(current instanceof String) {
-            valueBuilder.setStringValue((String) current);
-        } else if(current instanceof Boolean) {
-            valueBuilder.setBoolValue((Boolean) current);
-        } else {
-            valueBuilder.setNullValue(NullValue.NULL_VALUE);
+    public Value wrapValue(Value.Builder valueBuilder, Type type, Object current) {
+        if (type instanceof Class) {
+            final Class<?> clazz = (Class<?>) type;
+
+            if (clazz.isEnum()) {
+                valueBuilder.setStringValue(((Enum<?>) current).name());
+            } else if (Number.class.isAssignableFrom(clazz)) {
+                valueBuilder.setNumberValue(((Number) current).doubleValue());
+            } else if (String.class.isAssignableFrom(clazz)) {
+                valueBuilder.setStringValue((String) current);
+            } else if (Boolean.class.isAssignableFrom(clazz)) {
+                valueBuilder.setBoolValue((Boolean) current);
+            }
         }
 
         return valueBuilder.build();
@@ -184,33 +249,49 @@ public class OptionsImpl implements Options {
      * Unwraps the provided protobuf {@link Value} into the appropriate object.
      *
      * @param wrapper the wrapped value
+     * @param type    the wrapped type
      * @return the unwrapped value
      * @since 1.0.0
      */
-    public @Nullable Object unwrapValue(Value wrapper) {
-        if(wrapper.hasNumberValue()) {
-            return wrapper.getNumberValue();
-        } else if(wrapper.hasStringValue()) {
-            return wrapper.getStringValue();
-        } else if(wrapper.hasBoolValue()) {
-            return wrapper.getBoolValue();
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public @Nullable Object unwrapValue(Value wrapper, Type type) {
+        if (type instanceof Class) {
+            final Class<?> clazz = (Class<?>) type;
+
+            if (clazz.isEnum() && wrapper.hasStringValue()) {
+                return Enum.valueOf((Class<? extends Enum>) clazz, wrapper.getStringValue());
+            } else if (Number.class.isAssignableFrom(clazz) && wrapper.hasNumberValue()) {
+                return wrapper.getNumberValue();
+            } else if (String.class.isAssignableFrom(clazz) && wrapper.hasStringValue()) {
+                return wrapper.getStringValue();
+            } else if (Boolean.class.isAssignableFrom(clazz) && wrapper.hasBoolValue()) {
+                return wrapper.getBoolValue();
+            }
         }
 
         return null;
     }
 
     protected boolean postEvent(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {
-        EventBus.EventResult<ApolloUpdateOptionEvent> eventResult = EventBus.getBus().post(new ApolloUpdateOptionEvent(this, player, option, value));
-        for(Throwable throwable : eventResult.getThrowing()) {
+        EventBus.EventResult<ApolloUpdateOptionEvent> eventResult = EventBus.getBus()
+            .post(new ApolloUpdateOptionEvent(this, player, option, value));
+
+        for (Throwable throwable : eventResult.getThrowing()) {
             throwable.printStackTrace();
         }
+
         return eventResult.getEvent().isCancelled();
     }
 
-    protected void postPacket(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {
-        if(!option.isNotify()) return;
-        Collection<ApolloPlayer> players = player == null ? Apollo.getPlayerManager().getPlayers() : Collections.singleton(player);
-        Value valueWrapper = this.wrapValue(Value.newBuilder(), value);
+    protected void postPacket(Option<?, ?, ?> option, @Nullable ApolloPlayer player, Object value) {
+        if (!option.isNotify()) {
+            return;
+        }
+
+        Collection<ApolloPlayer> players = player == null ? Apollo.getPlayerManager()
+            .getPlayers() : Collections.singleton(player);
+
+        Value valueWrapper = this.wrapValue(Value.newBuilder(), option.getTypeToken().getType(), value);
         NetworkOptions.sendOption(this.module, option, valueWrapper, players);
     }
 
