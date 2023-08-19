@@ -23,10 +23,10 @@
  */
 package com.lunarclient.apollo.module.nametag;
 
-import com.lunarclient.apollo.common.ApolloComponent;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 
 /**
  * Represents a nametag which can be shown on the client.
@@ -38,11 +38,11 @@ import lombok.Getter;
 public final class Nametag {
 
     /**
-     * Returns a {@link List} of {@link ApolloComponent} nametag.
+     * Returns a {@link List} of {@link Component} nametag.
      *
      * @return the nametag
      * @since 1.0.0
      */
-    List<ApolloComponent> lines;
+    List<Component> lines;
 
 }

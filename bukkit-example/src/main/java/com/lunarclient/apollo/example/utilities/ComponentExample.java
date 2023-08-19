@@ -24,17 +24,18 @@
 package com.lunarclient.apollo.example.utilities;
 
 import com.google.common.collect.Lists;
-import com.lunarclient.apollo.common.Component;
-import java.awt.Color;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 
 public final class ComponentExample {
 
     public static Component componentExample() {
-        return Component.builder()
+        return Component.text()
             .content("Hello world!")
-            .color(Color.GREEN)
-            .decorators(Lists.newArrayList(Component.TextDecorators.BOLD, Component.TextDecorators.UNDERLINED))
-            .children(Lists.newArrayList())
+            .color(NamedTextColor.GREEN)
+            .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
+            .append(Lists.newArrayList())
             .build();
     }
 

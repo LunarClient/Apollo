@@ -24,14 +24,14 @@ The nametag module enhances the vanilla Minecraft nametag.
 public void overrideNametagExample(Player target) {
     this.nametagModule.overrideNametag(Recipients.ofEveryone(), target.getUniqueId(), Nametag.builder()
         .lines(Lists.newArrayList(
-            Component.builder()
+            Component.text()
                 .content("[StaffMode]")
-                .decorators(Collections.singletonList(Component.TextDecorators.ITALIC))
-                .color(Color.GRAY)
+                .decorate(TextDecoration.ITALIC)
+                .color(NamedTextColor.GRAY)
                 .build(),
-            Component.builder()
+            Component.text()
                 .content(target.getName())
-                .color(Color.RED)
+                .color(NamedTextColor.RED)
                 .build()
         ))
         .build()
@@ -55,13 +55,14 @@ public void overrideNametagExample(Player target) {
 
 ```java
 .lines(List.of(
-    Component.builder()
-        .content("[StaffMod]")
-        .color(Color.GRAY)
+    Component.text()
+        .content("[StaffMode]")
+        .decorate(TextDecoration.ITALIC)
+        .color(NamedTextColor.GRAY)
         .build(),
-    Component.builder()
+    Component.text()
         .content(target.getName())
-        .color(Color.RED)
+        .color(NamedTextColor.RED)
         .build()
 ))
 ```

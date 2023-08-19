@@ -87,9 +87,9 @@ public class Team {
 
         return TeamMember.builder()
             .playerUuid(member.getUniqueId())
-            .displayName(Component.builder()
+            .displayName(Component.text()
                 .content(member.getName())
-                .color(Color.WHITE)
+                .color(NamedTextColor.WHITE)
                 .build())
             .markerColor(Color.WHITE)
             .location(ApolloLocation.builder()
@@ -164,9 +164,9 @@ public class TeamUpdateTask extends BukkitRunnable {
 `.displayName(Componnent)` is the display name that will be shown whenever the observer is outside view distance, but hovers over the player marker. See the [component builder](/apollo/developers/utilities/components) page for more.
 
 ```java
-.displayName(Component.builder()
+.displayName(Component.text()
     .content(member.getName())
-    .color(Color.WHITE)
+    .color(NamedTextColor.WHITE)
     .build())
 ```
 

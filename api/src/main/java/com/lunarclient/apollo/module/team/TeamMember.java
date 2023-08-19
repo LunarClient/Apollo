@@ -23,12 +23,12 @@
  */
 package com.lunarclient.apollo.module.team;
 
-import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import java.awt.Color;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 
 /**
  * Represents a team which can be shown on the client.
@@ -47,7 +47,7 @@ public final class TeamMember {
     UUID playerUuid;
 
     /**
-     * Returns the team member's {@link ApolloComponent}.
+     * Returns the team member's {@link Component}.
      *
      * <p>The display name is only used when the player
      * is out of render distance for the observer and when the
@@ -56,7 +56,7 @@ public final class TeamMember {
      * @return the team member's display name
      * @since 1.0.0
      */
-    ApolloComponent displayName;
+    Component displayName;
 
     /**
      * Returns the team member's assigned {@link Color} - this will be used

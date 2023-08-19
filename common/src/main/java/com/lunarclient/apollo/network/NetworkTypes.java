@@ -303,10 +303,10 @@ public final class NetworkTypes {
      * @return the proto component message
      * @since 1.0.0
      */
-    public static com.lunarclient.apollo.common.v1.Component toProtobuf(ApolloComponent object) {
+    public static com.lunarclient.apollo.common.v1.Component toProtobuf(Component object) {
         // TODO
         return com.lunarclient.apollo.common.v1.Component.newBuilder()
-            .setContent(object.toJson())
+            .setContent(ApolloComponent.toJson(object))
             .build();
     }
 
@@ -318,7 +318,7 @@ public final class NetworkTypes {
      * @return the component object
      * @since 1.0.0
      */
-    public static ApolloComponent fromProtobuf(com.lunarclient.apollo.common.v1.Component message) {
+    public static Component fromProtobuf(com.lunarclient.apollo.common.v1.Component message) {
         // TODO
         return ApolloComponent.fromJson(message.getContent());
     }

@@ -23,16 +23,16 @@
  */
 package com.lunarclient.apollo.example.modules;
 
-import com.google.common.collect.Lists;
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.module.title.Title;
 import com.lunarclient.apollo.module.title.TitleModule;
 import com.lunarclient.apollo.module.title.TitleType;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.awt.Color;
 import java.time.Duration;
 import java.util.Optional;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
 public class TitleExample {
@@ -41,10 +41,10 @@ public class TitleExample {
 
     private final Title helloTitle = Title.builder()
         .type(TitleType.TITLE)
-        .message(Component.builder()
+        .message(Component.text()
             .content("Hello, player!")
-            .color(Color.GREEN)
-            .decorators(Lists.newArrayList(Component.TextDecorators.BOLD))
+            .color(NamedTextColor.GREEN)
+            .decorate(TextDecoration.BOLD)
             .build())
         .scale(1.0f)
         .displayTime(Duration.ofMillis(1500L))

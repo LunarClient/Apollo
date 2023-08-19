@@ -24,7 +24,6 @@
 package com.lunarclient.apollo.common;
 
 import lombok.NonNull;
-import lombok.Value;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 
@@ -33,8 +32,7 @@ import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
  *
  * @since 1.0.0
  */
-@Value
-public class ApolloComponent {
+public final class ApolloComponent {
 
     /**
      * Returns a new component from the provided JSON {@link String}.
@@ -43,26 +41,22 @@ public class ApolloComponent {
      * @return the component from the json string
      * @since 1.0.0
      */
-    public static ApolloComponent fromJson(@NonNull String json) {
-        return new ApolloComponent(GsonComponentSerializer.gson().deserializeOrNull(json));
+    public static Component fromJson(@NonNull String json) {
+        return GsonComponentSerializer.gson().deserializeOrNull(json);
     }
-
-    /**
-     * Returns the {@link Component} contents.
-     *
-     * @return the component contents
-     * @since 1.0.0
-     */
-    Component content;
 
     /**
      * Returns this component as a JSON {@link String}.
      *
+     * @param component the component to make into a json string
      * @return the json string for this component
      * @since 1.0.0
      */
-    public String toJson() {
-        return GsonComponentSerializer.gson().serialize(this.content);
+    public static String toJson(@NonNull Component component) {
+        return GsonComponentSerializer.gson().serialize(component);
+    }
+
+    private ApolloComponent() {
     }
 
 }

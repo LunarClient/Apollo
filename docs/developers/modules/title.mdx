@@ -21,10 +21,10 @@ The title module backports all vanilla `title` & `subtitle` features found in 1.
 ```java
 private final Title helloTitle = Title.builder()
     .type(TitleType.TITLE)
-    .message(Component.builder()
+    .message(Component.text()
         .content("Hello, player!")
-        .color(Color.GREEN)
-        .decorators(Lists.newArrayList(Component.TextDecorators.BOLD))
+        .color(NamedTextColor.GREEN)
+        .decorate(TextDecoration.BOLD)
         .build())
     .scale(1.0f)
     .displayTime(Duration.ofMillis(1500L))
@@ -44,10 +44,10 @@ private final Title helloTitle = Title.builder()
 `.message(Componnent)` is the message you want to display. See the [component builder](/apollo/developers/utilities/components) page for more.
 
 ```java
-.message(Component.builder()
+.message(Component.text()
     .content("Hello, player!")
-    .color(Color.GREEN)
-    .decorators(List.of(Component.TextDecorators.BOLD))
+    .color(NamedTextColor.GREEN)
+    .decorate(TextDecoration.BOLD)
     .build())
 ```
 

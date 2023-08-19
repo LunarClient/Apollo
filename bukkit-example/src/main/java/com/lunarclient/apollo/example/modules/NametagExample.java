@@ -25,14 +25,14 @@ package com.lunarclient.apollo.example.modules;
 
 import com.google.common.collect.Lists;
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.module.nametag.Nametag;
 import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
-import java.awt.Color;
-import java.util.Collections;
 import java.util.Optional;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
 public class NametagExample {
@@ -42,14 +42,14 @@ public class NametagExample {
     public void overrideNametagExample(Player target) {
         this.nametagModule.overrideNametag(Recipients.ofEveryone(), target.getUniqueId(), Nametag.builder()
             .lines(Lists.newArrayList(
-                Component.builder()
+                Component.text()
                     .content("[StaffMode]")
-                    .decorators(Collections.singletonList(Component.TextDecorators.ITALIC))
-                    .color(Color.GRAY)
+                    .decorate(TextDecoration.ITALIC)
+                    .color(NamedTextColor.GRAY)
                     .build(),
-                Component.builder()
+                Component.text()
                     .content(target.getName())
-                    .color(Color.RED)
+                    .color(NamedTextColor.RED)
                     .build()
             ))
             .build()
