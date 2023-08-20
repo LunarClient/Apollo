@@ -23,8 +23,10 @@
  */
 package com.lunarclient.apollo.network;
 
+import com.google.protobuf.Timestamp;
 import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.common.Component;
+import com.lunarclient.apollo.common.anticheat.PlayerInfo;
 import com.lunarclient.apollo.common.cuboid.Cuboid2D;
 import com.lunarclient.apollo.common.cuboid.Cuboid3D;
 import com.lunarclient.apollo.common.icon.AdvancedResourceLocationIcon;
@@ -155,6 +157,69 @@ public final class NetworkTypes {
      */
     public static Duration fromProtobuf(com.google.protobuf.Duration message) {
         return Duration.ofSeconds(message.getSeconds()).withNanos(message.getNanos());
+    }
+
+    /**
+     * Converts an unix timestamp in milliseconds to an
+     * {@link com.google.protobuf.Timestamp} proto message.
+     *
+     * @param millis the millis
+     * @return the proto timestamp message
+     * @since 1.0.0
+     */
+    public static Timestamp toProtobuf(long millis) {
+        return Timestamp.newBuilder()
+            .setSeconds(millis / 1000)
+            .setNanos((int) ((millis % 1000) * 1000000))
+            .build();
+    }
+
+    /**
+     * Converts an {@link com.google.protobuf.Timestamp}
+     * proto message to a unix timestamp in milliseconds.
+     *
+     * @param message the duration message
+     * @return the unix timestamp in milliseconds
+     * @since 1.0.0
+     */
+    public static long fromProtobuf(Timestamp message) {
+        return message.getSeconds() * 1000 + message.getNanos() / 1000000;
+    }
+
+    /**
+     * Converts an {@link PlayerInfo} object to an
+     * {@link com.lunarclient.apollo.anticheat.v1.PlayerInfo} proto message.
+     *
+     * @param object the player info
+     * @return the proto player info message
+     * @since 1.0.0
+     */
+    public static com.lunarclient.apollo.anticheat.v1.PlayerInfo toProtobuf(PlayerInfo object) {
+        return com.lunarclient.apollo.anticheat.v1.PlayerInfo.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(object.getPlayerUuid()))
+            .setLocation(NetworkTypes.toProtobuf(object.getLocation()))
+            .setSprinting(object.isSprinting())
+            .setSneaking(object.isSneaking())
+            .setPingMs((int) object.getPing()) // TODO
+            .build();
+    }
+
+    /**
+     * Converts an {@link com.lunarclient.apollo.anticheat.v1.PlayerInfo}
+     * proto message to an {@link PlayerInfo} object.
+     *
+     * @param message the player info message
+     * @return the apollo player info object
+     * @since 1.0.0
+     */
+    public static PlayerInfo fromProtobuf(com.lunarclient.apollo.anticheat.v1.PlayerInfo message) {
+        return PlayerInfo.builder()
+            .playerUuid(NetworkTypes.fromProtobuf(message.getPlayerUuid()))
+            .location(NetworkTypes.fromProtobuf(message.getLocation()))
+            .sneaking(message.getSneaking())
+            .sprinting(message.getSprinting())
+            .ping(message.getPingMs())
+            .build();
     }
 
     /**

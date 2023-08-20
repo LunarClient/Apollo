@@ -23,6 +23,13 @@
  */
 package com.lunarclient.apollo.module.anticheat;
 
+import com.lunarclient.apollo.anticheat.v1.PlayerAttackMessage;
+import com.lunarclient.apollo.anticheat.v1.PlayerAttackedMessage;
+import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
+import com.lunarclient.apollo.event.EventBus;
+import com.lunarclient.apollo.event.anticheat.ApolloPlayerAttackEvent;
+import com.lunarclient.apollo.network.NetworkTypes;
+
 /**
  * Provides the anti cheat module.
  *
@@ -30,6 +37,33 @@ package com.lunarclient.apollo.module.anticheat;
  */
 public final class AntiCheatImpl extends AntiCheatModule {
 
+    /**
+     * Creates a new instance of {@link AntiCheatImpl}.
+     *
+     * @since 1.0.0
+     */
+    public AntiCheatImpl() {
+        super();
+        this.handle(ApolloReceivePacketEvent.class, this::onReceivePacket);
+    }
 
+    private void onReceivePacket(ApolloReceivePacketEvent event) {
+        event.unpack(PlayerAttackMessage.class).ifPresent(packet -> {
+            ApolloPlayerAttackEvent playerAttackEvent = new ApolloPlayerAttackEvent(
+                NetworkTypes.fromProtobuf(packet.getPacketInfo().getInstantiationTime()),
+                NetworkTypes.fromProtobuf(packet.getPlayerInfo()),
+                NetworkTypes.fromProtobuf(packet.getAttackerInfo())
+            );
 
+            EventBus.EventResult<ApolloPlayerAttackEvent> result = EventBus.getBus().post(playerAttackEvent);
+
+            for (Throwable throwable : result.getThrowing()) {
+                throwable.printStackTrace();
+            }
+        });
+
+        event.unpack(PlayerAttackedMessage.class).ifPresent(packet -> {
+
+        });
+    }
 }
