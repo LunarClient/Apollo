@@ -6,10 +6,7 @@ import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.jvm.tasks.Jar
 import org.gradle.jvm.toolchain.JavaLanguageVersion
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.get
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.named
+import org.gradle.kotlin.dsl.*
 
 fun JavaPluginExtension.javaTarget(version: Int) {
     toolchain.languageVersion.set(JavaLanguageVersion.of(version))
@@ -17,33 +14,63 @@ fun JavaPluginExtension.javaTarget(version: Int) {
 
 fun Project.createPlatformSources(vararg names: String) {
     extensions.configure<JavaPluginExtension> {
-        val mainSource by sourceSets.named("main")
-        val platformSources = mutableListOf(mainSource)
-        platformSources.addAll(names.map {
+        val commonsCompileOnly by configurations.register("commonsCompileOnly")
+
+        val main by sourceSets
+        names.forEach {
             sourceSets.register(it) {
                 java.setSrcDirs(setOf("src/$it/java"))
-                compileClasspath += mainSource.compileClasspath
-                runtimeClasspath += mainSource.runtimeClasspath
-                dependencies.add(implementationConfigurationName, objects.fileCollection().from(mainSource.output.classesDirs))
-            }.get()
-        })
 
-        tasks.named<ShadowJar>("shadowJar") {
-            platformSources.forEach {
-                from(it.output)
+                project.dependencies.add(this.implementationConfigurationName, main.output)
+
+                configurations.named(compileOnlyConfigurationName) {
+                    extendsFrom(commonsCompileOnly)
+                }
+            }.get()
+        }
+
+        sourceSets.configureEach {
+            val sourceSet = this
+            val sourceName = sourceSet.name
+            if (sourceName.equals("main")) return@configureEach
+
+            tasks.register("${sourceName}Jar", Jar::class.java) {
+                archiveClassifier.set(sourceName)
+                from(sourceSet.output)
             }
         }
 
-        tasks.named<Jar>("sourcesJar") {
-            platformSources.forEach {
-                from(it.allSource)
+        tasks.named<ShadowJar>("shadowJar") {
+            sourceSets.forEach {
+                val sourceName = it.name
+                val sourceJarName = if (sourceName.equals("main")) "sourcesJar" else "${sourceName}Jar"
+
+                val sourceJar by tasks.named<Jar>(sourceJarName)
+                from(sourceJar)
             }
         }
 
         tasks.named<Javadoc>("javadoc") {
-            source(platformSources.map { it.allJava })
-            classpath += platformSources.map { it.compileClasspath }.reduce { first, second -> first + second }
+            source(sourceSets.map { it.allJava })
+            classpath += sourceSets.map { it.compileClasspath }.reduce { first, second -> first + second }
         }
+
+//        tasks.named<ShadowJar>("shadowJar") {
+//            platformSources.forEach {
+//                from(it.output)
+//            }
+//        }
+//
+//        tasks.named<Jar>("sourcesJar") {
+//            platformSources.forEach {
+//                from(it.allSource)
+//            }
+//        }
+//
+//        tasks.named<Javadoc>("javadoc") {
+//            source(platformSources.map { it.allJava })
+//            classpath += platformSources.map { it.compileClasspath }.reduce { first, second -> first + second }
+//        }
     }
 }
 

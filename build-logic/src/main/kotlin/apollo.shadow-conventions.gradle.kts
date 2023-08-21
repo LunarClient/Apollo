@@ -8,13 +8,11 @@ plugins {
 tasks {
     jar {
         archiveClassifier.set("dev")
-//        archiveFileName.set("${project.name}-${project.version}-dev.jar")
     }
 
     val shadowJar = named<ShadowJar>("shadowJar") {
         archiveClassifier.set("")
         configureRelocations()
-//        archiveFileName.set("${project.name}-${project.version}.jar")
     }
 
     assemble {
