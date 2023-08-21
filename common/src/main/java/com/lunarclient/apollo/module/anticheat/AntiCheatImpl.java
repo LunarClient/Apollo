@@ -51,8 +51,9 @@ public final class AntiCheatImpl extends AntiCheatModule {
         event.unpack(PlayerAttackMessage.class).ifPresent(packet -> {
             ApolloPlayerAttackEvent playerAttackEvent = new ApolloPlayerAttackEvent(
                 NetworkTypes.fromProtobuf(packet.getPacketInfo().getInstantiationTime()),
-                NetworkTypes.fromProtobuf(packet.getPlayerInfo()),
-                NetworkTypes.fromProtobuf(packet.getAttackerInfo())
+                NetworkTypes.fromProtobuf(packet.getTargetInfo()),
+                NetworkTypes.fromProtobuf(packet.getAttackerInfo()),
+                packet.getDistance()
             );
 
             EventBus.EventResult<ApolloPlayerAttackEvent> result = EventBus.getBus().post(playerAttackEvent);

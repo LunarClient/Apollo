@@ -35,10 +35,12 @@ import lombok.Value;
 @Value
 public class ApolloPlayerAttackEvent implements Event {
 
+    // TODO: docs
     long instantiationTimeMs;
 
     PlayerInfo playerInfo;
 
     PlayerInfo attackerInfo;
 
+    double distance;
 }
