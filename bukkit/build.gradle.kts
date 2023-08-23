@@ -6,6 +6,11 @@ dependencies {
     compileOnly(libs.bukkit.api)
     compileOnly(libs.bukkit)
 
-    api(projects.apolloApi)
+    compileOnlyApi(projects.extra.apolloExtraAdventure4)
+
+    api(projects.apolloApi) {
+        targetConfiguration = "shadow"
+    }
+
     api(projects.apolloCommon)
 }

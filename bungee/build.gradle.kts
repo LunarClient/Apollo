@@ -3,8 +3,13 @@ plugins {
 }
 
 dependencies {
-    api(projects.apolloApi)
-    api(projects.apolloCommon)
-
     compileOnly(libs.bungee)
+
+    compileOnlyApi(projects.extra.apolloExtraAdventure4)
+
+    api(projects.apolloApi) {
+        targetConfiguration = "shadow"
+    }
+
+    api(projects.apolloCommon)
 }

@@ -3,9 +3,15 @@ plugins {
 }
 
 dependencies {
-    api(projects.apolloApi)
+    compileOnly(libs.velocity)
+
+    compileOnlyApi(projects.extra.apolloExtraAdventure4)
+
+    api(projects.apolloApi) {
+        targetConfiguration = "shadow"
+    }
+
     api(projects.apolloCommon)
 
-    compileOnly(libs.velocity)
     annotationProcessor(libs.velocity)
 }

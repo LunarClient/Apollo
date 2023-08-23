@@ -3,7 +3,12 @@ plugins {
 }
 
 dependencies {
-    api(projects.apolloApi)
+    compileOnlyApi(projects.extra.apolloExtraAdventure4)
+
+    api(projects.apolloApi) {
+        targetConfiguration = "shadow"
+    }
+
     api(libs.protobuf)
     api(libs.configurate.core)
     api(libs.configurate.yaml)
