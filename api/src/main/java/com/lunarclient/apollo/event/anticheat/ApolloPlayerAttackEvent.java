@@ -35,12 +35,37 @@ import lombok.Value;
 @Value
 public class ApolloPlayerAttackEvent implements Event {
 
-    // TODO: docs
+    /**
+     * The {@code long} representing the unix timestamp
+     * when the packet was created.
+     *
+     * @return the unix timestamp
+     * @since 1.0.0
+     */
     long instantiationTimeMs;
 
-    PlayerInfo playerInfo;
+    /**
+     * The target's {@link PlayerInfo} information.
+     *
+     * @return the target player info
+     * @since 1.0.0
+     */
+    PlayerInfo targetInfo;
 
+    /**
+     * The attacker's {@link PlayerInfo} information.
+     *
+     * @return the attacker player info
+     * @since 1.0.0
+     */
     PlayerInfo attackerInfo;
 
+    /**
+     * The {@code double} reach distance.
+     *
+     * @return the reach distance
+     * @since 1.0.0
+     */
     double distance;
+
 }
