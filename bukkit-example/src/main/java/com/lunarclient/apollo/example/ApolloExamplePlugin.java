@@ -41,6 +41,7 @@ import com.lunarclient.apollo.example.commands.TntCountdownCommand;
 import com.lunarclient.apollo.example.commands.TransferCommand;
 import com.lunarclient.apollo.example.commands.VignetteCommand;
 import com.lunarclient.apollo.example.commands.WaypointCommand;
+import com.lunarclient.apollo.example.listeners.AntiCheatListenerExample;
 import com.lunarclient.apollo.example.modules.BeamExample;
 import com.lunarclient.apollo.example.modules.BorderExample;
 import com.lunarclient.apollo.example.modules.ColoredFireExample;
@@ -93,6 +94,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
 
         this.registerModuleExamples();
         this.registerCommands();
+        this.registerListeners();
     }
 
     @Override
@@ -140,5 +142,9 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("transfer").setExecutor(new TransferCommand());
         this.getCommand("vignette").setExecutor(new VignetteCommand());
         this.getCommand("waypoint").setExecutor(new WaypointCommand());
+    }
+
+    private void registerListeners() {
+        new AntiCheatListenerExample();
     }
 }

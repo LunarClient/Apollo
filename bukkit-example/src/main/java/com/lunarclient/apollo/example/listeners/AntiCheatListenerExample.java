@@ -27,6 +27,8 @@ import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.Listen;
 import com.lunarclient.apollo.event.anticheat.ApolloPlayerAttackEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 public class AntiCheatListenerExample implements ApolloListener {
 
@@ -35,7 +37,8 @@ public class AntiCheatListenerExample implements ApolloListener {
     }
 
     @Listen
-    public void onApolloPlayerAttack(ApolloPlayerAttackEvent event) {
-
+    private void onApolloPlayerAttack(ApolloPlayerAttackEvent event) {
+        double dist = event.getDistance();
+        Bukkit.broadcastMessage(dist > 3.00000000000000001 ? ChatColor.RED.toString() + dist : dist + "");
     }
 }
