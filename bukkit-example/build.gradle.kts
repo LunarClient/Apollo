@@ -1,5 +1,5 @@
 plugins {
-    id("apollo.shadow-conventions")
+    id("apollo.base-conventions")
 }
 
 dependencies {
@@ -7,6 +7,6 @@ dependencies {
 
     compileOnlyApi(projects.extra.apolloExtraAdventure4)
     compileOnlyApi(projects.apolloApi) {
-        targetConfiguration = "shadow"
+        targetConfiguration = "bukkit"
     }
 }

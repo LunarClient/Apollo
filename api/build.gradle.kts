@@ -10,28 +10,34 @@ val velocityConfig = configurations.register("velocity")
 val main by sourceSets
 
 val bukkitSource by sourceSets.register("bukkit") {
+    project.dependencies.add(this.implementationConfigurationName, main.output)
+
     compileClasspath += main.compileClasspath
     compileClasspath += main.runtimeClasspath
 
-    configurations.named(compileOnlyConfigurationName) {
+    configurations.named(implementationConfigurationName) {
         extendsFrom(bukkitConfig.get())
     }
 }
 
 val bungeeSource by sourceSets.register("bungee") {
+    project.dependencies.add(this.implementationConfigurationName, main.output)
+
     compileClasspath += main.compileClasspath
     compileClasspath += main.runtimeClasspath
 
-    configurations.named(compileOnlyConfigurationName) {
+    configurations.named(implementationConfigurationName) {
         extendsFrom(bungeeConfig.get())
     }
 }
 
 val velocitySource by sourceSets.register("velocity") {
+    project.dependencies.add(this.implementationConfigurationName, main.output)
+
     compileClasspath += main.compileClasspath
     compileClasspath += main.runtimeClasspath
 
-    configurations.named(compileOnlyConfigurationName) {
+    configurations.named(implementationConfigurationName) {
         extendsFrom(velocityConfig.get())
     }
 }
@@ -87,6 +93,12 @@ tasks {
     assemble {
         dependsOn(shadowJar)
     }
+}
+
+artifacts {
+    add("bukkit", tasks["bukkitJar"])
+    add("bungee", tasks["bungeeJar"])
+    add("velocity", tasks["velocityJar"])
 }
 
 publishShadowJar()
