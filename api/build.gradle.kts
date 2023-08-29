@@ -46,16 +46,16 @@ dependencies {
     api(projects.extra.apolloExtraAdventure4)
     api(libs.geantyref)
 
-    val bukkit = bukkitSource.name
+    val bukkit = bukkitConfig.name
     bukkit(main.output)
     bukkit(libs.bukkit.api)
     bukkit(libs.bukkit)
 
-    val bungee = bungeeSource.name
+    val bungee = bungeeConfig.name
     bungee(main.output)
     bungee(libs.bungee)
 
-    val velocity = velocitySource.name
+    val velocity = velocityConfig.name
     velocity(main.output)
     velocity(libs.velocity)
 }
