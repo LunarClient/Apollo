@@ -24,10 +24,13 @@
 package com.lunarclient.apollo.module.anticheat;
 
 import com.lunarclient.apollo.anticheat.v1.PlayerAttackMessage;
-import com.lunarclient.apollo.anticheat.v1.PlayerAttackedMessage;
+import com.lunarclient.apollo.anticheat.v1.PlayerChatCloseMessage;
+import com.lunarclient.apollo.anticheat.v1.PlayerChatOpenMessage;
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.anticheat.ApolloPlayerAttackEvent;
+import com.lunarclient.apollo.event.anticheat.chat.ApolloPlayerChatCloseEvent;
+import com.lunarclient.apollo.event.anticheat.chat.ApolloPlayerChatOpenEvent;
 import com.lunarclient.apollo.network.NetworkTypes;
 
 /**
@@ -63,8 +66,29 @@ public final class AntiCheatImpl extends AntiCheatModule {
             }
         });
 
-        event.unpack(PlayerAttackedMessage.class).ifPresent(packet -> {
+        event.unpack(PlayerChatOpenMessage.class).ifPresent(packet -> {
+            ApolloPlayerChatOpenEvent playerChatOpenEvent = new ApolloPlayerChatOpenEvent(
+                NetworkTypes.fromProtobuf(packet.getPacketInfo().getInstantiationTime()),
+                NetworkTypes.fromProtobuf(packet.getPlayerInfo()));
 
+            EventBus.EventResult<ApolloPlayerChatOpenEvent> result = EventBus.getBus().post(playerChatOpenEvent);
+
+            for (Throwable throwable : result.getThrowing()) {
+                throwable.printStackTrace();
+            }
+        });
+
+        event.unpack(PlayerChatCloseMessage.class).ifPresent(packet -> {
+            ApolloPlayerChatCloseEvent playerChatCloseEvent = new ApolloPlayerChatCloseEvent(
+                NetworkTypes.fromProtobuf(packet.getPacketInfo().getInstantiationTime()),
+                NetworkTypes.fromProtobuf(packet.getPlayerInfo()));
+
+            EventBus.EventResult<ApolloPlayerChatCloseEvent> result = EventBus.getBus().post(playerChatCloseEvent);
+
+            for (Throwable throwable : result.getThrowing()) {
+                throwable.printStackTrace();
+            }
         });
     }
+
 }
