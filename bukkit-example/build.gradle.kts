@@ -5,8 +5,6 @@ plugins {
 dependencies {
     compileOnly(libs.bukkit.api)
 
-    compileOnlyApi(projects.extra.apolloExtraAdventure4)
-    compileOnlyApi(projects.apolloApi) {
-        targetConfiguration = "bukkit"
-    }
+    compileOnly(project(":extra:apollo-extra-adventure4"))
+    compileOnly(project(path = ":apollo-api", configuration = "bukkit"))
 }

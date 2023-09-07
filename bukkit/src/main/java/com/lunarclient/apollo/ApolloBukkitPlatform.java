@@ -26,6 +26,7 @@ package com.lunarclient.apollo;
 import com.google.protobuf.Any;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
+import com.lunarclient.apollo.loader.PlatformPlugin;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
@@ -78,20 +79,32 @@ import org.bukkit.plugin.messaging.Messenger;
  *
  * @since 1.0.0
  */
-public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform {
+public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatform {
 
     @Getter private static ApolloBukkitPlatform instance;
 
     @Getter private final Options options = new OptionsImpl(null);
+
+    @Getter private final JavaPlugin plugin;
+
+    /**
+     * Constructs a new {@link ApolloBukkitPlatform}.
+     *
+     * @param plugin the plugin instance
+     * @since 1.0.0
+     */
+    public ApolloBukkitPlatform(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public void onEnable() {
         ApolloBukkitPlatform.instance = this;
         ApolloManager.bootstrap(this);
 
-        PluginManager pluginManager = this.getServer().getPluginManager();
-        pluginManager.registerEvents(new ApolloPlayerListener(), this);
-        pluginManager.registerEvents(new ApolloWorldListener(), this);
+        PluginManager pluginManager = this.plugin.getServer().getPluginManager();
+        pluginManager.registerEvents(new ApolloPlayerListener(), this.plugin);
+        pluginManager.registerEvents(new ApolloWorldListener(), this.plugin);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
             .addModule(BeamModule.class, new BeamModuleImpl())
@@ -114,13 +127,13 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
             .addModule(VignetteModule.class, new VignetteModuleImpl())
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
-        ApolloManager.loadConfiguration(this.getDataFolder().toPath());
+        ApolloManager.loadConfiguration(this.plugin.getDataFolder().toPath());
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
         ApolloManager.saveConfiguration();
 
-        Messenger messenger = this.getServer().getMessenger();
-        messenger.registerOutgoingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
-        messenger.registerIncomingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
+        Messenger messenger = this.plugin.getServer().getMessenger();
+        messenger.registerOutgoingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
+        messenger.registerIncomingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
             (channel, player, bytes) -> this.handlePacket(player, bytes)
         );
     }
@@ -139,7 +152,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
 
     @Override
     public String getApolloVersion() {
-        return this.getDescription().getVersion();
+        return this.plugin.getDescription().getVersion();
     }
 
     @Override

@@ -24,6 +24,7 @@
 package com.lunarclient.apollo;
 
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
+import com.lunarclient.apollo.loader.PlatformPlugin;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
@@ -37,11 +38,23 @@ import net.md_5.bungee.api.plugin.Plugin;
  *
  * @since 1.0.0
  */
-public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform {
+public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatform {
 
     @Getter private static ApolloBungeePlatform instance;
 
     @Getter private final Options options = new OptionsImpl(null);
+
+    @Getter private final Plugin plugin;
+
+    /**
+     * Constructs a new {@link ApolloBungeePlatform}.
+     *
+     * @param plugin the plugin instance
+     * @since 1.0.0
+     */
+    public ApolloBungeePlatform(Plugin plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public void onEnable() {
@@ -49,12 +62,12 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
 
         ApolloManager.bootstrap(this);
 
-        ApolloManager.loadConfiguration(this.getDataFolder().toPath());
+        ApolloManager.loadConfiguration(this.plugin.getDataFolder().toPath());
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
         ApolloManager.saveConfiguration();
 
-        this.getProxy().getPluginManager().registerListener(this, new ApolloPlayerListener());
-        this.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
+        this.plugin.getProxy().getPluginManager().registerListener(this.plugin, new ApolloPlayerListener());
+        this.plugin.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
     }
 
     @Override
@@ -71,7 +84,7 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
 
     @Override
     public String getApolloVersion() {
-        return this.getDescription().getVersion();
+        return this.plugin.getDescription().getVersion();
     }
 
     @Override

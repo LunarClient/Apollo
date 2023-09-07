@@ -11,7 +11,7 @@ idea = "1.1.7"
 jetbrains = "24.0.1"
 lombok = "1.18.26"
 protobuf = "1.0-SNAPSHOT"
-shadow = "7.1.2"
+shadow = "8.1.1"
 spotless = "6.13.0"
 velocity = "3.0.1"
 
@@ -46,7 +46,7 @@ velocity = { module = "com.velocitypowered:velocity-api", version.ref = "velocit
 # build
 artifactregistry = { module = "gradle.plugin.com.google.cloud.artifactregistry:artifactregistry-gradle-plugin", version.ref = "artifactregistry" }
 spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
-shadow = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "shadow" }
+shadow = { module = "com.github.johnrengelman:shadow", version.ref = "shadow" }
 idea = { module = "gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext", version.ref = "idea" }
 
 stylecheck = "ca.stellardrift:stylecheck:0.1"

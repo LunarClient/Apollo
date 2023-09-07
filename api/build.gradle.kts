@@ -43,7 +43,8 @@ val velocitySource by sourceSets.register("velocity") {
 }
 
 dependencies {
-    api(projects.extra.apolloExtraAdventure4)
+    api(project(":extra:apollo-extra-adventure4"))
+
     api(libs.geantyref)
 
     val bukkit = bukkitConfig.name
@@ -88,10 +89,6 @@ tasks {
     javadoc {
         source(sourceSets.map { it.allJava })
         classpath += sourceSets.map { it.compileClasspath }.reduce { first, second -> first + second }
-    }
-
-    assemble {
-        dependsOn(shadowJar)
     }
 }
 

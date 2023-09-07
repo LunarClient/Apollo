@@ -2,27 +2,16 @@ plugins {
     id("apollo.shadow-conventions")
 }
 
-val adventure4Config = configurations.register("adventure4")
+setupDynamicLoader()
+
+setupDynamicDependency("adventure4", "shadowJarAdventure4", "adventure/4/", "libs")
 
 dependencies {
-    compileOnly(libs.bungee)
+    api(project(path = ":apollo-api", configuration = "shadow"))
+    api(project(":apollo-common"))
 
-    val adventure4 = adventure4Config.name
-    adventure4(projects.extra.apolloExtraAdventure4)
+    "loaderCompileOnly"(libs.bungee)
+    "loaderImplementation"(project(":extra:apollo-extra-loader"))
 
-    api(projects.apolloApi) {
-        targetConfiguration = "shadow"
-    }
-
-    api(projects.apolloCommon)
-}
-
-tasks {
-    shadowJar {
-        from(sourceSets.main.get().output)
-
-        into("adventure/4/") {
-            from(adventure4Config.get().resolve().map { zipTree(it) })
-        }
-    }
+    "adventure4"(project(":extra:apollo-extra-adventure4"))
 }

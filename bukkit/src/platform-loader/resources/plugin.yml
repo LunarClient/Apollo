@@ -1,4 +1,4 @@
 name: Apollo-Bukkit
-main: com.lunarclient.apollo.ApolloBukkitPlatform
+main: com.lunarclient.apollo.loader.BukkitPlatformLoader
 version: 0.1.0-SNAPSHOT
 author: Moonsworth
