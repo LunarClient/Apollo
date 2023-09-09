@@ -30,6 +30,7 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import java.util.logging.Logger;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -38,6 +39,7 @@ import net.md_5.bungee.api.plugin.Plugin;
  *
  * @since 1.0.0
  */
+@RequiredArgsConstructor
 public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatform {
 
     @Getter private static ApolloBungeePlatform instance;
@@ -45,16 +47,6 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
     @Getter private final Options options = new OptionsImpl(null);
 
     @Getter private final Plugin plugin;
-
-    /**
-     * Constructs a new {@link ApolloBungeePlatform}.
-     *
-     * @param plugin the plugin instance
-     * @since 1.0.0
-     */
-    public ApolloBungeePlatform(Plugin plugin) {
-        this.plugin = plugin;
-    }
 
     @Override
     public void onEnable() {

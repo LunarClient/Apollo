@@ -1,9 +1,10 @@
-import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.api.tasks.javadoc.Javadoc
+import org.gradle.jvm.tasks.Jar
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.*
 
@@ -18,6 +19,55 @@ fun ShadowJar.configureRelocations() {
 
 fun ShadowJar.configureExclusions() {
     exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
+}
+
+fun Project.setupPlatforms() {
+    extensions.configure<JavaPluginExtension> {
+        val jar by tasks.named("jar")
+
+        val shadowJar by tasks.named("shadowJar", ShadowJar::class) {
+            configurations = listOf()
+
+            from(jar)
+        }
+
+        tasks.named("javadoc", Javadoc::class) {
+            source(sourceSets.map { it.allJava })
+            classpath += sourceSets.map { it.compileClasspath }.reduce { first, second -> first + second }
+        }
+    }
+}
+
+fun Project.setupPlatformDependency(configurationName: String, jarTaskName: String) {
+    extensions.configure<JavaPluginExtension> {
+        val configuration = configurations.register(configurationName)
+
+        val main by sourceSets
+
+        val source by sourceSets.register(configurationName) {
+            project.dependencies.add(this.implementationConfigurationName, main.output)
+
+            compileClasspath += main.compileClasspath
+            compileClasspath += main.runtimeClasspath
+
+            configurations.named(this.implementationConfigurationName) {
+                extendsFrom(configuration.get())
+            }
+        }
+
+        val jarTask by tasks.register(jarTaskName, Jar::class) {
+            archiveClassifier.set(configurationName)
+            from(source.output)
+        }
+
+        tasks.named("shadowJar", ShadowJar::class) {
+            from(jarTask)
+        }
+
+        artifacts {
+            add(configurationName, jarTask)
+        }
+    }
 }
 
 fun Project.setupDynamicLoader() {

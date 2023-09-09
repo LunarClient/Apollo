@@ -68,6 +68,7 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import java.util.logging.Logger;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -79,6 +80,7 @@ import org.bukkit.plugin.messaging.Messenger;
  *
  * @since 1.0.0
  */
+@RequiredArgsConstructor
 public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatform {
 
     @Getter private static ApolloBukkitPlatform instance;
@@ -86,16 +88,6 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
     @Getter private final Options options = new OptionsImpl(null);
 
     @Getter private final JavaPlugin plugin;
-
-    /**
-     * Constructs a new {@link ApolloBukkitPlatform}.
-     *
-     * @param plugin the plugin instance
-     * @since 1.0.0
-     */
-    public ApolloBukkitPlatform(JavaPlugin plugin) {
-        this.plugin = plugin;
-    }
 
     @Override
     public void onEnable() {
