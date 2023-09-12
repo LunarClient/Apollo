@@ -61,8 +61,10 @@ import com.lunarclient.apollo.module.vignette.VignetteModuleImpl;
 import com.lunarclient.apollo.module.waypoint.WaypointModule;
 import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
+import com.lunarclient.apollo.wrapper.BukkitApolloStats;
 import com.lunarclient.apollo.wrapper.BukkitApolloWorld;
 import lombok.Getter;
 import org.bukkit.entity.Player;
@@ -85,9 +87,12 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
 
     @Getter private static ApolloBukkitPlatform instance;
 
+    private ApolloStats stats;
+
     @Override
     public void onEnable() {
         ApolloBukkitPlatform.instance = this;
+        this.stats = new BukkitApolloStats();
         ApolloManager.bootstrap(this);
 
         this.getServer().getPluginManager().registerEvents(this, this);
@@ -135,6 +140,11 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     @Override
     public Kind getKind() {
         return Kind.SERVER;
+    }
+
+    @Override
+    public ApolloStats getStats() {
+        return this.stats;
     }
 
     @EventHandler

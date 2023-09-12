@@ -21,42 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo;
+package com.lunarclient.apollo.stats;
 
-import com.lunarclient.apollo.stats.ApolloStats;
-import org.jetbrains.annotations.ApiStatus;
+import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
- * Represents a platform that supports Apollo.
+ * Represents a single plugin used for stats.
  *
  * @since 1.0.0
  */
-@ApiStatus.NonExtendable
-public interface ApolloPlatform {
+@Getter
+@Builder
+@ToString // TODO: remove
+public class ApolloPluginDescription {
 
     /**
-     * Returns this kind of platform.
+     * Returns the plugin {@link String} name.
      *
-     * @return this kind of platform
+     * @return the plugin name
      * @since 1.0.0
      */
-    Kind getKind();
+    String name;
 
     /**
-     * Returns the platform stats.
+     * Returns the plugin {@link String} description.
      *
-     * @return the platform stats
+     * @return the plugin description
      * @since 1.0.0
      */
-    ApolloStats getStats();
+    String description;
 
     /**
-     * Represents the kind of server a platform is.
+     * Returns the plugin {@link List} of {@link String} authors.
      *
+     * @return the plugin authors
      * @since 1.0.0
      */
-    enum Kind {
-        SERVER,
-        PROXY
-    }
+    List<String> authors;
+
+    /**
+     * Returns the plugin {@link String} version.
+     *
+     * @return the plugin version
+     * @since 1.0.0
+     */
+    String version;
+
 }

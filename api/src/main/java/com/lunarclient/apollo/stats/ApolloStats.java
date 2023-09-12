@@ -21,42 +21,65 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo;
+package com.lunarclient.apollo.stats;
 
-import com.lunarclient.apollo.stats.ApolloStats;
+import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Represents a platform that supports Apollo.
+ * Represents a player on Apollo.
  *
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
-public interface ApolloPlatform {
+public interface ApolloStats {
 
     /**
-     * Returns this kind of platform.
+     * Gets the servers message of the day (MOTD).
      *
-     * @return this kind of platform
+     * @return the servers message of the day
      * @since 1.0.0
      */
-    Kind getKind();
+    String getMotd();
 
     /**
-     * Returns the platform stats.
+     * Gets the servers icon (Base64).
      *
-     * @return the platform stats
+     * @return the servers icon
      * @since 1.0.0
      */
-    ApolloStats getStats();
+    String getIcon();
 
     /**
-     * Represents the kind of server a platform is.
+     * Gets the servers version.
      *
+     * @return the servers version
      * @since 1.0.0
      */
-    enum Kind {
-        SERVER,
-        PROXY
-    }
+    String getVersion();
+
+    /**
+     * Gets the servers plugin list.
+     *
+     * @return the servers plugin list
+     * @since 1.0.0
+     */
+    List<ApolloPluginDescription> getPlugins();
+
+    /**
+     * Gets the servers platform type (Bukkit, BungeeCord, Velocity...).
+     *
+     * @return the servers platform type
+     * @since 1.0.0
+     */
+    String getPlatformType();
+
+    /**
+     * Gets the servers platform version.
+     *
+     * @return the servers platform version
+     * @since 1.0.0
+     */
+    String getPlatformVersion();
+
 }

@@ -26,7 +26,9 @@ package com.lunarclient.apollo;
 import com.google.common.base.Charsets;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.wrapper.BungeeApolloPlayer;
+import com.lunarclient.apollo.wrapper.BungeeApolloStats;
 import lombok.Getter;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -45,10 +47,13 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
 
     @Getter private static ApolloBungeePlatform instance;
 
+    private ApolloStats stats;
+
     @Override
     public void onEnable() {
         ApolloBungeePlatform.instance = this;
 
+        this.stats = new BungeeApolloStats();
         this.getProxy().getPluginManager().registerListener(this, this);
 
         ApolloManager.bootstrap(this);
@@ -71,6 +76,11 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
     @Override
     public Kind getKind() {
         return Kind.PROXY;
+    }
+
+    @Override
+    public ApolloStats getStats() {
+        return this.stats;
     }
 
     @EventHandler

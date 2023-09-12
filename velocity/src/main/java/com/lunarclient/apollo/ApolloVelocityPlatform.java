@@ -27,6 +27,7 @@ import com.google.common.base.Charsets;
 import com.google.inject.Inject;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.wrapper.VelocityApolloPlayer;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
@@ -94,6 +95,11 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     @Override
     public Kind getKind() {
         return Kind.PROXY;
+    }
+
+    @Override
+    public ApolloStats getStats() {
+        return null; // TODO
     }
 
     @Subscribe

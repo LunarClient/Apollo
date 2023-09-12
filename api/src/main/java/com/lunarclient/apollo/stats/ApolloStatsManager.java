@@ -21,42 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo;
+package com.lunarclient.apollo.stats;
 
-import com.lunarclient.apollo.stats.ApolloStats;
-import org.jetbrains.annotations.ApiStatus;
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.SimpleOption;
+import io.leangen.geantyref.TypeToken;
 
 /**
- * Represents a platform that supports Apollo.
+ * Manages Apollo statistics.
  *
  * @since 1.0.0
  */
-@ApiStatus.NonExtendable
-public interface ApolloPlatform {
+public final class ApolloStatsManager {
+
+    private static final String CONFIG_PREFIX = "mcstats";
+
+    public static final SimpleOption<Boolean> SERVER_IP = Option.<Boolean>builder()
+        .comment("Set to 'true' to send your server IP address to MCStats, otherwise 'false'.")
+        .node(CONFIG_PREFIX + "server-address").type(TypeToken.get(Boolean.class))
+        .defaultValue(true).build();
 
     /**
-     * Returns this kind of platform.
-     *
-     * @return this kind of platform
-     * @since 1.0.0
-     */
-    Kind getKind();
-
-    /**
-     * Returns the platform stats.
-     *
-     * @return the platform stats
-     * @since 1.0.0
-     */
-    ApolloStats getStats();
-
-    /**
-     * Represents the kind of server a platform is.
+     * Constructs the {@link ApolloStatsManager}.
      *
      * @since 1.0.0
      */
-    enum Kind {
-        SERVER,
-        PROXY
+    public ApolloStatsManager() {
+        this.handleServerStartStats();
     }
+
+    private void handleServerStartStats() {
+        ApolloStats stats = Apollo.getPlatform().getStats();
+
+        // Request
+        System.out.println(stats.getMotd());
+        System.out.println(stats.getIcon());
+        System.out.println(stats.getVersion());
+        System.out.println(stats.getPlugins());
+        System.out.println(stats.getPlatformType());
+        System.out.println(stats.getPlatformVersion());
+    }
+
 }
