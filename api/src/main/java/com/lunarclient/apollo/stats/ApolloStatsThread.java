@@ -24,45 +24,44 @@
 package com.lunarclient.apollo.stats;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.option.Option;
-import com.lunarclient.apollo.option.SimpleOption;
-import io.leangen.geantyref.TypeToken;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Manages Apollo statistics.
+ * Represents a background thread responsible for sending heartbeat data to MCStats.
  *
  * @since 1.0.0
  */
-public final class ApolloStatsManager {
+public final class ApolloStatsThread extends Thread {
 
-    private static final String CONFIG_PREFIX = "mcstats.";
-
-    public static final SimpleOption<Boolean> SERVER_IP = Option.<Boolean>builder()
-        .comment("Set to 'true' to send your server IP address to MCStats, otherwise 'false'.")
-        .node(CONFIG_PREFIX + "server-address").type(TypeToken.get(Boolean.class))
-        .defaultValue(true).build();
+    private static final long HEARTBEAT_INTERVAL = TimeUnit.MINUTES.toMillis(15);
 
     /**
-     * Constructs the {@link ApolloStatsManager}.
+     * Constructs the {@link ApolloStatsThread} thread.
      *
      * @since 1.0.0
      */
-    public ApolloStatsManager() {
-        this.handleServerStartStats();
-
-        new ApolloStatsThread();
+    public ApolloStatsThread() {
+        this.setName("Apollo Stats Thread");
+        this.setDaemon(true);
+        this.start();
     }
 
-    private void handleServerStartStats() {
-        ApolloStats stats = Apollo.getPlatform().getStats();
+    @Override
+    public void run() {
+        for(;;) {
+            try {
+                ApolloStats stats = Apollo.getPlatform().getStats();
 
-        // Request
-        System.out.println("MOTD " + stats.getMotd());
-        System.out.println("ICON " + stats.getIcon());
-        System.out.println("VERSION " + stats.getVersion());
-        System.out.println("PLUGINS " + stats.getPlugins());
-        System.out.println("PLATFORM TYPE " + stats.getPlatformType());
-        System.out.println("PLATFORM VERSION " + stats.getPlatformVersion());
+                System.out.println("CPU USAGE " + stats.getCpuUsage());
+                System.out.println("MAX RAM " + stats.getMaximumAllocatedRam());
+                System.out.println("USED RAM " + stats.getUsedRam());
+                System.out.println("TOTAL PLAYERS " + stats.getTotalPlayers());
+                System.out.println("MAX PLAYERS " + stats.getMaxPlayers());
+
+                Thread.sleep(HEARTBEAT_INTERVAL);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        }
     }
-
 }

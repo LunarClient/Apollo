@@ -23,71 +23,66 @@
  */
 package com.lunarclient.apollo.wrapper;
 
+import com.lunarclient.apollo.ApolloVelocityPlatform;
 import com.lunarclient.apollo.stats.ApolloPluginDescription;
 import com.lunarclient.apollo.stats.ApolloStats;
+import com.velocitypowered.api.plugin.PluginContainer;
+import com.velocitypowered.api.util.Favicon;
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import net.md_5.bungee.api.Favicon;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.config.ListenerInfo;
-import net.md_5.bungee.api.plugin.Plugin;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 /**
- * The Bungee implementation of {@link ApolloStats}.
+ * The Velocity implementation of {@link ApolloStats}.
  *
  * @since 1.0.0
  */
-public class BungeeApolloStats implements ApolloStats {
+public class VelocityApolloStats implements ApolloStats {
 
     private static final OperatingSystemMXBean MX_BEAN = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
 
     @Override
     public String getMotd() {
-        return ProxyServer.getInstance().getConfigurationAdapter().getListeners().stream()
-            .filter(listener -> listener.getMotd() != null && !listener.getMotd().isEmpty())
-            .findAny().map(ListenerInfo::getMotd).orElse(null);
+        Component motd = ApolloVelocityPlatform.getInstance().getServer().getConfiguration().getMotd();
+        return LegacyComponentSerializer.legacyAmpersand().serialize(motd);
     }
 
     @Override
     public String getIcon() {
-        Favicon favicon = ProxyServer.getInstance().getConfig().getFaviconObject();
-        return favicon == null ? null : favicon.getEncoded();
+        Optional<Favicon> favicon = ApolloVelocityPlatform.getInstance().getServer().getConfiguration().getFavicon();
+        return favicon.map(Favicon::getBase64Url).orElse(null);
     }
 
     @Override
     public String getVersion() {
-        try {
-            return ProxyServer.getInstance().getVersion().split(":")[2];
-        } catch (IndexOutOfBoundsException e) {
-            return null;
-        }
+        return null;
     }
 
     @Override
     public List<ApolloPluginDescription> getPlugins() {
-        return ProxyServer.getInstance().getPluginManager().getPlugins()
-            .stream().map(Plugin::getDescription)
-            .filter(plugin -> !plugin.getAuthor().equals("SpigotMC"))
+        return ApolloVelocityPlatform.getInstance().getServer().getPluginManager().getPlugins()
+            .stream().map(PluginContainer::getDescription)
             .map(description -> ApolloPluginDescription.builder()
-                .name(description.getName())
-                .description(description.getDescription())
-                .authors(Collections.singletonList(description.getAuthor()))
-                .version(description.getVersion())
+                .name(description.getName().orElse(null))
+                .description(description.getDescription().orElse(null))
+                .authors(description.getAuthors())
+                .version(description.getVersion().orElse(null))
                 .build())
             .collect(Collectors.toList());
     }
 
     @Override
     public String getPlatformType() {
-        return "BungeeCord";
+        return "Velocity";
     }
 
     @Override
     public String getPlatformVersion() {
-        return ProxyServer.getInstance().getVersion();
+        return ApolloVelocityPlatform.getInstance().getServer().getVersion().getVersion();
     }
 
     @Override
@@ -97,12 +92,12 @@ public class BungeeApolloStats implements ApolloStats {
 
     @Override
     public int getTotalPlayers() {
-        return ProxyServer.getInstance().getOnlineCount();
+        return ApolloVelocityPlatform.getInstance().getServer().getPlayerCount();
     }
 
     @Override
     public int getMaxPlayers() {
-        return ProxyServer.getInstance().getConfig().getPlayerLimit();
+        return ApolloVelocityPlatform.getInstance().getServer().getConfiguration().getShowMaxPlayers();
     }
 
 }

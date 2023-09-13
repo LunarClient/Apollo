@@ -32,12 +32,13 @@ import io.netty.handler.codec.base64.Base64;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.OperatingSystemMXBean;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.Charsets;
-import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -47,6 +48,8 @@ import org.bukkit.plugin.Plugin;
  * @since 1.0.0
  */
 public class BukkitApolloStats implements ApolloStats {
+
+    private static final OperatingSystemMXBean MX_BEAN = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
 
     @Override
     public String getMotd() {
@@ -68,8 +71,9 @@ public class BukkitApolloStats implements ApolloStats {
             return null;
         }
 
-        Validate.isTrue(image.getWidth() == 64, "Must be 64 pixels wide");
-        Validate.isTrue(image.getHeight() == 64, "Must be 64 pixels high");
+        if (image.getWidth() != 64 || image.getHeight() != 64) {
+            return null;
+        }
 
         ByteBuf bytebuf = Unpooled.buffer();
 
@@ -84,14 +88,13 @@ public class BukkitApolloStats implements ApolloStats {
 
     @Override
     public String getVersion() {
-        return Bukkit.getServer().getVersion();
+        return Bukkit.getServer().getBukkitVersion();
     }
 
     @Override
     public List<ApolloPluginDescription> getPlugins() {
-        Plugin[] plugins = Bukkit.getPluginManager().getPlugins();
-
-        return Arrays.stream(plugins).map(Plugin::getDescription)
+        return Arrays.stream(Bukkit.getPluginManager().getPlugins())
+            .map(Plugin::getDescription)
             .map(description -> ApolloPluginDescription.builder()
                 .name(description.getName())
                 .description(description.getDescription())
@@ -108,7 +111,22 @@ public class BukkitApolloStats implements ApolloStats {
 
     @Override
     public String getPlatformVersion() {
-        return Bukkit.getServer().getBukkitVersion();
+        return Bukkit.getServer().getVersion();
+    }
+
+    @Override
+    public double getCpuUsage() {
+        return MX_BEAN.getSystemLoadAverage();
+    }
+
+    @Override
+    public int getTotalPlayers() {
+        return Bukkit.getMaxPlayers();
+    }
+
+    @Override
+    public int getMaxPlayers() {
+        return Bukkit.getOnlinePlayers().size();
     }
 
 }

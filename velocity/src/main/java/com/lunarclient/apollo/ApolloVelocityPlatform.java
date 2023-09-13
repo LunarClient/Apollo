@@ -29,6 +29,7 @@ import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.wrapper.VelocityApolloPlayer;
+import com.lunarclient.apollo.wrapper.VelocityApolloStats;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
@@ -61,8 +62,9 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
     @Getter private static ApolloVelocityPlatform instance;
 
-    private final ProxyServer server;
+    @Getter private final ProxyServer server;
     private final Path dataDirectory;
+    private ApolloStats stats;
 
     @Inject
     private ApolloVelocityPlatform(ProxyServer server,
@@ -75,6 +77,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     private void onProxyInitialization(ProxyInitializeEvent event) {
         ApolloVelocityPlatform.instance = this;
 
+        this.stats = new VelocityApolloStats();
         ApolloManager.bootstrap(this);
         ApolloManager.loadConfiguration(this.dataDirectory);
 
@@ -99,7 +102,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
     @Override
     public ApolloStats getStats() {
-        return null; // TODO
+        return this.stats;
     }
 
     @Subscribe

@@ -82,4 +82,48 @@ public interface ApolloStats {
      */
     String getPlatformVersion();
 
+    /**
+     * Gets the servers cpu usage.
+     *
+     * @return the servers cpu usage
+     * @since 1.0.0
+     */
+    double getCpuUsage();
+
+    /**
+     * Gets the servers maximum allocated ram in bytes.
+     *
+     * @return the servers cpu usage
+     * @since 1.0.0
+     */
+    default double getMaximumAllocatedRam() {
+        return Runtime.getRuntime().maxMemory();
+    }
+
+    /**
+     * Gets the servers used ram in bytes.
+     *
+     * @return the servers used ram
+     * @since 1.0.0
+     */
+    default double getUsedRam() {
+        return Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory();
+    }
+
+    /**
+     * Gets the servers total players.
+     *
+     * @return the servers total players
+     * @since 1.0.0
+     */
+    int getTotalPlayers();
+
+    /**
+     * Gets the servers maximum players.
+     *
+     * @return the servers maximum players
+     * @since 1.0.0
+     */
+    int getMaxPlayers();
+
 }
