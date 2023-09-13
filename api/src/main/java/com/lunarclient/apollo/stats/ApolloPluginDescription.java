@@ -26,7 +26,6 @@ package com.lunarclient.apollo.stats;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 /**
  * Represents a single plugin used for stats.
@@ -35,7 +34,6 @@ import lombok.ToString;
  */
 @Getter
 @Builder
-@ToString // TODO: remove
 public class ApolloPluginDescription {
 
     /**
