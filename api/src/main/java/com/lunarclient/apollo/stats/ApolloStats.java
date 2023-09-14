@@ -27,7 +27,7 @@ import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Represents a player on Apollo.
+ * Represents Apollo tracked stats.
  *
  * @since 1.0.0
  */
@@ -35,7 +35,7 @@ import org.jetbrains.annotations.ApiStatus;
 public interface ApolloStats {
 
     /**
-     * Gets the servers message of the day (MOTD).
+     * Gets the servers message of the day.
      *
      * @return the servers message of the day
      * @since 1.0.0
