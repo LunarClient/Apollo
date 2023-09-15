@@ -70,8 +70,14 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         this.dataDirectory = dataDirectory;
     }
 
+    /**
+     * Handles initialization of the proxy.
+     *
+     * @param event the event
+     * @since 1.0.0
+     */
     @Subscribe
-    private void onProxyInitialization(ProxyInitializeEvent event) {
+    public void onProxyInitialization(ProxyInitializeEvent event) {
         ApolloVelocityPlatform.instance = this;
 
         ApolloManager.bootstrap(this);
@@ -84,8 +90,14 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         ApolloManager.saveConfiguration();
     }
 
+    /**
+     * Handles the shutdown of the proxy.
+     *
+     * @param event the event
+     * @since 1.0.0
+     */
     @Subscribe
-    private void onProxyShutdown(ProxyShutdownEvent event) {
+    public void onProxyShutdown(ProxyShutdownEvent event) {
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
 
         ApolloManager.saveConfiguration();
