@@ -70,8 +70,19 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         this.dataDirectory = dataDirectory;
     }
 
+    @Override
+    public Kind getKind() {
+        return Kind.PROXY;
+    }
+
+    /**
+     * Handles initialization of the proxy.
+     *
+     * @param event the event
+     * @since 1.0.0
+     */
     @Subscribe
-    private void onProxyInitialization(ProxyInitializeEvent event) {
+    public void onProxyInitialization(ProxyInitializeEvent event) {
         ApolloVelocityPlatform.instance = this;
 
         ApolloManager.bootstrap(this);
@@ -84,20 +95,27 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         ApolloManager.saveConfiguration();
     }
 
+    /**
+     * Handles the shutdown of the proxy.
+     *
+     * @param event the event
+     * @since 1.0.0
+     */
     @Subscribe
-    private void onProxyShutdown(ProxyShutdownEvent event) {
+    public void onProxyShutdown(ProxyShutdownEvent event) {
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
 
         ApolloManager.saveConfiguration();
     }
 
-    @Override
-    public Kind getKind() {
-        return Kind.PROXY;
-    }
-
+    /**
+     * Handles registering players that join with Lunar Client.
+     *
+     * @param event the event
+     * @since 1.0.0
+     */
     @Subscribe
-    private void onPluginMessage(PluginMessageEvent event) {
+    public void onPluginMessage(PluginMessageEvent event) {
         if (!event.getIdentifier().getId().equals("REGISTER")) {
             return;
         }
@@ -115,8 +133,14 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new VelocityApolloPlayer(player));
     }
 
+    /**
+     * Handles unregistering players from Apollo.
+     *
+     * @param event the event
+     * @since 1.0.0
+     */
     @Subscribe
-    private void onDisconnect(DisconnectEvent event) {
+    public void onDisconnect(DisconnectEvent event) {
         Player player = event.getPlayer();
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
     }
