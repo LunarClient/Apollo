@@ -28,6 +28,7 @@ import com.lunarclient.apollo.network.ApolloNetworkManager;
 import com.lunarclient.apollo.option.config.Serializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
+import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import java.nio.file.Path;
 import lombok.Getter;
@@ -48,6 +49,7 @@ public final class ApolloManager {
     public static final String PLUGIN_MESSAGE_CHANNEL = "lunar:apollo";
 
     @Getter private static ApolloNetworkManager networkManager;
+    @Getter private static ApolloVersionManager versionManager;
     @Getter private static CommentedConfigurationNode configurationNode;
 
     private static YamlConfigurationLoader configurationLoader;
@@ -73,6 +75,7 @@ public final class ApolloManager {
                 new ApolloRoundtripManager()
             );
 
+            ApolloManager.versionManager = new ApolloVersionManager();
             ApolloManager.networkManager = new ApolloNetworkManager();
         } catch (Throwable throwable) {
             throw new RuntimeException("Unable to bootstrap Apollo!", throwable);

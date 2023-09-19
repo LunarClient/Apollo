@@ -21,50 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo;
+package com.lunarclient.apollo.version;
 
-import java.util.logging.Logger;
-import org.jetbrains.annotations.ApiStatus;
+import com.lunarclient.apollo.Apollo;
 
 /**
- * Represents a platform that supports Apollo.
+ * Manages Apollo versioning.
  *
  * @since 1.0.0
  */
-@ApiStatus.NonExtendable
-public interface ApolloPlatform {
+public class ApolloVersionManager {
+
+    // TODO: add message toggle to config
+
+    private static final String DOWNLOAD_URL = "https://lunarclient.dev/apollo/downloads";
+    private static final String UPDATE_MESSAGE = "[Apollo] You’re running an outdated version, update to the latest version here: " + DOWNLOAD_URL;
 
     /**
-     * Returns this kind of platform.
-     *
-     * @return this kind of platform
-     * @since 1.0.0
-     */
-    Kind getKind();
-
-    /**
-     * Returns the current Apollo version.
-     *
-     * @return the current apollo version
-     * @since 1.0.0
-     */
-    String getApolloVersion();
-
-    /**
-     * Returns the servers logger.
-     *
-     * @return the servers logger
-     * @since 1.0.0
-     */
-    Logger getPlatformLogger();
-
-    /**
-     * Represents the kind of server a platform is.
+     * Constructs the {@link ApolloVersionManager}.
      *
      * @since 1.0.0
      */
-    enum Kind {
-        SERVER,
-        PROXY
+    public ApolloVersionManager() {
+        this.checkForUpdates();
     }
+
+    private void checkForUpdates() {
+        ApolloVersion currentVersion = new ApolloVersion(Apollo.getPlatform().getApolloVersion());
+        ApolloVersion latestVersion = new ApolloVersion("v1.0.1"); // TODO: fetch
+
+        if (currentVersion.isUpdateAvailable(latestVersion)) {
+            Apollo.getPlatform().getPlatformLogger().warning(UPDATE_MESSAGE);
+        }
+    }
+
 }

@@ -34,11 +34,14 @@ import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.PluginContainer;
+import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import java.nio.file.Path;
+import java.util.logging.Logger;
 import lombok.Getter;
 
 /**
@@ -56,23 +59,39 @@ import lombok.Getter;
 )
 public final class ApolloVelocityPlatform implements ApolloPlatform {
 
-    public static MinecraftChannelIdentifier PLUGIN_CHANNEL = MinecraftChannelIdentifier.from(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
+    public static final MinecraftChannelIdentifier PLUGIN_CHANNEL = MinecraftChannelIdentifier.from(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
 
     @Getter private static ApolloVelocityPlatform instance;
 
     private final ProxyServer server;
+    private final Logger logger;
     private final Path dataDirectory;
 
     @Inject
     private ApolloVelocityPlatform(ProxyServer server,
+                                   Logger logger,
                                    @DataDirectory Path dataDirectory) {
         this.server = server;
+        this.logger = logger;
         this.dataDirectory = dataDirectory;
     }
 
     @Override
     public Kind getKind() {
         return Kind.PROXY;
+    }
+
+    @Override
+    public String getApolloVersion() {
+        return this.server.getPluginManager().fromInstance(this)
+            .map(PluginContainer::getDescription)
+            .flatMap(PluginDescription::getVersion)
+            .orElse(null);
+    }
+
+    @Override
+    public Logger getPlatformLogger() {
+        return this.logger;
     }
 
     /**

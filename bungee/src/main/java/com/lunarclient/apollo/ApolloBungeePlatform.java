@@ -27,6 +27,7 @@ import com.google.common.base.Charsets;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.wrapper.BungeeApolloPlayer;
+import java.util.logging.Logger;
 import lombok.Getter;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -71,6 +72,16 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
     @Override
     public Kind getKind() {
         return Kind.PROXY;
+    }
+
+    @Override
+    public String getApolloVersion() {
+        return this.getDescription().getVersion();
+    }
+
+    @Override
+    public Logger getPlatformLogger() {
+        return ProxyServer.getInstance().getLogger();
     }
 
     @EventHandler

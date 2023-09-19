@@ -64,7 +64,9 @@ import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
 import com.lunarclient.apollo.wrapper.BukkitApolloWorld;
+import java.util.logging.Logger;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -135,6 +137,16 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     @Override
     public Kind getKind() {
         return Kind.SERVER;
+    }
+
+    @Override
+    public String getApolloVersion() {
+        return this.getDescription().getVersion();
+    }
+
+    @Override
+    public Logger getPlatformLogger() {
+        return Bukkit.getServer().getLogger();
     }
 
     @EventHandler
