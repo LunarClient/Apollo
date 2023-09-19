@@ -26,6 +26,7 @@ package com.lunarclient.apollo.version;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.ApolloPlatform;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,19 +34,29 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import lombok.Getter;
 
 /**
  * Manages Apollo versioning.
  *
  * @since 1.0.0
  */
+@Getter
 public final class ApolloVersionManager {
 
     // TODO: add message toggle to config
 
     private static final String APOLLO_UPDATES_URL = "https://api.lunarclientprod.com/apollo/updates";
     private static final String DOWNLOAD_URL = "https://lunarclient.dev/apollo/downloads";
-    private static final String UPDATE_MESSAGE = "[Apollo] You’re running an outdated version, update to the latest version here: " + DOWNLOAD_URL;
+    public static final String UPDATE_MESSAGE = "[Apollo] You’re running an outdated version, update to the latest version here: " + DOWNLOAD_URL;
+
+    /**
+     * Returns whether the server needs to update Apollo.
+     *
+     * @return the needs update value
+     * @since 1.0.0
+     */
+    private boolean needsUpdate;
 
     /**
      * The executor for http requests.
@@ -68,11 +79,13 @@ public final class ApolloVersionManager {
     private void checkForUpdates() {
         this.requestExecutor.submit(() -> {
             try {
-                ApolloVersion currentVersion = new ApolloVersion(Apollo.getPlatform().getApolloVersion());
+                ApolloPlatform platform = Apollo.getPlatform();
+                ApolloVersion currentVersion = new ApolloVersion(platform.getApolloVersion());
                 ApolloVersion latestVersion = this.fetchLatestApolloVersion();
 
                 if (latestVersion != null && currentVersion.isUpdateAvailable(latestVersion)) {
-                    Apollo.getPlatform().getPlatformLogger().warning(UPDATE_MESSAGE);
+                    this.needsUpdate = true;
+                    platform.getPlatformLogger().warning(UPDATE_MESSAGE);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

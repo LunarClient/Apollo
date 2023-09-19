@@ -61,15 +61,18 @@ import com.lunarclient.apollo.module.vignette.VignetteModuleImpl;
 import com.lunarclient.apollo.module.waypoint.WaypointModule;
 import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
 import com.lunarclient.apollo.wrapper.BukkitApolloWorld;
 import java.util.logging.Logger;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.event.player.PlayerUnregisterChannelEvent;
@@ -180,6 +183,18 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     @EventHandler
     private void onPlayerQuit(PlayerQuitEvent event) {
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(event.getPlayer().getUniqueId());
+    }
+
+    @EventHandler
+    private void onPlayerJoin(PlayerJoinEvent event) {
+        if (!ApolloManager.getVersionManager().isNeedsUpdate()) {
+            return;
+        }
+
+        Player player = event.getPlayer();
+        if (player.isOp()) {
+            player.sendMessage(ChatColor.YELLOW + ApolloVersionManager.UPDATE_MESSAGE);
+        }
     }
 
     private void handlePacket(Player player, byte[] bytes) {
