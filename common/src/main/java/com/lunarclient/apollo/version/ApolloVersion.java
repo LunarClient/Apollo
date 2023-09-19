@@ -23,7 +23,6 @@
  */
 package com.lunarclient.apollo.version;
 
-import java.util.Arrays;
 import lombok.Getter;
 
 /**
@@ -48,13 +47,9 @@ public class ApolloVersion {
      * @since 1.0.0
      */
     public ApolloVersion(String version) {
-        System.out.println(version);
-
         String[] versions = version
             .replaceAll("[^0-9.]", "")
             .split("\\.");
-
-        System.out.println(Arrays.toString(versions)); // TODO: remove
 
         if (versions.length != 3) {
             throw new RuntimeException("Failed to parse Apollo version.");
@@ -74,7 +69,7 @@ public class ApolloVersion {
      *
      * @param version the latest available version
      * @return whether the update is available
-     * @see com.lunarclient.apollo.version.ApolloVersionManager
+     * @see ApolloVersionManager
      * @since 1.0.0
      */
     public boolean isUpdateAvailable(ApolloVersion version) {
