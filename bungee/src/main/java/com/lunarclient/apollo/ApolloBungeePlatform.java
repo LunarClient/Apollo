@@ -26,6 +26,10 @@ package com.lunarclient.apollo;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import java.util.logging.Logger;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.OptionsImpl;
+import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.wrapper.BungeeApolloPlayer;
 import lombok.Getter;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -39,20 +43,20 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
 
     @Getter private static ApolloBungeePlatform instance;
 
+    @Getter private final Options options = new OptionsImpl(null);
+
     @Override
     public void onEnable() {
         ApolloBungeePlatform.instance = this;
 
-        this.getProxy().getPluginManager().registerListener(this, new ApolloPlayerListener());
-
         ApolloManager.bootstrap(this);
+
         ApolloManager.loadConfiguration(this.getDataFolder().toPath());
-
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
-
-        this.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
-
         ApolloManager.saveConfiguration();
+
+        this.getProxy().getPluginManager().registerListener(this, new ApolloPlayerListener())
+        this.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
     }
 
     @Override

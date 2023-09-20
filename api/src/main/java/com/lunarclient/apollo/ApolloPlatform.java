@@ -24,6 +24,7 @@
 package com.lunarclient.apollo;
 
 import java.util.logging.Logger;
+import com.lunarclient.apollo.option.Options;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -41,6 +42,14 @@ public interface ApolloPlatform {
      * @since 1.0.0
      */
     Kind getKind();
+
+    /**
+     * Returns the platform options that don't belong to a specific module.
+     *
+     * @return the platform options
+     * @since 1.0.0
+     */
+    Options getOptions();
 
     /**
      * Returns the current Apollo version.

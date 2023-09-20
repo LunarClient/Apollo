@@ -26,6 +26,10 @@ package com.lunarclient.apollo;
 import com.google.inject.Inject;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.OptionsImpl;
+import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.wrapper.VelocityApolloPlayer;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
@@ -57,6 +61,8 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     public static final MinecraftChannelIdentifier PLUGIN_CHANNEL = MinecraftChannelIdentifier.from(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
 
     @Getter private static ApolloVelocityPlatform instance;
+
+    @Getter private final Options options = new OptionsImpl(null);
 
     private final ProxyServer server;
     private final Logger logger;
@@ -100,14 +106,14 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         ApolloVelocityPlatform.instance = this;
 
         ApolloManager.bootstrap(this);
-        ApolloManager.loadConfiguration(this.dataDirectory);
 
+        ApolloManager.loadConfiguration(this.dataDirectory);
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
+
+        ApolloManager.saveConfiguration();
 
         this.server.getEventManager().register(this, new ApolloPlayerListener());
         this.server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
-
-        ApolloManager.saveConfiguration();
     }
 
     /**

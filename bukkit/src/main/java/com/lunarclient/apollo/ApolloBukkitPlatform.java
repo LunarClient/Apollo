@@ -24,8 +24,6 @@
 package com.lunarclient.apollo;
 
 import com.google.protobuf.Any;
-import com.lunarclient.apollo.listener.ApolloPlayerListener;
-import com.lunarclient.apollo.listener.ApolloWorldListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
@@ -63,6 +61,12 @@ import com.lunarclient.apollo.module.vignette.VignetteModuleImpl;
 import com.lunarclient.apollo.module.waypoint.WaypointModule;
 import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import java.util.logging.Logger;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.OptionsImpl;
+import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
+import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
+import com.lunarclient.apollo.wrapper.BukkitApolloWorld;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -78,6 +82,8 @@ import org.bukkit.plugin.messaging.Messenger;
 public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform {
 
     @Getter private static ApolloBukkitPlatform instance;
+
+    @Getter private final Options options = new OptionsImpl(null);
 
     @Override
     public void onEnable() {
@@ -109,16 +115,14 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
         ApolloManager.loadConfiguration(this.getDataFolder().toPath());
-
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
+        ApolloManager.saveConfiguration();
 
         Messenger messenger = this.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
             (channel, player, bytes) -> this.handlePacket(player, bytes)
         );
-
-        ApolloManager.saveConfiguration();
     }
 
     @Override
