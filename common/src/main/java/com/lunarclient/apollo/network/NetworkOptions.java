@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.network;
 
 import com.google.protobuf.Value;
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage;
 import com.lunarclient.apollo.module.ApolloModule;
@@ -32,6 +33,7 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Utility class for sending options to the client.
@@ -39,10 +41,6 @@ import com.lunarclient.apollo.player.ApolloPlayer;
  * @since 1.0.0
  */
 public final class NetworkOptions {
-
-    private NetworkOptions() {
-
-    }
 
     /**
      * Send a single option to a single player.
@@ -53,7 +51,7 @@ public final class NetworkOptions {
      * @param players the players to send the option to
      * @since 1.0.0
      */
-    public static void sendOption(ApolloModule module,
+    public static void sendOption(@Nullable ApolloModule module,
                                   Option<?, ?, ?> key,
                                   Value value,
                                   Iterable<ApolloPlayer> players) {
@@ -112,9 +110,13 @@ public final class NetworkOptions {
         return builder;
     }
 
-    private static ConfigurableSettings.Builder module(ApolloModule module) {
+    private static ConfigurableSettings.Builder module(@Nullable ApolloModule module) {
         return ConfigurableSettings.newBuilder()
-            .setApolloModule(module.getId())
-            .setEnable(module.isEnabled());
+            .setApolloModule(module == null ? ApolloManager.PLUGIN_ROOT_MODULE : module.getId())
+            .setEnable(module == null || module.isEnabled());
     }
+
+    private NetworkOptions() {
+    }
+
 }

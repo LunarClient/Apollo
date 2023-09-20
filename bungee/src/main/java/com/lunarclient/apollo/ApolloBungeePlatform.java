@@ -25,6 +25,8 @@ package com.lunarclient.apollo;
 
 import com.google.common.base.Charsets;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.wrapper.BungeeApolloPlayer;
 import lombok.Getter;
@@ -45,6 +47,8 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
 
     @Getter private static ApolloBungeePlatform instance;
 
+    @Getter private final Options options = new OptionsImpl(null);
+
     @Override
     public void onEnable() {
         ApolloBungeePlatform.instance = this;
@@ -52,13 +56,12 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
         this.getProxy().getPluginManager().registerListener(this, this);
 
         ApolloManager.bootstrap(this);
-        ApolloManager.loadConfiguration(this.getDataFolder().toPath());
 
+        ApolloManager.loadConfiguration(this.getDataFolder().toPath());
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
+        ApolloManager.saveConfiguration();
 
         this.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
-
-        ApolloManager.saveConfiguration();
     }
 
     @Override

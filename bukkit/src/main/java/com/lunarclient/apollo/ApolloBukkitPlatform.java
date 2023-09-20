@@ -60,6 +60,8 @@ import com.lunarclient.apollo.module.vignette.VignetteModule;
 import com.lunarclient.apollo.module.vignette.VignetteModuleImpl;
 import com.lunarclient.apollo.module.waypoint.WaypointModule;
 import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
@@ -84,6 +86,8 @@ import org.bukkit.plugin.messaging.Messenger;
 public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, Listener {
 
     @Getter private static ApolloBukkitPlatform instance;
+
+    @Getter private final Options options = new OptionsImpl(null);
 
     @Override
     public void onEnable() {
@@ -113,16 +117,14 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
         ApolloManager.loadConfiguration(this.getDataFolder().toPath());
-
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
+        ApolloManager.saveConfiguration();
 
         Messenger messenger = this.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
             (channel, player, bytes) -> this.handlePacket(player, bytes)
         );
-
-        ApolloManager.saveConfiguration();
     }
 
     @Override

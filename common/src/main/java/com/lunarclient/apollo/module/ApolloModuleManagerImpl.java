@@ -25,10 +25,10 @@ package com.lunarclient.apollo.module;
 
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.event.EventBus;
+import com.lunarclient.apollo.option.ConfigOptions;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
-import io.leangen.geantyref.TypeToken;
 import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Collections;
@@ -146,28 +146,12 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      * @param node the configuration node
      * @since 1.0.0
      */
-    @SuppressWarnings("unchecked")
     public void saveConfiguration(CommentedConfigurationNode node) {
         for (ApolloModule module : this.modules.values()) {
             CommentedConfigurationNode moduleNode = node.node(module.getId().toLowerCase(Locale.ENGLISH));
 
             Options optionsContainer = module.getOptions();
-            for (Option<?, ?, ?> option : module.getOptionKeys()) {
-                CommentedConfigurationNode optionNode = moduleNode.node((Object[]) option.getPath());
-                if (optionNode == null) {
-                    continue;
-                }
-
-                try {
-                    if (option.getComment() != null) {
-                        optionNode.comment(option.getComment());
-                    }
-
-                    optionNode.set((TypeToken<Object>) option.getTypeToken(), optionsContainer.get(option));
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }
-            }
+            ConfigOptions.saveOptions(optionsContainer, moduleNode);
         }
     }
 
@@ -179,19 +163,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         }
 
         Options optionsContainer = module.getOptions();
-        for (Option<?, ?, ?> option : options) {
-            CommentedConfigurationNode optionNode = moduleNode.node((Object[]) option.getPath());
-            if (optionNode.virtual()) {
-                continue;
-            }
-
-            try {
-                Object value = optionNode.get(option.getTypeToken());
-                optionsContainer.set(option, value);
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
-        }
+        ConfigOptions.loadOptions(optionsContainer, moduleNode, options);
     }
 
 }
