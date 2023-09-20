@@ -28,8 +28,6 @@ import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
-import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
-import com.lunarclient.apollo.wrapper.VelocityApolloPlayer;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;

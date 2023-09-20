@@ -23,8 +23,8 @@
  */
 package com.lunarclient.apollo;
 
-import java.util.logging.Logger;
 import com.lunarclient.apollo.option.Options;
+import java.util.logging.Logger;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
