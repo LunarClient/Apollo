@@ -23,10 +23,12 @@
  */
 package com.lunarclient.apollo.version;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.SimpleOption;
+import io.leangen.geantyref.TypeToken;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,7 +46,10 @@ import lombok.Getter;
 @Getter
 public final class ApolloVersionManager {
 
-    // TODO: add message toggle to config
+    public static final SimpleOption<Boolean> SEND_UPDATE_MESSAGE = Option.<Boolean>builder()
+        .comment("Set to 'true' to send opped players available update message, otherwise 'false'.")
+        .node("send-updater-message").type(TypeToken.get(Boolean.class))
+        .defaultValue(true).build();
 
     private static final String APOLLO_UPDATES_URL = "https://api.lunarclientprod.com/apollo/updates";
     private static final String DOWNLOAD_URL = "https://lunarclient.dev/apollo/downloads";
@@ -71,15 +76,21 @@ public final class ApolloVersionManager {
      * @since 1.0.0
      */
     public ApolloVersionManager() {
-        this.requestExecutor = Executors.newSingleThreadExecutor();
+        ApolloManager.registerOptions(SEND_UPDATE_MESSAGE);
 
+        this.requestExecutor = Executors.newSingleThreadExecutor();
         this.checkForUpdates();
     }
 
     private void checkForUpdates() {
+        ApolloPlatform platform = Apollo.getPlatform();
+
+        if (!platform.getOptions().get(SEND_UPDATE_MESSAGE)) {
+            return;
+        }
+
         this.requestExecutor.submit(() -> {
             try {
-                ApolloPlatform platform = Apollo.getPlatform();
                 ApolloVersion currentVersion = new ApolloVersion(platform.getApolloVersion());
                 ApolloVersion latestVersion = this.fetchLatestApolloVersion();
 
@@ -103,8 +114,7 @@ public final class ApolloVersionManager {
             }
 
             try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                JsonObject versionResponse = JsonParser.parseReader(in).getAsJsonObject();
-                String version = versionResponse.get("version").getAsString();
+                String version = in.readLine();
                 return new ApolloVersion(version);
             }
         } catch (IOException e) {
