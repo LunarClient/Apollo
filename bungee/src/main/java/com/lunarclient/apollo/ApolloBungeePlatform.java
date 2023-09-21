@@ -23,27 +23,21 @@
  */
 package com.lunarclient.apollo;
 
-import com.google.common.base.Charsets;
+import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
-import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
-import com.lunarclient.apollo.wrapper.BungeeApolloPlayer;
+import java.util.logging.Logger;
 import lombok.Getter;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.PlayerDisconnectEvent;
-import net.md_5.bungee.api.event.PluginMessageEvent;
-import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.event.EventHandler;
 
 /**
  * The Bungee platform plugin.
  *
  * @since 1.0.0
  */
-public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform, Listener {
+public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform {
 
     @Getter private static ApolloBungeePlatform instance;
 
@@ -53,14 +47,13 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
     public void onEnable() {
         ApolloBungeePlatform.instance = this;
 
-        this.getProxy().getPluginManager().registerListener(this, this);
-
         ApolloManager.bootstrap(this);
 
         ApolloManager.loadConfiguration(this.getDataFolder().toPath());
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
         ApolloManager.saveConfiguration();
 
+        this.getProxy().getPluginManager().registerListener(this, new ApolloPlayerListener());
         this.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
     }
 
@@ -76,33 +69,14 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
         return Kind.PROXY;
     }
 
-    @EventHandler
-    private void onPluginMessage(PluginMessageEvent event) {
-        if (!(event.getReceiver() instanceof ProxyServer)) {
-            return;
-        }
-
-        if (!(event.getSender() instanceof ProxiedPlayer)) {
-            return;
-        }
-
-        if (!event.getTag().equals("REGISTER")) {
-            return;
-        }
-
-        String channels = new String(event.getData(), Charsets.UTF_8);
-        if (!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
-            return;
-        }
-
-        ProxiedPlayer player = (ProxiedPlayer) event.getSender();
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new BungeeApolloPlayer(player));
+    @Override
+    public String getApolloVersion() {
+        return this.getDescription().getVersion();
     }
 
-    @EventHandler
-    private void onDisconnect(PlayerDisconnectEvent event) {
-        ProxiedPlayer player = event.getPlayer();
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
+    @Override
+    public Logger getPlatformLogger() {
+        return ProxyServer.getInstance().getLogger();
     }
 
 }
