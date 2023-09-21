@@ -56,7 +56,7 @@ import lombok.Getter;
 )
 public final class ApolloVelocityPlatform implements ApolloPlatform {
 
-    public static final MinecraftChannelIdentifier PLUGIN_CHANNEL = MinecraftChannelIdentifier.from(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
+    public static MinecraftChannelIdentifier PLUGIN_CHANNEL;
 
     @Getter private static ApolloVelocityPlatform instance;
 
@@ -125,6 +125,15 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
 
         ApolloManager.saveConfiguration();
+    }
+
+    static {
+        try {
+            PLUGIN_CHANNEL = MinecraftChannelIdentifier.from(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
+        } catch (NoSuchMethodError e) {
+            String[] messageChannel = ApolloManager.PLUGIN_MESSAGE_CHANNEL.split(":");
+            PLUGIN_CHANNEL = MinecraftChannelIdentifier.create(messageChannel[0], messageChannel[1]);
+        }
     }
 
 }
