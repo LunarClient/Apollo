@@ -85,10 +85,6 @@ public final class ApolloVersionManager {
     private void checkForUpdates() {
         ApolloPlatform platform = Apollo.getPlatform();
 
-        if (!platform.getOptions().get(SEND_UPDATE_MESSAGE)) {
-            return;
-        }
-
         this.requestExecutor.submit(() -> {
             try {
                 ApolloVersion currentVersion = new ApolloVersion(platform.getApolloVersion());
