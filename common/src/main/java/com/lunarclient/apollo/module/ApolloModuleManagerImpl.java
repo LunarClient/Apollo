@@ -151,7 +151,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
             CommentedConfigurationNode moduleNode = node.node(module.getId().toLowerCase(Locale.ENGLISH));
 
             Options optionsContainer = module.getOptions();
-            ConfigOptions.saveOptions(optionsContainer, moduleNode);
+            ConfigOptions.saveOptions(optionsContainer, moduleNode, module.getOptionKeys());
         }
     }
 

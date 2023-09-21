@@ -106,7 +106,7 @@ public final class ApolloManager {
      * @since 1.0.0
      */
     public static void registerOptions(Option<?, ?, ?>... options) {
-        optionKeys.addAll(Arrays.asList(options));
+        ApolloManager.optionKeys.addAll(Arrays.asList(options));
     }
 
     /**
@@ -144,7 +144,7 @@ public final class ApolloManager {
                 return;
             }
 
-            ConfigOptions.saveOptions(ApolloManager.platform.getOptions(), ApolloManager.configurationNode);
+            ConfigOptions.saveOptions(ApolloManager.platform.getOptions(), ApolloManager.configurationNode, ApolloManager.optionKeys);
 
             CommentedConfigurationNode modules = ApolloManager.configurationNode.node("modules");
 
