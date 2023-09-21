@@ -26,6 +26,8 @@ package com.lunarclient.apollo;
 import com.google.common.base.Charsets;
 import com.google.inject.Inject;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.wrapper.VelocityApolloPlayer;
 import com.velocitypowered.api.event.Subscribe;
@@ -60,6 +62,8 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
     @Getter private static ApolloVelocityPlatform instance;
 
+    @Getter private final Options options = new OptionsImpl(null);
+
     private final ProxyServer server;
     private final Path dataDirectory;
 
@@ -86,13 +90,12 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         ApolloVelocityPlatform.instance = this;
 
         ApolloManager.bootstrap(this);
-        ApolloManager.loadConfiguration(this.dataDirectory);
 
+        ApolloManager.loadConfiguration(this.dataDirectory);
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
+        ApolloManager.saveConfiguration();
 
         this.server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
-
-        ApolloManager.saveConfiguration();
     }
 
     /**
