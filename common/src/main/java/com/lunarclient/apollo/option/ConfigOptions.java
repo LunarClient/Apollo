@@ -64,11 +64,12 @@ public final class ConfigOptions {
      *
      * @param options the options container
      * @param node the configuration node
+     * @param optionKeys the option keys
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static void saveOptions(Options options, CommentedConfigurationNode node) {
-        for (Option<?, ?, ?> option : options) {
+    public static void saveOptions(Options options, CommentedConfigurationNode node, List<Option<?, ?, ?>> optionKeys) {
+        for (Option<?, ?, ?> option : optionKeys) {
             CommentedConfigurationNode optionNode = node.node((Object[]) option.getPath());
             if (optionNode == null) {
                 continue;
