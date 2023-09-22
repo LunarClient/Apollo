@@ -14,7 +14,7 @@ val main by sourceSets
 dependencies {
     api(project(":extra:apollo-extra-adventure4"))
 
-    api(libs.geantyref)
+    "shade"(libs.geantyref)
 
     "bukkit"(main.output)
     "bukkit"(libs.bukkit.api)

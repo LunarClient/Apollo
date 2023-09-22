@@ -23,10 +23,16 @@ fun ShadowJar.configureExclusions() {
 
 fun Project.setupPlatforms() {
     extensions.configure<JavaPluginExtension> {
+        val shade = configurations.register("shade")
+
+        configurations.named("api") {
+            extendsFrom(shade.get())
+        }
+
         val jar by tasks.named("jar")
 
         val shadowJar by tasks.named("shadowJar", ShadowJar::class) {
-            configurations = listOf()
+            configurations = listOf(shade.get())
 
             from(jar)
         }
