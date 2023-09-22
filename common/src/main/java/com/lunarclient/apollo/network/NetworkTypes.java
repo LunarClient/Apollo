@@ -23,7 +23,6 @@
  */
 package com.lunarclient.apollo.network;
 
-import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.common.cuboid.Cuboid2D;
 import com.lunarclient.apollo.common.cuboid.Cuboid3D;
@@ -38,7 +37,6 @@ import com.lunarclient.apollo.common.v1.Uuid;
 import java.awt.Color;
 import java.time.Duration;
 import java.util.UUID;
-import net.kyori.adventure.text.Component;
 
 /**
  * Utility class for converting objects to and from their
@@ -293,34 +291,6 @@ public final class NetworkTypes {
             .maxY(message.getMaxY())
             .maxZ(message.getMaxZ())
             .build();
-    }
-
-    /**
-     * Converts an {@link ApolloComponent} object to an
-     * {@link com.lunarclient.apollo.common.v1.Component} proto message.
-     *
-     * @param object the component
-     * @return the proto component message
-     * @since 1.0.0
-     */
-    public static com.lunarclient.apollo.common.v1.Component toProtobuf(Component object) {
-        // TODO
-        return com.lunarclient.apollo.common.v1.Component.newBuilder()
-            .setContent(ApolloComponent.toJson(object))
-            .build();
-    }
-
-    /**
-     * Converts an {@link com.lunarclient.apollo.common.v1.Component}
-     * proto message to an {@link ApolloComponent} object.
-     *
-     * @param message the component message
-     * @return the component object
-     * @since 1.0.0
-     */
-    public static Component fromProtobuf(com.lunarclient.apollo.common.v1.Component message) {
-        // TODO
-        return ApolloComponent.fromJson(message.getContent());
     }
 
     /**
