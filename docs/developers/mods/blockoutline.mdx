@@ -1,0 +1,52 @@
+# Block Outline
+
+Allows you to customize the outline or add an overlay to the block you are pointing at.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void enableBlockOutline(Player viewer, boolean value) {
+    ModBlockOutline.ENABLED.set(viewer, value);
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BLOCK_OUTLINE_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0x66000000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`BLOCK_OVERLAY_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0x66000000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`BLOCK_OUTLINE_WIDTH`__
+    - Values
+        - Type: `Float`
+        - Default: `2.0F`
+        - Minimum: `1.0F`
+        - Maximum: `10.0F`
+
+- __`BLOCK_OVERLAY`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BLOCK_OUTLINE`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

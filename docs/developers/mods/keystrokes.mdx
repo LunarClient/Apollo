@@ -1,0 +1,129 @@
+# Key Strokes
+
+Displays when your movement, mouse or space bar is pressed.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void enableKeyStrokes(Player viewer, boolean value) {
+    ModKeystrokes.ENABLED.set(viewer, value);
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SCALE`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.5F`
+
+- __`KEY_STROKES_CLICKS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`LEFT_C_P_S`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`RIGHT_C_P_S`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`KEY_STROKES_MOVEMENT`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`KEY_STROKES_SPACEBAR`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`USE_ARROWS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TEXT_SHADOW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BORDER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`INNER_BORDER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BORDER_THICKNESS`__
+    - Values
+        - Type: `Float`
+        - Default: `0.5F`
+        - Minimum: `0.5F`
+        - Maximum: `3.0F`
+
+- __`BOX_SIZE`__
+    - Values
+        - Type: `Float`
+        - Default: `18.0F`
+        - Minimum: `10.0F`
+        - Maximum: `32.0F`
+
+- __`BORDER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFFFFF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`TEXT_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFFFFF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`TEXT_PRESSED_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFF000000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`BACKGROUND_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0x6F000000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`BACKGROUND_PRESSED_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0x6FFFFFFF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`KEY_FADE_DELAY`__
+    - Values
+        - Type: `Long`
+        - Default: `75L`
+        - Minimum: `0L`
+        - Maximum: `500L`
+

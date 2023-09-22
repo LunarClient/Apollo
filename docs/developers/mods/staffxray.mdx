@@ -1,0 +1,28 @@
+# XRAY
+
+Lets you see through blocks.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void enableXRAY(Player viewer, boolean value) {
+    ModStaffXray.ENABLED.set(viewer, value);
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`OPACITY`__
+    - Values
+        - Type: `Integer`
+        - Default: `120`
+        - Minimum: `1`
+        - Maximum: `255`
+

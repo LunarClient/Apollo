@@ -1,0 +1,53 @@
+# Toggle Sneak/Sprint
+
+Make the sprinting and sneaking keys toggleable instead of needing to be held down.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void enableToggleSneak/Sprint(Player viewer, boolean value) {
+    ModToggleSneak.ENABLED.set(viewer, value);
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TOGGLE_SPRINT`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TOGGLE_SNEAK`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DOUBLE_TAP`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TOGGLE_SNEAK_CONTAINER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`FLY_BOOST`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`FLY_BOOST_AMOUNT`__
+    - Values
+        - Type: `Integer`
+        - Default: `4`
+        - Minimum: `2`
+        - Maximum: `8`
+
