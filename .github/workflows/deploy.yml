@@ -48,7 +48,7 @@ jobs:
                 fi
 
         -   name: Gradle Publish
-            if: "${{ github.ref == 'refs/heads/master' }}"
+            if: "${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/feature/adventure-api' }}"
             run: ./gradlew publish
 
         -   name: Gradle Release
