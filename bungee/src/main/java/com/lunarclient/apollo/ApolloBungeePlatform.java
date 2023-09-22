@@ -23,47 +23,42 @@
  */
 package com.lunarclient.apollo;
 
-import com.google.common.base.Charsets;
+import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
-import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.OptionsImpl;
+import java.util.logging.Logger;
+
 import com.lunarclient.apollo.stats.ApolloStats;
-import com.lunarclient.apollo.wrapper.BungeeApolloPlayer;
 import com.lunarclient.apollo.wrapper.BungeeApolloStats;
 import lombok.Getter;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.PlayerDisconnectEvent;
-import net.md_5.bungee.api.event.PluginMessageEvent;
-import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.event.EventHandler;
 
 /**
  * The Bungee platform plugin.
  *
  * @since 1.0.0
  */
-public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform, Listener {
+public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform {
 
     @Getter private static ApolloBungeePlatform instance;
 
+    @Getter private final Options options = new OptionsImpl(null);
     private ApolloStats stats;
 
     @Override
     public void onEnable() {
         ApolloBungeePlatform.instance = this;
-
         this.stats = new BungeeApolloStats();
-        this.getProxy().getPluginManager().registerListener(this, this);
-
         ApolloManager.bootstrap(this);
+
         ApolloManager.loadConfiguration(this.getDataFolder().toPath());
-
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
-
-        this.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
-
         ApolloManager.saveConfiguration();
+
+        this.getProxy().getPluginManager().registerListener(this, new ApolloPlayerListener());
+        this.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
     }
 
     @Override
@@ -79,37 +74,18 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
     }
 
     @Override
+    public String getApolloVersion() {
+        return this.getDescription().getVersion();
+    }
+
+    @Override
+    public Logger getPlatformLogger() {
+        return ProxyServer.getInstance().getLogger();
+    }
+
+    @Override
     public ApolloStats getStats() {
         return this.stats;
-    }
-
-    @EventHandler
-    private void onPluginMessage(PluginMessageEvent event) {
-        if (!(event.getReceiver() instanceof ProxyServer)) {
-            return;
-        }
-
-        if (!(event.getSender() instanceof ProxiedPlayer)) {
-            return;
-        }
-
-        if (!event.getTag().equals("REGISTER")) {
-            return;
-        }
-
-        String channels = new String(event.getData(), Charsets.UTF_8);
-        if (!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
-            return;
-        }
-
-        ProxiedPlayer player = (ProxiedPlayer) event.getSender();
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new BungeeApolloPlayer(player));
-    }
-
-    @EventHandler
-    private void onDisconnect(PlayerDisconnectEvent event) {
-        ProxiedPlayer player = event.getPlayer();
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
     }
 
 }

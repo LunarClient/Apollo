@@ -24,6 +24,8 @@
 package com.lunarclient.apollo;
 
 import com.google.protobuf.Any;
+import com.lunarclient.apollo.listener.ApolloPlayerListener;
+import com.lunarclient.apollo.listener.ApolloWorldListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
@@ -60,21 +62,16 @@ import com.lunarclient.apollo.module.vignette.VignetteModule;
 import com.lunarclient.apollo.module.vignette.VignetteModuleImpl;
 import com.lunarclient.apollo.module.waypoint.WaypointModule;
 import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
-import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.OptionsImpl;
+import java.util.logging.Logger;
+
 import com.lunarclient.apollo.stats.ApolloStats;
-import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
-import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
 import com.lunarclient.apollo.wrapper.BukkitApolloStats;
-import com.lunarclient.apollo.wrapper.BukkitApolloWorld;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRegisterChannelEvent;
-import org.bukkit.event.player.PlayerUnregisterChannelEvent;
-import org.bukkit.event.world.WorldLoadEvent;
-import org.bukkit.event.world.WorldUnloadEvent;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
@@ -83,10 +80,11 @@ import org.bukkit.plugin.messaging.Messenger;
  *
  * @since 1.0.0
  */
-public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform, Listener {
+public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform {
 
     @Getter private static ApolloBukkitPlatform instance;
 
+    @Getter private final Options options = new OptionsImpl(null);
     private ApolloStats stats;
 
     @Override
@@ -95,7 +93,9 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         this.stats = new BukkitApolloStats();
         ApolloManager.bootstrap(this);
 
-        this.getServer().getPluginManager().registerEvents(this, this);
+        PluginManager pluginManager = this.getServer().getPluginManager();
+        pluginManager.registerEvents(new ApolloPlayerListener(), this);
+        pluginManager.registerEvents(new ApolloWorldListener(), this);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
             .addModule(BeamModule.class, new BeamModuleImpl())
@@ -118,16 +118,14 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
         ApolloManager.loadConfiguration(this.getDataFolder().toPath());
-
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
+        ApolloManager.saveConfiguration();
 
         Messenger messenger = this.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
             (channel, player, bytes) -> this.handlePacket(player, bytes)
         );
-
-        ApolloManager.saveConfiguration();
     }
 
     @Override
@@ -143,41 +141,18 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
     }
 
     @Override
+    public String getApolloVersion() {
+        return this.getDescription().getVersion();
+    }
+
+    @Override
     public ApolloStats getStats() {
         return this.stats;
     }
 
-    @EventHandler
-    private void onWorldLoad(WorldLoadEvent event) {
-        ((ApolloWorldManagerImpl) Apollo.getWorldManager()).addWorld(new BukkitApolloWorld(event.getWorld()));
-    }
-
-    @EventHandler
-    private void onWorldUnload(WorldUnloadEvent event) {
-        ((ApolloWorldManagerImpl) Apollo.getWorldManager()).removeWorld(event.getWorld().getName());
-    }
-
-    @EventHandler
-    private void onRegisterChannel(PlayerRegisterChannelEvent event) {
-        if (!event.getChannel().equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
-            return;
-        }
-
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new BukkitApolloPlayer(event.getPlayer()));
-    }
-
-    @EventHandler
-    private void onUnregisterChannel(PlayerUnregisterChannelEvent event) {
-        if (!event.getChannel().equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
-            return;
-        }
-
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(event.getPlayer().getUniqueId());
-    }
-
-    @EventHandler
-    private void onPlayerQuit(PlayerQuitEvent event) {
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(event.getPlayer().getUniqueId());
+    @Override
+    public Logger getPlatformLogger() {
+        return Bukkit.getServer().getLogger();
     }
 
     private void handlePacket(Player player, byte[] bytes) {

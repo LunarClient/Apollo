@@ -23,24 +23,24 @@
  */
 package com.lunarclient.apollo;
 
-import com.google.common.base.Charsets;
 import com.google.inject.Inject;
+import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
-import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
-import com.lunarclient.apollo.wrapper.VelocityApolloPlayer;
 import com.lunarclient.apollo.wrapper.VelocityApolloStats;
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.connection.DisconnectEvent;
-import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.PluginContainer;
+import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
-import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import java.nio.file.Path;
+import java.util.logging.Logger;
 import lombok.Getter;
 
 /**
@@ -56,43 +56,27 @@ import lombok.Getter;
     description = "Implementation of Apollo for Velocity",
     authors = {"Moonsworth"}
 )
+@Getter
 public final class ApolloVelocityPlatform implements ApolloPlatform {
 
-    public static MinecraftChannelIdentifier PLUGIN_CHANNEL = MinecraftChannelIdentifier.from(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
+    public static MinecraftChannelIdentifier PLUGIN_CHANNEL;
 
     @Getter private static ApolloVelocityPlatform instance;
 
-    @Getter private final ProxyServer server;
-    private final Path dataDirectory;
+    private final Options options = new OptionsImpl(null);
     private ApolloStats stats;
+
+    private final ProxyServer server;
+    private final Logger logger;
+    private final Path dataDirectory;
 
     @Inject
     private ApolloVelocityPlatform(ProxyServer server,
+                                   Logger logger,
                                    @DataDirectory Path dataDirectory) {
         this.server = server;
+        this.logger = logger;
         this.dataDirectory = dataDirectory;
-    }
-
-    @Subscribe
-    private void onProxyInitialization(ProxyInitializeEvent event) {
-        ApolloVelocityPlatform.instance = this;
-
-        this.stats = new VelocityApolloStats();
-        ApolloManager.bootstrap(this);
-        ApolloManager.loadConfiguration(this.dataDirectory);
-
-        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
-
-        this.server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
-
-        ApolloManager.saveConfiguration();
-    }
-
-    @Subscribe
-    private void onProxyShutdown(ProxyShutdownEvent event) {
-        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
-
-        ApolloManager.saveConfiguration();
     }
 
     @Override
@@ -101,33 +85,64 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     }
 
     @Override
+    public String getApolloVersion() {
+        return this.server.getPluginManager().fromInstance(this)
+            .map(PluginContainer::getDescription)
+            .flatMap(PluginDescription::getVersion)
+            .orElse(null);
+    }
+
+    @Override
+    public Logger getPlatformLogger() {
+        return this.logger;
+    }
+
+    @Override
     public ApolloStats getStats() {
         return this.stats;
     }
 
+    /**
+     * Handles initialization of the proxy.
+     *
+     * @param event the event
+     * @since 1.0.0
+     */
     @Subscribe
-    private void onPluginMessage(PluginMessageEvent event) {
-        if (!event.getIdentifier().getId().equals("REGISTER")) {
-            return;
-        }
+    public void onProxyInitialization(ProxyInitializeEvent event) {
+        ApolloVelocityPlatform.instance = this;
+        this.stats = new VelocityApolloStats();
+        ApolloManager.bootstrap(this);
 
-        if (!(event.getSource() instanceof Player)) {
-            return;
-        }
+        ApolloManager.loadConfiguration(this.dataDirectory);
+        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
 
-        String channels = new String(event.getData(), Charsets.UTF_8);
-        if (!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
-            return;
-        }
+        ApolloManager.saveConfiguration();
 
-        Player player = (Player) event.getSource();
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new VelocityApolloPlayer(player));
+        this.server.getEventManager().register(this, new ApolloPlayerListener());
+        this.server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
     }
 
+    /**
+     * Handles the shutdown of the proxy.
+     *
+     * @param event the event
+     * @since 1.0.0
+     */
     @Subscribe
-    private void onDisconnect(DisconnectEvent event) {
-        Player player = event.getPlayer();
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
+    public void onProxyShutdown(ProxyShutdownEvent event) {
+        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
+
+        ApolloManager.saveConfiguration();
+    }
+
+    static {
+        try {
+            PLUGIN_CHANNEL = MinecraftChannelIdentifier.from(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
+        } catch (NoSuchMethodError e) {
+            String[] messageChannel = ApolloManager.PLUGIN_MESSAGE_CHANNEL.split(":");
+            PLUGIN_CHANNEL = MinecraftChannelIdentifier.create(messageChannel[0], messageChannel[1]);
+        }
     }
 
 }
