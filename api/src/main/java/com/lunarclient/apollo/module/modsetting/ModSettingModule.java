@@ -24,20 +24,25 @@
 package com.lunarclient.apollo.module.modsetting;
 
 import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.mods.Mods;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.option.Option;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collection;
-import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the mod settings module.
  *
  * @since 1.0.0
  */
-@ApiStatus.NonExtendable
 @ModuleDefinition(id = "mod_setting", name = "Mod Setting")
-public abstract class ModSettingModule extends ApolloModule {
+public final class ModSettingModule extends ApolloModule {
+
+    ModSettingModule() {
+        this.registerModOptions();
+    }
 
     @Override
     public Collection<ApolloPlatform.Kind> getSupportedPlatforms() {
@@ -47,6 +52,22 @@ public abstract class ModSettingModule extends ApolloModule {
     @Override
     public boolean isClientNotify() {
         return true;
+    }
+
+    private void registerModOptions() {
+        for (Class<?> mod : Mods.ALL_MODS) {
+            Field[] fields = mod.getDeclaredFields();
+
+            for (Field field : fields) {
+                try {
+                    field.setAccessible(true);
+                    Option<?, ?, ?> option = (Option<?, ?, ?>) field.get(Option.class);
+                    this.registerOptions(option);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }
