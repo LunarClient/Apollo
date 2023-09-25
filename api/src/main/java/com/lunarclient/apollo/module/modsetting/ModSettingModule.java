@@ -26,9 +26,9 @@ package com.lunarclient.apollo.module.modsetting;
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
-import org.jetbrains.annotations.ApiStatus;
 import java.util.Arrays;
 import java.util.Collection;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Represents the mod settings module.

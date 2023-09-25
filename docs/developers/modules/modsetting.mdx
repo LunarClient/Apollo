@@ -4,71 +4,37 @@
 
 The mod setting module allows you to interact with Lunar Client players mods and settings of those mods.
 
+This module heavily integrates with our [Options API](apollo/developers/options).
+You can find all available mods and their options under the mods section.
+
 - Adds the ability to interact with Lunar Client mods.
   - Ability to enable/disable mods.
   - Ability to change, enable or disable mod settings within a mod.
 
 ## Integration
 
-### `ModsSettings` Builder
-
-```java
-private final ModsSettings settings = ModsSettings.builder()
-    .settings(Sets.newHashSet(
-        // Disables the SkyBlock Addons mod
-        ModSettings.builder()
-            .target("SKYBLOCK_ADDONS") // The Mod ID you want to change
-            .enable(false) // If the mod can be enabled
-            .properties(null)
-            .build()
-    ))
-    .build();
-```
-
-#### `ModSettings` Options
-
-`.target(String)` should include the name of Mod ID you're trying to modify. See the [Mod ID page](/apollo/server-owners/mod-ids) for more.
-
-```java
-.target("SKYBLOCK_ADDONS")
-```
-
-`.enable(boolean)` should be set to true or false depending on if you want the mod to be enabled.
-
-```java
-.enable(false)
-```
-
-`.properties(String)` should be the list of a property you're trying to edit.
-
-```java
-.properties(null)
-```
-
 ### Interacting with a specific players `ModSettings`
 
 ```java
-public void sendSettingsExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    
-    // Sending the updated mod settings, "settings", built in the example above to the player.
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.sendSettings(apolloPlayer, this.settings));
+public void enableLightningModExample(Player viewer) {
+     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, true));
 }
 ```
 
 ### Resetting a specific players `ModSettings`
 
 ```java
-public void resetSettingsExample(Player viewer) {
+public void disableLightningModExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.modSettingModule::resetSettings);
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, false));
 }
 ```
 
 ### Broadcasting a `ModSettings` change to an entire server.
 
 ```java
-public void broadcastSettingsExample() {
-    this.modSettingModule.broadcastSettings(this.settings);
+public void broadcastDisableLightningModExample(Player viewer) {
+    this.modSettingModule.getOptions().set(ModLighting.ENABLED, false);
 }
 ```

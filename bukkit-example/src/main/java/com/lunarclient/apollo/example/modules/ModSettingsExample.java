@@ -34,14 +34,18 @@ public class ModSettingsExample {
 
     private final ModSettingModule modSettingModule = Apollo.getModuleManager().getModule(ModSettingModule.class);
 
+    public void enableLightningModExample(Player viewer) {
+         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+         apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, true));
+    }
+
     public void disableLightningModExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, false));
     }
 
-    public void enableLightningModExample(Player viewer) {
-         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-         apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, true));
+    public void broadcastDisableLightningModExample(Player viewer) {
+        this.modSettingModule.getOptions().set(ModLighting.ENABLED, false);
     }
 
 }
