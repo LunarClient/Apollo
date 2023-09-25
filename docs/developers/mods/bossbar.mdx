@@ -1,0 +1,45 @@
+# Boss Bar
+
+Allows you to hide, move or customize the Minecraft boss bar.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void enableBossBar(Player viewer, boolean value) {
+    ModBossbar.ENABLED.set(viewer, value);
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SCALE`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.5F`
+
+- __`RENDER_BAR`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`CUSTOM_BOSS_BAR`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BAR_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFF249F2`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+

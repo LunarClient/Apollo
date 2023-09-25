@@ -1,0 +1,40 @@
+# Time Changer
+
+Customize the current time of day to a fixed position.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void enableTimeChanger(Player viewer, boolean value) {
+    ModTimeChanger.ENABLED.set(viewer, value);
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TIME_CHANGER_TIME`__
+    - Values
+        - Type: `Integer`
+        - Default: `-12000`
+        - Minimum: `-18000`
+        - Maximum: `-6000`
+
+- __`HORIZON_YLEVEL`__
+    - Values
+        - Type: `Integer`
+        - Default: `63`
+        - Minimum: `0`
+        - Maximum: `63`
+
+- __`USE_REAL_TIME`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

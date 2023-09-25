@@ -1,0 +1,127 @@
+# Armor Status
+
+Displays information about the armor you have equipped and the item you are holding on the HUD.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void enableArmorStatus(Player viewer, boolean value) {
+    ModArmorstatus.ENABLED.set(viewer, value);
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SCALE`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.5F`
+
+- __`MOVE_ARMOR_INDIVIDUALLY`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ITEM_NAME`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ITEM_COUNT`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_WHILE_TYPING`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TEXT_SHADOW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DAMAGE_OVERLAY`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`ITEM_DAMAGE`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`ARMOR_DAMAGE`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`MAX_DAMAGE`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`STATIC_DAMAGE_COLORS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`NAME_TEXT_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFFFFF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`HIGHEST_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFFFFF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`HIGH_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFF55FF55`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`MEDIUM_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFFF55`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`MEDIUM_LOW_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFAA00`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`LOW_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFF5555`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`LOWEST_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFAA0000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+

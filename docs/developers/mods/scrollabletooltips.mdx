@@ -1,0 +1,41 @@
+# Scrollable Tooltips
+
+Use your scroll wheel to read overly long item descriptions.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void enableScrollableTooltips(Player viewer, boolean value) {
+    ModScrollableTooltips.ENABLED.set(viewer, value);
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`START_AT_TOP`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`VERTICAL_KEYBIND`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TEXT_SHADOW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`WRAP_TEXT`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

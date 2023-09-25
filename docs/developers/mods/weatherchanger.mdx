@@ -1,0 +1,36 @@
+# Weather Changer
+
+Customize the current weather.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void enableWeatherChanger(Player viewer, boolean value) {
+    ModWeatherChanger.ENABLED.set(viewer, value);
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`RAIN_STRENGTH`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `1.0F`
+
+- __`RAIN_COLOR`__
+    - Augment the rain/snow color
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFFFFF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+

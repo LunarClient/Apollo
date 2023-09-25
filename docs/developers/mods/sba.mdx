@@ -1,0 +1,476 @@
+# SkyblockAddons
+
+A mod created for Hypixel Skyblock with over 50 features that will enhance your skyblock experience (version: DEBUG).
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void enableSkyblockAddons(Player viewer, boolean value) {
+    ModSba.ENABLED.set(viewer, value);
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_HEALTH_BAR`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_FOOD_BAR`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_PET_HEALTH_BAR`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SKELETON_HELMET_BARS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`COOLDOWN_PREDICTION`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`LEG_MONKEY_LVL_100`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`COMPACT_TAB_LIST`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_ITEM_COOLDOWNS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`USE_LUNAR_COOLDOWNS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_TRUE_DEFENSE`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SPECIAL_ZEALOT_ALERT`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`ZEALOT_COUNTER_EXPLOSIVE_BOW_SUPPORT`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ZEALOT_COLOR_BOOLEAN`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ZEALOT_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFF202020`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`LOCK_SLOTS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`STOP_DROPPING_SELLING_RARE_ITEMS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`AVOID_BLINKING_NIGHT_VISION`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`MAKE_BACKPACK_INVENTORIES_COLORED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`FISHING_SOUND_INDICATOR`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`CHANGE_BAR_COLOR_FOR_POTIONS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`COLOR_ENDER_CHEST_IN_END`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`END_ENDER_CHEST_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFF202020`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`OUTBID_ALERT_SOUND`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`OUTBID_ALERT_SOUND_IN_OTHER_GAMES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_OTHER_PLAYER_PRESENTS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`ENTITY_GLOW`__
+    - §cRequires Fast Render to be OFF.
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DROPPED_ITEMS_GLOW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DROPPED_ITEMS_GLOW_ON_ISLAND`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_SVEN_PUP_NAMETAGS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_PLAYERS_IN_LOBBY`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_SPAWN_POINT_PLAYERS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_BONES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BIGGER_FISHING_WAKE`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`STOP_RAT_SOUNDS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`STOP_ONLY_RAT_SQUEAK`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`FISHING_PARTICLE_OVERLAY`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`FISHING_PARTICLE_OVERLAY_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFFFFF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`DUNGEON_TEAMMATES_GLOW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`CRITICAL_HEALTH_DUNGEON_TEAMMATE_WARNING`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_DUNGEON_TEAMMATE_NAME_OVERLAY`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_HEALING_CIRCLE_WALL`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HEALING_CIRCLE_OPACITY`__
+    - Values
+        - Type: `Float`
+        - Default: `0.4F`
+        - Minimum: `0.1F`
+        - Maximum: `1.0F`
+
+- __`STOP_BONZO_STAFF_SOUNDS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_SALVAGE_ESSENCES_COUNTER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`RESET_SALVAGED_ESSENCES_AFTER_LEAVING_MENU`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`CHANGE_DUNGEON_MAP_ZOOM_WITH_KEYBOARD`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_ENCHANT_DESCRIPTION`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ENABLE_MESSAGE_WHEN_BREAKING_PARK`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_BACKPACK_PREVIEW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_BACKPACK_HOLDING_SHIFT`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BACKPACK_PREVIEW_AH`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CAKE_BAG_PREVIEW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BACKPACK_OPENING_SOUND`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`FANCY_WARP_MENU`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`WARP_ADVANCED_MODE`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DISABLE_ENDERMAN_TELEPORTION_EFFECT`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_GREY_ENCHANTS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_ITEM_ANVIL_USES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`REPLACE_ROMAN_NUMERALS_WITH_NUMBERS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DONT_REPLACE_ROMAN_NUMERALS_IN_ITEM_NAME`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_ENCHANTMENTS_REFORGES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_BROKEN_FRAGMENTS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_BASE_STAT_BOOST_PERCENTAGE`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BASE_STAT_BOOST_COLOR_BY_RARITY`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_ITEM_DUNGEON_FLOOR`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_RARITY_UPGRADED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_STACKING_ENCHANT_PROGRESS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_SWORD_KILLS`__
+    - Shows the kills for swords that give stats reflecting the enemies killed with said sword (ex. Fels Sword)
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`ENCHANTMENT_LORE_PARSING`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIGHLIGHT_SPECIAL_ENCHANTMENTS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_EXPERIMENTATION_TABLE_TOOLTIPS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DEVELOPER_MODE`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_SKY_BLOCK_ITEM_ID`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DONT_RESET_CURSOR_INVENTORY`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_PERSONAL_COMPACTOR_PREVIEW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`REFORGE_FILTER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_ENDER_CHEST_PREVIEW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DISABLE_EMPTY_GLASS_PANES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DISABLE_TELEPORT_PAD_MESSAGES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DISABLE_MAGICAL_SOUP_MESSAGES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DISABLE_MORT_MESSAGES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DISABLE_BOSS_MESSAGES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DISABLE_SPIRIT_SCEPTRE_MESSAGES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`PLAYER_SYMBOLS_IN_CHAT`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_PROFILE_TYPE`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_NETHER_FACTION`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TREVOR_THE_TRAPPER_FEATURES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TREVOR_HIGHLIGHT_TRACKED_ENTITY`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TREVOR_SHOW_QUEST_COOLDOWN`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
