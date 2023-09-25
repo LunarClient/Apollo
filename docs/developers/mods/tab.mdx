@@ -1,0 +1,164 @@
+# Tab Editor
+
+Allows you to customize the in-game tab.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void enableTabEditor(Player viewer, boolean value) {
+    ModTab.ENABLED.set(viewer, value);
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TOGGLE_KEY_TAB`__
+    - Quickly pressing and releasing the key will toggle tab
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HEADER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0x80000000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`FOOTER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0x80000000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`BACKGROUND_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0x80000000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`PING_ROW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ROWS_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0x20000000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`DISABLE_HEADER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DISPLAY_PLAYER_HEAD`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DISABLE_FOOTER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_NPC`__
+    - Hide Hypixel NPC on tab
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TAB_LOGO`__
+    - An option to toggle LC logos in player list tab overlay.
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIGHLIGHT_OWN_NAME`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`NAME_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFF0000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`NAME_SHADOW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_PING`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_PING_IF_OVER_500`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DISPLAY_PING_AS_NUMBER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DYNAMIC_PING_COLOR`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PING_NUMBER_SHADOW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PING_NUMBER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFFF55`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`LOW_PING_NUMBER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFF55FF55`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`MEDIUM_PING_NUMBER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFFF55`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`HIGH_PING_NUMBER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFF5555`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`EXTREME_PING_NUMBER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFAA0000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+

@@ -1,0 +1,42 @@
+# Chunk Borders
+
+View the border of the current chunk
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void enableChunkBorders(Player viewer, boolean value) {
+    ModChunkBorders.ENABLED.set(viewer, value);
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`GRID_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFFF00`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`INNER_CHUNK_CORNER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFF0000FF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`OUTER_CHUNK_CORNER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFF0000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
