@@ -45,31 +45,25 @@ public class ModSettingsCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /modsettings <send|reset|broadcast>");
+            player.sendMessage("Usage: /modsettings <enable|disable>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
-            case "send": {
-                this.modSettingsExample.sendSettingsExample(player);
-                player.sendMessage("Sending settings....");
+            case "enable": {
+                this.modSettingsExample.enableLightningModExample(player);
+                player.sendMessage("Enabling lightning mod....");
                 break;
             }
 
-            case "reset": {
-                this.modSettingsExample.resetSettingsExample(player);
-                player.sendMessage("Resetting settings....");
-                break;
-            }
-
-            case "broadcast": {
-                this.modSettingsExample.broadcastSettingsExample();
-                player.sendMessage("Broadcasting settings....");
+            case "disable": {
+                this.modSettingsExample.disableLightningModExample(player);
+                player.sendMessage("Disabling lightning mod....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /modsettings <send|reset|broadcast>");
+                player.sendMessage("Usage: /modsettings <enable|disable>");
                 break;
             }
         }
