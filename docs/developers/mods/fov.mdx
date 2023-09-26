@@ -1,0 +1,154 @@
+# FOV Changer
+
+Allows you to customize your field of view for different potion or speed states.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleFOVChangerExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModFov.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`STATIC_FOV`__
+    - Determines if your FOV changes as you move.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DEFAULT_FOV`__
+    - Values
+        - Type: `Integer`
+        - Default: `70`
+        - Minimum: `30`
+        - Maximum: `110`
+
+- __`AIMING_MODIFIER`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `5.0F`
+
+- __`AIMING_MIN`__
+    - Values
+        - Type: `Float`
+        - Default: `-10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`AIMING_MAX`__
+    - Values
+        - Type: `Float`
+        - Default: `10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`SPEED_FOV`__
+    - Values
+        - Type: `Integer`
+        - Default: `70`
+        - Minimum: `30`
+        - Maximum: `110`
+
+- __`SPEED_TWO_FOV`__
+    - Values
+        - Type: `Integer`
+        - Default: `70`
+        - Minimum: `30`
+        - Maximum: `110`
+
+- __`SLOWNESS_FOV`__
+    - Values
+        - Type: `Integer`
+        - Default: `70`
+        - Minimum: `30`
+        - Maximum: `110`
+
+- __`MOVEMENT_MODIFIER`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `5.0F`
+
+- __`MOVEMENT_MIN`__
+    - Values
+        - Type: `Float`
+        - Default: `-10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`MOVEMENT_MAX`__
+    - Values
+        - Type: `Float`
+        - Default: `10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`SPRINTING_FOV`__
+    - Values
+        - Type: `Integer`
+        - Default: `70`
+        - Minimum: `30`
+        - Maximum: `110`
+
+- __`SPRINT_MODIFIER`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `5.0F`
+
+- __`SPRINT_MIN`__
+    - Values
+        - Type: `Float`
+        - Default: `-10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`SPRINT_MAX`__
+    - Values
+        - Type: `Float`
+        - Default: `10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`FLYING_FOV`__
+    - Values
+        - Type: `Integer`
+        - Default: `70`
+        - Minimum: `30`
+        - Maximum: `110`
+
+- __`FLYING_MODIFIER`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `5.0F`
+
+- __`FLYING_MIN`__
+    - Values
+        - Type: `Float`
+        - Default: `-10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`FLYING_MAX`__
+    - Values
+        - Type: `Float`
+        - Default: `10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+

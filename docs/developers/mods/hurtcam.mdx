@@ -1,0 +1,34 @@
+# Hurt Cam
+
+Manage the hurt camera shaking animation.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleHurtCamExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModHurtCam.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DISABLE_HURT_CAM`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HURT_SHAKING_INTENSITY`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `2.0F`
+

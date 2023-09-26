@@ -1,0 +1,34 @@
+# Hypixel Bedwars
+
+Various enhancements to assist you when playing Hypixel Bedwars
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleHypixelBedwarsExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModHypixelBedwars.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`COLORED_BEDS`__
+    - Recolor the beds in-game according to the team's color
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BW_HARDCORE_HEARTS`__
+    - Replaces normal hearts with hardcore hearts once your bed is lost
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

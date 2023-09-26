@@ -1,0 +1,29 @@
+# Item Physics
+
+Replaces ground items with ones that have physics.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleItemPhysicsExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModItemPhysics.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ROTATION_SPEED`__
+    - Values
+        - Type: `Float`
+        - Default: `0.5F`
+        - Minimum: `0.1F`
+        - Maximum: `4.0F`
+

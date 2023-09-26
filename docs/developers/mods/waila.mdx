@@ -1,0 +1,91 @@
+# WAILA
+
+What am I looking at?
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleWAILAExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModWaila.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SCALE`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.5F`
+
+- __`SHOW_ENTITIES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TEXT_SHADOW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BACKGROUND`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BORDER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BORDER_THICKNESS`__
+    - Values
+        - Type: `Float`
+        - Default: `0.5F`
+        - Minimum: `0.5F`
+        - Maximum: `3.0F`
+
+- __`TEXT_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFFFFF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`BACKGROUND_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0x80000000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`BORDER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0x9F000000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`VERTICAL_SPACING`__
+    - Values
+        - Type: `Integer`
+        - Default: `3`
+        - Minimum: `1`
+        - Maximum: `10`
+
+- __`HORIZONTAL_SPACING`__
+    - Values
+        - Type: `Integer`
+        - Default: `3`
+        - Minimum: `1`
+        - Maximum: `10`
+
