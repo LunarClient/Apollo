@@ -13,21 +13,22 @@ You can find all available mods and their options under the mods section.
 
 ## Integration
 
-### Interacting with a specific players `ModSettings`
-
-```java
-public void enableLightningModExample(Player viewer) {
-     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, true));
-}
-```
-
-### Resetting a specific players `ModSettings`
+### Interacting with a specific players `ModSetting`
 
 ```java
 public void disableLightningModExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, false));
+}
+```
+
+### Resetting a specific players `ModSetting`
+
+```java
+public void rollbackLightningModEnabledState(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    // To rollback the server override value of the setting, simply set the value to "null"
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, null));
 }
 ```
 

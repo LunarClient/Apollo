@@ -34,17 +34,18 @@ public class ModSettingsExample {
 
     private final ModSettingModule modSettingModule = Apollo.getModuleManager().getModule(ModSettingModule.class);
 
-    public void enableLightningModExample(Player viewer) {
-         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-         apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, true));
-    }
-
     public void disableLightningModExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, false));
     }
 
-    public void broadcastDisableLightningModExample(Player viewer) {
+    public void rollbackLightningModEnabledState(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        // To rollback the server override value of the setting, simply set the value to "null"
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, null));
+    }
+
+    public void broadcastDisableLightningModExample() {
         this.modSettingModule.getOptions().set(ModLighting.ENABLED, false);
     }
 
