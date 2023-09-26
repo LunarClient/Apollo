@@ -1,0 +1,104 @@
+# ReplayMod
+
+Record your game sessions and replay them from any perspective.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleReplayModExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModReplaymod.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`INDICATOR`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`AUTO_POST_PROCESS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_SERVER_IP`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`AUTO_SYNC`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TIMELINE_LENGTH`__
+    - Values
+        - Type: `Integer`
+        - Default: `1800`
+        - Minimum: `1500`
+        - Maximum: `2100`
+
+- __`ASK_FOR_OPEN_EYE`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SKIP_POST_RENDER_GUI`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SKIP_POST_SCREENSHOT_GUI`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PATH_PREVIEW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`LUNAR_UI`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`NOTIFICATIONS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`RECORD_SINGLEPLAYER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`RECORD_SERVER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`AUTO_START_RECORDING`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`RENAME_DIALOG`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_CHAT`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

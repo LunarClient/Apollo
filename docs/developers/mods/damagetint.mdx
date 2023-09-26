@@ -1,0 +1,51 @@
+# Damage Tint
+
+Adds a tint to the screen when you are low on health.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleDamageTintExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModDamageTint.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`VIGNETTE_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFF0000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`VIGNETTE_INTENSITY`__
+    - Intensity of the tint.
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `1.0F`
+
+- __`SHOW_VIGNETTE_BELOW`__
+    - Show the tint when you have less than this amount of health as a percentage.
+    - Values
+        - Type: `Integer`
+        - Default: `100`
+        - Minimum: `0`
+        - Maximum: `100`
+
+- __`HEARTBEAT_AUDIO`__
+    - Plays a heartbeat, becoming faster the lower your health.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

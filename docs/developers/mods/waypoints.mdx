@@ -1,0 +1,81 @@
+# Waypoints
+
+Create a waypoint anywhere in the world that will show how for away from a location you are as well as optionally render the name and a beam.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleWaypointsExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModWaypoints.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DEATH_WAYPOINT`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ADD_FROM_CHAT`__
+    - Adds a waypoint if coordinates are clicked in chat.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`WAYPOINT_BEAMS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BOX_BORDER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TEXT_SHADOW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BOX_PADDING`__
+    - Values
+        - Type: `Float`
+        - Default: `4.0F`
+        - Minimum: `1.0F`
+        - Maximum: `8.0F`
+
+- __`ONLY_SHOW_WHEN_LOOKING_NEAR`__
+    - Only show each waypoint when looking near then in the world
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_ICONS`__
+    - Show simpler text icons above each waypoint
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`LABEL_SCALE`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.1F`
+        - Maximum: `2.0F`
+
+- __`ICON_SCALE`__
+    - Values
+        - Type: `Float`
+        - Default: `1.5F`
+        - Minimum: `0.1F`
+        - Maximum: `3.0F`
+
