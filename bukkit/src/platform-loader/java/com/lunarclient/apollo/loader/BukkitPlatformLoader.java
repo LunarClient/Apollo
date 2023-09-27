@@ -41,12 +41,11 @@ public class BukkitPlatformLoader extends JavaPlugin {
      * @since 1.0.0
      */
     public BukkitPlatformLoader() {
-        DynamicClassLoader classLoader = new DynamicClassLoader(
-            DynamicDependencies.discoverDependencies(),
-            this.getClass().getClassLoader()
-        );
+        DynamicLoader loader = new DynamicLoader(this.getClass().getClassLoader());
 
-        this.plugin = classLoader.createPlugin(JavaPlugin.class, this, BukkitPlatformLoader.PLUGIN_CLASS);
+        loader.install(DynamicDependencies.discoverDependencies());
+
+        this.plugin = loader.createPlugin(JavaPlugin.class, this, BukkitPlatformLoader.PLUGIN_CLASS);
     }
 
     @Override

@@ -23,39 +23,50 @@
  */
 package com.lunarclient.apollo.loader;
 
-import net.md_5.bungee.api.plugin.Plugin;
+import java.lang.instrument.Instrumentation;
+import sun.management.Agent;
 
 /**
- * The bungee loading plugin.
+ * Provides the {@link DynamicLoader} with access to the
+ * {@link Instrumentation} instance.
  *
  * @since 1.0.0
  */
-public class BungeePlatformLoader extends Plugin {
-    private static final String PLUGIN_CLASS = "com.lunarclient.apollo.ApolloBungeePlatform";
+public final class DynamicAgent extends Agent {
 
-    private final PlatformPlugin plugin;
+    private static Instrumentation INSTRUMENTATION = null;
 
     /**
-     * Creates a new bungee platform loader.
+     * Called by the JVM when the agent is loaded.
      *
+     * @param agentArgs the agent arguments
+     * @param instrumentation the instrumentation instance
      * @since 1.0.0
      */
-    public BungeePlatformLoader() {
-        DynamicLoader loader = new DynamicLoader(this.getClass().getClassLoader());
-
-        loader.install(DynamicDependencies.discoverDependencies());
-
-        this.plugin = loader.createPlugin(Plugin.class, this, BungeePlatformLoader.PLUGIN_CLASS);
+    public static void premain(String agentArgs, Instrumentation instrumentation) {
+        agentmain(agentArgs, instrumentation);
     }
 
-    @Override
-    public void onEnable() {
-        this.plugin.onEnable();
+    /**
+     * Called by the JVM when the agent is loaded.
+     *
+     * @param agentArgs the agent arguments
+     * @param instrumentation the instrumentation instance
+     * @since 1.0.0
+     */
+    public static void agentmain(String agentArgs, Instrumentation instrumentation) {
+        if (DynamicAgent.INSTRUMENTATION == null) DynamicAgent.INSTRUMENTATION = instrumentation;
+        if (DynamicAgent.INSTRUMENTATION == null) throw new NullPointerException("Unable to get instrumentation instance!");
     }
 
-    @Override
-    public void onDisable() {
-        this.plugin.onDisable();
+    /**
+     * Returns the instrumentation instance.
+     *
+     * @return the instrumentation instance
+     * @since 1.0.0
+     */
+    public static Instrumentation getInstrumentation() {
+        return DynamicAgent.INSTRUMENTATION;
     }
 
 }
