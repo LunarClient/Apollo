@@ -82,7 +82,6 @@ import com.lunarclient.apollo.mods.impl.ModScoreboard;
 import com.lunarclient.apollo.mods.impl.ModScreenshot;
 import com.lunarclient.apollo.mods.impl.ModScrollableTooltips;
 import com.lunarclient.apollo.mods.impl.ModServerAddress;
-import com.lunarclient.apollo.mods.impl.ModServerTitles;
 import com.lunarclient.apollo.mods.impl.ModShinyPots;
 import com.lunarclient.apollo.mods.impl.ModSnaplook;
 import com.lunarclient.apollo.mods.impl.ModSoundChanger;
@@ -189,8 +188,7 @@ public final class Mods {
             ModWaila.class,
             ModNeu.class,
             ModHurtCam.class,
-            ModDamageTint.class,
-            ModServerTitles.class
+            ModDamageTint.class
         );
 
     private Mods() {
