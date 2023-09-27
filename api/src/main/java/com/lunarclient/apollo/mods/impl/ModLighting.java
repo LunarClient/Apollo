@@ -24,7 +24,6 @@
 package com.lunarclient.apollo.mods.impl;
 
 import com.lunarclient.apollo.option.NumberOption;
-import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
@@ -40,7 +39,7 @@ public final class ModLighting {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> ENABLED = Option.<Boolean>builder()
+    public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("lighting", "enabled").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
