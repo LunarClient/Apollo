@@ -49,12 +49,12 @@ public void runLocationExample(Location location) {
         .id("welcome-hologram")
         .location(apolloLocation)
         .lines(Lists.newArrayList(
-            Component.builder()
+            Component.text()
                 .content("Welcome to my server!")
-                .color(Color.RED)
-                .decorators(Lists.newArrayList(Component.TextDecorators.BOLD, Component.TextDecorators.UNDERLINED))
+                .color(NamedTextColor.RED)
+                .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
                 .build(),
-            Component.builder()
+            Component.text()
                 .content("Type /help to get started!")
                 .build()
         ))
