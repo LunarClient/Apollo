@@ -1,6 +1,9 @@
 plugins {
+    id("com.github.johnrengelman.shadow")
     id("apollo.publish-conventions")
 }
+
+setupAdventureProject()
 
 dependencies {
     api(libs.bundles.adventure) {
@@ -10,6 +13,5 @@ dependencies {
         exclude("com.google.code.gson", "gson")
     }
 }
-
 
 publishJar()

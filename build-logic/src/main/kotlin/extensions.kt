@@ -76,6 +76,30 @@ fun Project.setupPlatformDependency(configurationName: String, jarTaskName: Stri
     }
 }
 
+fun Project.setupAdventureProject() {
+    extensions.configure<JavaPluginExtension> {
+        val base by configurations.register("base")
+        val dependency by configurations.register("dependency")
+
+        val main by sourceSets
+
+        val jarTask by tasks.register("baseJar", Jar::class) {
+            archiveClassifier.set("base")
+            from(main.output)
+        }
+
+        val shadowTask by tasks.register("dependencyJar", ShadowJar::class) {
+            archiveClassifier.set("all")
+            configurations = listOf(project.configurations["runtimeClasspath"])
+        }
+
+        artifacts {
+            add("base", jarTask)
+            add("dependency", shadowTask)
+        }
+    }
+}
+
 fun Project.setupDynamicLoader() {
     extensions.configure<JavaPluginExtension> {
         val loaderCompileOnlyConfig = configurations.register("loaderCompileOnly")
@@ -124,17 +148,17 @@ fun Project.setupDynamicLoader() {
     }
 }
 
-fun Project.setupDynamicDependency(configurationName: String, shadowTaskName: String, jarPath: String, jarName: String) {
+fun Project.setupDynamicDependency(configurationName: String, shadowTaskName: String, jarPath: String, jarName: String, name: String = configurationName, classifier: String = "all") {
     extensions.configure<JavaPluginExtension> {
-        val configuration = configurations.register(configurationName)
+        val configuration = configurations.findByName(configurationName) ?: configurations.register(configurationName).get()
 
         configurations.named("compileOnly") {
-            extendsFrom(configuration.get())
+            extendsFrom(configuration)
         }
 
         val shadowTask by tasks.register(shadowTaskName, ShadowJar::class) {
-            archiveClassifier.set("${configurationName}-all")
-            configurations = listOf(configuration.get())
+            archiveClassifier.set("${name}-${classifier}")
+            configurations = listOf(configuration)
 
             configureExclusions()
         }

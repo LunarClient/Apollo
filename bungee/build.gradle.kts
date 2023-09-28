@@ -4,7 +4,8 @@ plugins {
 
 setupDynamicLoader()
 
-setupDynamicDependency("adventure4", "shadowJarAdventure4", "adventure/4/", "libs")
+setupDynamicDependency("baseAdventure4", "baseJarAdventure4", "adventure/4/", "libs", "adventure4", "dev")
+setupDynamicDependency("adventure4", "shadowJarAdventure4", "adventure/4/", "dependencies", "adventure4", "all")
 
 dependencies {
     api(project(path = ":apollo-api", configuration = "shadow"))
@@ -13,5 +14,6 @@ dependencies {
     "loaderCompileOnly"(libs.bungee)
     "loaderImplementation"(project(":extra:apollo-extra-loader"))
 
-    "adventure4"(project(":extra:apollo-extra-adventure4"))
+    "baseAdventure4"(project(path = ":extra:apollo-extra-adventure4", configuration = "base"))
+    "adventure4"(project(path = ":extra:apollo-extra-adventure4", configuration = "dependency"))
 }

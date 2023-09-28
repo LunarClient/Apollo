@@ -46,8 +46,10 @@ public final class DynamicDependencies {
         try {
             Class.forName("net.kyori.adventure.Adventure");
         } catch(Exception ignored) {
-            resources.add("adventure/4/libs.jarinjar");
+            resources.add("adventure/4/dependencies.jarinjar");
         }
+
+        resources.add("adventure/4/libs.jarinjar");
 
         return resources.toArray(new String[0]);
     }
