@@ -32,8 +32,6 @@ import io.netty.handler.codec.base64.Base64;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
-import java.lang.management.OperatingSystemMXBean;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,7 +47,10 @@ import org.bukkit.plugin.Plugin;
  */
 public class BukkitApolloStats implements ApolloStats {
 
-    private static final OperatingSystemMXBean MX_BEAN = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+    @Override
+    public boolean isOnlineMode() {
+        return Bukkit.getServer().getOnlineMode();
+    }
 
     @Override
     public String getMotd() {
@@ -105,18 +106,13 @@ public class BukkitApolloStats implements ApolloStats {
     }
 
     @Override
-    public String getPlatformType() {
+    public String getPlatformSubtype() {
         return "Bukkit";
     }
 
     @Override
     public String getPlatformVersion() {
         return Bukkit.getServer().getVersion();
-    }
-
-    @Override
-    public double getCpuUsage() {
-        return MX_BEAN.getSystemLoadAverage();
     }
 
     @Override

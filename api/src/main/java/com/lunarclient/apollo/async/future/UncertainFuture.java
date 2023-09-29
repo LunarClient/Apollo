@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.roundtrip.async.future;
+package com.lunarclient.apollo.async.future;
 
-import com.lunarclient.apollo.roundtrip.ApolloResponse;
-import com.lunarclient.apollo.roundtrip.async.Future;
-import com.lunarclient.apollo.roundtrip.async.Handler;
+import com.lunarclient.apollo.api.ApiResponse;
+import com.lunarclient.apollo.async.Future;
+import com.lunarclient.apollo.async.Handler;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
@@ -38,7 +38,7 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
-public final class UncertainFuture<T extends ApolloResponse> implements Future<T> {
+public final class UncertainFuture<T extends ApiResponse> implements Future<T> {
 
     /**
      * A {@link Set} of success handlers that will be

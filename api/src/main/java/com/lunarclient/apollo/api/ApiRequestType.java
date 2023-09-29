@@ -21,27 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.roundtrip;
-
-import com.lunarclient.apollo.api.ApiResponse;
-import java.util.UUID;
-import lombok.Getter;
-import lombok.experimental.SuperBuilder;
+package com.lunarclient.apollo.api;
 
 /**
- * Represents an Apollo Response.
+ * The {@link ApiRequestType} enum represents different types of API request methods.
  *
  * @since 1.0.0
  */
-@Getter
-@SuperBuilder
-public class ApolloResponse implements ApiResponse {
+public enum ApiRequestType {
 
     /**
-     * The {@link ApolloRequest} identifier.
+     * Represents an HTTP GET request.
      *
      * @since 1.0.0
      */
-    UUID packetId;
+    GET,
+
+    /**
+     * Represents an HTTP POST request.
+     *
+     * @since 1.0.0
+     */
+    POST
 
 }

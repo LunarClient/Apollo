@@ -46,6 +46,11 @@ public class VelocityApolloStats implements ApolloStats {
     private static final OperatingSystemMXBean MX_BEAN = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
 
     @Override
+    public boolean isOnlineMode() {
+        return ApolloVelocityPlatform.getInstance().getServer().getConfiguration().isOnlineMode();
+    }
+
+    @Override
     public String getMotd() {
         Component motd = ApolloVelocityPlatform.getInstance().getServer().getConfiguration().getMotd();
         return LegacyComponentSerializer.legacyAmpersand().serialize(motd);
@@ -76,18 +81,13 @@ public class VelocityApolloStats implements ApolloStats {
     }
 
     @Override
-    public String getPlatformType() {
+    public String getPlatformSubtype() {
         return "Velocity";
     }
 
     @Override
     public String getPlatformVersion() {
         return ApolloVelocityPlatform.getInstance().getServer().getVersion().getVersion();
-    }
-
-    @Override
-    public double getCpuUsage() {
-        return MX_BEAN.getSystemLoadAverage();
     }
 
     @Override

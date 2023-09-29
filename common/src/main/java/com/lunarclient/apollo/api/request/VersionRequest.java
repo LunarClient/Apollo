@@ -21,27 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.roundtrip;
+package com.lunarclient.apollo.api.request;
 
-import com.lunarclient.apollo.api.ApiResponse;
-import java.util.UUID;
-import lombok.Getter;
-import lombok.experimental.SuperBuilder;
+import com.lunarclient.apollo.api.ApiRequest;
+import com.lunarclient.apollo.api.ApiRequestType;
+import com.lunarclient.apollo.api.response.VersionResponse;
+import lombok.Builder;
 
 /**
- * Represents an Apollo Response.
+ * Represents the apollo version request.
  *
  * @since 1.0.0
  */
-@Getter
-@SuperBuilder
-public class ApolloResponse implements ApiResponse {
+@Builder
+public final class VersionRequest implements ApiRequest<VersionResponse> {
 
-    /**
-     * The {@link ApolloRequest} identifier.
-     *
-     * @since 1.0.0
-     */
-    UUID packetId;
+    @Override
+    public ApiRequestType getType() {
+        return ApiRequestType.GET;
+    }
+
+    @Override
+    public String getRoute() {
+        return "/updates";
+    }
 
 }

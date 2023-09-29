@@ -25,9 +25,16 @@ package com.lunarclient.apollo.stats;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.api.request.ServerStartRequest;
 import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.lang.management.ManagementFactory;
+import java.lang.management.OperatingSystemMXBean;
+import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Manages Apollo statistics.
@@ -36,7 +43,14 @@ import io.leangen.geantyref.TypeToken;
  */
 public final class ApolloStatsManager {
 
+    private static final OperatingSystemMXBean MX_BEAN = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+    private static final String SESSION_ID = UUID.randomUUID().toString();
     private static final String CONFIG_PREFIX = "mcstats";
+
+    public static final SimpleOption<Boolean> PLUGINS = Option.<Boolean>builder()
+        .comment("Set to 'true' to send your server plugins to MCStats, otherwise 'false'.")
+        .node(CONFIG_PREFIX, "plugins").type(TypeToken.get(Boolean.class))
+        .defaultValue(true).build();
 
     public static final SimpleOption<Boolean> MOTD = Option.<Boolean>builder()
         .comment("Set to 'true' to send your server IP address to MCStats, otherwise 'false'.")
@@ -53,14 +67,9 @@ public final class ApolloStatsManager {
         .node(CONFIG_PREFIX, "version").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
-    public static final SimpleOption<Boolean> PLUGINS = Option.<Boolean>builder()
-        .comment("Set to 'true' to send your server plugins to MCStats, otherwise 'false'.")
-        .node(CONFIG_PREFIX, "plugins").type(TypeToken.get(Boolean.class))
-        .defaultValue(true).build();
-
-    public static final SimpleOption<Boolean> PLATFORM_TYPE = Option.<Boolean>builder()
-        .comment("Set to 'true' to send your server platform type to MCStats, otherwise 'false'.")
-        .node(CONFIG_PREFIX, "platform-type").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> PLATFORM_SUBTYPE = Option.<Boolean>builder()
+        .comment("Set to 'true' to send your server platform subtype to MCStats, otherwise 'false'.")
+        .node(CONFIG_PREFIX, "platform-subtype").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
     public static final SimpleOption<Boolean> PLATFORM_VERSION = Option.<Boolean>builder()
@@ -96,7 +105,7 @@ public final class ApolloStatsManager {
             ApolloStatsManager.ICON,
             ApolloStatsManager.VERSION,
             ApolloStatsManager.PLUGINS,
-            ApolloStatsManager.PLATFORM_TYPE,
+            ApolloStatsManager.PLATFORM_SUBTYPE,
             ApolloStatsManager.PLATFORM_VERSION,
             ApolloStatsManager.HEARTBEAT_PERFORMANCE,
             ApolloStatsManager.HEARTBEAT_COUNTS
@@ -104,15 +113,24 @@ public final class ApolloStatsManager {
     }
 
     private void handleServerStartStats() {
-        ApolloStats stats = Apollo.getPlatform().getStats();
+        ApolloPlatform platform = Apollo.getPlatform();
+        Options options = platform.getOptions();
+        ApolloStats stats = platform.getStats();
+        Runtime runtime = Runtime.getRuntime();
 
-        // Request
-        System.out.println("MOTD " + stats.getMotd());
-        System.out.println("ICON " + stats.getIcon());
-        System.out.println("VERSION " + stats.getVersion());
-        System.out.println("PLUGINS " + stats.getPlugins());
-        System.out.println("PLATFORM TYPE " + stats.getPlatformType());
-        System.out.println("PLATFORM VERSION " + stats.getPlatformVersion());
+        ServerStartRequest request = ServerStartRequest.builder()
+            .serverSessionId(SESSION_ID)
+            .plugins(options.get(ApolloStatsManager.PLUGINS) ? stats.getPlugins() : new ArrayList<>())
+            .onlineMode(stats.isOnlineMode())
+            .platformType(platform.getKind().name())
+            .platformSubtype(options.get(ApolloStatsManager.PLATFORM_SUBTYPE) ? stats.getPlatformSubtype() : null)
+            .platformVersion(options.get(ApolloStatsManager.PLATFORM_VERSION) ? stats.getPlatformVersion() : null)
+            .javaVersion(System.getProperty("java.version"))
+            .cpuArch(System.getProperty("os.arch"))
+            .cpuCoreCount(runtime.availableProcessors())
+            .build();
+
+        System.out.println(ApolloManager.GSON.toJson(request));
     }
 
 }

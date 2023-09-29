@@ -21,27 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.roundtrip;
+package com.lunarclient.apollo.api.request;
 
-import com.lunarclient.apollo.api.ApiResponse;
-import java.util.UUID;
-import lombok.Getter;
-import lombok.experimental.SuperBuilder;
+import com.lunarclient.apollo.api.ApiRequest;
+import com.lunarclient.apollo.api.ApiRequestType;
+import com.lunarclient.apollo.api.response.VersionResponse;
+import com.lunarclient.apollo.stats.ApolloPluginDescription;
+import java.util.List;
+import lombok.Builder;
 
 /**
- * Represents an Apollo Response.
+ * Represents the apollo version request.
  *
  * @since 1.0.0
  */
-@Getter
-@SuperBuilder
-public class ApolloResponse implements ApiResponse {
+@Builder
+public final class ServerStartRequest implements ApiRequest<VersionResponse> {
 
-    /**
-     * The {@link ApolloRequest} identifier.
-     *
-     * @since 1.0.0
-     */
-    UUID packetId;
+    // TODO: docs
+    private final String serverSessionId;
+    private final List<ApolloPluginDescription> plugins;
+    private final boolean onlineMode;
+    private final String platformType;
+    private final String platformSubtype;
+    private final String platformVersion;
+    private final String javaVersion;
+    private final String cpuArch;
+    private final int cpuCoreCount;
+
+    @Override
+    public ApiRequestType getType() {
+        return ApiRequestType.GET;
+    }
+
+    @Override
+    public String getRoute() {
+        return "/updates";
+    }
 
 }

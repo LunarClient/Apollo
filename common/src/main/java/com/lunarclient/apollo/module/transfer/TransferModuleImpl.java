@@ -25,10 +25,10 @@ package com.lunarclient.apollo.module.transfer;
 
 import com.google.protobuf.ByteString;
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.async.Future;
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.roundtrip.async.Future;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;

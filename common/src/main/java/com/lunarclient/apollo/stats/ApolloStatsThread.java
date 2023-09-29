@@ -52,12 +52,6 @@ public final class ApolloStatsThread extends Thread {
             try {
                 ApolloStats stats = Apollo.getPlatform().getStats();
 
-                System.out.println("CPU USAGE " + stats.getCpuUsage());
-                System.out.println("MAX RAM " + stats.getMaximumAllocatedRam());
-                System.out.println("USED RAM " + stats.getUsedRam());
-                System.out.println("TOTAL PLAYERS " + stats.getTotalPlayers());
-                System.out.println("MAX PLAYERS " + stats.getMaxPlayers());
-
                 Thread.sleep(HEARTBEAT_INTERVAL);
             } catch (Throwable e) {
                 e.printStackTrace();

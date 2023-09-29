@@ -21,27 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.roundtrip;
-
-import com.lunarclient.apollo.api.ApiResponse;
-import java.util.UUID;
-import lombok.Getter;
-import lombok.experimental.SuperBuilder;
+package com.lunarclient.apollo.api;
 
 /**
- * Represents an Apollo Response.
+ * The {@link ApiRequest} interface represents a request object for making API calls.
  *
+ * @param <T> the expected {@link ApiResponse}
  * @since 1.0.0
  */
-@Getter
-@SuperBuilder
-public class ApolloResponse implements ApiResponse {
+public interface ApiRequest<T extends ApiResponse> {
 
     /**
-     * The {@link ApolloRequest} identifier.
+     * Gets the type of API request (e.g., GET, POST).
      *
+     * @return the API request type.
      * @since 1.0.0
      */
-    UUID packetId;
+    ApiRequestType getType();
+
+    /**
+     * Gets the URL endpoint for the API request.
+     *
+     * @return The route or URL endpoint.
+     * @since 1.0.0
+     */
+    String getRoute();
 
 }

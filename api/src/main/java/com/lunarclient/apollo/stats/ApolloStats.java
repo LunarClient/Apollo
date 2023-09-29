@@ -35,6 +35,14 @@ import org.jetbrains.annotations.ApiStatus;
 public interface ApolloStats {
 
     /**
+     * Gets the servers online mode state.
+     *
+     * @return the servers online mode state.
+     * @since 1.0.0
+     */
+    boolean isOnlineMode();
+
+    /**
      * Gets the servers message of the day.
      *
      * @return the servers message of the day
@@ -67,12 +75,12 @@ public interface ApolloStats {
     List<ApolloPluginDescription> getPlugins();
 
     /**
-     * Gets the servers platform type (Bukkit, BungeeCord, Velocity...).
+     * Gets the servers platform subtype (Bukkit, BungeeCord, Velocity...).
      *
-     * @return the servers platform type
+     * @return the servers platform subtype
      * @since 1.0.0
      */
-    String getPlatformType();
+    String getPlatformSubtype();
 
     /**
      * Gets the servers platform version.
@@ -83,12 +91,20 @@ public interface ApolloStats {
     String getPlatformVersion();
 
     /**
-     * Gets the servers cpu usage.
+     * Gets the servers total players.
      *
-     * @return the servers cpu usage
+     * @return the servers total players
      * @since 1.0.0
      */
-    double getCpuUsage();
+    int getTotalPlayers();
+
+    /**
+     * Gets the servers maximum players.
+     *
+     * @return the servers maximum players
+     * @since 1.0.0
+     */
+    int getMaxPlayers();
 
     /**
      * Gets the servers maximum allocated ram in bytes.
@@ -109,21 +125,5 @@ public interface ApolloStats {
     default double getUsedRam() {
         return Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory();
     }
-
-    /**
-     * Gets the servers total players.
-     *
-     * @return the servers total players
-     * @since 1.0.0
-     */
-    int getTotalPlayers();
-
-    /**
-     * Gets the servers maximum players.
-     *
-     * @return the servers maximum players
-     * @since 1.0.0
-     */
-    int getMaxPlayers();
 
 }

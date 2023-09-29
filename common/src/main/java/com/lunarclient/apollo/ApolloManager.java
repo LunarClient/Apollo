@@ -23,6 +23,9 @@
  */
 package com.lunarclient.apollo;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.lunarclient.apollo.api.ApolloHttpManager;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.network.ApolloNetworkManager;
 import com.lunarclient.apollo.option.ConfigOptions;
@@ -59,12 +62,18 @@ public final class ApolloManager {
      */
     public static final String PLUGIN_ROOT_MODULE = "apollo";
 
+    /**
+     * The plugins GSON used for http.
+     */
+    public static final Gson GSON = new GsonBuilder().create();
+
     private static final List<Option<?, ?, ?>> optionKeys = new LinkedList<>();
 
     @Getter private static ApolloPlatform platform;
-    @Getter private static ApolloNetworkManager networkManager;
+    @Getter private static ApolloHttpManager httpManager;
     @Getter private static ApolloStatsManager statsManager;
     @Getter private static ApolloVersionManager versionManager;
+    @Getter private static ApolloNetworkManager networkManager;
     @Getter private static CommentedConfigurationNode configurationNode;
 
     private static YamlConfigurationLoader configurationLoader;
@@ -90,6 +99,7 @@ public final class ApolloManager {
                 new ApolloRoundtripManager()
             );
 
+            ApolloManager.httpManager = new ApolloHttpManager();
             ApolloManager.statsManager = new ApolloStatsManager();
             ApolloManager.versionManager = new ApolloVersionManager();
             ApolloManager.networkManager = new ApolloNetworkManager();

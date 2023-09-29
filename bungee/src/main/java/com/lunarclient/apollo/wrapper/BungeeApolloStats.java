@@ -45,6 +45,11 @@ public class BungeeApolloStats implements ApolloStats {
     private static final OperatingSystemMXBean MX_BEAN = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
 
     @Override
+    public boolean isOnlineMode() {
+        return ProxyServer.getInstance().getConfig().isOnlineMode();
+    }
+
+    @Override
     public String getMotd() {
         return ProxyServer.getInstance().getConfigurationAdapter().getListeners().stream()
             .filter(listener -> listener.getMotd() != null && !listener.getMotd().isEmpty())
@@ -81,18 +86,13 @@ public class BungeeApolloStats implements ApolloStats {
     }
 
     @Override
-    public String getPlatformType() {
+    public String getPlatformSubtype() {
         return "BungeeCord";
     }
 
     @Override
     public String getPlatformVersion() {
         return ProxyServer.getInstance().getVersion();
-    }
-
-    @Override
-    public double getCpuUsage() {
-        return MX_BEAN.getSystemLoadAverage();
     }
 
     @Override
