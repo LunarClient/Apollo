@@ -1,0 +1,129 @@
+# Minimap
+
+Display a miniature map of the world on your HUD.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleMinimapExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModMinimap.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SCALE`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.5F`
+
+- __`MAP_WIDTH`__
+    - Values
+        - Type: `Integer`
+        - Default: `8`
+        - Minimum: `1`
+        - Maximum: `16`
+
+- __`MAP_HEIGHT`__
+    - Values
+        - Type: `Integer`
+        - Default: `8`
+        - Minimum: `1`
+        - Maximum: `16`
+
+- __`MAP_ZOOM`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `2.0F`
+
+- __`ROTATE_WITH_PLAYER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BORDER`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BORDER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0x9F000000`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`BORDER_THICKNESS`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`COMPASS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`COMPASS_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFFFFFFFF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`COMPASS_SHADOW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`PLAYER_MARKER_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFF0000FF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`PLAYER_MARKER_SIZE`__
+    - Values
+        - Type: `Float`
+        - Default: `5.0F`
+        - Minimum: `1.0F`
+        - Maximum: `10.0F`
+
+- __`ENTITY_MARKER_OPACITY`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `1.0F`
+
+- __`ENTITY_MARKER_SIZE`__
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `10.0F`
+
+- __`ENTITY_MARKER_SHADOW`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_COORDINATES`__
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

@@ -1,0 +1,68 @@
+# Glint Colorizer
+
+Customize the color of enchantment glints
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleGlintColorizerExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModGlintColorizer.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`USE_LUNAR_EQUATION`__
+    - Use a custom blending algorithm which supports darker colours
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`OVERRIDE_ITEM_GLINT`__
+    - Recolor the glints of items
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`ITEM_GLINT_LUNAR_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xCC6419FF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`ITEM_GLINT_VANILLA_COLOR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFF8040CC`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`OVERRIDE_ARMOR_GLINT`__
+    - Recolor the glints of worn armor
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`ARMOR_GLINT_LUNAR`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xCC6419FF`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+
+- __`ARMOR_GLINT_VANILLA`__
+    - Values
+        - Type: `Integer`
+        - Default: `0xFF8040CC`
+        - Minimum: `0x80000000`
+        - Maximum: `0x7FFFFFFF`
+

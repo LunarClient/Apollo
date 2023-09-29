@@ -6,6 +6,7 @@
     "entity": "Entity",
     "hologram": "Hologram",
     "limb": "Limb",
+    "modsetting": "Mod Setting",
     "nametag": "Nametag",
     "notification": "Notification",
     "saturation": "Saturation",

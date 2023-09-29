@@ -1,0 +1,34 @@
+# Motion Blur
+
+Blur your surroundings when moving.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleMotionBlurExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModMotionBlur.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`OLD_BLUR`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`VALUE`__
+    - Values
+        - Type: `Integer`
+        - Default: `1`
+        - Minimum: `1`
+        - Maximum: `10`
+

@@ -1,0 +1,37 @@
+# Shiny Pots
+
+Gives potions the full box shiny enchantment effect.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleShinyPotsExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModShinyPots.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`COLORED_POTIONS`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`RENDER_GLINT_BEHIND_POTION`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`RENDER_ENTIRE_SLOT`__
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
