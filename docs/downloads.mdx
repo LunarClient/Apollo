@@ -21,7 +21,11 @@ import { Text } from "@moonsworth/text";
                 {
                     text: "Download",
                     onClick: () => {
-                        alert("Bukkit");
+                        const asset = fetch("https://api.lunarclientprod.com/apollo/updates")
+                            .then((res) => res.json())
+                            .then((res) => res.assets.bukkit);
+
+                        window.open(asset, "_blank");
                     },
                 },
             ],
@@ -43,7 +47,11 @@ import { Text } from "@moonsworth/text";
                 {
                     text: "Download",
                     onClick: () => {
-                        alert("Bungee");
+                        const asset = fetch("https://api.lunarclientprod.com/apollo/updates")
+                            .then((res) => res.json())
+                            .then((res) => res.assets.bungee);
+
+                        window.open(asset, "_blank");
                     },
                 },
             ],
@@ -65,7 +73,11 @@ import { Text } from "@moonsworth/text";
                 {
                     text: "Download",
                     onClick: () => {
-                        alert("Velocity");
+                        const asset = fetch("https://api.lunarclientprod.com/apollo/updates")
+                            .then((res) => res.json())
+                            .then((res) => res.assets.velocity);
+
+                        window.open(asset, "_blank");
                     },
                 },
             ],
@@ -79,6 +91,7 @@ import { Text } from "@moonsworth/text";
             },
         },
     ]}
+
 />
 
 <Text textAlign="center" color="rgba(226,232,240)" fontSize="18px" CSS={{ marginTop: "10px" }}>
