@@ -23,50 +23,38 @@
  */
 package com.lunarclient.apollo.api;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
- * The {@link ApiRequest} interface represents a request object for making API calls.
+ * The {@link ApiServiceType} enum represents different service types.
  *
- * @param <T> the expected {@link ApiResponse}
  * @since 1.0.0
  */
-public interface ApiRequest<T extends ApiResponse> {
+@Getter
+@RequiredArgsConstructor
+public enum ApiServiceType {
 
     /**
-     * Gets the service type (e.g. API, Analytics).
+     * Represents the API service.
      *
-     * @return the service type.
      * @since 1.0.0
      */
-    ApiServiceType getService();
+    API("api.lunarclientprod.com/apollo/"),
 
     /**
-     * Gets the type of API request (e.g. GET, POST).
+     * Represents the analytics service.
      *
-     * @return the API request type.
      * @since 1.0.0
      */
-    ApiRequestType getType();
+    ANALYTICS("analytics.lunarclientprod.com/apollo/");
 
     /**
-     * Gets the URL endpoint for the API request.
+     * Returns the service {@link String} url.
      *
-     * @return The route or URL endpoint.
+     * @return the service url
      * @since 1.0.0
      */
-    String getRoute();
-
-    /**
-     * Gets the gson token type.
-     *
-     * @return The token type.
-     * @since 1.0.0
-     */
-    default Type getResponseType() {
-        ParameterizedType parameterized = (ParameterizedType) this.getClass().getGenericInterfaces()[0];
-        return parameterized.getActualTypeArguments()[0];
-    }
+    private final String url;
 
 }

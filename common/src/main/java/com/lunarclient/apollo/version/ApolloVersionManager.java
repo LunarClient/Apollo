@@ -80,7 +80,8 @@ public final class ApolloVersionManager {
                     this.needsUpdate = true;
                     platform.getPlatformLogger().warning(UPDATE_MESSAGE);
                 }
-            });
+            })
+            .onFailure(Throwable::printStackTrace);
     }
 
 }

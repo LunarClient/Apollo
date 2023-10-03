@@ -31,4 +31,13 @@ import com.lunarclient.apollo.api.ApiResponse;
  * @since 1.0.0
  */
 public final class ServerStartResponse implements ApiResponse {
+
+    /**
+     * Returns whether the request was successfully handled.
+     *
+     * @return the success state
+     * @since 1.0.0
+     */
+    boolean success;
+
 }

@@ -28,13 +28,9 @@ import com.lunarclient.apollo.stats.ApolloPluginDescription;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.util.Favicon;
-import java.lang.management.ManagementFactory;
-import java.lang.management.OperatingSystemMXBean;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 /**
  * The Velocity implementation of {@link ApolloStats}.
@@ -43,17 +39,9 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
  */
 public class VelocityApolloStats implements ApolloStats {
 
-    private static final OperatingSystemMXBean MX_BEAN = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
-
     @Override
     public boolean isOnlineMode() {
         return ApolloVelocityPlatform.getInstance().getServer().getConfiguration().isOnlineMode();
-    }
-
-    @Override
-    public String getMotd() {
-        Component motd = ApolloVelocityPlatform.getInstance().getServer().getConfiguration().getMotd();
-        return LegacyComponentSerializer.legacyAmpersand().serialize(motd);
     }
 
     @Override
@@ -93,11 +81,6 @@ public class VelocityApolloStats implements ApolloStats {
     @Override
     public int getTotalPlayers() {
         return ApolloVelocityPlatform.getInstance().getServer().getPlayerCount();
-    }
-
-    @Override
-    public int getMaxPlayers() {
-        return ApolloVelocityPlatform.getInstance().getServer().getConfiguration().getShowMaxPlayers();
     }
 
 }

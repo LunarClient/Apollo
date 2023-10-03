@@ -53,11 +53,6 @@ public class BukkitApolloStats implements ApolloStats {
     }
 
     @Override
-    public String getMotd() {
-        return Bukkit.getServer().getMotd();
-    }
-
-    @Override
     public String getIcon() {
         File icon = new File(new File("."), "server-icon.png");
 
@@ -117,11 +112,6 @@ public class BukkitApolloStats implements ApolloStats {
 
     @Override
     public int getTotalPlayers() {
-        return Bukkit.getMaxPlayers();
-    }
-
-    @Override
-    public int getMaxPlayers() {
         return Bukkit.getOnlinePlayers().size();
     }
 

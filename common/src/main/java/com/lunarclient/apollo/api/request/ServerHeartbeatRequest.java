@@ -26,9 +26,7 @@ package com.lunarclient.apollo.api.request;
 import com.lunarclient.apollo.api.ApiRequest;
 import com.lunarclient.apollo.api.ApiRequestType;
 import com.lunarclient.apollo.api.ApiServiceType;
-import com.lunarclient.apollo.api.response.ServerStartResponse;
-import com.lunarclient.apollo.stats.ApolloPluginDescription;
-import java.util.List;
+import com.lunarclient.apollo.api.response.ServerHeartbeatResponse;
 import lombok.Builder;
 
 /**
@@ -37,7 +35,7 @@ import lombok.Builder;
  * @since 1.0.0
  */
 @Builder(toBuilder = true)
-public final class ServerStartRequest implements ApiRequest<ServerStartResponse> {
+public final class ServerHeartbeatRequest implements ApiRequest<ServerHeartbeatResponse> {
 
     /**
      * Randomly generated ID that gets saved to the apollo config file.
@@ -54,82 +52,32 @@ public final class ServerStartRequest implements ApiRequest<ServerStartResponse>
     private final String serverSessionId;
 
     /**
-     * A {@link List} of {@link ApolloPluginDescription} that contains
-     * key plugin information such as the plugin name, author & version.
+     * The system load average for the last minute.
      *
      * @since 1.0.0
      */
-    private final List<ApolloPluginDescription> plugins;
+    private final double cpuUsage;
 
     /**
-     * Whether the server is set to online mode.
+     * The servers maximum allocated ram in megabytes.
      *
      * @since 1.0.0
      */
-    private final boolean onlineMode;
+    private final int ramMax;
 
     /**
-     * The platform {@link com.lunarclient.apollo.ApolloPlatform.Kind} type.
+     * The servers used ram in megabytes.
      *
      * @since 1.0.0
      */
-    private final String platformType;
+    private final int ramUsed;
 
     /**
-     * The platform subtype (Bukkit, BungeeCord, Velocity...).
+     * The servers total online players.
      *
      * @since 1.0.0
      */
-    private final String platformSubtype;
-
-    /**
-     * The platform version.
-     *
-     * @since 1.0.0
-     */
-    private final String platformVersion;
-
-    /**
-     * The Java version used by the server.
-     *
-     * @since 1.0.0
-     */
-    private final String javaVersion;
-
-    /**
-     * The CPU architecture used by the server.
-     *
-     * @since 1.0.0
-     */
-    private final String cpuArch;
-
-    /**
-     * The number of processors available.
-     *
-     * @since 1.0.0
-     */
-    private final int cpuCoreCount;
-
-    /**
-     * The operating system name.
-     *
-     * @since 1.0.0
-     */
-    private final String operatingSystem;
-
-    /**
-     * The operating system release.
-     *
-     * @since 1.0.0
-     */
-    private final String operatingSystemRelease;
-
-    /**
-     * A {@link List} of {@link String} apollo modules that are currently enabled.
-     *
-     * @since 1.0.0
-     */
-    private final List<String> modules;
+    private final int totalPlayers;
 
     @Override
     public ApiServiceType getService() {
@@ -143,7 +91,7 @@ public final class ServerStartRequest implements ApiRequest<ServerStartResponse>
 
     @Override
     public String getRoute() {
-        return "event/server.start";
+        return "event/server.heartbeat";
     }
 
 }

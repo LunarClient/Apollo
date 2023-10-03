@@ -66,6 +66,7 @@ import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
+import com.lunarclient.apollo.stats.ApolloStatsManager;
 import com.lunarclient.apollo.wrapper.BukkitApolloStats;
 import java.util.logging.Logger;
 import lombok.Getter;
@@ -127,6 +128,8 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         messenger.registerIncomingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
             (channel, player, bytes) -> this.handlePacket(player, bytes)
         );
+
+        new ApolloStatsManager();
     }
 
     @Override

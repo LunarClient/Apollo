@@ -27,14 +27,14 @@ import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.api.request.ServerStartRequest;
+import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
-import java.lang.management.ManagementFactory;
-import java.lang.management.OperatingSystemMXBean;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Manages Apollo statistics.
@@ -43,38 +43,27 @@ import java.util.UUID;
  */
 public final class ApolloStatsManager {
 
-    private static final OperatingSystemMXBean MX_BEAN = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
-    private static final String SESSION_ID = UUID.randomUUID().toString();
+    public static final String SESSION_ID = UUID.randomUUID().toString();
     private static final String CONFIG_PREFIX = "mcstats";
 
-    public static final SimpleOption<Boolean> PLUGINS = Option.<Boolean>builder()
-        .comment("Set to 'true' to send your server plugins to MCStats, otherwise 'false'.")
-        .node(CONFIG_PREFIX, "plugins").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<UUID> INSTALLATION_ID = Option.<UUID>builder()
+        .comment("Your servers installation id used for stats.")
+        .node(CONFIG_PREFIX, "installation-id").type(TypeToken.get(UUID.class))
+        .defaultValue(UUID.randomUUID()).build();
+
+    public static final SimpleOption<Boolean> SERVER_STATISTICS = Option.<Boolean>builder()
+        .comment("Set to 'true' to send your minecraft server statistics to MCStats, otherwise 'false'.")
+        .node(CONFIG_PREFIX, "server-statistics").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
-    public static final SimpleOption<Boolean> MOTD = Option.<Boolean>builder()
-        .comment("Set to 'true' to send your server IP address to MCStats, otherwise 'false'.")
-        .node(CONFIG_PREFIX, "address").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> SOFTWARE_INFORMATION = Option.<Boolean>builder()
+        .comment("Set to 'true' to send your server software information to MCStats, otherwise 'false'.")
+        .node(CONFIG_PREFIX, "software-information").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
-    public static final SimpleOption<Boolean> ICON = Option.<Boolean>builder()
-        .comment("Set to 'true' to send your server icon to MCStats, otherwise 'false'.")
-        .node(CONFIG_PREFIX, "icon").type(TypeToken.get(Boolean.class))
-        .defaultValue(true).build();
-
-    public static final SimpleOption<Boolean> VERSION = Option.<Boolean>builder()
-        .comment("Set to 'true' to send your server version to MCStats, otherwise 'false'.")
-        .node(CONFIG_PREFIX, "version").type(TypeToken.get(Boolean.class))
-        .defaultValue(true).build();
-
-    public static final SimpleOption<Boolean> PLATFORM_SUBTYPE = Option.<Boolean>builder()
-        .comment("Set to 'true' to send your server platform subtype to MCStats, otherwise 'false'.")
-        .node(CONFIG_PREFIX, "platform-subtype").type(TypeToken.get(Boolean.class))
-        .defaultValue(true).build();
-
-    public static final SimpleOption<Boolean> PLATFORM_VERSION = Option.<Boolean>builder()
-        .comment("Set to 'true' to send your server platform version to MCStats, otherwise 'false'.")
-        .node(CONFIG_PREFIX, "platform-version").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> HARDWARE_INFORMATION = Option.<Boolean>builder()
+        .comment("Set to 'true' to send your server hardware information to MCStats, otherwise 'false'.")
+        .node(CONFIG_PREFIX, "hardware-information").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
     public static final SimpleOption<Boolean> HEARTBEAT_PERFORMANCE = Option.<Boolean>builder()
@@ -101,12 +90,10 @@ public final class ApolloStatsManager {
 
     private void registerConfigOptions() {
         ApolloManager.registerOptions(
-            ApolloStatsManager.MOTD,
-            ApolloStatsManager.ICON,
-            ApolloStatsManager.VERSION,
-            ApolloStatsManager.PLUGINS,
-            ApolloStatsManager.PLATFORM_SUBTYPE,
-            ApolloStatsManager.PLATFORM_VERSION,
+            ApolloStatsManager.INSTALLATION_ID,
+            ApolloStatsManager.SERVER_STATISTICS,
+            ApolloStatsManager.HARDWARE_INFORMATION,
+            ApolloStatsManager.SOFTWARE_INFORMATION,
             ApolloStatsManager.HEARTBEAT_PERFORMANCE,
             ApolloStatsManager.HEARTBEAT_COUNTS
         );
@@ -118,19 +105,40 @@ public final class ApolloStatsManager {
         ApolloStats stats = platform.getStats();
         Runtime runtime = Runtime.getRuntime();
 
-        ServerStartRequest request = ServerStartRequest.builder()
-            .serverSessionId(SESSION_ID)
-            .plugins(options.get(ApolloStatsManager.PLUGINS) ? stats.getPlugins() : new ArrayList<>())
-            .onlineMode(stats.isOnlineMode())
-            .platformType(platform.getKind().name())
-            .platformSubtype(options.get(ApolloStatsManager.PLATFORM_SUBTYPE) ? stats.getPlatformSubtype() : null)
-            .platformVersion(options.get(ApolloStatsManager.PLATFORM_VERSION) ? stats.getPlatformVersion() : null)
-            .javaVersion(System.getProperty("java.version"))
-            .cpuArch(System.getProperty("os.arch"))
-            .cpuCoreCount(runtime.availableProcessors())
-            .build();
+        List<String> enabledModules = Apollo.getModuleManager().getModules().stream()
+            .filter(ApolloModule::isEnabled)
+            .map(ApolloModule::getId)
+            .collect(Collectors.toList());
 
-        System.out.println(ApolloManager.GSON.toJson(request));
+        ServerStartRequest.ServerStartRequestBuilder requestBuilder = ServerStartRequest.builder()
+            .serverInstallationId(options.get(ApolloStatsManager.INSTALLATION_ID).toString())
+            .serverSessionId(SESSION_ID);
+
+        if (options.get(ApolloStatsManager.SERVER_STATISTICS)) {
+            requestBuilder
+                .plugins(stats.getPlugins())
+                .onlineMode(stats.isOnlineMode())
+                .platformType(platform.getKind().name())
+                .platformSubtype(stats.getPlatformSubtype())
+                .platformVersion(stats.getPlatformVersion())
+                .modules(enabledModules);
+        }
+
+        if (options.get(ApolloStatsManager.SOFTWARE_INFORMATION)) {
+            requestBuilder
+                .javaVersion(System.getProperty("java.version"))
+                .operatingSystem(System.getProperty("os.name"))
+                .operatingSystemRelease(System.getProperty("os.version"));
+        }
+
+        if (options.get(ApolloStatsManager.HARDWARE_INFORMATION)) {
+            requestBuilder
+                .cpuArch(System.getProperty("os.arch"))
+                .cpuCoreCount(runtime.availableProcessors());
+        }
+
+        ApolloManager.getHttpManager().request(requestBuilder.build())
+            .onFailure(Throwable::printStackTrace);
     }
 
 }

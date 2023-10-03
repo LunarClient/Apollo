@@ -43,14 +43,6 @@ public interface ApolloStats {
     boolean isOnlineMode();
 
     /**
-     * Gets the servers message of the day.
-     *
-     * @return the servers message of the day
-     * @since 1.0.0
-     */
-    String getMotd();
-
-    /**
      * Gets the servers icon (Base64).
      *
      * @return the servers icon
@@ -97,33 +89,5 @@ public interface ApolloStats {
      * @since 1.0.0
      */
     int getTotalPlayers();
-
-    /**
-     * Gets the servers maximum players.
-     *
-     * @return the servers maximum players
-     * @since 1.0.0
-     */
-    int getMaxPlayers();
-
-    /**
-     * Gets the servers maximum allocated ram in bytes.
-     *
-     * @return the servers cpu usage
-     * @since 1.0.0
-     */
-    default double getMaximumAllocatedRam() {
-        return Runtime.getRuntime().maxMemory();
-    }
-
-    /**
-     * Gets the servers used ram in bytes.
-     *
-     * @return the servers used ram
-     * @since 1.0.0
-     */
-    default double getUsedRam() {
-        return Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory();
-    }
 
 }

@@ -24,6 +24,12 @@
 package com.lunarclient.apollo.stats;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.api.request.ServerHeartbeatRequest;
+import com.lunarclient.apollo.option.Options;
+import java.lang.management.ManagementFactory;
+import java.lang.management.OperatingSystemMXBean;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,6 +39,8 @@ import java.util.concurrent.TimeUnit;
  */
 public final class ApolloStatsThread extends Thread {
 
+    private static final long MB_BYTES = 1024 * 1024;
+    private static final OperatingSystemMXBean MX_BEAN = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
     private static final long HEARTBEAT_INTERVAL = TimeUnit.MINUTES.toMillis(15);
 
     /**
@@ -50,7 +58,29 @@ public final class ApolloStatsThread extends Thread {
     public void run() {
         for(;;) {
             try {
-                ApolloStats stats = Apollo.getPlatform().getStats();
+                ApolloPlatform platform = Apollo.getPlatform();
+                Options options = platform.getOptions();
+                ApolloStats stats = platform.getStats();
+                Runtime runtime = Runtime.getRuntime();
+
+                ServerHeartbeatRequest.ServerHeartbeatRequestBuilder requestBuilder = ServerHeartbeatRequest.builder()
+                    .serverInstallationId(options.get(ApolloStatsManager.INSTALLATION_ID).toString())
+                    .serverSessionId(ApolloStatsManager.SESSION_ID);
+
+                if (options.get(ApolloStatsManager.HEARTBEAT_PERFORMANCE)) {
+                    requestBuilder
+                        .cpuUsage(MX_BEAN.getSystemLoadAverage())
+                        .ramMax((int) (runtime.maxMemory() / MB_BYTES))
+                        .ramUsed((int) ((runtime.maxMemory() - runtime.freeMemory()) / MB_BYTES));
+                }
+
+                if (options.get(ApolloStatsManager.HEARTBEAT_COUNTS)) {
+                    requestBuilder
+                        .totalPlayers(stats.getTotalPlayers());
+                }
+
+                ApolloManager.getHttpManager().request(requestBuilder.build())
+                    .onFailure(Throwable::printStackTrace);
 
                 Thread.sleep(HEARTBEAT_INTERVAL);
             } catch (Throwable e) {

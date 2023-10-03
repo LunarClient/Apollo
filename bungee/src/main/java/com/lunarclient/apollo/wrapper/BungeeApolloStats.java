@@ -25,14 +25,11 @@ package com.lunarclient.apollo.wrapper;
 
 import com.lunarclient.apollo.stats.ApolloPluginDescription;
 import com.lunarclient.apollo.stats.ApolloStats;
-import java.lang.management.ManagementFactory;
-import java.lang.management.OperatingSystemMXBean;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.md_5.bungee.api.Favicon;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.config.ListenerInfo;
 import net.md_5.bungee.api.plugin.Plugin;
 
 /**
@@ -42,18 +39,9 @@ import net.md_5.bungee.api.plugin.Plugin;
  */
 public class BungeeApolloStats implements ApolloStats {
 
-    private static final OperatingSystemMXBean MX_BEAN = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
-
     @Override
     public boolean isOnlineMode() {
         return ProxyServer.getInstance().getConfig().isOnlineMode();
-    }
-
-    @Override
-    public String getMotd() {
-        return ProxyServer.getInstance().getConfigurationAdapter().getListeners().stream()
-            .filter(listener -> listener.getMotd() != null && !listener.getMotd().isEmpty())
-            .findAny().map(ListenerInfo::getMotd).orElse(null);
     }
 
     @Override
@@ -98,11 +86,6 @@ public class BungeeApolloStats implements ApolloStats {
     @Override
     public int getTotalPlayers() {
         return ProxyServer.getInstance().getOnlineCount();
-    }
-
-    @Override
-    public int getMaxPlayers() {
-        return ProxyServer.getInstance().getConfig().getPlayerLimit();
     }
 
 }

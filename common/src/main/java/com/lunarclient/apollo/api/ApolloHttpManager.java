@@ -26,7 +26,7 @@ package com.lunarclient.apollo.api;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.async.Future;
 import com.lunarclient.apollo.async.future.UncertainFuture;
-import io.leangen.geantyref.TypeToken;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -41,8 +41,6 @@ import java.util.concurrent.Executors;
  * @since 1.0.0
  */
 public final class ApolloHttpManager {
-
-    private static final String BASE_URL = "https://api.lunarclientprod.com/apollo/";
 
     /**
      * The executor for http requests.
@@ -71,42 +69,54 @@ public final class ApolloHttpManager {
      */
     public <T extends ApiResponse> Future<T> request(ApiRequest<T> request) {
         UncertainFuture<T> future = new UncertainFuture<>();
+        ApiRequestType type = request.getType();
+
+        System.out.println(ApolloManager.GSON.toJson(request));
 
         this.requestExecutor.submit(() -> {
             try {
-                URL url = new URL(BASE_URL + request.getRoute());
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                URL url = new URL("https://" + request.getService().getUrl() + request.getRoute());
 
-                connection.setRequestMethod(request.getType().toString());
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod(type.name());
                 connection.setConnectTimeout(5_000);
                 connection.setReadTimeout(5_000);
 
-                try (OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream())) {
-                    ApolloManager.GSON.toJson(request, out);
+                try {
+                    if (type == ApiRequestType.POST) {
+                        connection.setDoOutput(true);
+
+                        try (OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream())) {
+                            ApolloManager.GSON.toJson(request, out);
+                        }
+                    }
+
+                    int responseCode = connection.getResponseCode();
+                    if (responseCode != HttpURLConnection.HTTP_OK) {
+                        Throwable error = new Throwable("Error code: " + responseCode);
+                        future.getFailure().forEach(handler -> handler.handle(error));
+                        return;
+                    }
+
+                    T response;
+                    try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                        response = ApolloManager.GSON.fromJson(in.readLine(), request.getResponseType());
+                    }
+
+                    if (response == null) {
+                        Throwable error = new Throwable("Failed to parse response json");
+                        future.getFailure().forEach(handler -> handler.handle(error));
+                        return;
+                    }
+
+                    future.getSuccess().forEach(handler -> handler.handle(response));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    connection.disconnect();
                 }
-
-                int responseCode = connection.getResponseCode();
-                if (responseCode != 200) {
-                    Throwable error = new Throwable("Error code: " + responseCode);
-                    future.getFailure().forEach(handler -> handler.handle(error));
-                    return;
-                }
-
-                ApiResponse response;
-                try (InputStreamReader in = new InputStreamReader(connection.getInputStream())) {
-                    response = ApolloManager.GSON.fromJson(in, TypeToken.get(this.getClass()).getType());
-                }
-
-                if (response == null) {
-                    Throwable error = new Throwable("Failed to parse json");
-                    future.getFailure().forEach(handler -> handler.handle(error));
-                    return;
-                }
-
-                future.getSuccess().forEach(handler -> handler.handle((T) response));
-
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
             }
         });
 

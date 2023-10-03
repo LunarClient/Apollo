@@ -21,52 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.api;
+package com.lunarclient.apollo.api.response;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import com.lunarclient.apollo.api.ApiResponse;
 
 /**
- * The {@link ApiRequest} interface represents a request object for making API calls.
+ * Represents the server heartbeat response.
  *
- * @param <T> the expected {@link ApiResponse}
  * @since 1.0.0
  */
-public interface ApiRequest<T extends ApiResponse> {
+public final class ServerHeartbeatResponse implements ApiResponse {
 
     /**
-     * Gets the service type (e.g. API, Analytics).
+     * Returns whether the request was successfully handled.
      *
-     * @return the service type.
+     * @return the success state
      * @since 1.0.0
      */
-    ApiServiceType getService();
-
-    /**
-     * Gets the type of API request (e.g. GET, POST).
-     *
-     * @return the API request type.
-     * @since 1.0.0
-     */
-    ApiRequestType getType();
-
-    /**
-     * Gets the URL endpoint for the API request.
-     *
-     * @return The route or URL endpoint.
-     * @since 1.0.0
-     */
-    String getRoute();
-
-    /**
-     * Gets the gson token type.
-     *
-     * @return The token type.
-     * @since 1.0.0
-     */
-    default Type getResponseType() {
-        ParameterizedType parameterized = (ParameterizedType) this.getClass().getGenericInterfaces()[0];
-        return parameterized.getActualTypeArguments()[0];
-    }
+    boolean success;
 
 }
