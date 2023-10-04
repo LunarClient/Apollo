@@ -30,6 +30,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
@@ -69,19 +70,20 @@ public final class ApolloHttpManager {
      */
     public <T extends ApiResponse> Future<T> request(ApiRequest<T> request) {
         UncertainFuture<T> future = new UncertainFuture<>();
-        ApiRequestType type = request.getType();
+        ApiRequestType requestType = request.getType();
+        Type responseType = request.getResponseType();
 
         this.requestExecutor.submit(() -> {
             try {
                 URL url = new URL("https://" + request.getService().getUrl() + request.getRoute());
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod(type.name());
+                connection.setRequestMethod(requestType.name());
                 connection.setConnectTimeout(5_000);
                 connection.setReadTimeout(5_000);
 
                 try {
-                    if (type == ApiRequestType.POST) {
+                    if (requestType == ApiRequestType.POST) {
                         connection.setDoOutput(true);
 
                         try (OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream())) {
@@ -91,18 +93,28 @@ public final class ApolloHttpManager {
 
                     int responseCode = connection.getResponseCode();
                     if (responseCode != HttpURLConnection.HTTP_OK) {
-                        Throwable error = new Throwable("Error code: " + responseCode);
+                        Throwable error = new Throwable(String.format(
+                            "Failed to send %s responded with code %d",
+                            request.getClass().getSimpleName(), responseCode
+                        ));
+
                         future.getFailure().forEach(handler -> handler.handle(error));
                         return;
                     }
 
                     T response;
+                    String rawResponse;
                     try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                        response = ApolloManager.GSON.fromJson(in.readLine(), request.getResponseType());
+                        rawResponse = in.readLine();
+                        response = ApolloManager.GSON.fromJson(rawResponse, responseType);
                     }
 
                     if (response == null) {
-                        Throwable error = new Throwable("Failed to parse response json");
+                        Throwable error = new Throwable(String.format(
+                            "Failed to parse %s with output %s",
+                            responseType.getTypeName(), rawResponse)
+                        );
+
                         future.getFailure().forEach(handler -> handler.handle(error));
                         return;
                     }
