@@ -30,14 +30,12 @@ import com.lunarclient.apollo.api.request.VersionRequest;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
-import lombok.Getter;
 
 /**
  * Manages Apollo versioning.
  *
  * @since 1.0.0
  */
-@Getter
 public final class ApolloVersionManager {
 
     public static final SimpleOption<Boolean> SEND_UPDATE_MESSAGE = Option.<Boolean>builder()
