@@ -22,6 +22,6 @@ tasks {
 
 fun ShadowJar.configureRelocations() {
     relocate("com.google.protobuf", "com.lunarclient.apollo.libs.protobuf")
-    relocate("com.google.code.gson", "com.lunarclient.apollo.libs.gson")
+    relocate("com.google.gson", "com.lunarclient.apollo.libs.gson")
     relocate("org.spongepowered.configurate", "com.lunarclient.apollo.libs.configurate")
 }
