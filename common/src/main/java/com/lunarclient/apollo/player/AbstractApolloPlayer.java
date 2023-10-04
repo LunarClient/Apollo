@@ -25,7 +25,6 @@ package com.lunarclient.apollo.player;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.Message;
-import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.async.Future;
 import com.lunarclient.apollo.async.future.UncertainFuture;
@@ -66,7 +65,7 @@ public abstract class AbstractApolloPlayer implements ApolloPlayer {
         this.sendPacket(message);
 
         UncertainFuture<T> future = new UncertainFuture<>();
-        Apollo.getRoundtripManager().registerListener(request, future);
+        ApolloManager.getRoundtripManager().registerListener(request, future);
 
         return future;
     }

@@ -68,7 +68,8 @@ public final class ApolloManager {
 
     private static final List<Option<?, ?, ?>> optionKeys = new LinkedList<>();
 
-    @Getter private static ApolloPlatform platform;
+    private static ApolloPlatform platform;
+    @Getter private static ApolloRoundtripManager roundtripManager;
     @Getter private static ApolloHttpManager httpManager;
     @Getter private static ApolloVersionManager versionManager;
     @Getter private static ApolloNetworkManager networkManager;
@@ -93,10 +94,10 @@ public final class ApolloManager {
                 platform,
                 new ApolloModuleManagerImpl(),
                 new ApolloWorldManagerImpl(),
-                new ApolloPlayerManagerImpl(),
-                new ApolloRoundtripManager()
+                new ApolloPlayerManagerImpl()
             );
 
+            ApolloManager.roundtripManager = new ApolloRoundtripManager();
             ApolloManager.httpManager = new ApolloHttpManager();
             ApolloManager.versionManager = new ApolloVersionManager();
             ApolloManager.networkManager = new ApolloNetworkManager();
