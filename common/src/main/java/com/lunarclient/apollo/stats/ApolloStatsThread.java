@@ -63,18 +63,25 @@ public final class ApolloStatsThread extends Thread {
                 ApolloStats stats = platform.getStats();
                 Runtime runtime = Runtime.getRuntime();
 
+                boolean performance = options.get(ApolloStatsManager.HEARTBEAT_PERFORMANCE);
+                boolean counts = options.get(ApolloStatsManager.HEARTBEAT_COUNTS);
+
+                if (!performance && !counts) {
+                    break;
+                }
+
                 ServerHeartbeatRequest.ServerHeartbeatRequestBuilder requestBuilder = ServerHeartbeatRequest.builder()
                     .serverInstallationId(options.get(ApolloStatsManager.INSTALLATION_ID).toString())
                     .serverSessionId(ApolloStatsManager.SESSION_ID);
 
-                if (options.get(ApolloStatsManager.HEARTBEAT_PERFORMANCE)) {
+                if (performance) {
                     requestBuilder
                         .cpuUsage(MX_BEAN.getSystemLoadAverage())
                         .ramMax((int) (runtime.maxMemory() / MB_BYTES))
                         .ramUsed((int) ((runtime.maxMemory() - runtime.freeMemory()) / MB_BYTES));
                 }
 
-                if (options.get(ApolloStatsManager.HEARTBEAT_COUNTS)) {
+                if (counts) {
                     requestBuilder
                         .totalPlayers(stats.getTotalPlayers());
                 }

@@ -102,6 +102,15 @@ public final class ApolloStatsManager {
     private void handleServerStartStats() {
         ApolloPlatform platform = Apollo.getPlatform();
         Options options = platform.getOptions();
+
+        boolean serverStatistics = options.get(ApolloStatsManager.SERVER_STATISTICS);
+        boolean softwareInformation = options.get(ApolloStatsManager.SOFTWARE_INFORMATION);
+        boolean hardwareInformation = options.get(ApolloStatsManager.HARDWARE_INFORMATION);
+
+        if (!serverStatistics && !softwareInformation && !hardwareInformation) {
+            return;
+        }
+
         ApolloStats stats = platform.getStats();
         Runtime runtime = Runtime.getRuntime();
 
@@ -114,7 +123,7 @@ public final class ApolloStatsManager {
             .serverInstallationId(options.get(ApolloStatsManager.INSTALLATION_ID).toString())
             .serverSessionId(SESSION_ID);
 
-        if (options.get(ApolloStatsManager.SERVER_STATISTICS)) {
+        if (serverStatistics) {
             requestBuilder
                 .plugins(stats.getPlugins())
                 .onlineMode(stats.isOnlineMode())
@@ -124,14 +133,14 @@ public final class ApolloStatsManager {
                 .modules(enabledModules);
         }
 
-        if (options.get(ApolloStatsManager.SOFTWARE_INFORMATION)) {
+        if (softwareInformation) {
             requestBuilder
                 .javaVersion(System.getProperty("java.version"))
                 .operatingSystem(System.getProperty("os.name"))
                 .operatingSystemRelease(System.getProperty("os.version"));
         }
 
-        if (options.get(ApolloStatsManager.HARDWARE_INFORMATION)) {
+        if (hardwareInformation) {
             requestBuilder
                 .cpuArch(System.getProperty("os.arch"))
                 .cpuCoreCount(runtime.availableProcessors());

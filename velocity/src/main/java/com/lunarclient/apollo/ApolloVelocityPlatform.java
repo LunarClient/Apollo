@@ -30,6 +30,7 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.stats.ApolloStatsManager;
+import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.VelocityApolloStats;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -124,6 +125,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         this.server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
 
         new ApolloStatsManager();
+        new ApolloVersionManager();
     }
 
     /**

@@ -29,6 +29,7 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.stats.ApolloStatsManager;
+import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BungeeApolloStats;
 import java.util.logging.Logger;
 import lombok.Getter;
@@ -61,6 +62,7 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
         this.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
 
         new ApolloStatsManager();
+        new ApolloVersionManager();
     }
 
     @Override

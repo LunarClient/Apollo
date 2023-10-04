@@ -33,7 +33,6 @@ import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.config.Serializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
-import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -71,7 +70,6 @@ public final class ApolloManager {
     private static ApolloPlatform platform;
     @Getter private static ApolloRoundtripManager roundtripManager;
     @Getter private static ApolloHttpManager httpManager;
-    @Getter private static ApolloVersionManager versionManager;
     @Getter private static ApolloNetworkManager networkManager;
     @Getter private static CommentedConfigurationNode configurationNode;
 
@@ -99,7 +97,6 @@ public final class ApolloManager {
 
             ApolloManager.roundtripManager = new ApolloRoundtripManager();
             ApolloManager.httpManager = new ApolloHttpManager();
-            ApolloManager.versionManager = new ApolloVersionManager();
             ApolloManager.networkManager = new ApolloNetworkManager();
 
             ApolloManager.platform = platform;

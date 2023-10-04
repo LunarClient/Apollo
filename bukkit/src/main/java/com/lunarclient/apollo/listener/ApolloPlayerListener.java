@@ -69,11 +69,7 @@ public final class ApolloPlayerListener implements Listener {
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
-        if (!Apollo.getPlatform().getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
-            return;
-        }
-
-        if (!ApolloManager.getVersionManager().isNeedsUpdate()) {
+        if (!ApolloVersionManager.NEEDS_UPDATE) {
             return;
         }
 

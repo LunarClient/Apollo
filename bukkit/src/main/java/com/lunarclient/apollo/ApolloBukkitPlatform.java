@@ -67,6 +67,7 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.stats.ApolloStatsManager;
+import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BukkitApolloStats;
 import java.util.logging.Logger;
 import lombok.Getter;
@@ -130,6 +131,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         );
 
         new ApolloStatsManager();
+        new ApolloVersionManager();
     }
 
     @Override

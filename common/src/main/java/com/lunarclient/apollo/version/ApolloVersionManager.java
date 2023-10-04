@@ -54,7 +54,7 @@ public final class ApolloVersionManager {
      * @return the needs update value
      * @since 1.0.0
      */
-    private boolean needsUpdate;
+    public static boolean NEEDS_UPDATE;
 
     /**
      * Constructs the {@link ApolloVersionManager}.
@@ -62,22 +62,25 @@ public final class ApolloVersionManager {
      * @since 1.0.0
      */
     public ApolloVersionManager() {
-        ApolloManager.registerOptions(SEND_UPDATE_MESSAGE);
+        ApolloManager.registerOptions(ApolloVersionManager.SEND_UPDATE_MESSAGE);
 
         this.checkForUpdates();
     }
 
     private void checkForUpdates() {
         ApolloPlatform platform = Apollo.getPlatform();
-        VersionRequest versionRequest = VersionRequest.builder().build();
 
-        ApolloManager.getHttpManager().request(versionRequest)
+        if (!platform.getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
+            return;
+        }
+
+        ApolloManager.getHttpManager().request(VersionRequest.builder().build())
             .onSuccess(response -> {
                 ApolloVersion currentVersion = new ApolloVersion(platform.getApolloVersion());
                 ApolloVersion latestVersion = new ApolloVersion(response.getVersion());
 
                 if (currentVersion.isUpdateAvailable(latestVersion)) {
-                    this.needsUpdate = true;
+                    ApolloVersionManager.NEEDS_UPDATE = true;
                     platform.getPlatformLogger().warning(UPDATE_MESSAGE);
                 }
             })
