@@ -24,8 +24,7 @@
 package com.lunarclient.apollo.async;
 
 /**
- * Represents a callback that can be registered with a
- * {@link Future}
+ * Represents a callback that can be registered with a {@link Future}
  * object to be invoked when the associated operation completes.
  *
  * @param <E> the type of the response object that will be handled by the callback

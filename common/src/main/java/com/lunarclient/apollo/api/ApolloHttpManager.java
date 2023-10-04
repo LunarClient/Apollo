@@ -71,8 +71,6 @@ public final class ApolloHttpManager {
         UncertainFuture<T> future = new UncertainFuture<>();
         ApiRequestType type = request.getType();
 
-        System.out.println(ApolloManager.GSON.toJson(request));
-
         this.requestExecutor.submit(() -> {
             try {
                 URL url = new URL("https://" + request.getService().getUrl() + request.getRoute());
@@ -115,8 +113,8 @@ public final class ApolloHttpManager {
                 } finally {
                     connection.disconnect();
                 }
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
+            } catch (Throwable t) {
+                t.printStackTrace();
             }
         });
 

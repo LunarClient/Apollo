@@ -37,7 +37,7 @@ public interface ApiRequest<T extends ApiResponse> {
     /**
      * Gets the service type (e.g. API, Analytics).
      *
-     * @return the service type.
+     * @return the service type
      * @since 1.0.0
      */
     ApiServiceType getService();
@@ -45,7 +45,7 @@ public interface ApiRequest<T extends ApiResponse> {
     /**
      * Gets the type of API request (e.g. GET, POST).
      *
-     * @return the API request type.
+     * @return the API request type
      * @since 1.0.0
      */
     ApiRequestType getType();
@@ -53,7 +53,7 @@ public interface ApiRequest<T extends ApiResponse> {
     /**
      * Gets the URL endpoint for the API request.
      *
-     * @return The route or URL endpoint.
+     * @return the route or URL endpoint
      * @since 1.0.0
      */
     String getRoute();
@@ -61,7 +61,7 @@ public interface ApiRequest<T extends ApiResponse> {
     /**
      * Gets the gson token type.
      *
-     * @return The token type.
+     * @return the token type
      * @since 1.0.0
      */
     default Type getResponseType() {
