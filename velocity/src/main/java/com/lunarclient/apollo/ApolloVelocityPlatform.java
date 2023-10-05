@@ -116,6 +116,9 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         this.stats = new VelocityApolloStats();
         ApolloManager.bootstrap(this);
 
+        ApolloStatsManager statsManager = new ApolloStatsManager();
+        ApolloVersionManager versionManager = new ApolloVersionManager();
+
         ApolloManager.loadConfiguration(this.dataDirectory);
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
 
@@ -124,8 +127,8 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         this.server.getEventManager().register(this, new ApolloPlayerListener());
         this.server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
 
-        new ApolloStatsManager();
-        new ApolloVersionManager();
+        statsManager.enable();
+        versionManager.checkForUpdates();
     }
 
     /**

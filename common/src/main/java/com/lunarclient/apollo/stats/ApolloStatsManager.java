@@ -82,13 +82,6 @@ public final class ApolloStatsManager {
      * @since 1.0.0
      */
     public ApolloStatsManager() {
-        this.registerConfigOptions();
-        this.handleServerStartStats();
-
-        new ApolloStatsThread();
-    }
-
-    private void registerConfigOptions() {
         ApolloManager.registerOptions(
             ApolloStatsManager.INSTALLATION_ID,
             ApolloStatsManager.SERVER_STATISTICS,
@@ -97,6 +90,17 @@ public final class ApolloStatsManager {
             ApolloStatsManager.HEARTBEAT_PERFORMANCE,
             ApolloStatsManager.HEARTBEAT_COUNTS
         );
+    }
+
+    /**
+     * Enables the Apollo statistics.
+     *
+     * @since 1.0.0
+     */
+    public void enable() {
+        this.handleServerStartStats();
+
+        new ApolloStatsThread();
     }
 
     private void handleServerStartStats() {

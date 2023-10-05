@@ -54,6 +54,9 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
         this.stats = new BungeeApolloStats();
         ApolloManager.bootstrap(this);
 
+        ApolloStatsManager statsManager = new ApolloStatsManager();
+        ApolloVersionManager versionManager = new ApolloVersionManager();
+
         ApolloManager.loadConfiguration(this.getDataFolder().toPath());
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
         ApolloManager.saveConfiguration();
@@ -61,8 +64,8 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
         this.getProxy().getPluginManager().registerListener(this, new ApolloPlayerListener());
         this.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
 
-        new ApolloStatsManager();
-        new ApolloVersionManager();
+        statsManager.enable();
+        versionManager.checkForUpdates();
     }
 
     @Override

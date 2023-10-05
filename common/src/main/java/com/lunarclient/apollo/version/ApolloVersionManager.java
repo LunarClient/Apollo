@@ -61,11 +61,14 @@ public final class ApolloVersionManager {
      */
     public ApolloVersionManager() {
         ApolloManager.registerOptions(ApolloVersionManager.SEND_UPDATE_MESSAGE);
-
-        this.checkForUpdates();
     }
 
-    private void checkForUpdates() {
+    /**
+     * Runs the update checker.
+     *
+     * @since 1.0.0
+     */
+    public void checkForUpdates() {
         ApolloPlatform platform = Apollo.getPlatform();
 
         if (!platform.getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {

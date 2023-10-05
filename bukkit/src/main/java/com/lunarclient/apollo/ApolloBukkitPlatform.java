@@ -120,6 +120,9 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
             .addModule(VignetteModule.class, new VignetteModuleImpl())
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
+        ApolloStatsManager statsManager = new ApolloStatsManager();
+        ApolloVersionManager versionManager = new ApolloVersionManager();
+
         ApolloManager.loadConfiguration(this.getDataFolder().toPath());
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
         ApolloManager.saveConfiguration();
@@ -130,8 +133,8 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
             (channel, player, bytes) -> this.handlePacket(player, bytes)
         );
 
-        new ApolloStatsManager();
-        new ApolloVersionManager();
+        statsManager.enable();
+        versionManager.checkForUpdates();
     }
 
     @Override
