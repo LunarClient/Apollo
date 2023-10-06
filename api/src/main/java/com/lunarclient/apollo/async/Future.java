@@ -54,4 +54,20 @@ public interface Future<T extends ApiResponse> {
      */
     Future<T> onFailure(Handler<Throwable> throwable);
 
+    /**
+     * Invokes all registered success handlers with the given response.
+     *
+     * @param response the response object to handle
+     * @since 1.0.0
+     */
+    void handleSuccess(T response);
+
+    /**
+     * Invokes all registered success handlers with the given throwable.
+     *
+     * @param throwable the throwable to handle
+     * @since 1.0.0
+     */
+    void handleFailure(Throwable throwable);
+
 }

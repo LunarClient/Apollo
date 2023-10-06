@@ -98,7 +98,7 @@ public final class ApolloHttpManager {
                             request.getClass().getSimpleName(), responseCode
                         ));
 
-                        future.getFailure().forEach(handler -> handler.handle(error));
+                        future.handleFailure(error);
                         return;
                     }
 
@@ -115,11 +115,11 @@ public final class ApolloHttpManager {
                             responseType.getTypeName(), rawResponse)
                         );
 
-                        future.getFailure().forEach(handler -> handler.handle(error));
+                        future.handleFailure(error);
                         return;
                     }
 
-                    future.getSuccess().forEach(handler -> handler.handle(response));
+                    future.handleSuccess(response);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {

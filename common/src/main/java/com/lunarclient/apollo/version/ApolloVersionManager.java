@@ -49,7 +49,6 @@ public final class ApolloVersionManager {
     /**
      * Returns whether the server needs to update Apollo.
      *
-     * @return the needs update value
      * @since 1.0.0
      */
     public static boolean NEEDS_UPDATE;

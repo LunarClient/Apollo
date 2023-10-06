@@ -28,7 +28,7 @@ import com.lunarclient.apollo.async.Future;
 import com.lunarclient.apollo.async.Handler;
 import java.util.HashSet;
 import java.util.Set;
-import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Represents a {@link Future} result of an asynchronous
@@ -37,7 +37,7 @@ import lombok.Data;
  * @param <T> the type of the response object that will be returned
  * @since 1.0.0
  */
-@Data
+@NoArgsConstructor
 public final class UncertainFuture<T extends ApiResponse> implements Future<T> {
 
     /**
@@ -46,7 +46,7 @@ public final class UncertainFuture<T extends ApiResponse> implements Future<T> {
      *
      * @since 1.0.0
      */
-    private Set<Handler<T>> success = new HashSet<>();
+    private final Set<Handler<T>> success = new HashSet<>();
 
     /**
      * A {@link Set} of failure handlers that will be
@@ -54,7 +54,7 @@ public final class UncertainFuture<T extends ApiResponse> implements Future<T> {
      *
      * @since 1.0.0
      */
-    private Set<Handler<Throwable>> failure = new HashSet<>();
+    private final Set<Handler<Throwable>> failure = new HashSet<>();
 
     /**
      * Registers a success handler to be invoked
@@ -80,6 +80,28 @@ public final class UncertainFuture<T extends ApiResponse> implements Future<T> {
     public UncertainFuture<T> onFailure(Handler<Throwable> throwable) {
         this.failure.add(throwable);
         return this;
+    }
+
+    /**
+     * Invokes all registered success handlers with the given response.
+     *
+     * @param response the response object to handle
+     * @since 1.0.0
+     */
+    @Override
+    public void handleSuccess(T response) {
+        this.success.forEach(success -> success.handle(response));
+    }
+
+    /**
+     * Invokes all registered success handlers with the given throwable.
+     *
+     * @param throwable the throwable to handle
+     * @since 1.0.0
+     */
+    @Override
+    public void handleFailure(Throwable throwable) {
+        this.failure.forEach(failure -> failure.handle(throwable));
     }
 
 }

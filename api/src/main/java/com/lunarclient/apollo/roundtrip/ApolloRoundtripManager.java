@@ -72,7 +72,7 @@ public final class ApolloRoundtripManager {
         UncertainFuture<ApolloResponse> future = this.listeners.remove(response.getPacketId());
 
         if (future != null) {
-            future.getSuccess().forEach(handler -> handler.handle(response));
+            future.handleSuccess(response);
         }
     }
 
@@ -94,7 +94,7 @@ public final class ApolloRoundtripManager {
 
                 if (listener != null) {
                     Throwable error = new Throwable("Timeout exceeded!");
-                    future.getFailure().forEach(handler -> handler.handle(error));
+                    future.handleFailure(error);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
