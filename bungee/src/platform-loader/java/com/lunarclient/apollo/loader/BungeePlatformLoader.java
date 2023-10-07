@@ -41,7 +41,7 @@ public class BungeePlatformLoader extends Plugin {
      * @since 1.0.0
      */
     public BungeePlatformLoader() {
-        DynamicLoader loader = new DynamicLoader(this.getClass().getClassLoader());
+        DynamicLoader loader = new DynamicLoader(this.getClass().getClassLoader(), this.getLogger());
 
         loader.install(DynamicDependencies.discoverDependencies());
 

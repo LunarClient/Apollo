@@ -41,7 +41,7 @@ public class BukkitPlatformLoader extends JavaPlugin {
      * @since 1.0.0
      */
     public BukkitPlatformLoader() {
-        DynamicLoader loader = new DynamicLoader(this.getClass().getClassLoader());
+        DynamicLoader loader = new DynamicLoader(this.getClass().getClassLoader(), this.getLogger());
 
         loader.install(DynamicDependencies.discoverDependencies());
 

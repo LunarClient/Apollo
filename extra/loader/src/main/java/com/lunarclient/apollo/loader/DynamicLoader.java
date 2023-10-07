@@ -36,13 +36,15 @@ import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.NonNull;
 import sun.misc.Unsafe;
 
@@ -118,12 +120,15 @@ public final class DynamicLoader {
      * Constructs a new {@link DynamicLoader}.
      *
      * @param parent the parent class loader
+     * @param logger the plugin logger
      * @since 1.0.0
      */
-    public DynamicLoader(@NonNull ClassLoader parent) {
+    @SuppressWarnings({"JavaReflectionMemberAccess", "JavaReflectionInvocation"})
+    public DynamicLoader(@NonNull ClassLoader parent, @NonNull Logger logger) {
         if (!(parent instanceof URLClassLoader)) throw new IllegalArgumentException("Parent class loader must be the plugin class loader!");
         this.parent = (URLClassLoader) parent;
 
+        final List<Exception> errors = new ArrayList<>();
         try {
             Method targetMethod = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
 
@@ -137,7 +142,8 @@ public final class DynamicLoader {
                 Object thisModule = getModuleMethod.invoke(this.getClass());
 
                 addOpensMethod.invoke(classLoaderModule, URLClassLoader.class.getPackage().getName(), thisModule);
-            } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException ignore) {
+            } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException exception) {
+                errors.add(exception);
             }
 
             try {
@@ -163,10 +169,12 @@ public final class DynamicLoader {
 
                                     this.addURL = lookup.unreflect(targetMethod).bindTo(this.parent);
                                     return;
-                                } catch (Exception ignored) {
+                                } catch (Exception error) {
+                                    errors.add(error);
                                 }
                             }
-                        } catch (Exception ignored) {
+                        } catch (Exception error) {
+                            errors.add(error);
                         }
                     }
 
@@ -180,14 +188,20 @@ public final class DynamicLoader {
                         Map<String, Set<?>> toOpen = Collections.singletonMap("java.net", Collections.singleton(getModule.invoke(getClass())));
                         redefineModule.invoke(instrumentation, getModule.invoke(URLClassLoader.class), Collections.emptySet(), Collections.emptyMap(), toOpen, Collections.emptySet(), Collections.emptyMap());
                         targetMethod.setAccessible(true);
-                    } catch (Exception ignored) {
+                    } catch (Exception error) {
+                        errors.add(error);
                     }
                 }
             }
 
             this.addURL = MethodHandles.lookup().unreflect(targetMethod).bindTo(this.parent);
+            return;
         } catch (NoSuchMethodException | IllegalAccessException exception) {
-            throw new RuntimeException(exception);
+            errors.add(exception);
+        }
+
+        for (int i = errors.size() - 1; i > 0; i--) {
+            logger.log(Level.SEVERE, "Unable to access plugin class loader!", errors.get(i));
         }
     }
 
@@ -198,22 +212,10 @@ public final class DynamicLoader {
      * @since 1.0.0
      */
     public void install(@NonNull String[] resources) {
-        this.install(Arrays.stream(resources)
-            .map(resource -> DynamicLoader.extractJar(this.parent, resource))
-            .collect(Collectors.toList()));
-    }
-
-    /**
-     * Installs the specified resources onto the plugin class loader.
-     *
-     * @param resources the resources
-     * @since 1.0.0
-     */
-    public void install(@NonNull List<URL> resources) {
         try {
-            for (URL url : resources) {
-                this.loadJar(url);
-            }
+            Arrays.stream(resources)
+                .map(resource -> DynamicLoader.extractJar(this.parent, resource))
+                .forEach(this::loadJar);
         } catch (Exception exception) {
             throw new RuntimeException("Unable to load library jars!", exception);
         }
