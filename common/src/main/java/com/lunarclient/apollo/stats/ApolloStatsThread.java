@@ -63,6 +63,10 @@ public final class ApolloStatsThread extends Thread {
                 ApolloStats stats = platform.getStats();
                 Runtime runtime = Runtime.getRuntime();
 
+                if (!options.get(ApolloStatsManager.SEND_STATS)) {
+                    break;
+                }
+
                 boolean performance = options.get(ApolloStatsManager.HEARTBEAT_PERFORMANCE);
                 boolean counts = options.get(ApolloStatsManager.HEARTBEAT_COUNTS);
 
@@ -88,9 +92,13 @@ public final class ApolloStatsThread extends Thread {
 
                 ApolloManager.getHttpManager().request(requestBuilder.build())
                     .onFailure(Throwable::printStackTrace);
-
-                Thread.sleep(HEARTBEAT_INTERVAL);
             } catch (Throwable e) {
+                e.printStackTrace();
+            }
+
+            try {
+                Thread.sleep(HEARTBEAT_INTERVAL);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }

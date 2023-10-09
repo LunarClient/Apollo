@@ -46,8 +46,13 @@ public final class ApolloStatsManager {
     public static final String SESSION_ID = UUID.randomUUID().toString();
     private static final String CONFIG_PREFIX = "mcstats";
 
+    public static final SimpleOption<Boolean> SEND_STATS = Option.<Boolean>builder()
+        .comment("Set to 'true' to send statistics to MCStats, otherwise 'false'.")
+        .node(CONFIG_PREFIX, "send-stats").type(TypeToken.get(Boolean.class))
+        .defaultValue(true).build();
+
     public static final SimpleOption<UUID> INSTALLATION_ID = Option.<UUID>builder()
-        .comment("Your servers installation id used for stats.")
+        .comment("Your server's installation id used for stats.")
         .node(CONFIG_PREFIX, "installation-id").type(TypeToken.get(UUID.class))
         .defaultValue(UUID.randomUUID()).build();
 
@@ -83,6 +88,7 @@ public final class ApolloStatsManager {
      */
     public ApolloStatsManager() {
         ApolloManager.registerOptions(
+            ApolloStatsManager.SEND_STATS,
             ApolloStatsManager.INSTALLATION_ID,
             ApolloStatsManager.SERVER_STATISTICS,
             ApolloStatsManager.HARDWARE_INFORMATION,
@@ -106,6 +112,10 @@ public final class ApolloStatsManager {
     private void handleServerStartStats() {
         ApolloPlatform platform = Apollo.getPlatform();
         Options options = platform.getOptions();
+
+        if (!options.get(ApolloStatsManager.SEND_STATS)) {
+            return;
+        }
 
         boolean serverStatistics = options.get(ApolloStatsManager.SERVER_STATISTICS);
         boolean softwareInformation = options.get(ApolloStatsManager.SOFTWARE_INFORMATION);
