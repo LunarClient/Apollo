@@ -25,18 +25,15 @@ package com.lunarclient.apollo.wrapper;
 
 import com.lunarclient.apollo.stats.ApolloPluginDescription;
 import com.lunarclient.apollo.stats.ApolloStats;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufOutputStream;
-import io.netty.buffer.Unpooled;
-import io.netty.handler.codec.base64.Base64;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
-import org.apache.commons.io.Charsets;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -71,15 +68,16 @@ public class BukkitApolloStats implements ApolloStats {
             return null;
         }
 
-        ByteBuf bytebuf = Unpooled.buffer();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         try {
-            ImageIO.write(image, "PNG", new ByteBufOutputStream(bytebuf));
+            ImageIO.write(image, "PNG", outputStream);
         } catch (IOException e) {
             return null;
         }
 
-        return Base64.encode(bytebuf).toString(Charsets.UTF_8);
+        byte[] bytes = outputStream.toByteArray();
+        return Base64.getEncoder().encodeToString(bytes);
     }
 
     @Override
