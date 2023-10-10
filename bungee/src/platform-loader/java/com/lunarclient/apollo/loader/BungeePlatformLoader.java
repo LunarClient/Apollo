@@ -33,14 +33,10 @@ import net.md_5.bungee.api.plugin.Plugin;
 public class BungeePlatformLoader extends Plugin {
     private static final String PLUGIN_CLASS = "com.lunarclient.apollo.ApolloBungeePlatform";
 
-    private final PlatformPlugin plugin;
+    private PlatformPlugin plugin;
 
-    /**
-     * Creates a new bungee platform loader.
-     *
-     * @since 1.0.0
-     */
-    public BungeePlatformLoader() {
+    @Override
+    public void onLoad() {
         DynamicLoader loader = new DynamicLoader(this.getClass().getClassLoader(), this.getLogger());
 
         loader.install(DynamicDependencies.discoverDependencies());
