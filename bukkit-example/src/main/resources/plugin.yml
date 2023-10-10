@@ -3,6 +3,7 @@ main: com.lunarclient.apollo.example.ApolloExamplePlugin
 version: 0.1.1
 author: Moonsworth
 depend: [ Apollo-Bukkit ]
+api-version: 1.13
 
 commands:
     beam:
