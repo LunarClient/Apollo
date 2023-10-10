@@ -66,6 +66,10 @@ import com.lunarclient.apollo.module.waypoint.WaypointModule;
 import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
+import com.lunarclient.apollo.stats.ApolloStats;
+import com.lunarclient.apollo.stats.ApolloStatsManager;
+import com.lunarclient.apollo.version.ApolloVersionManager;
+import com.lunarclient.apollo.wrapper.BukkitApolloStats;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -86,12 +90,13 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
     @Getter private static ApolloBukkitPlatform instance;
 
     @Getter private final Options options = new OptionsImpl(null);
-
     @Getter private final JavaPlugin plugin;
+    private ApolloStats stats;
 
     @Override
     public void onEnable() {
         ApolloBukkitPlatform.instance = this;
+        this.stats = new BukkitApolloStats();
         ApolloManager.bootstrap(this);
 
         PluginManager pluginManager = this.plugin.getServer().getPluginManager();
@@ -119,6 +124,9 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(VignetteModule.class, new VignetteModuleImpl())
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
+        ApolloStatsManager statsManager = new ApolloStatsManager();
+        ApolloVersionManager versionManager = new ApolloVersionManager();
+
         ApolloManager.loadConfiguration(this.plugin.getDataFolder().toPath());
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
         ApolloManager.saveConfiguration();
@@ -128,6 +136,9 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         messenger.registerIncomingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
             (channel, player, bytes) -> this.handlePacket(player, bytes)
         );
+
+        statsManager.enable();
+        versionManager.checkForUpdates();
     }
 
     @Override
@@ -145,6 +156,11 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
     @Override
     public String getApolloVersion() {
         return this.plugin.getDescription().getVersion();
+    }
+
+    @Override
+    public ApolloStats getStats() {
+        return this.stats;
     }
 
     @Override

@@ -28,6 +28,10 @@ import com.lunarclient.apollo.loader.PlatformPlugin;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
+import com.lunarclient.apollo.stats.ApolloStats;
+import com.lunarclient.apollo.stats.ApolloStatsManager;
+import com.lunarclient.apollo.version.ApolloVersionManager;
+import com.lunarclient.apollo.wrapper.BungeeApolloStats;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -45,14 +49,17 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
     @Getter private static ApolloBungeePlatform instance;
 
     @Getter private final Options options = new OptionsImpl(null);
-
     @Getter private final Plugin plugin;
+    private ApolloStats stats;
 
     @Override
     public void onEnable() {
         ApolloBungeePlatform.instance = this;
-
+        this.stats = new BungeeApolloStats();
         ApolloManager.bootstrap(this);
+
+        ApolloStatsManager statsManager = new ApolloStatsManager();
+        ApolloVersionManager versionManager = new ApolloVersionManager();
 
         ApolloManager.loadConfiguration(this.plugin.getDataFolder().toPath());
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
@@ -60,6 +67,9 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
 
         this.plugin.getProxy().getPluginManager().registerListener(this.plugin, new ApolloPlayerListener());
         this.plugin.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
+
+        statsManager.enable();
+        versionManager.checkForUpdates();
     }
 
     @Override
@@ -82,6 +92,11 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
     @Override
     public Logger getPlatformLogger() {
         return ProxyServer.getInstance().getLogger();
+    }
+
+    @Override
+    public ApolloStats getStats() {
+        return this.stats;
     }
 
 }

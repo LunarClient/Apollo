@@ -21,68 +21,73 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo;
+package com.lunarclient.apollo.stats;
 
-import com.lunarclient.apollo.option.Options;
-import com.lunarclient.apollo.stats.ApolloStats;
-import java.util.logging.Logger;
+import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Represents a platform that supports Apollo.
+ * Represents Apollo tracked stats.
  *
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
-public interface ApolloPlatform {
+public interface ApolloStats {
 
     /**
-     * Returns this kind of platform.
+     * Gets the servers online mode state.
      *
-     * @return this kind of platform
+     * @return the servers online mode state.
      * @since 1.0.0
      */
-    Kind getKind();
+    boolean isOnlineMode();
 
     /**
-     * Returns the platform options that don't belong to a specific module.
+     * Gets the servers icon (Base64).
      *
-     * @return the platform options
+     * @return the servers icon
      * @since 1.0.0
      */
-    Options getOptions();
+    String getIcon();
 
     /**
-     * Returns the current Apollo version.
+     * Gets the servers version.
      *
-     * @return the current apollo version
+     * @return the servers version
      * @since 1.0.0
      */
-    String getApolloVersion();
+    String getVersion();
 
     /**
-     * Returns the servers logger.
+     * Gets the servers plugin list.
      *
-     * @return the servers logger
+     * @return the servers plugin list
      * @since 1.0.0
      */
-    Logger getPlatformLogger();
+    List<ApolloPluginDescription> getPlugins();
 
     /**
-     * Returns the platform stats.
+     * Gets the servers platform subtype (Bukkit, BungeeCord, Velocity...).
      *
-     * @return the platform stats
+     * @return the servers platform subtype
      * @since 1.0.0
      */
-    ApolloStats getStats();
+    String getPlatformSubtype();
 
     /**
-     * Represents the kind of server a platform is.
+     * Gets the servers platform version.
      *
+     * @return the servers platform version
      * @since 1.0.0
      */
-    enum Kind {
-        SERVER,
-        PROXY
-    }
+    String getPlatformVersion();
+
+    /**
+     * Gets the servers total players.
+     *
+     * @return the servers total players
+     * @since 1.0.0
+     */
+    int getTotalPlayers();
+
 }

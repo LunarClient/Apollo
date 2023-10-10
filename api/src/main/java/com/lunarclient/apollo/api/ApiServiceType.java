@@ -21,68 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo;
+package com.lunarclient.apollo.api;
 
-import com.lunarclient.apollo.option.Options;
-import com.lunarclient.apollo.stats.ApolloStats;
-import java.util.logging.Logger;
-import org.jetbrains.annotations.ApiStatus;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
- * Represents a platform that supports Apollo.
+ * The {@link ApiServiceType} enum represents different service types.
  *
  * @since 1.0.0
  */
-@ApiStatus.NonExtendable
-public interface ApolloPlatform {
+@Getter
+@RequiredArgsConstructor
+public enum ApiServiceType {
 
     /**
-     * Returns this kind of platform.
-     *
-     * @return this kind of platform
-     * @since 1.0.0
-     */
-    Kind getKind();
-
-    /**
-     * Returns the platform options that don't belong to a specific module.
-     *
-     * @return the platform options
-     * @since 1.0.0
-     */
-    Options getOptions();
-
-    /**
-     * Returns the current Apollo version.
-     *
-     * @return the current apollo version
-     * @since 1.0.0
-     */
-    String getApolloVersion();
-
-    /**
-     * Returns the servers logger.
-     *
-     * @return the servers logger
-     * @since 1.0.0
-     */
-    Logger getPlatformLogger();
-
-    /**
-     * Returns the platform stats.
-     *
-     * @return the platform stats
-     * @since 1.0.0
-     */
-    ApolloStats getStats();
-
-    /**
-     * Represents the kind of server a platform is.
+     * Represents the API service.
      *
      * @since 1.0.0
      */
-    enum Kind {
-        SERVER,
-        PROXY
-    }
+    API("api.lunarclientprod.com/apollo/"),
+
+    /**
+     * Represents the analytics service.
+     *
+     * @since 1.0.0
+     */
+    ANALYTICS("analytics.lunarclientprod.com/apollo/");
+
+    /**
+     * Returns the service {@link String} url.
+     *
+     * @return the service url
+     * @since 1.0.0
+     */
+    private final String url;
+
 }

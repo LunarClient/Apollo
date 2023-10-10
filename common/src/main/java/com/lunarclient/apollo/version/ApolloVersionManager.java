@@ -26,24 +26,16 @@ package com.lunarclient.apollo.version;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.api.request.VersionRequest;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import lombok.Getter;
 
 /**
  * Manages Apollo versioning.
  *
  * @since 1.0.0
  */
-@Getter
 public final class ApolloVersionManager {
 
     public static final SimpleOption<Boolean> SEND_UPDATE_MESSAGE = Option.<Boolean>builder()
@@ -51,24 +43,15 @@ public final class ApolloVersionManager {
         .node("send-updater-message").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
-    private static final String APOLLO_UPDATES_URL = "https://api.lunarclientprod.com/apollo/updates";
     private static final String DOWNLOAD_URL = "https://lunarclient.dev/apollo/downloads";
     public static final String UPDATE_MESSAGE = "[Apollo] You’re running an outdated version, update to the latest version here: " + DOWNLOAD_URL;
 
     /**
      * Returns whether the server needs to update Apollo.
      *
-     * @return the needs update value
      * @since 1.0.0
      */
-    private boolean needsUpdate;
-
-    /**
-     * The executor for http requests.
-     *
-     * @since 1.0.0
-     */
-    private final ExecutorService requestExecutor;
+    public static boolean NEEDS_UPDATE;
 
     /**
      * Constructs the {@link ApolloVersionManager}.
@@ -76,45 +59,32 @@ public final class ApolloVersionManager {
      * @since 1.0.0
      */
     public ApolloVersionManager() {
-        ApolloManager.registerOptions(SEND_UPDATE_MESSAGE);
-
-        this.requestExecutor = Executors.newSingleThreadExecutor();
-        this.checkForUpdates();
+        ApolloManager.registerOptions(ApolloVersionManager.SEND_UPDATE_MESSAGE);
     }
 
-    private void checkForUpdates() {
+    /**
+     * Runs the update checker.
+     *
+     * @since 1.0.0
+     */
+    public void checkForUpdates() {
         ApolloPlatform platform = Apollo.getPlatform();
 
-        this.requestExecutor.submit(() -> {
-            try {
-                ApolloVersion currentVersion = new ApolloVersion(platform.getApolloVersion());
-                ApolloVersion latestVersion = this.fetchLatestApolloVersion();
+        if (!platform.getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
+            return;
+        }
 
-                if (latestVersion != null && currentVersion.isUpdateAvailable(latestVersion)) {
-                    this.needsUpdate = true;
+        ApolloManager.getHttpManager().request(VersionRequest.builder().build())
+            .onSuccess(response -> {
+                ApolloVersion currentVersion = new ApolloVersion(platform.getApolloVersion());
+                ApolloVersion latestVersion = new ApolloVersion(response.getVersion());
+
+                if (currentVersion.isUpdateAvailable(latestVersion)) {
+                    ApolloVersionManager.NEEDS_UPDATE = true;
                     platform.getPlatformLogger().warning(UPDATE_MESSAGE);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+            })
+            .onFailure(Throwable::printStackTrace);
     }
 
-    private ApolloVersion fetchLatestApolloVersion() {
-        try {
-            URL url = new URL(APOLLO_UPDATES_URL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                return null;
-            }
-
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                String version = in.readLine();
-                return new ApolloVersion(version);
-            }
-        } catch (IOException e) {
-            return null;
-        }
-    }
 }

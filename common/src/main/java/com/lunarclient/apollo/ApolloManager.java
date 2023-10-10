@@ -23,6 +23,9 @@
  */
 package com.lunarclient.apollo;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.lunarclient.apollo.api.ApolloHttpManager;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.network.ApolloNetworkManager;
 import com.lunarclient.apollo.option.ConfigOptions;
@@ -30,7 +33,6 @@ import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.config.Serializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
-import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -58,11 +60,17 @@ public final class ApolloManager {
      */
     public static final String PLUGIN_ROOT_MODULE = "apollo";
 
+    /**
+     * The plugins GSON used for http.
+     */
+    public static final Gson GSON = new GsonBuilder().create();
+
     private static final List<Option<?, ?, ?>> optionKeys = new LinkedList<>();
 
-    @Getter private static ApolloPlatform platform;
+    private static ApolloPlatform platform;
+    @Getter private static ApolloRoundtripManager roundtripManager;
+    @Getter private static ApolloHttpManager httpManager;
     @Getter private static ApolloNetworkManager networkManager;
-    @Getter private static ApolloVersionManager versionManager;
     @Getter private static CommentedConfigurationNode configurationNode;
 
     private static YamlConfigurationLoader configurationLoader;
@@ -84,11 +92,11 @@ public final class ApolloManager {
                 platform,
                 new ApolloModuleManagerImpl(),
                 new ApolloWorldManagerImpl(),
-                new ApolloPlayerManagerImpl(),
-                new ApolloRoundtripManager()
+                new ApolloPlayerManagerImpl()
             );
 
-            ApolloManager.versionManager = new ApolloVersionManager();
+            ApolloManager.roundtripManager = new ApolloRoundtripManager();
+            ApolloManager.httpManager = new ApolloHttpManager();
             ApolloManager.networkManager = new ApolloNetworkManager();
 
             ApolloManager.platform = platform;

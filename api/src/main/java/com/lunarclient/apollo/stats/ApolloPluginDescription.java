@@ -21,68 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo;
+package com.lunarclient.apollo.stats;
 
-import com.lunarclient.apollo.option.Options;
-import com.lunarclient.apollo.stats.ApolloStats;
-import java.util.logging.Logger;
-import org.jetbrains.annotations.ApiStatus;
+import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
- * Represents a platform that supports Apollo.
+ * Represents a single plugin used for stats.
  *
  * @since 1.0.0
  */
-@ApiStatus.NonExtendable
-public interface ApolloPlatform {
+@Getter
+@Builder
+public class ApolloPluginDescription {
 
     /**
-     * Returns this kind of platform.
+     * Returns the plugin {@link String} name.
      *
-     * @return this kind of platform
+     * @return the plugin name
      * @since 1.0.0
      */
-    Kind getKind();
+    String name;
 
     /**
-     * Returns the platform options that don't belong to a specific module.
+     * Returns the plugin {@link String} description.
      *
-     * @return the platform options
+     * @return the plugin description
      * @since 1.0.0
      */
-    Options getOptions();
+    String description;
 
     /**
-     * Returns the current Apollo version.
+     * Returns the plugin {@link List} of {@link String} authors.
      *
-     * @return the current apollo version
+     * @return the plugin authors
      * @since 1.0.0
      */
-    String getApolloVersion();
+    List<String> authors;
 
     /**
-     * Returns the servers logger.
+     * Returns the plugin {@link String} version.
      *
-     * @return the servers logger
+     * @return the plugin version
      * @since 1.0.0
      */
-    Logger getPlatformLogger();
+    String version;
 
-    /**
-     * Returns the platform stats.
-     *
-     * @return the platform stats
-     * @since 1.0.0
-     */
-    ApolloStats getStats();
-
-    /**
-     * Represents the kind of server a platform is.
-     *
-     * @since 1.0.0
-     */
-    enum Kind {
-        SERVER,
-        PROXY
-    }
 }

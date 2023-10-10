@@ -24,10 +24,10 @@
 package com.lunarclient.apollo.module.transfer;
 
 import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.async.Future;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.roundtrip.async.Future;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;

@@ -28,6 +28,10 @@ import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
+import com.lunarclient.apollo.stats.ApolloStats;
+import com.lunarclient.apollo.stats.ApolloStatsManager;
+import com.lunarclient.apollo.version.ApolloVersionManager;
+import com.lunarclient.apollo.wrapper.VelocityApolloStats;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
@@ -54,13 +58,15 @@ import lombok.Getter;
     description = "Implementation of Apollo for Velocity",
     authors = {"Moonsworth"}
 )
+@Getter
 public final class ApolloVelocityPlatform implements ApolloPlatform {
 
     public static MinecraftChannelIdentifier PLUGIN_CHANNEL;
 
     @Getter private static ApolloVelocityPlatform instance;
 
-    @Getter private final Options options = new OptionsImpl(null);
+    private final Options options = new OptionsImpl(null);
+    private ApolloStats stats;
 
     private final ProxyServer server;
     private final Logger logger;
@@ -93,6 +99,11 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         return this.logger;
     }
 
+    @Override
+    public ApolloStats getStats() {
+        return this.stats;
+    }
+
     /**
      * Handles initialization of the proxy.
      *
@@ -102,8 +113,11 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         ApolloVelocityPlatform.instance = this;
-
+        this.stats = new VelocityApolloStats();
         ApolloManager.bootstrap(this);
+
+        ApolloStatsManager statsManager = new ApolloStatsManager();
+        ApolloVersionManager versionManager = new ApolloVersionManager();
 
         ApolloManager.loadConfiguration(this.dataDirectory);
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
@@ -112,6 +126,9 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
         this.server.getEventManager().register(this, new ApolloPlayerListener());
         this.server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
+
+        statsManager.enable();
+        versionManager.checkForUpdates();
     }
 
     /**

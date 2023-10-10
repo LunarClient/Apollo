@@ -21,25 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.roundtrip.async;
+package com.lunarclient.apollo.api;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 /**
- * Represents a callback that can be registered with a
- * {@link com.lunarclient.apollo.roundtrip.async.Future}
- * object to be invoked when the associated operation completes.
+ * The {@link ApiRequest} interface represents a request object for making API calls.
  *
- * @param <E> the type of the response object that will be handled by the callback
+ * @param <T> the expected {@link ApiResponse}
  * @since 1.0.0
  */
-@FunctionalInterface
-public interface Handler<E> {
+public interface ApiRequest<T extends ApiResponse> {
 
     /**
-     * Handles the response object passed to the callback.
+     * Gets the service type (e.g. API, Analytics).
      *
-     * @param response the object to handle
+     * @return the service type
      * @since 1.0.0
      */
-    void handle(E response);
+    ApiServiceType getService();
+
+    /**
+     * Gets the type of API request (e.g. GET, POST).
+     *
+     * @return the API request type
+     * @since 1.0.0
+     */
+    ApiRequestType getType();
+
+    /**
+     * Gets the URL endpoint for the API request.
+     *
+     * @return the route or URL endpoint
+     * @since 1.0.0
+     */
+    String getRoute();
+
+    /**
+     * Gets the gson token type.
+     *
+     * @return the token type
+     * @since 1.0.0
+     */
+    default Type getResponseType() {
+        ParameterizedType parameterized = (ParameterizedType) this.getClass().getGenericInterfaces()[0];
+        return parameterized.getActualTypeArguments()[0];
+    }
 
 }

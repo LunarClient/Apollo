@@ -21,68 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo;
+package com.lunarclient.apollo.api.response;
 
-import com.lunarclient.apollo.option.Options;
-import com.lunarclient.apollo.stats.ApolloStats;
-import java.util.logging.Logger;
-import org.jetbrains.annotations.ApiStatus;
+import com.lunarclient.apollo.api.ApiResponse;
+import lombok.Getter;
 
 /**
- * Represents a platform that supports Apollo.
+ * Represents the apollo version response.
  *
  * @since 1.0.0
  */
-@ApiStatus.NonExtendable
-public interface ApolloPlatform {
+@Getter
+public final class VersionResponse implements ApiResponse {
 
     /**
-     * Returns this kind of platform.
+     * Returns the apollo {@link String} version.
      *
-     * @return this kind of platform
+     * @return the apollo version
      * @since 1.0.0
      */
-    Kind getKind();
+    String version;
 
-    /**
-     * Returns the platform options that don't belong to a specific module.
-     *
-     * @return the platform options
-     * @since 1.0.0
-     */
-    Options getOptions();
-
-    /**
-     * Returns the current Apollo version.
-     *
-     * @return the current apollo version
-     * @since 1.0.0
-     */
-    String getApolloVersion();
-
-    /**
-     * Returns the servers logger.
-     *
-     * @return the servers logger
-     * @since 1.0.0
-     */
-    Logger getPlatformLogger();
-
-    /**
-     * Returns the platform stats.
-     *
-     * @return the platform stats
-     * @since 1.0.0
-     */
-    ApolloStats getStats();
-
-    /**
-     * Represents the kind of server a platform is.
-     *
-     * @since 1.0.0
-     */
-    enum Kind {
-        SERVER,
-        PROXY
-    }
 }

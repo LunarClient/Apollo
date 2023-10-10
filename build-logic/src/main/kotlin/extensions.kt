@@ -14,6 +14,7 @@ fun JavaPluginExtension.javaTarget(version: Int) {
 
 fun ShadowJar.configureRelocations() {
     relocate("com.google.protobuf", "com.lunarclient.apollo.libs.protobuf")
+    relocate("com.google.gson", "com.lunarclient.apollo.libs.gson")
     relocate("org.spongepowered.configurate", "com.lunarclient.apollo.libs.configurate")
 }
 

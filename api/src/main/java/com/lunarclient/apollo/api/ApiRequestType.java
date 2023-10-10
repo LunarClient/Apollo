@@ -21,68 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo;
-
-import com.lunarclient.apollo.option.Options;
-import com.lunarclient.apollo.stats.ApolloStats;
-import java.util.logging.Logger;
-import org.jetbrains.annotations.ApiStatus;
+package com.lunarclient.apollo.api;
 
 /**
- * Represents a platform that supports Apollo.
+ * The {@link ApiRequestType} enum represents different types of API request methods.
  *
  * @since 1.0.0
  */
-@ApiStatus.NonExtendable
-public interface ApolloPlatform {
+public enum ApiRequestType {
 
     /**
-     * Returns this kind of platform.
-     *
-     * @return this kind of platform
-     * @since 1.0.0
-     */
-    Kind getKind();
-
-    /**
-     * Returns the platform options that don't belong to a specific module.
-     *
-     * @return the platform options
-     * @since 1.0.0
-     */
-    Options getOptions();
-
-    /**
-     * Returns the current Apollo version.
-     *
-     * @return the current apollo version
-     * @since 1.0.0
-     */
-    String getApolloVersion();
-
-    /**
-     * Returns the servers logger.
-     *
-     * @return the servers logger
-     * @since 1.0.0
-     */
-    Logger getPlatformLogger();
-
-    /**
-     * Returns the platform stats.
-     *
-     * @return the platform stats
-     * @since 1.0.0
-     */
-    ApolloStats getStats();
-
-    /**
-     * Represents the kind of server a platform is.
+     * Represents an HTTP GET request.
      *
      * @since 1.0.0
      */
-    enum Kind {
-        SERVER,
-        PROXY
-    }
+    GET,
+
+    /**
+     * Represents an HTTP POST request.
+     *
+     * @since 1.0.0
+     */
+    POST
+
 }

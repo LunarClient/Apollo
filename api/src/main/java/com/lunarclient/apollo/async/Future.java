@@ -21,65 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.roundtrip.async.future;
+package com.lunarclient.apollo.async;
 
-import com.lunarclient.apollo.roundtrip.ApolloResponse;
-import com.lunarclient.apollo.roundtrip.async.Future;
-import com.lunarclient.apollo.roundtrip.async.Handler;
-import java.util.HashSet;
-import java.util.Set;
-import lombok.Data;
+import com.lunarclient.apollo.api.ApiResponse;
 
 /**
- * Represents a {@link Future} result of an asynchronous
- * operation that may or may not complete successfully.
+ * Represents a future result of an asynchronous
+ * operation invoked when the operation is completed.
  *
  * @param <T> the type of the response object that will be returned
  * @since 1.0.0
  */
-@Data
-public final class UncertainFuture<T extends ApolloResponse> implements Future<T> {
-
-    /**
-     * A {@link Set} of success handlers that will be
-     * invoked if the operation completes successfully.
-     *
-     * @since 1.0.0
-     */
-    private Set<Handler<T>> success = new HashSet<>();
-
-    /**
-     * A {@link Set} of failure handlers that will be
-     * invoked if the operation does not complete successfully.
-     *
-     * @since 1.0.0
-     */
-    private Set<Handler<Throwable>> failure = new HashSet<>();
+public interface Future<T extends ApiResponse> {
 
     /**
      * Registers a success handler to be invoked
      * when the operation completes successfully.
      *
      * @param handler the handler
+     * @return future the future
      * @since 1.0.0
      */
-    @Override
-    public UncertainFuture<T> onSuccess(Handler<T> handler) {
-        this.success.add(handler);
-        return this;
-    }
+    Future<T> onSuccess(Handler<T> handler);
 
     /**
      * Registers a failure handler to be invoked
      * when the operation does not complete successfully.
      *
      * @param throwable the throwable
+     * @return future the future
      * @since 1.0.0
      */
-    @Override
-    public UncertainFuture<T> onFailure(Handler<Throwable> throwable) {
-        this.failure.add(throwable);
-        return this;
-    }
+    Future<T> onFailure(Handler<Throwable> throwable);
+
+    /**
+     * Invokes all registered success handlers with the given response.
+     *
+     * @param response the response object to handle
+     * @since 1.0.0
+     */
+    void handleSuccess(T response);
+
+    /**
+     * Invokes all registered success handlers with the given throwable.
+     *
+     * @param throwable the throwable to handle
+     * @since 1.0.0
+     */
+    void handleFailure(Throwable throwable);
 
 }

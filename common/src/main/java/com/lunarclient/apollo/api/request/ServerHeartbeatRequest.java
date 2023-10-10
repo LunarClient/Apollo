@@ -21,68 +21,77 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo;
+package com.lunarclient.apollo.api.request;
 
-import com.lunarclient.apollo.option.Options;
-import com.lunarclient.apollo.stats.ApolloStats;
-import java.util.logging.Logger;
-import org.jetbrains.annotations.ApiStatus;
+import com.lunarclient.apollo.api.ApiRequest;
+import com.lunarclient.apollo.api.ApiRequestType;
+import com.lunarclient.apollo.api.ApiServiceType;
+import com.lunarclient.apollo.api.response.ServerHeartbeatResponse;
+import lombok.Builder;
 
 /**
- * Represents a platform that supports Apollo.
+ * Represents the apollo version request.
  *
  * @since 1.0.0
  */
-@ApiStatus.NonExtendable
-public interface ApolloPlatform {
+@Builder(toBuilder = true)
+public final class ServerHeartbeatRequest implements ApiRequest<ServerHeartbeatResponse> {
 
     /**
-     * Returns this kind of platform.
-     *
-     * @return this kind of platform
-     * @since 1.0.0
-     */
-    Kind getKind();
-
-    /**
-     * Returns the platform options that don't belong to a specific module.
-     *
-     * @return the platform options
-     * @since 1.0.0
-     */
-    Options getOptions();
-
-    /**
-     * Returns the current Apollo version.
-     *
-     * @return the current apollo version
-     * @since 1.0.0
-     */
-    String getApolloVersion();
-
-    /**
-     * Returns the servers logger.
-     *
-     * @return the servers logger
-     * @since 1.0.0
-     */
-    Logger getPlatformLogger();
-
-    /**
-     * Returns the platform stats.
-     *
-     * @return the platform stats
-     * @since 1.0.0
-     */
-    ApolloStats getStats();
-
-    /**
-     * Represents the kind of server a platform is.
+     * Randomly generated ID that gets saved to the apollo config file.
      *
      * @since 1.0.0
      */
-    enum Kind {
-        SERVER,
-        PROXY
+    private final String serverInstallationId;
+
+    /**
+     * Randomly generated ID every single time Apollo starts.
+     *
+     * @since 1.0.0
+     */
+    private final String serverSessionId;
+
+    /**
+     * The system load average for the last minute.
+     *
+     * @since 1.0.0
+     */
+    private final double cpuUsage;
+
+    /**
+     * The servers maximum allocated ram in megabytes.
+     *
+     * @since 1.0.0
+     */
+    private final int ramMax;
+
+    /**
+     * The servers used ram in megabytes.
+     *
+     * @since 1.0.0
+     */
+    private final int ramUsed;
+
+    /**
+     * The servers total online players.
+     *
+     * @since 1.0.0
+     */
+    private final int totalPlayers;
+
+    @Override
+    public ApiServiceType getService() {
+        return ApiServiceType.ANALYTICS;
     }
+
+    @Override
+    public ApiRequestType getType() {
+        return ApiRequestType.POST;
+    }
+
+    @Override
+    public String getRoute() {
+        return "event/server.heartbeat";
+    }
+
 }

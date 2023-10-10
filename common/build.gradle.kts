@@ -8,6 +8,7 @@ dependencies {
     api(project(path = ":apollo-api", configuration = "shadow"))
 
     api(libs.protobuf)
+    api(libs.gson)
     api(libs.configurate.core)
     api(libs.configurate.yaml)
 }
