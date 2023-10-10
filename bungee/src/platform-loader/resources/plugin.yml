@@ -1,4 +1,4 @@
 name: Apollo-Bungee
-main: com.lunarclient.apollo.ApolloBungeePlatform
+main: com.lunarclient.apollo.loader.BungeePlatformLoader
 version: 0.1.0-SNAPSHOT
 author: Moonsworth

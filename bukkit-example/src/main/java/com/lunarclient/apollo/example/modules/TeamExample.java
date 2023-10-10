@@ -26,7 +26,6 @@ package com.lunarclient.apollo.example.modules;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.module.team.TeamMember;
@@ -38,6 +37,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -121,9 +122,9 @@ public class TeamExample implements Listener {
 
             return TeamMember.builder()
                 .playerUuid(member.getUniqueId())
-                .displayName(Component.builder()
+                .displayName(Component.text()
                     .content(member.getName())
-                    .color(Color.WHITE)
+                    .color(NamedTextColor.WHITE)
                     .build())
                 .markerColor(Color.WHITE)
                 .location(ApolloLocation.builder()

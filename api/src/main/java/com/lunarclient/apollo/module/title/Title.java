@@ -23,10 +23,10 @@
  */
 package com.lunarclient.apollo.module.title;
 
-import com.lunarclient.apollo.common.Component;
 import java.time.Duration;
 import lombok.Builder;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 
 /**
  * Represents a title which can be shown on the client.

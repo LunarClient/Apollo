@@ -83,7 +83,7 @@ public final class BukkitApolloPlayer extends AbstractApolloPlayer {
 
     @Override
     public void sendPacket(byte[] messages) {
-        this.player.sendPluginMessage(ApolloBukkitPlatform.getInstance(), ApolloManager.PLUGIN_MESSAGE_CHANNEL, messages);
+        this.player.sendPluginMessage(ApolloBukkitPlatform.getInstance().getPlugin(), ApolloManager.PLUGIN_MESSAGE_CHANNEL, messages);
     }
 
 }
