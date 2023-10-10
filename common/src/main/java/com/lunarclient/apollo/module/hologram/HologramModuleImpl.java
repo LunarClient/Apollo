@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.module.hologram;
 
+import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.hologram.v1.DisplayHologramMessage;
 import com.lunarclient.apollo.hologram.v1.RemoveHologramMessage;
 import com.lunarclient.apollo.hologram.v1.ResetHologramsMessage;
@@ -44,8 +45,8 @@ public final class HologramModuleImpl extends HologramModule {
         DisplayHologramMessage message = DisplayHologramMessage.newBuilder()
             .setId(hologram.getId())
             .setLocation(NetworkTypes.toProtobuf(hologram.getLocation()))
-            .addAllLines(hologram.getLines().stream()
-                .map(NetworkTypes::toProtobuf)
+            .addAllAdventureJsonLines(hologram.getLines().stream()
+                .map(ApolloComponent::toJson)
                 .collect(Collectors.toList())
             )
             .setShowThroughWalls(hologram.isShowThroughWalls())

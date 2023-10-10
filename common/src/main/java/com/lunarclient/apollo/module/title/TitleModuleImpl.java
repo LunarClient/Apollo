@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.module.title;
 
+import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
@@ -42,7 +43,7 @@ public final class TitleModuleImpl extends TitleModule {
     public void displayTitle(@NonNull Recipients recipients, @NonNull Title title) {
         DisplayTitleMessage message = DisplayTitleMessage.newBuilder()
             .setTitleType(TitleType.forNumber(title.getType().ordinal() + 1))
-            .setMessage(NetworkTypes.toProtobuf(title.getMessage()))
+            .setAdventureJsonMessage(ApolloComponent.toJson(title.getMessage()))
             .setScale(title.getScale())
             .setFadeInTime(NetworkTypes.toProtobuf(title.getFadeInTime()))
             .setDisplayTime(NetworkTypes.toProtobuf(title.getDisplayTime()))

@@ -26,6 +26,7 @@ package com.lunarclient.apollo;
 import com.google.protobuf.Any;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
+import com.lunarclient.apollo.loader.PlatformPlugin;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
@@ -71,6 +72,7 @@ import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BukkitApolloStats;
 import java.util.logging.Logger;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -82,11 +84,13 @@ import org.bukkit.plugin.messaging.Messenger;
  *
  * @since 1.0.0
  */
-public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlatform {
+@RequiredArgsConstructor
+public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatform {
 
     @Getter private static ApolloBukkitPlatform instance;
 
     @Getter private final Options options = new OptionsImpl(null);
+    @Getter private final JavaPlugin plugin;
     private ApolloStats stats;
 
     @Override
@@ -95,9 +99,9 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         this.stats = new BukkitApolloStats();
         ApolloManager.bootstrap(this);
 
-        PluginManager pluginManager = this.getServer().getPluginManager();
-        pluginManager.registerEvents(new ApolloPlayerListener(), this);
-        pluginManager.registerEvents(new ApolloWorldListener(), this);
+        PluginManager pluginManager = this.plugin.getServer().getPluginManager();
+        pluginManager.registerEvents(new ApolloPlayerListener(), this.plugin);
+        pluginManager.registerEvents(new ApolloWorldListener(), this.plugin);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
             .addModule(BeamModule.class, new BeamModuleImpl())
@@ -123,13 +127,13 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
         ApolloStatsManager statsManager = new ApolloStatsManager();
         ApolloVersionManager versionManager = new ApolloVersionManager();
 
-        ApolloManager.loadConfiguration(this.getDataFolder().toPath());
+        ApolloManager.loadConfiguration(this.plugin.getDataFolder().toPath());
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
         ApolloManager.saveConfiguration();
 
-        Messenger messenger = this.getServer().getMessenger();
-        messenger.registerOutgoingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
-        messenger.registerIncomingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
+        Messenger messenger = this.plugin.getServer().getMessenger();
+        messenger.registerOutgoingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
+        messenger.registerIncomingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
             (channel, player, bytes) -> this.handlePacket(player, bytes)
         );
 
@@ -151,7 +155,7 @@ public final class ApolloBukkitPlatform extends JavaPlugin implements ApolloPlat
 
     @Override
     public String getApolloVersion() {
-        return this.getDescription().getVersion();
+        return this.plugin.getDescription().getVersion();
     }
 
     @Override

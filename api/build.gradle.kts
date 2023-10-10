@@ -3,20 +3,28 @@ plugins {
     id("apollo.publish-conventions")
 }
 
-createPlatformSources("bukkit", "bungee", "velocity")
+setupPlatforms()
+
+setupPlatformDependency("bukkit", "bukkitJar")
+setupPlatformDependency("bungee", "bungeeJar")
+setupPlatformDependency("velocity", "velocityJar")
+
+val main by sourceSets
 
 dependencies {
-    api(libs.geantyref)
+    api(project(":extra:apollo-extra-adventure4"))
 
-    "commonsCompileOnly"(libs.jetbrains.annotations)
-    "commonsCompileOnly"(libs.lombok)
+    "shade"(libs.geantyref)
 
-    "bukkitCompileOnly"(libs.bukkit.api)
-    "bukkitCompileOnly"(libs.bukkit)
+    "bukkit"(main.output)
+    "bukkit"(libs.bukkit.api)
+    "bukkit"(libs.bukkit)
 
-    "bungeeCompileOnly"(libs.bungee)
+    "bungee"(main.output)
+    "bungee"(libs.bungee)
 
-    "velocityCompileOnly"(libs.velocity)
+    "velocity"(main.output)
+    "velocity"(libs.velocity)
 }
 
 publishShadowJar()

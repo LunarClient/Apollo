@@ -24,6 +24,7 @@
 package com.lunarclient.apollo;
 
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
+import com.lunarclient.apollo.loader.PlatformPlugin;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
@@ -33,6 +34,7 @@ import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BungeeApolloStats;
 import java.util.logging.Logger;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -41,11 +43,13 @@ import net.md_5.bungee.api.plugin.Plugin;
  *
  * @since 1.0.0
  */
-public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform {
+@RequiredArgsConstructor
+public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatform {
 
     @Getter private static ApolloBungeePlatform instance;
 
     @Getter private final Options options = new OptionsImpl(null);
+    @Getter private final Plugin plugin;
     private ApolloStats stats;
 
     @Override
@@ -57,12 +61,12 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
         ApolloStatsManager statsManager = new ApolloStatsManager();
         ApolloVersionManager versionManager = new ApolloVersionManager();
 
-        ApolloManager.loadConfiguration(this.getDataFolder().toPath());
+        ApolloManager.loadConfiguration(this.plugin.getDataFolder().toPath());
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
         ApolloManager.saveConfiguration();
 
-        this.getProxy().getPluginManager().registerListener(this, new ApolloPlayerListener());
-        this.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
+        this.plugin.getProxy().getPluginManager().registerListener(this.plugin, new ApolloPlayerListener());
+        this.plugin.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
 
         statsManager.enable();
         versionManager.checkForUpdates();
@@ -82,7 +86,7 @@ public final class ApolloBungeePlatform extends Plugin implements ApolloPlatform
 
     @Override
     public String getApolloVersion() {
-        return this.getDescription().getVersion();
+        return this.plugin.getDescription().getVersion();
     }
 
     @Override

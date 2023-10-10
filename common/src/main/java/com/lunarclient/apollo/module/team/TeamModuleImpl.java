@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.module.team;
 
+import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
@@ -44,7 +45,7 @@ public final class TeamModuleImpl extends TeamModule {
         List<com.lunarclient.apollo.team.v1.TeamMember> teamMembersProto = teamMembers.stream()
             .map(teamMember -> com.lunarclient.apollo.team.v1.TeamMember.newBuilder()
                 .setPlayerUuid(NetworkTypes.toProtobuf(teamMember.getPlayerUuid()))
-                .setPlayerDisplayName(NetworkTypes.toProtobuf(teamMember.getDisplayName()))
+                .setAdventureJsonPlayerName(ApolloComponent.toJson(teamMember.getDisplayName()))
                 .setLocation(NetworkTypes.toProtobuf(teamMember.getLocation()))
                 .setMarkerColor(NetworkTypes.toProtobuf(teamMember.getMarkerColor()))
                 .build()

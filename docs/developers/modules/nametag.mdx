@@ -24,14 +24,14 @@ The nametag module enhances the vanilla Minecraft nametag.
 public void overrideNametagExample(Player target) {
     this.nametagModule.overrideNametag(Recipients.ofEveryone(), target.getUniqueId(), Nametag.builder()
         .lines(Lists.newArrayList(
-            Component.builder()
+            Component.text()
                 .content("[StaffMode]")
-                .decorators(Collections.singletonList(Component.TextDecorators.ITALIC))
-                .color(Color.GRAY)
+                .decorate(TextDecoration.ITALIC)
+                .color(NamedTextColor.GRAY)
                 .build(),
-            Component.builder()
+            Component.text()
                 .content(target.getName())
-                .color(Color.RED)
+                .color(NamedTextColor.RED)
                 .build()
         ))
         .build()
@@ -46,22 +46,23 @@ public void overrideNametagExample(Player target) {
 2. `UUID Target`
    - The players UUID you want to override the nametag of.
 3. `Nametag`
-   - The nametag you want to display for the `target` player. It's recommended to use Apollos [component builder](/apollo/developers/utilities/components).
+   - The nametag you want to display for the `target` player. It's recommended to a [chat component](https://docs.advntr.dev/text.html).
 
 
 ### `Nametag` Options
 
-`.lines(Component)` should be a string, or Apollo's `Component` builder. See the [component builder](/apollo/developers/utilities/components) page for more.
+`.lines(Component)` should be a string, or an Adventure `Component`. See the [chat components](https://docs.advntr.dev/text.html) page for more.
 
 ```java
 .lines(List.of(
-    Component.builder()
-        .content("[StaffMod]")
-        .color(Color.GRAY)
+    Component.text()
+        .content("[StaffMode]")
+        .decorate(TextDecoration.ITALIC)
+        .color(NamedTextColor.GRAY)
         .build(),
-    Component.builder()
+    Component.text()
         .content(target.getName())
-        .color(Color.RED)
+        .color(NamedTextColor.RED)
         .build()
 ))
 ```

@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.module.nametag;
 
-import com.lunarclient.apollo.common.v1.Component;
+import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.nametag.v1.OverrideNametagMessage;
 import com.lunarclient.apollo.nametag.v1.ResetNametagMessage;
 import com.lunarclient.apollo.nametag.v1.ResetNametagsMessage;
@@ -44,13 +44,13 @@ public final class NametagModuleImpl extends NametagModule {
 
     @Override
     public void overrideNametag(@NonNull Recipients recipients, @NonNull UUID playerUuid, @NonNull Nametag nametag) {
-        List<Component> lines = nametag.getLines().stream()
-            .map(NetworkTypes::toProtobuf)
+        List<String> lines = nametag.getLines().stream()
+            .map(ApolloComponent::toJson)
             .collect(Collectors.toList());
 
         OverrideNametagMessage message = OverrideNametagMessage.newBuilder()
             .setPlayerUuid(NetworkTypes.toProtobuf(playerUuid))
-            .addAllLines(lines)
+            .addAllAdventureJsonLines(lines)
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));

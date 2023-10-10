@@ -23,12 +23,12 @@
  */
 package com.lunarclient.apollo.module.team;
 
-import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import java.awt.Color;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 
 /**
  * Represents a team which can be shown on the client.

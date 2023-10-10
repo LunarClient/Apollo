@@ -1,11 +1,10 @@
 plugins {
-    id("apollo.shadow-conventions")
+    id("apollo.base-conventions")
 }
 
 dependencies {
     compileOnly(libs.bukkit.api)
 
-    compileOnlyApi(projects.apolloApi) {
-        targetConfiguration = "shadow"
-    }
+    compileOnly(project(":extra:apollo-extra-adventure4"))
+    compileOnly(project(path = ":apollo-api", configuration = "bukkit"))
 }

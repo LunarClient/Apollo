@@ -25,12 +25,12 @@ public void displayHologramExample() {
             .z(0)
             .build())
         .lines(Lists.newArrayList(
-            Component.builder()
+            Component.text()
                 .content("Welcome to my server!")
-                .color(Color.RED)
-                .decorators(Lists.newArrayList(Component.TextDecorators.BOLD, Component.TextDecorators.UNDERLINED))
+                .color(NamedTextColor.RED)
+                .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
                 .build(),
-            Component.builder()
+            Component.text()
                 .content("Type /help to get started!")
                 .build()
         ))
@@ -62,19 +62,19 @@ public void displayHologramExample() {
 ) 
 ```
 
-`.lines(Component)` should be a string, or Apollo's `Component` builder. See the [component builder](/apollo/developers/utilities/components) page for more.
+`.lines(Component)` should be a string, or an Adventure `Component`. See the [chat components](https://docs.advntr.dev/text.html) page for more.
 
 ```java
 .lines(List.of(
-    Component.builder()
+    Component.text()
         .content("Welcome to my server!")
-        .color(Color.RED)
-        .decorators(List.of(Component.TextDecorators.BOLD))
+        .color(NamedTextColor.RED)
+        .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
         .build(),
-    Component.builder()
+    Component.text()
         .content("Type /help to get started!")
         .build()
-    ))
+))
 ```
 
 `.showThroughWalls(Boolean)` if the player is able to see the hologram through walls.

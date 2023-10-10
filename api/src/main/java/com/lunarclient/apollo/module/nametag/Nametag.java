@@ -23,10 +23,10 @@
  */
 package com.lunarclient.apollo.module.nametag;
 
-import com.lunarclient.apollo.common.Component;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 
 /**
  * Represents a nametag which can be shown on the client.

@@ -60,7 +60,7 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
 
     @Override
     protected void onEnable() {
-        Bukkit.getPluginManager().registerEvents(this, ApolloBukkitPlatform.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, ApolloBukkitPlatform.getInstance().getPlugin());
     }
 
     @Override

@@ -1,0 +1,4 @@
+name: Apollo-Bungee
+main: com.lunarclient.apollo.loader.BungeePlatformLoader
+version: 0.1.1
+author: Moonsworth

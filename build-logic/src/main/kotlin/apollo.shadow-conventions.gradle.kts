@@ -13,15 +13,10 @@ tasks {
     val shadowJar = named<ShadowJar>("shadowJar") {
         archiveClassifier.set("")
         configureRelocations()
+        configureExclusions()
     }
 
     assemble {
         dependsOn(shadowJar)
     }
-}
-
-fun ShadowJar.configureRelocations() {
-    relocate("com.google.protobuf", "com.lunarclient.apollo.libs.protobuf")
-    relocate("com.google.gson", "com.lunarclient.apollo.libs.gson")
-    relocate("org.spongepowered.configurate", "com.lunarclient.apollo.libs.configurate")
 }

@@ -23,11 +23,11 @@
  */
 package com.lunarclient.apollo.module.hologram;
 
-import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 
 /**
  * Represents a hologram which can be shown on the client.

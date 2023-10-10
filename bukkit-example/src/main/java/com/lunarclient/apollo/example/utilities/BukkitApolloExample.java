@@ -26,7 +26,6 @@ package com.lunarclient.apollo.example.utilities;
 import com.google.common.collect.Lists;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.BukkitApollo;
-import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
@@ -39,6 +38,9 @@ import com.lunarclient.apollo.recipients.Recipients;
 import java.awt.Color;
 import java.util.Collection;
 import java.util.UUID;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -69,12 +71,12 @@ public final class BukkitApolloExample {
             .id("welcome-hologram")
             .location(apolloLocation)
             .lines(Lists.newArrayList(
-                Component.builder()
+                Component.text()
                     .content("Welcome to my server!")
-                    .color(Color.RED)
-                    .decorators(Lists.newArrayList(Component.TextDecorators.BOLD, Component.TextDecorators.UNDERLINED))
+                    .color(NamedTextColor.RED)
+                    .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
                     .build(),
-                Component.builder()
+                Component.text()
                     .content("Type /help to get started!")
                     .build()
             ))
