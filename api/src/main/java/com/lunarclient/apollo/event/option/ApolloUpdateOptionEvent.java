@@ -76,7 +76,7 @@ public final class ApolloUpdateOptionEvent implements EventCancellable {
      * @return the new value
      * @since 1.0.0
      */
-    Object value;
+    @Nullable Object value;
 
     @NonFinal @Setter boolean cancelled;
 

@@ -76,10 +76,7 @@ public final class ConfigOptions {
             }
 
             try {
-                if (option.getComment() != null) {
-                    optionNode.comment(option.getComment());
-                }
-
+                optionNode.comment(option.getComment());
                 optionNode.set((TypeToken<Object>) option.getTypeToken(), options.get(option));
             } catch (Throwable throwable) {
                 throwable.printStackTrace();
