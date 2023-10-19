@@ -30,6 +30,7 @@ import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.network.ApolloNetworkManager;
 import com.lunarclient.apollo.option.ConfigOptions;
 import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.config.CommonSerializers;
 import com.lunarclient.apollo.option.config.Serializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
@@ -98,6 +99,8 @@ public final class ApolloManager {
             ApolloManager.roundtripManager = new ApolloRoundtripManager();
             ApolloManager.httpManager = new ApolloHttpManager();
             ApolloManager.networkManager = new ApolloNetworkManager();
+
+            new CommonSerializers();
 
             ApolloManager.platform = platform;
         } catch (Throwable throwable) {

@@ -74,17 +74,20 @@ public final class NetworkOptions {
      * {@link ApolloPlayer}s.
      *
      * @param modules the modules to send the options of
+     * @param onlyPresent send only the options that have a present value
      * @param players the players to send the module options to
      * @since 1.0.0
      */
     public static void sendOptions(Iterable<ApolloModule> modules,
+                                   boolean onlyPresent,
                                    ApolloPlayer... players) {
         for (ApolloPlayer player : players) {
             OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
 
             for (ApolloModule module : modules) {
                 modulesBuilder.addConfigurableSettings(NetworkOptions.moduleWithOptions(
-                    module
+                    module,
+                    onlyPresent
                 ).build());
             }
 
@@ -92,7 +95,7 @@ public final class NetworkOptions {
         }
     }
 
-    private static ConfigurableSettings.Builder moduleWithOptions(ApolloModule module) {
+    private static ConfigurableSettings.Builder moduleWithOptions(ApolloModule module, boolean onlyPresent) {
         ConfigurableSettings.Builder builder = NetworkOptions.module(module);
         Options options = module.getOptions();
 
@@ -103,6 +106,10 @@ public final class NetworkOptions {
 
             Value.Builder valueBuilder = Value.newBuilder();
             Object value = options.get(option);
+            if (value == null && onlyPresent) {
+                continue;
+            }
+
             Value wrapper = ((OptionsImpl) options).wrapValue(valueBuilder, option.getTypeToken().getType(), value);
             builder.putProperties(option.getKey(), wrapper);
         }
