@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
-import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Customize the color of enchantment glints.
@@ -41,7 +41,6 @@ public final class ModGlintColorizer {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("glint-colorizer", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -53,7 +52,6 @@ public final class ModGlintColorizer {
     public static final SimpleOption<Boolean> USE_LUNAR_EQUATION = SimpleOption.<Boolean>builder()
         .comment("Use a custom blending algorithm which supports darker colours")
         .node("glint-colorizer", "use-lunar-equation").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -65,7 +63,6 @@ public final class ModGlintColorizer {
     public static final SimpleOption<Boolean> OVERRIDE_ITEM_GLINT = SimpleOption.<Boolean>builder()
         .comment("Recolor the glints of items")
         .node("glint-colorizer", "override-item-glint").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -74,9 +71,8 @@ public final class ModGlintColorizer {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> ITEM_GLINT_LUNAR_COLOR = NumberOption.<Integer>number()
-        .node("glint-colorizer", "item-glint-lunar-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xCC6419FF).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> ITEM_GLINT_LUNAR_COLOR = SimpleOption.<Color>builder()
+        .node("glint-colorizer", "item-glint-lunar-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -85,9 +81,8 @@ public final class ModGlintColorizer {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> ITEM_GLINT_VANILLA_COLOR = NumberOption.<Integer>number()
-        .node("glint-colorizer", "item-glint-vanilla-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFF8040CC).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> ITEM_GLINT_VANILLA_COLOR = SimpleOption.<Color>builder()
+        .node("glint-colorizer", "item-glint-vanilla-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -99,7 +94,6 @@ public final class ModGlintColorizer {
     public static final SimpleOption<Boolean> OVERRIDE_ARMOR_GLINT = SimpleOption.<Boolean>builder()
         .comment("Recolor the glints of worn armor")
         .node("glint-colorizer", "override-armor-glint").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -108,9 +102,8 @@ public final class ModGlintColorizer {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> ARMOR_GLINT_LUNAR = NumberOption.<Integer>number()
-        .node("glint-colorizer", "armor-glint-lunar").type(TypeToken.get(Integer.class))
-        .defaultValue(0xCC6419FF).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> ARMOR_GLINT_LUNAR = SimpleOption.<Color>builder()
+        .node("glint-colorizer", "armor-glint-lunar").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -119,9 +112,8 @@ public final class ModGlintColorizer {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> ARMOR_GLINT_VANILLA = NumberOption.<Integer>number()
-        .node("glint-colorizer", "armor-glint-vanilla").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFF8040CC).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> ARMOR_GLINT_VANILLA = SimpleOption.<Color>builder()
+        .node("glint-colorizer", "armor-glint-vanilla").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods.impl;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Replace the default Minecraft crosshair with a customizable crosshair.
@@ -41,7 +42,6 @@ public final class ModCrosshair {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("crosshair", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,9 +50,9 @@ public final class ModCrosshair {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> CROSSHAIR_THICKNESS = NumberOption.<Integer>number()
+    public static final NumberOption<Integer> CROSSHAIR_THICKNESS = NumberOption.<Integer>number()
         .node("crosshair", "crosshair-thickness").type(TypeToken.get(Integer.class))
-        .defaultValue(1).min(1).max(5)
+        .min(1).max(5)
         .notifyClient()
         .build();
 
@@ -61,9 +61,9 @@ public final class ModCrosshair {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> CROSSHAIR_SIZE = NumberOption.<Integer>number()
+    public static final NumberOption<Integer> CROSSHAIR_SIZE = NumberOption.<Integer>number()
         .node("crosshair", "crosshair-size").type(TypeToken.get(Integer.class))
-        .defaultValue(4).min(0).max(8)
+        .min(0).max(8)
         .notifyClient()
         .build();
 
@@ -72,9 +72,9 @@ public final class ModCrosshair {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> CROSSHAIR_GAP = NumberOption.<Integer>number()
+    public static final NumberOption<Integer> CROSSHAIR_GAP = NumberOption.<Integer>number()
         .node("crosshair", "crosshair-gap").type(TypeToken.get(Integer.class))
-        .defaultValue(0).min(0).max(8)
+        .min(0).max(8)
         .notifyClient()
         .build();
 
@@ -85,7 +85,6 @@ public final class ModCrosshair {
      */
     public static final SimpleOption<Boolean> CROSSHAIR_DOT = SimpleOption.<Boolean>builder()
         .node("crosshair", "crosshair-dot").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -96,7 +95,6 @@ public final class ModCrosshair {
      */
     public static final SimpleOption<Boolean> CROSSHAIR_OUTLINE = SimpleOption.<Boolean>builder()
         .node("crosshair", "crosshair-outline").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -105,9 +103,9 @@ public final class ModCrosshair {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> OUTLINE_THICKNESS = NumberOption.<Float>number()
+    public static final NumberOption<Float> OUTLINE_THICKNESS = NumberOption.<Float>number()
         .node("crosshair", "outline-thickness").type(TypeToken.get(Float.class))
-        .defaultValue(0.5F).min(0.0F).max(1.0F)
+        .min(0.0F).max(1.0F)
         .notifyClient()
         .build();
 
@@ -116,9 +114,8 @@ public final class ModCrosshair {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> OUTLINE_COLOR = NumberOption.<Integer>number()
-        .node("crosshair", "outline-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0x88000000).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("crosshair", "outline-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -129,7 +126,6 @@ public final class ModCrosshair {
      */
     public static final SimpleOption<Boolean> CUSTOM_SCALE = SimpleOption.<Boolean>builder()
         .node("crosshair", "custom-scale").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -138,9 +134,8 @@ public final class ModCrosshair {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> COLOR = NumberOption.<Integer>number()
-        .node("crosshair", "color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFFFFFFFF).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> COLOR = SimpleOption.<Color>builder()
+        .node("crosshair", "color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -149,9 +144,8 @@ public final class ModCrosshair {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> FRIENDLY_COLOR = NumberOption.<Integer>number()
-        .node("crosshair", "friendly-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFF33FF33).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> FRIENDLY_COLOR = SimpleOption.<Color>builder()
+        .node("crosshair", "friendly-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -160,9 +154,8 @@ public final class ModCrosshair {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> ENEMY_COLOR = NumberOption.<Integer>number()
-        .node("crosshair", "enemy-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFFFF3333).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> ENEMY_COLOR = SimpleOption.<Color>builder()
+        .node("crosshair", "enemy-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

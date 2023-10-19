@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods.impl;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Customize the current weather.
@@ -41,7 +42,6 @@ public final class ModWeatherChanger {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("weather-changer", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,9 +50,9 @@ public final class ModWeatherChanger {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> RAIN_STRENGTH = NumberOption.<Float>number()
+    public static final NumberOption<Float> RAIN_STRENGTH = NumberOption.<Float>number()
         .node("weather-changer", "rain-strength").type(TypeToken.get(Float.class))
-        .defaultValue(1.0F).min(0.0F).max(1.0F)
+        .min(0.0F).max(1.0F)
         .notifyClient()
         .build();
 
@@ -61,10 +61,9 @@ public final class ModWeatherChanger {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> RAIN_COLOR = NumberOption.<Integer>number()
+    public static final SimpleOption<Color> RAIN_COLOR = SimpleOption.<Color>builder()
         .comment("Augment the rain/snow color")
-        .node("weather-changer", "rain-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFFFFFFFF).min(0x80000000).max(0x7FFFFFFF)
+        .node("weather-changer", "rain-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

@@ -41,7 +41,6 @@ public final class ModHurtCam {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("hurt-cam", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -52,7 +51,6 @@ public final class ModHurtCam {
      */
     public static final SimpleOption<Boolean> DISABLE_HURT_CAM = SimpleOption.<Boolean>builder()
         .node("hurt-cam", "disable-hurt-cam").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -61,9 +59,19 @@ public final class ModHurtCam {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> HURT_SHAKING_INTENSITY = NumberOption.<Float>number()
+    public static final NumberOption<Float> HURT_SHAKING_INTENSITY = NumberOption.<Float>number()
         .node("hurt-cam", "hurt-shaking-intensity").type(TypeToken.get(Float.class))
-        .defaultValue(1.0F).min(0.0F).max(2.0F)
+        .min(0.0F).max(2.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> OLD_CAMERA_TILT = SimpleOption.<Boolean>builder()
+        .node("hurt-cam", "old-camera-tilt").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

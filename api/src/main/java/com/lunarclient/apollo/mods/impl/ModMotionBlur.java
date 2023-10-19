@@ -41,7 +41,6 @@ public final class ModMotionBlur {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("motion-blur", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -52,7 +51,6 @@ public final class ModMotionBlur {
      */
     public static final SimpleOption<Boolean> OLD_BLUR = SimpleOption.<Boolean>builder()
         .node("motion-blur", "old-blur").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -61,9 +59,9 @@ public final class ModMotionBlur {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> VALUE = NumberOption.<Integer>number()
+    public static final NumberOption<Integer> VALUE = NumberOption.<Integer>number()
         .node("motion-blur", "value").type(TypeToken.get(Integer.class))
-        .defaultValue(1).min(1).max(10)
+        .min(1).max(10)
         .notifyClient()
         .build();
 

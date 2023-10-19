@@ -41,7 +41,6 @@ public final class ModCooldowns {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("cooldowns", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -50,9 +49,9 @@ public final class ModCooldowns {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> SCALE = NumberOption.<Float>number()
+    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("cooldowns", "scale").type(TypeToken.get(Float.class))
-        .defaultValue(1.0F).min(0.5F).max(1.5F)
+        .min(0.5F).max(1.5F)
         .notifyClient()
         .build();
 

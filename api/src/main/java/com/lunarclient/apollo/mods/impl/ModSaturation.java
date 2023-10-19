@@ -40,7 +40,6 @@ public final class ModSaturation {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("saturation", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -51,7 +50,6 @@ public final class ModSaturation {
      */
     public static final SimpleOption<Boolean> SHOW_SATURATION_OVERLAY = SimpleOption.<Boolean>builder()
         .node("saturation", "show-saturation-overlay").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -62,7 +60,6 @@ public final class ModSaturation {
      */
     public static final SimpleOption<Boolean> SHOW_APPLESKIN_TOOLTIP = SimpleOption.<Boolean>builder()
         .node("saturation", "show-appleskin-tooltip").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -73,7 +70,6 @@ public final class ModSaturation {
      */
     public static final SimpleOption<Boolean> SHOW_HELD_ITEM_HUNGER = SimpleOption.<Boolean>builder()
         .node("saturation", "show-held-item-hunger").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -84,7 +80,6 @@ public final class ModSaturation {
      */
     public static final SimpleOption<Boolean> SHOW_HELD_ITEM_SATURATION = SimpleOption.<Boolean>builder()
         .node("saturation", "show-held-item-saturation").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 

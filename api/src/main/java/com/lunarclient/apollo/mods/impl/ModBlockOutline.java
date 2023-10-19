@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods.impl;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Allows you to customize the outline or add an overlay to the block you are pointing at.
@@ -41,7 +42,6 @@ public final class ModBlockOutline {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("block-outline", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,9 +50,8 @@ public final class ModBlockOutline {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> BLOCK_OUTLINE_COLOR = NumberOption.<Integer>number()
-        .node("block-outline", "block-outline-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0x66000000).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> BLOCK_OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("block-outline", "block-outline-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -61,9 +60,8 @@ public final class ModBlockOutline {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> BLOCK_OVERLAY_COLOR = NumberOption.<Integer>number()
-        .node("block-outline", "block-overlay-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0x66000000).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> BLOCK_OVERLAY_COLOR = SimpleOption.<Color>builder()
+        .node("block-outline", "block-overlay-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -72,9 +70,9 @@ public final class ModBlockOutline {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> BLOCK_OUTLINE_WIDTH = NumberOption.<Float>number()
+    public static final NumberOption<Float> BLOCK_OUTLINE_WIDTH = NumberOption.<Float>number()
         .node("block-outline", "block-outline-width").type(TypeToken.get(Float.class))
-        .defaultValue(2.0F).min(1.0F).max(10.0F)
+        .min(1.0F).max(10.0F)
         .notifyClient()
         .build();
 
@@ -85,7 +83,6 @@ public final class ModBlockOutline {
      */
     public static final SimpleOption<Boolean> BLOCK_OVERLAY = SimpleOption.<Boolean>builder()
         .node("block-outline", "block-overlay").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -96,7 +93,6 @@ public final class ModBlockOutline {
      */
     public static final SimpleOption<Boolean> BLOCK_OUTLINE = SimpleOption.<Boolean>builder()
         .node("block-outline", "block-outline").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 

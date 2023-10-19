@@ -40,7 +40,6 @@ public final class ModSnaplook {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("snaplook", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -52,7 +51,6 @@ public final class ModSnaplook {
     public static final SimpleOption<Boolean> SMOOTH_CAMERA = SimpleOption.<Boolean>builder()
         .comment("When zoomed in the camera movement will move smoothly (cinematic camera)")
         .node("snaplook", "smooth-camera").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 

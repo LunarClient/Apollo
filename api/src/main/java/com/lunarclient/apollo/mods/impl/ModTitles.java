@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods.impl;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Adjust the minecraft title and subtitle scale and location.
@@ -41,7 +42,6 @@ public final class ModTitles {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("titles", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,9 +50,9 @@ public final class ModTitles {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> SCALE = NumberOption.<Float>number()
+    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("titles", "scale").type(TypeToken.get(Float.class))
-        .defaultValue(1.0F).min(0.5F).max(1.5F)
+        .min(0.5F).max(1.5F)
         .notifyClient()
         .build();
 
@@ -63,7 +63,6 @@ public final class ModTitles {
      */
     public static final SimpleOption<Boolean> SHOW_IN_HUD_EDITOR = SimpleOption.<Boolean>builder()
         .node("titles", "show-in-hud-editor").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -72,9 +71,8 @@ public final class ModTitles {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> TITLE_COLOR = NumberOption.<Integer>number()
-        .node("titles", "title-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFFFF5555).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> TITLE_COLOR = SimpleOption.<Color>builder()
+        .node("titles", "title-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -83,9 +81,8 @@ public final class ModTitles {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> SUBTITLE_COLOR = NumberOption.<Integer>number()
-        .node("titles", "subtitle-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFFFFFFFF).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> SUBTITLE_COLOR = SimpleOption.<Color>builder()
+        .node("titles", "subtitle-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

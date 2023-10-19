@@ -40,7 +40,6 @@ public final class ModScrollableTooltips {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("scrollable-tooltips", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -51,7 +50,6 @@ public final class ModScrollableTooltips {
      */
     public static final SimpleOption<Boolean> START_AT_TOP = SimpleOption.<Boolean>builder()
         .node("scrollable-tooltips", "start-at-top").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -62,7 +60,6 @@ public final class ModScrollableTooltips {
      */
     public static final SimpleOption<Boolean> VERTICAL_KEYBIND = SimpleOption.<Boolean>builder()
         .node("scrollable-tooltips", "vertical-keybind").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -73,7 +70,6 @@ public final class ModScrollableTooltips {
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("scrollable-tooltips", "text-shadow").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -84,7 +80,6 @@ public final class ModScrollableTooltips {
      */
     public static final SimpleOption<Boolean> WRAP_TEXT = SimpleOption.<Boolean>builder()
         .node("scrollable-tooltips", "wrap-text").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
