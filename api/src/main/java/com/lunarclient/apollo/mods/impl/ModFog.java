@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods.impl;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Allows you to adjust the strength of fog for various fog types.
@@ -41,7 +42,6 @@ public final class ModFog {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("fog", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,9 +50,9 @@ public final class ModFog {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> WATER_FOG_DENSITY = NumberOption.<Float>number()
+    public static final NumberOption<Float> WATER_FOG_DENSITY = NumberOption.<Float>number()
         .node("fog", "water-fog-density").type(TypeToken.get(Float.class))
-        .defaultValue(1.0F).min(0.0F).max(1.8F)
+        .min(0.0F).max(1.8F)
         .notifyClient()
         .build();
 
@@ -61,9 +61,9 @@ public final class ModFog {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> RENDER_DISTANCE_FOG_DENSITY = NumberOption.<Float>number()
+    public static final NumberOption<Float> RENDER_DISTANCE_FOG_DENSITY = NumberOption.<Float>number()
         .node("fog", "render-distance-fog-density").type(TypeToken.get(Float.class))
-        .defaultValue(1.0F).min(0.0F).max(1.95F)
+        .min(0.0F).max(1.95F)
         .notifyClient()
         .build();
 
@@ -74,7 +74,6 @@ public final class ModFog {
      */
     public static final SimpleOption<Boolean> RENDER_DISTANCE_FOG_COLOR_TOGGLE = SimpleOption.<Boolean>builder()
         .node("fog", "render-distance-fog-color-toggle").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -83,9 +82,8 @@ public final class ModFog {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> RENDER_DISTANCE_FOG_COLOR = NumberOption.<Integer>number()
-        .node("fog", "render-distance-fog-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xC0D8FF).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> RENDER_DISTANCE_FOG_COLOR = SimpleOption.<Color>builder()
+        .node("fog", "render-distance-fog-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

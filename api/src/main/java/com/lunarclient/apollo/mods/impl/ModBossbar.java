@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods.impl;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Allows you to hide, move or customize the Minecraft boss bar.
@@ -41,7 +42,6 @@ public final class ModBossbar {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("bossbar", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -50,9 +50,9 @@ public final class ModBossbar {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> SCALE = NumberOption.<Float>number()
+    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("bossbar", "scale").type(TypeToken.get(Float.class))
-        .defaultValue(1.0F).min(0.5F).max(1.5F)
+        .min(0.5F).max(1.5F)
         .notifyClient()
         .build();
 
@@ -63,7 +63,6 @@ public final class ModBossbar {
      */
     public static final SimpleOption<Boolean> RENDER_BAR = SimpleOption.<Boolean>builder()
         .node("bossbar", "render-bar").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -74,7 +73,6 @@ public final class ModBossbar {
      */
     public static final SimpleOption<Boolean> CUSTOM_BOSS_BAR = SimpleOption.<Boolean>builder()
         .node("bossbar", "custom-boss-bar").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -83,9 +81,8 @@ public final class ModBossbar {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> BAR_COLOR = NumberOption.<Integer>number()
-        .node("bossbar", "bar-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFFF249F2).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> BAR_COLOR = SimpleOption.<Color>builder()
+        .node("bossbar", "bar-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

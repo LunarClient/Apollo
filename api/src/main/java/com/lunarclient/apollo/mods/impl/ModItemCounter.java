@@ -41,7 +41,6 @@ public final class ModItemCounter {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("item-counter", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,9 +49,9 @@ public final class ModItemCounter {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> SCALE = NumberOption.<Float>number()
+    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("item-counter", "scale").type(TypeToken.get(Float.class))
-        .defaultValue(1.0F).min(0.5F).max(1.5F)
+        .min(0.5F).max(1.5F)
         .notifyClient()
         .build();
 

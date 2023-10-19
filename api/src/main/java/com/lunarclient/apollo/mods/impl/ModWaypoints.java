@@ -41,7 +41,6 @@ public final class ModWaypoints {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("waypoints", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -52,7 +51,6 @@ public final class ModWaypoints {
      */
     public static final SimpleOption<Boolean> DEATH_WAYPOINT = SimpleOption.<Boolean>builder()
         .node("waypoints", "death-waypoint").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -64,7 +62,6 @@ public final class ModWaypoints {
     public static final SimpleOption<Boolean> ADD_FROM_CHAT = SimpleOption.<Boolean>builder()
         .comment("Adds a waypoint if coordinates are clicked in chat.")
         .node("waypoints", "add-from-chat").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -75,7 +72,6 @@ public final class ModWaypoints {
      */
     public static final SimpleOption<Boolean> WAYPOINT_BEAMS = SimpleOption.<Boolean>builder()
         .node("waypoints", "waypoint-beams").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -86,7 +82,6 @@ public final class ModWaypoints {
      */
     public static final SimpleOption<Boolean> BOX_BORDER = SimpleOption.<Boolean>builder()
         .node("waypoints", "box-border").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -97,7 +92,6 @@ public final class ModWaypoints {
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("waypoints", "text-shadow").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -106,9 +100,9 @@ public final class ModWaypoints {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> BOX_PADDING = NumberOption.<Float>number()
+    public static final NumberOption<Float> BOX_PADDING = NumberOption.<Float>number()
         .node("waypoints", "box-padding").type(TypeToken.get(Float.class))
-        .defaultValue(4.0F).min(1.0F).max(8.0F)
+        .min(1.0F).max(8.0F)
         .notifyClient()
         .build();
 
@@ -120,7 +114,6 @@ public final class ModWaypoints {
     public static final SimpleOption<Boolean> ONLY_SHOW_WHEN_LOOKING_NEAR = SimpleOption.<Boolean>builder()
         .comment("Only show each waypoint when looking near then in the world")
         .node("waypoints", "only-show-when-looking-near").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -132,7 +125,6 @@ public final class ModWaypoints {
     public static final SimpleOption<Boolean> SHOW_ICONS = SimpleOption.<Boolean>builder()
         .comment("Show simpler text icons above each waypoint")
         .node("waypoints", "show-icons").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -141,9 +133,9 @@ public final class ModWaypoints {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> LABEL_SCALE = NumberOption.<Float>number()
+    public static final NumberOption<Float> LABEL_SCALE = NumberOption.<Float>number()
         .node("waypoints", "label-scale").type(TypeToken.get(Float.class))
-        .defaultValue(1.0F).min(0.1F).max(2.0F)
+        .min(0.1F).max(2.0F)
         .notifyClient()
         .build();
 
@@ -152,9 +144,9 @@ public final class ModWaypoints {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> ICON_SCALE = NumberOption.<Float>number()
+    public static final NumberOption<Float> ICON_SCALE = NumberOption.<Float>number()
         .node("waypoints", "icon-scale").type(TypeToken.get(Float.class))
-        .defaultValue(1.5F).min(0.1F).max(3.0F)
+        .min(0.1F).max(3.0F)
         .notifyClient()
         .build();
 

@@ -40,7 +40,6 @@ public final class ModPvpInfo {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("pvp-info", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -51,7 +50,6 @@ public final class ModPvpInfo {
      */
     public static final SimpleOption<Boolean> RESET_ON_WORLD_CHANGE = SimpleOption.<Boolean>builder()
         .node("pvp-info", "reset-on-world-change").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 

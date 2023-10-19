@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
-import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Changes the color of the damage indicator.
@@ -41,7 +41,6 @@ public final class ModHitColor {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("hit-color", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,9 +49,8 @@ public final class ModHitColor {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> HIT_ARMOR_COLOR = NumberOption.<Integer>number()
-        .node("hit-color", "hit-armor-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0x66990000).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> HIT_ARMOR_COLOR = SimpleOption.<Color>builder()
+        .node("hit-color", "hit-armor-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -63,7 +61,6 @@ public final class ModHitColor {
      */
     public static final SimpleOption<Boolean> SHOULD_COLOR_ARMOR = SimpleOption.<Boolean>builder()
         .node("hit-color", "should-color-armor").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 

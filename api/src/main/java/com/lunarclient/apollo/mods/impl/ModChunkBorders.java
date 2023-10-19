@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
-import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * View the border of the current chunk.
@@ -41,7 +41,6 @@ public final class ModChunkBorders {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("chunk-borders", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,9 +49,8 @@ public final class ModChunkBorders {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> GRID_COLOR = NumberOption.<Integer>number()
-        .node("chunk-borders", "grid-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFFFFFF00).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> GRID_COLOR = SimpleOption.<Color>builder()
+        .node("chunk-borders", "grid-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -61,9 +59,8 @@ public final class ModChunkBorders {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> INNER_CHUNK_CORNER_COLOR = NumberOption.<Integer>number()
-        .node("chunk-borders", "inner-chunk-corner-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFF0000FF).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> INNER_CHUNK_CORNER_COLOR = SimpleOption.<Color>builder()
+        .node("chunk-borders", "inner-chunk-corner-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -72,9 +69,8 @@ public final class ModChunkBorders {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> OUTER_CHUNK_CORNER_COLOR = NumberOption.<Integer>number()
-        .node("chunk-borders", "outer-chunk-corner-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFFFF0000).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> OUTER_CHUNK_CORNER_COLOR = SimpleOption.<Color>builder()
+        .node("chunk-borders", "outer-chunk-corner-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

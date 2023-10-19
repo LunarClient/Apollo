@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods.impl;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Adds a stopwatch to the HUD.
@@ -41,7 +42,6 @@ public final class ModStopwatch {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("stopwatch", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,9 +50,9 @@ public final class ModStopwatch {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> SCALE = NumberOption.<Float>number()
+    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("stopwatch", "scale").type(TypeToken.get(Float.class))
-        .defaultValue(1.0F).min(0.5F).max(1.5F)
+        .min(0.5F).max(1.5F)
         .notifyClient()
         .build();
 
@@ -63,7 +63,6 @@ public final class ModStopwatch {
      */
     public static final SimpleOption<Boolean> RESET_EVERY_START = SimpleOption.<Boolean>builder()
         .node("stopwatch", "reset-every-start").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -74,7 +73,6 @@ public final class ModStopwatch {
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("stopwatch", "text-shadow").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -85,7 +83,6 @@ public final class ModStopwatch {
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("stopwatch", "background").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -97,7 +94,6 @@ public final class ModStopwatch {
     public static final SimpleOption<Boolean> STATIC_BACKGROUND_WIDTH = SimpleOption.<Boolean>builder()
         .comment("If this is disabled the background will change size with the text.")
         .node("stopwatch", "static-background-width").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -106,9 +102,9 @@ public final class ModStopwatch {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> BACKGROUND_WIDTH = NumberOption.<Integer>number()
+    public static final NumberOption<Integer> BACKGROUND_WIDTH = NumberOption.<Integer>number()
         .node("stopwatch", "background-width").type(TypeToken.get(Integer.class))
-        .defaultValue(56).min(44).max(120)
+        .min(44).max(120)
         .notifyClient()
         .build();
 
@@ -117,9 +113,9 @@ public final class ModStopwatch {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> BACKGROUND_HEIGHT = NumberOption.<Integer>number()
+    public static final NumberOption<Integer> BACKGROUND_HEIGHT = NumberOption.<Integer>number()
         .node("stopwatch", "background-height").type(TypeToken.get(Integer.class))
-        .defaultValue(18).min(10).max(22)
+        .min(10).max(22)
         .notifyClient()
         .build();
 
@@ -130,7 +126,6 @@ public final class ModStopwatch {
      */
     public static final SimpleOption<Boolean> BRACKETS = SimpleOption.<Boolean>builder()
         .node("stopwatch", "brackets").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -141,7 +136,6 @@ public final class ModStopwatch {
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("stopwatch", "border").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -150,9 +144,9 @@ public final class ModStopwatch {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
+    public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("stopwatch", "border-thickness").type(TypeToken.get(Float.class))
-        .defaultValue(0.5F).min(0.5F).max(3.0F)
+        .min(0.5F).max(3.0F)
         .notifyClient()
         .build();
 
@@ -161,9 +155,8 @@ public final class ModStopwatch {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> TEXT_COLOR = NumberOption.<Integer>number()
-        .node("stopwatch", "text-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFFFFFFFF).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
+        .node("stopwatch", "text-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -172,9 +165,8 @@ public final class ModStopwatch {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> BACKGROUND_COLOR = NumberOption.<Integer>number()
-        .node("stopwatch", "background-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0x6F000000).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
+        .node("stopwatch", "background-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -183,9 +175,8 @@ public final class ModStopwatch {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> BORDER_COLOR = NumberOption.<Integer>number()
-        .node("stopwatch", "border-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0x9F000000).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
+        .node("stopwatch", "border-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

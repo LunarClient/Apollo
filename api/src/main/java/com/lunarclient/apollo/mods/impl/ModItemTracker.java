@@ -41,7 +41,6 @@ public final class ModItemTracker {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("item-tracker", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,9 +49,9 @@ public final class ModItemTracker {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> SCALE = NumberOption.<Float>number()
+    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("item-tracker", "scale").type(TypeToken.get(Float.class))
-        .defaultValue(1.0F).min(0.5F).max(1.5F)
+        .min(0.5F).max(1.5F)
         .notifyClient()
         .build();
 
@@ -63,7 +62,6 @@ public final class ModItemTracker {
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("item-tracker", "text-shadow").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -74,7 +72,6 @@ public final class ModItemTracker {
      */
     public static final SimpleOption<Boolean> SKYBLOCK_ONLY = SimpleOption.<Boolean>builder()
         .node("item-tracker", "skyblock-only").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -83,10 +80,10 @@ public final class ModItemTracker {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> POPUP_DURATION_SEC = NumberOption.<Float>number()
+    public static final NumberOption<Float> POPUP_DURATION_SEC = NumberOption.<Float>number()
         .comment("How long the text should stay on screen (seconds)")
         .node("item-tracker", "popup-duration-sec").type(TypeToken.get(Float.class))
-        .defaultValue(5.0F).min(0.1F).max(30.0F)
+        .min(0.1F).max(30.0F)
         .notifyClient()
         .build();
 

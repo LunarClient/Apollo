@@ -41,7 +41,6 @@ public final class ModNametag {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("nametag", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -52,7 +51,6 @@ public final class ModNametag {
      */
     public static final SimpleOption<Boolean> NAMETAG_SHADOW = SimpleOption.<Boolean>builder()
         .node("nametag", "nametag-shadow").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -64,7 +62,6 @@ public final class ModNametag {
     public static final SimpleOption<Boolean> NAMETAG = SimpleOption.<Boolean>builder()
         .comment("An option to see your own nametag in third person")
         .node("nametag", "nametag").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -76,7 +73,6 @@ public final class ModNametag {
     public static final SimpleOption<Boolean> NAMETAG_LOGO = SimpleOption.<Boolean>builder()
         .comment("An option to toggle LC logos in nametags")
         .node("nametag", "nametag-logo").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -88,7 +84,6 @@ public final class ModNametag {
     public static final SimpleOption<Boolean> TOGGLE_NAMETAGS = SimpleOption.<Boolean>builder()
         .comment("Determines if we should send the message when nametags are toggled.")
         .node("nametag", "toggle-nametags").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -97,9 +92,9 @@ public final class ModNametag {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Float> NAMETAG_BACKGROUND_OPACITY = NumberOption.<Float>number()
+    public static final NumberOption<Float> NAMETAG_BACKGROUND_OPACITY = NumberOption.<Float>number()
         .node("nametag", "nametag-background-opacity").type(TypeToken.get(Float.class))
-        .defaultValue(1.0F).min(0.0F).max(1.0F)
+        .min(0.0F).max(1.0F)
         .notifyClient()
         .build();
 

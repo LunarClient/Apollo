@@ -16,19 +16,20 @@ public void toggleDamageTintExample(Player viewer, boolean value) {
 ## Available options
 
 - __`ENABLED`__
+    - Config Key: `enabled`
     - Values
         - Type: `Boolean`
         - Default: `false`
 
 - __`VIGNETTE_COLOR`__
+    - Config Key: `vignette-color`
     - Values
-        - Type: `Integer`
-        - Default: `0xFFFF0000`
-        - Minimum: `0x80000000`
-        - Maximum: `0x7FFFFFFF`
+        - Type: `String`
+        - Default: `#FFFF0000`
 
 - __`VIGNETTE_INTENSITY`__
     - Intensity of the tint.
+    - Config Key: `vignette-intensity`
     - Values
         - Type: `Float`
         - Default: `1.0F`
@@ -37,6 +38,7 @@ public void toggleDamageTintExample(Player viewer, boolean value) {
 
 - __`SHOW_VIGNETTE_BELOW`__
     - Show the tint when you have less than this amount of health as a percentage.
+    - Config Key: `show-vignette-below`
     - Values
         - Type: `Integer`
         - Default: `100`
@@ -45,6 +47,7 @@ public void toggleDamageTintExample(Player viewer, boolean value) {
 
 - __`HEARTBEAT_AUDIO`__
     - Plays a heartbeat, becoming faster the lower your health.
+    - Config Key: `heartbeat-audio`
     - Values
         - Type: `Boolean`
         - Default: `false`

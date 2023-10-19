@@ -41,7 +41,6 @@ public final class ModTimeChanger {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("time-changer", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,9 +49,9 @@ public final class ModTimeChanger {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> TIME_CHANGER_TIME = NumberOption.<Integer>number()
+    public static final NumberOption<Integer> TIME_CHANGER_TIME = NumberOption.<Integer>number()
         .node("time-changer", "time-changer-time").type(TypeToken.get(Integer.class))
-        .defaultValue(-12000).min(-18000).max(-6000)
+        .min(-18000).max(-6000)
         .notifyClient()
         .build();
 
@@ -61,9 +60,9 @@ public final class ModTimeChanger {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> HORIZON_YLEVEL = NumberOption.<Integer>number()
+    public static final NumberOption<Integer> HORIZON_YLEVEL = NumberOption.<Integer>number()
         .node("time-changer", "horizon-y-level").type(TypeToken.get(Integer.class))
-        .defaultValue(63).min(0).max(63)
+        .min(0).max(63)
         .notifyClient()
         .build();
 
@@ -74,7 +73,6 @@ public final class ModTimeChanger {
      */
     public static final SimpleOption<Boolean> USE_REAL_TIME = SimpleOption.<Boolean>builder()
         .node("time-changer", "use-real-time").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 

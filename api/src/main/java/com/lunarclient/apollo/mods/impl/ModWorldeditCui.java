@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
-import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * A client-side user interface for the WorldEdit plugin allowing you to see your selected region in-game in real time.
@@ -41,7 +41,6 @@ public final class ModWorldeditCui {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("worldedit-cui", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,9 +49,8 @@ public final class ModWorldeditCui {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> POSITION_ONE_COLOR = NumberOption.<Integer>number()
-        .node("worldedit-cui", "position-one-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFF0000FF).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> POSITION_ONE_COLOR = SimpleOption.<Color>builder()
+        .node("worldedit-cui", "position-one-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -61,9 +59,8 @@ public final class ModWorldeditCui {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> POSITION_TWO_COLOR = NumberOption.<Integer>number()
-        .node("worldedit-cui", "position-two-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFFFF0000).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> POSITION_TWO_COLOR = SimpleOption.<Color>builder()
+        .node("worldedit-cui", "position-two-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -72,9 +69,8 @@ public final class ModWorldeditCui {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> OUTLINE_COLOR = NumberOption.<Integer>number()
-        .node("worldedit-cui", "outline-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFF00FF00).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("worldedit-cui", "outline-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

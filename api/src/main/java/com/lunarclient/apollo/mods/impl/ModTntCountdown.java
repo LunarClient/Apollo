@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods.impl;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Displays the fuse countdown above TNT.
@@ -41,7 +42,6 @@ public final class ModTntCountdown {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("tnt-countdown", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,10 +50,10 @@ public final class ModTntCountdown {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> ADJUST_FUSE_TIME = NumberOption.<Integer>number()
+    public static final NumberOption<Integer> ADJUST_FUSE_TIME = NumberOption.<Integer>number()
         .comment("Offset the default tnt delay in ticks. 1 second is 20 ticks")
         .node("tnt-countdown", "adjust-fuse-time").type(TypeToken.get(Integer.class))
-        .defaultValue(0).min(-80).max(80)
+        .min(-80).max(80)
         .notifyClient()
         .build();
 
@@ -64,7 +64,6 @@ public final class ModTntCountdown {
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("tnt-countdown", "background").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -75,7 +74,6 @@ public final class ModTntCountdown {
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("tnt-countdown", "text-shadow").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -87,7 +85,6 @@ public final class ModTntCountdown {
     public static final SimpleOption<Boolean> STATIC_COUNTDOWN_COLOR = SimpleOption.<Boolean>builder()
         .comment("Should the color stay the same the entire time.")
         .node("tnt-countdown", "static-countdown-color").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -96,9 +93,8 @@ public final class ModTntCountdown {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> COLOR = NumberOption.<Integer>number()
-        .node("tnt-countdown", "color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFF00FF00).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> COLOR = SimpleOption.<Color>builder()
+        .node("tnt-countdown", "color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -107,9 +103,8 @@ public final class ModTntCountdown {
      *
      * @since 1.0.0
      */
-    public static NumberOption<Integer> PREFIX_COLOR = NumberOption.<Integer>number()
-        .node("tnt-countdown", "prefix-color").type(TypeToken.get(Integer.class))
-        .defaultValue(0xFFFFFFFF).min(0x80000000).max(0x7FFFFFFF)
+    public static final SimpleOption<Color> PREFIX_COLOR = SimpleOption.<Color>builder()
+        .node("tnt-countdown", "prefix-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
