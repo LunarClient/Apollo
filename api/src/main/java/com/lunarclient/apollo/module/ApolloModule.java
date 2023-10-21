@@ -28,6 +28,7 @@ import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.SimpleOption;
+import com.lunarclient.apollo.util.ConfigTarget;
 import io.leangen.geantyref.TypeToken;
 import java.util.Arrays;
 import java.util.Collection;
@@ -58,6 +59,15 @@ public abstract class ApolloModule implements ApolloListener {
         .defaultValue(true).build();
 
     /**
+     * Returns an array of {@link Option}s in this module.
+     *
+     * @return an array of module options
+     * @since 1.0.0
+     */
+    @Getter(AccessLevel.PACKAGE)
+    private final List<Option<?, ?, ?>> optionKeys = new LinkedList<>();
+
+    /**
      * Returns {@code true} if the module is enabled, otherwise returns
      * {@code false}.
      *
@@ -77,16 +87,9 @@ public abstract class ApolloModule implements ApolloListener {
     @Setter(AccessLevel.PACKAGE)
     private Options options = Options.empty();
 
-    /**
-     * Returns an array of {@link Option}s in this module.
-     *
-     * @return an array of module options
-     * @since 1.0.0
-     */
-    @Getter(AccessLevel.PACKAGE)
-    private List<Option<?, ?, ?>> optionKeys = new LinkedList<>();
-
     private String id;
+    private String name;
+    private ConfigTarget configTarget;
 
     /**
      * Constructs a new {@link ApolloModule}.
@@ -118,19 +121,35 @@ public abstract class ApolloModule implements ApolloListener {
             return this.id;
         }
 
-        Class<?> moduleClass = this.getClass();
-        ModuleDefinition definition = moduleClass.getAnnotation(ModuleDefinition.class);
+        return this.id = this.definition().id();
+    }
 
-        if (definition == null) {
-            moduleClass = moduleClass.getSuperclass();
-            definition = moduleClass.getAnnotation(ModuleDefinition.class);
+    /**
+     * Returns the module {@link String} name.
+     *
+     * @return the module name
+     * @since 1.0.0
+     */
+    public String getName() {
+        if (this.name != null) {
+            return this.name;
         }
 
-        if (definition == null) {
-            throw new RuntimeException("Apollo module class " + moduleClass.getSimpleName() + " must be decorated with a ModuleDefinition annotation");
+        return this.name = this.definition().name();
+    }
+
+    /**
+     * Returns the {@link ConfigTarget} for this module.
+     *
+     * @return the module config target
+     * @since 1.0.0
+     */
+    public ConfigTarget getConfigTarget() {
+        if (this.configTarget != null) {
+            return this.configTarget;
         }
 
-        return this.id = definition.id();
+        return this.configTarget = this.definition().configTarget();
     }
 
     /**
@@ -199,6 +218,22 @@ public abstract class ApolloModule implements ApolloListener {
      * @since 1.0.0
      */
     private void onDisable() {
+    }
+
+    private ModuleDefinition definition() {
+        Class<?> moduleClass = this.getClass();
+        ModuleDefinition definition = moduleClass.getAnnotation(ModuleDefinition.class);
+
+        if (definition == null) {
+            moduleClass = moduleClass.getSuperclass();
+            definition = moduleClass.getAnnotation(ModuleDefinition.class);
+        }
+
+        if (definition == null) {
+            throw new RuntimeException("Apollo module class " + moduleClass.getSimpleName() + " must be decorated with a ModuleDefinition annotation");
+        }
+
+        return definition;
     }
 
 }

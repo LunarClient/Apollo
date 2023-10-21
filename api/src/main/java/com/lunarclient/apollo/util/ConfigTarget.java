@@ -21,45 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module;
+package com.lunarclient.apollo.util;
 
-import com.lunarclient.apollo.util.ConfigTarget;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
- * Annotation used to define a module.
+ * Represents a configuration target.
  *
  * @since 1.0.0
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ModuleDefinition {
+@Getter
+@RequiredArgsConstructor
+public enum ConfigTarget {
+
+    GENERAL_SETTINGS("general.yml"),
+    MOD_SETTINGS("mods.yml");
 
     /**
-     * The identifier of the module.
+     * The file name of the configuration.
      *
-     * @return the identifier
+     * @return the file name
      * @since 1.0.0
      */
-    String id();
-
-    /**
-     * The friendly name of the module.
-     *
-     * @return the name
-     * @since 1.0.0
-     */
-    String name();
-
-    /**
-     * The config target of the module.
-     *
-     * @return the config target
-     * @since 1.0.0
-     */
-    ConfigTarget configTarget() default ConfigTarget.GENERAL_SETTINGS;
+    private final String fileName;
 
 }
