@@ -1,0 +1,44 @@
+# Glow Module
+
+## Overview
+
+@Trent
+
+## Integration
+
+### Sample Code
+
+```java
+public void overrideGlowEffectExample(UUID glowingPlayer) {
+    this.glowModule.overrideGlow(Recipients.ofEveryone(),
+        glowingPlayer,
+        Color.RED
+    );
+}
+```
+
+### `overrideGlowEffectExample` Parameters
+
+1. `Recipients recipients`
+   - A list of all the player(s) you want to be able to see the updated glow effect.
+2. `UUID target`
+   - The player or living entity you want to display the glow effect on.
+3. `Color glowColor`
+   - How you'll dictate the color of the glow effect, see the [colors page](/apollo/developers/utilities/colors) for more.
+
+### Removing a specific targets glow effect for viewers
+
+```java
+public void resetGlowEffectExample(UUID glowingPlayer) {
+    this.glowModule.resetGlow(Recipients.ofEveryone(), glowingPlayer);
+}
+```
+
+### Resetting all glow effects for all viewers
+
+```java
+public void resetGlowEffectsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.glowModule::resetGlow);
+}
+```

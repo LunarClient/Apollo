@@ -16,6 +16,8 @@ commands:
         description: "Cooldowns!"
     entity:
         description: "Entity!"
+    glow:
+        description: "Glow!"
     hologram:
         description: "Holograms!"
     limb:
