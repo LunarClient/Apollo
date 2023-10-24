@@ -35,7 +35,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ConfigTarget {
 
-    GENERAL_SETTINGS("config.yml", "General and module specific settings. https://luginarclient.dev/apollo/server-owners/config", new String[]{"modules"}),
+    GENERAL_SETTINGS("config.yml", "General and module specific settings. https://lunarclient.dev/apollo/server-owners/config", new String[]{"modules"}),
     MOD_SETTINGS("mods.yml", "Lunar Client mod option overrides. https://lunarclient.dev/apollo/server-owners/config", new String[0]);
 
     /**
