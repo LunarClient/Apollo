@@ -30,6 +30,7 @@ import com.lunarclient.apollo.option.ConfigOptions;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
+import com.lunarclient.apollo.util.ConfigTarget;
 import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Collections;
@@ -153,10 +154,13 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
     public void saveConfiguration() {
         for (ApolloModule module : this.modules.values()) {
             try {
-                ApolloConfig config = ApolloConfig.get(module.getConfigTarget());
-                CommentedConfigurationNode node = config.node();
+                ConfigTarget configTarget = module.getConfigTarget();
+                ApolloConfig config = ApolloConfig.get(configTarget);
 
-                CommentedConfigurationNode modules = node.node("modules");
+                CommentedConfigurationNode node = config.node();
+                node.comment(configTarget.getHeaderComment());
+
+                CommentedConfigurationNode modules = node.node((Object[]) configTarget.getModulesNode());
                 CommentedConfigurationNode moduleNode = modules.node(module.getId().toLowerCase(Locale.ENGLISH));
 
                 Options optionsContainer = module.getOptions();
@@ -168,10 +172,11 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
     }
 
     private void loadConfiguration(ApolloModule module, List<Option<?, ?, ?>> options) throws Throwable {
-        ApolloConfig config = ApolloConfig.compute(ApolloManager.getConfigPath(), module.getConfigTarget());
+        ConfigTarget configTarget = module.getConfigTarget();
+        ApolloConfig config = ApolloConfig.compute(ApolloManager.getConfigPath(), configTarget);
         CommentedConfigurationNode node = config.node();
 
-        CommentedConfigurationNode modules = node.node("modules");
+        CommentedConfigurationNode modules = node.node((Object[]) configTarget.getModulesNode());
         CommentedConfigurationNode moduleNode = modules.node(module.getId().toLowerCase(Locale.ENGLISH));
         if (moduleNode.virtual()) {
             return;
