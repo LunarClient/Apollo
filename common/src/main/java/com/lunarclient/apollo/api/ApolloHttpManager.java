@@ -78,6 +78,7 @@ public final class ApolloHttpManager {
                 URL url = new URL("https://" + request.getService().getUrl() + request.getRoute());
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestMethod(requestType.name());
                 connection.setConnectTimeout(5_000);
                 connection.setReadTimeout(5_000);
