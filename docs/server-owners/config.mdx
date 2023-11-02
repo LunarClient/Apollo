@@ -1,0 +1,104 @@
+# Configuration
+
+The Apollo configurations are split into two parts:
+  * General and module specific settings for Apollo are located in the `config.yml`.
+  * Settings for Lunar Client mod options are located in the `mods.yml`.
+
+The settings for the `config.yml` are generated with examples and comments, which you can modify to your liking.
+
+The `mods.yml` is not generated with its settings or comments, which will require you to refer to each mods documentation ([example](apollo/developers/mods/2ditems#available-options)) for the keys and value(s) you can set.
+The settings in the `mods.yml` will override the mod options for players on Lunar Client while they are on your server and revert them back after they leave.
+
+## Mod Configuration Example
+
+<Callout type="warning" emoji="⚠️">
+  The following example is not a complete list of mod settings or guaranteed to be up to date.
+  You should refer to the mods documentation ([example](apollo/developers/mods/2ditems#available-options)) for the latest mod settings.
+</Callout>
+
+```yaml
+mod_setting:
+    # Set to 'true' to enable these mod overrides, otherwise set 'false'.
+    enable: true
+    zoom:
+        # Set 'true' to enable the mod, otherwise set 'false'.
+        enabled: true
+        # Quickly pressing and releasing the key will toggle zoom.
+        toggle-key-zoom: false
+        # When zoomed in the camera movement will move smoothly (cinematic camera).
+        smooth-camera: true
+        # Add a transition when zooming in and out.
+        smooth-zoom: true
+        # Adjust the zoom depth using Mouse Scroll Wheel.
+        variable-zoom: false
+        # Change the initial zoom depth.
+        zoom-divisor: 4
+    chat:
+        # Set 'true' to enable the mod, otherwise set 'false'.
+        enabled: true
+        # Choose whether or not you want to increase the message history in chat.
+        unlimited-chat: true
+        # Choose whether or not you want to stack multiple of the same messages in chat.
+        stack-messages: false
+        # Moves the chat up 12 pixels so it doesn't block health bar.
+        chat-height: false
+        # Set the opacity of the chat background.
+        chat-background-opacity: 1.0
+        # Show text shadow on chat lines.
+        chat-shadow: true
+        # Set whether the chat should be disabled.
+        disable-chat: false
+    nametag:
+        # Set 'true' to enable the mod, otherwise set 'false'.
+        enabled: true
+        # Set whether the nametag should have a shadow.
+        nametag-shadow: false
+        # An option to see your own nametag in third person.
+        nametag: true
+        # An option to toggle LC logos in nametags.
+        nametag-logo: true
+        # Determines if we should send the message when nametags are toggled.
+        toggle-nametags: true
+        # Set the opacity of the nametag background.
+        nametag-background-opacity: 1.0
+    bossbar:
+        # Set 'true' to enable the mod, otherwise set 'false'.
+        enabled: true
+        # Sets the scale of the boss bar.
+        scale: 1.0
+        # Sets whether to render the boss bar.
+        render-bar: true
+        # Sets whether to use the custom boss bar.
+        custom-boss-bar: true
+        # Set the boss bar color.
+        bar-color: '#F249F2'
+    freelook:
+        # Set 'true' to enable the mod, otherwise set 'false'.
+        enabled: false
+        # Set whether to invert the pitch when using freelook.
+        invert-pitch: false
+        # Set whether to invert the yaw when using freelook.
+        invert-yaw: false
+        # Quickly pressing and releasing the key will toggle freelook.
+        toggle-key-freelook: false
+        # When zoomed in the camera movement will move smoothly (cinematic camera).
+        smooth-camera: true
+    lighting:
+        # Set 'true' to enable the mod, otherwise set 'false'.
+        enabled: true
+        # Set whether or not to use full-bright.
+        full-bright: true
+        # Set the brightness boost.
+        brightness-boost: 1.0
+    damage-tint:
+        # Set 'true' to enable the mod, otherwise set 'false'.
+        enabled: false
+        # Set the color of the tint.
+        vignette-color: '#000000'
+        # Set the intensity of the tint.
+        vignette-intensity: 1.0
+        # Show the tint when you have less than this amount of health as a percentage.
+        show-vignette-below: 100
+        # Plays a heartbeat, becoming faster the lower your health.
+        heartbeat-audio: false
+```

@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.module;
 
+import com.lunarclient.apollo.util.ConfigTarget;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -52,5 +53,13 @@ public @interface ModuleDefinition {
      * @since 1.0.0
      */
     String name();
+
+    /**
+     * The config target of the module.
+     *
+     * @return the config target
+     * @since 1.0.0
+     */
+    ConfigTarget configTarget() default ConfigTarget.GENERAL_SETTINGS;
 
 }

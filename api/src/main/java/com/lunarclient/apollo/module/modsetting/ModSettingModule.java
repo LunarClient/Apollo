@@ -28,6 +28,7 @@ import com.lunarclient.apollo.mods.Mods;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.util.ConfigTarget;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,7 +38,7 @@ import java.util.Collection;
  *
  * @since 1.0.0
  */
-@ModuleDefinition(id = "mod_setting", name = "Mod Setting")
+@ModuleDefinition(id = "mod_setting", name = "Mod Setting", configTarget = ConfigTarget.MOD_SETTINGS)
 public final class ModSettingModule extends ApolloModule {
 
     ModSettingModule() {

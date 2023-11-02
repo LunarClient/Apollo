@@ -27,6 +27,7 @@ import io.leangen.geantyref.TypeToken;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents an option builder.
@@ -80,7 +81,7 @@ public abstract class OptionBuilder<V, M extends OptionBuilder<V, M, I>, I exten
      * @return this builder
      * @since 1.0.0
      */
-    public M comment(String comment) {
+    public M comment(@Nullable String comment) {
         this.comment = comment;
         return (M) this;
     }
@@ -93,7 +94,7 @@ public abstract class OptionBuilder<V, M extends OptionBuilder<V, M, I>, I exten
      * @return this builder
      * @since 1.0.0
      */
-    public M defaultValue(V value) {
+    public M defaultValue(@Nullable V value) {
         this.defaultValue = value;
         return (M) this;
     }

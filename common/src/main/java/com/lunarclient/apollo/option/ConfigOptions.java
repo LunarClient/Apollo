@@ -71,15 +71,9 @@ public final class ConfigOptions {
     public static void saveOptions(Options options, CommentedConfigurationNode node, List<Option<?, ?, ?>> optionKeys) {
         for (Option<?, ?, ?> option : optionKeys) {
             CommentedConfigurationNode optionNode = node.node((Object[]) option.getPath());
-            if (optionNode == null) {
-                continue;
-            }
 
             try {
-                if (option.getComment() != null) {
-                    optionNode.comment(option.getComment());
-                }
-
+                optionNode.comment(option.getComment());
                 optionNode.set((TypeToken<Object>) option.getTypeToken(), options.get(option));
             } catch (Throwable throwable) {
                 throwable.printStackTrace();

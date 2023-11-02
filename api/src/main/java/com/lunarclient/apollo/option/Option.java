@@ -28,6 +28,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
+import org.jetbrains.annotations.Nullable;
 
 import static java.util.Objects.requireNonNull;
 
@@ -99,7 +100,7 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
      * @return the option comment
      * @since 1.0.0
      */
-    String comment;
+    @Nullable String comment;
 
     /**
      * Returns the option {@code T} default value.
@@ -107,7 +108,7 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
      * @return the option default value
      * @since 1.0.0
      */
-    V defaultValue;
+    @Nullable V defaultValue;
 
     /**
      * Returns {@code true} if this option should be aware to the client,

@@ -21,63 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.event.option;
+package com.lunarclient.apollo.util;
 
-import com.lunarclient.apollo.event.EventCancellable;
-import com.lunarclient.apollo.option.Option;
-import com.lunarclient.apollo.option.Options;
-import com.lunarclient.apollo.player.ApolloPlayer;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
-import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents an event that is fired when an option is updated.
+ * Represents a configuration target.
  *
  * @since 1.0.0
  */
 @Getter
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public final class ApolloUpdateOptionEvent implements EventCancellable {
+public enum ConfigTarget {
+
+    GENERAL_SETTINGS("config.yml", "General and module specific settings. https://lunarclient.dev/apollo/server-owners/config", new String[]{"modules"}),
+    MOD_SETTINGS("mods.yml", "Lunar Client mod option overrides. https://lunarclient.dev/apollo/server-owners/config", new String[0]);
 
     /**
-     * The {@link Options} container that the option is in.
+     * The file name of the configuration.
      *
-     * @return the options container
+     * @return the file name
      * @since 1.0.0
      */
-    Options container;
+    private final String fileName;
 
     /**
-     * The {@link ApolloPlayer} that the option was updated for, or
-     * {@code null} if it was a global option.
+     * The header comment for the configuration.
      *
-     * @return the player
+     * @return the header comment
      * @since 1.0.0
      */
-    @Nullable ApolloPlayer player;
+    private final String headerComment;
 
     /**
-     * The {@link Option} that was updated.
+     * The modules node in the configuration to place the module options under.
      *
-     * @return the option
+     * @return the modules node
      * @since 1.0.0
      */
-    Option<?, ?, ?> option;
-
-    /**
-     * The new value of the option.
-     *
-     * @return the new value
-     * @since 1.0.0
-     */
-    @Nullable Object value;
-
-    @NonFinal @Setter boolean cancelled;
+    private final String[] modulesNode;
 
 }
