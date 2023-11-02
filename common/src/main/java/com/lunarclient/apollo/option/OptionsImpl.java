@@ -23,6 +23,8 @@
  */
 package com.lunarclient.apollo.option;
 
+import com.google.protobuf.ListValue;
+import com.google.protobuf.NullValue;
 import com.google.protobuf.Value;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.event.EventBus;
@@ -30,11 +32,16 @@ import com.lunarclient.apollo.event.option.ApolloUpdateOptionEvent;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import io.leangen.geantyref.GenericTypeReflector;
+import java.lang.reflect.AnnotatedParameterizedType;
+import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -227,22 +234,34 @@ public class OptionsImpl implements Options {
      * @return the wrapped value
      * @since 1.0.0
      */
-    public Value wrapValue(Value.Builder valueBuilder, Type type, Object current) {
-        if (type instanceof Class) {
-            final Class<?> clazz = (Class<?>) type;
-
-            if (clazz.isEnum()) {
-                valueBuilder.setStringValue(((Enum<?>) current).name());
-            } else if (Number.class.isAssignableFrom(clazz)) {
-                valueBuilder.setNumberValue(((Number) current).doubleValue());
-            } else if (String.class.isAssignableFrom(clazz)) {
-                valueBuilder.setStringValue((String) current);
-            } else if (Boolean.class.isAssignableFrom(clazz)) {
-                valueBuilder.setBoolValue((Boolean) current);
-            }
+    public Value wrapValue(Value.Builder valueBuilder, Type type, @Nullable Object current) {
+        if (current == null) {
+            return valueBuilder.setNullValue(NullValue.NULL_VALUE).build();
         }
 
-        return valueBuilder.build();
+        Type boxed = GenericTypeReflector.box(type);
+        Class<?> clazz = GenericTypeReflector.erase(boxed);
+
+        if (clazz.isEnum()) {
+            return valueBuilder.setStringValue(((Enum<?>) current).name()).build();
+        } else if (Number.class.isAssignableFrom(clazz)) {
+            return valueBuilder.setNumberValue(((Number) current).doubleValue()).build();
+        } else if (String.class.isAssignableFrom(clazz)) {
+            return valueBuilder.setStringValue((String) current).build();
+        } else if (Boolean.class.isAssignableFrom(clazz)) {
+            return valueBuilder.setBoolValue((Boolean) current).build();
+        } else if (List.class.isAssignableFrom(clazz)) {
+            AnnotatedType elementType = this.elementType(boxed);
+            ListValue.Builder listBuilder = ListValue.newBuilder();
+            List<?> list = (List<?>) current;
+            for (int i = 0; i < list.size(); i++) {
+                listBuilder.addValues(this.wrapValue(Value.newBuilder(), elementType.getType(), list.get(i)));
+            }
+
+            return valueBuilder.setListValue(listBuilder.build()).build();
+        }
+
+        throw new RuntimeException("Unable to wrap value of type '" + clazz.getSimpleName() + "'!");
     }
 
     /**
@@ -255,21 +274,33 @@ public class OptionsImpl implements Options {
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public @Nullable Object unwrapValue(Value wrapper, Type type) {
-        if (type instanceof Class) {
-            final Class<?> clazz = (Class<?>) type;
-
-            if (clazz.isEnum() && wrapper.hasStringValue()) {
-                return Enum.valueOf((Class<? extends Enum>) clazz, wrapper.getStringValue());
-            } else if (Number.class.isAssignableFrom(clazz) && wrapper.hasNumberValue()) {
-                return wrapper.getNumberValue();
-            } else if (String.class.isAssignableFrom(clazz) && wrapper.hasStringValue()) {
-                return wrapper.getStringValue();
-            } else if (Boolean.class.isAssignableFrom(clazz) && wrapper.hasBoolValue()) {
-                return wrapper.getBoolValue();
-            }
+        if (wrapper.hasNullValue()) {
+            return null;
         }
 
-        return null;
+        Type boxed = GenericTypeReflector.box(type);
+        Class<?> clazz = GenericTypeReflector.erase(boxed);
+
+        if (clazz.isEnum() && wrapper.hasStringValue()) {
+            return Enum.valueOf((Class<? extends Enum>) clazz, wrapper.getStringValue());
+        } else if (Number.class.isAssignableFrom(clazz) && wrapper.hasNumberValue()) {
+            return wrapper.getNumberValue();
+        } else if (String.class.isAssignableFrom(clazz) && wrapper.hasStringValue()) {
+            return wrapper.getStringValue();
+        } else if (Boolean.class.isAssignableFrom(clazz) && wrapper.hasBoolValue()) {
+            return wrapper.getBoolValue();
+        } else if (List.class.isAssignableFrom(clazz) && wrapper.hasListValue()) {
+            AnnotatedType elementType = this.elementType(boxed);
+            ListValue listValue = wrapper.getListValue();
+            List<Object> list = new ArrayList<>(listValue.getValuesCount());
+            for (int i = 0; i < listValue.getValuesCount(); i++) {
+                list.add(this.unwrapValue(listValue.getValues(i), elementType.getType()));
+            }
+
+            return Collections.unmodifiableList(list);
+        }
+
+        throw new RuntimeException("Unable to unwrap value of type '" + clazz.getSimpleName() + "'!");
     }
 
     protected boolean postEvent(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {
@@ -283,7 +314,7 @@ public class OptionsImpl implements Options {
         return eventResult.getEvent().isCancelled();
     }
 
-    protected void postPacket(Option<?, ?, ?> option, @Nullable ApolloPlayer player, Object value) {
+    protected void postPacket(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {
         if (!option.isNotify()) {
             return;
         }
@@ -293,6 +324,15 @@ public class OptionsImpl implements Options {
 
         Value valueWrapper = this.wrapValue(Value.newBuilder(), option.getTypeToken().getType(), value);
         NetworkOptions.sendOption(this.module, option, valueWrapper, players);
+    }
+
+    private AnnotatedType elementType(Type type) {
+        AnnotatedType elementType = GenericTypeReflector.annotate(type);
+        if(!(elementType instanceof AnnotatedParameterizedType)) {
+            throw new RuntimeException("Raw types for lists are not supported!");
+        }
+
+        return ((AnnotatedParameterizedType) elementType).getAnnotatedActualTypeArguments()[0];
     }
 
 }

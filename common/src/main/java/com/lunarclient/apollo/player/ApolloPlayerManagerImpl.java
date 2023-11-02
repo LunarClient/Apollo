@@ -73,6 +73,7 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
 
             NetworkOptions.sendOptions(
                 Apollo.getModuleManager().getModules(),
+                true,
                 player
             );
         }
