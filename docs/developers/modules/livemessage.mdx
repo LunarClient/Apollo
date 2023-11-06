@@ -1,0 +1,32 @@
+# Live Message Module
+
+## Overview
+
+@Trentin
+
+## Integration
+
+```java
+private final int messageId = ThreadLocalRandom.current().nextInt(100);
+private int countdown = 5;
+
+public void displayLiveMessageExample() {
+    this.liveMessageModule.displayLiveMessage(Recipients.ofEveryone(),
+        Component.text("Game starting in ", NamedTextColor.GREEN)
+            .append(Component.text(this.countdown, NamedTextColor.BLUE)),
+        this.messageId
+    );
+
+    if (--this.countdown == 0) {
+        this.countdown = 5;
+    }
+}
+```
+
+### Removing a specific live message for a player
+
+```java
+public void removeLiveMessageExample() {
+    this.liveMessageModule.removeLiveMessage(Recipients.ofEveryone(), this.messageId);
+}
+```

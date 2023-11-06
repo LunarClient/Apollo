@@ -42,6 +42,8 @@ import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
+import com.lunarclient.apollo.module.livemessage.LiveMessageModule;
+import com.lunarclient.apollo.module.livemessage.LiveMessageModuleImpl;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
@@ -111,6 +113,7 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(EntityModule.class, new EntityModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
             .addModule(LimbModule.class, new LimbModuleImpl())
+            .addModule(LiveMessageModule.class, new LiveMessageModuleImpl())
             .addModule(ModSettingModule.class)
             .addModule(NametagModule.class, new NametagModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())

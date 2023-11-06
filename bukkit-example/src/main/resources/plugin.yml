@@ -20,6 +20,8 @@ commands:
         description: "Holograms!"
     limb:
         description: "Limb!"
+    livemessage:
+        description: "LiveMessage!"
     modsettings:
         description: "ModSettings!"
     nametag:
