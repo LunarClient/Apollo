@@ -24,16 +24,16 @@
 package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.LiveMessageExample;
+import com.lunarclient.apollo.example.modules.ChatExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class LiveMessageCommand implements CommandExecutor {
+public class ChatCommand implements CommandExecutor {
 
-    private final LiveMessageExample liveMessageExample = ApolloExamplePlugin.getPlugin().getLiveMessageExample();
+    private final ChatExample chatExample = ApolloExamplePlugin.getPlugin().getChatExample();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,25 +45,25 @@ public class LiveMessageCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /livemessage <display|remove>");
+            player.sendMessage("Usage: /chat <display|remove>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
             case "display": {
-                this.liveMessageExample.displayLiveMessageExample();
+                this.chatExample.displayLiveChatMessageExample();
                 player.sendMessage("Displaying live message....");
                 break;
             }
 
             case "remove": {
-                this.liveMessageExample.removeLiveMessageExample();
+                this.chatExample.removeLiveChatMessageExample();
                 player.sendMessage("Removing live message....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /livemessage <display|remove>");
+                player.sendMessage("Usage: /chat <display|remove>");
                 break;
             }
         }

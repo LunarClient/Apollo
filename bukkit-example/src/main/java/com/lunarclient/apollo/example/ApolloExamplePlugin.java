@@ -30,7 +30,7 @@ import com.lunarclient.apollo.example.commands.CooldownCommand;
 import com.lunarclient.apollo.example.commands.EntityCommand;
 import com.lunarclient.apollo.example.commands.HologramCommand;
 import com.lunarclient.apollo.example.commands.LimbCommand;
-import com.lunarclient.apollo.example.commands.LiveMessageCommand;
+import com.lunarclient.apollo.example.commands.ChatCommand;
 import com.lunarclient.apollo.example.commands.ModSettingsCommand;
 import com.lunarclient.apollo.example.commands.NametagCommand;
 import com.lunarclient.apollo.example.commands.NotificationCommand;
@@ -50,7 +50,7 @@ import com.lunarclient.apollo.example.modules.CooldownExample;
 import com.lunarclient.apollo.example.modules.EntityExample;
 import com.lunarclient.apollo.example.modules.HologramExample;
 import com.lunarclient.apollo.example.modules.LimbExample;
-import com.lunarclient.apollo.example.modules.LiveMessageExample;
+import com.lunarclient.apollo.example.modules.ChatExample;
 import com.lunarclient.apollo.example.modules.ModSettingsExample;
 import com.lunarclient.apollo.example.modules.NametagExample;
 import com.lunarclient.apollo.example.modules.NotificationExample;
@@ -74,12 +74,12 @@ public class ApolloExamplePlugin extends JavaPlugin {
 
     private BeamExample beamExample;
     private BorderExample borderExample;
+    private ChatExample chatExample;
     private ColoredFireExample coloredFireExample;
     private CooldownExample cooldownExample;
     private EntityExample entityExample;
     private HologramExample hologramExample;
     private LimbExample limbExample;
-    private LiveMessageExample liveMessageExample;
     private ModSettingsExample modSettingsExample;
     private NametagExample nametagExample;
     private NotificationExample notificationExample;
@@ -109,12 +109,12 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private void registerModuleExamples() {
         this.beamExample = new BeamExample();
         this.borderExample = new BorderExample();
+        this.chatExample = new ChatExample();
         this.coloredFireExample = new ColoredFireExample();
         this.cooldownExample = new CooldownExample();
         this.entityExample = new EntityExample();
         this.hologramExample = new HologramExample();
         this.limbExample = new LimbExample();
-        this.liveMessageExample = new LiveMessageExample();
         this.modSettingsExample = new ModSettingsExample();
         this.nametagExample = new NametagExample();
         this.notificationExample = new NotificationExample();
@@ -132,12 +132,12 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private void registerCommands() {
         this.getCommand("beam").setExecutor(new BeamCommand());
         this.getCommand("border").setExecutor(new BorderCommand());
+        this.getCommand("chat").setExecutor(new ChatCommand());
         this.getCommand("coloredfire").setExecutor(new ColoredFireCommand());
         this.getCommand("cooldown").setExecutor(new CooldownCommand());
         this.getCommand("entity").setExecutor(new EntityCommand());
         this.getCommand("hologram").setExecutor(new HologramCommand());
         this.getCommand("limb").setExecutor(new LimbCommand());
-        this.getCommand("livemessage").setExecutor(new LiveMessageCommand());
         this.getCommand("modsettings").setExecutor(new ModSettingsCommand());
         this.getCommand("nametag").setExecutor(new NametagCommand());
         this.getCommand("notification").setExecutor(new NotificationCommand());

@@ -10,6 +10,8 @@ commands:
         description: "Beams!"
     border:
         description: "Borders!"
+    chat:
+        description: "Chat!"
     coloredfire:
         description: "Colored Fires!"
     cooldown:
@@ -20,8 +22,6 @@ commands:
         description: "Holograms!"
     limb:
         description: "Limb!"
-    livemessage:
-        description: "LiveMessage!"
     modsettings:
         description: "ModSettings!"
     nametag:

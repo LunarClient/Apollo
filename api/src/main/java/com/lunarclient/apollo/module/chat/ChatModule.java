@@ -21,40 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.livemessage;
+package com.lunarclient.apollo.module.chat;
 
-import com.lunarclient.apollo.common.ApolloComponent;
-import com.lunarclient.apollo.livemessage.v1.DisplayLiveMessageMessage;
-import com.lunarclient.apollo.livemessage.v1.RemoveLiveMessageMessage;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.recipients.Recipients;
-import lombok.NonNull;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Provides the border module.
+ * Represents the chat module.
  *
  * @since 1.0.2 // TODO
  */
-public final class LiveMessageModuleImpl extends LiveMessageModule {
+@ApiStatus.NonExtendable
+@ModuleDefinition(id = "chat", name = "Chat")
+public abstract class ChatModule extends ApolloModule {
 
-    @Override
-    public void displayLiveMessage(@NonNull Recipients recipients, @NonNull Component text, int messageId) {
-        DisplayLiveMessageMessage message = DisplayLiveMessageMessage.newBuilder()
-            .setAdventureJsonLines(ApolloComponent.toJson(text))
-            .setMessageId(messageId)
-            .build();
+    /**
+     * Displays the message to the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param text       the text to display
+     * @param messageId  the message id to update
+     * @since 1.0.2 // TODO
+     */
+    public abstract void displayLiveChatMessage(Recipients recipients, Component text, int messageId);
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
-    }
-
-    @Override
-    public void removeLiveMessage(@NonNull Recipients recipients, int messageId) {
-        RemoveLiveMessageMessage message = RemoveLiveMessageMessage.newBuilder()
-            .setMessageId(messageId)
-            .build();
-
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
-    }
+    /**
+     * Removes the message to the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param messageId  the message id to update
+     * @since 1.0.2 // TODO
+     */
+    public abstract void removeLiveChatMessage(Recipients recipients, int messageId);
 
 }
