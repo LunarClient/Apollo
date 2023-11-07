@@ -42,11 +42,11 @@ public abstract class LiveMessageModule extends ApolloModule {
      * Displays the message to the {@link Recipients}.
      *
      * @param recipients the recipients that are receiving the packet
-     * @param message    the message to display
+     * @param text       the text to display
      * @param messageId  the message id to update
      * @since 1.0.2 // TODO
      */
-    public abstract void displayLiveMessage(Recipients recipients, Component message, int messageId);
+    public abstract void displayLiveMessage(Recipients recipients, Component text, int messageId);
 
     /**
      * Removes the message to the {@link Recipients}.

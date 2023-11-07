@@ -23,6 +23,10 @@
  */
 package com.lunarclient.apollo.module.livemessage;
 
+import com.lunarclient.apollo.common.ApolloComponent;
+import com.lunarclient.apollo.livemessage.v1.DisplayLiveMessageMessage;
+import com.lunarclient.apollo.livemessage.v1.RemoveLiveMessageMessage;
+import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 import net.kyori.adventure.text.Component;
@@ -35,12 +39,22 @@ import net.kyori.adventure.text.Component;
 public final class LiveMessageModuleImpl extends LiveMessageModule {
 
     @Override
-    public void displayLiveMessage(@NonNull Recipients recipients, @NonNull Component message, int messageId) {
-        // TODO
+    public void displayLiveMessage(@NonNull Recipients recipients, @NonNull Component text, int messageId) {
+        DisplayLiveMessageMessage message = DisplayLiveMessageMessage.newBuilder()
+            .setAdventureJsonLines(ApolloComponent.toJson(text))
+            .setMessageId(messageId)
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
     public void removeLiveMessage(@NonNull Recipients recipients, int messageId) {
-        // TODO
+        RemoveLiveMessageMessage message = RemoveLiveMessageMessage.newBuilder()
+            .setMessageId(messageId)
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
+
 }
