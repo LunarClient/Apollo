@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.chat;
 
+import com.lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage;
+import com.lunarclient.apollo.chat.v1.RemoveLiveChatMessageMessage;
 import com.lunarclient.apollo.common.ApolloComponent;
-import com.lunarclient.apollo.livemessage.v1.DisplayLiveMessageMessage;
-import com.lunarclient.apollo.livemessage.v1.RemoveLiveMessageMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
@@ -40,8 +40,7 @@ public final class ChatModuleImpl extends ChatModule {
 
     @Override
     public void displayLiveChatMessage(@NonNull Recipients recipients, @NonNull Component text, int messageId) {
-        // TODO: Use renamed protos
-        DisplayLiveMessageMessage message = DisplayLiveMessageMessage.newBuilder()
+        DisplayLiveChatMessageMessage message = DisplayLiveChatMessageMessage.newBuilder()
             .setAdventureJsonLines(ApolloComponent.toJson(text))
             .setMessageId(messageId)
             .build();
@@ -51,8 +50,7 @@ public final class ChatModuleImpl extends ChatModule {
 
     @Override
     public void removeLiveChatMessage(@NonNull Recipients recipients, int messageId) {
-        // TODO: Use renamed protos
-        RemoveLiveMessageMessage message = RemoveLiveMessageMessage.newBuilder()
+        RemoveLiveChatMessageMessage message = RemoveLiveChatMessageMessage.newBuilder()
             .setMessageId(messageId)
             .build();
 
