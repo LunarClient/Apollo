@@ -1,0 +1,171 @@
+# Potion Effects
+
+Display your currently active potion effects on the HUD.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void togglePotionEffectsExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModPotionEffects.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SCALE`__
+    - Config Key: `scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.5F`
+
+- __`SHOW_IN_INVENTORY`__
+    - Config Key: `show-in-inventory`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_WHILE_TYPING`__
+    - Config Key: `show-while-typing`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`EFFECT_NAME`__
+    - Config Key: `effect-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TEXT_SHADOW`__
+    - Config Key: `text-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_MODERN_ICONS`__
+    - Config Key: `hide-modern-icons`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`POTION_BLINK`__
+    - Config Key: `potion-blink`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BLINK_DURATION`__
+    - Config Key: `blink-duration`
+    - Values
+        - Type: `Integer`
+        - Default: `10`
+        - Minimum: `2`
+        - Maximum: `20`
+
+- __`COLOR_NAME_BASED_ON_EFFECT`__
+    - Config Key: `color-name-based-on-effect`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TEXT_COLOR`__
+    - Config Key: `text-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`DURATION_COLOR`__
+    - Config Key: `duration-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`EXCLUDE_PERM`__
+    - Config Key: `exclude-perm`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_SPEED`__
+    - Config Key: `exclude-speed`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_SLOWNESS`__
+    - Config Key: `exclude-slowness`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_STRENGTH`__
+    - Config Key: `exclude-strength`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_JUMP_BOOST`__
+    - Config Key: `exclude-jump-boost`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_REGEN`__
+    - Config Key: `exclude-regen`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_FIRE_RES`__
+    - Config Key: `exclude-fire-res`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_WATER_BREATHING`__
+    - Config Key: `exclude-water-breathing`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_NIGHT_VISION`__
+    - Config Key: `exclude-night-vision`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_WEAKNESS`__
+    - Config Key: `exclude-weakness`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_POISON`__
+    - Config Key: `exclude-poison`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_HASTE`__
+    - Config Key: `exclude-haste`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_INVIS`__
+    - Config Key: `exclude-invis`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

@@ -25,7 +25,6 @@ package com.lunarclient.apollo.network;
 
 import com.google.protobuf.Timestamp;
 import com.lunarclient.apollo.common.ApolloEntity;
-import com.lunarclient.apollo.common.Component;
 import com.lunarclient.apollo.common.anticheat.PlayerInfo;
 import com.lunarclient.apollo.common.cuboid.Cuboid2D;
 import com.lunarclient.apollo.common.cuboid.Cuboid3D;
@@ -40,9 +39,7 @@ import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Uuid;
 import java.awt.Color;
 import java.time.Duration;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * Utility class for converting objects to and from their
@@ -391,57 +388,6 @@ public final class NetworkTypes {
             .maxX(message.getMaxX())
             .maxY(message.getMaxY())
             .maxZ(message.getMaxZ())
-            .build();
-    }
-
-    /**
-     * Converts an {@link Component} object to an
-     * {@link com.lunarclient.apollo.common.v1.Component} proto message.
-     *
-     * @param object the component
-     * @return the proto component message
-     * @since 1.0.0
-     */
-    public static com.lunarclient.apollo.common.v1.Component toProtobuf(Component object) {
-        List<com.lunarclient.apollo.common.v1.Component.TextDecorator> decorators = object.getDecorators()
-            .stream()
-            .map(decorator -> com.lunarclient.apollo.common.v1.Component.TextDecorator.forNumber(decorator.ordinal() + 1))
-            .collect(Collectors.toList());
-
-        List<com.lunarclient.apollo.common.v1.Component> children = object.getChildren()
-            .stream().map(NetworkTypes::toProtobuf)
-            .collect(Collectors.toList());
-
-        return com.lunarclient.apollo.common.v1.Component.newBuilder()
-            .setContent(object.getContent())
-            .setColor(NetworkTypes.toProtobuf(object.getColor()))
-            .addAllDecorators(decorators)
-            .addAllChildren(children)
-            .build();
-    }
-
-    /**
-     * Converts an {@link com.lunarclient.apollo.common.v1.Component}
-     * proto message to an {@link Component} object.
-     *
-     * @param message the component message
-     * @return the component object
-     * @since 1.0.0
-     */
-    public static Component fromProtobuf(com.lunarclient.apollo.common.v1.Component message) {
-        List<Component.TextDecorators> decorators = message.getDecoratorsList()
-            .stream().map(decorator -> Component.TextDecorators.values()[decorator.ordinal() - 1])
-            .collect(Collectors.toList());
-
-        List<Component> children = message.getChildrenList()
-            .stream().map(NetworkTypes::fromProtobuf)
-            .collect(Collectors.toList());
-
-        return Component.builder()
-            .content(message.getContent())
-            .color(NetworkTypes.fromProtobuf(message.getColor()))
-            .decorators(decorators)
-            .children(children)
             .build();
     }
 

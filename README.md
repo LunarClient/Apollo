@@ -1,6 +1,6 @@
 # Apollo
 ![Build Status](https://img.shields.io/github/actions/workflow/status/LunarClient/Apollo/.github/workflows/deploy.yml)
-[![Discord](https://img.shields.io/discord/1080556677004271666?logo=discord&label=discord)](https://discord.gg/ww4UhsPNwf)
+[![Discord](https://img.shields.io/discord/1080556677004271666?logo=discord&label=discord)](https://discord.gg/3T9Atyb6pf)
 
 Apollo is a powerful tool that allows developers to create custom integrations with Lunar Client.
 
@@ -45,7 +45,7 @@ The Apollo project is split into several modules.
 - **Bukkit, BungeeCord, Velocity** - Are modules that implement the common module for each respective platform.
 
 Contributions can be made to Apollo by creating a pull request for improvements or fixes. For new feature ideas please consider making a 
-suggestion by creating an [issue](https://github.com/LunarClient/Apollo/issues) or joining our [discord](https://discord.gg/ww4UhsPNwf).
+suggestion by creating an [issue](https://github.com/LunarClient/Apollo/issues) or joining our [discord](https://discord.gg/3T9Atyb6pf).
 
 ## License
 

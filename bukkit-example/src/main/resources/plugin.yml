@@ -1,8 +1,9 @@
 name: Apollo-Example
 main: com.lunarclient.apollo.example.ApolloExamplePlugin
-version: 0.1.0-SNAPSHOT
+version: 1.0.1
 author: Moonsworth
 depend: [ Apollo-Bukkit ]
+api-version: 1.13
 
 commands:
     beam:
@@ -19,6 +20,8 @@ commands:
         description: "Holograms!"
     limb:
         description: "Limb!"
+    modsettings:
+        description: "ModSettings!"
     nametag:
         description: "Nametags!"
     notification:

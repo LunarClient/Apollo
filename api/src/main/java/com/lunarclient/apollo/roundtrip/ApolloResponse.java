@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.roundtrip;
 
+import com.lunarclient.apollo.api.ApiResponse;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -34,7 +35,7 @@ import lombok.experimental.SuperBuilder;
  */
 @Getter
 @SuperBuilder
-public class ApolloResponse {
+public class ApolloResponse implements ApiResponse {
 
     /**
      * The {@link ApolloRequest} identifier.

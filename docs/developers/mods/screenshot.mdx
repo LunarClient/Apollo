@@ -1,0 +1,47 @@
+# Screenshot Uploader
+
+Updates the screenshot behaviour allowing you to instantly open, upload or tweet the image.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleScreenshotUploaderExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModScreenshot.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`COPY_AUTOMATICALLY`__
+    - Config Key: `copy-automatically`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`UPLOAD_OPTION`__
+    - Config Key: `upload-option`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TWEET_OPTION`__
+    - Config Key: `tweet-option`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`COPY_OPTION`__
+    - Config Key: `copy-option`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

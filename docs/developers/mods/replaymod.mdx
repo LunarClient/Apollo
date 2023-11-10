@@ -1,0 +1,121 @@
+# ReplayMod
+
+Record your game sessions and replay them from any perspective.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleReplayModExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModReplaymod.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`INDICATOR`__
+    - Config Key: `indicator`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`AUTO_POST_PROCESS`__
+    - Config Key: `auto-post-process`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_SERVER_IP`__
+    - Config Key: `show-server-ip`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`AUTO_SYNC`__
+    - Config Key: `auto-sync`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TIMELINE_LENGTH`__
+    - Config Key: `timeline-length`
+    - Values
+        - Type: `Integer`
+        - Default: `1800`
+        - Minimum: `1500`
+        - Maximum: `2100`
+
+- __`ASK_FOR_OPEN_EYE`__
+    - Config Key: `ask-for-open-eye`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SKIP_POST_RENDER_GUI`__
+    - Config Key: `skip-post-render-gui`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SKIP_POST_SCREENSHOT_GUI`__
+    - Config Key: `skip-post-screenshot-gui`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PATH_PREVIEW`__
+    - Config Key: `path-preview`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`LUNAR_UI`__
+    - Config Key: `lunar-u-i`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`NOTIFICATIONS`__
+    - Config Key: `notifications`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`RECORD_SINGLEPLAYER`__
+    - Config Key: `record-singleplayer`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`RECORD_SERVER`__
+    - Config Key: `record-server`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`AUTO_START_RECORDING`__
+    - Config Key: `auto-start-recording`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`RENAME_DIALOG`__
+    - Config Key: `rename-dialog`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_CHAT`__
+    - Config Key: `show-chat`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

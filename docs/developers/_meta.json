@@ -2,6 +2,10 @@
     "faq": "FAQ",
     "general": "General",
     "events": "Events",
+    "options": "Options",
     "modules": "Modules",
-    "utilities": "Utilities"
+    "mods": "Mods",
+    "utilities": "Utilities",
+    "platform-utilities": "Platform Utilities",
+    "adventure": "Adventure"
 }

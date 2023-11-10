@@ -1,0 +1,23 @@
+# Mumble Link
+
+Uses mumble to create positional audio in the Minecraft world.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleMumbleLinkExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModMumbleLink.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

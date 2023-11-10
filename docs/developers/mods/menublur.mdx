@@ -1,0 +1,67 @@
+# Menu Blur
+
+Blurs the background behind menus.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleMenuBlurExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModMenuBlur.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BLUR_STRENGTH`__
+    - Config Key: `blur-strength`
+    - Values
+        - Type: `Integer`
+        - Default: `4`
+        - Minimum: `0`
+        - Maximum: `20`
+
+- __`BLUR_LUNAR_TOGGLE`__
+    - Config Key: `blur-lunar-toggle`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BLUR_LUNAR_BACKGROUND`__
+    - Config Key: `blur-lunar-background`
+    - Values
+        - Type: `String`
+        - Default: `#0`
+
+- __`BLUR_INVENTORY_TOGGLE`__
+    - Config Key: `blur-inventory-toggle`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BLUR_INVENTORY_BACKGROUND`__
+    - Config Key: `blur-inventory-background`
+    - Values
+        - Type: `String`
+        - Default: `#6F000000`
+
+- __`BLUR_PAUSE_TOGGLE`__
+    - Config Key: `blur-pause-toggle`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BLUR_PAUSE_BACKGROUND`__
+    - Config Key: `blur-pause-background`
+    - Values
+        - Type: `String`
+        - Default: `#6F000000`
+

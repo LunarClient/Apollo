@@ -55,7 +55,7 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * @return the value or default if present
      * @since 1.0.0
      */
-    <T, C extends Option<T, ?, ?>> T get(C option);
+    <T, C extends Option<T, ?, ?>> @Nullable T get(C option);
 
     /**
      * Returns the {@code T} value stored for the provided {@link ApolloPlayer}

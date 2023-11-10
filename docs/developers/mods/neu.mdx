@@ -1,0 +1,23 @@
+# Not Enough Updates
+
+Skyblock Mod made by Moulberry
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleNotEnoughUpdatesExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModNeu.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

@@ -1,0 +1,51 @@
+# Fog Customizer
+
+Allows you to adjust the strength of fog for various fog types
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleFogCustomizerExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModFog.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`WATER_FOG_DENSITY`__
+    - Config Key: `water-fog-density`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `1.8F`
+
+- __`RENDER_DISTANCE_FOG_DENSITY`__
+    - Config Key: `render-distance-fog-density`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `1.95F`
+
+- __`RENDER_DISTANCE_FOG_COLOR_TOGGLE`__
+    - Config Key: `render-distance-fog-color-toggle`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`RENDER_DISTANCE_FOG_COLOR`__
+    - Config Key: `render-distance-fog-color`
+    - Values
+        - Type: `String`
+        - Default: `#C0D8FF`
+

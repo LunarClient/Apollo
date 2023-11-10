@@ -1,0 +1,41 @@
+# Mod Setting Module
+
+## Overview
+
+The mod setting module allows you to interact with Lunar Client players mods and settings of those mods.
+
+This module heavily integrates with our [Options API](apollo/developers/options).
+You can find all available mods and their options under the mods section.
+
+- Adds the ability to interact with Lunar Client mods.
+  - Ability to enable/disable mods.
+  - Ability to change, enable or disable mod settings within a mod.
+
+## Integration
+
+### Interacting with a specific players `ModSetting`
+
+```java
+public void disableLightningModExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, false));
+}
+```
+
+### Resetting a specific players `ModSetting`
+
+```java
+public void rollbackLightningModEnabledState(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    // To rollback the server override value of the setting, simply set the value to "null"
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, null));
+}
+```
+
+### Broadcasting a `ModSettings` change to an entire server.
+
+```java
+public void broadcastDisableLightningModExample(Player viewer) {
+    this.modSettingModule.getOptions().set(ModLighting.ENABLED, false);
+}
+```

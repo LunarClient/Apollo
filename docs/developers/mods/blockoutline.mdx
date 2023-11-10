@@ -1,0 +1,55 @@
+# Block Outline
+
+Allows you to customize the outline or add an overlay to the block you are pointing at.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleBlockOutlineExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModBlockOutline.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BLOCK_OUTLINE_COLOR`__
+    - Config Key: `block-outline-color`
+    - Values
+        - Type: `String`
+        - Default: `#66000000`
+
+- __`BLOCK_OVERLAY_COLOR`__
+    - Config Key: `block-overlay-color`
+    - Values
+        - Type: `String`
+        - Default: `#66000000`
+
+- __`BLOCK_OUTLINE_WIDTH`__
+    - Config Key: `block-outline-width`
+    - Values
+        - Type: `Float`
+        - Default: `2.0F`
+        - Minimum: `1.0F`
+        - Maximum: `10.0F`
+
+- __`BLOCK_OVERLAY`__
+    - Config Key: `block-overlay`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BLOCK_OUTLINE`__
+    - Config Key: `block-outline`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

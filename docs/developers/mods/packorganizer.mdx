@@ -1,0 +1,29 @@
+# Pack Organizer
+
+Allows you to organize your resource packs into folders
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void togglePackOrganizerExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModPackOrganizer.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_INCOMPATIBLE`__
+    - Config Key: `show-incompatible`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

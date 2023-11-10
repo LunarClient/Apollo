@@ -28,7 +28,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- * Represents a list {@link Option}.
+ * Represents an immutable list {@link Option}.
  *
  * @param <T> the value type
  * @since 1.0.0
@@ -40,7 +40,7 @@ public final class ListOption<T> extends Option<List<T>, ListOption.ListOptionBu
     }
 
     /**
-     * Represents a list {@link OptionBuilder}.
+     * Represents an immutable list {@link OptionBuilder}.
      *
      * @param <T> the value type
      * @since 1.0.0

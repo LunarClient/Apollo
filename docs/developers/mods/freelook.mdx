@@ -1,0 +1,49 @@
+# Freelook
+
+When activated, allows you to change your camera perspective without rotating your player.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleFreelookExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModFreelook.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`INVERT_PITCH`__
+    - Config Key: `invert-pitch`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`INVERT_YAW`__
+    - Config Key: `invert-yaw`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TOGGLE_KEY_FREELOOK`__
+    - Quickly pressing and releasing the key will toggle freelook
+    - Config Key: `toggle-key-freelook`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SMOOTH_CAMERA`__
+    - When zoomed in the camera movement will move smoothly (cinematic camera)
+    - Config Key: `smooth-camera`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

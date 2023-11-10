@@ -1,0 +1,176 @@
+# Tab Editor
+
+Allows you to customize the in-game tab.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleTabEditorExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModTab.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TOGGLE_KEY_TAB`__
+    - Quickly pressing and releasing the key will toggle tab
+    - Config Key: `toggle-key-tab`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HEADER_COLOR`__
+    - Config Key: `header-color`
+    - Values
+        - Type: `String`
+        - Default: `#80000000`
+
+- __`FOOTER_COLOR`__
+    - Config Key: `footer-color`
+    - Values
+        - Type: `String`
+        - Default: `#80000000`
+
+- __`BACKGROUND_COLOR`__
+    - Config Key: `background-color`
+    - Values
+        - Type: `String`
+        - Default: `#80000000`
+
+- __`PING_ROW`__
+    - Config Key: `ping-row`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ROWS_COLOR`__
+    - Config Key: `rows-color`
+    - Values
+        - Type: `String`
+        - Default: `#20000000`
+
+- __`DISABLE_HEADER`__
+    - Config Key: `disable-header`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DISPLAY_PLAYER_HEAD`__
+    - Config Key: `display-player-head`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DISABLE_FOOTER`__
+    - Config Key: `disable-footer`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_NPC`__
+    - Hide Hypixel NPC on tab
+    - Config Key: `hide-n-p-c`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_LUNAR_ICONS_ON_RIGHT`__
+    - Config Key: `show-lunar-icons-on-right`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TAB_LOGO`__
+    - An option to toggle LC logos in player list tab overlay.
+    - Config Key: `tab-logo`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIGHLIGHT_OWN_NAME`__
+    - Config Key: `highlight-own-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`NAME_COLOR`__
+    - Config Key: `name-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF0000`
+
+- __`NAME_SHADOW`__
+    - Config Key: `name-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_PING`__
+    - Config Key: `hide-ping`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_PING_IF_OVER_500`__
+    - Config Key: `hide-ping-if-over500`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DISPLAY_PING_AS_NUMBER`__
+    - Config Key: `display-ping-as-number`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DYNAMIC_PING_COLOR`__
+    - Config Key: `dynamic-ping-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PING_NUMBER_SHADOW`__
+    - Config Key: `ping-number-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PING_NUMBER_COLOR`__
+    - Config Key: `ping-number-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFF55`
+
+- __`LOW_PING_NUMBER_COLOR`__
+    - Config Key: `low-ping-number-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF55FF55`
+
+- __`MEDIUM_PING_NUMBER_COLOR`__
+    - Config Key: `medium-ping-number-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFF55`
+
+- __`HIGH_PING_NUMBER_COLOR`__
+    - Config Key: `high-ping-number-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF5555`
+
+- __`EXTREME_PING_NUMBER_COLOR`__
+    - Config Key: `extreme-ping-number-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFAA0000`
+

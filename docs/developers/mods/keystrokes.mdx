@@ -1,0 +1,139 @@
+# Key Strokes
+
+Displays when your movement, mouse or space bar is pressed.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleKeyStrokesExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModKeystrokes.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SCALE`__
+    - Config Key: `scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.5F`
+
+- __`KEY_STROKES_CLICKS`__
+    - Config Key: `key-strokes-clicks`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`LEFT_CPS`__
+    - Config Key: `left-c-p-s`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`RIGHT_CPS`__
+    - Config Key: `right-c-p-s`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`KEY_STROKES_MOVEMENT`__
+    - Config Key: `key-strokes-movement`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`KEY_STROKES_SPACEBAR`__
+    - Config Key: `key-strokes-spacebar`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`USE_ARROWS`__
+    - Config Key: `use-arrows`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TEXT_SHADOW`__
+    - Config Key: `text-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BORDER`__
+    - Config Key: `border`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`INNER_BORDER`__
+    - Config Key: `inner-border`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BORDER_THICKNESS`__
+    - Config Key: `border-thickness`
+    - Values
+        - Type: `Float`
+        - Default: `0.5F`
+        - Minimum: `0.5F`
+        - Maximum: `3.0F`
+
+- __`BOX_SIZE`__
+    - Config Key: `box-size`
+    - Values
+        - Type: `Float`
+        - Default: `18.0F`
+        - Minimum: `10.0F`
+        - Maximum: `32.0F`
+
+- __`BORDER_COLOR`__
+    - Config Key: `border-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`TEXT_COLOR`__
+    - Config Key: `text-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`TEXT_PRESSED_COLOR`__
+    - Config Key: `text-pressed-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF000000`
+
+- __`BACKGROUND_COLOR`__
+    - Config Key: `background-color`
+    - Values
+        - Type: `String`
+        - Default: `#6F000000`
+
+- __`BACKGROUND_PRESSED_COLOR`__
+    - Config Key: `background-pressed-color`
+    - Values
+        - Type: `String`
+        - Default: `#6FFFFFFF`
+
+- __`KEY_FADE_DELAY`__
+    - Config Key: `key-fade-delay`
+    - Values
+        - Type: `Long`
+        - Default: `75L`
+        - Minimum: `0L`
+        - Maximum: `500L`
+

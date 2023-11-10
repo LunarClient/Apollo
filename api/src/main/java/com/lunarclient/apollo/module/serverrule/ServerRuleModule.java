@@ -167,18 +167,18 @@ public final class ServerRuleModule extends ApolloModule {
 
     ServerRuleModule() {
         this.registerOptions(
-            COMPETITIVE_GAME,
-            COMPETITIVE_COMMANDS,
-            DISABLE_SHADERS,
-            DISABLE_CHUNK_RELOADING,
-            DISABLE_BROADCASTING,
-            ANTI_PORTAL_TRAPS,
-            OVERRIDE_BRIGHTNESS,
-            BRIGHTNESS,
-            OVERRIDE_NAMETAG_RENDER_DISTANCE,
-            NAMETAG_RENDER_DISTANCE,
-            OVERRIDE_MAX_CHAT_LENGTH,
-            MAX_CHAT_LENGTH
+            ServerRuleModule.COMPETITIVE_GAME,
+            ServerRuleModule.COMPETITIVE_COMMANDS,
+            ServerRuleModule.DISABLE_SHADERS,
+            ServerRuleModule.DISABLE_CHUNK_RELOADING,
+            ServerRuleModule.DISABLE_BROADCASTING,
+            ServerRuleModule.ANTI_PORTAL_TRAPS,
+            ServerRuleModule.OVERRIDE_BRIGHTNESS,
+            ServerRuleModule.BRIGHTNESS,
+            ServerRuleModule.OVERRIDE_NAMETAG_RENDER_DISTANCE,
+            ServerRuleModule.NAMETAG_RENDER_DISTANCE,
+            ServerRuleModule.OVERRIDE_MAX_CHAT_LENGTH,
+            ServerRuleModule.MAX_CHAT_LENGTH
         );
     }
 

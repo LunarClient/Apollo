@@ -1,0 +1,47 @@
+# Scrollable Tooltips
+
+Use your scroll wheel to read overly long item descriptions.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleScrollableTooltipsExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModScrollableTooltips.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`START_AT_TOP`__
+    - Config Key: `start-at-top`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`VERTICAL_KEYBIND`__
+    - Config Key: `vertical-keybind`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TEXT_SHADOW`__
+    - Config Key: `text-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`WRAP_TEXT`__
+    - Config Key: `wrap-text`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

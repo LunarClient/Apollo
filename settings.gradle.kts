@@ -14,8 +14,6 @@ pluginManagement {
     }
 }
 
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
@@ -33,6 +31,8 @@ val mcVersion = startParameter.projectProperties["mc"]
 val loadAllVersions = mcVersion == null
 
 listOfNotNull(
+    "extra:loader",
+    "extra:adventure4",
     "api",
     "common",
     "bukkit",

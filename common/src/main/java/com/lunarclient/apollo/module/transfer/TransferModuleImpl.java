@@ -24,11 +24,11 @@
 package com.lunarclient.apollo.module.transfer;
 
 import com.google.protobuf.ByteString;
-import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.async.Future;
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.roundtrip.async.Future;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -78,7 +78,7 @@ public final class TransferModuleImpl extends TransferModule {
                 .status(TransferResponse.Status.values()[packet.getStatusValue() - 1])
                 .build();
 
-            Apollo.getRoundtripManager().handleResponse(transferResponse);
+            ApolloManager.getRoundtripManager().handleResponse(transferResponse);
         });
 
         event.unpack(com.lunarclient.apollo.transfer.v1.PingResponse.class).ifPresent(packet -> {
@@ -95,7 +95,7 @@ public final class TransferModuleImpl extends TransferModule {
                 .data(pingData)
                 .build();
 
-            Apollo.getRoundtripManager().handleResponse(pingResponse);
+            ApolloManager.getRoundtripManager().handleResponse(pingResponse);
         });
     }
 

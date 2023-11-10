@@ -1,0 +1,35 @@
+# Hit Color
+
+Changes the color of the damage indicator.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleHitColorExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModHitColor.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIT_ARMOR_COLOR`__
+    - Config Key: `hit-armor-color`
+    - Values
+        - Type: `String`
+        - Default: `#66990000`
+
+- __`SHOULD_COLOR_ARMOR`__
+    - Config Key: `should-color-armor`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

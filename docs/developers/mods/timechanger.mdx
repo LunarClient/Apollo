@@ -1,0 +1,45 @@
+# Time Changer
+
+Customize the current time of day to a fixed position.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleTimeChangerExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModTimeChanger.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TIME_CHANGER_TIME`__
+    - Config Key: `time-changer-time`
+    - Values
+        - Type: `Integer`
+        - Default: `-12000`
+        - Minimum: `-18000`
+        - Maximum: `-6000`
+
+- __`HORIZON_YLEVEL`__
+    - Config Key: `horizon-y-level`
+    - Values
+        - Type: `Integer`
+        - Default: `63`
+        - Minimum: `0`
+        - Maximum: `63`
+
+- __`USE_REAL_TIME`__
+    - Config Key: `use-real-time`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

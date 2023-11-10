@@ -1,0 +1,23 @@
+# 2D Items
+
+Render blocks and items in a 2D perspective or with sprites.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggle2DItemsExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, Mod2dItems.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

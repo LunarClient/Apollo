@@ -1,0 +1,63 @@
+# TNT Countdown
+
+Displays the fuse countdown above TNT.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleTNTCountdownExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModTntCountdown.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ADJUST_FUSE_TIME`__
+    - Offset the default tnt delay in ticks. 1 second is 20 ticks
+    - Config Key: `adjust-fuse-time`
+    - Values
+        - Type: `Integer`
+        - Default: `0`
+        - Minimum: `-80`
+        - Maximum: `80`
+
+- __`BACKGROUND`__
+    - Config Key: `background`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TEXT_SHADOW`__
+    - Config Key: `text-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`STATIC_COUNTDOWN_COLOR`__
+    - Should the color stay the same the entire time.
+    - Config Key: `static-countdown-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FF00FF00`
+
+- __`PREFIX_COLOR`__
+    - Config Key: `prefix-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+

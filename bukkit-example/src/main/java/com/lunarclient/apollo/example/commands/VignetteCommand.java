@@ -45,25 +45,25 @@ public class VignetteCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /vignette <displayVignette|resetVignette>");
+            player.sendMessage("Usage: /vignette <display|reset>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
-            case "displayvignette": {
+            case "display": {
                 this.vignetteExample.displayVignetteExample(player);
                 player.sendMessage("Displaying vignette....");
                 break;
             }
 
-            case "resetvignette": {
+            case "reset": {
                 this.vignetteExample.resetVignetteExample(player);
                 player.sendMessage("Resetting vignette....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /vignette <displayVignette|resetVignette>");
+                player.sendMessage("Usage: /vignette <display|reset>");
                 break;
             }
         }

@@ -1,0 +1,58 @@
+# NameTags
+
+A mod that allows you to modify nametags.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleNameTagsExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModNametag.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`NAMETAG_SHADOW`__
+    - Config Key: `nametag-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`NAMETAG`__
+    - An option to see your own nametag in third person
+    - Config Key: `nametag`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`NAMETAG_LOGO`__
+    - An option to toggle LC logos in nametags
+    - Config Key: `nametag-logo`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TOGGLE_NAMETAGS`__
+    - Determines if we should send the message when nametags are toggled.
+    - Config Key: `toggle-nametags`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`NAMETAG_BACKGROUND_OPACITY`__
+    - Config Key: `nametag-background-opacity`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `1.0F`
+

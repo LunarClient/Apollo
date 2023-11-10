@@ -16,8 +16,7 @@ Apollo uses Google's [Protocol Buffers](https://protobuf.dev/) to communicate wi
 Note that although the `.proto` files / messages _generally_ match up with Apollo modules, there's circumstances where we
 expose different interfaces in Apollo - primarily to make the API simpler to use.
 
-For example, Apollo's `modsetting` and `serverrule` module end up flowing over the wire as the same packet. However, the
-we split them into separate modules (with separate purposes) in the public API.
+For example, Apollo's `modsetting` and `serverrule` module end up flowing over the wire as the same packet. However, we split them into separate modules (with separate purposes) in the public API.
 
 ## Contributions
 

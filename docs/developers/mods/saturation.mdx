@@ -1,0 +1,47 @@
+# Saturation
+
+Saturation HUD with AppleSkin features
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleSaturationExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModSaturation.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_SATURATION_OVERLAY`__
+    - Config Key: `show-saturation-overlay`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_APPLESKIN_TOOLTIP`__
+    - Config Key: `show-appleskin-tooltip`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_HELD_ITEM_HUNGER`__
+    - Config Key: `show-held-item-hunger`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_HELD_ITEM_SATURATION`__
+    - Config Key: `show-held-item-saturation`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

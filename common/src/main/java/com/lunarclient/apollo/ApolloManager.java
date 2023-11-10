@@ -23,17 +23,23 @@
  */
 package com.lunarclient.apollo;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.lunarclient.apollo.api.ApolloHttpManager;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.network.ApolloNetworkManager;
-import com.lunarclient.apollo.option.config.Serializers;
+import com.lunarclient.apollo.option.ConfigOptions;
+import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.config.CommonSerializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
+import com.lunarclient.apollo.util.ConfigTarget;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import lombok.Getter;
-import org.spongepowered.configurate.CommentedConfigurationNode;
-import org.spongepowered.configurate.yaml.NodeStyle;
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 /**
  * Provides the instances for {@link Apollo}.
@@ -47,10 +53,26 @@ public final class ApolloManager {
      */
     public static final String PLUGIN_MESSAGE_CHANNEL = "lunar:apollo";
 
-    @Getter private static ApolloNetworkManager networkManager;
-    @Getter private static CommentedConfigurationNode configurationNode;
+    /**
+     * The plugin root module identifier for Apollos general options.
+     */
+    public static final String PLUGIN_ROOT_MODULE = "apollo";
 
-    private static YamlConfigurationLoader configurationLoader;
+    /**
+     * The plugins GSON used for http.
+     */
+    public static final Gson GSON = new GsonBuilder().create();
+
+    private static final List<Option<?, ?, ?>> optionKeys = new LinkedList<>();
+
+    private static ApolloPlatform platform;
+
+    @Getter private static ApolloRoundtripManager roundtripManager;
+    @Getter private static ApolloHttpManager httpManager;
+    @Getter private static ApolloNetworkManager networkManager;
+
+    @Getter private static Path configPath;
+
     private static boolean bootstrapped = false;
 
     /**
@@ -69,15 +91,31 @@ public final class ApolloManager {
                 platform,
                 new ApolloModuleManagerImpl(),
                 new ApolloWorldManagerImpl(),
-                new ApolloPlayerManagerImpl(),
-                new ApolloRoundtripManager()
+                new ApolloPlayerManagerImpl()
             );
 
+            ApolloManager.roundtripManager = new ApolloRoundtripManager();
+            ApolloManager.httpManager = new ApolloHttpManager();
             ApolloManager.networkManager = new ApolloNetworkManager();
+
+            new CommonSerializers();
+
+            ApolloManager.platform = platform;
         } catch (Throwable throwable) {
             throw new RuntimeException("Unable to bootstrap Apollo!", throwable);
         }
+
         ApolloManager.bootstrapped = true;
+    }
+
+    /**
+     * Registers {@link Option}s for Apollo.
+     *
+     * @param options the option keys
+     * @since 1.0.0
+     */
+    public static void registerOptions(Option<?, ?, ?>... options) {
+        ApolloManager.optionKeys.addAll(Arrays.asList(options));
     }
 
     /**
@@ -88,15 +126,10 @@ public final class ApolloManager {
      */
     public static void loadConfiguration(Path path) {
         try {
-            if (ApolloManager.configurationLoader == null) {
-                ApolloManager.configurationLoader = YamlConfigurationLoader.builder()
-                    .nodeStyle(NodeStyle.BLOCK)
-                    .path(path.resolve("settings.yml"))
-                    .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
-                    .build();
-            }
+            ApolloManager.configPath = path;
 
-            ApolloManager.configurationNode = ApolloManager.configurationLoader.load();
+            ApolloConfig generalSettings = ApolloConfig.compute(ApolloManager.configPath, ConfigTarget.GENERAL_SETTINGS);
+            ConfigOptions.loadOptions(ApolloManager.platform.getOptions(), generalSettings.node(), ApolloManager.optionKeys);
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -109,15 +142,14 @@ public final class ApolloManager {
      */
     public static void saveConfiguration() {
         try {
-            if (ApolloManager.configurationNode == null) {
-                return;
+            ApolloConfig generalSettings = ApolloConfig.compute(ApolloManager.configPath, ConfigTarget.GENERAL_SETTINGS);
+            ConfigOptions.saveOptions(ApolloManager.platform.getOptions(), generalSettings.node(), ApolloManager.optionKeys);
+
+            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration();
+
+            for (ApolloConfig config : ApolloConfig.configs()) {
+                config.save();
             }
-
-            CommentedConfigurationNode modules = ApolloManager.configurationNode.node("modules");
-
-            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration(modules);
-
-            ApolloManager.configurationLoader.save(ApolloManager.configurationNode);
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }

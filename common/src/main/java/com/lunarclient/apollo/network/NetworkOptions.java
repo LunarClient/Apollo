@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.network;
 
 import com.google.protobuf.Value;
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage;
 import com.lunarclient.apollo.module.ApolloModule;
@@ -32,6 +33,7 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Utility class for sending options to the client.
@@ -39,10 +41,6 @@ import com.lunarclient.apollo.player.ApolloPlayer;
  * @since 1.0.0
  */
 public final class NetworkOptions {
-
-    private NetworkOptions() {
-
-    }
 
     /**
      * Send a single option to a single player.
@@ -53,7 +51,7 @@ public final class NetworkOptions {
      * @param players the players to send the option to
      * @since 1.0.0
      */
-    public static void sendOption(ApolloModule module,
+    public static void sendOption(@Nullable ApolloModule module,
                                   Option<?, ?, ?> key,
                                   Value value,
                                   Iterable<ApolloPlayer> players) {
@@ -76,17 +74,20 @@ public final class NetworkOptions {
      * {@link ApolloPlayer}s.
      *
      * @param modules the modules to send the options of
+     * @param onlyPresent send only the options that have a present value
      * @param players the players to send the module options to
      * @since 1.0.0
      */
     public static void sendOptions(Iterable<ApolloModule> modules,
+                                   boolean onlyPresent,
                                    ApolloPlayer... players) {
         for (ApolloPlayer player : players) {
             OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
 
             for (ApolloModule module : modules) {
                 modulesBuilder.addConfigurableSettings(NetworkOptions.moduleWithOptions(
-                    module
+                    module,
+                    onlyPresent
                 ).build());
             }
 
@@ -94,7 +95,7 @@ public final class NetworkOptions {
         }
     }
 
-    private static ConfigurableSettings.Builder moduleWithOptions(ApolloModule module) {
+    private static ConfigurableSettings.Builder moduleWithOptions(ApolloModule module, boolean onlyPresent) {
         ConfigurableSettings.Builder builder = NetworkOptions.module(module);
         Options options = module.getOptions();
 
@@ -105,6 +106,10 @@ public final class NetworkOptions {
 
             Value.Builder valueBuilder = Value.newBuilder();
             Object value = options.get(option);
+            if (value == null && onlyPresent) {
+                continue;
+            }
+
             Value wrapper = ((OptionsImpl) options).wrapValue(valueBuilder, option.getTypeToken().getType(), value);
             builder.putProperties(option.getKey(), wrapper);
         }
@@ -112,9 +117,13 @@ public final class NetworkOptions {
         return builder;
     }
 
-    private static ConfigurableSettings.Builder module(ApolloModule module) {
+    private static ConfigurableSettings.Builder module(@Nullable ApolloModule module) {
         return ConfigurableSettings.newBuilder()
-            .setApolloModule(module.getId())
-            .setEnable(module.isEnabled());
+            .setApolloModule(module == null ? ApolloManager.PLUGIN_ROOT_MODULE : module.getId())
+            .setEnable(module == null || module.isEnabled());
     }
+
+    private NetworkOptions() {
+    }
+
 }

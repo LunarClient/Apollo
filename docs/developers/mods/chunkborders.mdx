@@ -1,0 +1,41 @@
+# Chunk Borders
+
+View the border of the current chunk
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleChunkBordersExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModChunkBorders.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`GRID_COLOR`__
+    - Config Key: `grid-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFF00`
+
+- __`INNER_CHUNK_CORNER_COLOR`__
+    - Config Key: `inner-chunk-corner-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF0000FF`
+
+- __`OUTER_CHUNK_CORNER_COLOR`__
+    - Config Key: `outer-chunk-corner-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF0000`
+

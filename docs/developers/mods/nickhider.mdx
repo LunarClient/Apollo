@@ -1,0 +1,59 @@
+# Nick Hider
+
+Allows you to hide skins and usernames for yourself or others.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleNickHiderExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModNickHider.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_NAME`__
+    - Config Key: `hide-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_REAL_NAME`__
+    - Config Key: `hide-real-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_OTHERS_NAMES`__
+    - Config Key: `hide-others-names`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_OWN_SKIN`__
+    - Config Key: `hide-own-skin`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`USE_REAL_SKIN`__
+    - Config Key: `use-real-skin`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_OTHERS_SKIN`__
+    - Config Key: `hide-others-skin`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

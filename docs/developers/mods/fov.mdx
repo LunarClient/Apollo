@@ -1,0 +1,174 @@
+# FOV Changer
+
+Allows you to customize your field of view for different potion or speed states.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleFOVChangerExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModFov.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`STATIC_FOV`__
+    - Determines if your FOV changes as you move.
+    - Config Key: `static-f-o-v`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DEFAULT_FOV`__
+    - Config Key: `default-fov`
+    - Values
+        - Type: `Integer`
+        - Default: `70`
+        - Minimum: `30`
+        - Maximum: `110`
+
+- __`AIMING_MODIFIER`__
+    - Config Key: `aiming-modifier`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `5.0F`
+
+- __`AIMING_MIN`__
+    - Config Key: `aiming-min`
+    - Values
+        - Type: `Float`
+        - Default: `-10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`AIMING_MAX`__
+    - Config Key: `aiming-max`
+    - Values
+        - Type: `Float`
+        - Default: `10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`SPEED_FOV`__
+    - Config Key: `speed-f-o-v`
+    - Values
+        - Type: `Integer`
+        - Default: `70`
+        - Minimum: `30`
+        - Maximum: `110`
+
+- __`SPEED_TWO_FOV`__
+    - Config Key: `speed-two-f-o-v`
+    - Values
+        - Type: `Integer`
+        - Default: `70`
+        - Minimum: `30`
+        - Maximum: `110`
+
+- __`SLOWNESS_FOV`__
+    - Config Key: `slowness-f-o-v`
+    - Values
+        - Type: `Integer`
+        - Default: `70`
+        - Minimum: `30`
+        - Maximum: `110`
+
+- __`MOVEMENT_MODIFIER`__
+    - Config Key: `movement-modifier`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `5.0F`
+
+- __`MOVEMENT_MIN`__
+    - Config Key: `movement-min`
+    - Values
+        - Type: `Float`
+        - Default: `-10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`MOVEMENT_MAX`__
+    - Config Key: `movement-max`
+    - Values
+        - Type: `Float`
+        - Default: `10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`SPRINTING_FOV`__
+    - Config Key: `sprinting-f-o-v`
+    - Values
+        - Type: `Integer`
+        - Default: `70`
+        - Minimum: `30`
+        - Maximum: `110`
+
+- __`SPRINT_MODIFIER`__
+    - Config Key: `sprint-modifier`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `5.0F`
+
+- __`SPRINT_MIN`__
+    - Config Key: `sprint-min`
+    - Values
+        - Type: `Float`
+        - Default: `-10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`SPRINT_MAX`__
+    - Config Key: `sprint-max`
+    - Values
+        - Type: `Float`
+        - Default: `10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`FLYING_FOV`__
+    - Config Key: `flying-fov`
+    - Values
+        - Type: `Integer`
+        - Default: `70`
+        - Minimum: `30`
+        - Maximum: `110`
+
+- __`FLYING_MODIFIER`__
+    - Config Key: `flying-modifier`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `5.0F`
+
+- __`FLYING_MIN`__
+    - Config Key: `flying-min`
+    - Values
+        - Type: `Float`
+        - Default: `-10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+
+- __`FLYING_MAX`__
+    - Config Key: `flying-max`
+    - Values
+        - Type: `Float`
+        - Default: `10.0F`
+        - Minimum: `-200.0F`
+        - Maximum: `200.0F`
+

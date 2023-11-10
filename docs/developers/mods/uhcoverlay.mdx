@@ -1,0 +1,63 @@
+# UHC Overlay
+
+Resize items that are commonly needed in UHC to make spotting them easier.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleUHCOverlayExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModUhcOverlay.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`GOLD_INGOT_SCALE`__
+    - Config Key: `gold-ingot-scale`
+    - Values
+        - Type: `Float`
+        - Default: `2.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`GOLD_NUGGET_SCALE`__
+    - Config Key: `gold-nugget-scale`
+    - Values
+        - Type: `Float`
+        - Default: `2.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`GOLD_ORE_SCALE`__
+    - Config Key: `gold-ore-scale`
+    - Values
+        - Type: `Float`
+        - Default: `2.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`GOLD_APPLE_SCALE`__
+    - Config Key: `gold-apple-scale`
+    - Values
+        - Type: `Float`
+        - Default: `2.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`SKULL_SCALE`__
+    - Config Key: `skull-scale`
+    - Values
+        - Type: `Float`
+        - Default: `2.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
