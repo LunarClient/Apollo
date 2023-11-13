@@ -34,7 +34,7 @@ import net.kyori.adventure.text.Component;
 /**
  * Provides the chat module.
  *
- * @since 1.0.2 // TODO
+ * @since 1.0.2
  */
 public final class ChatModuleImpl extends ChatModule {
 

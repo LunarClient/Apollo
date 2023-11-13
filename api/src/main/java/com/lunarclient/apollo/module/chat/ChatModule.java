@@ -32,7 +32,7 @@ import org.jetbrains.annotations.ApiStatus;
 /**
  * Represents the chat module.
  *
- * @since 1.0.2 // TODO
+ * @since 1.0.2
  */
 @ApiStatus.NonExtendable
 @ModuleDefinition(id = "chat", name = "Chat")
@@ -44,7 +44,7 @@ public abstract class ChatModule extends ApolloModule {
      * @param recipients the recipients that are receiving the packet
      * @param text       the text to display
      * @param messageId  the message id to update
-     * @since 1.0.2 // TODO
+     * @since 1.0.2
      */
     public abstract void displayLiveChatMessage(Recipients recipients, Component text, int messageId);
 
@@ -53,7 +53,7 @@ public abstract class ChatModule extends ApolloModule {
      *
      * @param recipients the recipients that are receiving the packet
      * @param messageId  the message id to update
-     * @since 1.0.2 // TODO
+     * @since 1.0.2
      */
     public abstract void removeLiveChatMessage(Recipients recipients, int messageId);
 
