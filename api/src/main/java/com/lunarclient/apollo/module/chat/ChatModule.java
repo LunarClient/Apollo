@@ -49,7 +49,7 @@ public abstract class ChatModule extends ApolloModule {
     public abstract void displayLiveChatMessage(Recipients recipients, Component text, int messageId);
 
     /**
-     * Removes the message to the {@link Recipients}.
+     * Removes the message from the {@link Recipients}.
      *
      * @param recipients the recipients that are receiving the packet
      * @param messageId  the message id to update
