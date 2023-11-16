@@ -32,6 +32,8 @@ import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
 import com.lunarclient.apollo.module.border.BorderModule;
 import com.lunarclient.apollo.module.border.BorderModuleImpl;
+import com.lunarclient.apollo.module.chat.ChatModule;
+import com.lunarclient.apollo.module.chat.ChatModuleImpl;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModuleImpl;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
@@ -106,6 +108,7 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
             .addModule(BeamModule.class, new BeamModuleImpl())
             .addModule(BorderModule.class, new BorderModuleImpl())
+            .addModule(ChatModule.class, new ChatModuleImpl())
             .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
             .addModule(CooldownModule.class, new CooldownModuleImpl())
             .addModule(EntityModule.class, new EntityModuleImpl())

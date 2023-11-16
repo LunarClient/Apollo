@@ -1,0 +1,35 @@
+# Chat Module
+
+## Overview
+
+The chat module allows you to interact with and modify users chat feeds.
+
+- Adds the ability to simulate live updating messages
+    - Grants the ability to remove specific messages for a player
+
+## Integration
+
+```java
+private final int messageId = ThreadLocalRandom.current().nextInt(100);
+private int countdown = 5;
+
+public void displayLiveMessageExample() {
+    this.liveMessageModule.displayLiveMessage(Recipients.ofEveryone(),
+        Component.text("Game starting in ", NamedTextColor.GREEN)
+            .append(Component.text(this.countdown, NamedTextColor.BLUE)),
+        this.messageId
+    );
+
+    if (--this.countdown == 0) {
+        this.countdown = 5;
+    }
+}
+```
+
+### Removing a specific live message for a player
+
+```java
+public void removeLiveMessageExample() {
+    this.liveMessageModule.removeLiveMessage(Recipients.ofEveryone(), this.messageId);
+}
+```
