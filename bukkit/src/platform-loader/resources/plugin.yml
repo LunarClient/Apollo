@@ -1,5 +1,5 @@
 name: Apollo-Bukkit
 main: com.lunarclient.apollo.loader.BukkitPlatformLoader
-version: 1.0.1
+version: 1.0.2
 author: Moonsworth
 api-version: 1.13
