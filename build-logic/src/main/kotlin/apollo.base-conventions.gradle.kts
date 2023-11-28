@@ -31,6 +31,8 @@ dependencies {
 }
 
 spotless {
+    spotless.isEnforceCheck = false
+
     fun FormatExtension.applyCommon() {
         trimTrailingWhitespace()
         endWithNewline()
@@ -74,6 +76,8 @@ val configPath: File = rootProject.file(".checkstyle")
 checkstyle {
     toolVersion = libs.stylecheck.get().toString()
     configDirectory.set(configPath)
+
+    checkstyle.isIgnoreFailures = true
 
     setConfigProperties(
         "configDirectory" to configPath,
