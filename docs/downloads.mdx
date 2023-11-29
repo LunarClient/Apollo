@@ -23,7 +23,7 @@ import { Text } from "@moonsworth/text";
                     onClick: () => {
                         const asset = fetch("https://api.lunarclientprod.com/apollo/updates")
                             .then((res) => res.json())
-                            .then((res) => window.open(res.assets.bukkit, "_blank"));
+                            .then((res) => window.open(res.assets.bukkit));
                     },
                 },
             ],
@@ -47,7 +47,7 @@ import { Text } from "@moonsworth/text";
                     onClick: () => {
                         const asset = fetch("https://api.lunarclientprod.com/apollo/updates")
                             .then((res) => res.json())
-                            .then((res) => window.open(res.assets.bungee, "_blank"));
+                            .then((res) => window.open(res.assets.bungee));
                     },
                 },
             ],
@@ -71,7 +71,7 @@ import { Text } from "@moonsworth/text";
                     onClick: () => {
                         const asset = fetch("https://api.lunarclientprod.com/apollo/updates")
                             .then((res) => res.json())
-                            .then((res) => window.open(res.assets.velocity, "_blank"));
+                            .then((res) => window.open(res.assets.velocity));
                     },
                 },
             ],
