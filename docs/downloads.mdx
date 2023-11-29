@@ -1,6 +1,7 @@
 import { DownloadList } from "@lunarclient/marketing-download-list";
 import { faWindows } from "@fortawesome/free-brands-svg-icons/faWindows";
 import { Text } from "@moonsworth/text";
+import router from "next/router";
 
 <Text textAlign="center" fontFamily="secondary" color="rgba(226,232,240)" fontSize="30px" CSS={{ marginBottom: "20px", marginTop: "35px" }}>
     Download Apollo
@@ -23,7 +24,7 @@ import { Text } from "@moonsworth/text";
                     onClick: () => {
                         const asset = fetch("https://api.lunarclientprod.com/apollo/updates")
                             .then((res) => res.json())
-                            .then((res) => window.open(res.assets.bukkit));
+                            .then((res) => router.push(res.assets.bukkit));
                     },
                 },
             ],
@@ -47,7 +48,7 @@ import { Text } from "@moonsworth/text";
                     onClick: () => {
                         const asset = fetch("https://api.lunarclientprod.com/apollo/updates")
                             .then((res) => res.json())
-                            .then((res) => window.open(res.assets.bungee));
+                            .then((res) => router.push(res.assets.bungee));
                     },
                 },
             ],
@@ -71,7 +72,7 @@ import { Text } from "@moonsworth/text";
                     onClick: () => {
                         const asset = fetch("https://api.lunarclientprod.com/apollo/updates")
                             .then((res) => res.json())
-                            .then((res) => window.open(res.assets.velocity));
+                            .then((res) => router.push(res.assets.velocity));
                     },
                 },
             ],
