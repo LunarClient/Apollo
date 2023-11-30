@@ -28,6 +28,7 @@ import com.lunarclient.apollo.api.ApiRequestType;
 import com.lunarclient.apollo.api.ApiServiceType;
 import com.lunarclient.apollo.api.response.VersionResponse;
 import lombok.Builder;
+import lombok.ToString;
 
 /**
  * Represents the apollo version request.
@@ -35,6 +36,7 @@ import lombok.Builder;
  * @since 1.0.0
  */
 @Builder
+@ToString
 public final class VersionRequest implements ApiRequest<VersionResponse> {
 
     @Override

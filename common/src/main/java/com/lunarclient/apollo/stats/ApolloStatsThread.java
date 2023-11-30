@@ -26,6 +26,7 @@ package com.lunarclient.apollo.stats;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.api.ApolloHttpManager;
 import com.lunarclient.apollo.api.request.ServerHeartbeatRequest;
 import com.lunarclient.apollo.option.Options;
 import java.lang.management.ManagementFactory;
@@ -57,6 +58,7 @@ public final class ApolloStatsThread extends Thread {
     @Override
     public void run() {
         for(;;) {
+            ServerHeartbeatRequest request = null;
             try {
                 ApolloPlatform platform = Apollo.getPlatform();
                 Options options = platform.getOptions();
@@ -90,17 +92,20 @@ public final class ApolloStatsThread extends Thread {
                         .totalPlayers(stats.getTotalPlayers());
                 }
 
-                ApolloManager.getHttpManager().request(requestBuilder.build())
-                    .onFailure(Throwable::printStackTrace);
+                final ServerHeartbeatRequest finalRequest = request = requestBuilder.build();
+
+                ApolloManager.getHttpManager().request(request)
+                    .onFailure(throwable -> ApolloHttpManager.handleError("Failed to send heartbeat!", throwable, finalRequest));
             } catch (Throwable e) {
-                e.printStackTrace();
+                ApolloHttpManager.handleError("Failed to create heartbeat!", e, request);
             }
 
             try {
                 Thread.sleep(HEARTBEAT_INTERVAL);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                ApolloHttpManager.handleError("Failed to sleep stats thread!", e, null);
             }
         }
     }
+
 }
