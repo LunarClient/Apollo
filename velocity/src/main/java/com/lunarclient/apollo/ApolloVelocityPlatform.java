@@ -26,13 +26,25 @@ package com.lunarclient.apollo;
 import com.google.inject.Inject;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
+import com.lunarclient.apollo.module.beam.BeamModule;
+import com.lunarclient.apollo.module.beam.BeamModuleImpl;
+import com.lunarclient.apollo.module.border.BorderModule;
+import com.lunarclient.apollo.module.border.BorderModuleImpl;
 import com.lunarclient.apollo.module.chat.ChatModule;
 import com.lunarclient.apollo.module.chat.ChatModuleImpl;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModuleImpl;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
+import com.lunarclient.apollo.module.entity.EntityModule;
+import com.lunarclient.apollo.module.entity.EntityModuleImpl;
+import com.lunarclient.apollo.module.hologram.HologramModule;
+import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
+import com.lunarclient.apollo.module.limb.LimbModule;
+import com.lunarclient.apollo.module.limb.LimbModuleImpl;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
+import com.lunarclient.apollo.module.nametag.NametagModule;
+import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
 import com.lunarclient.apollo.module.notification.NotificationModule;
 import com.lunarclient.apollo.module.notification.NotificationModuleImpl;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
@@ -40,12 +52,16 @@ import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
 import com.lunarclient.apollo.module.stopwatch.StopwatchModule;
 import com.lunarclient.apollo.module.stopwatch.StopwatchModuleImpl;
+import com.lunarclient.apollo.module.team.TeamModule;
+import com.lunarclient.apollo.module.team.TeamModuleImpl;
 import com.lunarclient.apollo.module.title.TitleModule;
 import com.lunarclient.apollo.module.title.TitleModuleImpl;
 import com.lunarclient.apollo.module.transfer.TransferModule;
 import com.lunarclient.apollo.module.transfer.TransferModuleImpl;
 import com.lunarclient.apollo.module.vignette.VignetteModule;
 import com.lunarclient.apollo.module.vignette.VignetteModuleImpl;
+import com.lunarclient.apollo.module.waypoint.WaypointModule;
+import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
@@ -136,25 +152,32 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         this.stats = new VelocityApolloStats();
         ApolloManager.bootstrap(this);
 
-        ApolloStatsManager statsManager = new ApolloStatsManager();
-        ApolloVersionManager versionManager = new ApolloVersionManager();
-
-        ApolloManager.loadConfiguration(this.dataDirectory);
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
+            .addModule(BeamModule.class, new BeamModuleImpl())
+            .addModule(BorderModule.class, new BorderModuleImpl())
             .addModule(ChatModule.class, new ChatModuleImpl())
             .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
             .addModule(CooldownModule.class, new CooldownModuleImpl())
+            .addModule(EntityModule.class, new EntityModuleImpl())
+            .addModule(HologramModule.class, new HologramModuleImpl())
+            .addModule(LimbModule.class, new LimbModuleImpl())
             .addModule(ModSettingModule.class)
+            .addModule(NametagModule.class, new NametagModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())
             .addModule(StopwatchModule.class, new StopwatchModuleImpl())
+            .addModule(TeamModule.class, new TeamModuleImpl())
             .addModule(TitleModule.class, new TitleModuleImpl())
             .addModule(TransferModule.class, new TransferModuleImpl())
-            .addModule(VignetteModule.class, new VignetteModuleImpl());
+            .addModule(VignetteModule.class, new VignetteModuleImpl())
+            .addModule(WaypointModule.class, new WaypointModuleImpl());
 
+        ApolloStatsManager statsManager = new ApolloStatsManager();
+        ApolloVersionManager versionManager = new ApolloVersionManager();
+
+        ApolloManager.loadConfiguration(this.dataDirectory);
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
-
         ApolloManager.saveConfiguration();
 
         this.server.getEventManager().register(this, new ApolloPlayerListener());

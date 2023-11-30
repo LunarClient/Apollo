@@ -23,7 +23,6 @@
  */
 package com.lunarclient.apollo.listener;
 
-import com.google.protobuf.Any;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloVelocityPlatform;
@@ -50,7 +49,7 @@ public final class ApolloPlayerListener {
      */
     @Subscribe
     public void onPlayerRegisterChannel(PlayerChannelRegisterEvent event) {
-        if(!event.getChannels().contains(ApolloVelocityPlatform.PLUGIN_CHANNEL)) {
+        if (!event.getChannels().contains(ApolloVelocityPlatform.PLUGIN_CHANNEL)) {
             return;
         }
 
@@ -59,22 +58,23 @@ public final class ApolloPlayerListener {
     }
 
     /**
-     * Handles registering players that join with Lunar Client.
+     * Handles Apollo messages players send from Lunar Client.
      *
      * @param event the event
      * @since 1.0.0
      */
     @Subscribe
     public void onPluginMessage(PluginMessageEvent event) {
-        if(!event.getIdentifier().equals(ApolloVelocityPlatform.PLUGIN_CHANNEL)) {
+        if (!event.getIdentifier().equals(ApolloVelocityPlatform.PLUGIN_CHANNEL)) {
             return;
         }
-        if(!(event.getSource() instanceof Player)) {
+
+        if (!(event.getSource() instanceof Player)) {
             return;
         }
 
         Player player = (Player) event.getSource();
-        this.handlePacket(player, event.getData());
+        ApolloManager.getNetworkManager().receivePacket(player.getUniqueId(), event.getData());
     }
 
     /**
@@ -89,13 +89,4 @@ public final class ApolloPlayerListener {
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
     }
 
-    private void handlePacket(Player player, byte[] bytes) {
-        Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
-            try {
-                ApolloManager.getNetworkManager().receivePacket(apolloPlayer, Any.parseFrom(bytes));
-            } catch (Throwable throwable) {
-                throw new RuntimeException(throwable);
-            }
-        });
-    }
 }
