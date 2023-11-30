@@ -23,14 +23,16 @@
  */
 package com.lunarclient.apollo.listener;
 
-import com.google.common.base.Charsets;
+import com.google.protobuf.Any;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.ApolloVelocityPlatform;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.wrapper.VelocityApolloPlayer;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
+import com.velocitypowered.api.event.player.PlayerChannelRegisterEvent;
 import com.velocitypowered.api.proxy.Player;
 
 /**
@@ -47,22 +49,32 @@ public final class ApolloPlayerListener {
      * @since 1.0.0
      */
     @Subscribe
+    public void onPlayerRegisterChannel(PlayerChannelRegisterEvent event) {
+        if(!event.getChannels().contains(ApolloVelocityPlatform.PLUGIN_CHANNEL)) {
+            return;
+        }
+
+        Player player = event.getPlayer();
+        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new VelocityApolloPlayer(player));
+    }
+
+    /**
+     * Handles registering players that join with Lunar Client.
+     *
+     * @param event the event
+     * @since 1.0.0
+     */
+    @Subscribe
     public void onPluginMessage(PluginMessageEvent event) {
-        if (!event.getIdentifier().getId().equals("REGISTER")) {
+        if(!event.getIdentifier().equals(ApolloVelocityPlatform.PLUGIN_CHANNEL)) {
             return;
         }
-
-        if (!(event.getSource() instanceof Player)) {
-            return;
-        }
-
-        String channels = new String(event.getData(), Charsets.UTF_8);
-        if (!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
+        if(!(event.getSource() instanceof Player)) {
             return;
         }
 
         Player player = (Player) event.getSource();
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new VelocityApolloPlayer(player));
+        this.handlePacket(player, event.getData());
     }
 
     /**
@@ -77,4 +89,13 @@ public final class ApolloPlayerListener {
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
     }
 
+    private void handlePacket(Player player, byte[] bytes) {
+        Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
+            try {
+                ApolloManager.getNetworkManager().receivePacket(apolloPlayer, Any.parseFrom(bytes));
+            } catch (Throwable throwable) {
+                throw new RuntimeException(throwable);
+            }
+        });
+    }
 }

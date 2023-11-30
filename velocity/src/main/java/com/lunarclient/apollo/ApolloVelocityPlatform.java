@@ -26,6 +26,26 @@ package com.lunarclient.apollo;
 import com.google.inject.Inject;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
+import com.lunarclient.apollo.module.chat.ChatModule;
+import com.lunarclient.apollo.module.chat.ChatModuleImpl;
+import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
+import com.lunarclient.apollo.module.coloredfire.ColoredFireModuleImpl;
+import com.lunarclient.apollo.module.cooldown.CooldownModule;
+import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
+import com.lunarclient.apollo.module.modsetting.ModSettingModule;
+import com.lunarclient.apollo.module.notification.NotificationModule;
+import com.lunarclient.apollo.module.notification.NotificationModuleImpl;
+import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
+import com.lunarclient.apollo.module.staffmod.StaffModModule;
+import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
+import com.lunarclient.apollo.module.stopwatch.StopwatchModule;
+import com.lunarclient.apollo.module.stopwatch.StopwatchModuleImpl;
+import com.lunarclient.apollo.module.title.TitleModule;
+import com.lunarclient.apollo.module.title.TitleModuleImpl;
+import com.lunarclient.apollo.module.transfer.TransferModule;
+import com.lunarclient.apollo.module.transfer.TransferModuleImpl;
+import com.lunarclient.apollo.module.vignette.VignetteModule;
+import com.lunarclient.apollo.module.vignette.VignetteModuleImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
@@ -120,6 +140,19 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         ApolloVersionManager versionManager = new ApolloVersionManager();
 
         ApolloManager.loadConfiguration(this.dataDirectory);
+        ((ApolloModuleManagerImpl) Apollo.getModuleManager())
+            .addModule(ChatModule.class, new ChatModuleImpl())
+            .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
+            .addModule(CooldownModule.class, new CooldownModuleImpl())
+            .addModule(ModSettingModule.class)
+            .addModule(NotificationModule.class, new NotificationModuleImpl())
+            .addModule(ServerRuleModule.class)
+            .addModule(StaffModModule.class, new StaffModModuleImpl())
+            .addModule(StopwatchModule.class, new StopwatchModuleImpl())
+            .addModule(TitleModule.class, new TitleModuleImpl())
+            .addModule(TransferModule.class, new TransferModuleImpl())
+            .addModule(VignetteModule.class, new VignetteModuleImpl());
+
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
 
         ApolloManager.saveConfiguration();
