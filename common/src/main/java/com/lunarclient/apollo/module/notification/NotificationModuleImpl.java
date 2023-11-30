@@ -39,13 +39,17 @@ public final class NotificationModuleImpl extends NotificationModule {
 
     @Override
     public void displayNotification(@NonNull Recipients recipients, @NonNull Notification notification) {
-        DisplayNotificationMessage message = DisplayNotificationMessage.newBuilder()
+        DisplayNotificationMessage.Builder builder = DisplayNotificationMessage.newBuilder()
             .setTitle(notification.getTitle())
             .setDescription(notification.getDescription())
-            .setResourceLocation(notification.getResourceLocation())
-            .setDisplayTime(NetworkTypes.toProtobuf(notification.getDisplayTime()))
-            .build();
+            .setDisplayTime(NetworkTypes.toProtobuf(notification.getDisplayTime()));
 
+        String resourceLocation = notification.getResourceLocation();
+        if (resourceLocation != null) {
+            builder.setResourceLocation(resourceLocation);
+        }
+
+        DisplayNotificationMessage message = builder.build();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 

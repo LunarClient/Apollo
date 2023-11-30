@@ -26,6 +26,7 @@ package com.lunarclient.apollo.module.notification;
 import java.time.Duration;
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a notification which can be shown on the client.
@@ -61,7 +62,7 @@ public final class Notification {
      * @return the notification resource location
      * @since 1.0.0
      */
-    String resourceLocation;
+    @Nullable String resourceLocation;
 
     /**
      * Returns the notification {@link Duration} display time.
