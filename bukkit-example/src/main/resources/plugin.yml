@@ -1,6 +1,6 @@
 name: Apollo-Example
 main: com.lunarclient.apollo.example.ApolloExamplePlugin
-version: 1.0.2
+version: 1.0.3
 author: Moonsworth
 depend: [ Apollo-Bukkit ]
 api-version: 1.13
