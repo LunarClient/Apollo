@@ -25,7 +25,11 @@ package com.lunarclient.apollo.module.evnt;
 
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.option.NumberOption;
+import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.SimpleOption;
 import com.lunarclient.apollo.recipients.Recipients;
+import io.leangen.geantyref.TypeToken;
 import org.jetbrains.annotations.ApiStatus;
 import java.util.List;
 
@@ -37,6 +41,130 @@ import java.util.List;
 @ApiStatus.NonExtendable
 @ModuleDefinition(id = "evnt", name = "EVNT")
 public abstract class EVNTModule extends ApolloModule {
+
+    public static final SimpleOption<Boolean> DISABLE_ENTITY_CRAMMING = Option.<Boolean>builder()
+        .comment("Set to 'true' to disable entity cramming, otherwise 'false'.")
+        .node("disable-entity-cramming").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    public static final SimpleOption<Boolean> DISABLE_ENDERPEARL_COOLDOWN = Option.<Boolean>builder()
+        .comment("Set to 'true' to disable enderpearl cooldown, otherwise 'false'.")
+        .node("disable-enderpearl-cooldown").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    public static final SimpleOption<Boolean> DISABLE_SWING_SOUNDS = Option.<Boolean>builder()
+        .comment("Set to 'true' to disable swing sounds, otherwise 'false'.")
+        .node("disable-swing-sounds").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    public static final SimpleOption<Boolean> DISABLE_SWEEP = Option.<Boolean>builder()
+        .comment("Set to 'true' to disable sweep, otherwise 'false'.")
+        .node("disable-sweep").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    public static final SimpleOption<Boolean> LEGACY_CRITS = Option.<Boolean>builder()
+        .comment("Set to 'true' to enable legacy crits, otherwise 'false'.")
+        .node("legacy-crits").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    public static final SimpleOption<Boolean> LEGACY_ATTACK_SPEED = Option.<Boolean>builder()
+        .comment("Set to 'true' to enable legacy attack speed, otherwise 'false'.")
+        .node("legacy-attack-speed").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    public static final SimpleOption<Boolean> LEGACY_ENCHANTING = Option.<Boolean>builder()
+        .comment("Set to 'true' to enable legacy enchanting, otherwise 'false'.")
+        .node("legacy-enchanting").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    public static final SimpleOption<Boolean> OVERRIDE_ARMOR_DURABILITY_REDUCTION = Option.<Boolean>builder()
+        .comment("Set to 'true' to override armor durability reduction, otherwise 'false'.")
+        .node("override-armor-durability-reduction").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    public static final NumberOption<Integer> ARMOR_DURABILITY_REDUCTION = Option.<Integer>number()
+        .comment("Set the armor durability reduction amount.")
+        .node("armor-durability-reduction").type(TypeToken.get(Integer.class))
+        .defaultValue(1).min(0).max(5).build();
+
+    public static final SimpleOption<Boolean> OVERRIDE_NO_DAMAGE_TICKS = Option.<Boolean>builder()
+        .comment("Set to 'true' to override no damage ticks, otherwise 'false'.")
+        .node("override-no-damage-ticks").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    public static final NumberOption<Integer> NO_DAMAGE_TICKS = Option.<Integer>number()
+        .comment("Set the no damage ticks amount.")
+        .node("no-damage-ticks").type(TypeToken.get(Integer.class))
+        .defaultValue(19).min(1).max(20).build();
+
+    public static final SimpleOption<Boolean> OVERRIDE_ATTACK_SPEED = Option.<Boolean>builder()
+        .comment("Set to 'true' to override attack speed, otherwise 'false'.")
+        .node("override-attack-speed").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    public static final NumberOption<Float> ATTACK_SPEED = Option.<Float>number()
+        .comment("Set the attack speed amount.")
+        .node("attack-speed").type(TypeToken.get(Float.class))
+        .defaultValue(16.0F).min(8.0F).max(32.0F).build();
+
+    public static final SimpleOption<Boolean> OVERRIDE_PROJECTILE_RANDOMNESS = Option.<Boolean>builder()
+        .comment("Set to 'true' to override projectile randomness, otherwise 'false'.")
+        .node("override-projectile-randomness").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    public static final NumberOption<Double> PROJECTILE_RANDOMNESS = Option.<Double>number()
+        .comment("Set the projectile randomness amount.")
+        .node("projectile-randomness").type(TypeToken.get(Double.class))
+        .defaultValue(0.1D).min(0.001D).max(1.0D).build();
+
+    public static final SimpleOption<Boolean> OVERRIDE_REGEN = Option.<Boolean>builder()
+        .comment("Set to 'true' to override regen, otherwise 'false'.")
+        .node("override-regen").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    public static final NumberOption<Integer> REGEN_INTERVAL = Option.<Integer>number()
+        .comment("Set the regen interval.")
+        .node("regen-interval").type(TypeToken.get(Integer.class))
+        .defaultValue(3900).min(1000).max(5000).build();
+
+    public static final NumberOption<Integer> REGEN_HEAL_AMOUNT = Option.<Integer>number()
+        .comment("Set the regen heal amount.")
+        .node("regen-heal-amount").type(TypeToken.get(Integer.class))
+        .defaultValue(1).min(0).max(5).build();
+
+    public static final NumberOption<Integer> REGEN_EXHAUSTION_HEAL_AMOUNT = Option.<Integer>number()
+        .comment("Set the regen exhaustion heal amount.")
+        .node("regen-exhaustion-heal-amount").type(TypeToken.get(Integer.class))
+        .defaultValue(3).min(0).max(5).build();
+
+    EVNTModule() {
+        this.registerOptions(
+            EVNTModule.DISABLE_ENTITY_CRAMMING,
+            EVNTModule.DISABLE_ENDERPEARL_COOLDOWN,
+            EVNTModule.DISABLE_SWING_SOUNDS,
+            EVNTModule.DISABLE_SWEEP,
+            EVNTModule.LEGACY_CRITS,
+            EVNTModule.LEGACY_ATTACK_SPEED,
+            EVNTModule.LEGACY_ENCHANTING,
+            EVNTModule.OVERRIDE_ARMOR_DURABILITY_REDUCTION,
+            EVNTModule.ARMOR_DURABILITY_REDUCTION,
+            EVNTModule.OVERRIDE_NO_DAMAGE_TICKS,
+            EVNTModule.NO_DAMAGE_TICKS,
+            EVNTModule.OVERRIDE_ATTACK_SPEED,
+            EVNTModule.ATTACK_SPEED,
+            EVNTModule.OVERRIDE_PROJECTILE_RANDOMNESS,
+            EVNTModule.PROJECTILE_RANDOMNESS,
+            EVNTModule.OVERRIDE_REGEN,
+            EVNTModule.REGEN_INTERVAL,
+            EVNTModule.REGEN_HEAL_AMOUNT,
+            EVNTModule.REGEN_EXHAUSTION_HEAL_AMOUNT
+        );
+    }
+
+    @Override
+    public boolean isClientNotify() {
+        return true;
+    }
 
     public abstract void overrideHeartTexture(Recipients recipients, int x, boolean hardcore);
 
