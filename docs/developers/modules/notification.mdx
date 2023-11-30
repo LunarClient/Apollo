@@ -31,21 +31,15 @@ private final Notification notification = Notification.builder()
 
 `.title(String)` is the title of the notification box. Char limit: `15`
 
-{/* Find out char limit & add screenshot of notification w/ title highlighted */}
-
 ```java
 .title("UHC Announcement")
 ```
 
 `.description(String)` is the description displayed inside the notification box. Char limit: `15`
 
-{/* Find out char limit & add screenshot of notification w/ desc highlighted */}
-
 ```java
 .description("UHC starts in 5 minutes...")
 ```
-
-{/* convert this to an icon instead of resourceLocation? */}
 
 `.resourceLocation(String)` is the resource location of the shown icon.
 
@@ -60,8 +54,6 @@ private final Notification notification = Notification.builder()
 ```
 
 If this field is left empty (null) it'll display a generic info icon, as displayed here.
-
-{/* insert screenshot of generic info icon */}
 
 ### Displaying a Notification for a specific player
 
