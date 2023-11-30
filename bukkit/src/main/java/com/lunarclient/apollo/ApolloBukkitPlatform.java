@@ -23,7 +23,6 @@
  */
 package com.lunarclient.apollo;
 
-import com.google.protobuf.Any;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
@@ -78,7 +77,6 @@ import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
@@ -140,7 +138,7 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         Messenger messenger = this.plugin.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
-            (channel, player, bytes) -> this.handlePacket(player, bytes)
+            (channel, player, bytes) -> ApolloManager.getNetworkManager().receivePacket(player.getUniqueId(), bytes)
         );
 
         statsManager.enable();
@@ -172,16 +170,6 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
     @Override
     public Logger getPlatformLogger() {
         return Bukkit.getServer().getLogger();
-    }
-
-    private void handlePacket(Player player, byte[] bytes) {
-        Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
-            try {
-                ApolloManager.getNetworkManager().receivePacket(apolloPlayer, Any.parseFrom(bytes));
-            } catch (Throwable throwable) {
-                throw new RuntimeException(throwable);
-            }
-        });
     }
 
 }

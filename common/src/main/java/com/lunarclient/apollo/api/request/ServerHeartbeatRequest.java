@@ -28,12 +28,14 @@ import com.lunarclient.apollo.api.ApiRequestType;
 import com.lunarclient.apollo.api.ApiServiceType;
 import com.lunarclient.apollo.api.response.ServerHeartbeatResponse;
 import lombok.Builder;
+import lombok.ToString;
 
 /**
  * Represents the apollo version request.
  *
  * @since 1.0.0
  */
+@ToString
 @Builder(toBuilder = true)
 public final class ServerHeartbeatRequest implements ApiRequest<ServerHeartbeatResponse> {
 

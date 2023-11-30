@@ -24,11 +24,14 @@
 package com.lunarclient.apollo.network;
 
 import com.google.protobuf.Any;
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.event.ApolloSendPacketEvent;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import java.util.UUID;
 import lombok.NoArgsConstructor;
 
 /**
@@ -73,6 +76,23 @@ public final class ApolloNetworkManager {
         for (Throwable throwable : result.getThrowing()) {
             throwable.printStackTrace();
         }
+    }
+
+    /**
+     * Receives a {@code byte[]} message packet from the provided player.
+     *
+     * @param player the player to receive the packet from
+     * @param bytes the message to receive
+     * @since 1.0.0
+     */
+    public void receivePacket(UUID player, byte[] bytes) {
+        Apollo.getPlayerManager().getPlayer(player).ifPresent(apolloPlayer -> {
+            try {
+                ApolloManager.getNetworkManager().receivePacket(apolloPlayer, Any.parseFrom(bytes));
+            } catch (Throwable throwable) {
+                throw new RuntimeException(throwable);
+            }
+        });
     }
 
 }

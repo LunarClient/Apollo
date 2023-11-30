@@ -26,6 +26,7 @@ package com.lunarclient.apollo.stats;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.api.ApolloHttpManager;
 import com.lunarclient.apollo.api.request.ServerStartRequest;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.option.Option;
@@ -110,58 +111,65 @@ public final class ApolloStatsManager {
     }
 
     private void handleServerStartStats() {
-        ApolloPlatform platform = Apollo.getPlatform();
-        Options options = platform.getOptions();
+        ServerStartRequest request = null;
+        try {
+            ApolloPlatform platform = Apollo.getPlatform();
+            Options options = platform.getOptions();
 
-        if (!options.get(ApolloStatsManager.SEND_STATS)) {
-            return;
+            if (!options.get(ApolloStatsManager.SEND_STATS)) {
+                return;
+            }
+
+            boolean serverStatistics = options.get(ApolloStatsManager.SERVER_STATISTICS);
+            boolean softwareInformation = options.get(ApolloStatsManager.SOFTWARE_INFORMATION);
+            boolean hardwareInformation = options.get(ApolloStatsManager.HARDWARE_INFORMATION);
+
+            if (!serverStatistics && !softwareInformation && !hardwareInformation) {
+                return;
+            }
+
+            ApolloStats stats = platform.getStats();
+            Runtime runtime = Runtime.getRuntime();
+
+            List<String> enabledModules = Apollo.getModuleManager().getModules().stream()
+                .filter(ApolloModule::isEnabled)
+                .map(ApolloModule::getId)
+                .collect(Collectors.toList());
+
+            ServerStartRequest.ServerStartRequestBuilder requestBuilder = ServerStartRequest.builder()
+                .serverInstallationId(options.get(ApolloStatsManager.INSTALLATION_ID).toString())
+                .serverSessionId(SESSION_ID);
+
+            if (serverStatistics) {
+                requestBuilder
+                    .plugins(stats.getPlugins())
+                    .onlineMode(stats.isOnlineMode())
+                    .platformType(platform.getKind().name())
+                    .platformSubtype(stats.getPlatformSubtype())
+                    .platformVersion(stats.getPlatformVersion())
+                    .modules(enabledModules);
+            }
+
+            if (softwareInformation) {
+                requestBuilder
+                    .javaVersion(System.getProperty("java.version"))
+                    .operatingSystem(System.getProperty("os.name"))
+                    .operatingSystemRelease(System.getProperty("os.version"));
+            }
+
+            if (hardwareInformation) {
+                requestBuilder
+                    .cpuArch(System.getProperty("os.arch"))
+                    .cpuCoreCount(runtime.availableProcessors());
+            }
+
+            final ServerStartRequest finalRequest = request = requestBuilder.build();
+
+            ApolloManager.getHttpManager().request(requestBuilder.build())
+                .onFailure(throwable -> ApolloHttpManager.handleError("Failed to send server start request!", throwable, finalRequest));
+        } catch (Throwable e) {
+            ApolloHttpManager.handleError("Failed to create server start request!", e, request);
         }
-
-        boolean serverStatistics = options.get(ApolloStatsManager.SERVER_STATISTICS);
-        boolean softwareInformation = options.get(ApolloStatsManager.SOFTWARE_INFORMATION);
-        boolean hardwareInformation = options.get(ApolloStatsManager.HARDWARE_INFORMATION);
-
-        if (!serverStatistics && !softwareInformation && !hardwareInformation) {
-            return;
-        }
-
-        ApolloStats stats = platform.getStats();
-        Runtime runtime = Runtime.getRuntime();
-
-        List<String> enabledModules = Apollo.getModuleManager().getModules().stream()
-            .filter(ApolloModule::isEnabled)
-            .map(ApolloModule::getId)
-            .collect(Collectors.toList());
-
-        ServerStartRequest.ServerStartRequestBuilder requestBuilder = ServerStartRequest.builder()
-            .serverInstallationId(options.get(ApolloStatsManager.INSTALLATION_ID).toString())
-            .serverSessionId(SESSION_ID);
-
-        if (serverStatistics) {
-            requestBuilder
-                .plugins(stats.getPlugins())
-                .onlineMode(stats.isOnlineMode())
-                .platformType(platform.getKind().name())
-                .platformSubtype(stats.getPlatformSubtype())
-                .platformVersion(stats.getPlatformVersion())
-                .modules(enabledModules);
-        }
-
-        if (softwareInformation) {
-            requestBuilder
-                .javaVersion(System.getProperty("java.version"))
-                .operatingSystem(System.getProperty("os.name"))
-                .operatingSystemRelease(System.getProperty("os.version"));
-        }
-
-        if (hardwareInformation) {
-            requestBuilder
-                .cpuArch(System.getProperty("os.arch"))
-                .cpuCoreCount(runtime.availableProcessors());
-        }
-
-        ApolloManager.getHttpManager().request(requestBuilder.build())
-            .onFailure(Throwable::printStackTrace);
     }
 
 }
