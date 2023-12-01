@@ -42,34 +42,14 @@ import java.util.List;
 @ModuleDefinition(id = "evnt", name = "EVNT")
 public abstract class EVNTModule extends ApolloModule {
 
-    public static final SimpleOption<Boolean> DISABLE_ENTITY_CRAMMING = Option.<Boolean>builder()
-        .comment("Set to 'true' to disable entity cramming, otherwise 'false'.")
-        .node("disable-entity-cramming").type(TypeToken.get(Boolean.class))
-        .defaultValue(false).notifyClient().build();
-
     public static final SimpleOption<Boolean> DISABLE_ENDERPEARL_COOLDOWN = Option.<Boolean>builder()
         .comment("Set to 'true' to disable enderpearl cooldown, otherwise 'false'.")
         .node("disable-enderpearl-cooldown").type(TypeToken.get(Boolean.class))
         .defaultValue(false).notifyClient().build();
 
-    public static final SimpleOption<Boolean> DISABLE_SWING_SOUNDS = Option.<Boolean>builder()
-        .comment("Set to 'true' to disable swing sounds, otherwise 'false'.")
-        .node("disable-swing-sounds").type(TypeToken.get(Boolean.class))
-        .defaultValue(false).build();
-
-    public static final SimpleOption<Boolean> DISABLE_SWEEP = Option.<Boolean>builder()
-        .comment("Set to 'true' to disable sweep, otherwise 'false'.")
-        .node("disable-sweep").type(TypeToken.get(Boolean.class))
-        .defaultValue(false).build();
-
     public static final SimpleOption<Boolean> DISABLE_PROJECTILE_DAMAGE = Option.<Boolean>builder()
         .comment("Set to 'true' to disable projectile damage, otherwise 'false'.")
         .node("override-projectile-damage").type(TypeToken.get(Boolean.class))
-        .defaultValue(false).build();
-
-    public static final SimpleOption<Boolean> LEGACY_CRITS = Option.<Boolean>builder()
-        .comment("Set to 'true' to enable legacy crits, otherwise 'false'.")
-        .node("legacy-crits").type(TypeToken.get(Boolean.class))
         .defaultValue(false).build();
 
     public static final SimpleOption<Boolean> LEGACY_ATTACK_SPEED = Option.<Boolean>builder()
@@ -144,12 +124,8 @@ public abstract class EVNTModule extends ApolloModule {
 
     EVNTModule() {
         this.registerOptions(
-            EVNTModule.DISABLE_ENTITY_CRAMMING,
             EVNTModule.DISABLE_ENDERPEARL_COOLDOWN,
-            EVNTModule.DISABLE_SWING_SOUNDS,
-            EVNTModule.DISABLE_SWEEP,
             EVNTModule.DISABLE_PROJECTILE_DAMAGE,
-            EVNTModule.LEGACY_CRITS,
             EVNTModule.LEGACY_ATTACK_SPEED,
             EVNTModule.LEGACY_ENCHANTING,
             EVNTModule.OVERRIDE_ARMOR_DURABILITY_REDUCTION,
