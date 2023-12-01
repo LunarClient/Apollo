@@ -62,6 +62,11 @@ public abstract class EVNTModule extends ApolloModule {
         .node("disable-sweep").type(TypeToken.get(Boolean.class))
         .defaultValue(false).build();
 
+    public static final SimpleOption<Boolean> DISABLE_PROJECTILE_DAMAGE = Option.<Boolean>builder()
+        .comment("Set to 'true' to disable projectile damage, otherwise 'false'.")
+        .node("override-projectile-damage").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
     public static final SimpleOption<Boolean> LEGACY_CRITS = Option.<Boolean>builder()
         .comment("Set to 'true' to enable legacy crits, otherwise 'false'.")
         .node("legacy-crits").type(TypeToken.get(Boolean.class))
@@ -143,6 +148,7 @@ public abstract class EVNTModule extends ApolloModule {
             EVNTModule.DISABLE_ENDERPEARL_COOLDOWN,
             EVNTModule.DISABLE_SWING_SOUNDS,
             EVNTModule.DISABLE_SWEEP,
+            EVNTModule.DISABLE_PROJECTILE_DAMAGE,
             EVNTModule.LEGACY_CRITS,
             EVNTModule.LEGACY_ATTACK_SPEED,
             EVNTModule.LEGACY_ENCHANTING,
