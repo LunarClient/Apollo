@@ -43,6 +43,8 @@ public final class EventGame {
 
     long gameStartTime;
 
+    long midRespawnTime;
+
     boolean witherShields;
 
     boolean lockGameTime;

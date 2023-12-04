@@ -43,4 +43,6 @@ public final class EventPlayer {
 
     float ultimatePercentage;
 
+    long respawnAt;
+
 }

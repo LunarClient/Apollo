@@ -165,8 +165,10 @@ public final class EVNTModuleImpl extends EVNTModule {
             .setTeamOneStatus(this.toProtobuf(game.getTeamOne()))
             .setTeamTwoStatus(this.toProtobuf(game.getTeamTwo()))
             .setTierThreeHealth(game.getTierThreeHealth())
+            .setGameStartTime(game.getGameStartTime())
             .setWitherShields(game.isWitherShields())
             .setLockGameTime(game.isLockGameTime())
+            .setMidRespawnTime(game.getMidRespawnTime())
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
@@ -223,6 +225,7 @@ public final class EVNTModuleImpl extends EVNTModule {
             .setPlayerUuid(NetworkTypes.toProtobuf(player.getPlayerUuid()))
             .setHealth(player.getHealth())
             .setUltimatePercentage(player.getUltimatePercentage())
+            .setRespawnAt(player.getRespawnAt())
             .build();
     }
 
