@@ -23,12 +23,17 @@
  */
 package com.lunarclient.apollo.module.evnt;
 
+import com.lunarclient.apollo.common.ApolloComponent;
+import com.lunarclient.apollo.evnt.v1.CharacterAbilityMessage;
 import com.lunarclient.apollo.evnt.v1.CloseGuiMessage;
 import com.lunarclient.apollo.evnt.v1.EventGameOverviewMessage;
+import com.lunarclient.apollo.evnt.v1.EventOverviewMessage;
+import com.lunarclient.apollo.evnt.v1.EventPlayerMessage;
 import com.lunarclient.apollo.evnt.v1.EventPlayerStatusMessage;
 import com.lunarclient.apollo.evnt.v1.EventStatusOverviewMessage;
 import com.lunarclient.apollo.evnt.v1.EventTeamStatusMessage;
 import com.lunarclient.apollo.evnt.v1.OpenGuiMessage;
+import com.lunarclient.apollo.evnt.v1.OverrideCharacterAbilityMessage;
 import com.lunarclient.apollo.evnt.v1.OverrideCharacterCosmeticMessage;
 import com.lunarclient.apollo.evnt.v1.OverrideCharacterMessage;
 import com.lunarclient.apollo.evnt.v1.OverrideCosmeticResourcesMessage;
@@ -37,6 +42,7 @@ import com.lunarclient.apollo.evnt.v1.ResetHeartTextureMessage;
 import com.lunarclient.apollo.evnt.v1.UpdateCosmeticsMessage;
 import com.lunarclient.apollo.module.evnt.event.EventGame;
 import com.lunarclient.apollo.module.evnt.event.EventPlayer;
+import com.lunarclient.apollo.module.evnt.event.EventPlayerStatus;
 import com.lunarclient.apollo.module.evnt.event.EventStatus;
 import com.lunarclient.apollo.module.evnt.event.EventTeam;
 import com.lunarclient.apollo.network.NetworkTypes;
@@ -133,6 +139,15 @@ public final class EVNTModuleImpl extends EVNTModule {
     }
 
     @Override
+    public void overrideCharacterAbility(@NonNull Recipients recipients, @NonNull List<CharacterAbility> abilities) {
+        OverrideCharacterAbilityMessage message = OverrideCharacterAbilityMessage.newBuilder()
+            .addAllAbilities(abilities.stream().map(this::toProtobuf).collect(Collectors.toList()))
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
     public void overrideCharacter(@NonNull Recipients recipients, @NonNull Character character) {
         OverrideCharacterMessage message = OverrideCharacterMessage.newBuilder()
             .setPlayerUuid(NetworkTypes.toProtobuf(character.getPlayerUuid()))
@@ -167,8 +182,28 @@ public final class EVNTModuleImpl extends EVNTModule {
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
+    @Override
+    public void updateEventOverview(@NonNull Recipients recipients, @NonNull List<EventPlayerStatus> playerStatuses) {
+        EventOverviewMessage message = EventOverviewMessage.newBuilder()
+            .addAllPlayers(playerStatuses.stream().map(this::toProtobuf).collect(Collectors.toList()))
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
     private com.lunarclient.apollo.evnt.v1.CharacterType toProtobuf(@NonNull CharacterType type) {
         return com.lunarclient.apollo.evnt.v1.CharacterType.forNumber(type.ordinal() + 1);
+    }
+
+    private com.lunarclient.apollo.evnt.v1.CharacterAbilityMessage toProtobuf(@NonNull CharacterAbility ability) {
+        List<String> abilities = ability.getAbilities().stream()
+            .map(ApolloComponent::toJson)
+            .collect(Collectors.toList());
+
+        return CharacterAbilityMessage.newBuilder()
+            .setCharacterType(this.toProtobuf(ability.getType()))
+            .addAllAbilitiesAdventure(abilities)
+            .build();
     }
 
     private com.lunarclient.apollo.evnt.v1.EventTeamStatusMessage toProtobuf(@NonNull EventTeam team) {
@@ -188,6 +223,15 @@ public final class EVNTModuleImpl extends EVNTModule {
             .setPlayerUuid(NetworkTypes.toProtobuf(player.getPlayerUuid()))
             .setHealth(player.getHealth())
             .setUltimatePercentage(player.getUltimatePercentage())
+            .build();
+    }
+
+    private com.lunarclient.apollo.evnt.v1.EventPlayerMessage toProtobuf(@NonNull EventPlayerStatus player) {
+        return EventPlayerMessage.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(player.getPlayerUuid()))
+            .setPlayerNameAdventure(ApolloComponent.toJson(player.getPlayerName()))
+            .setCharacterType(this.toProtobuf(player.getType()))
+            .setTeamOne(player.isTeamOne())
             .build();
     }
 
