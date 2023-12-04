@@ -25,6 +25,8 @@ package com.lunarclient.apollo.module.evnt;
 
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.module.evnt.event.EventGame;
+import com.lunarclient.apollo.module.evnt.event.EventStatus;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.SimpleOption;
@@ -32,6 +34,7 @@ import com.lunarclient.apollo.recipients.Recipients;
 import io.leangen.geantyref.TypeToken;
 import org.jetbrains.annotations.ApiStatus;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents the EVNT module.
@@ -160,6 +163,12 @@ public abstract class EVNTModule extends ApolloModule {
 
     public abstract void updateCosmetics(Recipients recipients, List<String> models, List<String> animations);
 
+    public abstract void overrideCharacterCosmetic(Recipients recipients, UUID playerUuid, CharacterType type);
+
     public abstract void overrideCharacter(Recipients recipients, Character character);
+
+    public abstract void updateGameOverview(Recipients recipients, EventGame game);
+
+    public abstract void updateStatusOverview(Recipients recipients, EventStatus status);
 
 }

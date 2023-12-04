@@ -24,18 +24,29 @@
 package com.lunarclient.apollo.module.evnt;
 
 import com.lunarclient.apollo.evnt.v1.CloseGuiMessage;
+import com.lunarclient.apollo.evnt.v1.EventGameOverviewMessage;
+import com.lunarclient.apollo.evnt.v1.EventPlayerStatusMessage;
+import com.lunarclient.apollo.evnt.v1.EventStatusOverviewMessage;
+import com.lunarclient.apollo.evnt.v1.EventTeamStatusMessage;
 import com.lunarclient.apollo.evnt.v1.OpenGuiMessage;
+import com.lunarclient.apollo.evnt.v1.OverrideCharacterCosmeticMessage;
 import com.lunarclient.apollo.evnt.v1.OverrideCharacterMessage;
 import com.lunarclient.apollo.evnt.v1.OverrideCosmeticResourcesMessage;
 import com.lunarclient.apollo.evnt.v1.OverrideHeartTextureMessage;
 import com.lunarclient.apollo.evnt.v1.ResetHeartTextureMessage;
 import com.lunarclient.apollo.evnt.v1.UpdateCosmeticsMessage;
+import com.lunarclient.apollo.module.evnt.event.EventGame;
+import com.lunarclient.apollo.module.evnt.event.EventPlayer;
+import com.lunarclient.apollo.module.evnt.event.EventStatus;
+import com.lunarclient.apollo.module.evnt.event.EventTeam;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Provides the EVNT module.
@@ -79,7 +90,7 @@ public final class EVNTModuleImpl extends EVNTModule {
     public void overrideCosmeticResources(@NonNull Recipients recipients, @NonNull CharacterResource resource) {
         OverrideCosmeticResourcesMessage.Builder builder = OverrideCosmeticResourcesMessage.newBuilder()
             .setPlayerUuid(NetworkTypes.toProtobuf(resource.getPlayerUuid()))
-            .setCharacterType(com.lunarclient.apollo.evnt.v1.CharacterType.forNumber(resource.getType().ordinal() + 1));
+            .setCharacterType(this.toProtobuf(resource.getType()));
 
         String modelPath = resource.getModelPath();
         String animationPath = resource.getAnimationPath();
@@ -112,15 +123,72 @@ public final class EVNTModuleImpl extends EVNTModule {
     }
 
     @Override
+    public void overrideCharacterCosmetic(@NonNull Recipients recipients, @NonNull UUID playerUuid, @NonNull CharacterType type) {
+        OverrideCharacterCosmeticMessage message = OverrideCharacterCosmeticMessage.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(playerUuid))
+            .setCharacterType(this.toProtobuf(type))
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
     public void overrideCharacter(@NonNull Recipients recipients, @NonNull Character character) {
         OverrideCharacterMessage message = OverrideCharacterMessage.newBuilder()
             .setPlayerUuid(NetworkTypes.toProtobuf(character.getPlayerUuid()))
-            .setCharacterType(com.lunarclient.apollo.evnt.v1.CharacterType.forNumber(character.getType().ordinal() + 1))
+            .setCharacterType(this.toProtobuf(character.getType()))
             .setColor(NetworkTypes.toProtobuf(character.getColor()))
             .setEquipped(character.isEquipped())
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void updateGameOverview(@NonNull Recipients recipients, @NonNull EventGame game) {
+        EventGameOverviewMessage message = EventGameOverviewMessage.newBuilder()
+            .setTeamOneStatus(this.toProtobuf(game.getTeamOne()))
+            .setTeamTwoStatus(this.toProtobuf(game.getTeamTwo()))
+            .setTierThreeHealth(game.getTierThreeHealth())
+            .setWitherShields(game.isWitherShields())
+            .setLockGameTime(game.isLockGameTime())
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void updateStatusOverview(@NonNull Recipients recipients, @NonNull EventStatus status) {
+        EventStatusOverviewMessage message = EventStatusOverviewMessage.newBuilder()
+            .addAllTeamOneStatus(status.getTeamOne().stream().map(this::toProtobuf).collect(Collectors.toList()))
+            .addAllTeamTwoStatus(status.getTeamTwo().stream().map(this::toProtobuf).collect(Collectors.toList()))
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    private com.lunarclient.apollo.evnt.v1.CharacterType toProtobuf(@NonNull CharacterType type) {
+        return com.lunarclient.apollo.evnt.v1.CharacterType.forNumber(type.ordinal() + 1);
+    }
+
+    private com.lunarclient.apollo.evnt.v1.EventTeamStatusMessage toProtobuf(@NonNull EventTeam team) {
+        return EventTeamStatusMessage.newBuilder()
+            .setTopWitherHealth(team.getTopWitherHealth())
+            .setTopCrystalHealth(team.getTopCrystalHealth())
+            .setMiddleWitherHealth(team.getMiddleWitherHealth())
+            .setMiddleCrystalHealth(team.getMiddleCrystalHealth())
+            .setBottomWitherHealth(team.getBottomWitherHealth())
+            .setBottomCrystalHealth(team.getBottomCrystalHealth())
+            .setDragonHealth(team.getDragonHealth())
+            .build();
+    }
+
+    private com.lunarclient.apollo.evnt.v1.EventPlayerStatusMessage toProtobuf(@NonNull EventPlayer player) {
+        return EventPlayerStatusMessage.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(player.getPlayerUuid()))
+            .setHealth(player.getHealth())
+            .setUltimatePercentage(player.getUltimatePercentage())
+            .build();
     }
 
 }
