@@ -27,11 +27,11 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * When activated, allows you to change your camera perspective while a button is pressed.
+ * Display a preview of the shulker box directly from your inventory.
  *
  * @since 1.0.0
  */
-public final class ModSnaplook {
+public final class ModShulkerPreview {
 
     /**
      * No documentation available.
@@ -39,33 +39,31 @@ public final class ModSnaplook {
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("snaplook", "enabled").type(TypeToken.get(Boolean.class))
+        .node("shulker-preview", "enabled").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
-     * When zoomed in the camera movement will move smoothly (cinematic camera).
+     * No documentation available.
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> SMOOTH_CAMERA = SimpleOption.<Boolean>builder()
-        .comment("When zoomed in the camera movement will move smoothly (cinematic camera)")
-        .node("snaplook", "smooth-camera").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> ALWAYS_PREVIEW = SimpleOption.<Boolean>builder()
+        .node("shulker-preview", "always-preview").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
-     * This feature uses press and hold by default. Useful if you want to bypass a certain camera orientation.
+     * No documentation available.
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> SNAPLOOK_TOGGLE_MODE = SimpleOption.<Boolean>builder()
-        .comment("This feature uses press and hold by default. Useful if you want to bypass a certain camera orientation.")
-        .node("snaplook", "snaplook-toggle-mode").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> COLORED_SHULKER_PREVIEW = SimpleOption.<Boolean>builder()
+        .node("shulker-preview", "colored-shulker-preview").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
-    private ModSnaplook() {
+    private ModShulkerPreview() {
     }
 
 }
