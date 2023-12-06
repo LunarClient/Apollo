@@ -78,17 +78,6 @@ public final class ModChat {
         .build();
 
     /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Float> CHAT_BACKGROUND_OPACITY = NumberOption.<Float>number()
-        .node("chat", "chat-background-opacity").type(TypeToken.get(Float.class))
-        .min(0.0F).max(1.0F)
-        .notifyClient()
-        .build();
-
-    /**
      * Show text shadow on chat lines.
      *
      * @since 1.0.0
@@ -120,34 +109,23 @@ public final class ModChat {
         .build();
 
     /**
-     * ENABLED: Completely hides filtered messages DISABLED: Replaces filtered words with asterisks.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> STOP_PROFANE_MESSAGES = SimpleOption.<Boolean>builder()
-        .comment("ENABLED: Completely hides filtered messages DISABLED: Replaces filtered words with asterisks")
-        .node("chat", "stop-profane-messages").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Float> INPUT_FIELD_OPACITY = NumberOption.<Float>number()
-        .node("chat", "input-field-opacity").type(TypeToken.get(Float.class))
-        .min(0.0F).max(10.0F)
-        .notifyClient()
-        .build();
-
-    /**
      * No documentation available.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> CHAT_PING_SOUND = SimpleOption.<Boolean>builder()
         .node("chat", "chat-ping-sound").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Copies the hovered chat message when holding the keybind and clicking.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> COPY_CHAT = SimpleOption.<Boolean>builder()
+        .comment("Copies the hovered chat message when holding the keybind and clicking.")
+        .node("chat", "copy-chat").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -169,6 +147,39 @@ public final class ModChat {
     public static final NumberOption<Integer> SMOOTH_CHAT_SPEED = NumberOption.<Integer>number()
         .node("chat", "smooth-chat-speed").type(TypeToken.get(Integer.class))
         .min(1).max(10)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final NumberOption<Float> CHAT_BACKGROUND_OPACITY = NumberOption.<Float>number()
+        .node("chat", "chat-background-opacity").type(TypeToken.get(Float.class))
+        .min(0.0F).max(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final NumberOption<Float> INPUT_FIELD_OPACITY = NumberOption.<Float>number()
+        .node("chat", "input-field-opacity").type(TypeToken.get(Float.class))
+        .min(0.0F).max(10.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * ENABLED: Completely hides filtered messages DISABLED: Replaces filtered words with asterisks.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> STOP_PROFANE_MESSAGES = SimpleOption.<Boolean>builder()
+        .comment("ENABLED: Completely hides filtered messages DISABLED: Replaces filtered words with asterisks")
+        .node("chat", "stop-profane-messages").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -243,17 +254,6 @@ public final class ModChat {
     public static final SimpleOption<Boolean> SHOW_BRACKETS = SimpleOption.<Boolean>builder()
         .comment("Adds square brackets around the timestamp")
         .node("chat", "show-brackets").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * Copies the hovered chat message when holding the keybind and clicking.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> COPY_CHAT = SimpleOption.<Boolean>builder()
-        .comment("Copies the hovered chat message when holding the keybind and clicking.")
-        .node("chat", "copy-chat").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
