@@ -50,30 +50,27 @@ public final class ApolloPlayerListener implements Listener {
      */
     @EventHandler
     public void onPluginMessage(PluginMessageEvent event) {
-        if (!(event.getReceiver() instanceof ProxiedPlayer)) {
+        if (!(event.getSender() instanceof ProxiedPlayer)) {
             return;
         }
 
-        if (!(event.getSender() instanceof Server)) {
+        if (!(event.getReceiver() instanceof Server)) {
             return;
         }
 
-        ProxiedPlayer player = (ProxiedPlayer) event.getReceiver();
+        ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
         String tag = event.getTag();
         byte[] data = event.getData();
 
-        if (tag.equalsIgnoreCase("REGISTER")) {
+        if (tag.equalsIgnoreCase("minecraft:register")) {
             String channels = new String(data, Charsets.UTF_8);
             if (!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
                 return;
             }
 
             ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new BungeeApolloPlayer(player));
-            return;
-        }
-
-        if (tag.equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
+        } else if (tag.equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
             ApolloManager.getNetworkManager().receivePacket(player.getUniqueId(), data);
         }
     }
