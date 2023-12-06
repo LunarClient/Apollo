@@ -86,6 +86,9 @@ import com.lunarclient.apollo.mods.impl.ModShinyPots;
 import com.lunarclient.apollo.mods.impl.ModShulkerPreview;
 import com.lunarclient.apollo.mods.impl.ModSnaplook;
 import com.lunarclient.apollo.mods.impl.ModSoundChanger;
+import com.lunarclient.apollo.mods.impl.ModStatusSideOverlayLeftHudMod;
+import com.lunarclient.apollo.mods.impl.ModStatusSideOverlayRightHudMod;
+import com.lunarclient.apollo.mods.impl.ModStatusTopOverlayHudMod;
 import com.lunarclient.apollo.mods.impl.ModStopwatch;
 import com.lunarclient.apollo.mods.impl.ModTab;
 import com.lunarclient.apollo.mods.impl.ModTeamView;
@@ -115,6 +118,9 @@ public final class Mods {
      * @since 1.0.0
      */
     public static final List<Class<?>> ALL_MODS = Arrays.asList(
+            ModStatusTopOverlayHudMod.class,
+            ModStatusSideOverlayLeftHudMod.class,
+            ModStatusSideOverlayRightHudMod.class,
             ModReplaymod.class,
             ModOneSevenVisuals.class,
             ModFps.class,
