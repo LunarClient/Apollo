@@ -21,54 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.notification;
+package com.lunarclient.apollo.mods.impl;
 
-import java.time.Duration;
-import lombok.Builder;
-import lombok.Getter;
-import org.jetbrains.annotations.Nullable;
+import com.lunarclient.apollo.option.SimpleOption;
+import io.leangen.geantyref.TypeToken;
 
 /**
- * Represents a notification which can be shown on the client.
+ * Display a preview of the shulker box directly from your inventory.
  *
- * @since 1.0.0
+ * @since 1.0.4
  */
-@Getter
-@Builder
-public final class Notification {
+public final class ModShulkerPreview {
 
     /**
-     * Returns the notification {@link String} title.
+     * No documentation available.
      *
-     * @return the notification title
-     * @since 1.0.0
+     * @since 1.0.4
      */
-    String title;
+    public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
+        .node("shulker-preview", "enabled").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
 
     /**
-     * Returns the notification {@link String} description.
+     * No documentation available.
      *
-     * @return the notification description
-     * @since 1.0.0
+     * @since 1.0.4
      */
-    String description;
+    public static final SimpleOption<Boolean> ALWAYS_PREVIEW = SimpleOption.<Boolean>builder()
+        .node("shulker-preview", "always-preview").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
 
     /**
-     * Returns the notification {@link String} resource location.
+     * No documentation available.
      *
-     * <p>Represents an icon that will appear for the player
-     * if empty (null) it'll display a generic info message</p>
-     *
-     * @return the notification resource location
-     * @since 1.0.0
+     * @since 1.0.4
      */
-    @Nullable String resourceLocation;
+    public static final SimpleOption<Boolean> COLORED_SHULKER_PREVIEW = SimpleOption.<Boolean>builder()
+        .node("shulker-preview", "colored-shulker-preview").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
 
-    /**
-     * Returns the notification {@link Duration} display time.
-     *
-     * @return the notification display time
-     * @since 1.0.0
-     */
-    Duration displayTime;
+    private ModShulkerPreview() {
+    }
+
 }

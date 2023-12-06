@@ -83,6 +83,7 @@ import com.lunarclient.apollo.mods.impl.ModScreenshot;
 import com.lunarclient.apollo.mods.impl.ModScrollableTooltips;
 import com.lunarclient.apollo.mods.impl.ModServerAddress;
 import com.lunarclient.apollo.mods.impl.ModShinyPots;
+import com.lunarclient.apollo.mods.impl.ModShulkerPreview;
 import com.lunarclient.apollo.mods.impl.ModSnaplook;
 import com.lunarclient.apollo.mods.impl.ModSoundChanger;
 import com.lunarclient.apollo.mods.impl.ModStopwatch;
@@ -142,6 +143,7 @@ public final class Mods {
             ModChat.class,
             ModTab.class,
             ModNametag.class,
+            ModShulkerPreview.class,
             ModScrollableTooltips.class,
             ModUhcOverlay.class,
             ModParticleChanger.class,

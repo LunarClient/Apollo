@@ -65,17 +65,17 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
      */
     public void addPlayer(@NonNull ApolloPlayer player) {
         if (this.players.putIfAbsent(player.getUniqueId(), player) == null) {
-            EventBus.EventResult<ApolloRegisterPlayerEvent> result = EventBus.getBus()
-                .post(new ApolloRegisterPlayerEvent(player));
-            for (Throwable throwable : result.getThrowing()) {
-                throwable.printStackTrace();
-            }
-
             NetworkOptions.sendOptions(
                 Apollo.getModuleManager().getModules(),
                 true,
                 player
             );
+
+            EventBus.EventResult<ApolloRegisterPlayerEvent> result = EventBus.getBus()
+                .post(new ApolloRegisterPlayerEvent(player));
+            for (Throwable throwable : result.getThrowing()) {
+                throwable.printStackTrace();
+            }
         }
     }
 
