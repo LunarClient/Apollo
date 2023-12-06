@@ -29,6 +29,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.EnumMap;
 import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.loader.HeaderMode;
 import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
@@ -50,7 +51,7 @@ public final class ApolloConfig {
      * @since 1.0.0
      */
     public static ApolloConfig compute(Path path, ConfigTarget target) {
-        return ApolloConfig.CONFIGS.computeIfAbsent(target, key -> new ApolloConfig(path, key.getFileName()));
+        return ApolloConfig.CONFIGS.computeIfAbsent(target, key -> new ApolloConfig(path, key));
     }
 
     /**
@@ -82,14 +83,18 @@ public final class ApolloConfig {
      * Constructs a new {@link ApolloConfig} with the given path and name.
      *
      * @param path the path to the configuration directory
-     * @param name the file name
+     * @param target the config target
      * @since 1.0.0
      */
-    ApolloConfig(Path path, String name) {
+    ApolloConfig(Path path, ConfigTarget target) {
         this.loader = YamlConfigurationLoader.builder()
             .nodeStyle(NodeStyle.BLOCK)
-            .path(path.resolve(name))
-            .defaultOptions(options -> options.serializers(builder -> builder.registerAll(Serializers.serializers())))
+            .path(path.resolve(target.getFileName()))
+            .headerMode(HeaderMode.PRESET)
+            .defaultOptions(options -> options
+                .serializers(builder -> builder.registerAll(Serializers.serializers()))
+                .header(target.getHeaderComment())
+            )
             .build();
     }
 
