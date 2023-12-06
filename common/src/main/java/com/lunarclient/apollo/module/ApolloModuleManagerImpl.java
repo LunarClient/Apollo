@@ -158,8 +158,6 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
                 ApolloConfig config = ApolloConfig.get(configTarget);
 
                 CommentedConfigurationNode node = config.node();
-                node.comment(configTarget.getHeaderComment());
-
                 CommentedConfigurationNode modules = node.node((Object[]) configTarget.getModulesNode());
                 CommentedConfigurationNode moduleNode = modules.node(module.getId().toLowerCase(Locale.ENGLISH));
 
