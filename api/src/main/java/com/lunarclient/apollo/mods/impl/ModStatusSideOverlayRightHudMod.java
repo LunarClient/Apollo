@@ -30,14 +30,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * A mod class.
  *
- * @since 1.0.0
+ * @since 1.0.4
  */
 public final class ModStatusSideOverlayRightHudMod {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.0.4
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("status-side-overlay-right-hud-mod", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModStatusSideOverlayRightHudMod {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.0.4
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("status-side-overlay-right-hud-mod", "scale").type(TypeToken.get(Float.class))
