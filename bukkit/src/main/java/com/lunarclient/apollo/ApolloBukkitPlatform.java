@@ -148,7 +148,7 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
     public void onDisable() {
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
 
-        ApolloManager.saveConfiguration();
+        //ApolloManager.saveConfiguration();
     }
 
     @Override
