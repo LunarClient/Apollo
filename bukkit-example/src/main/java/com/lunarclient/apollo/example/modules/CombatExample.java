@@ -21,37 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.api.request;
+package com.lunarclient.apollo.example.modules;
 
-import com.lunarclient.apollo.api.ApiRequest;
-import com.lunarclient.apollo.api.ApiRequestType;
-import com.lunarclient.apollo.api.ApiServiceType;
-import com.lunarclient.apollo.api.response.VersionResponse;
-import lombok.Builder;
-import lombok.ToString;
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.module.combat.CombatModule;
 
-/**
- * Represents the apollo version request.
- *
- * @since 1.0.0
- */
-@Builder
-@ToString
-public final class VersionRequest implements ApiRequest<VersionResponse> {
+public class CombatExample {
 
-    @Override
-    public ApiServiceType getService() {
-        return ApiServiceType.API;
-    }
+    private final CombatModule combatModule = Apollo.getModuleManager().getModule(CombatModule.class);
 
-    @Override
-    public ApiRequestType getType() {
-        return ApiRequestType.GET;
-    }
-
-    @Override
-    public String getRoute() {
-        return "updates";
+    public void setDisableMissPenalty(boolean value) {
+        this.combatModule.getOptions().set(CombatModule.DISABLE_MISS_PENALTY, value);
     }
 
 }

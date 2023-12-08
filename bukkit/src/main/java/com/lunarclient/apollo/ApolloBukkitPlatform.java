@@ -23,7 +23,6 @@
  */
 package com.lunarclient.apollo;
 
-import com.google.protobuf.Any;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
@@ -32,8 +31,11 @@ import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
 import com.lunarclient.apollo.module.border.BorderModule;
 import com.lunarclient.apollo.module.border.BorderModuleImpl;
+import com.lunarclient.apollo.module.chat.ChatModule;
+import com.lunarclient.apollo.module.chat.ChatModuleImpl;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModuleImpl;
+import com.lunarclient.apollo.module.combat.CombatModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
 import com.lunarclient.apollo.module.entity.EntityModule;
@@ -76,7 +78,6 @@ import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
@@ -108,7 +109,9 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
             .addModule(BeamModule.class, new BeamModuleImpl())
             .addModule(BorderModule.class, new BorderModuleImpl())
+            .addModule(ChatModule.class, new ChatModuleImpl())
             .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
+            .addModule(CombatModule.class)
             .addModule(CooldownModule.class, new CooldownModuleImpl())
             .addModule(EntityModule.class, new EntityModuleImpl())
             .addModule(GlowModule.class, new GlowModuleImpl())
@@ -137,7 +140,7 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         Messenger messenger = this.plugin.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
-            (channel, player, bytes) -> this.handlePacket(player, bytes)
+            (channel, player, bytes) -> ApolloManager.getNetworkManager().receivePacket(player.getUniqueId(), bytes)
         );
 
         statsManager.enable();
@@ -169,16 +172,6 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
     @Override
     public Logger getPlatformLogger() {
         return Bukkit.getServer().getLogger();
-    }
-
-    private void handlePacket(Player player, byte[] bytes) {
-        Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
-            try {
-                ApolloManager.getNetworkManager().receivePacket(apolloPlayer, Any.parseFrom(bytes));
-            } catch (Throwable throwable) {
-                throw new RuntimeException(throwable);
-            }
-        });
     }
 
 }

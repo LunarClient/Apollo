@@ -69,6 +69,16 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
+     * @since 1.0.4
+     */
+    public static final SimpleOption<Boolean> SHOW_COSMETICS = SimpleOption.<Boolean>builder()
+        .node("waila", "show-cosmetics").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()

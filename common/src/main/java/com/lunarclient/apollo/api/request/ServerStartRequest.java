@@ -30,12 +30,14 @@ import com.lunarclient.apollo.api.response.ServerStartResponse;
 import com.lunarclient.apollo.stats.ApolloPluginDescription;
 import java.util.List;
 import lombok.Builder;
+import lombok.ToString;
 
 /**
  * Represents the apollo version request.
  *
  * @since 1.0.0
  */
+@ToString
 @Builder(toBuilder = true)
 public final class ServerStartRequest implements ApiRequest<ServerStartResponse> {
 

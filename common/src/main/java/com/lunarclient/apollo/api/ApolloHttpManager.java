@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.api;
 
+import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.async.Future;
 import com.lunarclient.apollo.async.future.UncertainFuture;
@@ -35,6 +36,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Manages Apollo http requests & responses.
@@ -65,7 +69,6 @@ public final class ApolloHttpManager {
      * @param <T> The type of ApiResponse associated with this request.
      * @param request The API request to be sent.
      * @return A {@link Future} representing the result of the API request.
-     *
      * @since 1.0.0
      */
     public <T extends ApiResponse> Future<T> request(ApiRequest<T> request) {
@@ -93,45 +96,69 @@ public final class ApolloHttpManager {
                     }
 
                     int responseCode = connection.getResponseCode();
-                    if (responseCode != HttpURLConnection.HTTP_OK) {
-                        Throwable error = new Throwable(String.format(
-                            "Failed to send %s responded with code %d",
-                            request.getClass().getSimpleName(), responseCode
-                        ));
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        T response;
+                        String rawResponse;
+                        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                            rawResponse = in.readLine();
+                            response = ApolloManager.GSON.fromJson(rawResponse, responseType);
+                        }
 
-                        future.handleFailure(error);
-                        return;
+                        if (response == null) {
+                            Throwable error = new Throwable(String.format(
+                                "Failed to parse %s with output %s",
+                                responseType.getTypeName(), rawResponse)
+                            );
+
+                            future.handleFailure(error);
+                            return;
+                        }
+
+                        future.handleSuccess(response);
+                    } else {
+                        String rawResponse;
+                        StringBuilder response = new StringBuilder();
+                        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
+                            while((rawResponse = in.readLine()) != null) {
+                                response.append(rawResponse);
+                            }
+                        }
+
+                        future.handleFailure(new Throwable(String.format(
+                            "Failed to send %s with output %s",
+                            responseType.getTypeName(), response
+                        )));
                     }
-
-                    T response;
-                    String rawResponse;
-                    try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                        rawResponse = in.readLine();
-                        response = ApolloManager.GSON.fromJson(rawResponse, responseType);
-                    }
-
-                    if (response == null) {
-                        Throwable error = new Throwable(String.format(
-                            "Failed to parse %s with output %s",
-                            responseType.getTypeName(), rawResponse)
-                        );
-
-                        future.handleFailure(error);
-                        return;
-                    }
-
-                    future.handleSuccess(response);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    ApolloHttpManager.handleError("Failed to parse request!", e, request);
                 } finally {
                     connection.disconnect();
                 }
             } catch (Throwable t) {
-                t.printStackTrace();
+                ApolloHttpManager.handleError("Failed to open connection!", t, request);
             }
         });
 
         return future;
+    }
+
+    /**
+     * Handles an error that occurred while sending an API request.
+     *
+     * @param message The error message.
+     * @param throwable The error.
+     * @param request The API request.
+     * @since 1.0.0
+     */
+    public static void handleError(String message, Throwable throwable, @Nullable ApiRequest<?> request) {
+        Logger logger = Apollo.getPlatform().getPlatformLogger();
+        if (request == null) {
+            logger.log(Level.SEVERE, message, throwable);
+            return;
+        }
+
+        logger.severe(message);
+        logger.log(Level.SEVERE, String.format("%s (%s) [%s]: %s", request.getClass().getSimpleName(), request.getRoute(), request.getType(), request), throwable);
     }
 
 }

@@ -21,37 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.api.request;
+package com.lunarclient.apollo.module.chat;
 
-import com.lunarclient.apollo.api.ApiRequest;
-import com.lunarclient.apollo.api.ApiRequestType;
-import com.lunarclient.apollo.api.ApiServiceType;
-import com.lunarclient.apollo.api.response.VersionResponse;
-import lombok.Builder;
-import lombok.ToString;
+import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.recipients.Recipients;
+import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Represents the apollo version request.
+ * Represents the chat module.
  *
- * @since 1.0.0
+ * @since 1.0.2
  */
-@Builder
-@ToString
-public final class VersionRequest implements ApiRequest<VersionResponse> {
+@ApiStatus.NonExtendable
+@ModuleDefinition(id = "chat", name = "Chat")
+public abstract class ChatModule extends ApolloModule {
 
-    @Override
-    public ApiServiceType getService() {
-        return ApiServiceType.API;
-    }
+    /**
+     * Displays the message to the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param text       the text to display
+     * @param messageId  the message id to update
+     * @since 1.0.2
+     */
+    public abstract void displayLiveChatMessage(Recipients recipients, Component text, int messageId);
 
-    @Override
-    public ApiRequestType getType() {
-        return ApiRequestType.GET;
-    }
-
-    @Override
-    public String getRoute() {
-        return "updates";
-    }
+    /**
+     * Removes the message from the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param messageId  the message id to update
+     * @since 1.0.2
+     */
+    public abstract void removeLiveChatMessage(Recipients recipients, int messageId);
 
 }

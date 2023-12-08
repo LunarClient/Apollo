@@ -158,10 +158,8 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
                 ApolloConfig config = ApolloConfig.get(configTarget);
 
                 CommentedConfigurationNode node = config.node();
-                node.comment(configTarget.getHeaderComment());
-
                 CommentedConfigurationNode modules = node.node((Object[]) configTarget.getModulesNode());
-                CommentedConfigurationNode moduleNode = modules.node(module.getId().toLowerCase(Locale.ENGLISH));
+                CommentedConfigurationNode moduleNode = modules.node(module.getId().toLowerCase(Locale.ROOT));
 
                 Options optionsContainer = module.getOptions();
                 ConfigOptions.saveOptions(optionsContainer, moduleNode, module.getOptionKeys());
@@ -177,7 +175,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         CommentedConfigurationNode node = config.node();
 
         CommentedConfigurationNode modules = node.node((Object[]) configTarget.getModulesNode());
-        CommentedConfigurationNode moduleNode = modules.node(module.getId().toLowerCase(Locale.ENGLISH));
+        CommentedConfigurationNode moduleNode = modules.node(module.getId().toLowerCase(Locale.ROOT));
         if (moduleNode.virtual()) {
             return;
         }

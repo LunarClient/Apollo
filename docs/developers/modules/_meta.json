@@ -1,7 +1,9 @@
 {
     "beam": "Beam",
     "border": "Border",
+    "chat": "Chat",
     "coloredfire": "Colored Fire",
+    "combat": "Combat",
     "cooldown": "Cooldown",
     "entity": "Entity",
     "glow": "Glow",

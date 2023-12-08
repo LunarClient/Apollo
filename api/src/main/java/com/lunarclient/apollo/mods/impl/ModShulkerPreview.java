@@ -21,37 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.api.request;
+package com.lunarclient.apollo.mods.impl;
 
-import com.lunarclient.apollo.api.ApiRequest;
-import com.lunarclient.apollo.api.ApiRequestType;
-import com.lunarclient.apollo.api.ApiServiceType;
-import com.lunarclient.apollo.api.response.VersionResponse;
-import lombok.Builder;
-import lombok.ToString;
+import com.lunarclient.apollo.option.SimpleOption;
+import io.leangen.geantyref.TypeToken;
 
 /**
- * Represents the apollo version request.
+ * Display a preview of the shulker box directly from your inventory.
  *
- * @since 1.0.0
+ * @since 1.0.4
  */
-@Builder
-@ToString
-public final class VersionRequest implements ApiRequest<VersionResponse> {
+public final class ModShulkerPreview {
 
-    @Override
-    public ApiServiceType getService() {
-        return ApiServiceType.API;
-    }
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.4
+     */
+    public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
+        .node("shulker-preview", "enabled").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
 
-    @Override
-    public ApiRequestType getType() {
-        return ApiRequestType.GET;
-    }
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.4
+     */
+    public static final SimpleOption<Boolean> ALWAYS_PREVIEW = SimpleOption.<Boolean>builder()
+        .node("shulker-preview", "always-preview").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
 
-    @Override
-    public String getRoute() {
-        return "updates";
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.4
+     */
+    public static final SimpleOption<Boolean> COLORED_SHULKER_PREVIEW = SimpleOption.<Boolean>builder()
+        .node("shulker-preview", "colored-shulker-preview").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    private ModShulkerPreview() {
     }
 
 }

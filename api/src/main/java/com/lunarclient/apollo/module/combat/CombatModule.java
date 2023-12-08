@@ -21,37 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.api.request;
+package com.lunarclient.apollo.module.combat;
 
-import com.lunarclient.apollo.api.ApiRequest;
-import com.lunarclient.apollo.api.ApiRequestType;
-import com.lunarclient.apollo.api.ApiServiceType;
-import com.lunarclient.apollo.api.response.VersionResponse;
-import lombok.Builder;
-import lombok.ToString;
+import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.SimpleOption;
+import io.leangen.geantyref.TypeToken;
 
 /**
- * Represents the apollo version request.
+ * Represents the combat module.
  *
- * @since 1.0.0
+ * @since 1.0.4
  */
-@Builder
-@ToString
-public final class VersionRequest implements ApiRequest<VersionResponse> {
+@ModuleDefinition(id = "combat", name = "Combat")
+public final class CombatModule extends ApolloModule {
 
-    @Override
-    public ApiServiceType getService() {
-        return ApiServiceType.API;
+    /**
+     * Whether the player gets a hit delay for a missed hit.
+     *
+     * @since 1.0.4
+     */
+    public static final SimpleOption<Boolean> DISABLE_MISS_PENALTY = Option.<Boolean>builder()
+        .comment("Set to 'true' to disable the hit delay on 1.8, otherwise 'false'.")
+        .node("competitive-game").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    CombatModule() {
+        this.registerOptions(
+            CombatModule.DISABLE_MISS_PENALTY
+        );
     }
 
     @Override
-    public ApiRequestType getType() {
-        return ApiRequestType.GET;
-    }
-
-    @Override
-    public String getRoute() {
-        return "updates";
+    public boolean isClientNotify() {
+        return true;
     }
 
 }

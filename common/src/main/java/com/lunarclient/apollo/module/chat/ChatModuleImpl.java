@@ -21,41 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.notification;
+package com.lunarclient.apollo.module.chat;
 
-import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.notification.v1.DisplayNotificationMessage;
-import com.lunarclient.apollo.notification.v1.ResetNotificationsMessage;
+import com.lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage;
+import com.lunarclient.apollo.chat.v1.RemoveLiveChatMessageMessage;
+import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
+import net.kyori.adventure.text.Component;
 
 /**
- * Provides the notifications module.
+ * Provides the chat module.
  *
- * @since 1.0.0
+ * @since 1.0.2
  */
-public final class NotificationModuleImpl extends NotificationModule {
+public final class ChatModuleImpl extends ChatModule {
 
     @Override
-    public void displayNotification(@NonNull Recipients recipients, @NonNull Notification notification) {
-        DisplayNotificationMessage.Builder builder = DisplayNotificationMessage.newBuilder()
-            .setTitle(notification.getTitle())
-            .setDescription(notification.getDescription())
-            .setDisplayTime(NetworkTypes.toProtobuf(notification.getDisplayTime()));
+    public void displayLiveChatMessage(@NonNull Recipients recipients, @NonNull Component text, int messageId) {
+        DisplayLiveChatMessageMessage message = DisplayLiveChatMessageMessage.newBuilder()
+            .setAdventureJsonLines(ApolloComponent.toJson(text))
+            .setMessageId(messageId)
+            .build();
 
-        String resourceLocation = notification.getResourceLocation();
-        if (resourceLocation != null) {
-            builder.setResourceLocation(resourceLocation);
-        }
-
-        DisplayNotificationMessage message = builder.build();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void resetNotifications(@NonNull Recipients recipients) {
-        ResetNotificationsMessage message = ResetNotificationsMessage.getDefaultInstance();
+    public void removeLiveChatMessage(@NonNull Recipients recipients, int messageId) {
+        RemoveLiveChatMessageMessage message = RemoveLiveChatMessageMessage.newBuilder()
+            .setMessageId(messageId)
+            .build();
+
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 

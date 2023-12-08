@@ -21,37 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.api.request;
+package com.lunarclient.apollo.example.modules;
 
-import com.lunarclient.apollo.api.ApiRequest;
-import com.lunarclient.apollo.api.ApiRequestType;
-import com.lunarclient.apollo.api.ApiServiceType;
-import com.lunarclient.apollo.api.response.VersionResponse;
-import lombok.Builder;
-import lombok.ToString;
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.module.chat.ChatModule;
+import com.lunarclient.apollo.recipients.Recipients;
+import java.util.concurrent.ThreadLocalRandom;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
-/**
- * Represents the apollo version request.
- *
- * @since 1.0.0
- */
-@Builder
-@ToString
-public final class VersionRequest implements ApiRequest<VersionResponse> {
+public class ChatExample {
 
-    @Override
-    public ApiServiceType getService() {
-        return ApiServiceType.API;
+    private final ChatModule chatModule = Apollo.getModuleManager().getModule(ChatModule.class);
+
+    private final int messageId = ThreadLocalRandom.current().nextInt(100);
+    private int countdown = 5;
+
+    public void displayLiveChatMessageExample() {
+        this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
+            Component.text("Game starting in ", NamedTextColor.GREEN)
+                .append(Component.text(this.countdown, NamedTextColor.BLUE)),
+            this.messageId
+        );
+
+        if (--this.countdown == 0) {
+            this.countdown = 5;
+        }
     }
 
-    @Override
-    public ApiRequestType getType() {
-        return ApiRequestType.GET;
-    }
-
-    @Override
-    public String getRoute() {
-        return "updates";
+    public void removeLiveChatMessageExample() {
+        this.chatModule.removeLiveChatMessage(Recipients.ofEveryone(), this.messageId);
     }
 
 }
