@@ -20,6 +20,8 @@ commands:
         description: "Cooldowns!"
     entity:
         description: "Entity!"
+    evnt:
+        description: "EVNT!"
     hologram:
         description: "Holograms!"
     limb:
