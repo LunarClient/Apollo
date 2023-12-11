@@ -17,7 +17,6 @@ dependencies {
     "shade"(libs.geantyref)
 
     "bukkit"(main.output)
-    "bukkit"(libs.bukkit.api)
     "bukkit"(libs.bukkit)
 
     "bungee"(main.output)

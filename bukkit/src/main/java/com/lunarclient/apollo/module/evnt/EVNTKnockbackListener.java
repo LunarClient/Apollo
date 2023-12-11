@@ -23,14 +23,21 @@
  */
 package com.lunarclient.apollo.module.evnt;
 
+import com.google.common.base.Functions;
+import com.google.common.collect.ImmutableMap;
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.ApolloBukkitPlatform;
-import java.util.Map;
-import java.util.UUID;
-import java.util.WeakHashMap;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FishHook;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,11 +48,17 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.Vector;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.WeakHashMap;
 
 public final class EVNTKnockbackListener implements Listener {
 
-    // TODO: use Option API
     public static double KNOCKBACK_FRICTION = 2.0D;
     public static double KNOCKBACK_HORIZONTAL = 0.35D;
     public static double KNOCKBACK_VERTICAL = 0.35D;
@@ -58,10 +71,6 @@ public final class EVNTKnockbackListener implements Listener {
 
     private final Map<UUID, Vector> playerKnockbackHashMap = new WeakHashMap<>();
     private final EVNTModule module = Apollo.getModuleManager().getModule(EVNTModule.class);
-
-    public EVNTKnockbackListener() {
-        Bukkit.getPluginManager().registerEvents(this, ApolloBukkitPlatform.getInstance().getPlugin());
-    }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     private void onPlayerVelocity(PlayerVelocityEvent event) {
@@ -98,10 +107,10 @@ public final class EVNTKnockbackListener implements Listener {
         // Also it makes players sometimes just not take any knockback, and reduces knockback
         // This affects both PvP and PvE, so put it above the PvP check
         // We technically don't have to check the version but bad server jars might break if we do
-        // TODO: NMS
-//        for (AttributeModifier modifier : victim.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getModifiers()) {
-//            victim.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).removeModifier(modifier);
-//        }
+        AttributeInstance genericKnockbackResistance = victim.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE);
+        for (AttributeModifier modifier : genericKnockbackResistance.getModifiers()) {
+            genericKnockbackResistance.removeModifier(modifier);
+        }
 
         Location attackerLocation = attacker.getLocation();
         Location victimLocation = victim.getLocation();
@@ -144,7 +153,7 @@ public final class EVNTKnockbackListener implements Listener {
         }
 
         // Allow netherite to affect the horizontal knockback
-        double resistance = 1; /*TODO - victim.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getValue();*/
+        double resistance = 1 - genericKnockbackResistance.getValue();
         playerVelocity.multiply(new Vector(resistance, 1, resistance));
 
         // Knockback is sent immediately in 1.8+, there is no reason to send packets manually
@@ -153,80 +162,73 @@ public final class EVNTKnockbackListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     private void onProjectileHit(ProjectileHitEvent event) {
-        // TODO
-//        Entity hookEntity = event.getEntity();
-//
-//        if (event.getEntityType() != EntityType.FISHING_HOOK) {
-//            return;
-//        }
-//
-//        Entity hitEntity = null; /* TODO event.getHitEntity()*/;
-//
-//        if (hitEntity == null) {
-//            return;
-//        }
-//
-//        if (!(hitEntity instanceof LivingEntity)) {
-//            return;
-//        }
-//
-//        Entity livingEntity = hitEntity;
-//
-//        if (!FISHING_KNOCKBACK_NON_PLAYER_ENTITIES && !(hitEntity instanceof Player)) {
-//            return;
-//        }
-//
-//        FishHook hook = (FishHook) hookEntity;
-//        Player rodder = (Player) hook.getShooter();
-//
-//        if (!FISHING_KNOCKBACK_NON_PLAYER_ENTITIES) {
-//            Player player = (Player) hitEntity;
-//
-//            if (player.equals(rodder) || player.getGameMode() == GameMode.CREATIVE) {
-//                return;
-//            }
-//        }
-//
-//        //Check if cooldown time has elapsed
-//        if (livingEntity.getNoDamageTicks() > livingEntity.getMaximumNoDamageTicks() / 2f) {
-//            return;
-//        }
-//
-//        double damage = FISHING_DAMAGE;
-//
-//        EntityDamageEvent entityDamage = new EntityDamageByEntityEvent(rodder, hitEntity,
-//            EntityDamageEvent.DamageCause.PROJECTILE,
-//            new EnumMap<>(ImmutableMap.of(EntityDamageEvent.DamageModifier.BASE, damage)),
-//            new EnumMap<>(ImmutableMap.of(EntityDamageEvent.DamageModifier.BASE, Functions.constant(damage))));
-//
-//        Bukkit.getPluginManager().callEvent(entityDamage);
-//
-//        if (entityDamage.isCancelled()) {
-//            return;
-//        }
-//
-//        boolean mainHand = true;
-//        PlayerInventory inventory = rodder.getInventory();
-//
-//        ItemStack item = inventory.getItemInMainHand();
-//        if (item.getType() != Material.FISHING_ROD) {
-//            mainHand = false;
-//            item = inventory.getItemInOffHand();
-//        }
-//
-//        short durability = (short) (item.getDurability() + 1);
-//        if (durability >= item.getType().getMaxDurability()) {
-//            if (mainHand) {
-//                inventory.setItemInMainHand(null);
-//            } else {
-//                inventory.setItemInOffHand(null);
-//            }
-//        } else {
-//            item.setDurability(durability);
-//        }
-//
-//        livingEntity.damage(damage);
-//        livingEntity.setVelocity(this.calculateKnockbackVelocity(livingEntity.isOnGround(), hook.getLocation()));
+        Entity hookEntity = event.getEntity();
+
+        if (event.getEntityType() != EntityType.FISHING_HOOK) {
+            return;
+        }
+
+        if (!(event.getHitEntity() instanceof LivingEntity)) {
+            return;
+        }
+
+        LivingEntity hitEntity = (LivingEntity) event.getHitEntity();
+
+        if (!FISHING_KNOCKBACK_NON_PLAYER_ENTITIES && !(hitEntity instanceof Player)) {
+            return;
+        }
+
+        FishHook hook = (FishHook) hookEntity;
+        Player rodder = (Player) hook.getShooter();
+
+        if (!FISHING_KNOCKBACK_NON_PLAYER_ENTITIES) {
+            Player player = (Player) hitEntity;
+
+            if (player.equals(rodder) || player.getGameMode() == GameMode.CREATIVE) {
+                return;
+            }
+        }
+
+        //Check if cooldown time has elapsed
+        if (hitEntity.getNoDamageTicks() > hitEntity.getMaximumNoDamageTicks() / 2f) {
+            return;
+        }
+
+        double damage = FISHING_DAMAGE;
+
+        EntityDamageEvent entityDamage = new EntityDamageByEntityEvent(rodder, hitEntity,
+            EntityDamageEvent.DamageCause.PROJECTILE,
+            new EnumMap<>(ImmutableMap.of(EntityDamageEvent.DamageModifier.BASE, damage)),
+            new EnumMap<>(ImmutableMap.of(EntityDamageEvent.DamageModifier.BASE, Functions.constant(damage))));
+
+        Bukkit.getPluginManager().callEvent(entityDamage);
+
+        if (entityDamage.isCancelled()) {
+            return;
+        }
+
+        boolean mainHand = true;
+        PlayerInventory inventory = rodder.getInventory();
+
+        ItemStack item = inventory.getItemInMainHand();
+        if (item.getType() != Material.FISHING_ROD) {
+            mainHand = false;
+            item = inventory.getItemInOffHand();
+        }
+
+        short durability = (short) (item.getDurability() + 1);
+        if (durability >= item.getType().getMaxDurability()) {
+            if (mainHand) {
+                inventory.setItemInMainHand(null);
+            } else {
+                inventory.setItemInOffHand(null);
+            }
+        } else {
+            item.setDurability(durability);
+        }
+
+        hitEntity.damage(damage);
+        hitEntity.setVelocity(this.calculateKnockbackVelocity(hitEntity.isOnGround(), hook.getLocation()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

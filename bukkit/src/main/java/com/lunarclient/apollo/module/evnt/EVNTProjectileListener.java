@@ -26,6 +26,7 @@ package com.lunarclient.apollo.module.evnt;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloBukkitPlatform;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -39,10 +40,6 @@ public final class EVNTProjectileListener implements Listener {
 
     private final EVNTModule module = Apollo.getModuleManager().getModule(EVNTModule.class);
 
-    public EVNTProjectileListener() {
-        Bukkit.getPluginManager().registerEvents(this, ApolloBukkitPlatform.getInstance().getPlugin());
-    }
-
     @EventHandler(ignoreCancelled = true)
     private void onProjectileLaunch(ProjectileLaunchEvent event) {
         Projectile projectile = event.getEntity();
@@ -55,11 +52,10 @@ public final class EVNTProjectileListener implements Listener {
         Player player = (Player) shooter;
 
         if (projectile instanceof EnderPearl && this.module.getOptions().get(EVNTModule.DISABLE_ENDERPEARL_COOLDOWN)) {
-            // TODO: Player#setCooldown doesn't exist
-//            Bukkit.getScheduler().runTask(
-//                ApolloBukkitPlatform.getInstance().getPlugin(),
-//                () -> player.setCooldown(Material.ENDER_PEARL, 0)
-//            );
+            Bukkit.getScheduler().runTask(
+                ApolloBukkitPlatform.getInstance().getPlugin(),
+                () -> player.setCooldown(Material.ENDER_PEARL, 0)
+            );
         }
 
         if (!this.module.getOptions().get(EVNTModule.OVERRIDE_PROJECTILE_RANDOMNESS)) {

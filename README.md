@@ -16,7 +16,7 @@ Apollo uses [Gradle](https://gradle.org/) to handle dependencies and compile the
 **Prerequisites**
 
 - Java 8 JDK
-- Build Tools for Spigot 1.8.8
+- Build Tools for Spigot 1.18.2
 
 **Compiling**
 

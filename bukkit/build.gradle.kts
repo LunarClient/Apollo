@@ -13,7 +13,7 @@ dependencies {
     api(project(path = ":apollo-api", configuration = "shadow"))
     api(project(":apollo-common"))
 
-    "loaderCompileOnly"(libs.bukkit.api)
+    "loaderCompileOnly"(libs.bukkit)
     "loaderImplementation"(project(":extra:apollo-extra-loader"))
 
     "baseAdventure4"(project(path = ":extra:apollo-extra-adventure4", configuration = "base"))

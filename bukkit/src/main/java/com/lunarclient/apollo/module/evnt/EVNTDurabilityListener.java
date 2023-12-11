@@ -47,14 +47,8 @@ import org.bukkit.inventory.ItemStack;
 
 public final class EVNTDurabilityListener implements Listener {
 
-    // TODO: actually init the listeners
-
     private final Map<UUID, List<ItemStack>> explosionDamaged = new WeakHashMap<>();
     private final EVNTModule module = Apollo.getModuleManager().getModule(EVNTModule.class);
-
-    public EVNTDurabilityListener() {
-        Bukkit.getPluginManager().registerEvents(this, ApolloBukkitPlatform.getInstance().getPlugin());
-    }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     private void onPlayerItemDamage(PlayerItemDamageEvent event) {

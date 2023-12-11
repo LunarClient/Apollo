@@ -40,8 +40,13 @@ import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
 import com.lunarclient.apollo.module.entity.EntityModule;
 import com.lunarclient.apollo.module.entity.EntityModuleImpl;
+import com.lunarclient.apollo.module.evnt.EVNTDurabilityListener;
+import com.lunarclient.apollo.module.evnt.EVNTHitListener;
+import com.lunarclient.apollo.module.evnt.EVNTKnockbackListener;
 import com.lunarclient.apollo.module.evnt.EVNTModule;
 import com.lunarclient.apollo.module.evnt.EVNTModuleImpl;
+import com.lunarclient.apollo.module.evnt.EVNTProjectileListener;
+import com.lunarclient.apollo.module.evnt.EVNTRegenListener;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
@@ -136,6 +141,12 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         ApolloManager.loadConfiguration(this.plugin.getDataFolder().toPath());
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
         ApolloManager.saveConfiguration();
+
+        pluginManager.registerEvents(new EVNTDurabilityListener(), this.plugin);
+        pluginManager.registerEvents(new EVNTHitListener(), this.plugin);
+        pluginManager.registerEvents(new EVNTKnockbackListener(), this.plugin);
+        pluginManager.registerEvents(new EVNTProjectileListener(), this.plugin);
+        pluginManager.registerEvents(new EVNTRegenListener(), this.plugin);
 
         Messenger messenger = this.plugin.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL);

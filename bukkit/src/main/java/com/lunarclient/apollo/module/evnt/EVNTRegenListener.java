@@ -25,10 +25,8 @@ package com.lunarclient.apollo.module.evnt;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloBukkitPlatform;
-import java.util.Map;
-import java.util.UUID;
-import java.util.WeakHashMap;
 import org.bukkit.Bukkit;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,14 +35,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.Map;
+import java.util.UUID;
+import java.util.WeakHashMap;
+
 public final class EVNTRegenListener implements Listener {
 
     private final Map<UUID, Long> healTimes = new WeakHashMap<>();
     private final EVNTModule module = Apollo.getModuleManager().getModule(EVNTModule.class);
-
-    public EVNTRegenListener() {
-        Bukkit.getPluginManager().registerEvents(this, ApolloBukkitPlatform.getInstance().getPlugin());
-    }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     private void onRegen(EntityRegainHealthEvent event) {
@@ -81,7 +79,7 @@ public final class EVNTRegenListener implements Listener {
             return;
         }
 
-        double maxHealth = 20; /* TODO player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();*/
+        double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
         double playerHealth = player.getHealth();
 
         if (playerHealth < maxHealth) {

@@ -26,6 +26,8 @@ package com.lunarclient.apollo.module.evnt;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloBukkitPlatform;
 import org.bukkit.Bukkit;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,10 +38,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 public final class EVNTHitListener implements Listener {
 
     private final EVNTModule module = Apollo.getModuleManager().getModule(EVNTModule.class);
-
-    public EVNTHitListener() {
-        Bukkit.getPluginManager().registerEvents(this, ApolloBukkitPlatform.getInstance().getPlugin());
-    }
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
@@ -73,19 +71,18 @@ public final class EVNTHitListener implements Listener {
             return;
         }
 
-        // TODO: NMS
-//        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
-//        if (attribute == null) {
-//            return;
-//        }
-//
-//        double baseValue = attribute.getBaseValue();
-//        float baseAttackSpeed = this.module.getOptions().get(EVNTModule.ATTACK_SPEED);
-//
-//        if (baseValue != baseAttackSpeed) {
-//            attribute.setBaseValue(baseAttackSpeed);
-//            player.saveData();
-//        }
+        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+        if (attribute == null) {
+            return;
+        }
+
+        double baseValue = attribute.getBaseValue();
+        float baseAttackSpeed = this.module.getOptions().get(EVNTModule.ATTACK_SPEED);
+
+        if (baseValue != baseAttackSpeed) {
+            attribute.setBaseValue(baseAttackSpeed);
+            player.saveData();
+        }
     }
 
 }
