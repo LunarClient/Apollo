@@ -14,7 +14,7 @@ private final int messageId = ThreadLocalRandom.current().nextInt(100);
 private int countdown = 5;
 
 public void displayLiveMessageExample() {
-    this.liveMessageModule.displayLiveMessage(Recipients.ofEveryone(),
+    this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
         Component.text("Game starting in ", NamedTextColor.GREEN)
             .append(Component.text(this.countdown, NamedTextColor.BLUE)),
         this.messageId
@@ -30,6 +30,6 @@ public void displayLiveMessageExample() {
 
 ```java
 public void removeLiveMessageExample() {
-    this.liveMessageModule.removeLiveMessage(Recipients.ofEveryone(), this.messageId);
+    this.chatModule.removeLiveChatMessage(Recipients.ofEveryone(), this.messageId);
 }
 ```

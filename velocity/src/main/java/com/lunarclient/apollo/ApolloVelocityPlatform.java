@@ -34,6 +34,7 @@ import com.lunarclient.apollo.module.chat.ChatModule;
 import com.lunarclient.apollo.module.chat.ChatModuleImpl;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModuleImpl;
+import com.lunarclient.apollo.module.combat.CombatModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
 import com.lunarclient.apollo.module.entity.EntityModule;
@@ -89,7 +90,7 @@ import lombok.Getter;
 @Plugin(
     id = "apollo",
     name = "Apollo-Velocity",
-    version = "1.0.3",
+    version = "1.0.4",
     url = "https://moonsworth.com",
     description = "Implementation of Apollo for Velocity",
     authors = {"Moonsworth"}
@@ -157,6 +158,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
             .addModule(BorderModule.class, new BorderModuleImpl())
             .addModule(ChatModule.class, new ChatModuleImpl())
             .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
+            .addModule(CombatModule.class)
             .addModule(CooldownModule.class, new CooldownModuleImpl())
             .addModule(EntityModule.class, new EntityModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
