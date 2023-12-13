@@ -33,7 +33,7 @@ import org.jetbrains.annotations.ApiStatus;
 /**
  * Represents the glow module.
  *
- * @since 1.0.0
+ * @since 1.0.5
  */
 @ApiStatus.NonExtendable
 @ModuleDefinition(id = "glow", name = "Glow")
@@ -50,7 +50,7 @@ public abstract class GlowModule extends ApolloModule {
      * @param recipients    the recipients that are receiving the packet
      * @param glowingPlayer the UUID of the player whose glowing effect will be overwrote
      * @param color         the new color glowingPlayer should glow in.
-     * @since 1.0.0
+     * @since 1.0.5
      */
     public abstract void overrideGlow(Recipients recipients, UUID glowingPlayer, Color color);
 
@@ -59,7 +59,7 @@ public abstract class GlowModule extends ApolloModule {
      *
      * @param recipients    the recipients that are receiving the packet
      * @param glowingPlayer the UUID of the player whose glowing effect was overwrote
-     * @since 1.0.0
+     * @since 1.0.5
      */
     public abstract void resetGlow(Recipients recipients, UUID glowingPlayer);
 
@@ -67,7 +67,7 @@ public abstract class GlowModule extends ApolloModule {
      * Resets all glowing effect overrides for the given {@link Recipients}.
      *
      * @param recipients the recipients that are receiving the packet
-     * @since 1.0.0
+     * @since 1.0.5
      */
     public abstract void resetGlow(Recipients recipients);
 

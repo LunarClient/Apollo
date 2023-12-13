@@ -36,7 +36,7 @@ import lombok.NonNull;
 /**
  * Provides the glow module.
  *
- * @since 1.0.0
+ * @since 1.0.5
  */
 public final class GlowModuleImpl extends GlowModule {
 
