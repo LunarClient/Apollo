@@ -1,0 +1,48 @@
+# Glow Module
+
+## Overview
+
+The glow module allows you to take advantage of the vanilla Minecraft Glow Effect that is usually applied when hit by spectral arrows.
+
+-   Backports all vanilla Minecraft glow effect functionality, found on 1.9+ to the 1.7 and 1.8 version of Lunar Client.
+-   Adds improvements to glow effect for Lunar Client users.
+    -   Customizable colors for the glow effect, different from the vanilla Minecraft colors.
+
+## Integration
+
+### Sample Code
+
+```java
+public void overrideGlowEffectExample(UUID glowingPlayer) {
+    this.glowModule.overrideGlow(Recipients.ofEveryone(),
+        glowingPlayer,
+        Color.RED
+    );
+}
+```
+
+### `overrideGlowEffectExample` Parameters
+
+1. `Recipients recipients`
+   - A list of all the player(s) you want to be able to see the updated glow effect.
+2. `UUID target`
+   - The player or living entity you want to display the glow effect on.
+3. `Color glowColor`
+   - How you'll dictate the color of the glow effect, see the [colors page](/apollo/developers/utilities/colors) for more.
+
+### Removing a specific targets glow effect for viewers
+
+```java
+public void resetGlowEffectExample(UUID glowingPlayer) {
+    this.glowModule.resetGlow(Recipients.ofEveryone(), glowingPlayer);
+}
+```
+
+### Resetting all glow effects for all viewers
+
+```java
+public void resetGlowEffectsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.glowModule::resetGlow);
+}
+```
