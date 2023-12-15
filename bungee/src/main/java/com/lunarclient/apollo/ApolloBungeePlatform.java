@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo;
 
+import com.lunarclient.apollo.command.ApolloCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
@@ -69,6 +70,7 @@ import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.stats.ApolloStatsManager;
 import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BungeeApolloStats;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -120,12 +122,19 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
         ApolloStatsManager statsManager = new ApolloStatsManager();
         ApolloVersionManager versionManager = new ApolloVersionManager();
 
-        ApolloManager.loadConfiguration(this.plugin.getDataFolder().toPath());
-        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
-        ApolloManager.saveConfiguration();
+        try {
+            ApolloManager.setConfigPath(this.plugin.getDataFolder().toPath());
+            ApolloManager.loadConfiguration();
+            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
+            ApolloManager.saveConfiguration();
+        } catch (Throwable throwable) {
+            this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration!", throwable);
+        }
 
         this.plugin.getProxy().getPluginManager().registerListener(this.plugin, new ApolloPlayerListener());
         this.plugin.getProxy().registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
+
+        this.getPlugin().getProxy().getPluginManager().registerCommand(this.getPlugin(), ApolloCommand.create());
 
         statsManager.enable();
         versionManager.checkForUpdates();
@@ -134,8 +143,6 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
     @Override
     public void onDisable() {
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
-
-        ApolloManager.saveConfiguration();
     }
 
     @Override

@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo;
 
+import com.lunarclient.apollo.command.ApolloCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
@@ -72,6 +73,7 @@ import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.stats.ApolloStatsManager;
 import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BukkitApolloStats;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -130,15 +132,22 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         ApolloStatsManager statsManager = new ApolloStatsManager();
         ApolloVersionManager versionManager = new ApolloVersionManager();
 
-        ApolloManager.loadConfiguration(this.plugin.getDataFolder().toPath());
-        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
-        ApolloManager.saveConfiguration();
+        try {
+            ApolloManager.setConfigPath(this.plugin.getDataFolder().toPath());
+            ApolloManager.loadConfiguration();
+            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
+            ApolloManager.saveConfiguration();
+        } catch (Throwable throwable) {
+            this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration!", throwable);
+        }
 
         Messenger messenger = this.plugin.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
             (channel, player, bytes) -> ApolloManager.getNetworkManager().receivePacket(player.getUniqueId(), bytes)
         );
+
+        this.getPlugin().getCommand("apollo").setExecutor(new ApolloCommand());
 
         statsManager.enable();
         versionManager.checkForUpdates();
@@ -147,8 +156,6 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
     @Override
     public void onDisable() {
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
-
-        ApolloManager.saveConfiguration();
     }
 
     @Override
