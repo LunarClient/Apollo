@@ -128,7 +128,7 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
             ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
             ApolloManager.saveConfiguration();
         } catch (Throwable throwable) {
-            this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration!", throwable);
+            this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration and modules!", throwable);
         }
 
         this.plugin.getProxy().getPluginManager().registerListener(this.plugin, new ApolloPlayerListener());

@@ -138,7 +138,7 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
             ApolloManager.saveConfiguration();
         } catch (Throwable throwable) {
-            this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration!", throwable);
+            this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration and modules!", throwable);
         }
 
         Messenger messenger = this.plugin.getServer().getMessenger();

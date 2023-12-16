@@ -25,6 +25,7 @@ package com.lunarclient.apollo.command;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import java.util.function.BiConsumer;
 import java.util.logging.Level;
 import lombok.NonNull;
@@ -39,7 +40,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
  */
 public abstract class AbstractApolloCommand<T> {
 
-    private BiConsumer<T, Component> textConsumer;
+    private final BiConsumer<T, Component> textConsumer;
 
     protected AbstractApolloCommand(BiConsumer<T, Component> textConsumer) {
         this.textConsumer = textConsumer;
@@ -67,6 +68,7 @@ public abstract class AbstractApolloCommand<T> {
     protected void reloadConfiguration(@NonNull T sender) {
         try {
             ApolloManager.loadConfiguration();
+            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).reloadModules();
             ApolloManager.saveConfiguration();
         } catch (Throwable throwable) {
             Apollo.getPlatform().getPlatformLogger().log(Level.SEVERE, "Unable to save Apollo configuration!", throwable);

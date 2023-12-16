@@ -134,6 +134,10 @@ public final class ApolloManager {
      * @since 1.0.0
      */
     public static void loadConfiguration() throws Throwable {
+        for (ApolloConfig config : ApolloConfig.configs()) {
+            config.reset();
+        }
+
         ApolloConfig generalSettings = ApolloConfig.compute(ApolloManager.configPath, ConfigTarget.GENERAL_SETTINGS);
         ConfigOptions.loadOptions(ApolloManager.platform.getOptions(), generalSettings.node(), ApolloManager.optionKeys);
     }

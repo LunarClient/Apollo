@@ -186,7 +186,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
             ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
             ApolloManager.saveConfiguration();
         } catch (Throwable throwable) {
-            this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration!", throwable);
+            this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration and modules!", throwable);
         }
 
         this.server.getEventManager().register(this, new ApolloPlayerListener());
