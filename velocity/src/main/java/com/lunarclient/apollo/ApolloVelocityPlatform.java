@@ -24,6 +24,7 @@
 package com.lunarclient.apollo;
 
 import com.google.inject.Inject;
+import com.lunarclient.apollo.command.ApolloCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.beam.BeamModule;
@@ -79,6 +80,7 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import java.nio.file.Path;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 
@@ -178,12 +180,19 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         ApolloStatsManager statsManager = new ApolloStatsManager();
         ApolloVersionManager versionManager = new ApolloVersionManager();
 
-        ApolloManager.loadConfiguration(this.dataDirectory);
-        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
-        ApolloManager.saveConfiguration();
+        try {
+            ApolloManager.setConfigPath(this.dataDirectory);
+            ApolloManager.loadConfiguration();
+            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
+            ApolloManager.saveConfiguration();
+        } catch (Throwable throwable) {
+            this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration and modules!", throwable);
+        }
 
         this.server.getEventManager().register(this, new ApolloPlayerListener());
         this.server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
+
+        this.server.getCommandManager().register(ApolloCommand.create());
 
         statsManager.enable();
         versionManager.checkForUpdates();
@@ -198,8 +207,6 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     @Subscribe
     public void onProxyShutdown(ProxyShutdownEvent event) {
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
-
-        ApolloManager.saveConfiguration();
     }
 
     static {

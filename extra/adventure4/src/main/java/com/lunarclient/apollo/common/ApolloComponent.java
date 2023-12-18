@@ -26,6 +26,7 @@ package com.lunarclient.apollo.common;
 import lombok.NonNull;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 /**
  * Represents a component which can be shown on the client.
@@ -54,6 +55,17 @@ public final class ApolloComponent {
      */
     public static String toJson(@NonNull Component component) {
         return GsonComponentSerializer.gson().serialize(component);
+    }
+
+    /**
+     * Returns this component as a legacy {@link String}.
+     *
+     * @param component the component to make into a legacy string
+     * @return the legacy string for this component
+     * @since 1.0.5
+     */
+    public static String toLegacy(@NonNull Component component) {
+        return LegacyComponentSerializer.legacySection().serialize(component);
     }
 
     private ApolloComponent() {
