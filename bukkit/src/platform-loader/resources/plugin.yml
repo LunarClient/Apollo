@@ -8,4 +8,4 @@ commands:
   apollo:
     description: The main Apollo command.
     usage: /apollo <reload>
-    permission: apollo.commands
+    permission: apollo.command

@@ -31,14 +31,14 @@ import org.bukkit.command.CommandSender;
 /**
  * The general Apollo command.
  *
- * @since 1.0.0
+ * @since 1.0.5
  */
 public final class ApolloCommand extends AbstractApolloCommand<CommandSender> implements CommandExecutor {
 
     /**
      * Returns a new instance of this command.
      *
-     * @since 1.0.0
+     * @since 1.0.5
      */
     public ApolloCommand() {
         super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));

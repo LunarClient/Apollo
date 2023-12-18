@@ -30,7 +30,7 @@ import net.md_5.bungee.api.plugin.Command;
 /**
  * The general Apollo command.
  *
- * @since 1.0.0
+ * @since 1.0.5
  */
 public final class ApolloCommand extends AbstractApolloCommand<CommandSender> {
 
@@ -38,10 +38,10 @@ public final class ApolloCommand extends AbstractApolloCommand<CommandSender> {
      * Returns a new instance of this command.
      *
      * @return a new command
-     * @since 1.0.0
+     * @since 1.0.5
      */
     public static Command create() {
-        return new Command("apollo") {
+        return new Command("apollo", "apollo.command") {
             private final ApolloCommand command = new ApolloCommand();
 
             @Override

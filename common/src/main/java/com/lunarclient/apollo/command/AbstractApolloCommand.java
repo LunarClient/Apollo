@@ -29,6 +29,7 @@ import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import java.util.function.BiConsumer;
 import java.util.logging.Level;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -36,21 +37,18 @@ import net.kyori.adventure.text.format.NamedTextColor;
  * Provides common command functions.
  *
  * @param <T> the sender type
- * @since 1.0.0
+ * @since 1.0.5
  */
+@RequiredArgsConstructor
 public abstract class AbstractApolloCommand<T> {
 
     private final BiConsumer<T, Component> textConsumer;
-
-    protected AbstractApolloCommand(BiConsumer<T, Component> textConsumer) {
-        this.textConsumer = textConsumer;
-    }
 
     /**
      * Sends the current version message to the sender.
      *
      * @param sender the command sender
-     * @since 1.0.0
+     * @since 1.0.5
      */
     protected void getCurrentVersion(@NonNull T sender) {
         this.textConsumer.accept(sender, Component.text("Apollo is running version ", NamedTextColor.GREEN)
@@ -63,7 +61,7 @@ public abstract class AbstractApolloCommand<T> {
      * Reloads the configuration and messages the result to the sender.
      *
      * @param sender the command sender
-     * @since 1.0.0
+     * @since 1.0.5
      */
     protected void reloadConfiguration(@NonNull T sender) {
         try {

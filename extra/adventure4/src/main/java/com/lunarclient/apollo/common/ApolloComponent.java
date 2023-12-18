@@ -62,7 +62,7 @@ public final class ApolloComponent {
      *
      * @param component the component to make into a legacy string
      * @return the legacy string for this component
-     * @since 1.0.0
+     * @since 1.0.5
      */
     public static String toLegacy(@NonNull Component component) {
         return LegacyComponentSerializer.legacySection().serialize(component);

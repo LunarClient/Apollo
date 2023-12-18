@@ -127,7 +127,7 @@ public final class ApolloConfig {
      * Removes the node in-memory so the next time it is needed, it is loaded
      * from disk.
      *
-     * @since 1.0.0
+     * @since 1.0.5
      */
     public void reset() {
         this.node = null;

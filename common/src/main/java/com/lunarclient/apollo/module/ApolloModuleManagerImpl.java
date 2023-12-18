@@ -97,7 +97,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      * changed.
      *
      * @throws Throwable if there is an error reloading the modules
-     * @since 1.0.0
+     * @since 1.0.5
      */
     public void reloadModules() throws Throwable {
         for (ApolloModule module : this.modules.values()) {

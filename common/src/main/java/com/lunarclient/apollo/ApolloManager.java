@@ -122,7 +122,7 @@ public final class ApolloManager {
      * Sets the config data path.
      *
      * @param path the config data path
-     * @since 1.0.0
+     * @since 1.0.5
      */
     public static void setConfigPath(Path path) {
         ApolloManager.configPath = path;

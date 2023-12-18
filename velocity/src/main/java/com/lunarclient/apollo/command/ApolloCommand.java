@@ -33,7 +33,7 @@ import net.kyori.adventure.audience.Audience;
 /**
  * The general Apollo command.
  *
- * @since 1.0.0
+ * @since 1.0.5
  */
 @Getter
 public final class ApolloCommand extends AbstractApolloCommand<CommandSource> {
@@ -42,12 +42,13 @@ public final class ApolloCommand extends AbstractApolloCommand<CommandSource> {
      * Returns a new instance of this command.
      *
      * @return a new command
-     * @since 1.0.0
+     * @since 1.0.5
      */
     public static BrigadierCommand create() {
         ApolloCommand command = new ApolloCommand();
 
         return new BrigadierCommand(LiteralArgumentBuilder.<CommandSource>literal("apollo")
+            .requires(source -> source.hasPermission("apollo.command"))
             .executes(command.getBaseCommand())
             .then(LiteralArgumentBuilder.<CommandSource>literal("reload")
                 .executes(command.getReloadCommand())
