@@ -27,6 +27,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.velocitypowered.api.command.BrigadierCommand;
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.proxy.ConsoleCommandSource;
 import lombok.Getter;
 import net.kyori.adventure.audience.Audience;
 
@@ -48,7 +49,7 @@ public final class ApolloCommand extends AbstractApolloCommand<CommandSource> {
         ApolloCommand command = new ApolloCommand();
 
         return new BrigadierCommand(LiteralArgumentBuilder.<CommandSource>literal("apollo")
-            .requires(source -> source.hasPermission("apollo.command"))
+            .requires(source -> source instanceof ConsoleCommandSource || source.hasPermission("apollo.command"))
             .executes(command.getBaseCommand())
             .then(LiteralArgumentBuilder.<CommandSource>literal("reload")
                 .executes(command.getReloadCommand())
