@@ -3,6 +3,7 @@ main: com.lunarclient.apollo.loader.BukkitPlatformLoader
 version: 1.0.5
 author: Moonsworth
 api-version: 1.13
+soft-depend: [LunarClient-API]
 
 commands:
   apollo:
