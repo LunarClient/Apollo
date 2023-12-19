@@ -11,7 +11,7 @@ dependencies {
     compileOnly(libs.bukkit)
 
     api(project(path = ":apollo-api", configuration = "shadow"))
-    api(project(":apollo-common"))
+    api(project(path = ":apollo-common", configuration = "shadow"))
 
     "loaderCompileOnly"(libs.bukkit)
     "loaderImplementation"(project(":extra:apollo-extra-loader"))
