@@ -28,6 +28,7 @@ import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,6 +37,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.event.player.PlayerUnregisterChannelEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Handles registration and un-registration of Apollo players.
@@ -43,6 +45,16 @@ import org.bukkit.event.player.PlayerUnregisterChannelEvent;
  * @since 1.0.0
  */
 public final class ApolloPlayerListener implements Listener {
+
+    /**
+     * Constructs the {@link ApolloPlayerListener}.
+     *
+     * @param plugin the plugin
+     * @since 1.0.6
+     */
+    public ApolloPlayerListener(JavaPlugin plugin) {
+        Bukkit.getPluginManager().registerEvents(this, plugin);
+    }
 
     @EventHandler
     private void onRegisterChannel(PlayerRegisterChannelEvent event) {
