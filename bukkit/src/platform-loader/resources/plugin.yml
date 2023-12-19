@@ -1,5 +1,11 @@
 name: Apollo-Bukkit
 main: com.lunarclient.apollo.loader.BukkitPlatformLoader
-version: 1.0.4
+version: 1.0.5
 author: Moonsworth
 api-version: 1.13
+
+commands:
+  apollo:
+    description: The main Apollo command.
+    usage: /apollo <reload>
+    permission: apollo.command

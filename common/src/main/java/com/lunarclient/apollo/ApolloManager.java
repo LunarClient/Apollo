@@ -119,20 +119,27 @@ public final class ApolloManager {
     }
 
     /**
-     * Loads the configuration from the given {@link Path}.
+     * Sets the config data path.
      *
-     * @param path the path
+     * @param path the config data path
+     * @since 1.0.5
+     */
+    public static void setConfigPath(Path path) {
+        ApolloManager.configPath = path;
+    }
+
+    /**
+     * Loads the configuration.
+     *
      * @since 1.0.0
      */
-    public static void loadConfiguration(Path path) {
-        try {
-            ApolloManager.configPath = path;
-
-            ApolloConfig generalSettings = ApolloConfig.compute(ApolloManager.configPath, ConfigTarget.GENERAL_SETTINGS);
-            ConfigOptions.loadOptions(ApolloManager.platform.getOptions(), generalSettings.node(), ApolloManager.optionKeys);
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
+    public static void loadConfiguration() throws Throwable {
+        for (ApolloConfig config : ApolloConfig.configs()) {
+            config.reset();
         }
+
+        ApolloConfig generalSettings = ApolloConfig.compute(ApolloManager.configPath, ConfigTarget.GENERAL_SETTINGS);
+        ConfigOptions.loadOptions(ApolloManager.platform.getOptions(), generalSettings.node(), ApolloManager.optionKeys);
     }
 
     /**
@@ -140,18 +147,14 @@ public final class ApolloManager {
      *
      * @since 1.0.0
      */
-    public static void saveConfiguration() {
-        try {
-            ApolloConfig generalSettings = ApolloConfig.compute(ApolloManager.configPath, ConfigTarget.GENERAL_SETTINGS);
-            ConfigOptions.saveOptions(ApolloManager.platform.getOptions(), generalSettings.node(), ApolloManager.optionKeys);
+    public static void saveConfiguration() throws Throwable {
+        ApolloConfig generalSettings = ApolloConfig.compute(ApolloManager.configPath, ConfigTarget.GENERAL_SETTINGS);
+        ConfigOptions.saveOptions(ApolloManager.platform.getOptions(), generalSettings.node(), ApolloManager.optionKeys);
 
-            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration();
+        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration();
 
-            for (ApolloConfig config : ApolloConfig.configs()) {
-                config.save();
-            }
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
+        for (ApolloConfig config : ApolloConfig.configs()) {
+            config.save();
         }
     }
 

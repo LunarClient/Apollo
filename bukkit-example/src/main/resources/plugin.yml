@@ -1,6 +1,6 @@
 name: Apollo-Example
 main: com.lunarclient.apollo.example.ApolloExamplePlugin
-version: 1.0.4
+version: 1.0.5
 author: Moonsworth
 depend: [ Apollo-Bukkit ]
 api-version: 1.13
@@ -22,6 +22,8 @@ commands:
         description: "Entity!"
     evnt:
         description: "EVNT!"
+    glow:
+        description: "Glow!"
     hologram:
         description: "Holograms!"
     limb:

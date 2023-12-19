@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo;
 
+import com.lunarclient.apollo.command.ApolloCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
@@ -47,6 +48,8 @@ import com.lunarclient.apollo.module.evnt.EVNTModule;
 import com.lunarclient.apollo.module.evnt.EVNTModuleImpl;
 import com.lunarclient.apollo.module.evnt.EVNTProjectileListener;
 import com.lunarclient.apollo.module.evnt.EVNTRegenListener;
+import com.lunarclient.apollo.module.glow.GlowModule;
+import com.lunarclient.apollo.module.glow.GlowModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
@@ -79,6 +82,7 @@ import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.stats.ApolloStatsManager;
 import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BukkitApolloStats;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -120,6 +124,7 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(CooldownModule.class, new CooldownModuleImpl())
             .addModule(EntityModule.class, new EntityModuleImpl())
             .addModule(EVNTModule.class, new EVNTModuleImpl())
+            .addModule(GlowModule.class, new GlowModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
             .addModule(LimbModule.class, new LimbModuleImpl())
             .addModule(ModSettingModule.class)
@@ -138,9 +143,14 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         ApolloStatsManager statsManager = new ApolloStatsManager();
         ApolloVersionManager versionManager = new ApolloVersionManager();
 
-        ApolloManager.loadConfiguration(this.plugin.getDataFolder().toPath());
-        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
-        ApolloManager.saveConfiguration();
+        try {
+            ApolloManager.setConfigPath(this.plugin.getDataFolder().toPath());
+            ApolloManager.loadConfiguration();
+            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
+            ApolloManager.saveConfiguration();
+        } catch (Throwable throwable) {
+            this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration and modules!", throwable);
+        }
 
         pluginManager.registerEvents(new EVNTDurabilityListener(), this.plugin);
         pluginManager.registerEvents(new EVNTHitListener(), this.plugin);
@@ -154,6 +164,8 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             (channel, player, bytes) -> ApolloManager.getNetworkManager().receivePacket(player.getUniqueId(), bytes)
         );
 
+        this.getPlugin().getCommand("apollo").setExecutor(new ApolloCommand());
+
         statsManager.enable();
         versionManager.checkForUpdates();
     }
@@ -161,8 +173,6 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
     @Override
     public void onDisable() {
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
-
-        ApolloManager.saveConfiguration();
     }
 
     @Override
