@@ -111,7 +111,7 @@ public final class EVNTModuleImpl extends EVNTModule {
         }
 
         if (texturePath != null) {
-            builder.setAnimationPath(texturePath);
+            builder.setTexturePath(texturePath);
         }
 
         OverrideCosmeticResourcesMessage message = builder.build();
