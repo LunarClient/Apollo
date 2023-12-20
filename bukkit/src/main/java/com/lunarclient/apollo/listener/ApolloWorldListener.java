@@ -23,7 +23,6 @@
  */
 package com.lunarclient.apollo.listener;
 
-import com.google.protobuf.Any;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.event.EventBus;
@@ -31,6 +30,7 @@ import com.lunarclient.apollo.event.Listen;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.player.v1.UpdatePlayerWorldMessage;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import com.lunarclient.apollo.wrapper.BukkitApolloWorld;
 import org.bukkit.Bukkit;
@@ -75,17 +75,22 @@ public final class ApolloWorldListener implements Listener, ApolloListener {
         Player player = event.getPlayer();
 
         Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
-            String worldName = player.getWorld().getName();
-            ((AbstractApolloPlayer) apolloPlayer).sendPacket(Any.newBuilder().build()); // TODO
+            UpdatePlayerWorldMessage message = UpdatePlayerWorldMessage.newBuilder()
+                .setWorld(player.getWorld().getName())
+                .build();
+
+            ((AbstractApolloPlayer) apolloPlayer).sendPacket(message);
         });
     }
 
     @Listen
     private void onApolloRegisterPlayer(ApolloRegisterPlayerEvent event) {
         ApolloPlayer apolloPlayer = event.getPlayer();
-        String worldName = ((Player) apolloPlayer).getWorld().getName();
+        UpdatePlayerWorldMessage message = UpdatePlayerWorldMessage.newBuilder()
+            .setWorld(((Player) apolloPlayer).getWorld().getName())
+            .build();
 
-        ((AbstractApolloPlayer) apolloPlayer).sendPacket(Any.newBuilder().build()); // TODO
+        ((AbstractApolloPlayer) apolloPlayer).sendPacket(message);
     }
 
 }
