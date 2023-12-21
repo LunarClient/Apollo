@@ -32,6 +32,7 @@ public enum GuiType {
 
     SUIT,
     CHARACTER_SELECTION,
-    OBSERVER_UI
+    OBSERVER_UI,
+    WELCOME_UI
 
 }
