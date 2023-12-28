@@ -52,6 +52,7 @@ public class EVNTCommand implements CommandExecutor {
                 "|overrideCharacter" +
                 "|overrideCharacterAbility" +
                 "|overrideCharacterCosmetic" +
+                "|overrideCosmeticResource" +
                 "|updateGameOverview" +
                 "|updateStatusOverview>");
             return true;
@@ -100,6 +101,12 @@ public class EVNTCommand implements CommandExecutor {
                 break;
             }
 
+            case "overridecharacterresources": {
+                this.evntExample.overrideCharacterResources(player);
+                player.sendMessage("Overriding character resources...");
+                break;
+            }
+
             case "updategameoverview": {
                 this.evntExample.updateGameOverviewExample();
                 player.sendMessage("Updaing game overview...");
@@ -120,6 +127,7 @@ public class EVNTCommand implements CommandExecutor {
                     "|overrideCharacter" +
                     "|overrideCharacterAbility" +
                     "|overrideCharacterCosmetic" +
+                    "|overrideCosmeticResource" +
                     "|updateGameOverview" +
                     "|updateStatusOverview>");
                 break;

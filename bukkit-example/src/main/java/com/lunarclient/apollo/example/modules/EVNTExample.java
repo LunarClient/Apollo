@@ -27,6 +27,7 @@ import com.google.common.collect.Sets;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.module.evnt.Character;
 import com.lunarclient.apollo.module.evnt.CharacterAbility;
+import com.lunarclient.apollo.module.evnt.CharacterResource;
 import com.lunarclient.apollo.module.evnt.CharacterType;
 import com.lunarclient.apollo.module.evnt.EVNTModule;
 import com.lunarclient.apollo.module.evnt.GuiType;
@@ -120,6 +121,23 @@ public class EVNTExample {
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.evntModule.overrideCharacterCosmetic(apolloPlayer, apolloPlayer.getUniqueId(), CharacterType.ANGEL);
+        });
+    }
+
+    public void overrideCharacterResources(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            CharacterType[] values = CharacterType.values();
+            int randomCharacterType = ThreadLocalRandom.current().nextInt(values.length);
+
+            this.evntModule.overrideCosmeticResources(apolloPlayer, CharacterResource.builder()
+                .playerUuid(apolloPlayer.getUniqueId())
+                .type(values[randomCharacterType])
+                .modelPath(null)
+                .texturePath(null)
+                .animationPath(null)
+                .build());
         });
     }
 
