@@ -80,7 +80,6 @@ import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
@@ -104,9 +103,8 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         this.stats = new BukkitApolloStats();
         ApolloManager.bootstrap(this);
 
-        PluginManager pluginManager = this.plugin.getServer().getPluginManager();
-        pluginManager.registerEvents(new ApolloPlayerListener(), this.plugin);
-        pluginManager.registerEvents(new ApolloWorldListener(), this.plugin);
+        new ApolloPlayerListener(this.plugin);
+        new ApolloWorldListener(this.plugin);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
             .addModule(BeamModule.class, new BeamModuleImpl())

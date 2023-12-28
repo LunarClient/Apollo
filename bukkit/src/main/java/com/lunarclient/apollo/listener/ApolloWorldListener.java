@@ -24,19 +24,41 @@
 package com.lunarclient.apollo.listener;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.event.ApolloListener;
+import com.lunarclient.apollo.event.EventBus;
+import com.lunarclient.apollo.event.Listen;
+import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
+import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.player.v1.UpdatePlayerWorldMessage;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import com.lunarclient.apollo.wrapper.BukkitApolloWorld;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Handles registration and un-registration of Apollo worlds.
  *
  * @since 1.0.0
  */
-public final class ApolloWorldListener implements Listener {
+public final class ApolloWorldListener implements Listener, ApolloListener {
+
+    /**
+     * Constructs the {@link ApolloWorldListener}.
+     *
+     * @param plugin the plugin
+     * @since 1.0.6
+     */
+    public ApolloWorldListener(JavaPlugin plugin) {
+        EventBus.getBus().register(this);
+        Bukkit.getPluginManager().registerEvents(this, plugin);
+    }
 
     @EventHandler
     private void onWorldLoad(WorldLoadEvent event) {
@@ -46,6 +68,29 @@ public final class ApolloWorldListener implements Listener {
     @EventHandler
     private void onWorldUnload(WorldUnloadEvent event) {
         ((ApolloWorldManagerImpl) Apollo.getWorldManager()).removeWorld(event.getWorld().getName());
+    }
+
+    @EventHandler
+    private void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
+        Player player = event.getPlayer();
+
+        Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
+            UpdatePlayerWorldMessage message = UpdatePlayerWorldMessage.newBuilder()
+                .setWorld(player.getWorld().getName())
+                .build();
+
+            ((AbstractApolloPlayer) apolloPlayer).sendPacket(message);
+        });
+    }
+
+    @Listen
+    private void onApolloRegisterPlayer(ApolloRegisterPlayerEvent event) {
+        ApolloPlayer apolloPlayer = event.getPlayer();
+        UpdatePlayerWorldMessage message = UpdatePlayerWorldMessage.newBuilder()
+            .setWorld(((Player) apolloPlayer).getWorld().getName())
+            .build();
+
+        ((AbstractApolloPlayer) apolloPlayer).sendPacket(message);
     }
 
 }
