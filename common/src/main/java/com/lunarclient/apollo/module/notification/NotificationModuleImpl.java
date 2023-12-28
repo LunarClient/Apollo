@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.module.notification;
 
+import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.notification.v1.DisplayNotificationMessage;
 import com.lunarclient.apollo.notification.v1.ResetNotificationsMessage;
@@ -40,14 +41,17 @@ public final class NotificationModuleImpl extends NotificationModule {
     @Override
     public void displayNotification(@NonNull Recipients recipients, @NonNull Notification notification) {
         DisplayNotificationMessage.Builder builder = DisplayNotificationMessage.newBuilder()
-            .setTitle(notification.getTitle())
-            .setDescription(notification.getDescription())
             .setDisplayTime(NetworkTypes.toProtobuf(notification.getDisplayTime()));
 
-        String resourceLocation = notification.getResourceLocation();
-        if (resourceLocation != null) {
-            builder.setResourceLocation(resourceLocation);
-        }
+        this.setOptionalField(notification.getTitle(), builder::setTitle);
+        this.setOptionalField(notification.getDescription(), builder::setDescription);
+
+        this.setOptionalField(notification.getTitleComponent(), component ->
+            builder.setTitleAdventureJsonLines(ApolloComponent.toJson(component)));
+        this.setOptionalField(notification.getDescriptionComponent(), component ->
+            builder.setDescriptionAdventureJsonLines(ApolloComponent.toJson(component)));
+
+        this.setOptionalField(notification.getResourceLocation(), builder::setResourceLocation);
 
         DisplayNotificationMessage message = builder.build();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));

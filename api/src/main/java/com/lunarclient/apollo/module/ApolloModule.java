@@ -236,4 +236,38 @@ public abstract class ApolloModule implements ApolloListener {
         return definition;
     }
 
+    /**
+     * Sets an optional field with a value using a custom setter function if the value is not null.
+     *
+     * @param <T>     the type of the value to be set
+     * @param value   the value to be set (can be null)
+     * @param setter  the setter function to apply if the value is not null
+     * @see SetterFunction
+     * @since 1.0.6
+     */
+    protected <T> void setOptionalField(T value, SetterFunction<T> setter) {
+        if (value != null) {
+            setter.set(value);
+        }
+    }
+
+    /**
+     * Functional interface representing a setter function.
+     *
+     * @param <T>  the type of the value to be set
+     * @see ApolloModule#setOptionalField(Object, SetterFunction)
+     * @since 1.0.6
+     */
+    protected interface SetterFunction<T> {
+
+        /**
+         * Sets the value.
+         *
+         * @param value  the value to be set
+         * @since 1.0.6
+         */
+        void set(T value);
+
+    }
+
 }
