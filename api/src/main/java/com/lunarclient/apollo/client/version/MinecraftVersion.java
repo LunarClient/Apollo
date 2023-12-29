@@ -51,7 +51,8 @@ public enum MinecraftVersion {
     V1_20_1,
     V1_20_2,
     V1_20_3,
-    V1_20_4;
+    V1_20_4,
+    UNKNOWN;
 
     /**
      * Returns true if the current version is after (chronologically) the compared version.

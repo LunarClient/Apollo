@@ -113,7 +113,12 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
      * @since 1.0.6
      */
     public void handlePlayerHandshake(@NotNull ApolloPlayer player, @NotNull PlayerHandshakeMessage message) {
-        MinecraftVersion minecraftVersion = MinecraftVersion.valueOf(message.getMinecraftVersion().getEnum().toUpperCase());
+        MinecraftVersion minecraftVersion;
+        try {
+            minecraftVersion = MinecraftVersion.valueOf(message.getMinecraftVersion().getEnum().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            minecraftVersion = MinecraftVersion.UNKNOWN;
+        }
 
         LunarClientVersion lunarClientVersion = LunarClientVersion.builder()
             .gitBranch(message.getLunarClientVersion().getGitBranch())
