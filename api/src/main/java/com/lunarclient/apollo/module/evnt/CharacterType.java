@@ -39,6 +39,7 @@ public enum CharacterType {
     GREAT_MAGE,
     IGNUS,
     TULABOT,
+    SIR_BLOCK,
     UNRECOGNIZED
 
 }
