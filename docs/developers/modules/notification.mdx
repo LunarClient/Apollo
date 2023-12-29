@@ -26,7 +26,7 @@ private final Notification uhcAnnouncement = Notification.builder()
 #### `Notification` Options
 
 <Callout type="warning" emoji="⚠️">
-  There are character limits for the `title` and `description` options.
+  There are character limits for the `titleComponent` option.
 </Callout>
 
 `.titleComponent(Component)` is the title of the notification box. Char limit: `15`. See the [chat components](https://docs.advntr.dev/text.html) page for more.
@@ -54,6 +54,22 @@ private final Notification uhcAnnouncement = Notification.builder()
 ```
 
 If this field is left empty (null) it'll display a generic info icon, as displayed here.
+
+<Callout type="warning" emoji="⚠️">
+  The fields `title` and `description` are deprecated since 1.0.6, use 'titleComponent' and 'descriptionComponent' instead.
+</Callout>
+
+`.title(String)` is the title of the notification box. Char limit: `15`
+
+```java
+.title("UHC Announcement")
+```
+
+`.description(String)` is the description displayed inside the notification box.
+
+```java
+.description("UHC starts in 5 minutes...")
+```
 
 ### Displaying a Notification for a specific player
 

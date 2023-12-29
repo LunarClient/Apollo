@@ -41,8 +41,7 @@ public final class Notification {
     /**
      * Returns the notification {@link String} title.
      *
-     * @deprecated This field is deprecated since version 1.0.6,
-     *             use {@link Notification#titleComponent} instead
+     * @deprecated for removal since 1.0.6, use {@link Notification#titleComponent} instead.
      * @return the notification title
      * @since 1.0.0
      */
@@ -51,8 +50,7 @@ public final class Notification {
     /**
      * Returns the notification {@link String} description.
      *
-     * @deprecated This field is deprecated since version 1.0.6,
-     *             use {@link Notification#descriptionComponent} instead
+     * @deprecated for removal since 1.0.6, use {@link Notification#descriptionComponent} instead.
      * @return the notification description
      * @since 1.0.0
      */

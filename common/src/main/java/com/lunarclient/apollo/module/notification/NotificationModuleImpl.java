@@ -30,6 +30,7 @@ import com.lunarclient.apollo.notification.v1.ResetNotificationsMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
+import net.kyori.adventure.text.Component;
 
 /**
  * Provides the notifications module.
@@ -43,15 +44,30 @@ public final class NotificationModuleImpl extends NotificationModule {
         DisplayNotificationMessage.Builder builder = DisplayNotificationMessage.newBuilder()
             .setDisplayTime(NetworkTypes.toProtobuf(notification.getDisplayTime()));
 
-        this.setOptionalField(notification.getTitle(), builder::setTitle);
-        this.setOptionalField(notification.getDescription(), builder::setDescription);
+        String title = notification.getTitle();
+        if (title != null) {
+            builder.setTitle(title);
+        }
 
-        this.setOptionalField(notification.getTitleComponent(), component ->
-            builder.setTitleAdventureJsonLines(ApolloComponent.toJson(component)));
-        this.setOptionalField(notification.getDescriptionComponent(), component ->
-            builder.setDescriptionAdventureJsonLines(ApolloComponent.toJson(component)));
+        String description = notification.getDescription();
+        if (description != null) {
+            builder.setDescription(description);
+        }
 
-        this.setOptionalField(notification.getResourceLocation(), builder::setResourceLocation);
+        Component titleComponent = notification.getTitleComponent();
+        if (titleComponent != null) {
+            builder.setTitleAdventureJsonLines(ApolloComponent.toJson(titleComponent));
+        }
+
+        Component descriptionComponent = notification.getDescriptionComponent();
+        if (descriptionComponent != null) {
+            builder.setDescriptionAdventureJsonLines(ApolloComponent.toJson(descriptionComponent));
+        }
+
+        String resourceLocation = notification.getResourceLocation();
+        if (resourceLocation != null) {
+            builder.setResourceLocation(resourceLocation);
+        }
 
         DisplayNotificationMessage message = builder.build();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
