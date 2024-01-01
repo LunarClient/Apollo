@@ -9,7 +9,7 @@ setupDynamicDependency("adventure4", "shadowJarAdventure4", "adventure/4/", "dep
 
 dependencies {
     api(project(path = ":apollo-api", configuration = "shadow"))
-    api(project(":apollo-common"))
+    api(project(path = ":apollo-common", configuration = "shadow"))
 
     "loaderCompileOnly"(libs.bungee)
     "loaderImplementation"(project(":extra:apollo-extra-loader"))

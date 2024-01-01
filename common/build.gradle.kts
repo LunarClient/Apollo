@@ -1,4 +1,5 @@
 plugins {
+    id("apollo.shadow-conventions")
     id("apollo.publish-conventions")
 }
 
@@ -13,4 +14,4 @@ dependencies {
     api(libs.configurate.yaml)
 }
 
-publishJar()
+publishShadowJar()
