@@ -25,7 +25,12 @@ package com.lunarclient.apollo.listener;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.event.ApolloListener;
+import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
+import com.lunarclient.apollo.event.EventBus;
+import com.lunarclient.apollo.event.Listen;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
+import com.lunarclient.apollo.player.v1.PlayerHandshakeMessage;
 import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
 import org.bukkit.Bukkit;
@@ -44,7 +49,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @since 1.0.0
  */
-public final class ApolloPlayerListener implements Listener {
+public final class ApolloPlayerListener implements Listener, ApolloListener {
 
     /**
      * Constructs the {@link ApolloPlayerListener}.
@@ -53,6 +58,7 @@ public final class ApolloPlayerListener implements Listener {
      * @since 1.0.6
      */
     public ApolloPlayerListener(JavaPlugin plugin) {
+        EventBus.getBus().register(this);
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
@@ -89,6 +95,13 @@ public final class ApolloPlayerListener implements Listener {
         if (player.isOp()) {
             player.sendMessage(ChatColor.YELLOW + ApolloVersionManager.UPDATE_MESSAGE);
         }
+    }
+
+    @Listen
+    private void onApolloReceivePacket(ApolloReceivePacketEvent event) {
+        event.unpack(PlayerHandshakeMessage.class).ifPresent(message -> {
+            ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).handlePlayerHandshake(event.getPlayer(), message);
+        });
     }
 
 }
