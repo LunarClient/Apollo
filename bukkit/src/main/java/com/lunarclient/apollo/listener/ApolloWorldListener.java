@@ -34,6 +34,7 @@ import com.lunarclient.apollo.player.v1.UpdatePlayerWorldMessage;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import com.lunarclient.apollo.wrapper.BukkitApolloWorld;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -58,6 +59,11 @@ public final class ApolloWorldListener implements Listener, ApolloListener {
     public ApolloWorldListener(JavaPlugin plugin) {
         EventBus.getBus().register(this);
         Bukkit.getPluginManager().registerEvents(this, plugin);
+
+        ApolloWorldManagerImpl worldManager = ((ApolloWorldManagerImpl) Apollo.getWorldManager());
+        for (World world : Bukkit.getWorlds()) {
+            worldManager.addWorld(new BukkitApolloWorld(world));
+        }
     }
 
     @EventHandler
@@ -86,11 +92,14 @@ public final class ApolloWorldListener implements Listener, ApolloListener {
     @Listen
     private void onApolloRegisterPlayer(ApolloRegisterPlayerEvent event) {
         ApolloPlayer apolloPlayer = event.getPlayer();
-        UpdatePlayerWorldMessage message = UpdatePlayerWorldMessage.newBuilder()
-            .setWorld(((Player) apolloPlayer).getWorld().getName())
-            .build();
 
-        ((AbstractApolloPlayer) apolloPlayer).sendPacket(message);
+        apolloPlayer.getWorld().ifPresent(world -> {
+            UpdatePlayerWorldMessage message = UpdatePlayerWorldMessage.newBuilder()
+                .setWorld(world.getName())
+                .build();
+
+            ((AbstractApolloPlayer) apolloPlayer).sendPacket(message);
+        });
     }
 
 }
