@@ -15,9 +15,9 @@ The notification module allows you to send Lunar Client notifications to players
 ### `Notification` Builder
 
 ```java
-private final Notification notification = Notification.builder()
-    .title("UHC Announcement")
-    .description("UHC starts in 5 minutes...")
+private final Notification uhcAnnouncement = Notification.builder()
+    .titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
+    .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED))
     .resourceLocation("icons/golden_apple.png") // This field is optional
     .displayTime(Duration.ofSeconds(5))
     .build();
@@ -26,19 +26,19 @@ private final Notification notification = Notification.builder()
 #### `Notification` Options
 
 <Callout type="warning" emoji="⚠️">
-  There are character limits for the `title` and `description` options.
+  There are character limits for the `titleComponent` option.
 </Callout>
 
-`.title(String)` is the title of the notification box. Char limit: `15`
+`.titleComponent(Component)` is the title of the notification box. Char limit: `15`. See the [chat components](https://docs.advntr.dev/text.html) page for more.
 
 ```java
-.title("UHC Announcement")
+.titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
 ```
 
-`.description(String)` is the description displayed inside the notification box. Char limit: `15`
+`.descriptionComponent(Component)` is the description displayed inside the notification box. See the [chat components](https://docs.advntr.dev/text.html) page for more.
 
 ```java
-.description("UHC starts in 5 minutes...")
+.descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED))
 ```
 
 `.resourceLocation(String)` is the resource location of the shown icon.
@@ -54,6 +54,22 @@ private final Notification notification = Notification.builder()
 ```
 
 If this field is left empty (null) it'll display a generic info icon, as displayed here.
+
+<Callout type="warning" emoji="⚠️">
+  The fields `title` and `description` are deprecated since 1.0.6, use 'titleComponent' and 'descriptionComponent' instead.
+</Callout>
+
+`.title(String)` is the title of the notification box. Char limit: `15`
+
+```java
+.title("UHC Announcement")
+```
+
+`.description(String)` is the description displayed inside the notification box.
+
+```java
+.description("UHC starts in 5 minutes...")
+```
 
 ### Displaying a Notification for a specific player
 

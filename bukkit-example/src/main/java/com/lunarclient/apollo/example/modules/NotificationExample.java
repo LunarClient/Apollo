@@ -29,6 +29,8 @@ import com.lunarclient.apollo.module.notification.NotificationModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.time.Duration;
 import java.util.Optional;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 public class NotificationExample {
@@ -36,8 +38,8 @@ public class NotificationExample {
     private final NotificationModule notificationModule = Apollo.getModuleManager().getModule(NotificationModule.class);
 
     private final Notification uhcAnnouncement = Notification.builder()
-        .title("UHC Announcement")
-        .description("UHC starts in 5 minutes...")
+        .titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
+        .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED))
         .resourceLocation("icons/golden_apple.png") // This field is optional
         .displayTime(Duration.ofSeconds(5))
         .build();
