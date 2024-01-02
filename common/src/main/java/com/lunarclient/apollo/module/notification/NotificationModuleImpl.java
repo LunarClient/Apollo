@@ -23,12 +23,14 @@
  */
 package com.lunarclient.apollo.module.notification;
 
+import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.notification.v1.DisplayNotificationMessage;
 import com.lunarclient.apollo.notification.v1.ResetNotificationsMessage;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
+import net.kyori.adventure.text.Component;
 
 /**
  * Provides the notifications module.
@@ -40,9 +42,27 @@ public final class NotificationModuleImpl extends NotificationModule {
     @Override
     public void displayNotification(@NonNull Recipients recipients, @NonNull Notification notification) {
         DisplayNotificationMessage.Builder builder = DisplayNotificationMessage.newBuilder()
-            .setTitle(notification.getTitle())
-            .setDescription(notification.getDescription())
             .setDisplayTime(NetworkTypes.toProtobuf(notification.getDisplayTime()));
+
+        String title = notification.getTitle();
+        if (title != null) {
+            builder.setTitle(title);
+        }
+
+        String description = notification.getDescription();
+        if (description != null) {
+            builder.setDescription(description);
+        }
+
+        Component titleComponent = notification.getTitleComponent();
+        if (titleComponent != null) {
+            builder.setTitleAdventureJsonLines(ApolloComponent.toJson(titleComponent));
+        }
+
+        Component descriptionComponent = notification.getDescriptionComponent();
+        if (descriptionComponent != null) {
+            builder.setDescriptionAdventureJsonLines(ApolloComponent.toJson(descriptionComponent));
+        }
 
         String resourceLocation = notification.getResourceLocation();
         if (resourceLocation != null) {

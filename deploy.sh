@@ -1,5 +1,5 @@
 # Deploy apollo to the test server
 set -e
 ./gradlew clean build
-scp bukkit/build/libs/apollo-bukkit-1.0.5-evnt-SNAPSHOT.jar ubuntu@build.moonsworth.com:/home/ubuntu/apollo-evnt/plugins/
-scp bukkit-example/build/libs/apollo-bukkit-example-1.0.5-evnt-SNAPSHOT.jar ubuntu@build.moonsworth.com:/home/ubuntu/apollo-evnt/plugins/
+scp bukkit/build/libs/apollo-bukkit-1.0.6-evnt-SNAPSHOT.jar ubuntu@build.moonsworth.com:/home/ubuntu/apollo-evnt/plugins/
+scp bukkit-example/build/libs/apollo-bukkit-example-1.0.6-evnt-SNAPSHOT.jar ubuntu@build.moonsworth.com:/home/ubuntu/apollo-evnt/plugins/

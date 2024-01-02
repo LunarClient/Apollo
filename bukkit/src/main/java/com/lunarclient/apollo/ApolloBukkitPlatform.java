@@ -87,7 +87,6 @@ import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
@@ -111,9 +110,8 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         this.stats = new BukkitApolloStats();
         ApolloManager.bootstrap(this);
 
-        PluginManager pluginManager = this.plugin.getServer().getPluginManager();
-        pluginManager.registerEvents(new ApolloPlayerListener(), this.plugin);
-        pluginManager.registerEvents(new ApolloWorldListener(), this.plugin);
+        new ApolloPlayerListener(this.plugin);
+        new ApolloWorldListener(this.plugin);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
             .addModule(BeamModule.class, new BeamModuleImpl())
@@ -168,6 +166,10 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
 
         statsManager.enable();
         versionManager.checkForUpdates();
+
+        if (Bukkit.getPluginManager().getPlugin("LunarClient-API") != null) {
+            this.getPlatformLogger().log(Level.WARNING, "Please remove the legacy API to prevent compatibility issues with Apollo!");
+        }
     }
 
     @Override

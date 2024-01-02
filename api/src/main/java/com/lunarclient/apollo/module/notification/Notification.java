@@ -26,6 +26,7 @@ package com.lunarclient.apollo.module.notification;
 import java.time.Duration;
 import lombok.Builder;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -40,18 +41,36 @@ public final class Notification {
     /**
      * Returns the notification {@link String} title.
      *
+     * @deprecated for removal since 1.0.6, use {@link Notification#titleComponent} instead.
      * @return the notification title
      * @since 1.0.0
      */
-    String title;
+    @Deprecated String title;
 
     /**
      * Returns the notification {@link String} description.
      *
+     * @deprecated for removal since 1.0.6, use {@link Notification#descriptionComponent} instead.
      * @return the notification description
      * @since 1.0.0
      */
-    String description;
+    @Deprecated String description;
+
+    /**
+     * Returns the notification {@link String} title component.
+     *
+     * @return the notification title component
+     * @since 1.0.6
+     */
+    Component titleComponent;
+
+    /**
+     * Returns the notification {@link String} description component.
+     *
+     * @return the notification description component
+     * @since 1.0.6
+     */
+    Component descriptionComponent;
 
     /**
      * Returns the notification {@link String} resource location.
