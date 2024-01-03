@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo;
 
-import com.google.protobuf.Any;
+import com.lunarclient.apollo.command.ApolloCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
@@ -34,12 +34,17 @@ import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
 import com.lunarclient.apollo.module.border.BorderModule;
 import com.lunarclient.apollo.module.border.BorderModuleImpl;
+import com.lunarclient.apollo.module.chat.ChatModule;
+import com.lunarclient.apollo.module.chat.ChatModuleImpl;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModuleImpl;
+import com.lunarclient.apollo.module.combat.CombatModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
 import com.lunarclient.apollo.module.entity.EntityModule;
 import com.lunarclient.apollo.module.entity.EntityModuleImpl;
+import com.lunarclient.apollo.module.glow.GlowModule;
+import com.lunarclient.apollo.module.glow.GlowModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
@@ -72,12 +77,11 @@ import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.stats.ApolloStatsManager;
 import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BukkitApolloStats;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
@@ -101,17 +105,19 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         this.stats = new BukkitApolloStats();
         ApolloManager.bootstrap(this);
 
-        PluginManager pluginManager = this.plugin.getServer().getPluginManager();
-        pluginManager.registerEvents(new ApolloPlayerListener(), this.plugin);
-        pluginManager.registerEvents(new ApolloWorldListener(), this.plugin);
+        new ApolloPlayerListener(this.plugin);
+        new ApolloWorldListener(this.plugin);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
             .addModule(AntiCheatModule.class, new AntiCheatImpl())
             .addModule(BeamModule.class, new BeamModuleImpl())
             .addModule(BorderModule.class, new BorderModuleImpl())
+            .addModule(ChatModule.class, new ChatModuleImpl())
             .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
+            .addModule(CombatModule.class)
             .addModule(CooldownModule.class, new CooldownModuleImpl())
             .addModule(EntityModule.class, new EntityModuleImpl())
+            .addModule(GlowModule.class, new GlowModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
             .addModule(LimbModule.class, new LimbModuleImpl())
             .addModule(ModSettingModule.class)
@@ -130,25 +136,34 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         ApolloStatsManager statsManager = new ApolloStatsManager();
         ApolloVersionManager versionManager = new ApolloVersionManager();
 
-        ApolloManager.loadConfiguration(this.plugin.getDataFolder().toPath());
-        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
-        ApolloManager.saveConfiguration();
+        try {
+            ApolloManager.setConfigPath(this.plugin.getDataFolder().toPath());
+            ApolloManager.loadConfiguration();
+            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
+            ApolloManager.saveConfiguration();
+        } catch (Throwable throwable) {
+            this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration and modules!", throwable);
+        }
 
         Messenger messenger = this.plugin.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
         messenger.registerIncomingPluginChannel(this.plugin, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
-            (channel, player, bytes) -> this.handlePacket(player, bytes)
+            (channel, player, bytes) -> ApolloManager.getNetworkManager().receivePacket(player.getUniqueId(), bytes)
         );
+
+        this.getPlugin().getCommand("apollo").setExecutor(new ApolloCommand());
 
         statsManager.enable();
         versionManager.checkForUpdates();
+
+        if (Bukkit.getPluginManager().getPlugin("LunarClient-API") != null) {
+            this.getPlatformLogger().log(Level.WARNING, "Please remove the legacy API to prevent compatibility issues with Apollo!");
+        }
     }
 
     @Override
     public void onDisable() {
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
-
-        ApolloManager.saveConfiguration();
     }
 
     @Override
@@ -169,16 +184,6 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
     @Override
     public Logger getPlatformLogger() {
         return Bukkit.getServer().getLogger();
-    }
-
-    private void handlePacket(Player player, byte[] bytes) {
-        Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
-            try {
-                ApolloManager.getNetworkManager().receivePacket(apolloPlayer, Any.parseFrom(bytes));
-            } catch (Throwable throwable) {
-                throw new RuntimeException(throwable);
-            }
-        });
     }
 
 }

@@ -28,8 +28,8 @@ import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.wrapper.BungeeApolloPlayer;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -42,31 +42,48 @@ import net.md_5.bungee.event.EventHandler;
  */
 public final class ApolloPlayerListener implements Listener {
 
+    /**
+     * Handles registering players that join with Lunar Client.
+     *
+     * @param event the event
+     * @since 1.0.0
+     */
     @EventHandler
-    private void onPluginMessage(PluginMessageEvent event) {
-        if (!(event.getReceiver() instanceof ProxyServer)) {
+    public void onPluginMessage(PluginMessageEvent event) {
+        ProxiedPlayer player = null;
+        if (event.getSender() instanceof ProxiedPlayer && event.getReceiver() instanceof Server) {
+            player = (ProxiedPlayer) event.getSender();
+        } else if (event.getSender() instanceof Server && event.getReceiver() instanceof ProxiedPlayer) {
+            player = (ProxiedPlayer) event.getReceiver();
+        }
+
+        if (player == null) {
             return;
         }
 
-        if (!(event.getSender() instanceof ProxiedPlayer)) {
-            return;
-        }
+        String tag = event.getTag();
+        byte[] data = event.getData();
 
-        if (!event.getTag().equals("REGISTER")) {
-            return;
-        }
+        if(tag.equalsIgnoreCase("register") || tag.equalsIgnoreCase("minecraft:register")) {
+            String channels = new String(data, Charsets.UTF_8);
+            if (!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
+                return;
+            }
 
-        String channels = new String(event.getData(), Charsets.UTF_8);
-        if (!channels.contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
-            return;
+            ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new BungeeApolloPlayer(player));
+        } else if (tag.equalsIgnoreCase(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
+            ApolloManager.getNetworkManager().receivePacket(player.getUniqueId(), data);
         }
-
-        ProxiedPlayer player = (ProxiedPlayer) event.getSender();
-        ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).addPlayer(new BungeeApolloPlayer(player));
     }
 
+    /**
+     * Handles unregistering players from Apollo.
+     *
+     * @param event the event
+     * @since 1.0.0
+     */
     @EventHandler
-    private void onDisconnect(PlayerDisconnectEvent event) {
+    public void onDisconnect(PlayerDisconnectEvent event) {
         ProxiedPlayer player = event.getPlayer();
         ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).removePlayer(player.getUniqueId());
     }

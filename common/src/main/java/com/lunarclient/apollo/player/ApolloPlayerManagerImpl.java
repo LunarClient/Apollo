@@ -24,18 +24,27 @@
 package com.lunarclient.apollo.player;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.client.mod.LunarClientMod;
+import com.lunarclient.apollo.client.mod.LunarClientModType;
+import com.lunarclient.apollo.client.version.LunarClientVersion;
+import com.lunarclient.apollo.client.version.MinecraftVersion;
 import com.lunarclient.apollo.event.EventBus;
+import com.lunarclient.apollo.event.player.ApolloPlayerHandshakeEvent;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
 import com.lunarclient.apollo.network.NetworkOptions;
+import com.lunarclient.apollo.player.v1.PlayerHandshakeMessage;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Provides the implementation for the {@link ApolloPlayerManager}.
@@ -65,17 +74,17 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
      */
     public void addPlayer(@NonNull ApolloPlayer player) {
         if (this.players.putIfAbsent(player.getUniqueId(), player) == null) {
-            EventBus.EventResult<ApolloRegisterPlayerEvent> result = EventBus.getBus()
-                .post(new ApolloRegisterPlayerEvent(player));
-            for (Throwable throwable : result.getThrowing()) {
-                throwable.printStackTrace();
-            }
-
             NetworkOptions.sendOptions(
                 Apollo.getModuleManager().getModules(),
                 true,
                 player
             );
+
+            EventBus.EventResult<ApolloRegisterPlayerEvent> result = EventBus.getBus()
+                .post(new ApolloRegisterPlayerEvent(player));
+            for (Throwable throwable : result.getThrowing()) {
+                throwable.printStackTrace();
+            }
         }
     }
 
@@ -93,6 +102,45 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
             for (Throwable throwable : result.getThrowing()) {
                 throwable.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * Handles an {@link PlayerHandshakeMessage} message packet from the provided player.
+     *
+     * @param player the player that received the packet
+     * @param message the handshake message to handle
+     * @since 1.0.6
+     */
+    public void handlePlayerHandshake(@NotNull ApolloPlayer player, @NotNull PlayerHandshakeMessage message) {
+        MinecraftVersion minecraftVersion;
+        try {
+            minecraftVersion = MinecraftVersion.valueOf(message.getMinecraftVersion().getEnum().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            minecraftVersion = MinecraftVersion.UNKNOWN;
+        }
+
+        LunarClientVersion lunarClientVersion = LunarClientVersion.builder()
+            .gitBranch(message.getLunarClientVersion().getGitBranch())
+            .gitCommit(message.getLunarClientVersion().getGitCommit())
+            .semVer(message.getLunarClientVersion().getSemver())
+            .build();
+
+        LunarClientModType[] modTypes = LunarClientModType.values();
+        List<LunarClientMod> mods = message.getInstalledModsList().stream().map(mod ->
+            LunarClientMod.builder()
+                .id(mod.getId())
+                .displayName(mod.getName())
+                .version(mod.getVersion())
+                .type(modTypes[mod.getTypeValue() - 1])
+                .build()
+        ).collect(Collectors.toList());
+
+        EventBus.EventResult<ApolloPlayerHandshakeEvent> result = EventBus.getBus()
+            .post(new ApolloPlayerHandshakeEvent(player, minecraftVersion, lunarClientVersion, mods));
+
+        for (Throwable throwable : result.getThrowing()) {
+            throwable.printStackTrace();
         }
     }
 

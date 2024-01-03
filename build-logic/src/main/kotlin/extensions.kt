@@ -183,6 +183,7 @@ fun Project.publishJar() {
 
 fun Project.publishShadowJar() {
     configurePublication {
+        artifact(tasks["jar"])
         artifact(tasks["shadowJar"])
         artifact(tasks["sourcesJar"])
     }

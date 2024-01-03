@@ -63,7 +63,7 @@ public class BungeeApolloStats implements ApolloStats {
     public List<ApolloPluginDescription> getPlugins() {
         return ProxyServer.getInstance().getPluginManager().getPlugins()
             .stream().map(Plugin::getDescription)
-            .filter(plugin -> !plugin.getAuthor().equals("SpigotMC"))
+            .filter(plugin -> !"SpigotMC".equals(plugin.getAuthor()))
             .map(description -> ApolloPluginDescription.builder()
                 .name(description.getName())
                 .description(description.getDescription())

@@ -25,9 +25,12 @@ package com.lunarclient.apollo.example;
 
 import com.lunarclient.apollo.example.commands.BeamCommand;
 import com.lunarclient.apollo.example.commands.BorderCommand;
+import com.lunarclient.apollo.example.commands.ChatCommand;
 import com.lunarclient.apollo.example.commands.ColoredFireCommand;
+import com.lunarclient.apollo.example.commands.CombatCommand;
 import com.lunarclient.apollo.example.commands.CooldownCommand;
 import com.lunarclient.apollo.example.commands.EntityCommand;
+import com.lunarclient.apollo.example.commands.GlowCommand;
 import com.lunarclient.apollo.example.commands.HologramCommand;
 import com.lunarclient.apollo.example.commands.LimbCommand;
 import com.lunarclient.apollo.example.commands.ModSettingsCommand;
@@ -45,9 +48,12 @@ import com.lunarclient.apollo.example.commands.WaypointCommand;
 import com.lunarclient.apollo.example.listeners.AntiCheatListenerExample;
 import com.lunarclient.apollo.example.modules.BeamExample;
 import com.lunarclient.apollo.example.modules.BorderExample;
+import com.lunarclient.apollo.example.modules.ChatExample;
 import com.lunarclient.apollo.example.modules.ColoredFireExample;
+import com.lunarclient.apollo.example.modules.CombatExample;
 import com.lunarclient.apollo.example.modules.CooldownExample;
 import com.lunarclient.apollo.example.modules.EntityExample;
+import com.lunarclient.apollo.example.modules.GlowExample;
 import com.lunarclient.apollo.example.modules.HologramExample;
 import com.lunarclient.apollo.example.modules.LimbExample;
 import com.lunarclient.apollo.example.modules.ModSettingsExample;
@@ -73,9 +79,12 @@ public class ApolloExamplePlugin extends JavaPlugin {
 
     private BeamExample beamExample;
     private BorderExample borderExample;
+    private ChatExample chatExample;
     private ColoredFireExample coloredFireExample;
+    private CombatExample combatExample;
     private CooldownExample cooldownExample;
     private EntityExample entityExample;
+    private GlowExample glowExample;
     private HologramExample hologramExample;
     private LimbExample limbExample;
     private ModSettingsExample modSettingsExample;
@@ -108,9 +117,12 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private void registerModuleExamples() {
         this.beamExample = new BeamExample();
         this.borderExample = new BorderExample();
+        this.chatExample = new ChatExample();
         this.coloredFireExample = new ColoredFireExample();
+        this.combatExample = new CombatExample();
         this.cooldownExample = new CooldownExample();
         this.entityExample = new EntityExample();
+        this.glowExample = new GlowExample();
         this.hologramExample = new HologramExample();
         this.limbExample = new LimbExample();
         this.modSettingsExample = new ModSettingsExample();
@@ -130,9 +142,12 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private void registerCommands() {
         this.getCommand("beam").setExecutor(new BeamCommand());
         this.getCommand("border").setExecutor(new BorderCommand());
+        this.getCommand("chat").setExecutor(new ChatCommand());
         this.getCommand("coloredfire").setExecutor(new ColoredFireCommand());
+        this.getCommand("combat").setExecutor(new CombatCommand());
         this.getCommand("cooldown").setExecutor(new CooldownCommand());
         this.getCommand("entity").setExecutor(new EntityCommand());
+        this.getCommand("glow").setExecutor(new GlowCommand());
         this.getCommand("hologram").setExecutor(new HologramCommand());
         this.getCommand("limb").setExecutor(new LimbCommand());
         this.getCommand("modsettings").setExecutor(new ModSettingsCommand());

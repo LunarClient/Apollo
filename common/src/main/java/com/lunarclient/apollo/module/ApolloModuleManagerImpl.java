@@ -71,28 +71,53 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
     /**
      * Enables all the added modules, if they are not already enabled.
      *
+     * @throws Throwable if there is an error enabling the modules
      * @since 1.0.0
      */
-    public void enableModules() {
+    public void enableModules() throws Throwable {
         for (ApolloModule module : this.modules.values()) {
-            try {
-                // Load configuration options for the module.
-                module.setOptions(new OptionsImpl(module));
+            // Load configuration options for the module.
+            module.setOptions(new OptionsImpl(module));
 
-                List<Option<?, ?, ?>> options = module.getOptionKeys();
-                this.loadConfiguration(module, options);
+            List<Option<?, ?, ?>> options = module.getOptionKeys();
+            this.loadConfiguration(module, options);
 
-                // Enable the module if it is able to.
-                if (module.isEnabled() || module.getOptions().getDirect(ApolloModule.ENABLE).filter(value -> value).isPresent()) {
-                    continue;
+            // Enable the module if it is able to.
+            if (module.isEnabled() || module.getOptions().get(ApolloModule.ENABLE) == Boolean.FALSE) {
+                continue;
+            }
+
+            EventBus.getBus().register(module);
+            module.enable();
+        }
+    }
+
+    /**
+     * Reloads the configuration and enables/disables modules that have been
+     * changed.
+     *
+     * @throws Throwable if there is an error reloading the modules
+     * @since 1.0.5
+     */
+    public void reloadModules() throws Throwable {
+        for (ApolloModule module : this.modules.values()) {
+            List<Option<?, ?, ?>> options = module.getOptionKeys();
+            this.loadConfiguration(module, options);
+
+            // Enable or disable the module depending on the setting.
+            Boolean enable;
+            if ((enable = module.getOptions().get(ApolloModule.ENABLE)) != Boolean.valueOf(module.isEnabled())) {
+                if (enable == Boolean.TRUE) {
+                    EventBus.getBus().register(module);
+                    module.enable();
+                } else {
+                    EventBus.getBus().unregister(module);
+                    module.disable();
                 }
-
-                EventBus.getBus().register(module);
-                module.enable();
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
             }
         }
+
+        this.saveConfiguration();
     }
 
     /**
@@ -149,25 +174,20 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
     /**
      * Saves the configuration for all the loaded modules.
      *
+     * @throws Throwable if there is an error saving the module configurations
      * @since 1.0.0
      */
-    public void saveConfiguration() {
+    public void saveConfiguration() throws Throwable {
         for (ApolloModule module : this.modules.values()) {
-            try {
-                ConfigTarget configTarget = module.getConfigTarget();
-                ApolloConfig config = ApolloConfig.get(configTarget);
+            ConfigTarget configTarget = module.getConfigTarget();
+            ApolloConfig config = ApolloConfig.get(configTarget);
 
-                CommentedConfigurationNode node = config.node();
-                node.comment(configTarget.getHeaderComment());
+            CommentedConfigurationNode node = config.node();
+            CommentedConfigurationNode modules = node.node((Object[]) configTarget.getModulesNode());
+            CommentedConfigurationNode moduleNode = modules.node(module.getId().toLowerCase(Locale.ROOT));
 
-                CommentedConfigurationNode modules = node.node((Object[]) configTarget.getModulesNode());
-                CommentedConfigurationNode moduleNode = modules.node(module.getId().toLowerCase(Locale.ENGLISH));
-
-                Options optionsContainer = module.getOptions();
-                ConfigOptions.saveOptions(optionsContainer, moduleNode, module.getOptionKeys());
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
+            Options optionsContainer = module.getOptions();
+            ConfigOptions.saveOptions(optionsContainer, moduleNode, module.getOptionKeys());
         }
     }
 
@@ -177,7 +197,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
         CommentedConfigurationNode node = config.node();
 
         CommentedConfigurationNode modules = node.node((Object[]) configTarget.getModulesNode());
-        CommentedConfigurationNode moduleNode = modules.node(module.getId().toLowerCase(Locale.ENGLISH));
+        CommentedConfigurationNode moduleNode = modules.node(module.getId().toLowerCase(Locale.ROOT));
         if (moduleNode.virtual()) {
             return;
         }

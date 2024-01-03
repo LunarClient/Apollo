@@ -54,6 +54,17 @@ public final class ModSnaplook {
         .notifyClient()
         .build();
 
+    /**
+     * This feature uses press and hold by default. Useful if you want to bypass a certain camera orientation.
+     *
+     * @since 1.0.4
+     */
+    public static final SimpleOption<Boolean> SNAPLOOK_TOGGLE_MODE = SimpleOption.<Boolean>builder()
+        .comment("This feature uses press and hold by default. Useful if you want to bypass a certain camera orientation.")
+        .node("snaplook", "snaplook-toggle-mode").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
     private ModSnaplook() {
     }
 

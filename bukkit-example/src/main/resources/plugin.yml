@@ -1,6 +1,6 @@
 name: Apollo-Example
 main: com.lunarclient.apollo.example.ApolloExamplePlugin
-version: 1.0.1
+version: 1.0.6
 author: Moonsworth
 depend: [ Apollo-Bukkit ]
 api-version: 1.13
@@ -10,12 +10,18 @@ commands:
         description: "Beams!"
     border:
         description: "Borders!"
+    chat:
+        description: "Chat!"
     coloredfire:
         description: "Colored Fires!"
+    combat:
+        description: "Combat!"
     cooldown:
         description: "Cooldowns!"
     entity:
         description: "Entity!"
+    glow:
+        description: "Glow!"
     hologram:
         description: "Holograms!"
     limb:
