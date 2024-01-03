@@ -21,51 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.event.anticheat;
+package com.lunarclient.apollo.common.packetenrichment;
 
-import com.lunarclient.apollo.common.anticheat.PlayerInfo;
-import com.lunarclient.apollo.event.Event;
-import lombok.Value;
+import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
+import java.util.UUID;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
- * Represents an event that is fired when the player attacks another player.
+ * Represents a player info for the apollo anti-cheat module.
  *
- * @since 1.0.0
+ * @since 1.0.7
  */
-@Value
-public class ApolloPlayerAttackEvent implements Event {
+@Getter
+@Builder
+public class PlayerInfo {
 
     /**
-     * The {@code long} representing the unix timestamp
-     * when the packet was created.
+     * The UUID of this team member.
      *
-     * @return the unix timestamp
-     * @since 1.0.0
+     * @return the player uuid
+     * @since 1.0.7
      */
-    long instantiationTimeMs;
+    UUID playerUuid;
 
     /**
-     * The target's {@link PlayerInfo} information.
+     * Returns the {@link ApolloPlayerLocation} for this player.
      *
-     * @return the target player info
-     * @since 1.0.0
+     * @return the player location
+     * @since 1.0.7
      */
-    PlayerInfo targetInfo;
+    ApolloPlayerLocation location;
 
     /**
-     * The attacker's {@link PlayerInfo} information.
+     * Returns the player {@link Boolean} sneaking state.
      *
-     * @return the attacker player info
-     * @since 1.0.0
+     * @return the sneaking state
+     * @since 1.0.7
      */
-    PlayerInfo attackerInfo;
+    boolean sneaking;
 
     /**
-     * The {@code double} reach distance.
+     * Returns the player {@link Boolean} sprinting state.
      *
-     * @return the reach distance
-     * @since 1.0.0
+     * @return the sprinting state
+     * @since 1.0.7
      */
-    double distance;
+    boolean sprinting;
+
+    /**
+     * Returns the player {@link Long} ping in milliseconds.
+     *
+     * @return the ping
+     * @since 1.0.7
+     */
+    long ping;
 
 }

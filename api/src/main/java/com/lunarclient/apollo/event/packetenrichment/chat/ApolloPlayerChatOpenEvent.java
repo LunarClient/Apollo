@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.event.anticheat.chat;
+package com.lunarclient.apollo.event.packetenrichment.chat;
 
-import com.lunarclient.apollo.common.anticheat.PlayerInfo;
+import com.lunarclient.apollo.common.packetenrichment.PlayerInfo;
 import com.lunarclient.apollo.event.Event;
 import lombok.Value;
 
 /**
  * Represents an event that is fired when the player opens their chat.
  *
- * @since 1.0.0
+ * @since 1.0.7
  */
 @Value
 public class ApolloPlayerChatOpenEvent implements Event {
@@ -40,7 +40,7 @@ public class ApolloPlayerChatOpenEvent implements Event {
      * when the packet was created.
      *
      * @return the unix timestamp
-     * @since 1.0.0
+     * @since 1.0.7
      */
     long instantiationTimeMs;
 
@@ -48,7 +48,7 @@ public class ApolloPlayerChatOpenEvent implements Event {
      * The player's {@link PlayerInfo} information.
      *
      * @return the player's player info
-     * @since 1.0.0
+     * @since 1.0.7
      */
     PlayerInfo playerInfo;
 

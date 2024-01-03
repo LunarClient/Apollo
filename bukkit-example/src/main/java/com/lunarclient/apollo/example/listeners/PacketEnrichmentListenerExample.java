@@ -26,11 +26,11 @@ package com.lunarclient.apollo.example.listeners;
 import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.Listen;
-import com.lunarclient.apollo.event.anticheat.ApolloPlayerAttackEvent;
+import com.lunarclient.apollo.event.packetenrichment.ApolloPlayerAttackEvent;
 
-public class AntiCheatListenerExample implements ApolloListener {
+public class PacketEnrichmentListenerExample implements ApolloListener {
 
-    public AntiCheatListenerExample() {
+    public PacketEnrichmentListenerExample() {
         EventBus.getBus().register(this);
     }
 

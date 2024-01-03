@@ -25,7 +25,7 @@ package com.lunarclient.apollo.network;
 
 import com.google.protobuf.Timestamp;
 import com.lunarclient.apollo.common.ApolloEntity;
-import com.lunarclient.apollo.common.anticheat.PlayerInfo;
+import com.lunarclient.apollo.common.packetenrichment.PlayerInfo;
 import com.lunarclient.apollo.common.cuboid.Cuboid2D;
 import com.lunarclient.apollo.common.cuboid.Cuboid3D;
 import com.lunarclient.apollo.common.icon.AdvancedResourceLocationIcon;
@@ -162,7 +162,7 @@ public final class NetworkTypes {
      *
      * @param millis the millis
      * @return the proto timestamp message
-     * @since 1.0.0
+     * @since 1.0.7
      */
     public static Timestamp toProtobuf(long millis) {
         return Timestamp.newBuilder()
@@ -177,7 +177,7 @@ public final class NetworkTypes {
      *
      * @param message the duration message
      * @return the unix timestamp in milliseconds
-     * @since 1.0.0
+     * @since 1.0.7
      */
     public static long fromProtobuf(Timestamp message) {
         return message.getSeconds() * 1000 + message.getNanos() / 1000000;
@@ -189,7 +189,7 @@ public final class NetworkTypes {
      *
      * @param object the player info
      * @return the proto player info message
-     * @since 1.0.0
+     * @since 1.0.7
      */
     public static com.lunarclient.apollo.anticheat.v1.PlayerInfo toProtobuf(PlayerInfo object) {
         return com.lunarclient.apollo.anticheat.v1.PlayerInfo.newBuilder()
@@ -207,7 +207,7 @@ public final class NetworkTypes {
      *
      * @param message the player info message
      * @return the apollo player info object
-     * @since 1.0.0
+     * @since 1.0.7
      */
     public static PlayerInfo fromProtobuf(com.lunarclient.apollo.anticheat.v1.PlayerInfo message) {
         return PlayerInfo.builder()
@@ -293,7 +293,7 @@ public final class NetworkTypes {
      *
      * @param object the player location
      * @return the proto player location message
-     * @since 1.0.0
+     * @since 1.0.7
      */
     public static com.lunarclient.apollo.common.v1.PlayerLocation toProtobuf(ApolloPlayerLocation object) {
         return com.lunarclient.apollo.common.v1.PlayerLocation.newBuilder()
@@ -309,7 +309,7 @@ public final class NetworkTypes {
      *
      * @param message the player location message
      * @return the apollo player location object
-     * @since 1.0.0
+     * @since 1.0.7
      */
     public static ApolloPlayerLocation fromProtobuf(com.lunarclient.apollo.common.v1.PlayerLocation message) {
         return ApolloPlayerLocation.builder()

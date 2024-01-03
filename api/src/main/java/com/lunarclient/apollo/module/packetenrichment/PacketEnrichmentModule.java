@@ -21,60 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.common.anticheat;
+package com.lunarclient.apollo.module.packetenrichment;
 
-import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
-import java.util.UUID;
-import lombok.Builder;
-import lombok.Getter;
+import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Represents a player info for the apollo anti-cheat module.
+ * Represents the packet enrichment module.
  *
- * @since 1.0.0
+ * @since 1.0.7
  */
-@Getter
-@Builder
-public class PlayerInfo {
-
-    /**
-     * The UUID of this team member.
-     *
-     * @return the player uuid
-     * @since 1.0.0
-     */
-    UUID playerUuid;
-
-    /**
-     * Returns the {@link ApolloPlayerLocation} for this player.
-     *
-     * @return the player location
-     * @since 1.0.0
-     */
-    ApolloPlayerLocation location;
-
-    /**
-     * Returns the player {@link Boolean} sneaking state.
-     *
-     * @return the sneaking state
-     * @since 1.0.0
-     */
-    boolean sneaking;
-
-    /**
-     * Returns the player {@link Boolean} sprinting state.
-     *
-     * @return the sprinting state
-     * @since 1.0.0
-     */
-    boolean sprinting;
-
-    /**
-     * Returns the player {@link Long} ping in milliseconds.
-     *
-     * @return the ping
-     * @since 1.0.0
-     */
-    long ping;
+@ApiStatus.NonExtendable
+@ModuleDefinition(id = "packet_enrichment", name = "PacketEnrichment")
+public abstract class PacketEnrichmentModule extends ApolloModule {
 
 }

@@ -28,8 +28,8 @@ import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
-import com.lunarclient.apollo.module.anticheat.AntiCheatImpl;
-import com.lunarclient.apollo.module.anticheat.AntiCheatModule;
+import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentImpl;
+import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentModule;
 import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
 import com.lunarclient.apollo.module.border.BorderModule;
@@ -109,7 +109,6 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         new ApolloWorldListener(this.plugin);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
-            .addModule(AntiCheatModule.class, new AntiCheatImpl())
             .addModule(BeamModule.class, new BeamModuleImpl())
             .addModule(BorderModule.class, new BorderModuleImpl())
             .addModule(ChatModule.class, new ChatModuleImpl())
@@ -123,6 +122,7 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(ModSettingModule.class)
             .addModule(NametagModule.class, new NametagModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())
+            .addModule(PacketEnrichmentModule.class, new PacketEnrichmentImpl())
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())
             .addModule(StopwatchModule.class, new StopwatchModuleImpl())

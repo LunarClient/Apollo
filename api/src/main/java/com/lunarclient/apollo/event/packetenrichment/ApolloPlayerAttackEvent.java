@@ -21,19 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.anticheat;
+package com.lunarclient.apollo.event.packetenrichment;
 
-import com.lunarclient.apollo.module.ApolloModule;
-import com.lunarclient.apollo.module.ModuleDefinition;
-import org.jetbrains.annotations.ApiStatus;
+import com.lunarclient.apollo.common.packetenrichment.PlayerInfo;
+import com.lunarclient.apollo.event.Event;
+import lombok.Value;
 
 /**
- * Represents the anti cheat module.
+ * Represents an event that is fired when the player attacks another player.
  *
- * @since 1.0.0
+ * @since 1.0.7
  */
-@ApiStatus.NonExtendable
-@ModuleDefinition(id = "anti_cheat", name = "AntiCheat")
-public abstract class AntiCheatModule extends ApolloModule {
+@Value
+public class ApolloPlayerAttackEvent implements Event {
+
+    /**
+     * The {@code long} representing the unix timestamp
+     * when the packet was created.
+     *
+     * @return the unix timestamp
+     * @since 1.0.7
+     */
+    long instantiationTimeMs;
+
+    /**
+     * The target's {@link PlayerInfo} information.
+     *
+     * @return the target player info
+     * @since 1.0.7
+     */
+    PlayerInfo targetInfo;
+
+    /**
+     * The attacker's {@link PlayerInfo} information.
+     *
+     * @return the attacker player info
+     * @since 1.0.7
+     */
+    PlayerInfo attackerInfo;
+
+    /**
+     * The {@code double} reach distance.
+     *
+     * @return the reach distance
+     * @since 1.0.7
+     */
+    double distance;
 
 }

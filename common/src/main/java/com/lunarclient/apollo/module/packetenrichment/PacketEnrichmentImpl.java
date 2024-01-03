@@ -21,31 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.anticheat;
+package com.lunarclient.apollo.module.packetenrichment;
 
 import com.lunarclient.apollo.anticheat.v1.PlayerAttackMessage;
 import com.lunarclient.apollo.anticheat.v1.PlayerChatCloseMessage;
 import com.lunarclient.apollo.anticheat.v1.PlayerChatOpenMessage;
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.event.EventBus;
-import com.lunarclient.apollo.event.anticheat.ApolloPlayerAttackEvent;
-import com.lunarclient.apollo.event.anticheat.chat.ApolloPlayerChatCloseEvent;
-import com.lunarclient.apollo.event.anticheat.chat.ApolloPlayerChatOpenEvent;
+import com.lunarclient.apollo.event.packetenrichment.ApolloPlayerAttackEvent;
+import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatCloseEvent;
+import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatOpenEvent;
 import com.lunarclient.apollo.network.NetworkTypes;
 
 /**
- * Provides the anti cheat module.
+ * Provides the packet enrichment module.
  *
- * @since 1.0.0
+ * @since 1.0.7
  */
-public final class AntiCheatImpl extends AntiCheatModule {
+public final class PacketEnrichmentImpl extends PacketEnrichmentModule {
 
     /**
-     * Creates a new instance of {@link AntiCheatImpl}.
+     * Creates a new instance of {@link PacketEnrichmentImpl}.
      *
-     * @since 1.0.0
+     * @since 1.0.7
      */
-    public AntiCheatImpl() {
+    public PacketEnrichmentImpl() {
         super();
         this.handle(ApolloReceivePacketEvent.class, this::onReceivePacket);
     }

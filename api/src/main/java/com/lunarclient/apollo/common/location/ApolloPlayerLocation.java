@@ -29,7 +29,7 @@ import lombok.Getter;
 /**
  * Represents a player location in the world.
  *
- * @since 1.0.0
+ * @since 1.0.7
  */
 @Getter
 @Builder
@@ -39,7 +39,7 @@ public final class ApolloPlayerLocation {
      * Returns the {@link ApolloLocation} for this player.
      *
      * @return the apollo location
-     * @since 1.0.0
+     * @since 1.0.7
      */
     ApolloLocation location;
 
@@ -47,7 +47,7 @@ public final class ApolloPlayerLocation {
      * Returns the {@code float} yaw for this player location.
      *
      * @return the yaw
-     * @since 1.0.0
+     * @since 1.0.7
      */
     float yaw;
 
@@ -55,7 +55,7 @@ public final class ApolloPlayerLocation {
      * Returns the {@code float} pitch for this player location.
      *
      * @return the pitch
-     * @since 1.0.0
+     * @since 1.0.7
      */
     float pitch;
 
