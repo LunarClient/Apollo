@@ -309,7 +309,8 @@ public final class NetworkTypes {
             String itemName = item.getItemName();
 
             com.lunarclient.apollo.common.v1.ItemStackIcon.Builder itemBuilder = com.lunarclient.apollo.common.v1.ItemStackIcon.newBuilder()
-                .setItemId(item.getItemId());
+                .setItemId(item.getItemId())
+                .setCustomModelData(item.getCustomModelData());
 
             if (itemName != null) {
                 itemBuilder.setItemName(itemName);
@@ -355,6 +356,7 @@ public final class NetworkTypes {
             return ItemStackIcon.builder()
                 .itemName(item.getItemName())
                 .itemId(item.getItemId())
+                .customModelData(item.getCustomModelData())
                 .build();
         } else if (icon.hasSimpleResourceLocation()) {
             com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon simple = icon.getSimpleResourceLocation();
