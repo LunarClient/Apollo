@@ -25,9 +25,9 @@ package com.lunarclient.apollo.module.packetenrichment;
 
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.event.EventBus;
-import com.lunarclient.apollo.event.packetenrichment.melee.ApolloPlayerAttackEvent;
 import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatCloseEvent;
 import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatOpenEvent;
+import com.lunarclient.apollo.event.packetenrichment.melee.ApolloPlayerAttackEvent;
 import com.lunarclient.apollo.event.packetenrichment.world.ApolloPlayerUseItemEvent;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerAttackMessage;
