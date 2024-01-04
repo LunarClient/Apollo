@@ -26,7 +26,7 @@ package com.lunarclient.apollo.example.listeners;
 import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.Listen;
-import com.lunarclient.apollo.event.packetenrichment.ApolloPlayerAttackEvent;
+import com.lunarclient.apollo.event.packetenrichment.melee.ApolloPlayerAttackEvent;
 
 public class PacketEnrichmentListenerExample implements ApolloListener {
 

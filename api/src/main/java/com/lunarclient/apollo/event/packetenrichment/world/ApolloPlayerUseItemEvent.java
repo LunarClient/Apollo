@@ -21,76 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.common.packetenrichment;
+package com.lunarclient.apollo.event.packetenrichment.world;
 
-import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
-import java.util.UUID;
-import lombok.Builder;
-import lombok.Getter;
+import com.lunarclient.apollo.common.packetenrichment.PlayerInfo;
+import com.lunarclient.apollo.event.Event;
+import lombok.Value;
 
 /**
- * Represents a player info for the apollo packet enrichment module.
+ * Represents an event that is when a player uses an item (1.16.1+).
  *
  * @since 1.0.7
  */
-@Getter
-@Builder
-public class PlayerInfo {
+@Value
+public class ApolloPlayerUseItemEvent implements Event {
 
     /**
-     * The UUID of this team member.
+     * The {@code long} representing the unix timestamp
+     * when the packet was created.
      *
-     * @return the player uuid
+     * @return the unix timestamp
      * @since 1.0.7
      */
-    UUID playerUuid;
+    long instantiationTimeMs;
 
     /**
-     * Returns the {@link ApolloPlayerLocation} for this player.
+     * The player's {@link PlayerInfo} information.
      *
-     * @return the player location
+     * @return the player info
      * @since 1.0.7
      */
-    ApolloPlayerLocation location;
+    PlayerInfo playerInfo;
 
     /**
-     * Returns the player {@link Boolean} sneaking state.
+     * Whether {@code boolean} the used item is in the main hand.
      *
-     * @return the sneaking state
+     * @return the main hand
      * @since 1.0.7
      */
-    boolean sneaking;
-
-    /**
-     * Returns the player {@link Boolean} sprinting state.
-     *
-     * @return the sprinting state
-     * @since 1.0.7
-     */
-    boolean sprinting;
-
-    /**
-     * Returns the player {@link Boolean} jumping state.
-     *
-     * @return the jumping state
-     * @since 1.0.7
-     */
-    boolean jumping;
-
-    /**
-     * Returns the player {@link Float} forward speed.
-     *
-     * @return the forward speed
-     * @since 1.0.7
-     */
-    float forwardSpeed;
-
-    /**
-     * Returns the player {@link Float} strafe speed.
-     *
-     * @return the strafe speed
-     * @since 1.0.7
-     */
-    float strafeSpeed;
+    boolean mainHand;
 
 }

@@ -25,13 +25,15 @@ package com.lunarclient.apollo.module.packetenrichment;
 
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.event.EventBus;
-import com.lunarclient.apollo.event.packetenrichment.ApolloPlayerAttackEvent;
+import com.lunarclient.apollo.event.packetenrichment.melee.ApolloPlayerAttackEvent;
 import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatCloseEvent;
 import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatOpenEvent;
+import com.lunarclient.apollo.event.packetenrichment.world.ApolloPlayerUseItemEvent;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerAttackMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerChatCloseMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerChatOpenMessage;
+import com.lunarclient.apollo.packetenrichment.v1.PlayerUseItemMessage;
 
 /**
  * Provides the packet enrichment module.
@@ -84,6 +86,20 @@ public final class PacketEnrichmentImpl extends PacketEnrichmentModule {
                 NetworkTypes.fromProtobuf(packet.getPlayerInfo()));
 
             EventBus.EventResult<ApolloPlayerChatCloseEvent> result = EventBus.getBus().post(playerChatCloseEvent);
+
+            for (Throwable throwable : result.getThrowing()) {
+                throwable.printStackTrace();
+            }
+        });
+
+        event.unpack(PlayerUseItemMessage.class).ifPresent(packet -> {
+            ApolloPlayerUseItemEvent playerUseItemEvent = new ApolloPlayerUseItemEvent(
+                NetworkTypes.fromProtobuf(packet.getPacketInfo().getInstantiationTime()),
+                NetworkTypes.fromProtobuf(packet.getPlayerInfo()),
+                packet.getMainHand()
+            );
+
+            EventBus.EventResult<ApolloPlayerUseItemEvent> result = EventBus.getBus().post(playerUseItemEvent);
 
             for (Throwable throwable : result.getThrowing()) {
                 throwable.printStackTrace();

@@ -197,6 +197,9 @@ public final class NetworkTypes {
             .setLocation(NetworkTypes.toProtobuf(object.getLocation()))
             .setSprinting(object.isSprinting())
             .setSneaking(object.isSneaking())
+            .setJumping(object.isJumping())
+            .setForwardSpeed(object.getForwardSpeed())
+            .setStrafeSpeed(object.getStrafeSpeed())
             .build();
     }
 
@@ -214,6 +217,9 @@ public final class NetworkTypes {
             .location(NetworkTypes.fromProtobuf(message.getLocation()))
             .sneaking(message.getSneaking())
             .sprinting(message.getSprinting())
+            .jumping(message.getJumping())
+            .forwardSpeed(message.getForwardSpeed())
+            .strafeSpeed(message.getStrafeSpeed())
             .build();
     }
 

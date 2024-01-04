@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.event.packetenrichment;
+package com.lunarclient.apollo.event.packetenrichment.melee;
 
 import com.lunarclient.apollo.common.packetenrichment.PlayerInfo;
 import com.lunarclient.apollo.event.Event;
