@@ -23,15 +23,15 @@
  */
 package com.lunarclient.apollo.module.packetenrichment;
 
-import com.lunarclient.apollo.anticheat.v1.PlayerAttackMessage;
-import com.lunarclient.apollo.anticheat.v1.PlayerChatCloseMessage;
-import com.lunarclient.apollo.anticheat.v1.PlayerChatOpenMessage;
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.packetenrichment.ApolloPlayerAttackEvent;
 import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatCloseEvent;
 import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatOpenEvent;
 import com.lunarclient.apollo.network.NetworkTypes;
+import com.lunarclient.apollo.packetenrichment.v1.PlayerAttackMessage;
+import com.lunarclient.apollo.packetenrichment.v1.PlayerChatCloseMessage;
+import com.lunarclient.apollo.packetenrichment.v1.PlayerChatOpenMessage;
 
 /**
  * Provides the packet enrichment module.
