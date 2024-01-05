@@ -55,7 +55,7 @@ public final class ItemStackIcon extends Icon {
      * Returns the icon {@link Integer} custom model data.
      *
      * @return the icon custom model data
-     * @since 1.0.0
+     * @since 1.0.7
      */
     int customModelData;
 
