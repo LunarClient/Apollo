@@ -35,6 +35,74 @@ _Called when the player leaves the server using Lunar Client._
 </details>
 
 <details>
+<summary>ApolloPlayerHandshakeEvent</summary>
+
+#### ApolloPlayerHandshakeEvent
+
+_Called when the client sends a PlayerHandshakeMessage._
+
+| Field                                    | Description                                                   |
+|------------------------------------------|---------------------------------------------------------------|
+| `ApolloPlayer player`                    | The Apollo player that sent the packet.                       |
+| `MinecraftVersion minecraftVersion`      | The minecraft version the player is running.                  |
+| `LunarClientVersion lunarClientVersion`  | The Lunar Client version the player is running.               |
+| `List<LunarClientMod> installedMods`     | List of all internal and external mods the player has running.|
+
+
+<details>
+<summary>MinecraftVersion Breakdown</summary>
+
+##### All `MinecraftVersion minecraftVersion` Types
+
+- V1_7
+- V1_8
+- V1_9
+- V1_10
+- V1_11
+- V1_12
+- V1_16_1
+- V1_16_5
+- V1_17_0
+- V1_17_1
+- V1_18_1
+- V1_18_2
+- V1_19_pre
+- V1_19_0
+- V1_19_2
+- V1_19_3
+- V1_19_4
+- V1_20_0
+- V1_20_1
+- V1_20_2
+- V1_20_3
+- V1_20_4
+- UNKNOWN
+
+<Callout type="warning">This list might not always be updated which currently supported versions.</Callout>
+
+</details>
+
+<details>
+<summary>LunarClientVersion Breakdown</summary>
+
+##### How `LunarClientVersion lunarClientVersion` Works
+
+TODO
+
+</details>
+
+<details>
+<summary>installedMods Breakdown</summary>
+
+##### How `List<LunarClientMod> installedMods` Works
+
+TODO
+
+</details>
+
+</details>
+
+<details>
 <summary>ApolloReceivePacketEvent</summary>
 
 #### ApolloReceivePacketEvent
