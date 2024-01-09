@@ -23,8 +23,8 @@
  */
 package com.lunarclient.apollo.event.packetenrichment.world;
 
-import com.lunarclient.apollo.common.packetenrichment.PlayerInfo;
 import com.lunarclient.apollo.event.Event;
+import com.lunarclient.apollo.module.packetenrichment.PlayerInfo;
 import lombok.Value;
 
 /**

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.common.packetenrichment;
+package com.lunarclient.apollo.module.packetenrichment;
 
 import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
 import java.util.UUID;

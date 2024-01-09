@@ -25,6 +25,7 @@ package com.lunarclient.apollo.example.utilities;
 
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
 
 public final class LocationExample {
 
@@ -43,6 +44,19 @@ public final class LocationExample {
             .x(50.5D)
             .y(100)
             .z(50.0D)
+            .build();
+    }
+
+    public static ApolloPlayerLocation playerLocationExample() {
+        return ApolloPlayerLocation.builder()
+            .location(ApolloLocation.builder()
+                .world("world")
+                .x(50.5D)
+                .y(100)
+                .z(50.0D)
+                .build())
+            .yaw(180.0F)
+            .pitch(90.0F)
             .build();
     }
 

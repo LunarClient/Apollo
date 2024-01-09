@@ -25,6 +25,7 @@ package com.lunarclient.apollo;
 
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerManager;
 import com.lunarclient.apollo.recipients.Recipients;
@@ -120,6 +121,21 @@ public final class BukkitApollo {
     }
 
     /**
+     * Converts a {@link Location} to an {@link ApolloPlayerLocation} object.
+     *
+     * @param location the location
+     * @return the converted apollo player location object
+     * @since 1.0.7
+     */
+    public static ApolloPlayerLocation toApolloPlayerLocation(@NonNull Location location) {
+        return ApolloPlayerLocation.builder()
+            .location(BukkitApollo.toApolloLocation(location))
+            .yaw(location.getYaw())
+            .pitch(location.getPitch())
+            .build();
+    }
+
+    /**
      * Converts a {@link ApolloLocation} to an {@link Location} object.
      *
      * @param location the apollo location
@@ -148,6 +164,26 @@ public final class BukkitApollo {
             location.getX(),
             location.getY(),
             location.getZ()
+        );
+    }
+
+    /**
+     * Converts a {@link ApolloPlayerLocation} to an {@link Location} object.
+     *
+     * @param location the apollo location
+     * @return the converted location object
+     * @since 1.0.7
+     */
+    public static Location toBukkitLocation(@NonNull ApolloPlayerLocation location) {
+        ApolloLocation apolloLocation = location.getLocation();
+
+        return new Location(
+            Bukkit.getWorld(apolloLocation.getWorld()),
+            apolloLocation.getX(),
+            apolloLocation.getY(),
+            apolloLocation.getZ(),
+            location.getYaw(),
+            location.getPitch()
         );
     }
 
