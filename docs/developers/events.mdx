@@ -52,7 +52,7 @@ _Called when the client sends a PlayerHandshakeMessage._
 <details>
 <summary>Minecraft Version Information</summary>
 
-#### All `MinecraftVersion minecraftVersion` Versions
+##### All `MinecraftVersion minecraftVersion` Versions
 
 - V1_7
 - V1_8
@@ -78,14 +78,14 @@ _Called when the client sends a PlayerHandshakeMessage._
 - V1_20_4
 - UNKNOWN (Occurs when Apollo is outdated or hasn't been updated to include new Minecraft versions.)
 
-<Callout type="warning">This list may not consistently reflect the most up-to-date information regarding currently supported versions.</Callout>
+<Callout type="warning">This list may not consistently reflect the most up-to-date information regarding supported versions.</Callout>
 
 </details>
 
 <details>
 <summary>Lunar Client Version Information</summary>
 
-#### How `LunarClientVersion lunarClientVersion` Works
+##### How `LunarClientVersion lunarClientVersion` Works
 
 This returns all the attributes about the version of Lunar Client the player is using.
 
@@ -93,18 +93,18 @@ This returns all the attributes about the version of Lunar Client the player is 
 |-------------|-----------------------------------------------------|
 | `gitBranch` | The current branch of Lunar Client. (e.g. 'master') |
 | `gitCommit` | The current commit of the branch.                   |
-| `semVer`    | TODO                                                |
+| `semVer`    | The versions semver encoding. (e.g. '2.5.1'         |
 
 </details>
 
 <details>
 <summary>LunarClientMod (Installed Mods) Information</summary>
 
-#### How `List<LunarClientMod> installedMods` Works
+##### How `List<LunarClientMod> installedMods` Works
 
 This returns a list of each mod, and its respective attributes.
 
-##### Mod Attributes
+###### Mod Attributes
 
 | Attributes    | Description                                                    |
 |---------------|----------------------------------------------------------------|
@@ -113,7 +113,7 @@ This returns a list of each mod, and its respective attributes.
 | `version`     | The current version of the mod. (e.g. '1.2.21')                |
 | `type`        | The type of mod it's classified as. (e.g. 'FABRIC_INTERNAL')   |
 
-##### The Different `Type` of Mods
+###### The Different `Type` of Mods
 
 | Type              | Description                                     |
 |-------------------|-------------------------------------------------|
