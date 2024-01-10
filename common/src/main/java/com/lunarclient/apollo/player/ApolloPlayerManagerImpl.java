@@ -108,7 +108,7 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
     /**
      * Handles an {@link PlayerHandshakeMessage} message packet from the provided player.
      *
-     * @param player  the player that received the packet
+     * @param player the player that received the packet
      * @param message the handshake message to handle
      * @since 1.0.6
      */
