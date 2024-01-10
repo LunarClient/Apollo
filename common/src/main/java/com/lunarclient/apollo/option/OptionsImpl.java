@@ -30,6 +30,7 @@ import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.option.ApolloUpdateOptionEvent;
 import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import io.leangen.geantyref.GenericTypeReflector;
@@ -316,6 +317,9 @@ public class OptionsImpl implements Options {
 
     protected void postPacket(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {
         if (!option.isNotify()) {
+            return;
+        }
+        if(((ApolloModuleManagerImpl)Apollo.getModuleManager()).isCurrentlyReloading()) {
             return;
         }
 

@@ -23,13 +23,17 @@
  */
 package com.lunarclient.apollo.module;
 
+import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloConfig;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.event.EventBus;
+import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.option.ConfigOptions;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
+import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.util.ConfigTarget;
 import java.lang.reflect.Constructor;
 import java.util.Collection;
@@ -38,6 +42,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
@@ -51,6 +56,9 @@ import org.spongepowered.configurate.CommentedConfigurationNode;
 public final class ApolloModuleManagerImpl implements ApolloModuleManager {
 
     private final Map<Class<? extends ApolloModule>, ApolloModule> modules = new LinkedHashMap<>();
+
+    @Getter
+    private boolean currentlyReloading = false;
 
     @Override
     public boolean isEnabled(@NonNull Class<? extends ApolloModule> moduleClass) {
@@ -100,6 +108,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
      * @since 1.0.5
      */
     public void reloadModules() throws Throwable {
+        this.currentlyReloading = true;
         for (ApolloModule module : this.modules.values()) {
             List<Option<?, ?, ?>> options = module.getOptionKeys();
             this.loadConfiguration(module, options);
@@ -115,6 +124,14 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
                     module.disable();
                 }
             }
+        }
+        this.currentlyReloading = false;
+        for (ApolloPlayer player : ((ApolloPlayerManagerImpl) Apollo.getPlayerManager()).getPlayers()) {
+            NetworkOptions.sendOptions(
+                    Apollo.getModuleManager().getModules(),
+                    true,
+                    player
+            );
         }
 
         this.saveConfiguration();

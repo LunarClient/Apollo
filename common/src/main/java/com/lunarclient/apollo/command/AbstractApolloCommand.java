@@ -65,8 +65,11 @@ public abstract class AbstractApolloCommand<T> {
      */
     protected void reloadConfiguration(@NonNull T sender) {
         try {
+
             ApolloManager.loadConfiguration();
+
             ((ApolloModuleManagerImpl) Apollo.getModuleManager()).reloadModules();
+
             ApolloManager.saveConfiguration();
         } catch (Throwable throwable) {
             Apollo.getPlatform().getPlatformLogger().log(Level.SEVERE, "Unable to save Apollo configuration!", throwable);
