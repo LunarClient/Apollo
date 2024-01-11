@@ -35,6 +35,98 @@ _Called when the player leaves the server using Lunar Client._
 </details>
 
 <details>
+<summary>ApolloPlayerHandshakeEvent</summary>
+
+#### ApolloPlayerHandshakeEvent
+
+_Called when the client sends a PlayerHandshakeMessage._
+
+| Field                                    | Description                                                   |
+|------------------------------------------|---------------------------------------------------------------|
+| `ApolloPlayer player`                    | The Apollo player that sent the packet.                       |
+| `MinecraftVersion minecraftVersion`      | The minecraft version the player is running.                  |
+| `LunarClientVersion lunarClientVersion`  | The Lunar Client version the player is running.               |
+| `List<LunarClientMod> installedMods`     | List of all internal and external mods the player has running.|
+
+
+<details>
+<summary>Minecraft Version Information</summary>
+
+##### All `MinecraftVersion minecraftVersion` Versions
+
+- V1_7
+- V1_8
+- V1_9
+- V1_10
+- V1_11
+- V1_12
+- V1_16_1
+- V1_16_5
+- V1_17_0
+- V1_17_1
+- V1_18_1
+- V1_18_2
+- V1_19_pre
+- V1_19_0
+- V1_19_2
+- V1_19_3
+- V1_19_4
+- V1_20_0
+- V1_20_1
+- V1_20_2
+- V1_20_3
+- V1_20_4
+- UNKNOWN (Occurs when Apollo is outdated or hasn't been updated to include new Minecraft versions.)
+
+<Callout type="warning">This list may not consistently reflect the most up-to-date information regarding supported versions.</Callout>
+
+</details>
+
+<details>
+<summary>Lunar Client Version Information</summary>
+
+##### How `LunarClientVersion lunarClientVersion` Works
+
+This returns all the attributes about the version of Lunar Client the player is using.
+
+| Attributes  | Description                                         |
+|-------------|-----------------------------------------------------|
+| `gitBranch` | The current branch of Lunar Client. (e.g. 'master') |
+| `gitCommit` | The current commit of the branch.                   |
+| `semVer`    | The versions semver encoding. (e.g. '2.5.1')        |
+
+</details>
+
+<details>
+<summary>LunarClientMod (Installed Mods) Information</summary>
+
+##### How `List<LunarClientMod> installedMods` Works
+
+This returns a list of each mod, and its respective attributes.
+
+**Mod Attributes**
+
+| Attributes    | Description                                                    |
+|---------------|----------------------------------------------------------------|
+| `id`          | The unique identifier for the mod. (e.g. 'sodium')             |
+| `displayName` | The human-readable/user-friendly display name. (e.g. 'Sodium') |
+| `version`     | The current version of the mod. (e.g. '1.2.21')                |
+| `type`        | The type of mod it's classified as. (e.g. 'FABRIC_INTERNAL')   |
+
+**The Different `Type` of Mods**
+
+| Type              | Description                                     |
+|-------------------|-------------------------------------------------|
+| `FABRIC_INTERNAL` | A fabric mod that is shipped with Lunar Client. |
+| `FABRIC_EXTERNAL` | A fabric mod that is loaded by the Player.      |
+| `FORGE_INTERNAL`  | A forge mod that is shipped with Lunar Client.  |
+| `FORGE_EXTERNAL`  | A forge mod that is loaded by the Player.       |
+
+</details>
+
+</details>
+
+<details>
 <summary>ApolloReceivePacketEvent</summary>
 
 #### ApolloReceivePacketEvent
