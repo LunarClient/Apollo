@@ -107,7 +107,7 @@ public class EVNTExample {
                 CharacterAbility.builder()
                     .type(CharacterType.ANGEL)
                     .abilities(Collections.singletonList(
-                        Component.text("Angel", NamedTextColor.BLUE)
+                        Component.text("Angel", NamedTextColor.RED)
                     ))
                     .build()
             );
