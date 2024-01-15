@@ -52,6 +52,21 @@ public class TitleExample {
         .fadeOutTime(Duration.ofMillis(300))
         .build();
 
+    private final Title interpolatedTitle = Title.builder()
+        .type(TitleType.TITLE)
+        .message(Component.text()
+            .content("This title expands!")
+            .color(NamedTextColor.GREEN)
+            .decorate(TextDecoration.BOLD)
+            .build())
+        .scale(0.1f)
+        .interpolationScale(1.0f)
+        .interpolationRate(0.01f)
+        .displayTime(Duration.ofMillis(5000L))
+        .fadeInTime(Duration.ofMillis(250))
+        .fadeOutTime(Duration.ofMillis(300))
+        .build();
+
     public void displayTitleExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, this.helloTitle));

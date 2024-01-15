@@ -48,6 +48,8 @@ public final class TitleModuleImpl extends TitleModule {
             .setFadeInTime(NetworkTypes.toProtobuf(title.getFadeInTime()))
             .setDisplayTime(NetworkTypes.toProtobuf(title.getDisplayTime()))
             .setFadeOutTime(NetworkTypes.toProtobuf(title.getFadeOutTime()))
+            .setInterpolationScale(title.getInterpolationScale())
+            .setInterpolationRate(title.getInterpolationRate())
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));

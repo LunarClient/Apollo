@@ -85,4 +85,27 @@ public final class Title {
      */
     Duration fadeOutTime;
 
+    /**
+     * Returns the title {@link Float} interpolation scale.
+     *
+     * <p>If the provided interpolation scale is greater than {@link Title#scale},
+     * the title will expand. However, if the {@link Title#scale} is greater than
+     * the interpolation scale, the title will shrink.</p>
+     *
+     * @return the title interpolation scale
+     * @since 1.0.7
+     */
+    float interpolationScale;
+
+    /**
+     * Returns the title {@link Float} interpolation rate.
+     *
+     * <p>The rate that the title will expand or shrink every tick (50ms)
+     * between {@link Title#scale} and {@link Title#interpolationScale}.</p>
+     *
+     * @return the title interpolation rate
+     * @since 1.0.7
+     */
+    float interpolationRate;
+
 }
