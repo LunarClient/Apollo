@@ -21,46 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.utilities;
+package com.lunarclient.apollo.event.packetenrichment.chat;
 
-import com.lunarclient.apollo.common.location.ApolloBlockLocation;
-import com.lunarclient.apollo.common.location.ApolloLocation;
-import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
+import com.lunarclient.apollo.event.Event;
+import com.lunarclient.apollo.module.packetenrichment.PlayerInfo;
+import lombok.Value;
 
-public final class LocationExample {
+/**
+ * Represents an event that is fired when the player closes their chat.
+ *
+ * @since 1.0.7
+ */
+@Value
+public class ApolloPlayerChatCloseEvent implements Event {
 
-    public static ApolloBlockLocation blockLocationExample() {
-        return ApolloBlockLocation.builder()
-            .world("world")
-            .x(0)
-            .y(100)
-            .z(0)
-            .build();
-    }
+    /**
+     * The {@code long} representing the unix timestamp
+     * when the packet was created.
+     *
+     * @return the unix timestamp
+     * @since 1.0.7
+     */
+    long instantiationTimeMs;
 
-    public static ApolloLocation locationExample() {
-        return ApolloLocation.builder()
-            .world("world")
-            .x(50.5D)
-            .y(100)
-            .z(50.0D)
-            .build();
-    }
-
-    public static ApolloPlayerLocation playerLocationExample() {
-        return ApolloPlayerLocation.builder()
-            .location(ApolloLocation.builder()
-                .world("world")
-                .x(50.5D)
-                .y(100)
-                .z(50.0D)
-                .build())
-            .yaw(180.0F)
-            .pitch(90.0F)
-            .build();
-    }
-
-    private LocationExample() {
-    }
+    /**
+     * The player's {@link PlayerInfo} information.
+     *
+     * @return the player's player info
+     * @since 1.0.7
+     */
+    PlayerInfo playerInfo;
 
 }

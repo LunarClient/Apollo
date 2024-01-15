@@ -21,62 +21,76 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.team;
+package com.lunarclient.apollo.module.packetenrichment;
 
-import com.lunarclient.apollo.common.location.ApolloLocation;
-import java.awt.Color;
+import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
 
 /**
- * Represents a team which can be shown on the client.
+ * Represents a player info for the apollo packet enrichment module.
  *
- * @since 1.0.0
+ * @since 1.0.7
  */
 @Getter
 @Builder
-public final class TeamMember {
+public class PlayerInfo {
 
     /**
      * The UUID of this team member.
      *
      * @return the player uuid
-     * @since 1.0.0
+     * @since 1.0.7
      */
     UUID playerUuid;
 
     /**
-     * Returns the team member's {@link Component}.
+     * Returns the {@link ApolloPlayerLocation} for this player.
      *
-     * <p>The display name is only used when the player
-     * is out of render distance for the observer and when the
-     * observer hovers over the marker.</p>
-     *
-     * @return the team member's display name
-     * @since 1.0.0
+     * @return the player location
+     * @since 1.0.7
      */
-    Component displayName;
+    ApolloPlayerLocation location;
 
     /**
-     * Returns the team member's assigned {@link Color} - this will be used
-     * for any markers (such as on duration HUD, above head markers, etc).
+     * Returns the player {@link Boolean} sneaking state.
      *
-     * @return the team member's marker color
-     * @since 1.0.0
+     * @return the sneaking state
+     * @since 1.0.7
      */
-    Color markerColor;
+    boolean sneaking;
 
     /**
-     * Returns the team member's {@link ApolloLocation}.
+     * Returns the player {@link Boolean} sprinting state.
      *
-     * <p>The provided location is only used when the player is out of
-     * render distance for the observer. If you know that the players
-     * are close, you don't need to send the location.</p>
-     *
-     * @return the team member location
-     * @since 1.0.0
+     * @return the sprinting state
+     * @since 1.0.7
      */
-    ApolloLocation location;
+    boolean sprinting;
+
+    /**
+     * Returns the player {@link Boolean} jumping state.
+     *
+     * @return the jumping state
+     * @since 1.0.7
+     */
+    boolean jumping;
+
+    /**
+     * Returns the player {@link Float} forward speed.
+     *
+     * @return the forward speed
+     * @since 1.0.7
+     */
+    float forwardSpeed;
+
+    /**
+     * Returns the player {@link Float} strafe speed.
+     *
+     * @return the strafe speed
+     * @since 1.0.7
+     */
+    float strafeSpeed;
+
 }

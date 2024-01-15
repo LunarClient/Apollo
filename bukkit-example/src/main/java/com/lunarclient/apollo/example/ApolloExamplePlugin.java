@@ -161,4 +161,5 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("vignette").setExecutor(new VignetteCommand());
         this.getCommand("waypoint").setExecutor(new WaypointCommand());
     }
+
 }

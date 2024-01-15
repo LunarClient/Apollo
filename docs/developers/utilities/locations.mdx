@@ -114,3 +114,55 @@ public static ApolloBlockLocation blockLocationExample() {
         .build();
 }
 ```
+
+## `ApolloPlayerLocation` Builder
+
+For obtaining a highly accurate player location with decimal point precision, it is recommended to utilize the `ApolloPlayerLocation` builder.
+
+```java
+public final class ApolloPlayerLocation {
+
+    /**
+     * Returns the {@link ApolloLocation} for this player.
+     *
+     * @return the apollo location
+     * @since 1.0.7
+     */
+    ApolloLocation location;
+
+    /**
+     * Returns the {@code float} yaw for this player location.
+     *
+     * @return the yaw
+     * @since 1.0.7
+     */
+    float yaw;
+
+    /**
+     * Returns the {@code float} pitch for this player location.
+     *
+     * @return the pitch
+     * @since 1.0.7
+     */
+    float pitch;
+
+}
+
+```
+
+### Sample Code
+
+```java
+public static ApolloPlayerLocation playerLocationExample() {
+    return ApolloPlayerLocation.builder()
+        .location(ApolloLocation.builder()
+            .world("world")
+            .x(50.5D)
+            .y(100)
+            .z(50.0D)
+            .build())
+        .yaw(180.0F)
+        .pitch(90.0F)
+        .build();
+}
+```
