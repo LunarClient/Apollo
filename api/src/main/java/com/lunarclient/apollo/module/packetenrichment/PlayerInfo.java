@@ -21,42 +21,76 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.common.icon;
+package com.lunarclient.apollo.module.packetenrichment;
 
+import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 
 /**
- * Represents an item stack icon.
+ * Represents a player info for the apollo packet enrichment module.
  *
- * @since 1.0.0
+ * @since 1.0.7
  */
 @Getter
 @Builder
-public final class ItemStackIcon extends Icon {
+public class PlayerInfo {
 
     /**
-     * Returns the icon {@link String} item name.
+     * The UUID of this team member.
      *
-     * @return the icon item name
-     * @since 1.0.0
-     */
-    String itemName;
-
-    /**
-     * Returns the icon {@link Integer} item id.
-     *
-     * @return the icon item id
-     * @since 1.0.0
-     */
-    int itemId;
-
-    /**
-     * Returns the icon {@link Integer} custom model data.
-     *
-     * @return the icon custom model data
+     * @return the player uuid
      * @since 1.0.7
      */
-    int customModelData;
+    UUID playerUuid;
+
+    /**
+     * Returns the {@link ApolloPlayerLocation} for this player.
+     *
+     * @return the player location
+     * @since 1.0.7
+     */
+    ApolloPlayerLocation location;
+
+    /**
+     * Returns the player {@link Boolean} sneaking state.
+     *
+     * @return the sneaking state
+     * @since 1.0.7
+     */
+    boolean sneaking;
+
+    /**
+     * Returns the player {@link Boolean} sprinting state.
+     *
+     * @return the sprinting state
+     * @since 1.0.7
+     */
+    boolean sprinting;
+
+    /**
+     * Returns the player {@link Boolean} jumping state.
+     *
+     * @return the jumping state
+     * @since 1.0.7
+     */
+    boolean jumping;
+
+    /**
+     * Returns the player {@link Float} forward speed.
+     *
+     * @return the forward speed
+     * @since 1.0.7
+     */
+    float forwardSpeed;
+
+    /**
+     * Returns the player {@link Float} strafe speed.
+     *
+     * @return the strafe speed
+     * @since 1.0.7
+     */
+    float strafeSpeed;
 
 }

@@ -48,7 +48,6 @@ import java.util.Optional;
 import java.util.WeakHashMap;
 import java.util.function.BiFunction;
 import lombok.NonNull;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -56,7 +55,6 @@ import org.jetbrains.annotations.Nullable;
  *
  * @since 1.0.0
  */
-@ApiStatus.NonExtendable
 public class OptionsImpl implements Options {
 
     private final Map<Option<?, ?, ?>, Object> options = Collections.synchronizedMap(new HashMap<>());
@@ -109,13 +107,16 @@ public class OptionsImpl implements Options {
             return;
         }
 
+        Object currentValue;
         if (Objects.equals(nextValue, option.getDefaultValue())) {
-            this.options.remove(option);
+            currentValue = this.options.remove(option);
         } else {
-            this.options.put(option, value);
+            currentValue = this.options.put(option, value);
         }
 
-        this.postPacket(option, null, nextValue);
+        if (!Objects.equals(currentValue, value)) {
+            this.postPacket(option, null, nextValue);
+        }
     }
 
     @Override
@@ -126,15 +127,18 @@ public class OptionsImpl implements Options {
             return;
         }
 
+        Object currentValue;
         if (Objects.equals(value, globalValue)) {
-            this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+            currentValue = this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
                 .remove(option);
         } else {
-            this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+            currentValue = this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
                 .put(option, value);
         }
 
-        this.postPacket(option, player, nextValue);
+        if (!Objects.equals(currentValue, value)) {
+            this.postPacket(option, player, nextValue);
+        }
     }
 
     @Override
@@ -143,9 +147,11 @@ public class OptionsImpl implements Options {
             return;
         }
 
-        this.options.put(option, value);
+        Object currentValue = this.options.put(option, value);
 
-        this.postPacket(option, null, value);
+        if (!Objects.equals(currentValue, value)) {
+            this.postPacket(option, null, value);
+        }
     }
 
     @Override
@@ -154,10 +160,12 @@ public class OptionsImpl implements Options {
             return;
         }
 
-        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
+        Object currentValue = this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
             .put(option, value);
 
-        this.postPacket(option, player, value);
+        if (!Objects.equals(currentValue, value)) {
+            this.postPacket(option, player, value);
+        }
     }
 
     @Override
@@ -166,9 +174,9 @@ public class OptionsImpl implements Options {
             return;
         }
 
-        this.options.remove(option, compare);
-
-        this.postPacket(option, null, option.getDefaultValue());
+        if (this.options.remove(option, compare)) {
+            this.postPacket(option, null, option.getDefaultValue());
+        }
     }
 
     @Override
@@ -177,10 +185,9 @@ public class OptionsImpl implements Options {
             return;
         }
 
-        this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>()))
-            .remove(option, compare);
-
-        this.postPacket(option, player, option.getDefaultValue());
+        if (this.playerOptions.computeIfAbsent(player, k -> Collections.synchronizedMap(new WeakHashMap<>())).remove(option, compare)) {
+            this.postPacket(option, player, option.getDefaultValue());
+        }
     }
 
     @Override
@@ -196,7 +203,10 @@ public class OptionsImpl implements Options {
                 return null;
             }
 
-            this.postPacket(option, null, value);
+            if (!Objects.equals(v, value)) {
+                this.postPacket(option, null, value);
+            }
+
             return value;
         });
     }
@@ -215,7 +225,10 @@ public class OptionsImpl implements Options {
                     return null;
                 }
 
-                this.postPacket(option, player, value);
+                if (!Objects.equals(v, value)) {
+                    this.postPacket(option, player, value);
+                }
+
                 return value;
             });
     }

@@ -42,6 +42,7 @@ public final class TeamMember {
     /**
      * The UUID of this team member.
      *
+     * @return the player uuid
      * @since 1.0.0
      */
     UUID playerUuid;

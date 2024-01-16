@@ -21,46 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.utilities;
+package com.lunarclient.apollo.common.location;
 
-import com.lunarclient.apollo.common.location.ApolloBlockLocation;
-import com.lunarclient.apollo.common.location.ApolloLocation;
-import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
+import lombok.Builder;
+import lombok.Getter;
 
-public final class LocationExample {
+/**
+ * Represents a player location in the world.
+ *
+ * @since 1.0.7
+ */
+@Getter
+@Builder
+public final class ApolloPlayerLocation {
 
-    public static ApolloBlockLocation blockLocationExample() {
-        return ApolloBlockLocation.builder()
-            .world("world")
-            .x(0)
-            .y(100)
-            .z(0)
-            .build();
-    }
+    /**
+     * Returns the {@link ApolloLocation} for this player.
+     *
+     * @return the apollo location
+     * @since 1.0.7
+     */
+    ApolloLocation location;
 
-    public static ApolloLocation locationExample() {
-        return ApolloLocation.builder()
-            .world("world")
-            .x(50.5D)
-            .y(100)
-            .z(50.0D)
-            .build();
-    }
+    /**
+     * Returns the {@code float} yaw for this player location.
+     *
+     * @return the yaw
+     * @since 1.0.7
+     */
+    float yaw;
 
-    public static ApolloPlayerLocation playerLocationExample() {
-        return ApolloPlayerLocation.builder()
-            .location(ApolloLocation.builder()
-                .world("world")
-                .x(50.5D)
-                .y(100)
-                .z(50.0D)
-                .build())
-            .yaw(180.0F)
-            .pitch(90.0F)
-            .build();
-    }
-
-    private LocationExample() {
-    }
+    /**
+     * Returns the {@code float} pitch for this player location.
+     *
+     * @return the pitch
+     * @since 1.0.7
+     */
+    float pitch;
 
 }

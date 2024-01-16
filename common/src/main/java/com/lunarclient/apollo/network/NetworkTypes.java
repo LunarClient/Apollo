@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.network;
 
+import com.google.protobuf.Timestamp;
 import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.common.cuboid.Cuboid2D;
 import com.lunarclient.apollo.common.cuboid.Cuboid3D;
@@ -32,8 +33,10 @@ import com.lunarclient.apollo.common.icon.ItemStackIcon;
 import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Uuid;
+import com.lunarclient.apollo.module.packetenrichment.PlayerInfo;
 import java.awt.Color;
 import java.time.Duration;
 import java.util.UUID;
@@ -154,6 +157,73 @@ public final class NetworkTypes {
     }
 
     /**
+     * Converts an unix timestamp in milliseconds to an
+     * {@link com.google.protobuf.Timestamp} proto message.
+     *
+     * @param millis the millis
+     * @return the proto timestamp message
+     * @since 1.0.7
+     */
+    public static Timestamp toProtobuf(long millis) {
+        return Timestamp.newBuilder()
+            .setSeconds(millis / 1000)
+            .setNanos((int) ((millis % 1000) * 1000000))
+            .build();
+    }
+
+    /**
+     * Converts an {@link com.google.protobuf.Timestamp}
+     * proto message to a unix timestamp in milliseconds.
+     *
+     * @param message the duration message
+     * @return the unix timestamp in milliseconds
+     * @since 1.0.7
+     */
+    public static long fromProtobuf(Timestamp message) {
+        return message.getSeconds() * 1000 + message.getNanos() / 1000000;
+    }
+
+    /**
+     * Converts an {@link PlayerInfo} object to an
+     * {@link com.lunarclient.apollo.packetenrichment.v1.PlayerInfo} proto message.
+     *
+     * @param object the player info
+     * @return the proto player info message
+     * @since 1.0.7
+     */
+    public static com.lunarclient.apollo.packetenrichment.v1.PlayerInfo toProtobuf(PlayerInfo object) {
+        return com.lunarclient.apollo.packetenrichment.v1.PlayerInfo.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(object.getPlayerUuid()))
+            .setLocation(NetworkTypes.toProtobuf(object.getLocation()))
+            .setSprinting(object.isSprinting())
+            .setSneaking(object.isSneaking())
+            .setJumping(object.isJumping())
+            .setForwardSpeed(object.getForwardSpeed())
+            .setStrafeSpeed(object.getStrafeSpeed())
+            .build();
+    }
+
+    /**
+     * Converts an {@link com.lunarclient.apollo.packetenrichment.v1.PlayerInfo}
+     * proto message to an {@link PlayerInfo} object.
+     *
+     * @param message the player info message
+     * @return the apollo player info object
+     * @since 1.0.7
+     */
+    public static PlayerInfo fromProtobuf(com.lunarclient.apollo.packetenrichment.v1.PlayerInfo message) {
+        return PlayerInfo.builder()
+            .playerUuid(NetworkTypes.fromProtobuf(message.getPlayerUuid()))
+            .location(NetworkTypes.fromProtobuf(message.getLocation()))
+            .sneaking(message.getSneaking())
+            .sprinting(message.getSprinting())
+            .jumping(message.getJumping())
+            .forwardSpeed(message.getForwardSpeed())
+            .strafeSpeed(message.getStrafeSpeed())
+            .build();
+    }
+
+    /**
      * Converts an {@link ApolloLocation} object to an
      * {@link com.lunarclient.apollo.common.v1.Location} proto message.
      *
@@ -218,6 +288,38 @@ public final class NetworkTypes {
             .x(message.getX())
             .y(message.getY())
             .z(message.getZ())
+            .build();
+    }
+
+    /**
+     * Converts an {@link ApolloPlayerLocation} object to an
+     * {@link com.lunarclient.apollo.common.v1.PlayerLocation} proto message.
+     *
+     * @param object the player location
+     * @return the proto player location message
+     * @since 1.0.7
+     */
+    public static com.lunarclient.apollo.common.v1.PlayerLocation toProtobuf(ApolloPlayerLocation object) {
+        return com.lunarclient.apollo.common.v1.PlayerLocation.newBuilder()
+            .setLocation(NetworkTypes.toProtobuf(object.getLocation()))
+            .setYaw(object.getYaw())
+            .setPitch(object.getPitch())
+            .build();
+    }
+
+    /**
+     * Converts an {@link com.lunarclient.apollo.common.v1.PlayerLocation}
+     * proto message to an {@link ApolloPlayerLocation} object.
+     *
+     * @param message the player location message
+     * @return the apollo player location object
+     * @since 1.0.7
+     */
+    public static ApolloPlayerLocation fromProtobuf(com.lunarclient.apollo.common.v1.PlayerLocation message) {
+        return ApolloPlayerLocation.builder()
+            .location(NetworkTypes.fromProtobuf(message.getLocation()))
+            .yaw(message.getYaw())
+            .pitch(message.getPitch())
             .build();
     }
 
@@ -309,7 +411,8 @@ public final class NetworkTypes {
             String itemName = item.getItemName();
 
             com.lunarclient.apollo.common.v1.ItemStackIcon.Builder itemBuilder = com.lunarclient.apollo.common.v1.ItemStackIcon.newBuilder()
-                .setItemId(item.getItemId());
+                .setItemId(item.getItemId())
+                .setCustomModelData(item.getCustomModelData());
 
             if (itemName != null) {
                 itemBuilder.setItemName(itemName);
@@ -355,6 +458,7 @@ public final class NetworkTypes {
             return ItemStackIcon.builder()
                 .itemName(item.getItemName())
                 .itemId(item.getItemId())
+                .customModelData(item.getCustomModelData())
                 .build();
         } else if (icon.hasSimpleResourceLocation()) {
             com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon simple = icon.getSimpleResourceLocation();

@@ -33,6 +33,23 @@ private final Title helloTitle = Title.builder()
     .build();
 ```
 
+```java
+private final Title interpolatedTitle = Title.builder()
+    .type(TitleType.TITLE)
+    .message(Component.text()
+        .content("This title expands!")
+        .color(NamedTextColor.GREEN)
+        .decorate(TextDecoration.BOLD)
+        .build())
+    .scale(0.1f)
+    .interpolationScale(1.0f)
+    .interpolationRate(0.01f)
+    .displayTime(Duration.ofMillis(5000L))
+    .fadeInTime(Duration.ofMillis(250))
+    .fadeOutTime(Duration.ofMillis(300))
+    .build();
+```
+
 #### `Title` Options
 
 `.type(TitleType)` is the type of title you want to display. See the [TitleType](#titletype-types) types section for more.
@@ -73,6 +90,18 @@ private final Title helloTitle = Title.builder()
 
 ```java
 .fadeOutTime(Duration.ofMillis(300))
+```
+
+`.interpolationScale(Float)` if the provided interpolation scale is greater than the scale, the title will expand. However, if the scale is greater than the interpolation scale, the title will shrink.
+
+```java
+.interpolationScale(1.0f)
+```
+
+`.interpolationRate(Float)` is the rate that the title will expand or shrink every tick (50ms) between the scale and the interpolation scale.
+
+```java
+.interpolationRate(0.01f)
 ```
 
 ### Displaying a title for a player
