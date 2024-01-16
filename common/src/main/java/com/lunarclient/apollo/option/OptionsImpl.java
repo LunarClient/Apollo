@@ -55,7 +55,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @since 1.0.0
  */
-public final class OptionsImpl implements Options {
+public class OptionsImpl implements Options {
 
     private final Map<Option<?, ?, ?>, Object> options = Collections.synchronizedMap(new HashMap<>());
     private final Map<ApolloPlayer, Map<Option<?, ?, ?>, Object>> playerOptions = Collections.synchronizedMap(new WeakHashMap<>());
