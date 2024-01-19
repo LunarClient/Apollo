@@ -1,0 +1,161 @@
+name: "🐛 Bug Report"
+description: Create an issue to report a bug with Apollo.
+title: "[Bug Report] <title>"
+labels: [
+    "status: Pending",
+    "type: Bug"
+]
+body:
+    # Intro
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to report this issue, if you want to request a feature join our [Discord](https://discord.gg/3T9Atyb6pf).
+
+    # Checklist
+    - type: checkboxes
+      id: confirmation
+      attributes:
+          label: "Checklist before creating an issue:"
+          description: Verify your setup before creating the issue.
+          options:
+              - label: I'm using the [latest version](https://github.com/LunarClient/Apollo/releases) of Apollo.
+                required: true
+              - label: I'm using the latest version of Lunar Client. (Relaunched in the last hour)
+                required: true
+              - label: I'm running Apollo on **ONLY** the backend server OR the proxy. **(YOU CANNOT RUN IT ON BOTH)**
+                required: true
+              - label: I do **NOT** have both Apollo and the LEGACY API installed on the same server. **(YOU CANNOT RUN BOTH AT THE SAME TIME)**
+                required: true
+              - label: I've gathered all screenshots, logs and appropriate information related to creating a bug report.
+                required: true
+
+    # Description
+    - type: textarea
+      id: description
+      attributes:
+          label: "Issue Description"
+          description: Please enter an explicit description of the issue.
+          placeholder: Short and explicit description of your incident...
+      validations:
+          required: true
+
+    # Reproduction steps
+    - type: textarea
+      id: reprod
+      attributes:
+          label: "Reproduction steps"
+          description: Please enter an explicit description of the issue.
+          placeholder: |
+              1. Go to '...'
+              2. Click on '....'
+              3. Scroll down to '....'
+              4. See error
+          render: bash
+      validations:
+          required: true
+
+    # Lunar Client Version(s)
+    - type: dropdown
+      id: versions
+      attributes:
+          label: "Versions"
+          description: What Minecraft versions are you experiencing the problem on?
+          multiple: true
+          options:
+              - 1.7
+              - 1.8
+              - 1.12
+              - 1.16
+              - 1.17
+              - 1.18
+              - 1.19
+              - 1.20+
+      validations:
+          required: true
+
+    # Server Platform(s)
+    - type: dropdown
+      id: platforms
+      attributes:
+          label: "Platforms"
+          description: What server platform are you experiencing the problem on?
+          multiple: true
+          options:
+              - Spigot / Bukkit
+              - BungeeCord
+              - Velocity
+              - Other
+      validations:
+          required: true
+
+    # Server Version(s)
+    - type: dropdown
+      id: serverversions
+      attributes:
+          label: "Server Version"
+          description: What is the primary version your server is on?
+          multiple: false
+          options:
+              - 1.7
+              - 1.8
+              - 1.12
+              - 1.16
+              - 1.17
+              - 1.18
+              - 1.19
+              - 1.20+
+              - Other/Not Listed
+      validations:
+          required: true
+
+    # Lunar Client Modules
+    - type: dropdown
+      id: modules
+      attributes:
+          label: "Modules"
+          description: What Lunar Client modules are you experiencing the problem on?
+          multiple: true
+          options:
+              - "Sodium"
+              - "Optifine"
+              - "Forge"
+              - "Fabric"
+      validations:
+          required: false
+
+    # Screenshots
+    - type: textarea
+      id: screenshot
+      attributes:
+          label: "Screenshots"
+          description: If applicable, add screenshots to help explain your problem.
+          placeholder: |
+              ![DESCRIPTION](LINK.png)
+          render: bash
+      validations:
+          required: false
+
+    # Form of Contact
+    - type: textarea
+      id: contact
+      attributes:
+          label: "Contact Information"
+          description: Please enter the best way to get into contact with you. (Preferably your Discord)
+          placeholder: |
+              Discord - JohnDoe
+              Telegram - JohnDoe
+              Email - email@moonsworth.com
+          render: bash
+      validations:
+          required: true
+
+    # Additional Context
+    - type: textarea
+      id: context
+      attributes:
+          label: "Additional Context"
+          description: Do you have anything to say that cannot be covered by the questions above?
+          placeholder: ...
+      validations:
+          required: false
