@@ -42,7 +42,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 @RequiredArgsConstructor
 public abstract class AbstractApolloCommand<T> {
 
-    private final BiConsumer<T, Component> textConsumer;
+    protected final BiConsumer<T, Component> textConsumer;
 
     /**
      * Sends the current version message to the sender.
@@ -83,6 +83,18 @@ public abstract class AbstractApolloCommand<T> {
             "Reloaded the Apollo configuration!",
             NamedTextColor.GREEN
         ));
+    }
+
+    /**
+     * Sends the command usage to the sender.
+     *
+     * @param sender the command sender
+     * @param usage the command usage
+     * @since 1.0.9
+     */
+    protected void sendCommandUsage(@NonNull T sender, @NonNull String usage) {
+        this.textConsumer.accept(sender, Component.text("Usage: ", NamedTextColor.RED)
+            .append(Component.text(usage, NamedTextColor.RED)));
     }
 
 }

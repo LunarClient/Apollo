@@ -21,35 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command;
+package com.lunarclient.apollo.command.impl;
 
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.command.BukkitApolloCommand;
 import com.lunarclient.apollo.common.ApolloComponent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 /**
- * The general Apollo command.
+ * The general Lunar Client command.
  *
- * @since 1.0.5
+ * @since 1.0.9
  */
-public final class ApolloCommand extends AbstractApolloCommand<CommandSender> implements CommandExecutor {
+public final class LunarClientCommand extends BukkitApolloCommand<CommandSender> implements CommandExecutor {
 
     /**
      * Returns a new instance of this command.
      *
-     * @since 1.0.5
+     * @since 1.0.9
      */
-    public ApolloCommand() {
+    public LunarClientCommand() {
         super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
     }
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-        if(args.length < 1) {
-            this.getCurrentVersion(commandSender);
-        } else if(args[0].equalsIgnoreCase("reload")) {
-            this.reloadConfiguration(commandSender);
+        if(args.length != 1) {
+            this.sendCommandUsage(commandSender, command.getUsage());
+        } else {
+            this.handlePlayerArgument(commandSender, args[0], player -> {
+                Component message = Component.text("Player ", NamedTextColor.YELLOW)
+                    .append(Component.text(player.getDisplayName()));
+
+                if (Apollo.getPlayerManager().hasSupport(player.getUniqueId())) {
+                    message = message.append(Component.text(" is using ", NamedTextColor.GREEN));
+                } else {
+                    message = message.append(Component.text(" is not using ", NamedTextColor.RED));
+                }
+
+                message = message.append(Component.text("LunarClient!", NamedTextColor.YELLOW));
+
+                this.textConsumer.accept(commandSender, message);
+            });
         }
 
         return true;
