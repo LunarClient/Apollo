@@ -24,7 +24,7 @@
 package com.lunarclient.apollo;
 
 import com.google.inject.Inject;
-import com.lunarclient.apollo.command.ApolloCommand;
+import com.lunarclient.apollo.command.impl.ApolloCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.beam.BeamModule;

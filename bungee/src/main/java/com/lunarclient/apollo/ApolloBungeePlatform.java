@@ -23,7 +23,8 @@
  */
 package com.lunarclient.apollo;
 
-import com.lunarclient.apollo.command.ApolloCommand;
+import com.lunarclient.apollo.command.impl.ApolloCommand;
+import com.lunarclient.apollo.command.impl.LunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
@@ -76,6 +77,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.api.plugin.PluginManager;
 
 /**
  * The Bungee platform plugin.
@@ -133,8 +135,11 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
 
         ProxyServer server = this.plugin.getProxy();
         server.registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
-        server.getPluginManager().registerListener(this.plugin, new ApolloPlayerListener());
-        server.getPluginManager().registerCommand(this.plugin, ApolloCommand.create());
+
+        PluginManager pluginManager = server.getPluginManager();
+        pluginManager.registerListener(this.plugin, new ApolloPlayerListener());
+        pluginManager.registerCommand(this.plugin, ApolloCommand.create());
+        pluginManager.registerCommand(this.plugin, LunarClientCommand.create());
 
         statsManager.enable();
         versionManager.checkForUpdates();

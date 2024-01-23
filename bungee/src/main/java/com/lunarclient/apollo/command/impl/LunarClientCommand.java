@@ -24,20 +24,38 @@
 package com.lunarclient.apollo.command.impl;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.command.BukkitApolloCommand;
+import com.lunarclient.apollo.command.BungeeApolloCommand;
 import com.lunarclient.apollo.common.ApolloComponent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.plugin.Command;
 
 /**
  * The general Lunar Client command.
  *
  * @since 1.0.9
  */
-public final class LunarClientCommand extends BukkitApolloCommand<CommandSender> implements CommandExecutor {
+public final class LunarClientCommand extends BungeeApolloCommand<CommandSender> {
+
+
+    /**
+     * Returns a new instance of this command.
+     *
+     * @return a new command
+     * @since 1.0.9
+     */
+    public static Command create() {
+        return new Command("lunarclient", "apollo.lunarclient") {
+            private final LunarClientCommand command = new LunarClientCommand();
+
+            @Override
+            public void execute(CommandSender sender, String[] args) {
+                this.command.execute(sender, args);
+            }
+        };
+    }
+
 
     /**
      * Returns a new instance of this command.
@@ -48,14 +66,13 @@ public final class LunarClientCommand extends BukkitApolloCommand<CommandSender>
         super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
     }
 
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+    void execute(CommandSender sender, String[] args) {
         if(args.length != 1) {
-            this.sendCommandUsage(commandSender, command.getUsage());
-            return true;
+            this.sendCommandUsage(sender, command.getUsage());
+            return;
         }
 
-        this.handlePlayerArgument(commandSender, args[0], player -> {
+        this.handlePlayerArgument(sender, args[0], player -> {
             Component message = Component.text("Player ", NamedTextColor.GRAY)
                 .append(Component.text(player.getName(), NamedTextColor.AQUA))
                 .append(Component.text(" is ", NamedTextColor.GRAY));
@@ -68,10 +85,8 @@ public final class LunarClientCommand extends BukkitApolloCommand<CommandSender>
 
             message = message.append(Component.text("Lunar Client!", NamedTextColor.GRAY));
 
-            this.textConsumer.accept(commandSender, message);
+            this.textConsumer.accept(sender, message);
         });
-
-        return true;
     }
 
 }

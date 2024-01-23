@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command;
+package com.lunarclient.apollo.command.impl;
 
+import com.lunarclient.apollo.command.VelocityApolloCommand;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.velocitypowered.api.command.BrigadierCommand;
@@ -36,7 +37,7 @@ import net.kyori.adventure.audience.Audience;
  * @since 1.0.5
  */
 @Getter
-public final class ApolloCommand extends AbstractApolloCommand<CommandSource> {
+public final class ApolloCommand extends VelocityApolloCommand<CommandSource> {
 
     /**
      * Returns a new instance of this command.

@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command;
+package com.lunarclient.apollo.command.impl;
 
+import com.lunarclient.apollo.command.BungeeApolloCommand;
 import com.lunarclient.apollo.common.ApolloComponent;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
@@ -32,7 +33,7 @@ import net.md_5.bungee.api.plugin.Command;
  *
  * @since 1.0.5
  */
-public final class ApolloCommand extends AbstractApolloCommand<CommandSender> {
+public final class ApolloCommand extends BungeeApolloCommand<CommandSender> {
 
     /**
      * Returns a new instance of this command.
@@ -51,7 +52,7 @@ public final class ApolloCommand extends AbstractApolloCommand<CommandSender> {
         };
     }
 
-    ApolloCommand() {
+    public ApolloCommand() {
         super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
     }
 
