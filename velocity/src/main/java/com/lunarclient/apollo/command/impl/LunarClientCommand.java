@@ -24,19 +24,25 @@
 package com.lunarclient.apollo.command.impl;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.command.BungeeApolloCommand;
-import com.lunarclient.apollo.common.ApolloComponent;
+import com.lunarclient.apollo.command.VelocityApolloCommand;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
+import com.velocitypowered.api.command.BrigadierCommand;
+import com.velocitypowered.api.command.CommandSource;
+import lombok.Getter;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.plugin.Command;
 
 /**
  * The general Lunar Client command.
  *
  * @since 1.0.9
  */
-public final class LunarClientCommand extends BungeeApolloCommand<CommandSender> {
+@Getter
+public final class LunarClientCommand extends VelocityApolloCommand<CommandSource> {
 
     /**
      * Returns a new instance of this command.
@@ -44,32 +50,30 @@ public final class LunarClientCommand extends BungeeApolloCommand<CommandSender>
      * @return a new command
      * @since 1.0.9
      */
-    public static Command create() {
-        return new Command("lunarclient", "apollo.lunarclient") {
-            private final LunarClientCommand command = new LunarClientCommand();
+    public static BrigadierCommand create() {
+        LunarClientCommand command = new LunarClientCommand();
 
-            @Override
-            public void execute(CommandSender sender, String[] args) {
-                this.command.execute(sender, args);
-            }
-        };
+        return new BrigadierCommand(LiteralArgumentBuilder.<CommandSource>literal("lunarclient")
+            .executes(source -> {
+                command.sendCommandUsage(source.getSource());
+                return Command.SINGLE_SUCCESS;
+            })
+            .requires(source -> source.hasPermission("apollo.lunarclient"))
+            .then(RequiredArgumentBuilder.<CommandSource, String>argument("player", StringArgumentType.word())
+                .executes(command.getPlayerCommand())
+                .build()
+            )
+            .build()
+        );
     }
 
-    LunarClientCommand() {
-        super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
+    private final Command<CommandSource> playerCommand = context -> {
+        String argument = context.getArgument("player", String.class);
+        CommandSource source = context.getSource();
 
-        this.setUsage("/lunarclient <player>");
-    }
-
-    void execute(CommandSender sender, String[] args) {
-        if(args.length != 1) {
-            this.sendCommandUsage(sender);
-            return;
-        }
-
-        this.handlePlayerArgument(sender, args[0], player -> {
+        this.handlePlayerArgument(source, argument, player -> {
             Component message = Component.text("Player ", NamedTextColor.GRAY)
-                .append(Component.text(player.getName(), NamedTextColor.AQUA))
+                .append(Component.text(player.getUsername(), NamedTextColor.AQUA))
                 .append(Component.text(" is ", NamedTextColor.GRAY));
 
             if (Apollo.getPlayerManager().hasSupport(player.getUniqueId())) {
@@ -79,8 +83,16 @@ public final class LunarClientCommand extends BungeeApolloCommand<CommandSender>
             }
 
             message = message.append(Component.text("Lunar Client!", NamedTextColor.GRAY));
-            this.textConsumer.accept(sender, message);
+            this.textConsumer.accept(source, message);
         });
+
+        return Command.SINGLE_SUCCESS;
+    };
+
+    LunarClientCommand() {
+        super(Audience::sendMessage);
+
+        this.setUsage("/lunarclient <player>");
     }
 
 }

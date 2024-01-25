@@ -46,12 +46,14 @@ public final class LunarClientCommand extends BukkitApolloCommand<CommandSender>
      */
     public LunarClientCommand() {
         super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
+
+        this.setUsage("/lunarclient <player>");
     }
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         if(args.length != 1) {
-            this.sendCommandUsage(commandSender, command.getUsage());
+            this.sendCommandUsage(commandSender);
             return true;
         }
 
@@ -61,13 +63,12 @@ public final class LunarClientCommand extends BukkitApolloCommand<CommandSender>
                 .append(Component.text(" is ", NamedTextColor.GRAY));
 
             if (Apollo.getPlayerManager().hasSupport(player.getUniqueId())) {
-                message = message.append(Component.text(" using ", NamedTextColor.GREEN));
+                message = message.append(Component.text("using ", NamedTextColor.GREEN));
             } else {
-                message = message.append(Component.text(" not using ", NamedTextColor.RED));
+                message = message.append(Component.text("not using ", NamedTextColor.RED));
             }
 
             message = message.append(Component.text("Lunar Client!", NamedTextColor.GRAY));
-
             this.textConsumer.accept(commandSender, message);
         });
 

@@ -52,7 +52,7 @@ public final class ApolloCommand extends BungeeApolloCommand<CommandSender> {
         };
     }
 
-    public ApolloCommand() {
+    ApolloCommand() {
         super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
     }
 
