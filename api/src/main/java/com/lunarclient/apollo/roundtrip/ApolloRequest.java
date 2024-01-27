@@ -25,6 +25,7 @@ package com.lunarclient.apollo.roundtrip;
 
 import java.util.UUID;
 import lombok.Getter;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents an Apollo Request.
@@ -54,7 +55,7 @@ public class ApolloRequest<T extends ApolloResponse> {
      *
      * @since 1.0.0
      */
-    private final long sentTime;
+    private final @Range(from = 0, to = Long.MAX_VALUE) long sentTime;
 
     /**
      * Constructs a new {@link ApolloRequest}.

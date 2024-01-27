@@ -27,6 +27,7 @@ import java.time.Duration;
 import lombok.Builder;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents a title which can be shown on the client.
@@ -59,7 +60,7 @@ public final class Title {
      * @return the title scale
      * @since 1.0.0
      */
-    float scale;
+    @Range(from = 0, to = Integer.MAX_VALUE) float scale;
 
     /**
      * Returns the title {@link Duration} display time.
@@ -95,7 +96,7 @@ public final class Title {
      * @return the title interpolation scale
      * @since 1.0.7
      */
-    float interpolationScale;
+    @Range(from = 0, to = Integer.MAX_VALUE) float interpolationScale;
 
     /**
      * Returns the title {@link Float} interpolation rate.
@@ -106,6 +107,6 @@ public final class Title {
      * @return the title interpolation rate
      * @since 1.0.7
      */
-    float interpolationRate;
+    @Range(from = 0, to = Integer.MAX_VALUE) float interpolationRate;
 
 }

@@ -25,6 +25,7 @@ package com.lunarclient.apollo.module.vignette;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents a vignette which can be shown on the client.
@@ -53,6 +54,6 @@ public final class Vignette {
      * @return the opacity
      * @since 1.0.0
      */
-    float opacity;
+    @Range(from = 0, to = 1) float opacity;
 
 }

@@ -29,6 +29,7 @@ import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.NumberOption;
 import io.leangen.geantyref.TypeToken;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents the tnt countdown module.
@@ -68,6 +69,6 @@ public abstract class TntCountdownModule extends ApolloModule {
      * @param ticks  the ticks until explosion
      * @since 1.0.0
      */
-    public abstract void setTntCountdown(ApolloEntity entity, int ticks);
+    public abstract void setTntCountdown(ApolloEntity entity, @Range(from = 0, to = Integer.MAX_VALUE) int ticks);
 
 }

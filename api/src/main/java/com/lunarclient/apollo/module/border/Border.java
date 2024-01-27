@@ -27,6 +27,7 @@ import com.lunarclient.apollo.common.cuboid.Cuboid2D;
 import java.awt.Color;
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents a border which can be shown on the client.
@@ -105,6 +106,6 @@ public final class Border {
      * @return the border duration
      * @since 1.0.0
      */
-    int durationTicks;
+    @Range(from = 0, to = Integer.MAX_VALUE) int durationTicks;
 
 }

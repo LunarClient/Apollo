@@ -25,6 +25,7 @@ package com.lunarclient.apollo.common.icon;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents an advanced resource location icon.
@@ -56,7 +57,7 @@ public final class AdvancedResourceLocationIcon extends Icon {
      * @return the icon width
      * @since 1.0.0
      */
-    float width;
+    @Range(from = 0, to = Integer.MAX_VALUE) float width;
 
     /**
      * Returns the icon height {@link Float}.
@@ -66,7 +67,7 @@ public final class AdvancedResourceLocationIcon extends Icon {
      * @return the icon height
      * @since 1.0.0
      */
-    float height;
+    @Range(from = 0, to = Integer.MAX_VALUE) float height;
 
     /**
      * Returns the icon min u {@link Float}.
@@ -76,7 +77,7 @@ public final class AdvancedResourceLocationIcon extends Icon {
      * @return the icon min u
      * @since 1.0.0
      */
-    float minU;
+    @Range(from = 0, to = 1) float minU;
 
     /**
      * Returns the icon max u {@link Float}.
@@ -86,7 +87,7 @@ public final class AdvancedResourceLocationIcon extends Icon {
      * @return the icon max u
      * @since 1.0.0
      */
-    float maxU;
+    @Range(from = 0, to = 1) float maxU;
 
     /**
      * Returns the icon min v {@link Float}.
@@ -96,7 +97,7 @@ public final class AdvancedResourceLocationIcon extends Icon {
      * @return the icon min v
      * @since 1.0.0
      */
-    float minV;
+    @Range(from = 0, to = 1) float minV;
 
     /**
      * Returns the icon max v {@link Float}.
@@ -106,6 +107,6 @@ public final class AdvancedResourceLocationIcon extends Icon {
      * @return the icon max v
      * @since 1.0.0
      */
-    float maxV;
+    @Range(from = 0, to = 1) float maxV;
 
 }
