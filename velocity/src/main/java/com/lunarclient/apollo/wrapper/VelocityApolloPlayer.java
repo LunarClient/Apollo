@@ -28,6 +28,7 @@ import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.velocitypowered.api.proxy.Player;
 import java.util.UUID;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -35,6 +36,7 @@ import lombok.RequiredArgsConstructor;
  *
  * @since 1.0.0
  */
+@Getter
 @RequiredArgsConstructor
 public final class VelocityApolloPlayer extends AbstractApolloPlayer {
 
