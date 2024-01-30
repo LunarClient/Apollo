@@ -143,6 +143,11 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         return this.stats;
     }
 
+    @Override
+    public Object getPlugin() {
+        return this.server;
+    }
+
     /**
      * Handles initialization of the proxy.
      *

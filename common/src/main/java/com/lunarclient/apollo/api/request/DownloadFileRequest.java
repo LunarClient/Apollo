@@ -21,68 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.api.response;
+package com.lunarclient.apollo.api.request;
 
-import com.lunarclient.apollo.api.ApiResponse;
+import com.lunarclient.apollo.api.ApiRequest;
+import com.lunarclient.apollo.api.ApiRequestType;
+import com.lunarclient.apollo.api.ApiServiceType;
+import com.lunarclient.apollo.api.response.DownloadFileResponse;
+import java.nio.file.Path;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
- * Represents the apollo version response.
+ * Represents the apollo version request.
  *
- * @since 1.0.0
+ * @since 1.0.9
  */
+@ToString
 @Getter
-public final class VersionResponse implements ApiResponse {
+@Builder(toBuilder = true)
+public final class DownloadFileRequest implements ApiRequest<DownloadFileResponse> {
 
     /**
-     * Returns the apollo {@link String} version.
-     *
-     * @return the apollo version
-     * @since 1.0.0
-     */
-    String version;
-
-    /**
-     * Returns the apollo {@link Assets}.
-     *
-     * @return the apollo assets
-     * @since 1.0.9
-     */
-    Assets assets;
-
-    /**
-     * Represents the apollo assets.
+     * The url to download the file from.
      *
      * @since 1.0.9
      */
-    @Getter
-    public static final class Assets {
+    private final String url;
 
-        /**
-         * Returns the latest version of apollo {@link String} Bukkit download URL.
-         *
-         * @return the apollo bukkit download url
-         * @since 1.0.9
-         */
-        String bukkit;
+    /**
+     * The target path to download the file to.
+     *
+     * @since 1.0.9
+     */
+    private final Path target;
 
-        /**
-         * Returns the latest version of apollo {@link String} Bungee download URL.
-         *
-         * @return the apollo bungee download url
-         * @since 1.0.9
-         */
-        String bungee;
+    @Override
+    public ApiServiceType getService() {
+        return null;
+    }
 
-        /**
-         * Returns the latest version of apollo {@link String} Velocity download URL.
-         *
-         * @return the apollo velocity download url
-         * @since 1.0.9
-         */
-        String velocity;
+    @Override
+    public ApiRequestType getType() {
+        return null;
+    }
 
-
+    @Override
+    public String getRoute() {
+        return null;
     }
 
 }

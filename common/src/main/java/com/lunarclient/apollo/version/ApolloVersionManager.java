@@ -26,10 +26,16 @@ package com.lunarclient.apollo.version;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.api.request.DownloadFileRequest;
 import com.lunarclient.apollo.api.request.VersionRequest;
+import com.lunarclient.apollo.api.response.VersionResponse;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.io.File;
+import java.net.URL;
+import java.nio.file.Paths;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Manages Apollo versioning.
@@ -43,8 +49,7 @@ public final class ApolloVersionManager {
         .node("send-updater-message").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
-    private static final String DOWNLOAD_URL = "https://lunarclient.dev/apollo/downloads";
-    public static final String UPDATE_MESSAGE = "[Apollo] You’re running an outdated version, update to the latest version here: " + DOWNLOAD_URL;
+    public static final String UPDATE_MESSAGE = "[Apollo] You’re running an outdated version, update to the latest using /apollo update";
 
     /**
      * Returns whether the server needs to update Apollo.
@@ -52,6 +57,9 @@ public final class ApolloVersionManager {
      * @since 1.0.0
      */
     public static boolean NEEDS_UPDATE;
+
+    @Nullable
+    private VersionResponse.Assets assets;
 
     /**
      * Constructs the {@link ApolloVersionManager}.
@@ -76,6 +84,8 @@ public final class ApolloVersionManager {
 
         ApolloManager.getHttpManager().request(VersionRequest.builder().build())
             .onSuccess(response -> {
+                this.assets = response.getAssets();
+
                 ApolloVersion currentVersion = new ApolloVersion(platform.getApolloVersion());
                 ApolloVersion latestVersion = new ApolloVersion(response.getVersion());
 
@@ -83,8 +93,89 @@ public final class ApolloVersionManager {
                     ApolloVersionManager.NEEDS_UPDATE = true;
                     platform.getPlatformLogger().warning(UPDATE_MESSAGE);
                 }
+
+                // TODO: remove
+                this.forceUpdate("bukkit");
             })
             .onFailure(Throwable::printStackTrace);
+    }
+
+    /**
+     * Runs a force update.
+     *
+     * @param platform the platform to run the update on
+     * @since 1.0.9
+     */
+    public void forceUpdate(String platform) {
+        // Check if needs update at all
+
+        if (this.assets == null) {
+            System.out.println("No assets found");
+            System.out.println("No assets found");
+            System.out.println("No assets found");
+            System.out.println("No assets found");
+            return;
+        }
+
+        try {
+            URL url = Apollo.getPlatform()
+                .getPlugin().getClass()
+                .getProtectionDomain()
+                .getCodeSource()
+                .getLocation();
+
+            File file = new File(url.toURI());
+            String platformUrl = this.getUrlByPlatform(platform);
+            String[] urlArgs = platformUrl.split("/");
+            String fileName = urlArgs[urlArgs.length - 1];
+
+            System.out.println("New version name " + fileName);
+            System.out.println(file.getParent() + "/" + fileName);
+            System.out.println(Paths.get(file.getParent() + "/" + fileName));
+
+            DownloadFileRequest request = DownloadFileRequest.builder()
+                .url(platformUrl)
+                .target(Paths.get(file.getParent() + "/" + fileName))
+                .build();
+
+            ApolloManager.getHttpManager().download(request)
+                .onSuccess(response -> {
+                    System.out.println("Successfully updated");
+                    // Send message to sender
+
+                    // Delete old version
+                    file.deleteOnExit();
+                })
+                .onFailure(throwable -> {
+                    System.out.println("Failed to update");
+                    // Send message to sender
+
+                    throwable.printStackTrace();
+                });
+
+            System.out.println("Delete hook! " + file.getAbsolutePath());
+            System.out.println(file.getParentFile().getAbsolutePath());
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
+    private String getUrlByPlatform(String platform) {
+        switch (platform.toLowerCase()) {
+            case "bukkit": {
+                return this.assets.getBukkit();
+            }
+
+            case "bungee": {
+                return this.assets.getBungee();
+            }
+
+            case "velocity": {
+                return this.assets.getVelocity();
+            }
+        }
+
+        return null;
     }
 
 }

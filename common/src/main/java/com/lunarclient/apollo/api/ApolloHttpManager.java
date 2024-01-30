@@ -25,15 +25,20 @@ package com.lunarclient.apollo.api;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.api.request.DownloadFileRequest;
+import com.lunarclient.apollo.api.response.DownloadFileResponse;
 import com.lunarclient.apollo.async.Future;
 import com.lunarclient.apollo.async.future.UncertainFuture;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -136,6 +141,33 @@ public final class ApolloHttpManager {
                 }
             } catch (Throwable t) {
                 ApolloHttpManager.handleError("Failed to open connection!", t, request);
+            }
+        });
+
+        return future;
+    }
+
+    /**
+     * Asynchronously downloads a file and returns a {@link Future} for the API response.
+     *
+     * @param request The download file request to be sent.
+     * @return A {@link Future} representing the result of the API request.
+     * @since 1.0.9
+     */
+    public Future<DownloadFileResponse> download(DownloadFileRequest request) {
+        UncertainFuture<DownloadFileResponse> future = new UncertainFuture<>();
+        String url = request.getUrl();
+
+        this.requestExecutor.submit(() -> {
+            try {
+                InputStream in = new URL(url).openStream();
+                Files.copy(in, request.getTarget(), StandardCopyOption.REPLACE_EXISTING);
+
+                future.handleSuccess(new DownloadFileResponse());
+                System.out.println("Handle success");
+            } catch (Throwable t) {
+                future.handleFailure(new Throwable(String.format("Failed to download file %s", url)));
+                t.printStackTrace();
             }
         });
 

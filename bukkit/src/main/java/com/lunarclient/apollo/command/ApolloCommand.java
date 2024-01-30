@@ -50,6 +50,8 @@ public final class ApolloCommand extends AbstractApolloCommand<CommandSender> im
             this.getCurrentVersion(commandSender);
         } else if(args[0].equalsIgnoreCase("reload")) {
             this.reloadConfiguration(commandSender);
+        } else if(args[0].equalsIgnoreCase("update")) {
+
         }
 
         return true;

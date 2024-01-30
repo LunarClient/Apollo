@@ -24,65 +24,12 @@
 package com.lunarclient.apollo.api.response;
 
 import com.lunarclient.apollo.api.ApiResponse;
-import lombok.Getter;
 
 /**
- * Represents the apollo version response.
+ * Represents the download response.
  *
- * @since 1.0.0
+ * @since 1.0.9
  */
-@Getter
-public final class VersionResponse implements ApiResponse {
-
-    /**
-     * Returns the apollo {@link String} version.
-     *
-     * @return the apollo version
-     * @since 1.0.0
-     */
-    String version;
-
-    /**
-     * Returns the apollo {@link Assets}.
-     *
-     * @return the apollo assets
-     * @since 1.0.9
-     */
-    Assets assets;
-
-    /**
-     * Represents the apollo assets.
-     *
-     * @since 1.0.9
-     */
-    @Getter
-    public static final class Assets {
-
-        /**
-         * Returns the latest version of apollo {@link String} Bukkit download URL.
-         *
-         * @return the apollo bukkit download url
-         * @since 1.0.9
-         */
-        String bukkit;
-
-        /**
-         * Returns the latest version of apollo {@link String} Bungee download URL.
-         *
-         * @return the apollo bungee download url
-         * @since 1.0.9
-         */
-        String bungee;
-
-        /**
-         * Returns the latest version of apollo {@link String} Velocity download URL.
-         *
-         * @return the apollo velocity download url
-         * @since 1.0.9
-         */
-        String velocity;
-
-
-    }
+public final class DownloadFileResponse implements ApiResponse {
 
 }
