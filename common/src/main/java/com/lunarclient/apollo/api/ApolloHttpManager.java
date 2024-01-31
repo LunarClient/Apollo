@@ -164,7 +164,6 @@ public final class ApolloHttpManager {
                 Files.copy(in, request.getTarget(), StandardCopyOption.REPLACE_EXISTING);
 
                 future.handleSuccess(new DownloadFileResponse());
-                System.out.println("Handle success");
             } catch (Throwable t) {
                 future.handleFailure(new Throwable(String.format("Failed to download file %s", url)));
                 t.printStackTrace();

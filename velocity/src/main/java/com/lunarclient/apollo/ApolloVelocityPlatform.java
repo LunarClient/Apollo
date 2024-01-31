@@ -68,8 +68,6 @@ import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
-import com.lunarclient.apollo.stats.ApolloStatsManager;
-import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.VelocityApolloStats;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.event.Subscribe;
@@ -184,9 +182,6 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
             .addModule(VignetteModule.class, new VignetteModuleImpl())
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
-        ApolloStatsManager statsManager = new ApolloStatsManager();
-        ApolloVersionManager versionManager = new ApolloVersionManager();
-
         try {
             ApolloManager.setConfigPath(this.dataDirectory);
             ApolloManager.loadConfiguration();
@@ -203,8 +198,8 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         commandManager.register(ApolloCommand.create());
         commandManager.register(LunarClientCommand.create());
 
-        statsManager.enable();
-        versionManager.checkForUpdates();
+        ApolloManager.getStatsManager().enable();
+        ApolloManager.getVersionManager().checkForUpdates();
     }
 
     /**

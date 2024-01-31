@@ -33,9 +33,13 @@ import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.logging.Logger;
+import java.util.function.Consumer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 /**
  * Manages Apollo versioning.
@@ -90,9 +94,6 @@ public final class ApolloVersionManager {
                         platform.getPlatformLogger().warning(UPDATE_MESSAGE);
                     }
                 }
-
-                // TODO: remove
-                this.forceUpdate("bukkit");
             })
             .onFailure(Throwable::printStackTrace);
     }
@@ -100,61 +101,81 @@ public final class ApolloVersionManager {
     /**
      * Runs a force update.
      *
-     * @param serverPlatform the platform to run the update on
+     * @param platform the platform to run the update on
+     * @param message the message to send to the command sender
      * @since 1.0.9
      */
-    public void forceUpdate(String serverPlatform) {
-        ApolloPlatform platform = Apollo.getPlatform();
-        Logger logger = platform.getPlatformLogger();
-
+    public void forceUpdate(String platform, Consumer<Component> message) {
         if (!ApolloVersionManager.NEEDS_UPDATE) {
-            logger.severe("This server is already running the latest version of Apollo.");
+            message.accept(Component.text(
+                "This server is already running the latest version of Apollo.",
+                NamedTextColor.RED)
+            );
             return;
         }
 
         if (this.assets == null) {
-            logger.severe("Unable to update Apollo: No assets found");
+            message.accept(Component.text(
+                "Unable to find assets to update from.",
+                NamedTextColor.RED)
+            );
             return;
         }
 
-        try {
-            String platformUrl = this.getPlatformUrl(serverPlatform);
-            if (platformUrl == null) {
-                logger.severe("Unable to find platform url");
-                return;
-            }
-
-            String[] urlArgs = platformUrl.split("/");
-            String fileName = urlArgs[urlArgs.length - 1];
-
-            URL url = platform.getPlugin()
-                .getClass()
-                .getProtectionDomain()
-                .getCodeSource()
-                .getLocation();
-            File file = new File(url.toURI());
-
-            DownloadFileRequest request = DownloadFileRequest.builder()
-                .url(platformUrl)
-                .target(Paths.get(file.getParent() + "/" + fileName))
-                .build();
-
-            ApolloManager.getHttpManager().download(request)
-                .onSuccess(response -> {
-                    logger.severe("Successfully updated Apollo, please restart your server!");
-
-                    // Delete old version
-                    file.deleteOnExit();
-                })
-                .onFailure(throwable -> {
-                    logger.severe("Failed to update Apollo, please check your console for more information!");
-                    // Send message to sender
-
-                    throwable.printStackTrace();
-                });
-        } catch (Throwable t) {
-            t.printStackTrace();
+        String platformUrl = this.getPlatformUrl(platform);
+        if (platformUrl == null) {
+            message.accept(Component.text(
+                "Unable to find platform url.",
+                NamedTextColor.RED)
+            );
+            return;
         }
+
+        // Find name of the new Apollo jar
+        String[] urlArgs = platformUrl.split("/");
+        String fileName = urlArgs[urlArgs.length - 1];
+
+        // Find the current running Apollo jar
+        URL url = Apollo.getPlatform().getPlugin()
+            .getClass()
+            .getProtectionDomain()
+            .getCodeSource()
+            .getLocation();
+
+        File file;
+        try {
+            file = new File(url.toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // Create a path for the downloaded Apollo jar
+        Path updatedJarPath = Paths.get(file.getParent() + File.separator + fileName);
+
+        DownloadFileRequest request = DownloadFileRequest.builder()
+            .url(platformUrl)
+            .target(updatedJarPath)
+            .build();
+
+        ApolloManager.getHttpManager().download(request)
+            .onSuccess(response -> {
+                message.accept(Component.text(
+                    "Successfully updated Apollo, please restart your server!",
+                    NamedTextColor.RED)
+                );
+
+                // Delete old Apollo jar
+                file.deleteOnExit();
+            })
+            .onFailure(throwable -> {
+                message.accept(Component.text(
+                    "Failed to update Apollo, please check your console for more information!",
+                    NamedTextColor.RED)
+                );
+
+                throwable.printStackTrace();
+            });
     }
 
     private String getPlatformUrl(String platform) {

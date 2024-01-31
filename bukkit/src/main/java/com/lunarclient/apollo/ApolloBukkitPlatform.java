@@ -75,8 +75,6 @@ import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
-import com.lunarclient.apollo.stats.ApolloStatsManager;
-import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BukkitApolloStats;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -134,9 +132,6 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(VignetteModule.class, new VignetteModuleImpl())
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
-        ApolloStatsManager statsManager = new ApolloStatsManager();
-        ApolloVersionManager versionManager = new ApolloVersionManager();
-
         try {
             ApolloManager.setConfigPath(this.plugin.getDataFolder().toPath());
             ApolloManager.loadConfiguration();
@@ -155,8 +150,8 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         this.plugin.getCommand("apollo").setExecutor(new ApolloCommand());
         this.plugin.getCommand("lunarclient").setExecutor(new LunarClientCommand());
 
-        statsManager.enable();
-        versionManager.checkForUpdates();
+        ApolloManager.getStatsManager().enable();
+        ApolloManager.getVersionManager().checkForUpdates();
 
         if (Bukkit.getPluginManager().getPlugin("LunarClient-API") != null) {
             this.getPlatformLogger().log(Level.WARNING, "Please remove the legacy API to prevent compatibility issues with Apollo!");

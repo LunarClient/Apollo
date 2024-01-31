@@ -68,8 +68,6 @@ import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
-import com.lunarclient.apollo.stats.ApolloStatsManager;
-import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BungeeApolloStats;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -121,9 +119,6 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(VignetteModule.class, new VignetteModuleImpl())
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
-        ApolloStatsManager statsManager = new ApolloStatsManager();
-        ApolloVersionManager versionManager = new ApolloVersionManager();
-
         try {
             ApolloManager.setConfigPath(this.plugin.getDataFolder().toPath());
             ApolloManager.loadConfiguration();
@@ -141,8 +136,8 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
         pluginManager.registerCommand(this.plugin, ApolloCommand.create());
         pluginManager.registerCommand(this.plugin, LunarClientCommand.create());
 
-        statsManager.enable();
-        versionManager.checkForUpdates();
+        ApolloManager.getStatsManager().enable();
+        ApolloManager.getVersionManager().checkForUpdates();
     }
 
     @Override

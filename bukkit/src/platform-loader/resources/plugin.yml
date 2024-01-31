@@ -8,7 +8,7 @@ soft-depend: [LunarClient-API]
 commands:
   apollo:
     description: The main Apollo command.
-    usage: /apollo <reload>
+    usage: /apollo <reload|update>
     permission: apollo.command
   lunarclient:
     aliases: [lc]

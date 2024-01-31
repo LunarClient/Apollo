@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.command.impl;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.command.VelocityApolloCommand;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -55,6 +56,10 @@ public final class ApolloCommand extends VelocityApolloCommand<CommandSource> {
                 .executes(command.getReloadCommand())
                 .build()
             )
+            .then(LiteralArgumentBuilder.<CommandSource>literal("update")
+                .executes(command.getUpdateCommand())
+                .build()
+            )
             .build()
         );
     }
@@ -68,6 +73,15 @@ public final class ApolloCommand extends VelocityApolloCommand<CommandSource> {
     private final Command<CommandSource> reloadCommand = context -> {
         CommandSource source = context.getSource();
         this.reloadConfiguration(source);
+        return Command.SINGLE_SUCCESS;
+    };
+
+    private final Command<CommandSource> updateCommand = context -> {
+        ApolloManager.getVersionManager().forceUpdate(
+            "velocity",
+            message -> this.textConsumer.accept(context.getSource(), message)
+        );
+
         return Command.SINGLE_SUCCESS;
     };
 
