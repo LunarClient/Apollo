@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.example;
 
+import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.example.commands.BeamCommand;
 import com.lunarclient.apollo.example.commands.BorderCommand;
 import com.lunarclient.apollo.example.commands.ChatCommand;
@@ -45,6 +46,7 @@ import com.lunarclient.apollo.example.commands.TntCountdownCommand;
 import com.lunarclient.apollo.example.commands.TransferCommand;
 import com.lunarclient.apollo.example.commands.VignetteCommand;
 import com.lunarclient.apollo.example.commands.WaypointCommand;
+import com.lunarclient.apollo.example.listeners.PlayerListener;
 import com.lunarclient.apollo.example.modules.BeamExample;
 import com.lunarclient.apollo.example.modules.BorderExample;
 import com.lunarclient.apollo.example.modules.ChatExample;
@@ -105,6 +107,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
 
         this.registerModuleExamples();
         this.registerCommands();
+        this.registerListeners();
     }
 
     @Override
@@ -160,6 +163,10 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("transfer").setExecutor(new TransferCommand());
         this.getCommand("vignette").setExecutor(new VignetteCommand());
         this.getCommand("waypoint").setExecutor(new WaypointCommand());
+    }
+
+    private void registerListeners() {
+        EventBus.getBus().register(new PlayerListener());
     }
 
 }
