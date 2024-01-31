@@ -21,45 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.wrapper;
+package com.lunarclient.apollo.example.listeners;
 
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.event.ApolloListener;
+import com.lunarclient.apollo.event.Listen;
+import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
+import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.modules.TeamExample;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.util.UUID;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.bukkit.entity.Player;
 
-/**
- * The Bungee implementation of {@link ApolloPlayer}.
- *
- * @since 1.0.0
- */
-@Getter
-@RequiredArgsConstructor
-public final class BungeeApolloPlayer extends AbstractApolloPlayer {
+public class PlayerListener implements ApolloListener {
 
-    private final ProxiedPlayer player;
+    private final ApolloExamplePlugin plugin = ApolloExamplePlugin.getPlugin();
+    private final TeamExample.Team defaultTeam = this.plugin.getTeamExample().createTeam();
 
-    @Override
-    public UUID getUniqueId() {
-        return this.player.getUniqueId();
-    }
+    @Listen
+    private void onApolloRegister(ApolloRegisterPlayerEvent event) {
+        ApolloPlayer apolloPlayer = event.getPlayer();
+        Player player = (Player) apolloPlayer.getPlayer();
 
-    @Override
-    public String getName() {
-        return this.player.getName();
-    }
+        // Default team view markers
+        this.defaultTeam.addMember(player);
 
-    @Override
-    public boolean hasPermission(String permissionNode) {
-        return this.player.hasPermission(permissionNode);
-    }
-
-    @Override
-    public void sendPacket(byte[] messages) {
-        this.player.sendData(ApolloManager.PLUGIN_MESSAGE_CHANNEL, messages);
+        this.plugin.getBeamExample().displayBeamExample(player);
+        this.plugin.getBorderExample().displayBorderExample(player);
+        this.plugin.getCooldownExample().displayCooldownExample(player);
+        this.plugin.getNametagExample().overrideNametagExample(player);
+        this.plugin.getWaypointExample().displayWaypointExample(player);
     }
 
 }

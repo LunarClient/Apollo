@@ -10,3 +10,8 @@ commands:
     description: The main Apollo command.
     usage: /apollo <reload>
     permission: apollo.command
+  lunarclient:
+    aliases: [lc]
+    description: The command to check whether the player is using Lunar Client.
+    usage: /lunarclient <player>
+    permission: apollo.lunarclient

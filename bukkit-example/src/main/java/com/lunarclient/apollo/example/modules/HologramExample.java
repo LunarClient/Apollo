@@ -45,7 +45,7 @@ public class HologramExample {
             .id("welcome-hologram")
             .location(ApolloLocation.builder()
                 .world("world")
-                .z(5)
+                .x(5)
                 .y(105)
                 .z(0)
                 .build())

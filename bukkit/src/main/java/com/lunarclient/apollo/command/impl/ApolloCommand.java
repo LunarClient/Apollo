@@ -21,45 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.wrapper;
+package com.lunarclient.apollo.command.impl;
 
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
-import com.lunarclient.apollo.player.ApolloPlayer;
-import java.util.UUID;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import com.lunarclient.apollo.command.BukkitApolloCommand;
+import com.lunarclient.apollo.common.ApolloComponent;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 
 /**
- * The Bungee implementation of {@link ApolloPlayer}.
+ * The general Apollo command.
  *
- * @since 1.0.0
+ * @since 1.0.5
  */
-@Getter
-@RequiredArgsConstructor
-public final class BungeeApolloPlayer extends AbstractApolloPlayer {
+public final class ApolloCommand extends BukkitApolloCommand<CommandSender> implements CommandExecutor {
 
-    private final ProxiedPlayer player;
-
-    @Override
-    public UUID getUniqueId() {
-        return this.player.getUniqueId();
+    /**
+     * Returns a new instance of this command.
+     *
+     * @since 1.0.5
+     */
+    public ApolloCommand() {
+        super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
     }
 
     @Override
-    public String getName() {
-        return this.player.getName();
-    }
+    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+        if(args.length < 1) {
+            this.getCurrentVersion(commandSender);
+        } else if(args[0].equalsIgnoreCase("reload")) {
+            this.reloadConfiguration(commandSender);
+        } else if(args[0].equalsIgnoreCase("update")) {
 
-    @Override
-    public boolean hasPermission(String permissionNode) {
-        return this.player.hasPermission(permissionNode);
-    }
+        }
 
-    @Override
-    public void sendPacket(byte[] messages) {
-        this.player.sendData(ApolloManager.PLUGIN_MESSAGE_CHANNEL, messages);
+        return true;
     }
 
 }

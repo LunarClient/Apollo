@@ -21,22 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command;
+package com.lunarclient.apollo.command.impl;
 
-import com.mojang.brigadier.Command;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.velocitypowered.api.command.BrigadierCommand;
-import com.velocitypowered.api.command.CommandSource;
-import lombok.Getter;
-import net.kyori.adventure.audience.Audience;
+import com.lunarclient.apollo.command.BungeeApolloCommand;
+import com.lunarclient.apollo.common.ApolloComponent;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.plugin.Command;
 
 /**
  * The general Apollo command.
  *
  * @since 1.0.5
  */
-@Getter
-public final class ApolloCommand extends AbstractApolloCommand<CommandSource> {
+public final class ApolloCommand extends BungeeApolloCommand<CommandSender> {
 
     /**
      * Returns a new instance of this command.
@@ -44,34 +41,27 @@ public final class ApolloCommand extends AbstractApolloCommand<CommandSource> {
      * @return a new command
      * @since 1.0.5
      */
-    public static BrigadierCommand create() {
-        ApolloCommand command = new ApolloCommand();
+    public static Command create() {
+        return new Command("apollo", "apollo.command") {
+            private final ApolloCommand command = new ApolloCommand();
 
-        return new BrigadierCommand(LiteralArgumentBuilder.<CommandSource>literal("apollo")
-            .requires(source -> source.hasPermission("apollo.command"))
-            .executes(command.getBaseCommand())
-            .then(LiteralArgumentBuilder.<CommandSource>literal("reload")
-                .executes(command.getReloadCommand())
-                .build()
-            )
-            .build()
-        );
+            @Override
+            public void execute(CommandSender sender, String[] args) {
+                this.command.execute(sender, args);
+            }
+        };
     }
 
-    private final Command<CommandSource> baseCommand = context -> {
-        CommandSource source = context.getSource();
-        ApolloCommand.this.getCurrentVersion(source);
-        return Command.SINGLE_SUCCESS;
-    };
-
-    private final Command<CommandSource> reloadCommand = context -> {
-        CommandSource source = context.getSource();
-        this.reloadConfiguration(source);
-        return Command.SINGLE_SUCCESS;
-    };
-
     ApolloCommand() {
-        super(Audience::sendMessage);
+        super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
+    }
+
+    void execute(CommandSender sender, String[] args) {
+        if(args.length < 1) {
+            this.getCurrentVersion(sender);
+        } else if(args[0].equalsIgnoreCase("reload")) {
+            this.reloadConfiguration(sender);
+        }
     }
 
 }

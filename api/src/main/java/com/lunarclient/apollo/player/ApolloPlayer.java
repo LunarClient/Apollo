@@ -97,4 +97,12 @@ public interface ApolloPlayer extends Recipients {
      */
     boolean hasPermission(String permissionNode);
 
+    /**
+     * Returns the player object associated with the platform.
+     *
+     * @return the associated player object
+     * @since 1.0.9
+     */
+    Object getPlayer();
+
 }
