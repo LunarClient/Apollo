@@ -77,4 +77,7 @@ public final class Ranges {
         return value;
     }
 
+    private Ranges() {
+    }
+
 }
