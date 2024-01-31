@@ -30,6 +30,7 @@ import java.util.function.BiConsumer;
 import java.util.logging.Level;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -39,10 +40,13 @@ import net.kyori.adventure.text.format.NamedTextColor;
  * @param <T> the sender type
  * @since 1.0.5
  */
+@Setter
 @RequiredArgsConstructor
 public abstract class AbstractApolloCommand<T> {
 
-    private final BiConsumer<T, Component> textConsumer;
+    protected final BiConsumer<T, Component> textConsumer;
+
+    protected String usage;
 
     /**
      * Sends the current version message to the sender.
@@ -83,6 +87,17 @@ public abstract class AbstractApolloCommand<T> {
             "Reloaded the Apollo configuration!",
             NamedTextColor.GREEN
         ));
+    }
+
+    /**
+     * Sends the command usage to the sender.
+     *
+     * @param sender the command sender
+     * @since 1.0.9
+     */
+    protected void sendCommandUsage(@NonNull T sender) {
+        this.textConsumer.accept(sender, Component.text("Usage: ", NamedTextColor.RED)
+            .append(Component.text(this.usage, NamedTextColor.RED)));
     }
 
 }
