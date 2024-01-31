@@ -25,7 +25,6 @@ package com.lunarclient.apollo.common.icon;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.jetbrains.annotations.Range;
 
 /**
  * Represents an item stack icon.
@@ -58,6 +57,6 @@ public final class ItemStackIcon extends Icon {
      * @return the icon custom model data
      * @since 1.0.7
      */
-    @Range(from = 0, to = Integer.MAX_VALUE) int customModelData;
+    int customModelData;
 
 }

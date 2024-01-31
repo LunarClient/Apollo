@@ -26,7 +26,6 @@ package com.lunarclient.apollo.event.packetenrichment.melee;
 import com.lunarclient.apollo.event.Event;
 import com.lunarclient.apollo.module.packetenrichment.PlayerInfo;
 import lombok.Value;
-import org.jetbrains.annotations.Range;
 
 /**
  * Represents an event that is fired when the player attacks another player.
@@ -67,6 +66,6 @@ public class ApolloPlayerAttackEvent implements Event {
      * @return the reach distance
      * @since 1.0.7
      */
-    @Range(from = 0, to = Integer.MAX_VALUE) double distance;
+    double distance;
 
 }

@@ -103,6 +103,8 @@ public final class Border {
     /**
      * Returns the border {@link Integer} duration represented in ticks (1 tick = 50 milliseconds).
      *
+     * <p>The value must be equal to or greater than 0.</p>
+     *
      * @return the border duration
      * @since 1.0.0
      */

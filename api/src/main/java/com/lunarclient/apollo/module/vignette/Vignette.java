@@ -49,7 +49,7 @@ public final class Vignette {
     /**
      * Returns the vignette {@link Float} opacity.
      *
-     * <p>Set to 0 to hide the vignette.</p>
+     * <p>Set to 0 to hide the vignette. This value must be between 0 and 1.</p>
      *
      * @return the opacity
      * @since 1.0.0

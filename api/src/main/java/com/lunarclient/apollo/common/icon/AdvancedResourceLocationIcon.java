@@ -52,7 +52,8 @@ public final class AdvancedResourceLocationIcon extends Icon {
     /**
      * Returns the icon width {@link Float}.
      *
-     * <p>Size of the image width (in pixels).</p>
+     * <p>Size of the image width (in pixels). Must be equal to or greater
+     * than 0.</p>
      *
      * @return the icon width
      * @since 1.0.0
@@ -62,7 +63,8 @@ public final class AdvancedResourceLocationIcon extends Icon {
     /**
      * Returns the icon height {@link Float}.
      *
-     * <p>Size of the image height (in pixels).</p>
+     * <p>Size of the image height (in pixels). Must be equal to or greater
+     * than 0.</p>
      *
      * @return the icon height
      * @since 1.0.0

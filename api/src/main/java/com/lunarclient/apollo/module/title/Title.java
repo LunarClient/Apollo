@@ -57,6 +57,8 @@ public final class Title {
     /**
      * Returns the title {@link Float} scale.
      *
+     * <p>The value must be equal to or greater than 0.</p>
+     *
      * @return the title scale
      * @since 1.0.0
      */
@@ -91,7 +93,8 @@ public final class Title {
      *
      * <p>If the provided interpolation scale is greater than {@link Title#scale},
      * the title will expand. However, if the {@link Title#scale} is greater than
-     * the interpolation scale, the title will shrink.</p>
+     * the interpolation scale, the title will shrink. The value must be equal
+     * to or greater than 0.</p>
      *
      * @return the title interpolation scale
      * @since 1.0.7
@@ -102,7 +105,8 @@ public final class Title {
      * Returns the title {@link Float} interpolation rate.
      *
      * <p>The rate that the title will expand or shrink every tick (50ms)
-     * between {@link Title#scale} and {@link Title#interpolationScale}.</p>
+     * between {@link Title#scale} and {@link Title#interpolationScale}. The
+     * value must be equal to or greater than 0.</p>
      *
      * @return the title interpolation rate
      * @since 1.0.7

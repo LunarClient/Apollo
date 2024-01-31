@@ -49,7 +49,8 @@ public final class SimpleResourceLocationIcon extends Icon {
     /**
      * Returns the icon {@link Integer} size.
      *
-     * <p>Size of the image height and width (in pixels).</p>
+     * <p>Size of the image height and width (in pixels). Must be equal to or
+     * greater than 0.</p>
      *
      * @return the icon size
      * @since 1.0.0

@@ -65,6 +65,8 @@ public abstract class TntCountdownModule extends ApolloModule {
     /**
      * Set the amount of ticks before the specified TNT explodes.
      *
+     * <p>The given ticks must be equal to or greater than 0.</p>
+     *
      * @param entity the TNT entity
      * @param ticks  the ticks until explosion
      * @since 1.0.0

@@ -29,6 +29,8 @@ import com.lunarclient.apollo.vignette.v1.DisplayVignetteMessage;
 import com.lunarclient.apollo.vignette.v1.ResetVignetteMessage;
 import lombok.NonNull;
 
+import static com.lunarclient.apollo.util.Ranges.checkRange;
+
 /**
  * Provides the vignette module.
  *
@@ -40,7 +42,7 @@ public final class VignetteModuleImpl extends VignetteModule {
     public void displayVignette(@NonNull Recipients recipients, @NonNull Vignette vignette) {
         DisplayVignetteMessage message = DisplayVignetteMessage.newBuilder()
             .setResourceLocation(vignette.getResourceLocation())
-            .setOpacity(vignette.getOpacity())
+            .setOpacity(checkRange(vignette.getOpacity(), 0, 1, "Vignette#opacity"))
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
