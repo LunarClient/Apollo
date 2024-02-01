@@ -27,6 +27,7 @@ import java.time.Duration;
 import lombok.Builder;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents a title which can be shown on the client.
@@ -56,10 +57,12 @@ public final class Title {
     /**
      * Returns the title {@link Float} scale.
      *
+     * <p>The value must be equal to or greater than 0.</p>
+     *
      * @return the title scale
      * @since 1.0.0
      */
-    float scale;
+    @Range(from = 0, to = Integer.MAX_VALUE) float scale;
 
     /**
      * Returns the title {@link Duration} display time.
@@ -90,22 +93,24 @@ public final class Title {
      *
      * <p>If the provided interpolation scale is greater than {@link Title#scale},
      * the title will expand. However, if the {@link Title#scale} is greater than
-     * the interpolation scale, the title will shrink.</p>
+     * the interpolation scale, the title will shrink. The value must be equal
+     * to or greater than 0.</p>
      *
      * @return the title interpolation scale
      * @since 1.0.7
      */
-    float interpolationScale;
+    @Range(from = 0, to = Integer.MAX_VALUE) float interpolationScale;
 
     /**
      * Returns the title {@link Float} interpolation rate.
      *
      * <p>The rate that the title will expand or shrink every tick (50ms)
-     * between {@link Title#scale} and {@link Title#interpolationScale}.</p>
+     * between {@link Title#scale} and {@link Title#interpolationScale}. The
+     * value must be equal to or greater than 0.</p>
      *
      * @return the title interpolation rate
      * @since 1.0.7
      */
-    float interpolationRate;
+    @Range(from = 0, to = Integer.MAX_VALUE) float interpolationRate;
 
 }

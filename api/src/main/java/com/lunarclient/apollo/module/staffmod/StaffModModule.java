@@ -71,4 +71,5 @@ public abstract class StaffModModule extends ApolloModule {
      * @since 1.0.0
      */
     public abstract void disableAllStaffMods(Recipients recipients);
+
 }

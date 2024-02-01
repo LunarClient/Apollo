@@ -28,6 +28,7 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents the server ping response.
@@ -77,7 +78,7 @@ public final class PingResponse extends ApolloResponse {
          * @return the ping
          * @since 1.0.0
          */
-        int pingMillis;
+        @Range(from = 0, to = Integer.MAX_VALUE) int pingMillis;
 
         /**
          * Represents the ping data state.

@@ -41,6 +41,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
 
+import static com.lunarclient.apollo.util.Ranges.checkPositive;
+
 /**
  * Provides the tnt countdown module.
  *
@@ -65,6 +67,8 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
 
     @Override
     public void setTntCountdown(ApolloEntity entity, int ticks) {
+        checkPositive(ticks, "TntCountdown#ticks");
+
         TNTPrimed target = null;
         if (TntCountdownModuleImpl.entityGetter != null) {
             try {

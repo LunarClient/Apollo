@@ -25,6 +25,7 @@ package com.lunarclient.apollo.common.icon;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents a simple resource location icon.
@@ -48,11 +49,12 @@ public final class SimpleResourceLocationIcon extends Icon {
     /**
      * Returns the icon {@link Integer} size.
      *
-     * <p>Size of the image height and width (in pixels).</p>
+     * <p>Size of the image height and width (in pixels). Must be equal to or
+     * greater than 0.</p>
      *
      * @return the icon size
      * @since 1.0.0
      */
-    int size;
+    @Range(from = 0, to = Integer.MAX_VALUE) int size;
 
 }
