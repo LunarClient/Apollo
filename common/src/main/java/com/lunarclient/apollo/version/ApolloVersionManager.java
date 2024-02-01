@@ -37,6 +37,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -53,7 +54,8 @@ public final class ApolloVersionManager {
         .node("send-updater-message").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
-    public static final String UPDATE_MESSAGE = "[Apollo] You’re running an outdated version, update to the latest using /apollo update";
+    public static final String UPDATE_MESSAGE = "[Apollo] You're running an outdated version of Apollo. " +
+        "Use \"/apollo update\" to update to the latest version!";
 
     /**
      * Returns whether the server needs to update Apollo.
@@ -63,6 +65,7 @@ public final class ApolloVersionManager {
     public static boolean NEEDS_UPDATE;
 
     private VersionResponse.Assets assets;
+    private AtomicBoolean updated = new AtomicBoolean(false);
 
     /**
      * Constructs the {@link ApolloVersionManager}.
@@ -106,6 +109,14 @@ public final class ApolloVersionManager {
      * @since 1.0.9
      */
     public void forceUpdate(String platform, Consumer<Component> message) {
+        if (this.updated.get()) {
+            message.accept(Component.text(
+                "Apollo is already updated, please restart your server!",
+                NamedTextColor.RED)
+            );
+            return;
+        }
+
         if (!ApolloVersionManager.NEEDS_UPDATE) {
             message.accept(Component.text(
                 "This server is already running the latest version of Apollo.",
@@ -167,6 +178,7 @@ public final class ApolloVersionManager {
 
                 // Delete old Apollo jar
                 file.deleteOnExit();
+                this.updated.set(true);
             })
             .onFailure(throwable -> {
                 message.accept(Component.text(

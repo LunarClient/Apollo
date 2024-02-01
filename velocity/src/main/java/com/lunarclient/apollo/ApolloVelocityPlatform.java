@@ -145,7 +145,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
 
     @Override
     public Object getPlugin() {
-        return this.server;
+        return getInstance();
     }
 
     /**
