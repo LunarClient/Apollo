@@ -142,10 +142,6 @@ public final class ApolloVersionManager {
             return;
         }
 
-        // Find name of the new Apollo jar
-        String[] urlArgs = platformUrl.split("/");
-        String fileName = urlArgs[urlArgs.length - 1];
-
         // Find the current running Apollo jar
         URL url = Apollo.getPlatform().getPlugin()
             .getClass()
@@ -160,6 +156,10 @@ public final class ApolloVersionManager {
             e.printStackTrace();
             return;
         }
+
+        // Find name of the new Apollo jar
+        String[] urlArgs = platformUrl.split("/");
+        String fileName = urlArgs[urlArgs.length - 1];
 
         // Create a path for the downloaded Apollo jar
         Path updatedJarPath = Paths.get(file.getParent() + File.separator + fileName);

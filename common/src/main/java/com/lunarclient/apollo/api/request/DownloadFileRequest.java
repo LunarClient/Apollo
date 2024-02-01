@@ -33,7 +33,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Represents the apollo version request.
+ * Represents the apollo download request.
  *
  * @since 1.0.9
  */
