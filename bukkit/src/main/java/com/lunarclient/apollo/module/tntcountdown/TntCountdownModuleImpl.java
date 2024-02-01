@@ -67,7 +67,7 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
 
     @Override
     public void setTntCountdown(ApolloEntity entity, int ticks) {
-        checkPositive(ticks, "ticks");
+        checkPositive(ticks, "TntCountdown#ticks");
 
         TNTPrimed target = null;
         if (TntCountdownModuleImpl.entityGetter != null) {
