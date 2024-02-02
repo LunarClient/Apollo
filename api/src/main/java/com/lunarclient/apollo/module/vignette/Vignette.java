@@ -25,6 +25,7 @@ package com.lunarclient.apollo.module.vignette;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents a vignette which can be shown on the client.
@@ -48,11 +49,11 @@ public final class Vignette {
     /**
      * Returns the vignette {@link Float} opacity.
      *
-     * <p>Set to 0 to hide the vignette.</p>
+     * <p>Set to 0 to hide the vignette. This value must be between 0 and 1.</p>
      *
      * @return the opacity
      * @since 1.0.0
      */
-    float opacity;
+    @Range(from = 0, to = 1) float opacity;
 
 }

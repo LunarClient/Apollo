@@ -32,7 +32,8 @@ import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.world.ApolloWorld;
 import java.util.Optional;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -42,7 +43,8 @@ import org.bukkit.entity.Player;
  *
  * @since 1.0.0
  */
-@AllArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public final class BukkitApolloPlayer extends AbstractApolloPlayer {
 
     private final Player player;

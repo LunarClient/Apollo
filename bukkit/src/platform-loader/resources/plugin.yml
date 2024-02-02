@@ -1,6 +1,6 @@
 name: Apollo-Bukkit
 main: com.lunarclient.apollo.loader.BukkitPlatformLoader
-version: 1.0.8
+version: 1.0.9
 author: Moonsworth
 api-version: 1.13
 soft-depend: [LunarClient-API]
@@ -8,5 +8,10 @@ soft-depend: [LunarClient-API]
 commands:
   apollo:
     description: The main Apollo command.
-    usage: /apollo <reload>
+    usage: /apollo <reload|update>
     permission: apollo.command
+  lunarclient:
+    aliases: [lc]
+    description: The command to check whether the player is using Lunar Client.
+    usage: /lunarclient <player>
+    permission: apollo.lunarclient

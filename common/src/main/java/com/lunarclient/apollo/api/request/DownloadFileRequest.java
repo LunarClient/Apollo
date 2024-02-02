@@ -21,37 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.vignette;
+package com.lunarclient.apollo.api.request;
 
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
-import com.lunarclient.apollo.recipients.Recipients;
-import com.lunarclient.apollo.vignette.v1.DisplayVignetteMessage;
-import com.lunarclient.apollo.vignette.v1.ResetVignetteMessage;
-import lombok.NonNull;
-
-import static com.lunarclient.apollo.util.Ranges.checkRange;
+import com.lunarclient.apollo.api.ApiRequest;
+import com.lunarclient.apollo.api.ApiRequestType;
+import com.lunarclient.apollo.api.ApiServiceType;
+import com.lunarclient.apollo.api.response.DownloadFileResponse;
+import java.nio.file.Path;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
- * Provides the vignette module.
+ * Represents the apollo download request.
  *
- * @since 1.0.0
+ * @since 1.0.9
  */
-public final class VignetteModuleImpl extends VignetteModule {
+@ToString
+@Getter
+@Builder(toBuilder = true)
+public final class DownloadFileRequest implements ApiRequest<DownloadFileResponse> {
+
+    /**
+     * The url to download the file from.
+     *
+     * @since 1.0.9
+     */
+    private final String url;
+
+    /**
+     * The target path to download the file to.
+     *
+     * @since 1.0.9
+     */
+    private final Path target;
 
     @Override
-    public void displayVignette(@NonNull Recipients recipients, @NonNull Vignette vignette) {
-        DisplayVignetteMessage message = DisplayVignetteMessage.newBuilder()
-            .setResourceLocation(vignette.getResourceLocation())
-            .setOpacity(checkRange(vignette.getOpacity(), 0, 1, "Vignette#opacity"))
-            .build();
-
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    public ApiServiceType getService() {
+        return null;
     }
 
     @Override
-    public void resetVignette(@NonNull Recipients recipients) {
-        ResetVignetteMessage message = ResetVignetteMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    public ApiRequestType getType() {
+        return null;
+    }
+
+    @Override
+    public String getRoute() {
+        return null;
     }
 
 }

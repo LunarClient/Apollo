@@ -24,7 +24,8 @@
 package com.lunarclient.apollo;
 
 import com.google.inject.Inject;
-import com.lunarclient.apollo.command.ApolloCommand;
+import com.lunarclient.apollo.command.impl.ApolloCommand;
+import com.lunarclient.apollo.command.impl.LunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.beam.BeamModule;
@@ -67,9 +68,8 @@ import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
-import com.lunarclient.apollo.stats.ApolloStatsManager;
-import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.VelocityApolloStats;
+import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
@@ -92,7 +92,7 @@ import lombok.Getter;
 @Plugin(
     id = "apollo",
     name = "Apollo-Velocity",
-    version = "1.0.8",
+    version = "1.0.9",
     url = "https://moonsworth.com",
     description = "Implementation of Apollo for Velocity",
     authors = {"Moonsworth"}
@@ -143,6 +143,11 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         return this.stats;
     }
 
+    @Override
+    public Object getPlugin() {
+        return getInstance();
+    }
+
     /**
      * Handles initialization of the proxy.
      *
@@ -177,9 +182,6 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
             .addModule(VignetteModule.class, new VignetteModuleImpl())
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
-        ApolloStatsManager statsManager = new ApolloStatsManager();
-        ApolloVersionManager versionManager = new ApolloVersionManager();
-
         try {
             ApolloManager.setConfigPath(this.dataDirectory);
             ApolloManager.loadConfiguration();
@@ -192,10 +194,12 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         this.server.getEventManager().register(this, new ApolloPlayerListener());
         this.server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
 
-        this.server.getCommandManager().register(ApolloCommand.create());
+        CommandManager commandManager = this.server.getCommandManager();
+        commandManager.register(ApolloCommand.create());
+        commandManager.register(LunarClientCommand.create());
 
-        statsManager.enable();
-        versionManager.checkForUpdates();
+        ApolloManager.getStatsManager().enable();
+        ApolloManager.getVersionManager().checkForUpdates();
     }
 
     /**

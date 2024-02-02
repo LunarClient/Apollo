@@ -21,46 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command;
+package com.lunarclient.apollo.api.response;
 
-import com.lunarclient.apollo.common.ApolloComponent;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.plugin.Command;
+import com.lunarclient.apollo.api.ApiResponse;
 
 /**
- * The general Apollo command.
+ * Represents the download response.
  *
- * @since 1.0.5
+ * @since 1.0.9
  */
-public final class ApolloCommand extends AbstractApolloCommand<CommandSender> {
-
-    /**
-     * Returns a new instance of this command.
-     *
-     * @return a new command
-     * @since 1.0.5
-     */
-    public static Command create() {
-        return new Command("apollo", "apollo.command") {
-            private final ApolloCommand command = new ApolloCommand();
-
-            @Override
-            public void execute(CommandSender sender, String[] args) {
-                this.command.execute(sender, args);
-            }
-        };
-    }
-
-    ApolloCommand() {
-        super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
-    }
-
-    void execute(CommandSender sender, String[] args) {
-        if(args.length < 1) {
-            this.getCurrentVersion(sender);
-        } else if(args[0].equalsIgnoreCase("reload")) {
-            this.reloadConfiguration(sender);
-        }
-    }
+public final class DownloadFileResponse implements ApiResponse {
 
 }

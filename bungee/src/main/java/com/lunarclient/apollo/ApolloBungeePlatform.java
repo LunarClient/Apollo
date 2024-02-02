@@ -23,7 +23,8 @@
  */
 package com.lunarclient.apollo;
 
-import com.lunarclient.apollo.command.ApolloCommand;
+import com.lunarclient.apollo.command.impl.ApolloCommand;
+import com.lunarclient.apollo.command.impl.LunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
@@ -67,8 +68,6 @@ import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
-import com.lunarclient.apollo.stats.ApolloStatsManager;
-import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BungeeApolloStats;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,6 +75,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.api.plugin.PluginManager;
 
 /**
  * The Bungee platform plugin.
@@ -119,9 +119,6 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(VignetteModule.class, new VignetteModuleImpl())
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
-        ApolloStatsManager statsManager = new ApolloStatsManager();
-        ApolloVersionManager versionManager = new ApolloVersionManager();
-
         try {
             ApolloManager.setConfigPath(this.plugin.getDataFolder().toPath());
             ApolloManager.loadConfiguration();
@@ -133,11 +130,14 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
 
         ProxyServer server = this.plugin.getProxy();
         server.registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
-        server.getPluginManager().registerListener(this.plugin, new ApolloPlayerListener());
-        server.getPluginManager().registerCommand(this.plugin, ApolloCommand.create());
 
-        statsManager.enable();
-        versionManager.checkForUpdates();
+        PluginManager pluginManager = server.getPluginManager();
+        pluginManager.registerListener(this.plugin, new ApolloPlayerListener());
+        pluginManager.registerCommand(this.plugin, ApolloCommand.create());
+        pluginManager.registerCommand(this.plugin, LunarClientCommand.create());
+
+        ApolloManager.getStatsManager().enable();
+        ApolloManager.getVersionManager().checkForUpdates();
     }
 
     @Override
