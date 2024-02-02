@@ -91,7 +91,7 @@ public final class ModBlockOutline {
     /**
      * If the transparency should also blend between both outline colors.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final SimpleOption<Boolean> BLOCK_OUTLINE_INTERPOLATE_ALPHA = SimpleOption.<Boolean>builder()
         .comment("If the transparency should also blend between both outline colors")
@@ -102,7 +102,7 @@ public final class ModBlockOutline {
     /**
      * If the exact block bounding box should be used, this comes at a slight performance cost.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final SimpleOption<Boolean> BLOCK_OUTLINE_ACCURATE = SimpleOption.<Boolean>builder()
         .comment("If the exact block bounding box should be used, this comes at a slight performance cost")
@@ -113,7 +113,7 @@ public final class ModBlockOutline {
     /**
      * If the outline colors should travel through the block.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final SimpleOption<Boolean> BLOCK_OUTLINE_TRAVERSAL = SimpleOption.<Boolean>builder()
         .comment("If the outline colors should travel through the block")
@@ -124,7 +124,7 @@ public final class ModBlockOutline {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final NumberOption<Float> BLOCK_OUTLINE_TRAVERSAL_SPEED = NumberOption.<Float>number()
         .node("block-outline", "block-outline-traversal-speed").type(TypeToken.get(Float.class))
@@ -156,7 +156,7 @@ public final class ModBlockOutline {
     /**
      * Secondary block overlay color.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final SimpleOption<Color> BLOCK_OVERLAY_COLOR_END = SimpleOption.<Color>builder()
         .comment("Secondary block overlay color")
@@ -167,7 +167,7 @@ public final class ModBlockOutline {
     /**
      * If the transparency should also blend between both overlay colors.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final SimpleOption<Boolean> BLOCK_OVERLAY_INTERPOLATE_ALPHA = SimpleOption.<Boolean>builder()
         .comment("If the transparency should also blend between both overlay colors")
@@ -178,7 +178,7 @@ public final class ModBlockOutline {
     /**
      * If the exact block bounding box should be used, this comes at a slight performance cost.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final SimpleOption<Boolean> BLOCK_OVERLAY_ACCURATE = SimpleOption.<Boolean>builder()
         .comment("If the exact block bounding box should be used, this comes at a slight performance cost")
@@ -189,7 +189,7 @@ public final class ModBlockOutline {
     /**
      * If the overlay colors should travel through the block.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final SimpleOption<Boolean> BLOCK_OVERLAY_TRAVERSAL = SimpleOption.<Boolean>builder()
         .comment("If the overlay colors should travel through the block")
@@ -200,7 +200,7 @@ public final class ModBlockOutline {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final NumberOption<Float> BLOCK_OVERLAY_TRAVERSAL_SPEED = NumberOption.<Float>number()
         .node("block-outline", "block-overlay-traversal-speed").type(TypeToken.get(Float.class))
@@ -211,7 +211,7 @@ public final class ModBlockOutline {
     /**
      * If only a single side of the block should have outlines.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final SimpleOption<Boolean> BLOCK_OUTLINE_SIDE = SimpleOption.<Boolean>builder()
         .comment("If only a single side of the block should have outlines")
@@ -222,7 +222,7 @@ public final class ModBlockOutline {
     /**
      * If using hide foliage, should outlines still show on foliage.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final SimpleOption<Boolean> BLOCK_OUTLINE_SHOW_HIDDEN_FOLIAGE = SimpleOption.<Boolean>builder()
         .comment("If using hide foliage, should outlines still show on foliage")
@@ -233,7 +233,7 @@ public final class ModBlockOutline {
     /**
      * If blocks that connect together should share an outline.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final SimpleOption<Boolean> BLOCK_OUTLINE_MULTI_BLOCK = SimpleOption.<Boolean>builder()
         .comment("If blocks that connect together should share an outline")
@@ -244,7 +244,7 @@ public final class ModBlockOutline {
     /**
      * If outlines should be visible in spectator mode.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final SimpleOption<Boolean> SHOW_IN_SPECTATOR = SimpleOption.<Boolean>builder()
         .comment("If outlines should be visible in spectator mode")

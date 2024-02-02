@@ -103,7 +103,7 @@ public final class ModZoom {
     /**
      * Change the camera sensitivity when zoomed in.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final NumberOption<Float> CAMERA_SENSITIVITY = NumberOption.<Float>number()
         .comment("Change the camera sensitivity when zoomed in.")

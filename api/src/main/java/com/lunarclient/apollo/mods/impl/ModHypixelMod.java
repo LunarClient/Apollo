@@ -277,7 +277,7 @@ public final class ModHypixelMod {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.0.4
      */
     public static final SimpleOption<Boolean> HIDE_MYSTERY_BOX_ANNOUNCEMENTS = SimpleOption.<Boolean>builder()
         .node("hypixel-mod", "hide-mystery-box-announcements").type(TypeToken.get(Boolean.class))

@@ -226,7 +226,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.0.4
      */
     public static final SimpleOption<Boolean> SHOW_DISTANT_WAYPOINTS = SimpleOption.<Boolean>builder()
         .node("minimap", "show-distant-waypoints").type(TypeToken.get(Boolean.class))
