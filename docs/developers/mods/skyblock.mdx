@@ -1,0 +1,131 @@
+# Hypixel Skyblock
+
+Various features to help in Hypixel Skyblock.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleHypixelSkyblockExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModSkyblock.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SKYBLOCK_ALERT_SCALE`__
+    - Config Key: `skyblock-alert-scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.2F`
+        - Maximum: `2.5F`
+
+- __`SKYBLOCK_HIDE_HUNGER`__
+    - Config Key: `skyblock-hide-hunger`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SKYBLOCK_HIDE_ARMOR`__
+    - Config Key: `skyblock-hide-armor`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_MIDAS_STAFF`__
+    - Config Key: `hide-midas-staff`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_FALLING_BLOCKS`__
+    - Config Key: `hide-falling-blocks`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`AUTO_COPY_RARE_DROPS`__
+    - Automatically copies rare drops and pet drops to the clipboard.
+    - Config Key: `auto-copy-rare-drops`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TALLER_CROPS`__
+    - Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.
+    - Config Key: `taller-crops`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`FIX_LAVA_BOBBER`__
+    - Fixes your fishing bobber sinking in lava.
+    - Config Key: `fix-lava-bobber`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`REPLACE_LAVA_WITH_WATER_CRIMSON`__
+    - Changes the texture of lava to water in the Crimson Isles and Kuudra.
+    - Config Key: `replace-lava-with-water-crimson`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`REPLACE_LAVA_WITH_WATER_EVERYWHERE`__
+    - Changes the texture of lava to water everywhere in SkyBlock.
+    - Config Key: `replace-lava-with-water-everywhere`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SLAYER_BOSS_TIMER`__
+    - Provides a chat message on boss kill that tells you how long it took to kill!
+    - Config Key: `slayer-boss-timer`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SLAYER_MINI_BOSS_ALERT`__
+    - Config Key: `slayer-mini-boss-alert`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`INACTIVE_EFFIGY_WAYPOINTS`__
+    - Used in Stillgore of the Rift, this feature tells you where to go to refresh the duration of inactive Effigies.
+    - Config Key: `inactive-effigy-waypoints`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`VAMPIRE_STEAK_DISPLAY`__
+    - Highlights a boss when it can be 1 tapped using steak stake.
+    - Config Key: `vampire-steak-display`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`VAMPIRE_ICHOR_DISPLAY`__
+    - Highlights blood ichors present during T5 Bloodfiends
+    - Config Key: `vampire-ichor-display`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`GRAVITY_WELL_WAYPOINTS`__
+    - Shows the positions where you can trap the gray blazes.
+    - Config Key: `gravity-well-waypoints`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

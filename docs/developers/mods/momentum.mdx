@@ -29,29 +29,6 @@ public void toggleMomentumModExample(Player viewer, boolean value) {
         - Minimum: `0.5F`
         - Maximum: `1.5F`
 
-- __`USE_GROUND_SPEED`__
-    - If enabled then Y velocity is not used in the final speed.
-    - Config Key: `use-ground-speed`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
-- __`USE_AVERAGE_VELOCITY`__
-    - If this is disabled then instant velocity is used
-    - Config Key: `use-average-velocity`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
-- __`AVERAGING_PERIOD`__
-    - Determines how many times a second velocity is calculated. Lower values will show a smoother velocity
-    - Config Key: `averaging-period`
-    - Values
-        - Type: `Integer`
-        - Default: `8`
-        - Minimum: `1`
-        - Maximum: `50`
-
 - __`TEXT_SHADOW`__
     - Config Key: `text-shadow`
     - Values
@@ -124,4 +101,27 @@ public void toggleMomentumModExample(Player viewer, boolean value) {
     - Values
         - Type: `String`
         - Default: `#9F000000`
+
+- __`USE_GROUND_SPEED`__
+    - If enabled then Y velocity is not used in the final speed.
+    - Config Key: `use-ground-speed`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`USE_AVERAGE_VELOCITY`__
+    - If this is disabled then instant velocity is used
+    - Config Key: `use-average-velocity`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`AVERAGING_PERIOD`__
+    - Determines how many times a second velocity is calculated. Lower values will show a smoother velocity
+    - Config Key: `averaging-period`
+    - Values
+        - Type: `Integer`
+        - Default: `8`
+        - Minimum: `1`
+        - Maximum: `50`
 

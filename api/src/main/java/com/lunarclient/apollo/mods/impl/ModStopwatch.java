@@ -61,16 +61,6 @@ public final class ModStopwatch {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> RESET_EVERY_START = SimpleOption.<Boolean>builder()
-        .node("stopwatch", "reset-every-start").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("stopwatch", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -177,6 +167,16 @@ public final class ModStopwatch {
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("stopwatch", "border-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> RESET_EVERY_START = SimpleOption.<Boolean>builder()
+        .node("stopwatch", "reset-every-start").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

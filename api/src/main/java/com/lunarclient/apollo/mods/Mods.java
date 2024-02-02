@@ -84,6 +84,7 @@ import com.lunarclient.apollo.mods.impl.ModScrollableTooltips;
 import com.lunarclient.apollo.mods.impl.ModServerAddress;
 import com.lunarclient.apollo.mods.impl.ModShinyPots;
 import com.lunarclient.apollo.mods.impl.ModShulkerPreview;
+import com.lunarclient.apollo.mods.impl.ModSkyblock;
 import com.lunarclient.apollo.mods.impl.ModSnaplook;
 import com.lunarclient.apollo.mods.impl.ModSoundChanger;
 import com.lunarclient.apollo.mods.impl.ModStopwatch;
@@ -190,7 +191,8 @@ public final class Mods {
             ModWaila.class,
             ModNeu.class,
             ModHurtCam.class,
-            ModDamageTint.class
+            ModDamageTint.class,
+            ModSkyblock.class
         );
 
     private Mods() {
