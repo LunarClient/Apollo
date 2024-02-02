@@ -61,36 +61,6 @@ public final class ModCps {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> RIGHT_CLICK = SimpleOption.<Boolean>builder()
-        .node("cps", "right-click").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> SHOW_CPSTEXT = SimpleOption.<Boolean>builder()
-        .node("cps", "show-c-p-s-text").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Color> LINE_COLOR = SimpleOption.<Color>builder()
-        .node("cps", "line-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("cps", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -197,6 +167,36 @@ public final class ModCps {
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("cps", "border-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> RIGHT_CLICK = SimpleOption.<Boolean>builder()
+        .node("cps", "right-click").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> SHOW_CPSTEXT = SimpleOption.<Boolean>builder()
+        .node("cps", "show-c-p-s-text").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Color> LINE_COLOR = SimpleOption.<Color>builder()
+        .node("cps", "line-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

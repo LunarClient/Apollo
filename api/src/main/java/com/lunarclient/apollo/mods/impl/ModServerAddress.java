@@ -61,16 +61,6 @@ public final class ModServerAddress {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> SERVER_ICON = SimpleOption.<Boolean>builder()
-        .node("server-address", "server-icon").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("server-address", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -177,6 +167,16 @@ public final class ModServerAddress {
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("server-address", "border-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> SERVER_ICON = SimpleOption.<Boolean>builder()
+        .node("server-address", "server-icon").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

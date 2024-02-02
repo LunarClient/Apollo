@@ -57,18 +57,6 @@ public final class ModPing {
         .build();
 
     /**
-     * Faster updates may impact performance.
-     *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Integer> UPDATE_INTERVAL_SEC = NumberOption.<Integer>number()
-        .comment("Faster updates may impact performance")
-        .node("ping", "update-interval-sec").type(TypeToken.get(Integer.class))
-        .min(1).max(30)
-        .notifyClient()
-        .build();
-
-    /**
      * No documentation available.
      *
      * @since 1.0.0
@@ -179,6 +167,18 @@ public final class ModPing {
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("ping", "border-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Faster updates may impact performance.
+     *
+     * @since 1.0.0
+     */
+    public static final NumberOption<Integer> UPDATE_INTERVAL_SEC = NumberOption.<Integer>number()
+        .comment("Faster updates may impact performance")
+        .node("ping", "update-interval-sec").type(TypeToken.get(Integer.class))
+        .min(1).max(30)
         .notifyClient()
         .build();
 

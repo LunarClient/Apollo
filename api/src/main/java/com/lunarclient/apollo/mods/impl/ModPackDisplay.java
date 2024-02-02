@@ -61,26 +61,6 @@ public final class ModPackDisplay {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> PACK_ICON = SimpleOption.<Boolean>builder()
-        .node("pack-display", "pack-icon").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> PACK_DESCRIPTION = SimpleOption.<Boolean>builder()
-        .node("pack-display", "pack-description").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("pack-display", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -187,6 +167,26 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("pack-display", "border-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> PACK_ICON = SimpleOption.<Boolean>builder()
+        .node("pack-display", "pack-icon").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> PACK_DESCRIPTION = SimpleOption.<Boolean>builder()
+        .node("pack-display", "pack-description").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

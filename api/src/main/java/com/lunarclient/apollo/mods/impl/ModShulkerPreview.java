@@ -29,14 +29,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * Display a preview of the shulker box directly from your inventory.
  *
- * @since 1.0.4
+ * @since 1.0.0
  */
 public final class ModShulkerPreview {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.4
+     * @since 1.0.0
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("shulker-preview", "enabled").type(TypeToken.get(Boolean.class))
@@ -46,7 +46,7 @@ public final class ModShulkerPreview {
     /**
      * No documentation available.
      *
-     * @since 1.0.4
+     * @since 1.0.0
      */
     public static final SimpleOption<Boolean> ALWAYS_PREVIEW = SimpleOption.<Boolean>builder()
         .node("shulker-preview", "always-preview").type(TypeToken.get(Boolean.class))
@@ -56,7 +56,7 @@ public final class ModShulkerPreview {
     /**
      * No documentation available.
      *
-     * @since 1.0.4
+     * @since 1.0.0
      */
     public static final SimpleOption<Boolean> COLORED_SHULKER_PREVIEW = SimpleOption.<Boolean>builder()
         .node("shulker-preview", "colored-shulker-preview").type(TypeToken.get(Boolean.class))
