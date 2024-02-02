@@ -80,7 +80,7 @@ public final class ModBlockOutline {
     /**
      * Secondary block outline color.
      *
-     * @since 1.0.0
+     * @since 1.0.9
      */
     public static final SimpleOption<Color> BLOCK_OUTLINE_COLOR_END = SimpleOption.<Color>builder()
         .comment("Secondary block outline color")
