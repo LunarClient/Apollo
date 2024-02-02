@@ -73,12 +73,12 @@ public class ApolloVersion {
      * @since 1.0.0
      */
     public boolean isUpdateAvailable(ApolloVersion version) {
-        if (this.major > version.getMajor()) {
+        if (version.getMajor() > this.major) {
             return true;
-        } else if (this.minor > version.getMinor()) {
+        } else if (version.getMinor() > this.minor) {
             return true;
         }
 
-        return this.patch > version.getPatch();
+        return version.getPatch() > this.patch;
     }
 }

@@ -21,45 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command.impl;
+package com.lunarclient.apollo.api.request;
 
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.command.BukkitApolloCommand;
-import com.lunarclient.apollo.common.ApolloComponent;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import com.lunarclient.apollo.api.ApiRequest;
+import com.lunarclient.apollo.api.ApiRequestType;
+import com.lunarclient.apollo.api.ApiServiceType;
+import com.lunarclient.apollo.api.response.DownloadFileResponse;
+import java.nio.file.Path;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
- * The general Apollo command.
+ * Represents the apollo download request.
  *
- * @since 1.0.5
+ * @since 1.0.9
  */
-public final class ApolloCommand extends BukkitApolloCommand<CommandSender> implements CommandExecutor {
+@ToString
+@Getter
+@Builder(toBuilder = true)
+public final class DownloadFileRequest implements ApiRequest<DownloadFileResponse> {
 
     /**
-     * Returns a new instance of this command.
+     * The url to download the file from.
      *
-     * @since 1.0.5
+     * @since 1.0.9
      */
-    public ApolloCommand() {
-        super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
+    private final String url;
+
+    /**
+     * The target path to download the file to.
+     *
+     * @since 1.0.9
+     */
+    private final Path target;
+
+    @Override
+    public ApiServiceType getService() {
+        return null;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(args.length < 1) {
-            this.getCurrentVersion(sender);
-        } else if(args[0].equalsIgnoreCase("reload")) {
-            this.reloadConfiguration(sender);
-        } else if(args[0].equalsIgnoreCase("update")) {
-            ApolloManager.getVersionManager().forceUpdate(
-                "bukkit",
-                message -> this.textConsumer.accept(sender, message)
-            );
-        }
+    public ApiRequestType getType() {
+        return null;
+    }
 
-        return true;
+    @Override
+    public String getRoute() {
+        return null;
     }
 
 }

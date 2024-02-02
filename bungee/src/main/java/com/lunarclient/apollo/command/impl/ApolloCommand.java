@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.command.impl;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.command.BungeeApolloCommand;
 import com.lunarclient.apollo.common.ApolloComponent;
 import net.md_5.bungee.api.CommandSender;
@@ -61,6 +62,11 @@ public final class ApolloCommand extends BungeeApolloCommand<CommandSender> {
             this.getCurrentVersion(sender);
         } else if(args[0].equalsIgnoreCase("reload")) {
             this.reloadConfiguration(sender);
+        } else if(args[0].equalsIgnoreCase("update")) {
+            ApolloManager.getVersionManager().forceUpdate(
+                "bungee",
+                message -> this.textConsumer.accept(sender, message)
+            );
         }
     }
 

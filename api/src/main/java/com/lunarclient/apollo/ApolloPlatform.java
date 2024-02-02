@@ -77,6 +77,14 @@ public interface ApolloPlatform {
     ApolloStats getStats();
 
     /**
+     * Returns the platform plugin class.
+     *
+     * @return the platform plugin class
+     * @since 1.0.9
+     */
+    Object getPlugin();
+
+    /**
      * Represents the kind of server a platform is.
      *
      * @since 1.0.0
