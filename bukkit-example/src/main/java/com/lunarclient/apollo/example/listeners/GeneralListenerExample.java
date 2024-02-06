@@ -43,7 +43,7 @@ public class GeneralListenerExample {
 
         @Listen
         public void onApolloRegister(ApolloRegisterPlayerEvent event) {
-            ((Player) event.getPlayer()).sendMessage("You have joined using LunarClient!");
+            ((Player) event.getPlayer().getPlayer()).sendMessage("You have joined using LunarClient!");
         }
     }
 
@@ -55,7 +55,7 @@ public class GeneralListenerExample {
         }
 
         public void onApolloRegister(ApolloRegisterPlayerEvent event) {
-            ((Player) event.getPlayer()).sendMessage("You have joined using LunarClient!");
+            ((Player) event.getPlayer().getPlayer()).sendMessage("You have joined using LunarClient!");
         }
     }
 
