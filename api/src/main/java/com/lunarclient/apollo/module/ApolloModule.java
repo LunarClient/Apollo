@@ -49,14 +49,27 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class ApolloModule implements ApolloListener {
 
     /**
-     * Whether to enable this module.
+     * Whether to enable this module builder.
+     *
+     * @since 1.1.0
+     */
+    private static final SimpleOption.SimpleOptionBuilder<Boolean> ENABLE_OPTION_BUILDER = Option.<Boolean>builder()
+        .comment("Set to 'true' to enable this module, otherwise set 'false'.")
+        .node("enable").type(TypeToken.get(Boolean.class));
+
+    /**
+     * Whether to enable this module with default value set to false.
+     *
+     * @since 1.1.0
+     */
+    public static final SimpleOption<Boolean> ENABLE_OPTION_OFF = ENABLE_OPTION_BUILDER.defaultValue(false).build();
+
+    /**
+     * Whether to enable this module with default value set to true.
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> ENABLE = Option.<Boolean>builder()
-        .comment("Set to 'true' to enable this module, otherwise set 'false'.")
-        .node("enable").type(TypeToken.get(Boolean.class))
-        .defaultValue(true).build();
+    public static final SimpleOption<Boolean> ENABLE_OPTION_ON = ENABLE_OPTION_BUILDER.defaultValue(true).build();
 
     /**
      * Returns an array of {@link Option}s in this module.
@@ -97,7 +110,7 @@ public abstract class ApolloModule implements ApolloListener {
      * @since 1.0.0
      */
     protected ApolloModule() {
-        this.registerOptions(ApolloModule.ENABLE);
+        this.registerOptions(ApolloModule.ENABLE_OPTION_ON);
     }
 
     /**

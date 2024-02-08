@@ -83,7 +83,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
             this.loadConfiguration(module, options);
 
             // Enable the module if it is able to.
-            if (module.isEnabled() || module.getOptions().get(ApolloModule.ENABLE) == Boolean.FALSE) {
+            if (module.isEnabled() || module.getOptions().get(ApolloModule.ENABLE_OPTION_ON) == Boolean.FALSE) {
                 continue;
             }
 
@@ -106,7 +106,7 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
 
             // Enable or disable the module depending on the setting.
             Boolean enable;
-            if ((enable = module.getOptions().get(ApolloModule.ENABLE)) != Boolean.valueOf(module.isEnabled())) {
+            if ((enable = module.getOptions().get(ApolloModule.ENABLE_OPTION_ON)) != Boolean.valueOf(module.isEnabled())) {
                 if (enable == Boolean.TRUE) {
                     EventBus.getBus().register(module);
                     module.enable();
