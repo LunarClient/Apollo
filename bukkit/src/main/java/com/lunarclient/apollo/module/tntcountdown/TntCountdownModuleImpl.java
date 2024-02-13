@@ -103,20 +103,29 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     private void onTntSpawn(EntitySpawnEvent event) {
-        // We only care about TNT
         if (event.getEntityType() != EntityType.PRIMED_TNT) {
             return;
         }
 
         TNTPrimed primed = (TNTPrimed) event.getEntity();
-        int customFuse = this.getOptions().get(TntCountdownModule.TNT_TICKS);
+        int customTicks = this.getOptions().get(TntCountdownModule.TNT_TICKS);
+        int defaultTicks = TntCountdownModule.TNT_TICKS.getDefaultValue();
+        int currentTicks = primed.getFuseTicks();
 
-        // We only care about TNT with a non-standard fuse as well.
-        if (primed.getFuseTicks() == customFuse) {
-            return;
+        if (currentTicks != defaultTicks && !this.getOptions().get(TntCountdownModule.OVERRIDE_CUSTOM_TICKS)) {
+            customTicks = currentTicks;
+
+            SetTntCountdownMessage message = SetTntCountdownMessage.newBuilder()
+                .setEntityId(NetworkTypes.toProtobuf(new ApolloEntity(primed.getEntityId(), primed.getUniqueId())))
+                .setDurationTicks(customTicks)
+                .build();
+
+            for (ApolloPlayer viewer : Apollo.getPlayerManager().getPlayers()) {
+                ((AbstractApolloPlayer) viewer).sendPacket(message);
+            }
         }
 
-        primed.setFuseTicks(customFuse);
+        primed.setFuseTicks(customTicks);
     }
 
 }

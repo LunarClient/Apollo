@@ -9,7 +9,7 @@ The TNT Countdown module allows you to interact with and set custom TNT timers f
 - Adds the ability to set per TNT timers to be displayed for players using the TNT Countdown mod.
 
 <Callout type="info">
-  This module only changes the displayed TNT Countdown, you'll need to change the actual tnt-tick time server-side.
+  This module will change the actual TNT fuse time on the server, not just the countdown displayed on the client.
 </Callout>
 
 ## Integration
@@ -55,3 +55,9 @@ public void overrideTntCountdownExample(Player viewer) {
         - Type: `Integer`
         - Default: `80`
         - Minimum: `1`
+
+- __`OVERRIDE_CUSTOM_TICKS`__
+    - Whether to override custom TNT explosion ticks.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
