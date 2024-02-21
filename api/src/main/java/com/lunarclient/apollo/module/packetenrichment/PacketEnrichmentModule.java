@@ -36,4 +36,8 @@ import org.jetbrains.annotations.ApiStatus;
 @ModuleDefinition(id = "packet_enrichment", name = "PacketEnrichment")
 public abstract class PacketEnrichmentModule extends ApolloModule {
 
+    protected PacketEnrichmentModule() {
+        this.registerOptions(ApolloModule.ENABLE_OPTION_OFF);
+    }
+
 }

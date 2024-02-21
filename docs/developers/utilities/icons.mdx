@@ -9,6 +9,7 @@ Apollo adds three different icon builders, `ItemStackIcon`, `SimpleResourceLocat
 ## `ItemStackIcon` Builder
 
 The `ItemStackIcon` builder is used to assign an icon using a specified ItemStack name or ID. This will utilize the texture present in the player's resource pack as the icon.
+If you're using a custom resource pack and want to make the icon appear as a model, you can set the `customModelData` to the models data value. On versions below 1.13 `customModelData` sets the durability instead.
 
 <Callout type="error">
   If your server accepts players on Minecraft versions higher than `1.8.8` then you need to use `itemName`.
@@ -32,6 +33,14 @@ public final class ItemStackIcon extends Icon {
      * @since 1.0.0
      */
     int itemId;
+
+    /**
+     * Returns the icon {@link Integer} custom model data.
+     *
+     * @return the icon custom model data
+     * @since 1.0.7
+     */
+    int customModelData;
 
 }
 ```
