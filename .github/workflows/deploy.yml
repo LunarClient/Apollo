@@ -59,6 +59,7 @@ jobs:
                 prerelease: false
                 name: "Apollo v${{ env.VERSION }}"
                 tag_name: "v${{ env.VERSION }}"
+                target_commitish: "${{ github.sha }}"
                 generate_release_notes: true
                 files: |
                     bukkit/build/libs/apollo-bukkit-${{ env.VERSION }}.jar
