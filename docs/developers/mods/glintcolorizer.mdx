@@ -1,13 +1,11 @@
-# Glint Colorizer
-
-Customize the color of enchantment glints
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleGlintColorizerExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModGlintColorizer.ENABLED, value));
 }
@@ -20,6 +18,12 @@ public void toggleGlintColorizerExample(Player viewer, boolean value) {
     - Values
         - Type: `Boolean`
         - Default: `false`
+
+- __`SHOW_GLINT`__
+    - Config Key: `show-glint`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
 
 - __`USE_LUNAR_EQUATION`__
     - Use a custom blending algorithm which supports darker colours
@@ -62,6 +66,12 @@ public void toggleGlintColorizerExample(Player viewer, boolean value) {
 
 - __`ARMOR_GLINT_VANILLA`__
     - Config Key: `armor-glint-vanilla`
+    - Values
+        - Type: `String`
+        - Default: `#FF8040CC`
+
+- __`GLINT_COLOR`__
+    - Config Key: `glint-color`
     - Values
         - Type: `String`
         - Default: `#FF8040CC`

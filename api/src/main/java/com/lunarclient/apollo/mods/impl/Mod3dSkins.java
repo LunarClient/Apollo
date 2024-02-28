@@ -28,16 +28,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Adds additional depth and detail to player and skull models.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class Mod3dSkins {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("3d-skins", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> RENDER_DISTANCE_LOD = NumberOption.<Integer>number()
         .node("3d-skins", "render-distance-lod").type(TypeToken.get(Integer.class))
@@ -58,7 +58,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLE_HAT = SimpleOption.<Boolean>builder()
         .node("3d-skins", "enable-hat").type(TypeToken.get(Boolean.class))
@@ -68,7 +68,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLE_JACKET = SimpleOption.<Boolean>builder()
         .node("3d-skins", "enable-jacket").type(TypeToken.get(Boolean.class))
@@ -78,7 +78,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLE_LEFT_SLEEVE = SimpleOption.<Boolean>builder()
         .node("3d-skins", "enable-left-sleeve").type(TypeToken.get(Boolean.class))
@@ -88,7 +88,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLE_RIGHT_SLEEVE = SimpleOption.<Boolean>builder()
         .node("3d-skins", "enable-right-sleeve").type(TypeToken.get(Boolean.class))
@@ -98,7 +98,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLE_LEFT_PANTS = SimpleOption.<Boolean>builder()
         .node("3d-skins", "enable-left-pants").type(TypeToken.get(Boolean.class))
@@ -108,7 +108,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLE_RIGHT_PANTS = SimpleOption.<Boolean>builder()
         .node("3d-skins", "enable-right-pants").type(TypeToken.get(Boolean.class))
@@ -118,7 +118,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> BASE_VOXEL_SIZE = NumberOption.<Float>number()
         .node("3d-skins", "base-voxel-size").type(TypeToken.get(Float.class))
@@ -129,7 +129,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> BODY_VOXEL_WIDTH_SIZE = NumberOption.<Float>number()
         .node("3d-skins", "body-voxel-width-size").type(TypeToken.get(Float.class))
@@ -140,7 +140,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> HEAD_VOXEL_SIZE = NumberOption.<Float>number()
         .node("3d-skins", "head-voxel-size").type(TypeToken.get(Float.class))
@@ -151,7 +151,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLE_SKULLS = SimpleOption.<Boolean>builder()
         .node("3d-skins", "enable-skulls").type(TypeToken.get(Boolean.class))
@@ -161,7 +161,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLE_SKULLS_ITEMS = SimpleOption.<Boolean>builder()
         .node("3d-skins", "enable-skulls-items").type(TypeToken.get(Boolean.class))
@@ -171,7 +171,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> SKULL_VOXEL_SIZE = NumberOption.<Float>number()
         .node("3d-skins", "skull-voxel-size").type(TypeToken.get(Float.class))

@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Customize the current weather.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModWeatherChanger {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("weather-changer", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModWeatherChanger {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> RAIN_STRENGTH = NumberOption.<Float>number()
         .node("weather-changer", "rain-strength").type(TypeToken.get(Float.class))
@@ -59,7 +59,7 @@ public final class ModWeatherChanger {
     /**
      * Augment the rain/snow color.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> RAIN_COLOR = SimpleOption.<Color>builder()
         .comment("Augment the rain/snow color")

@@ -1,13 +1,11 @@
-# TNT Countdown
-
-Displays the fuse countdown above TNT.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleTNTCountdownExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModTntCountdown.ENABLED, value));
 }

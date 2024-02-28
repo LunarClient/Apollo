@@ -1,13 +1,11 @@
-# Hit Color
-
-Changes the color of the damage indicator.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleHitColorExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModHitColor.ENABLED, value));
 }

@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Allows you to hide, move or customize the Minecraft boss bar.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModBossbar {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("bossbar", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModBossbar {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("bossbar", "scale").type(TypeToken.get(Float.class))
@@ -59,7 +59,7 @@ public final class ModBossbar {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> RENDER_BAR = SimpleOption.<Boolean>builder()
         .node("bossbar", "render-bar").type(TypeToken.get(Boolean.class))
@@ -69,7 +69,7 @@ public final class ModBossbar {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> CUSTOM_BOSS_BAR = SimpleOption.<Boolean>builder()
         .node("bossbar", "custom-boss-bar").type(TypeToken.get(Boolean.class))
@@ -79,7 +79,7 @@ public final class ModBossbar {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BAR_COLOR = SimpleOption.<Color>builder()
         .node("bossbar", "bar-color").type(TypeToken.get(Color.class))

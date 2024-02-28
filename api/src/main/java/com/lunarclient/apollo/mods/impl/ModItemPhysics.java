@@ -28,16 +28,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Replaces ground items with ones that have physics.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModItemPhysics {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("item-physics", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModItemPhysics {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> ROTATION_SPEED = NumberOption.<Float>number()
         .node("item-physics", "rotation-speed").type(TypeToken.get(Float.class))

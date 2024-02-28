@@ -1,13 +1,11 @@
-# Hitbox
-
-Customize the hitbox displayed in F3+B
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleHitboxExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModHitbox.ENABLED, value));
 }

@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Replace the default Minecraft crosshair with a customizable crosshair.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModCrosshair {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("crosshair", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModCrosshair {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> CROSSHAIR_THICKNESS = NumberOption.<Integer>number()
         .node("crosshair", "crosshair-thickness").type(TypeToken.get(Integer.class))
@@ -59,7 +59,7 @@ public final class ModCrosshair {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> CROSSHAIR_SIZE = NumberOption.<Integer>number()
         .node("crosshair", "crosshair-size").type(TypeToken.get(Integer.class))
@@ -70,7 +70,7 @@ public final class ModCrosshair {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> CROSSHAIR_GAP = NumberOption.<Integer>number()
         .node("crosshair", "crosshair-gap").type(TypeToken.get(Integer.class))
@@ -81,7 +81,7 @@ public final class ModCrosshair {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> CROSSHAIR_DOT = SimpleOption.<Boolean>builder()
         .node("crosshair", "crosshair-dot").type(TypeToken.get(Boolean.class))
@@ -91,7 +91,7 @@ public final class ModCrosshair {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> CROSSHAIR_OUTLINE = SimpleOption.<Boolean>builder()
         .node("crosshair", "crosshair-outline").type(TypeToken.get(Boolean.class))
@@ -101,7 +101,7 @@ public final class ModCrosshair {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> OUTLINE_THICKNESS = NumberOption.<Float>number()
         .node("crosshair", "outline-thickness").type(TypeToken.get(Float.class))
@@ -112,7 +112,7 @@ public final class ModCrosshair {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> OUTLINE_COLOR = SimpleOption.<Color>builder()
         .node("crosshair", "outline-color").type(TypeToken.get(Color.class))
@@ -122,7 +122,7 @@ public final class ModCrosshair {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> CUSTOM_SCALE = SimpleOption.<Boolean>builder()
         .node("crosshair", "custom-scale").type(TypeToken.get(Boolean.class))
@@ -132,7 +132,7 @@ public final class ModCrosshair {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> COLOR = SimpleOption.<Color>builder()
         .node("crosshair", "color").type(TypeToken.get(Color.class))
@@ -142,7 +142,7 @@ public final class ModCrosshair {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> FRIENDLY_COLOR = SimpleOption.<Color>builder()
         .node("crosshair", "friendly-color").type(TypeToken.get(Color.class))
@@ -152,7 +152,7 @@ public final class ModCrosshair {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> ENEMY_COLOR = SimpleOption.<Color>builder()
         .node("crosshair", "enemy-color").type(TypeToken.get(Color.class))

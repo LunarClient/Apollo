@@ -1,13 +1,11 @@
-# Minimap
-
-Display a miniature map of the world on your HUD.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleMinimapExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModMinimap.ENABLED, value));
 }

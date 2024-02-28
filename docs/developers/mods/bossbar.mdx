@@ -1,13 +1,11 @@
-# Boss Bar
-
-Allows you to hide, move or customize the Minecraft boss bar.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleBossBarExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModBossbar.ENABLED, value));
 }

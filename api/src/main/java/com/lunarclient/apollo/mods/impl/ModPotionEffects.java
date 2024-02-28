@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Display your currently active potion effects on the HUD.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModPotionEffects {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("potion-effects", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("potion-effects", "scale").type(TypeToken.get(Float.class))
@@ -59,7 +59,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SHOW_IN_INVENTORY = SimpleOption.<Boolean>builder()
         .node("potion-effects", "show-in-inventory").type(TypeToken.get(Boolean.class))
@@ -69,7 +69,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SHOW_WHILE_TYPING = SimpleOption.<Boolean>builder()
         .node("potion-effects", "show-while-typing").type(TypeToken.get(Boolean.class))
@@ -79,7 +79,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EFFECT_NAME = SimpleOption.<Boolean>builder()
         .node("potion-effects", "effect-name").type(TypeToken.get(Boolean.class))
@@ -89,7 +89,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("potion-effects", "text-shadow").type(TypeToken.get(Boolean.class))
@@ -99,7 +99,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> HIDE_MODERN_ICONS = SimpleOption.<Boolean>builder()
         .node("potion-effects", "hide-modern-icons").type(TypeToken.get(Boolean.class))
@@ -109,7 +109,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> POTION_BLINK = SimpleOption.<Boolean>builder()
         .node("potion-effects", "potion-blink").type(TypeToken.get(Boolean.class))
@@ -119,7 +119,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> BLINK_DURATION = NumberOption.<Integer>number()
         .node("potion-effects", "blink-duration").type(TypeToken.get(Integer.class))
@@ -130,7 +130,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> COLOR_NAME_BASED_ON_EFFECT = SimpleOption.<Boolean>builder()
         .node("potion-effects", "color-name-based-on-effect").type(TypeToken.get(Boolean.class))
@@ -140,7 +140,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("potion-effects", "text-color").type(TypeToken.get(Color.class))
@@ -150,7 +150,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> DURATION_COLOR = SimpleOption.<Color>builder()
         .node("potion-effects", "duration-color").type(TypeToken.get(Color.class))
@@ -160,7 +160,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EXCLUDE_PERM = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-perm").type(TypeToken.get(Boolean.class))
@@ -170,7 +170,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EXCLUDE_SPEED = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-speed").type(TypeToken.get(Boolean.class))
@@ -180,7 +180,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EXCLUDE_SLOWNESS = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-slowness").type(TypeToken.get(Boolean.class))
@@ -190,17 +190,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> EXCLUDE_STRENGTH = SimpleOption.<Boolean>builder()
-        .node("potion-effects", "exclude-strength").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EXCLUDE_JUMP_BOOST = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-jump-boost").type(TypeToken.get(Boolean.class))
@@ -210,7 +200,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EXCLUDE_REGEN = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-regen").type(TypeToken.get(Boolean.class))
@@ -220,7 +210,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EXCLUDE_FIRE_RES = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-fire-res").type(TypeToken.get(Boolean.class))
@@ -230,7 +220,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EXCLUDE_WATER_BREATHING = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-water-breathing").type(TypeToken.get(Boolean.class))
@@ -240,7 +230,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EXCLUDE_NIGHT_VISION = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-night-vision").type(TypeToken.get(Boolean.class))
@@ -250,7 +240,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EXCLUDE_WEAKNESS = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-weakness").type(TypeToken.get(Boolean.class))
@@ -260,7 +250,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EXCLUDE_POISON = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-poison").type(TypeToken.get(Boolean.class))
@@ -270,7 +260,17 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EXCLUDE_STRENGTH = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "exclude-strength").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EXCLUDE_HASTE = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-haste").type(TypeToken.get(Boolean.class))
@@ -280,10 +280,110 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> EXCLUDE_INVIS = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-invis").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EXCLUDE_MINING_FATIGUE = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "exclude-mining-fatigue").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EXCLUDE_INSTANT_HEALTH = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "exclude-instant-health").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EXCLUDE_INSTANT_DAMAGE = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "exclude-instant-damage").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EXCLUDE_NAUSEA = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "exclude-nausea").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EXCLUDE_BLINDNESS = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "exclude-blindness").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EXCLUDE_HUNGER = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "exclude-hunger").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EXCLUDE_WITHER = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "exclude-wither").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EXCLUDE_HEALTH_BOOST = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "exclude-health-boost").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EXCLUDE_ABSORPTION = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "exclude-absorption").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EXCLUDE_SATURATION = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "exclude-saturation").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

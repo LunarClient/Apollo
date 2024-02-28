@@ -25,13 +25,14 @@ package com.lunarclient.apollo.mods.impl;
 
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * A mod class.
  *
  * @since %release_version%
  */
-public final class ModSoundChanger {
+public final class ModHorseStats {
 
     /**
      * No documentation available.
@@ -39,11 +40,51 @@ public final class ModSoundChanger {
      * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("sound-changer", "enabled").type(TypeToken.get(Boolean.class))
+        .node("horse-stats", "enabled").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
-    private ModSoundChanger() {
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
+        .node("horse-stats", "text-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> SPEED_COLOR = SimpleOption.<Color>builder()
+        .node("horse-stats", "speed-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> JUMP_COLOR = SimpleOption.<Color>builder()
+        .node("horse-stats", "jump-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HEALTH_COLOR = SimpleOption.<Color>builder()
+        .node("horse-stats", "health-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    private ModHorseStats() {
     }
 
 }

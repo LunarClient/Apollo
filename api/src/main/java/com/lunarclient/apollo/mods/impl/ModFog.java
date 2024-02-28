@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Allows you to adjust the strength of fog for various fog types.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModFog {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("fog", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModFog {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> WATER_FOG_DENSITY = NumberOption.<Float>number()
         .node("fog", "water-fog-density").type(TypeToken.get(Float.class))
@@ -59,7 +59,7 @@ public final class ModFog {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> RENDER_DISTANCE_FOG_DENSITY = NumberOption.<Float>number()
         .node("fog", "render-distance-fog-density").type(TypeToken.get(Float.class))
@@ -70,7 +70,7 @@ public final class ModFog {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> RENDER_DISTANCE_FOG_COLOR_TOGGLE = SimpleOption.<Boolean>builder()
         .node("fog", "render-distance-fog-color-toggle").type(TypeToken.get(Boolean.class))
@@ -80,7 +80,7 @@ public final class ModFog {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> RENDER_DISTANCE_FOG_COLOR = SimpleOption.<Color>builder()
         .node("fog", "render-distance-fog-color").type(TypeToken.get(Color.class))

@@ -28,16 +28,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Manage the hurt camera shaking animation.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModHurtCam {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("hurt-cam", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModHurtCam {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> DISABLE_HURT_CAM = SimpleOption.<Boolean>builder()
         .node("hurt-cam", "disable-hurt-cam").type(TypeToken.get(Boolean.class))
@@ -57,7 +57,7 @@ public final class ModHurtCam {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> HURT_SHAKING_INTENSITY = NumberOption.<Float>number()
         .node("hurt-cam", "hurt-shaking-intensity").type(TypeToken.get(Float.class))
@@ -68,7 +68,7 @@ public final class ModHurtCam {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> OLD_CAMERA_TILT = SimpleOption.<Boolean>builder()
         .node("hurt-cam", "old-camera-tilt").type(TypeToken.get(Boolean.class))

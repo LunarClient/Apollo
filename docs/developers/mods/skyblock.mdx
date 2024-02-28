@@ -1,13 +1,11 @@
-# Hypixel Skyblock
-
-Various features to help in Hypixel Skyblock.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleHypixelSkyblockExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModSkyblock.ENABLED, value));
 }
@@ -56,6 +54,13 @@ public void toggleHypixelSkyblockExample(Player viewer, boolean value) {
 - __`AUTO_COPY_RARE_DROPS`__
     - Automatically copies rare drops and pet drops to the clipboard.
     - Config Key: `auto-copy-rare-drops`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ONLY_MOVERS_ON_SKYBLOCK`__
+    - Hides the hud previews in the edit hud layout menu if you're not currently on SkyBlock.
+    - Config Key: `only-movers-on-skyblock`
     - Values
         - Type: `Boolean`
         - Default: `false`

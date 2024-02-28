@@ -1,13 +1,11 @@
-# ReplayMod
-
-Record your game sessions and replay them from any perspective.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleReplayModExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModReplaymod.ENABLED, value));
 }

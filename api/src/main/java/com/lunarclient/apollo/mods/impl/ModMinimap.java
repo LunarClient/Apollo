@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Display a miniature map of the world on your HUD.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModMinimap {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("minimap", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("minimap", "scale").type(TypeToken.get(Float.class))
@@ -59,7 +59,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> MAP_WIDTH = NumberOption.<Integer>number()
         .node("minimap", "map-width").type(TypeToken.get(Integer.class))
@@ -70,7 +70,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> MAP_HEIGHT = NumberOption.<Integer>number()
         .node("minimap", "map-height").type(TypeToken.get(Integer.class))
@@ -81,7 +81,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> MAP_ZOOM = NumberOption.<Float>number()
         .node("minimap", "map-zoom").type(TypeToken.get(Float.class))
@@ -92,7 +92,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ROTATE_WITH_PLAYER = SimpleOption.<Boolean>builder()
         .node("minimap", "rotate-with-player").type(TypeToken.get(Boolean.class))
@@ -102,7 +102,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("minimap", "border").type(TypeToken.get(Boolean.class))
@@ -112,7 +112,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("minimap", "border-color").type(TypeToken.get(Color.class))
@@ -122,7 +122,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("minimap", "border-thickness").type(TypeToken.get(Float.class))
@@ -133,7 +133,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> COMPASS = SimpleOption.<Boolean>builder()
         .node("minimap", "compass").type(TypeToken.get(Boolean.class))
@@ -143,7 +143,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> COMPASS_COLOR = SimpleOption.<Color>builder()
         .node("minimap", "compass-color").type(TypeToken.get(Color.class))
@@ -153,7 +153,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> COMPASS_SHADOW = SimpleOption.<Boolean>builder()
         .node("minimap", "compass-shadow").type(TypeToken.get(Boolean.class))
@@ -163,7 +163,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> PLAYER_MARKER_COLOR = SimpleOption.<Color>builder()
         .node("minimap", "player-marker-color").type(TypeToken.get(Color.class))
@@ -173,7 +173,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> PLAYER_MARKER_SIZE = NumberOption.<Float>number()
         .node("minimap", "player-marker-size").type(TypeToken.get(Float.class))
@@ -184,7 +184,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> ENTITY_MARKER_OPACITY = NumberOption.<Float>number()
         .node("minimap", "entity-marker-opacity").type(TypeToken.get(Float.class))
@@ -195,7 +195,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> ENTITY_MARKER_SIZE = NumberOption.<Float>number()
         .node("minimap", "entity-marker-size").type(TypeToken.get(Float.class))
@@ -206,7 +206,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENTITY_MARKER_SHADOW = SimpleOption.<Boolean>builder()
         .node("minimap", "entity-marker-shadow").type(TypeToken.get(Boolean.class))
@@ -216,7 +216,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SHOW_COORDINATES = SimpleOption.<Boolean>builder()
         .node("minimap", "show-coordinates").type(TypeToken.get(Boolean.class))
@@ -226,7 +226,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since 1.0.4
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SHOW_DISTANT_WAYPOINTS = SimpleOption.<Boolean>builder()
         .node("minimap", "show-distant-waypoints").type(TypeToken.get(Boolean.class))

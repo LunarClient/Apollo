@@ -1,13 +1,11 @@
-# 1.7 Visuals
-
-Revert certain visuals and animations to how they behaved on 1.7.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggle17VisualsExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModOneSevenVisuals.ENABLED, value));
 }

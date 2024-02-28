@@ -27,16 +27,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Displays various PvP statistics.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModPvpInfo {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("pvp-info", "enabled").type(TypeToken.get(Boolean.class))
@@ -46,7 +46,7 @@ public final class ModPvpInfo {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> RESET_ON_WORLD_CHANGE = SimpleOption.<Boolean>builder()
         .node("pvp-info", "reset-on-world-change").type(TypeToken.get(Boolean.class))

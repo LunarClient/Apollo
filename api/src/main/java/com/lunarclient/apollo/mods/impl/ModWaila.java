@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * What am I looking at?.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModWaila {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("waila", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("waila", "scale").type(TypeToken.get(Float.class))
@@ -59,7 +59,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SHOW_ENTITIES = SimpleOption.<Boolean>builder()
         .node("waila", "show-entities").type(TypeToken.get(Boolean.class))
@@ -69,7 +69,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since 1.0.4
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SHOW_COSMETICS = SimpleOption.<Boolean>builder()
         .node("waila", "show-cosmetics").type(TypeToken.get(Boolean.class))
@@ -79,7 +79,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("waila", "text-shadow").type(TypeToken.get(Boolean.class))
@@ -89,7 +89,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("waila", "background").type(TypeToken.get(Boolean.class))
@@ -99,7 +99,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("waila", "border").type(TypeToken.get(Boolean.class))
@@ -109,7 +109,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("waila", "border-thickness").type(TypeToken.get(Float.class))
@@ -120,7 +120,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("waila", "text-color").type(TypeToken.get(Color.class))
@@ -130,7 +130,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("waila", "background-color").type(TypeToken.get(Color.class))
@@ -140,7 +140,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("waila", "border-color").type(TypeToken.get(Color.class))
@@ -150,7 +150,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> VERTICAL_SPACING = NumberOption.<Integer>number()
         .node("waila", "vertical-spacing").type(TypeToken.get(Integer.class))
@@ -161,7 +161,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> HORIZONTAL_SPACING = NumberOption.<Integer>number()
         .node("waila", "horizontal-spacing").type(TypeToken.get(Integer.class))

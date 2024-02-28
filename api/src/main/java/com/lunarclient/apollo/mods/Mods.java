@@ -48,6 +48,7 @@ import com.lunarclient.apollo.mods.impl.ModFreelook;
 import com.lunarclient.apollo.mods.impl.ModGlintColorizer;
 import com.lunarclient.apollo.mods.impl.ModHitColor;
 import com.lunarclient.apollo.mods.impl.ModHitbox;
+import com.lunarclient.apollo.mods.impl.ModHorseStats;
 import com.lunarclient.apollo.mods.impl.ModHurtCam;
 import com.lunarclient.apollo.mods.impl.ModHypixelBedwars;
 import com.lunarclient.apollo.mods.impl.ModHypixelMod;
@@ -106,14 +107,14 @@ import java.util.List;
 /**
  * Mod container.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class Mods {
 
     /**
      * List of all current mod classes.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final List<Class<?>> ALL_MODS = Arrays.asList(
             ModReplaymod.class,
@@ -192,7 +193,8 @@ public final class Mods {
             ModNeu.class,
             ModHurtCam.class,
             ModDamageTint.class,
-            ModSkyblock.class
+            ModSkyblock.class,
+            ModHorseStats.class
         );
 
     private Mods() {

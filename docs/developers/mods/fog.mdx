@@ -1,13 +1,11 @@
-# Fog Customizer
-
-Allows you to adjust the strength of fog for various fog types
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleFogCustomizerExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModFog.ENABLED, value));
 }

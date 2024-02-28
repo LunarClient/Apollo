@@ -1,13 +1,11 @@
-# Ping
-
-Displays server latency on the HUD.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void togglePingExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModPing.ENABLED, value));
 }
@@ -21,87 +19,6 @@ public void togglePingExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
-- __`SCALE`__
-    - Config Key: `scale`
-    - Values
-        - Type: `Float`
-        - Default: `1.0F`
-        - Minimum: `0.5F`
-        - Maximum: `1.5F`
-
-- __`TEXT_SHADOW`__
-    - Config Key: `text-shadow`
-    - Values
-        - Type: `Boolean`
-        - Default: `true`
-
-- __`BACKGROUND`__
-    - Config Key: `background`
-    - Values
-        - Type: `Boolean`
-        - Default: `true`
-
-- __`STATIC_BACKGROUND_WIDTH`__
-    - If this is disabled the background will change size with the text.
-    - Config Key: `static-background-width`
-    - Values
-        - Type: `Boolean`
-        - Default: `true`
-
-- __`BACKGROUND_WIDTH`__
-    - Config Key: `background-width`
-    - Values
-        - Type: `Integer`
-        - Default: `56`
-        - Minimum: `40`
-        - Maximum: `62`
-
-- __`BACKGROUND_HEIGHT`__
-    - Config Key: `background-height`
-    - Values
-        - Type: `Integer`
-        - Default: `18`
-        - Minimum: `10`
-        - Maximum: `22`
-
-- __`BRACKETS`__
-    - Config Key: `brackets`
-    - Values
-        - Type: `Boolean`
-        - Default: `true`
-
-- __`BORDER`__
-    - Config Key: `border`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
-- __`BORDER_THICKNESS`__
-    - Config Key: `border-thickness`
-    - Values
-        - Type: `Float`
-        - Default: `0.5F`
-        - Minimum: `0.5F`
-        - Maximum: `3.0F`
-
-- __`TEXT_COLOR`__
-    - Config Key: `text-color`
-    - Values
-        - Type: `String`
-        - Default: `#FFFFFFFF`
-
-- __`BACKGROUND_COLOR`__
-    - Config Key: `background-color`
-    - Values
-        - Type: `String`
-        - Default: `#6F000000`
-
-- __`BORDER_COLOR`__
-    - Config Key: `border-color`
-    - Values
-        - Type: `String`
-        - Default: `#9F000000`
-
 - __`UPDATE_INTERVAL_SEC`__
     - Faster updates may impact performance
     - Config Key: `update-interval-sec`
@@ -110,4 +27,58 @@ public void togglePingExample(Player viewer, boolean value) {
         - Default: `15`
         - Minimum: `1`
         - Maximum: `30`
+
+- __`ENABLE_PING_NAMETAG`__
+    - Config Key: `enable-ping-nametag`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PING_ABOVE`__
+    - Config Key: `ping-above`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`PING_PREFIX_COLOR`__
+    - Config Key: `ping-prefix-color`
+    - Values
+        - Type: `String`
+        - Default: `#55555555`
+
+- __`DYNAMIC_PING_COLOR`__
+    - Config Key: `dynamic-ping-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`PING_NUMBER_COLOR`__
+    - Config Key: `ping-number-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFF55`
+
+- __`LOW_PING_NUMBER_COLOR`__
+    - Config Key: `low-ping-number-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF55FF55`
+
+- __`MEDIUM_PING_NUMBER_COLOR`__
+    - Config Key: `medium-ping-number-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFF55`
+
+- __`HIGH_PING_NUMBER_COLOR`__
+    - Config Key: `high-ping-number-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF5555`
+
+- __`EXTREME_PING_NUMBER_COLOR`__
+    - Config Key: `extreme-ping-number-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFAA0000`
 

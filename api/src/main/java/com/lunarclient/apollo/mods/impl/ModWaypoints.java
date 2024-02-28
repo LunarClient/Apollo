@@ -28,16 +28,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Create a waypoint anywhere in the world that will show how for away from a location you are as well as optionally render the name and a beam.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModWaypoints {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("waypoints", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModWaypoints {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> DEATH_WAYPOINT = SimpleOption.<Boolean>builder()
         .node("waypoints", "death-waypoint").type(TypeToken.get(Boolean.class))
@@ -57,7 +57,7 @@ public final class ModWaypoints {
     /**
      * Adds a waypoint if coordinates are clicked in chat.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ADD_FROM_CHAT = SimpleOption.<Boolean>builder()
         .comment("Adds a waypoint if coordinates are clicked in chat.")
@@ -68,7 +68,7 @@ public final class ModWaypoints {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> WAYPOINT_BEAMS = SimpleOption.<Boolean>builder()
         .node("waypoints", "waypoint-beams").type(TypeToken.get(Boolean.class))
@@ -78,7 +78,7 @@ public final class ModWaypoints {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BOX_BORDER = SimpleOption.<Boolean>builder()
         .node("waypoints", "box-border").type(TypeToken.get(Boolean.class))
@@ -88,7 +88,7 @@ public final class ModWaypoints {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("waypoints", "text-shadow").type(TypeToken.get(Boolean.class))
@@ -98,7 +98,7 @@ public final class ModWaypoints {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> BOX_PADDING = NumberOption.<Float>number()
         .node("waypoints", "box-padding").type(TypeToken.get(Float.class))
@@ -109,7 +109,7 @@ public final class ModWaypoints {
     /**
      * Only show each waypoint when looking near then in the world.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ONLY_SHOW_WHEN_LOOKING_NEAR = SimpleOption.<Boolean>builder()
         .comment("Only show each waypoint when looking near then in the world")
@@ -120,7 +120,7 @@ public final class ModWaypoints {
     /**
      * Show simpler text icons above each waypoint.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SHOW_ICONS = SimpleOption.<Boolean>builder()
         .comment("Show simpler text icons above each waypoint")
@@ -131,7 +131,7 @@ public final class ModWaypoints {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> LABEL_SCALE = NumberOption.<Float>number()
         .node("waypoints", "label-scale").type(TypeToken.get(Float.class))
@@ -142,7 +142,7 @@ public final class ModWaypoints {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> ICON_SCALE = NumberOption.<Float>number()
         .node("waypoints", "icon-scale").type(TypeToken.get(Float.class))

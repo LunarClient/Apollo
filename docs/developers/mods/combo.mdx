@@ -1,13 +1,11 @@
-# Combo Counter
-
-Displays how often you have hit another player within a certain amount of time on the HUD.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleComboCounterExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModCombo.ENABLED, value));
 }

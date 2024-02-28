@@ -28,16 +28,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Customize the color of enchantment glints.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModGlintColorizer {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("glint-colorizer", "enabled").type(TypeToken.get(Boolean.class))
@@ -45,9 +45,19 @@ public final class ModGlintColorizer {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_GLINT = SimpleOption.<Boolean>builder()
+        .node("glint-colorizer", "show-glint").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Use a custom blending algorithm which supports darker colours.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> USE_LUNAR_EQUATION = SimpleOption.<Boolean>builder()
         .comment("Use a custom blending algorithm which supports darker colours")
@@ -58,7 +68,7 @@ public final class ModGlintColorizer {
     /**
      * Recolor the glints of items.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> OVERRIDE_ITEM_GLINT = SimpleOption.<Boolean>builder()
         .comment("Recolor the glints of items")
@@ -69,7 +79,7 @@ public final class ModGlintColorizer {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> ITEM_GLINT_LUNAR_COLOR = SimpleOption.<Color>builder()
         .node("glint-colorizer", "item-glint-lunar-color").type(TypeToken.get(Color.class))
@@ -79,7 +89,7 @@ public final class ModGlintColorizer {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> ITEM_GLINT_VANILLA_COLOR = SimpleOption.<Color>builder()
         .node("glint-colorizer", "item-glint-vanilla-color").type(TypeToken.get(Color.class))
@@ -89,7 +99,7 @@ public final class ModGlintColorizer {
     /**
      * Recolor the glints of worn armor.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> OVERRIDE_ARMOR_GLINT = SimpleOption.<Boolean>builder()
         .comment("Recolor the glints of worn armor")
@@ -100,7 +110,7 @@ public final class ModGlintColorizer {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> ARMOR_GLINT_LUNAR = SimpleOption.<Color>builder()
         .node("glint-colorizer", "armor-glint-lunar").type(TypeToken.get(Color.class))
@@ -110,10 +120,20 @@ public final class ModGlintColorizer {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> ARMOR_GLINT_VANILLA = SimpleOption.<Color>builder()
         .node("glint-colorizer", "armor-glint-vanilla").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> GLINT_COLOR = SimpleOption.<Color>builder()
+        .node("glint-colorizer", "glint-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

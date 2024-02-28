@@ -28,16 +28,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Customize the current time of day to a fixed position.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModTimeChanger {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("time-changer", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModTimeChanger {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> TIME_CHANGER_TIME = NumberOption.<Integer>number()
         .node("time-changer", "time-changer-time").type(TypeToken.get(Integer.class))
@@ -58,7 +58,7 @@ public final class ModTimeChanger {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> HORIZON_YLEVEL = NumberOption.<Integer>number()
         .node("time-changer", "horizon-y-level").type(TypeToken.get(Integer.class))
@@ -69,7 +69,7 @@ public final class ModTimeChanger {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> USE_REAL_TIME = SimpleOption.<Boolean>builder()
         .node("time-changer", "use-real-time").type(TypeToken.get(Boolean.class))

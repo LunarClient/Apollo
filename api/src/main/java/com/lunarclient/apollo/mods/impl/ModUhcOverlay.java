@@ -28,16 +28,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Resize items that are commonly needed in UHC to make spotting them easier.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModUhcOverlay {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("uhc-overlay", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModUhcOverlay {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> GOLD_INGOT_SCALE = NumberOption.<Float>number()
         .node("uhc-overlay", "gold-ingot-scale").type(TypeToken.get(Float.class))
@@ -58,7 +58,7 @@ public final class ModUhcOverlay {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> GOLD_NUGGET_SCALE = NumberOption.<Float>number()
         .node("uhc-overlay", "gold-nugget-scale").type(TypeToken.get(Float.class))
@@ -69,7 +69,7 @@ public final class ModUhcOverlay {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> GOLD_ORE_SCALE = NumberOption.<Float>number()
         .node("uhc-overlay", "gold-ore-scale").type(TypeToken.get(Float.class))
@@ -80,7 +80,7 @@ public final class ModUhcOverlay {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> GOLD_APPLE_SCALE = NumberOption.<Float>number()
         .node("uhc-overlay", "gold-apple-scale").type(TypeToken.get(Float.class))
@@ -91,7 +91,7 @@ public final class ModUhcOverlay {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> SKULL_SCALE = NumberOption.<Float>number()
         .node("uhc-overlay", "skull-scale").type(TypeToken.get(Float.class))

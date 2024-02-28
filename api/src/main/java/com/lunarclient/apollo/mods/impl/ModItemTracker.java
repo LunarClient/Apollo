@@ -28,16 +28,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Shows you when and how much items you pick up or drop.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModItemTracker {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("item-tracker", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModItemTracker {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("item-tracker", "scale").type(TypeToken.get(Float.class))
@@ -58,7 +58,7 @@ public final class ModItemTracker {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("item-tracker", "text-shadow").type(TypeToken.get(Boolean.class))
@@ -68,7 +68,7 @@ public final class ModItemTracker {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SKYBLOCK_ONLY = SimpleOption.<Boolean>builder()
         .node("item-tracker", "skyblock-only").type(TypeToken.get(Boolean.class))
@@ -78,7 +78,7 @@ public final class ModItemTracker {
     /**
      * How long the text should stay on screen (seconds).
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> POPUP_DURATION_SEC = NumberOption.<Float>number()
         .comment("How long the text should stay on screen (seconds)")

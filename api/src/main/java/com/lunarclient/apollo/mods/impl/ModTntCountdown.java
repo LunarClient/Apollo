@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Displays the fuse countdown above TNT.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModTntCountdown {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("tnt-countdown", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModTntCountdown {
     /**
      * Offset the default tnt delay in ticks. 1 second is 20 ticks.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> ADJUST_FUSE_TIME = NumberOption.<Integer>number()
         .comment("Offset the default tnt delay in ticks. 1 second is 20 ticks")
@@ -60,7 +60,7 @@ public final class ModTntCountdown {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("tnt-countdown", "background").type(TypeToken.get(Boolean.class))
@@ -70,7 +70,7 @@ public final class ModTntCountdown {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("tnt-countdown", "text-shadow").type(TypeToken.get(Boolean.class))
@@ -80,7 +80,7 @@ public final class ModTntCountdown {
     /**
      * Should the color stay the same the entire time.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> STATIC_COUNTDOWN_COLOR = SimpleOption.<Boolean>builder()
         .comment("Should the color stay the same the entire time.")
@@ -91,7 +91,7 @@ public final class ModTntCountdown {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> COLOR = SimpleOption.<Color>builder()
         .node("tnt-countdown", "color").type(TypeToken.get(Color.class))
@@ -101,7 +101,7 @@ public final class ModTntCountdown {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> PREFIX_COLOR = SimpleOption.<Color>builder()
         .node("tnt-countdown", "prefix-color").type(TypeToken.get(Color.class))

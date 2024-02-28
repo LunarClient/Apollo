@@ -1,13 +1,11 @@
-# Scrollable Tooltips
-
-Use your scroll wheel to read overly long item descriptions.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleScrollableTooltipsExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModScrollableTooltips.ENABLED, value));
 }

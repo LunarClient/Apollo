@@ -27,16 +27,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Allows you to organize your resource packs into folders.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModPackOrganizer {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("pack-organizer", "enabled").type(TypeToken.get(Boolean.class))
@@ -46,7 +46,7 @@ public final class ModPackOrganizer {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SHOW_INCOMPATIBLE = SimpleOption.<Boolean>builder()
         .node("pack-organizer", "show-incompatible").type(TypeToken.get(Boolean.class))

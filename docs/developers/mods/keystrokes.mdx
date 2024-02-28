@@ -1,13 +1,11 @@
-# Key Strokes
-
-Displays when your movement, mouse or space bar is pressed.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleKeyStrokesExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModKeystrokes.ENABLED, value));
 }

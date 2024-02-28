@@ -1,13 +1,11 @@
-# NameTags
-
-A mod that allows you to modify nametags.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleNameTagsExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModNametag.ENABLED, value));
 }
@@ -30,13 +28,6 @@ public void toggleNameTagsExample(Player viewer, boolean value) {
 - __`NAMETAG`__
     - An option to see your own nametag in third person
     - Config Key: `nametag`
-    - Values
-        - Type: `Boolean`
-        - Default: `true`
-
-- __`NAMETAG_LOGO`__
-    - An option to toggle LC logos in nametags
-    - Config Key: `nametag-logo`
     - Values
         - Type: `Boolean`
         - Default: `true`

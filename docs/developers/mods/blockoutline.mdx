@@ -1,13 +1,11 @@
-# Block Outline
-
-Allows you to customize the outline or add an overlay to the block you are pointing at.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleBlockOutlineExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModBlockOutline.ENABLED, value));
 }

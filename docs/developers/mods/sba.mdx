@@ -1,13 +1,11 @@
-# SkyblockAddons
-
-A mod created for Hypixel Skyblock with over 50 features that will enhance your skyblock experience (version: DEBUG).
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleSkyblockAddonsExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModSba.ENABLED, value));
 }

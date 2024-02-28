@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Displays your total and free memory usage.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModMemory {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("memory", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("memory", "scale").type(TypeToken.get(Float.class))
@@ -59,7 +59,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("memory", "text-shadow").type(TypeToken.get(Boolean.class))
@@ -69,7 +69,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("memory", "background").type(TypeToken.get(Boolean.class))
@@ -79,7 +79,7 @@ public final class ModMemory {
     /**
      * If this is disabled the background will change size with the text.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> STATIC_BACKGROUND_WIDTH = SimpleOption.<Boolean>builder()
         .comment("If this is disabled the background will change size with the text.")
@@ -90,7 +90,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> BACKGROUND_WIDTH = NumberOption.<Integer>number()
         .node("memory", "background-width").type(TypeToken.get(Integer.class))
@@ -101,7 +101,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> BACKGROUND_HEIGHT = NumberOption.<Integer>number()
         .node("memory", "background-height").type(TypeToken.get(Integer.class))
@@ -112,7 +112,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BRACKETS = SimpleOption.<Boolean>builder()
         .node("memory", "brackets").type(TypeToken.get(Boolean.class))
@@ -122,7 +122,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("memory", "border").type(TypeToken.get(Boolean.class))
@@ -132,7 +132,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("memory", "border-thickness").type(TypeToken.get(Float.class))
@@ -143,7 +143,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("memory", "text-color").type(TypeToken.get(Color.class))
@@ -153,7 +153,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("memory", "background-color").type(TypeToken.get(Color.class))
@@ -163,7 +163,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("memory", "border-color").type(TypeToken.get(Color.class))

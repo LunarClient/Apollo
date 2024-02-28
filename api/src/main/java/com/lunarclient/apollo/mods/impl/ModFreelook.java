@@ -27,16 +27,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * When activated, allows you to change your camera perspective without rotating your player.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModFreelook {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("freelook", "enabled").type(TypeToken.get(Boolean.class))
@@ -46,7 +46,7 @@ public final class ModFreelook {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> INVERT_PITCH = SimpleOption.<Boolean>builder()
         .node("freelook", "invert-pitch").type(TypeToken.get(Boolean.class))
@@ -56,7 +56,7 @@ public final class ModFreelook {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> INVERT_YAW = SimpleOption.<Boolean>builder()
         .node("freelook", "invert-yaw").type(TypeToken.get(Boolean.class))
@@ -66,7 +66,7 @@ public final class ModFreelook {
     /**
      * Quickly pressing and releasing the key will toggle freelook.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TOGGLE_KEY_FREELOOK = SimpleOption.<Boolean>builder()
         .comment("Quickly pressing and releasing the key will toggle freelook")
@@ -77,7 +77,7 @@ public final class ModFreelook {
     /**
      * When zoomed in the camera movement will move smoothly (cinematic camera).
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SMOOTH_CAMERA = SimpleOption.<Boolean>builder()
         .comment("When zoomed in the camera movement will move smoothly (cinematic camera)")

@@ -28,16 +28,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * View the border of the current chunk.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModChunkBorders {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("chunk-borders", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModChunkBorders {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> GRID_COLOR = SimpleOption.<Color>builder()
         .node("chunk-borders", "grid-color").type(TypeToken.get(Color.class))
@@ -57,7 +57,7 @@ public final class ModChunkBorders {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> INNER_CHUNK_CORNER_COLOR = SimpleOption.<Color>builder()
         .node("chunk-borders", "inner-chunk-corner-color").type(TypeToken.get(Color.class))
@@ -67,7 +67,7 @@ public final class ModChunkBorders {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> OUTER_CHUNK_CORNER_COLOR = SimpleOption.<Color>builder()
         .node("chunk-borders", "outer-chunk-corner-color").type(TypeToken.get(Color.class))

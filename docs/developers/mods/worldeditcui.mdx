@@ -1,13 +1,11 @@
-# WorldEdit CUI
-
-A client-side user interface for the WorldEdit plugin allowing you to see your selected region in-game in real time.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleWorldEditCUIExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModWorldeditCui.ENABLED, value));
 }

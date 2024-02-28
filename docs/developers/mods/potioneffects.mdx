@@ -1,13 +1,11 @@
-# Potion Effects
-
-Display your currently active potion effects on the HUD.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void togglePotionEffectsExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModPotionEffects.ENABLED, value));
 }
@@ -109,12 +107,6 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
-- __`EXCLUDE_STRENGTH`__
-    - Config Key: `exclude-strength`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
 - __`EXCLUDE_JUMP_BOOST`__
     - Config Key: `exclude-jump-boost`
     - Values
@@ -157,6 +149,12 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
+- __`EXCLUDE_STRENGTH`__
+    - Config Key: `exclude-strength`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
 - __`EXCLUDE_HASTE`__
     - Config Key: `exclude-haste`
     - Values
@@ -165,6 +163,66 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
 
 - __`EXCLUDE_INVIS`__
     - Config Key: `exclude-invis`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_MINING_FATIGUE`__
+    - Config Key: `exclude-mining-fatigue`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_INSTANT_HEALTH`__
+    - Config Key: `exclude-instant-health`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_INSTANT_DAMAGE`__
+    - Config Key: `exclude-instant-damage`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_NAUSEA`__
+    - Config Key: `exclude-nausea`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_BLINDNESS`__
+    - Config Key: `exclude-blindness`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_HUNGER`__
+    - Config Key: `exclude-hunger`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_WITHER`__
+    - Config Key: `exclude-wither`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_HEALTH_BOOST`__
+    - Config Key: `exclude-health-boost`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_ABSORPTION`__
+    - Config Key: `exclude-absorption`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EXCLUDE_SATURATION`__
+    - Config Key: `exclude-saturation`
     - Values
         - Type: `Boolean`
         - Default: `false`

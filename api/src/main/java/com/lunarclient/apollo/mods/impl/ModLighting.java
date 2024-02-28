@@ -28,16 +28,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Allows you to configure or disable lighting effects, which can increase FPS.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModLighting {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("lighting", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModLighting {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> FULL_BRIGHT = SimpleOption.<Boolean>builder()
         .node("lighting", "full-bright").type(TypeToken.get(Boolean.class))
@@ -57,7 +57,7 @@ public final class ModLighting {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> BRIGHTNESS_BOOST = NumberOption.<Float>number()
         .node("lighting", "brightness-boost").type(TypeToken.get(Float.class))

@@ -1,13 +1,11 @@
-# Lighting
-
-Allows you to configure or disable lighting effects, which can increase FPS.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleLightingExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, value));
 }

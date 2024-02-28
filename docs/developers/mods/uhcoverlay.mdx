@@ -1,13 +1,11 @@
-# UHC Overlay
-
-Resize items that are commonly needed in UHC to make spotting them easier.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleUHCOverlayExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModUhcOverlay.ENABLED, value));
 }

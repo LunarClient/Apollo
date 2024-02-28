@@ -27,16 +27,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * When activated, allows you to change your camera perspective while a button is pressed.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModSnaplook {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("snaplook", "enabled").type(TypeToken.get(Boolean.class))
@@ -46,7 +46,7 @@ public final class ModSnaplook {
     /**
      * When zoomed in the camera movement will move smoothly (cinematic camera).
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SMOOTH_CAMERA = SimpleOption.<Boolean>builder()
         .comment("When zoomed in the camera movement will move smoothly (cinematic camera)")
@@ -57,7 +57,7 @@ public final class ModSnaplook {
     /**
      * This feature uses press and hold by default. Useful if you want to bypass a certain camera orientation.
      *
-     * @since 1.0.4
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SNAPLOOK_TOGGLE_MODE = SimpleOption.<Boolean>builder()
         .comment("This feature uses press and hold by default. Useful if you want to bypass a certain camera orientation.")

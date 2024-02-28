@@ -28,16 +28,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Make the sprinting and sneaking keys toggleable instead of needing to be held down.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModToggleSneak {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("toggle-sneak", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModToggleSneak {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TOGGLE_SPRINT = SimpleOption.<Boolean>builder()
         .node("toggle-sneak", "toggle-sprint").type(TypeToken.get(Boolean.class))
@@ -57,7 +57,7 @@ public final class ModToggleSneak {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TOGGLE_SNEAK = SimpleOption.<Boolean>builder()
         .node("toggle-sneak", "toggle-sneak").type(TypeToken.get(Boolean.class))
@@ -67,7 +67,7 @@ public final class ModToggleSneak {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> DOUBLE_TAP = SimpleOption.<Boolean>builder()
         .node("toggle-sneak", "double-tap").type(TypeToken.get(Boolean.class))
@@ -77,7 +77,7 @@ public final class ModToggleSneak {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TOGGLE_SNEAK_CONTAINER = SimpleOption.<Boolean>builder()
         .node("toggle-sneak", "toggle-sneak-container").type(TypeToken.get(Boolean.class))
@@ -87,7 +87,7 @@ public final class ModToggleSneak {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> FLY_BOOST = SimpleOption.<Boolean>builder()
         .node("toggle-sneak", "fly-boost").type(TypeToken.get(Boolean.class))
@@ -97,7 +97,7 @@ public final class ModToggleSneak {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> FLY_BOOST_AMOUNT = NumberOption.<Integer>number()
         .node("toggle-sneak", "fly-boost-amount").type(TypeToken.get(Integer.class))

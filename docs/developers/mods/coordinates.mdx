@@ -1,13 +1,11 @@
-# Coordinates
-
-Displays your coordinates on the HUD.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleCoordinatesExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModCoordinates.ENABLED, value));
 }

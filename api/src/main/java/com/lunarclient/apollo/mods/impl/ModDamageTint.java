@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Adds a tint to the screen when you are low on health.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModDamageTint {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("damage-tint", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModDamageTint {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> VIGNETTE_COLOR = SimpleOption.<Color>builder()
         .node("damage-tint", "vignette-color").type(TypeToken.get(Color.class))
@@ -58,7 +58,7 @@ public final class ModDamageTint {
     /**
      * Intensity of the tint.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> VIGNETTE_INTENSITY = NumberOption.<Float>number()
         .comment("Intensity of the tint.")
@@ -70,7 +70,7 @@ public final class ModDamageTint {
     /**
      * Show the tint when you have less than this amount of health as a percentage.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> SHOW_VIGNETTE_BELOW = NumberOption.<Integer>number()
         .comment("Show the tint when you have less than this amount of health as a percentage.")
@@ -82,7 +82,7 @@ public final class ModDamageTint {
     /**
      * Plays a heartbeat, becoming faster the lower your health.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> HEARTBEAT_AUDIO = SimpleOption.<Boolean>builder()
         .comment("Plays a heartbeat, becoming faster the lower your health.")

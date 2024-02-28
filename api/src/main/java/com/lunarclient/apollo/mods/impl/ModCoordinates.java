@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Displays your coordinates on the HUD.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModCoordinates {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("coordinates", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("coordinates", "scale").type(TypeToken.get(Float.class))
@@ -59,7 +59,7 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("coordinates", "background").type(TypeToken.get(Boolean.class))
@@ -69,7 +69,7 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("coordinates", "text-shadow").type(TypeToken.get(Boolean.class))
@@ -79,7 +79,7 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SHOW_WHILE_TYPING = SimpleOption.<Boolean>builder()
         .node("coordinates", "show-while-typing").type(TypeToken.get(Boolean.class))
@@ -89,7 +89,7 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("coordinates", "border").type(TypeToken.get(Boolean.class))
@@ -99,7 +99,7 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("coordinates", "border-thickness").type(TypeToken.get(Float.class))
@@ -110,7 +110,7 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> MOVE_CHILDREN_INDIVIDUALLY = SimpleOption.<Boolean>builder()
         .node("coordinates", "move-children-individually").type(TypeToken.get(Boolean.class))
@@ -120,7 +120,7 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("coordinates", "background-color").type(TypeToken.get(Color.class))
@@ -130,7 +130,7 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("coordinates", "border-color").type(TypeToken.get(Color.class))

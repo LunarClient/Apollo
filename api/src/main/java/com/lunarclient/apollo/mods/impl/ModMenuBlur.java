@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Blurs the background behind menus.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModMenuBlur {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("menu-blur", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModMenuBlur {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> BLUR_STRENGTH = NumberOption.<Integer>number()
         .node("menu-blur", "blur-strength").type(TypeToken.get(Integer.class))
@@ -59,7 +59,7 @@ public final class ModMenuBlur {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BLUR_LUNAR_TOGGLE = SimpleOption.<Boolean>builder()
         .node("menu-blur", "blur-lunar-toggle").type(TypeToken.get(Boolean.class))
@@ -69,7 +69,7 @@ public final class ModMenuBlur {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BLUR_LUNAR_BACKGROUND = SimpleOption.<Color>builder()
         .node("menu-blur", "blur-lunar-background").type(TypeToken.get(Color.class))
@@ -79,7 +79,7 @@ public final class ModMenuBlur {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BLUR_INVENTORY_TOGGLE = SimpleOption.<Boolean>builder()
         .node("menu-blur", "blur-inventory-toggle").type(TypeToken.get(Boolean.class))
@@ -89,7 +89,7 @@ public final class ModMenuBlur {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BLUR_INVENTORY_BACKGROUND = SimpleOption.<Color>builder()
         .node("menu-blur", "blur-inventory-background").type(TypeToken.get(Color.class))
@@ -99,7 +99,7 @@ public final class ModMenuBlur {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BLUR_PAUSE_TOGGLE = SimpleOption.<Boolean>builder()
         .node("menu-blur", "blur-pause-toggle").type(TypeToken.get(Boolean.class))
@@ -109,7 +109,7 @@ public final class ModMenuBlur {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BLUR_PAUSE_BACKGROUND = SimpleOption.<Color>builder()
         .node("menu-blur", "blur-pause-background").type(TypeToken.get(Color.class))

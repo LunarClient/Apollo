@@ -28,16 +28,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Various features to help in Hypixel Skyblock.
+ * A mod class.
  *
- * @since 1.0.9
+ * @since %release_version%
  */
 public final class ModSkyblock {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("skyblock", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final NumberOption<Float> SKYBLOCK_ALERT_SCALE = NumberOption.<Float>number()
         .node("skyblock", "skyblock-alert-scale").type(TypeToken.get(Float.class))
@@ -58,7 +58,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SKYBLOCK_HIDE_HUNGER = SimpleOption.<Boolean>builder()
         .node("skyblock", "skyblock-hide-hunger").type(TypeToken.get(Boolean.class))
@@ -68,7 +68,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SKYBLOCK_HIDE_ARMOR = SimpleOption.<Boolean>builder()
         .node("skyblock", "skyblock-hide-armor").type(TypeToken.get(Boolean.class))
@@ -78,7 +78,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> HIDE_MIDAS_STAFF = SimpleOption.<Boolean>builder()
         .node("skyblock", "hide-midas-staff").type(TypeToken.get(Boolean.class))
@@ -88,7 +88,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> HIDE_FALLING_BLOCKS = SimpleOption.<Boolean>builder()
         .node("skyblock", "hide-falling-blocks").type(TypeToken.get(Boolean.class))
@@ -98,7 +98,7 @@ public final class ModSkyblock {
     /**
      * Automatically copies rare drops and pet drops to the clipboard.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> AUTO_COPY_RARE_DROPS = SimpleOption.<Boolean>builder()
         .comment("Automatically copies rare drops and pet drops to the clipboard.")
@@ -107,9 +107,20 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * Hides the hud previews in the edit hud layout menu if you're not currently on SkyBlock.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ONLY_MOVERS_ON_SKYBLOCK = SimpleOption.<Boolean>builder()
+        .comment("Hides the hud previews in the edit hud layout menu if you're not currently on SkyBlock.")
+        .node("skyblock", "only-movers-on-skyblock").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TALLER_CROPS = SimpleOption.<Boolean>builder()
         .comment("Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.")
@@ -120,7 +131,7 @@ public final class ModSkyblock {
     /**
      * Fixes your fishing bobber sinking in lava.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> FIX_LAVA_BOBBER = SimpleOption.<Boolean>builder()
         .comment("Fixes your fishing bobber sinking in lava.")
@@ -131,7 +142,7 @@ public final class ModSkyblock {
     /**
      * Changes the texture of lava to water in the Crimson Isles and Kuudra.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> REPLACE_LAVA_WITH_WATER_CRIMSON = SimpleOption.<Boolean>builder()
         .comment("Changes the texture of lava to water in the Crimson Isles and Kuudra.")
@@ -142,7 +153,7 @@ public final class ModSkyblock {
     /**
      * Changes the texture of lava to water everywhere in SkyBlock.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> REPLACE_LAVA_WITH_WATER_EVERYWHERE = SimpleOption.<Boolean>builder()
         .comment("Changes the texture of lava to water everywhere in SkyBlock.")
@@ -153,7 +164,7 @@ public final class ModSkyblock {
     /**
      * Provides a chat message on boss kill that tells you how long it took to kill!.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SLAYER_BOSS_TIMER = SimpleOption.<Boolean>builder()
         .comment("Provides a chat message on boss kill that tells you how long it took to kill!")
@@ -164,7 +175,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SLAYER_MINI_BOSS_ALERT = SimpleOption.<Boolean>builder()
         .node("skyblock", "slayer-mini-boss-alert").type(TypeToken.get(Boolean.class))
@@ -174,7 +185,7 @@ public final class ModSkyblock {
     /**
      * Used in Stillgore of the Rift, this feature tells you where to go to refresh the duration of inactive Effigies.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> INACTIVE_EFFIGY_WAYPOINTS = SimpleOption.<Boolean>builder()
         .comment("Used in Stillgore of the Rift, this feature tells you where to go to refresh the duration of inactive Effigies.")
@@ -185,7 +196,7 @@ public final class ModSkyblock {
     /**
      * Highlights a boss when it can be 1 tapped using steak stake.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> VAMPIRE_STEAK_DISPLAY = SimpleOption.<Boolean>builder()
         .comment("Highlights a boss when it can be 1 tapped using steak stake.")
@@ -196,7 +207,7 @@ public final class ModSkyblock {
     /**
      * Highlights blood ichors present during T5 Bloodfiends.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> VAMPIRE_ICHOR_DISPLAY = SimpleOption.<Boolean>builder()
         .comment("Highlights blood ichors present during T5 Bloodfiends")
@@ -207,7 +218,7 @@ public final class ModSkyblock {
     /**
      * Shows the positions where you can trap the gray blazes.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> GRAVITY_WELL_WAYPOINTS = SimpleOption.<Boolean>builder()
         .comment("Shows the positions where you can trap the gray blazes.")

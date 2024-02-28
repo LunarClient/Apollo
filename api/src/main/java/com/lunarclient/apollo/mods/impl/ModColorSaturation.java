@@ -30,14 +30,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModColorSaturation {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("color-saturation", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModColorSaturation {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> COLOR_SATURATION_HUE = NumberOption.<Float>number()
         .node("color-saturation", "color-saturation-hue").type(TypeToken.get(Float.class))
@@ -58,7 +58,7 @@ public final class ModColorSaturation {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> COLOR_SATURATION_SATURATION = NumberOption.<Float>number()
         .node("color-saturation", "color-saturation-saturation").type(TypeToken.get(Float.class))
@@ -69,7 +69,7 @@ public final class ModColorSaturation {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> COLOR_SATURATION_BRIGHTNESS = NumberOption.<Float>number()
         .node("color-saturation", "color-saturation-brightness").type(TypeToken.get(Float.class))
@@ -80,7 +80,7 @@ public final class ModColorSaturation {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> COLOR_SATURATION_CONTRAST = NumberOption.<Float>number()
         .node("color-saturation", "color-saturation-contrast").type(TypeToken.get(Float.class))

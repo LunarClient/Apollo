@@ -28,16 +28,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Blur your surroundings when moving.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModMotionBlur {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("motion-blur", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModMotionBlur {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> OLD_BLUR = SimpleOption.<Boolean>builder()
         .node("motion-blur", "old-blur").type(TypeToken.get(Boolean.class))
@@ -57,7 +57,7 @@ public final class ModMotionBlur {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> VALUE = NumberOption.<Integer>number()
         .node("motion-blur", "value").type(TypeToken.get(Integer.class))

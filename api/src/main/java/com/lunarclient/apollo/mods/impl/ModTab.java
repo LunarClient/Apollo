@@ -28,16 +28,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Allows you to customize the in-game tab.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModTab {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("tab", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModTab {
     /**
      * Quickly pressing and releasing the key will toggle tab.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TOGGLE_KEY_TAB = SimpleOption.<Boolean>builder()
         .comment("Quickly pressing and releasing the key will toggle tab")
@@ -58,7 +58,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> HEADER_COLOR = SimpleOption.<Color>builder()
         .node("tab", "header-color").type(TypeToken.get(Color.class))
@@ -68,7 +68,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> FOOTER_COLOR = SimpleOption.<Color>builder()
         .node("tab", "footer-color").type(TypeToken.get(Color.class))
@@ -78,7 +78,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("tab", "background-color").type(TypeToken.get(Color.class))
@@ -88,7 +88,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> PING_ROW = SimpleOption.<Boolean>builder()
         .node("tab", "ping-row").type(TypeToken.get(Boolean.class))
@@ -98,7 +98,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> ROWS_COLOR = SimpleOption.<Color>builder()
         .node("tab", "rows-color").type(TypeToken.get(Color.class))
@@ -108,7 +108,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> DISABLE_HEADER = SimpleOption.<Boolean>builder()
         .node("tab", "disable-header").type(TypeToken.get(Boolean.class))
@@ -118,7 +118,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> DISPLAY_PLAYER_HEAD = SimpleOption.<Boolean>builder()
         .node("tab", "display-player-head").type(TypeToken.get(Boolean.class))
@@ -128,7 +128,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> DISABLE_FOOTER = SimpleOption.<Boolean>builder()
         .node("tab", "disable-footer").type(TypeToken.get(Boolean.class))
@@ -138,7 +138,7 @@ public final class ModTab {
     /**
      * Hide Hypixel NPC on tab.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> HIDE_NPC = SimpleOption.<Boolean>builder()
         .comment("Hide Hypixel NPC on tab")
@@ -149,7 +149,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SHOW_LUNAR_ICONS_ON_RIGHT = SimpleOption.<Boolean>builder()
         .node("tab", "show-lunar-icons-on-right").type(TypeToken.get(Boolean.class))
@@ -157,20 +157,9 @@ public final class ModTab {
         .build();
 
     /**
-     * An option to toggle LC logos in player list tab overlay.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> TAB_LOGO = SimpleOption.<Boolean>builder()
-        .comment("An option to toggle LC logos in player list tab overlay.")
-        .node("tab", "tab-logo").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> HIGHLIGHT_OWN_NAME = SimpleOption.<Boolean>builder()
         .node("tab", "highlight-own-name").type(TypeToken.get(Boolean.class))
@@ -180,7 +169,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> NAME_COLOR = SimpleOption.<Color>builder()
         .node("tab", "name-color").type(TypeToken.get(Color.class))
@@ -190,7 +179,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> NAME_SHADOW = SimpleOption.<Boolean>builder()
         .node("tab", "name-shadow").type(TypeToken.get(Boolean.class))
@@ -200,7 +189,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> HIDE_PING = SimpleOption.<Boolean>builder()
         .node("tab", "hide-ping").type(TypeToken.get(Boolean.class))
@@ -210,7 +199,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> HIDE_PING_IF_OVER_500 = SimpleOption.<Boolean>builder()
         .node("tab", "hide-ping-if-over500").type(TypeToken.get(Boolean.class))
@@ -220,7 +209,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> DISPLAY_PING_AS_NUMBER = SimpleOption.<Boolean>builder()
         .node("tab", "display-ping-as-number").type(TypeToken.get(Boolean.class))
@@ -230,7 +219,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> DYNAMIC_PING_COLOR = SimpleOption.<Boolean>builder()
         .node("tab", "dynamic-ping-color").type(TypeToken.get(Boolean.class))
@@ -240,7 +229,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> PING_NUMBER_SHADOW = SimpleOption.<Boolean>builder()
         .node("tab", "ping-number-shadow").type(TypeToken.get(Boolean.class))
@@ -250,7 +239,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("tab", "ping-number-color").type(TypeToken.get(Color.class))
@@ -260,7 +249,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> LOW_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("tab", "low-ping-number-color").type(TypeToken.get(Color.class))
@@ -270,7 +259,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> MEDIUM_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("tab", "medium-ping-number-color").type(TypeToken.get(Color.class))
@@ -280,7 +269,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> HIGH_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("tab", "high-ping-number-color").type(TypeToken.get(Color.class))
@@ -290,7 +279,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> EXTREME_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("tab", "extreme-ping-number-color").type(TypeToken.get(Color.class))

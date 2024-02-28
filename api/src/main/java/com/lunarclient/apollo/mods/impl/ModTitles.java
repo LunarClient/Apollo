@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Adjust the minecraft title and subtitle scale and location.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModTitles {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("titles", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModTitles {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("titles", "scale").type(TypeToken.get(Float.class))
@@ -59,7 +59,7 @@ public final class ModTitles {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SHOW_IN_HUD_EDITOR = SimpleOption.<Boolean>builder()
         .node("titles", "show-in-hud-editor").type(TypeToken.get(Boolean.class))
@@ -69,7 +69,7 @@ public final class ModTitles {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> TITLE_COLOR = SimpleOption.<Color>builder()
         .node("titles", "title-color").type(TypeToken.get(Color.class))
@@ -79,7 +79,7 @@ public final class ModTitles {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> SUBTITLE_COLOR = SimpleOption.<Color>builder()
         .node("titles", "subtitle-color").type(TypeToken.get(Color.class))

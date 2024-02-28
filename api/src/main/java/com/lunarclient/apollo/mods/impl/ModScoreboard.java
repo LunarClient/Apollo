@@ -29,16 +29,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Allows you to hide, move, or customize the Minecraft scoreboard.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModScoreboard {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("scoreboard", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModScoreboard {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("scoreboard", "scale").type(TypeToken.get(Float.class))
@@ -59,7 +59,7 @@ public final class ModScoreboard {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> NUMBERS = SimpleOption.<Boolean>builder()
         .node("scoreboard", "numbers").type(TypeToken.get(Boolean.class))
@@ -69,7 +69,7 @@ public final class ModScoreboard {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("scoreboard", "text-shadow").type(TypeToken.get(Boolean.class))
@@ -79,7 +79,7 @@ public final class ModScoreboard {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("scoreboard", "border-thickness").type(TypeToken.get(Float.class))
@@ -90,7 +90,7 @@ public final class ModScoreboard {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("scoreboard", "border").type(TypeToken.get(Boolean.class))
@@ -100,7 +100,7 @@ public final class ModScoreboard {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("scoreboard", "background-color").type(TypeToken.get(Color.class))
@@ -110,7 +110,7 @@ public final class ModScoreboard {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("scoreboard", "border-color").type(TypeToken.get(Color.class))

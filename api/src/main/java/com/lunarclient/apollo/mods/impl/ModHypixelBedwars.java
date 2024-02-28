@@ -27,16 +27,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Various enhancements to assist you when playing Hypixel Bedwars.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModHypixelBedwars {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("hypixel-bedwars", "enabled").type(TypeToken.get(Boolean.class))
@@ -46,7 +46,7 @@ public final class ModHypixelBedwars {
     /**
      * Recolor the beds in-game according to the team's color.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> COLORED_BEDS = SimpleOption.<Boolean>builder()
         .comment("Recolor the beds in-game according to the team's color")
@@ -57,7 +57,7 @@ public final class ModHypixelBedwars {
     /**
      * Replaces normal hearts with hardcore hearts once your bed is lost.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BW_HARDCORE_HEARTS = SimpleOption.<Boolean>builder()
         .comment("Replaces normal hearts with hardcore hearts once your bed is lost")

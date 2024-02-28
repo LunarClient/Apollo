@@ -1,13 +1,11 @@
-# Item Physics
-
-Replaces ground items with ones that have physics.
+# name
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleItemPhysicsExample(Player viewer, boolean value) {
+public void togglenameExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModItemPhysics.ENABLED, value));
 }

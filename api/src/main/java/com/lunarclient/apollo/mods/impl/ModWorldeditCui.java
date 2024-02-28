@@ -28,16 +28,16 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * A client-side user interface for the WorldEdit plugin allowing you to see your selected region in-game in real time.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModWorldeditCui {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("worldedit-cui", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModWorldeditCui {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> POSITION_ONE_COLOR = SimpleOption.<Color>builder()
         .node("worldedit-cui", "position-one-color").type(TypeToken.get(Color.class))
@@ -57,7 +57,7 @@ public final class ModWorldeditCui {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> POSITION_TWO_COLOR = SimpleOption.<Color>builder()
         .node("worldedit-cui", "position-two-color").type(TypeToken.get(Color.class))
@@ -67,7 +67,7 @@ public final class ModWorldeditCui {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> OUTLINE_COLOR = SimpleOption.<Color>builder()
         .node("worldedit-cui", "outline-color").type(TypeToken.get(Color.class))

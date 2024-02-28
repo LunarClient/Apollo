@@ -28,16 +28,16 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Allows you to smoothly zoom in and out.
+ * A mod class.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
 public final class ModZoom {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("zoom", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModZoom {
     /**
      * Quickly pressing and releasing the key will toggle zoom.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TOGGLE_KEY_ZOOM = SimpleOption.<Boolean>builder()
         .comment("Quickly pressing and releasing the key will toggle zoom")
@@ -58,7 +58,7 @@ public final class ModZoom {
     /**
      * When zoomed in the camera movement will move smoothly (cinematic camera).
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SMOOTH_CAMERA = SimpleOption.<Boolean>builder()
         .comment("When zoomed in the camera movement will move smoothly (cinematic camera)")
@@ -69,7 +69,7 @@ public final class ModZoom {
     /**
      * Add a transition when zooming in and out.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> SMOOTH_ZOOM = SimpleOption.<Boolean>builder()
         .comment("Add a transition when zooming in and out.")
@@ -80,7 +80,7 @@ public final class ModZoom {
     /**
      * Adjust the zoom depth using Mouse Scroll Wheel.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> VARIABLE_ZOOM = SimpleOption.<Boolean>builder()
         .comment("Adjust the zoom depth using Mouse Scroll Wheel")
@@ -91,7 +91,7 @@ public final class ModZoom {
     /**
      * Change the initial zoom depth.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Integer> ZOOM_DIVISOR = NumberOption.<Integer>number()
         .comment("Change the initial zoom depth.")
@@ -103,7 +103,7 @@ public final class ModZoom {
     /**
      * Change the camera sensitivity when zoomed in.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
     public static final NumberOption<Float> CAMERA_SENSITIVITY = NumberOption.<Float>number()
         .comment("Change the camera sensitivity when zoomed in.")
