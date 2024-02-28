@@ -55,7 +55,7 @@ body:
       validations:
           required: true
 
-    # Additional Context
+    # Code Snippet
     - type: textarea
       id: codebox
       attributes:
