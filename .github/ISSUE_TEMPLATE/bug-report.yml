@@ -55,6 +55,16 @@ body:
       validations:
           required: true
 
+    # Additional Context
+    - type: textarea
+      id: codebox
+      attributes:
+          label: "Code Snippet (If applicable, if not write N/A)"
+          description: Provide any code snippet related to the issue you are reporting. 
+          placeholder: ...
+      validations:
+          required: true
+
     # Lunar Client Version(s)
     - type: dropdown
       id: versions
@@ -154,7 +164,7 @@ body:
     - type: textarea
       id: context
       attributes:
-          label: "Additional Context (Code Snippet, Examples, Links, ETC)"
+          label: "Additional Context (Examples, Links, ETC)"
           description: Do you have anything to say that cannot be covered by the questions above?
           placeholder: ...
       validations:
