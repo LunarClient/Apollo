@@ -55,6 +55,8 @@ import com.lunarclient.apollo.module.notification.NotificationModule;
 import com.lunarclient.apollo.module.notification.NotificationModuleImpl;
 import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentImpl;
 import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentModule;
+import com.lunarclient.apollo.module.ping.PingModule;
+import com.lunarclient.apollo.module.ping.PingModuleImpl;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
@@ -122,6 +124,7 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(NametagModule.class, new NametagModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())
             .addModule(PacketEnrichmentModule.class, new PacketEnrichmentImpl())
+            .addModule(PingModule.class, new PingModuleImpl())
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())
             .addModule(StopwatchModule.class, new StopwatchModuleImpl())

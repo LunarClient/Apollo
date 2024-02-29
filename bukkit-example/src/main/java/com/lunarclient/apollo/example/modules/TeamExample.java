@@ -27,29 +27,40 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.event.EventBus;
+import com.lunarclient.apollo.event.ping.ApolloPlayerPingEvent;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.module.ping.PingModule;
 import com.lunarclient.apollo.module.team.TeamMember;
 import com.lunarclient.apollo.module.team.TeamModule;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.player.ApolloPlayerManager;
+import com.lunarclient.apollo.recipients.Recipients;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Team;
 
 public class TeamExample implements Listener {
 
     private final TeamModule teamModule = Apollo.getModuleManager().getModule(TeamModule.class);
+    private final PingModule pingModule = Apollo.getModuleManager().getModule(PingModule.class);
 
     private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
     private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
@@ -58,6 +69,26 @@ public class TeamExample implements Listener {
         new TeamUpdateTask();
 
         Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
+        EventBus.getBus().register(ApolloPlayerPingEvent.class, this::onApolloPlayerPing);
+    }
+
+    private void onApolloPlayerPing(ApolloPlayerPingEvent apolloPlayerPingEvent) {
+        // Forward the event to everyone on the team. You may want to limit by distance or other factors.
+        this.getByPlayerUuid(apolloPlayerPingEvent.getPlayerUuid()).ifPresent(team -> {
+	        ApolloPlayerManager apolloPlayerManager = Apollo.getPlayerManager();
+            Recipients recipients = Recipients.of(
+                team.getMembers().stream()
+                    .map(Entity::getUniqueId)
+                    .map(apolloPlayerManager::getPlayer)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toList())
+            );
+
+	        team.members.forEach(member -> {
+                this.pingModule.pingTeamMembers(recipients, apolloPlayerPingEvent.getPlayerUuid(), apolloPlayerPingEvent.getLocation(), apolloPlayerPingEvent.isDoublePing());
+            });
+        });
     }
 
     @EventHandler

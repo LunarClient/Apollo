@@ -50,6 +50,8 @@ import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
 import com.lunarclient.apollo.module.notification.NotificationModule;
 import com.lunarclient.apollo.module.notification.NotificationModuleImpl;
+import com.lunarclient.apollo.module.ping.PingModule;
+import com.lunarclient.apollo.module.ping.PingModuleImpl;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
