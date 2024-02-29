@@ -1,0 +1,23 @@
+# Nick Hider Module
+
+## Overview
+
+## Integration
+
+### Override the nick for a specific player
+
+```java
+public void overrideNickExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.nickHiderModule.overrideNick(apolloPlayer, "Notch"));
+}
+```
+
+### Reset the nick for a specific player
+
+```java
+public void resetNickExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.nickHiderModule::resetNick);
+}
+```
