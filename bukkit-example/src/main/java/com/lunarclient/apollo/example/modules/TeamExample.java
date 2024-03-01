@@ -60,7 +60,6 @@ import org.bukkit.scoreboard.Team;
 public class TeamExample implements Listener {
 
     private final TeamModule teamModule = Apollo.getModuleManager().getModule(TeamModule.class);
-    private final PingModule pingModule = Apollo.getModuleManager().getModule(PingModule.class);
 
     private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
     private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
@@ -69,26 +68,6 @@ public class TeamExample implements Listener {
         new TeamUpdateTask();
 
         Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
-        EventBus.getBus().register(ApolloPlayerPingEvent.class, this::onApolloPlayerPing);
-    }
-
-    private void onApolloPlayerPing(ApolloPlayerPingEvent apolloPlayerPingEvent) {
-        // Forward the event to everyone on the team. You may want to limit by distance or other factors.
-        this.getByPlayerUuid(apolloPlayerPingEvent.getPlayerUuid()).ifPresent(team -> {
-	        ApolloPlayerManager apolloPlayerManager = Apollo.getPlayerManager();
-            Recipients recipients = Recipients.of(
-                team.getMembers().stream()
-                    .map(Entity::getUniqueId)
-                    .map(apolloPlayerManager::getPlayer)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .collect(Collectors.toList())
-            );
-
-	        team.members.forEach(member -> {
-                this.pingModule.pingTeamMembers(recipients, apolloPlayerPingEvent.getPlayerUuid(), apolloPlayerPingEvent.getLocation(), apolloPlayerPingEvent.isDoublePing());
-            });
-        });
     }
 
     @EventHandler
