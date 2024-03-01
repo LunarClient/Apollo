@@ -60,6 +60,7 @@ import com.lunarclient.apollo.example.modules.LimbExample;
 import com.lunarclient.apollo.example.modules.ModSettingsExample;
 import com.lunarclient.apollo.example.modules.NametagExample;
 import com.lunarclient.apollo.example.modules.NotificationExample;
+import com.lunarclient.apollo.example.modules.PingExample;
 import com.lunarclient.apollo.example.modules.ServerRuleExample;
 import com.lunarclient.apollo.example.modules.StaffModExample;
 import com.lunarclient.apollo.example.modules.StopwatchExample;
@@ -91,6 +92,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private ModSettingsExample modSettingsExample;
     private NametagExample nametagExample;
     private NotificationExample notificationExample;
+    private PingExample pingExample;
     private ServerRuleExample serverRuleExample;
     private StaffModExample staffModExample;
     private StopwatchExample stopwatchExample;
@@ -129,6 +131,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.modSettingsExample = new ModSettingsExample();
         this.nametagExample = new NametagExample();
         this.notificationExample = new NotificationExample();
+        this.pingExample = new PingExample();
         this.serverRuleExample = new ServerRuleExample();
         this.staffModExample = new StaffModExample();
         this.stopwatchExample = new StopwatchExample();
