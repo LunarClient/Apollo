@@ -27,35 +27,26 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.common.location.ApolloLocation;
-import com.lunarclient.apollo.event.EventBus;
-import com.lunarclient.apollo.event.ping.ApolloPlayerPingEvent;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.module.ping.PingModule;
 import com.lunarclient.apollo.module.team.TeamMember;
 import com.lunarclient.apollo.module.team.TeamModule;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.player.ApolloPlayerManager;
-import com.lunarclient.apollo.recipients.Recipients;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Team;
 
 public class TeamExample implements Listener {
 

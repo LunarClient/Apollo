@@ -50,8 +50,6 @@ import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
 import com.lunarclient.apollo.module.notification.NotificationModule;
 import com.lunarclient.apollo.module.notification.NotificationModuleImpl;
-import com.lunarclient.apollo.module.ping.PingModule;
-import com.lunarclient.apollo.module.ping.PingModuleImpl;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
@@ -81,10 +79,11 @@ import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
+import lombok.Getter;
+
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lombok.Getter;
 
 /**
  * The Velocity implementation plugin.
