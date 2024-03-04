@@ -30,6 +30,8 @@ commands:
         description: "ModSettings!"
     nametag:
         description: "Nametags!"
+    nickhider:
+        description: "Nick Hider!"
     notification:
         description: "Notifications!"
     serverrule:
