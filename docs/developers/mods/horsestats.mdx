@@ -1,0 +1,47 @@
+# Horse Stats
+
+Display the stats of the horse you are riding in the horse's inventory.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleHorseStatsExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModHorseStats.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TEXT_COLOR`__
+    - Config Key: `text-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF404040`
+
+- __`SPEED_COLOR`__
+    - Config Key: `speed-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF2D68CF`
+
+- __`JUMP_COLOR`__
+    - Config Key: `jump-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF12AF0D`
+
+- __`HEALTH_COLOR`__
+    - Config Key: `health-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFCF2D2D`
+

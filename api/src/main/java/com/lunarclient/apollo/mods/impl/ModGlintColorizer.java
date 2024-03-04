@@ -45,6 +45,16 @@ public final class ModGlintColorizer {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_GLINT = SimpleOption.<Boolean>builder()
+        .node("glint-colorizer", "show-glint").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Use a custom blending algorithm which supports darker colours.
      *
      * @since 1.0.0
@@ -114,6 +124,16 @@ public final class ModGlintColorizer {
      */
     public static final SimpleOption<Color> ARMOR_GLINT_VANILLA = SimpleOption.<Color>builder()
         .node("glint-colorizer", "armor-glint-vanilla").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> GLINT_COLOR = SimpleOption.<Color>builder()
+        .node("glint-colorizer", "glint-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

@@ -157,17 +157,6 @@ public final class ModTab {
         .build();
 
     /**
-     * An option to toggle LC logos in player list tab overlay.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> TAB_LOGO = SimpleOption.<Boolean>builder()
-        .comment("An option to toggle LC logos in player list tab overlay.")
-        .node("tab", "tab-logo").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
      * No documentation available.
      *
      * @since 1.0.0
@@ -294,6 +283,18 @@ public final class ModTab {
      */
     public static final SimpleOption<Color> EXTREME_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("tab", "extreme-ping-number-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * An option to toggle LC logos in player list tab overlay.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> TAB_LOGO = SimpleOption.<Boolean>builder()
+        .comment("An option to toggle LC logos in player list tab overlay.")
+        .node("tab", "tab-logo").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
