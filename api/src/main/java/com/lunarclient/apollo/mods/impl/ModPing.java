@@ -60,7 +60,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Boolean> ENABLE_PING_NAMETAG = SimpleOption.<Boolean>builder()
         .node("ping", "enable-ping-nametag").type(TypeToken.get(Boolean.class))
@@ -70,7 +70,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Boolean> PING_ABOVE = SimpleOption.<Boolean>builder()
         .node("ping", "ping-above").type(TypeToken.get(Boolean.class))
@@ -80,7 +80,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Color> PING_PREFIX_COLOR = SimpleOption.<Color>builder()
         .node("ping", "ping-prefix-color").type(TypeToken.get(Color.class))
@@ -90,7 +90,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Boolean> DYNAMIC_PING_COLOR = SimpleOption.<Boolean>builder()
         .node("ping", "dynamic-ping-color").type(TypeToken.get(Boolean.class))
@@ -100,7 +100,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Color> PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("ping", "ping-number-color").type(TypeToken.get(Color.class))
@@ -110,7 +110,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Color> LOW_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("ping", "low-ping-number-color").type(TypeToken.get(Color.class))
@@ -120,7 +120,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Color> MEDIUM_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("ping", "medium-ping-number-color").type(TypeToken.get(Color.class))
@@ -130,7 +130,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Color> HIGH_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("ping", "high-ping-number-color").type(TypeToken.get(Color.class))
@@ -140,7 +140,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Color> EXTREME_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("ping", "extreme-ping-number-color").type(TypeToken.get(Color.class))

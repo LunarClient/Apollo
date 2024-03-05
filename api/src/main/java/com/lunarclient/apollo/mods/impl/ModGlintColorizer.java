@@ -47,7 +47,7 @@ public final class ModGlintColorizer {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Boolean> SHOW_GLINT = SimpleOption.<Boolean>builder()
         .node("glint-colorizer", "show-glint").type(TypeToken.get(Boolean.class))
@@ -130,7 +130,7 @@ public final class ModGlintColorizer {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Color> GLINT_COLOR = SimpleOption.<Color>builder()
         .node("glint-colorizer", "glint-color").type(TypeToken.get(Color.class))

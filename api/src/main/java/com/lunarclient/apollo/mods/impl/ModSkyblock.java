@@ -109,7 +109,7 @@ public final class ModSkyblock {
     /**
      * Hides the hud previews in the edit hud layout menu if you're not currently on SkyBlock.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Boolean> ONLY_MOVERS_ON_SKYBLOCK = SimpleOption.<Boolean>builder()
         .comment("Hides the hud previews in the edit hud layout menu if you're not currently on SkyBlock.")

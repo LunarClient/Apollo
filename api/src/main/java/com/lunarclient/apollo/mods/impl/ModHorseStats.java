@@ -30,14 +30,14 @@ import java.awt.Color;
 /**
  * Display the stats of the horse you are riding in the horse's inventory.
  *
- * @since %release_version%
+ * @since 1.1.1
  */
 public final class ModHorseStats {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("horse-stats", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModHorseStats {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("horse-stats", "text-color").type(TypeToken.get(Color.class))
@@ -57,7 +57,7 @@ public final class ModHorseStats {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Color> SPEED_COLOR = SimpleOption.<Color>builder()
         .node("horse-stats", "speed-color").type(TypeToken.get(Color.class))
@@ -67,7 +67,7 @@ public final class ModHorseStats {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Color> JUMP_COLOR = SimpleOption.<Color>builder()
         .node("horse-stats", "jump-color").type(TypeToken.get(Color.class))
@@ -77,7 +77,7 @@ public final class ModHorseStats {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.1
      */
     public static final SimpleOption<Color> HEALTH_COLOR = SimpleOption.<Color>builder()
         .node("horse-stats", "health-color").type(TypeToken.get(Color.class))
