@@ -1,0 +1,27 @@
+# Nick Hider Module
+
+## Overview
+
+The Nick Hider module allows you to interact with the Nick Hider mod.
+
+- Pass in a nickname you want to hide for the user.
+
+## Integration
+
+### Override the nick for a specific player
+
+```java
+public void overrideNickExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.nickHiderModule.overrideNick(apolloPlayer, "Notch"));
+}
+```
+
+### Reset the nick for a specific player
+
+```java
+public void resetNickExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.nickHiderModule::resetNick);
+}
+```

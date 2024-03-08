@@ -23,83 +23,68 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
-import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
- * A mod that allows you to modify nametags.
+ * Display the stats of the horse you are riding in the horse's inventory.
  *
- * @since 1.0.0
+ * @since 1.1.1
  */
-public final class ModNametag {
+public final class ModHorseStats {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.1.1
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("nametag", "enabled").type(TypeToken.get(Boolean.class))
+        .node("horse-stats", "enabled").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.1.1
      */
-    public static final SimpleOption<Boolean> NAMETAG_SHADOW = SimpleOption.<Boolean>builder()
-        .node("nametag", "nametag-shadow").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * An option to see your own nametag in third person.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> NAMETAG = SimpleOption.<Boolean>builder()
-        .comment("An option to see your own nametag in third person")
-        .node("nametag", "nametag").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * Determines if we should send the message when nametags are toggled.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> TOGGLE_NAMETAGS = SimpleOption.<Boolean>builder()
-        .comment("Determines if we should send the message when nametags are toggled.")
-        .node("nametag", "toggle-nametags").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
+        .node("horse-stats", "text-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.1.1
      */
-    public static final NumberOption<Float> NAMETAG_BACKGROUND_OPACITY = NumberOption.<Float>number()
-        .node("nametag", "nametag-background-opacity").type(TypeToken.get(Float.class))
-        .min(0.0F).max(1.0F)
+    public static final SimpleOption<Color> SPEED_COLOR = SimpleOption.<Color>builder()
+        .node("horse-stats", "speed-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
     /**
-     * An option to toggle LC logos in nametags.
+     * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.1.1
      */
-    @Deprecated
-    public static final SimpleOption<Boolean> NAMETAG_LOGO = SimpleOption.<Boolean>builder()
-        .comment("An option to toggle LC logos in nametags")
-        .node("nametag", "nametag-logo").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Color> JUMP_COLOR = SimpleOption.<Color>builder()
+        .node("horse-stats", "jump-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
-    private ModNametag() {
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.1
+     */
+    public static final SimpleOption<Color> HEALTH_COLOR = SimpleOption.<Color>builder()
+        .node("horse-stats", "health-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    private ModHorseStats() {
     }
 
 }
