@@ -74,8 +74,11 @@ public void displayCooldownResourceExample(Player viewer) {
 ```java
 public void removeCooldownExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown"));
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.cooldownModule.removeCooldown(apolloPlayer, "lunar-cooldown"));
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown");
+        this.cooldownModule.removeCooldown(apolloPlayer, "lunar-cooldown");
+    });
 }
 ```
 
