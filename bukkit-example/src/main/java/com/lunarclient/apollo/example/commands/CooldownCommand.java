@@ -75,7 +75,7 @@ public class CooldownCommand implements CommandExecutor {
             }
 
             default: {
-                player.sendMessage("Usage: /cooldown <display|remove|reset>");
+                player.sendMessage("Usage: /cooldown <displayItem|displayResource|remove|reset>");
                 break;
             }
         }
