@@ -45,14 +45,20 @@ public class CooldownCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /cooldown <display|remove|reset>");
+            player.sendMessage("Usage: /cooldown <displayItem|displayResource|remove|reset>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
-            case "display": {
-                this.cooldownExample.displayCooldownExample(player);
-                player.sendMessage("Displaying cooldown....");
+            case "displayitem": {
+                this.cooldownExample.displayCooldownItemExample(player);
+                player.sendMessage("Displaying cooldown item....");
+                break;
+            }
+
+            case "displayresource": {
+                this.cooldownExample.displayCooldownResourceExample(player);
+                player.sendMessage("Displaying cooldown resource....");
                 break;
             }
 
