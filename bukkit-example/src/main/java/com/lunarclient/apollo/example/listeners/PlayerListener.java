@@ -46,7 +46,7 @@ public class PlayerListener implements ApolloListener {
 
         this.plugin.getBeamExample().displayBeamExample(player);
         this.plugin.getBorderExample().displayBorderExample(player);
-        this.plugin.getCooldownExample().displayCooldownExample(player);
+        this.plugin.getCooldownExample().displayCooldownItemExample(player);
         this.plugin.getNametagExample().overrideNametagExample(player);
         this.plugin.getWaypointExample().displayWaypointExample(player);
     }
