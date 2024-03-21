@@ -1,0 +1,113 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+# Player Ping Module
+
+## Overview
+
+
+
+## Integration
+
+### Sample Code
+
+```java
+public void displayPlayerPingExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.playerPingModule.displayPlayerPing(Recipients.ofEveryone(), PlayerPing.builder()
+            .id("test-ping")
+            .color(Color.BLUE)
+            .location(BukkitApollo.toApolloLocation(viewer.getLocation()))
+            .displayTime(Duration.ofSeconds(5))
+            .build()
+        );
+    });
+}
+```
+
+### `PlayerPing` Options
+
+`.id(String)` should include a unique identifier for the player ping.
+
+```java
+.id("test-ping")
+```
+
+`.color(java.awt.Color)` is how you dictate the color of the player ping. See the [colors page](/apollo/developers/utilities/colors) for more.
+
+**Color Types**
+
+<Tabs items={['Java Presets', 'Minecraft Presets', 'Hex & RGB']}>
+<Tab>
+
+The `java.awt.Color` class statically exposes some colors, although they do not correspond to any existing colors used in Minecraft.
+
+```java
+.color(Color.CYAN)
+```
+
+</Tab>
+
+<Tab>
+
+The `ApolloColors` class statically exposes colors that correspond to Bukkit/Spigot's `ChatColor` enum.
+
+```java
+.color(ApolloColors.LIGHT_PURPLE)
+```
+
+</Tab>
+
+<Tab>
+
+Custom colors can be created from any RGB values using `new Color(int red, int green, int blue)`, or from any hex color using `Color.decode(String hex)`.
+
+```java
+.color(Color.decode("#FF00FF"))
+```
+
+</Tab>
+</Tabs>
+
+`.location(ApolloLocation)` is using the `ApolloLocation` builder to create the location. See the [locations page](/apollo/developers/utilities/locations) for more.
+
+```java
+.location(BukkitApollo.toApolloLocation(viewer.getLocation()))
+```
+
+### Removing a specific player ping for a player
+
+```java
+public void removePlayerPingExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.playerPingModule.removePlayerPing(apolloPlayer, "test-ping"));
+}
+```
+
+### Resetting all player pings for a player
+
+```java
+public void resetPlayerPingsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.playerPingModule::resetPlayerPings);
+}
+```
+
+### Broadcast the player ping location to the whole team with the TeamModule
+
+```java
+private void onApolloPlayerPing(ApolloPlayerPingEvent event) {
+    TeamExample teamExample = ApolloExamplePlugin.getPlugin().getTeamExample();
+    UUID playerUuid = event.getPlayer().getUniqueId();
+
+    // Forward the event to everyone on the team. You may want to limit by distance or other factors.
+    teamExample.getByPlayerUuid(playerUuid).ifPresent(team -> {
+        Recipients recipients = BukkitApollo.getRecipientsFrom(team.getMembers());
+
+        team.getMembers().forEach(member -> {
+            this.playerPingModule.displayPlayerPing(recipients, event.getPing());
+        });
+    });
+}
+```
