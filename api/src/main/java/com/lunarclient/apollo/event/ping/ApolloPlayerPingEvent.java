@@ -23,32 +23,33 @@
  */
 package com.lunarclient.apollo.event.ping;
 
-import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.event.Event;
-import java.util.UUID;
+import com.lunarclient.apollo.module.playerping.PlayerPing;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import lombok.Value;
 
 /**
- * An event that is fired when a player ping message is received from a player.
+ * Represents an event that is fired when a player ping message is received from a player.
  *
- * @since 1.1.1
+ * @since 1.1.2
  */
 @Value
 public class ApolloPlayerPingEvent implements Event {
 
     /**
-     * @return The UUID of the player who sent the ping.
+     * The player that sent the packet.
+     *
+     * @return the player
+     * @since 1.1.2
      */
-    UUID playerUuid;
+    ApolloPlayer player;
 
     /**
-     * @return The in-world location of the ping.
+     * The {@link PlayerPing} the player sent.
+     *
+     * @return the ping
+     * @since 1.1.2
      */
-    ApolloLocation location;
-
-    /**
-     * @return true if the ping is a double-click ping
-     */
-    boolean isDoublePing;
+    PlayerPing ping;
 
 }

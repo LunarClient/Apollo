@@ -21,33 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.ping;
+package com.lunarclient.apollo.module.playerping;
 
 import com.lunarclient.apollo.common.location.ApolloLocation;
-import com.lunarclient.apollo.module.ApolloModule;
-import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.recipients.Recipients;
-import java.util.UUID;
-import org.jetbrains.annotations.ApiStatus;
+import java.awt.Color;
+import java.time.Duration;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
- * Represents the Player Ping module.
+ * Represents a player ping which can be shown on the client.
  *
- * @since 1.1.1
+ * @since 1.1.2
  */
-@ApiStatus.NonExtendable
-@ModuleDefinition(id = "ping", name = "Ping")
-public abstract class PingModule extends ApolloModule {
+@Getter
+@Builder
+public final class PlayerPing {
 
     /**
-     * Send a team ping to all the given Recipients.
+     * Returns the player ping {@link String} id.
      *
-     * @param recipients the recipients to send the packet to
-     * @param playerUuid the player UUID who has originally sent the ping
-     * @param location  the in-world location of the ping
-     * @param isDoublePing true if the ping is a double-click ping, false otherwise
-     * @since 1.1.1
+     * @return the player ping id
+     * @since 1.1.2
      */
-    public abstract void pingTeamMembers(Recipients recipients, UUID playerUuid, ApolloLocation location, boolean isDoublePing);
+    String id;
+
+    /**
+     * Returns the player ping {@link Color}.
+     *
+     * @return the player ping color
+     * @since 1.1.2
+     */
+    Color color;
+
+    /**
+     * Returns the player ping {@link ApolloLocation}.
+     *
+     * @return the player ping location
+     * @since 1.1.2
+     */
+    ApolloLocation location;
+
+    /**
+     * Returns the player ping {@link Duration} display time.
+     *
+     * @return the player ping display time
+     * @since 1.1.2
+     */
+    Duration displayTime;
 
 }

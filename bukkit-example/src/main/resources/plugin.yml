@@ -34,6 +34,8 @@ commands:
         description: "Nick Hider!"
     notification:
         description: "Notifications!"
+    playerping:
+        description: "Player Ping"
     serverrule:
         description: "Server Rule!"
     staffmod:
