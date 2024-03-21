@@ -24,39 +24,23 @@
 package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.module.notification.Notification;
-import com.lunarclient.apollo.module.notification.NotificationModule;
+import com.lunarclient.apollo.module.nickhider.NickHiderModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.time.Duration;
 import java.util.Optional;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
-public class NotificationExample {
+public class NickHiderExample {
 
-    private final NotificationModule notificationModule = Apollo.getModuleManager().getModule(NotificationModule.class);
+    private final NickHiderModule nickHiderModule = Apollo.getModuleManager().getModule(NickHiderModule.class);
 
-    private final Notification uhcAnnouncement = Notification.builder()
-        .titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
-        .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
-            .appendNewline()
-            .append(Component.text("Get ready!", NamedTextColor.WHITE))
-            .appendNewline()
-            .append(Component.text("Good luck!", NamedTextColor.GOLD))
-        )
-        .resourceLocation("icons/golden_apple.png") // This field is optional
-        .displayTime(Duration.ofSeconds(5))
-        .build();
-
-    public void displayNotificationExample(Player viewer) {
+    public void overrideNickExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.notificationModule.displayNotification(apolloPlayer, this.uhcAnnouncement));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.nickHiderModule.overrideNick(apolloPlayer, "Notch"));
     }
 
-    public void resetNotificationsExample(Player viewer) {
+    public void resetNickExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(this.notificationModule::resetNotifications);
+        apolloPlayerOpt.ifPresent(this.nickHiderModule::resetNick);
     }
 
 }

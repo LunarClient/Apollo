@@ -107,6 +107,17 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * Hides the hud previews in the edit hud layout menu if you're not currently on SkyBlock.
+     *
+     * @since 1.1.1
+     */
+    public static final SimpleOption<Boolean> ONLY_MOVERS_ON_SKYBLOCK = SimpleOption.<Boolean>builder()
+        .comment("Hides the hud previews in the edit hud layout menu if you're not currently on SkyBlock.")
+        .node("skyblock", "only-movers-on-skyblock").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.
      *
      * @since 1.0.9
