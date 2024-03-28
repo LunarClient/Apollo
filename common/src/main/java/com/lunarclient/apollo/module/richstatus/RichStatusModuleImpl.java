@@ -25,7 +25,8 @@ package com.lunarclient.apollo.module.richstatus;
 
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
-import com.lunarclient.apollo.richstatus.v1.OverrideServerRichStatus;
+import com.lunarclient.apollo.richstatus.v1.OverrideServerRichStatusMessage;
+import com.lunarclient.apollo.richstatus.v1.ResetServerRichStatusMessage;
 import lombok.NonNull;
 
 /**
@@ -38,7 +39,7 @@ public final class RichStatusModuleImpl extends RichStatusModule {
     @Override
     public void overrideRichStatus(@NonNull Recipients recipients, @NonNull ServerRichStatus richStatus) {
         // TODO: optional fields
-        OverrideServerRichStatus.Builder builder = OverrideServerRichStatus.newBuilder()
+        OverrideServerRichStatusMessage.Builder builder = OverrideServerRichStatusMessage.newBuilder()
             .setGameName(richStatus.getGameName())
             .setGameVariantName(richStatus.getGameVariantName())
             .setGameState(richStatus.getGameState())
@@ -48,7 +49,13 @@ public final class RichStatusModuleImpl extends RichStatusModule {
             .setTeamCurrentSize(richStatus.getTeamCurrentSize())
             .setTeamMaxSize(richStatus.getTeamMaxSize());
 
-        OverrideServerRichStatus message = builder.build();
+        OverrideServerRichStatusMessage message = builder.build();
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void resetRichStatus(@NonNull Recipients recipients) {
+        ResetServerRichStatusMessage message = ResetServerRichStatusMessage.getDefaultInstance();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 

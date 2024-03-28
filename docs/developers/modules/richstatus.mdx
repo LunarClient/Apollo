@@ -77,3 +77,11 @@ public void overrideRichStatusExample(Player viewer) {
 .teamMaxSize(4)
 ```
 
+### Resetting the rich server for a player
+
+```java
+public void resetRichStatusExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.richStatusModule::resetRichStatus);
+}
+```

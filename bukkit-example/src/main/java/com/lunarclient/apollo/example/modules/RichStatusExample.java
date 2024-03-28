@@ -52,4 +52,9 @@ public class RichStatusExample {
         });
     }
 
+    public void resetRichStatusExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        apolloPlayerOpt.ifPresent(this.richStatusModule::resetRichStatus);
+    }
+
 }

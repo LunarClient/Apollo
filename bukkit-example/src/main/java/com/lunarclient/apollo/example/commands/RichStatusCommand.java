@@ -45,7 +45,7 @@ public class RichStatusCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /richstatus <override>");
+            player.sendMessage("Usage: /richstatus <override|reset>");
             return true;
         }
 
@@ -56,8 +56,14 @@ public class RichStatusCommand implements CommandExecutor {
                 break;
             }
 
+            case "reset": {
+                this.richStatusExample.resetRichStatusExample(player);
+                player.sendMessage("Resetting rich status...");
+                break;
+            }
+
             default: {
-                player.sendMessage("Usage: /richstatus <override>");
+                player.sendMessage("Usage: /richstatus <override|reset>");
                 break;
             }
         }

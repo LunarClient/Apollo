@@ -46,4 +46,12 @@ public abstract class RichStatusModule extends ApolloModule {
      */
     public abstract void overrideRichStatus(Recipients recipients, ServerRichStatus richStatus);
 
+    /**
+     * Resets the {@link ServerRichStatus} for the given {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @since 1.1.2
+     */
+    public abstract void resetRichStatus(Recipients recipients);
+
 }
