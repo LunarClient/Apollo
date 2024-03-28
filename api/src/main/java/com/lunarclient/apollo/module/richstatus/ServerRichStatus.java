@@ -25,13 +25,13 @@ package com.lunarclient.apollo.module.richstatus;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a server rich status for the rich status module.
  *
  * @since 1.1.2
  */
-// TODO: nullable fields
 @Getter
 @Builder
 public class ServerRichStatus {
@@ -42,7 +42,7 @@ public class ServerRichStatus {
      * @return the game name
      * @since 1.1.2
      */
-    String gameName;
+    @Nullable String gameName;
 
     /**
      * Returns the {@link String} variant of the game the player is playing on (e.g. 'Solo').
@@ -50,7 +50,7 @@ public class ServerRichStatus {
      * @return the game variant name
      * @since 1.1.2
      */
-    String gameVariantName;
+    @Nullable String gameVariantName;
 
     /**
      * Returns the {@link String} state of the current game (e.g. 'In Game').
@@ -58,7 +58,7 @@ public class ServerRichStatus {
      * @return the game state
      * @since 1.1.2
      */
-    String gameState;
+    @Nullable String gameState;
 
     /**
      * Returns {@link String} what the player is currently doing in the game (e.g. 'Spectating', 'Playing', 'Crafting').
@@ -66,7 +66,7 @@ public class ServerRichStatus {
      * @return the player state
      * @since 1.1.2
      */
-    String playerState;
+    @Nullable String playerState;
 
     /**
      * Returns the {@link String} name of the map the player is playing on (e.g. 'Winter').
@@ -74,7 +74,7 @@ public class ServerRichStatus {
      * @return the map name
      * @since 1.1.2
      */
-    String mapName;
+    @Nullable String mapName;
 
     /**
      * Returns the {@link String} sub server name of the server the player is playing on (e.g. 'BW02').
@@ -82,7 +82,7 @@ public class ServerRichStatus {
      * @return the sub server
      * @since 1.1.2
      */
-    String subServerName;
+    @Nullable String subServerName;
 
     /**
      * Returns the {@link Integer} current size of the player's team.

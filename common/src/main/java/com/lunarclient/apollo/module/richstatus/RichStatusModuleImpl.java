@@ -38,16 +38,39 @@ public final class RichStatusModuleImpl extends RichStatusModule {
 
     @Override
     public void overrideRichStatus(@NonNull Recipients recipients, @NonNull ServerRichStatus richStatus) {
-        // TODO: optional fields
         OverrideServerRichStatusMessage.Builder builder = OverrideServerRichStatusMessage.newBuilder()
-            .setGameName(richStatus.getGameName())
-            .setGameVariantName(richStatus.getGameVariantName())
-            .setGameState(richStatus.getGameState())
-            .setPlayerState(richStatus.getPlayerState())
-            .setMapName(richStatus.getMapName())
-            .setSubServer(richStatus.getSubServerName())
             .setTeamCurrentSize(richStatus.getTeamCurrentSize())
             .setTeamMaxSize(richStatus.getTeamMaxSize());
+
+        String gameName = richStatus.getGameName();
+        if (gameName != null) {
+            builder.setGameName(gameName);
+        }
+
+        String gameVariantName = richStatus.getGameVariantName();
+        if (gameVariantName != null) {
+            builder.setGameVariantName(gameVariantName);
+        }
+
+        String gameState = richStatus.getGameState();
+        if (gameState != null) {
+            builder.setGameState(gameState);
+        }
+
+        String playerState = richStatus.getPlayerState();
+        if (playerState != null) {
+            builder.setPlayerState(playerState);
+        }
+
+        String mapName = richStatus.getMapName();
+        if (mapName != null) {
+            builder.setMapName(mapName);
+        }
+
+        String subServerName = richStatus.getSubServerName();
+        if (subServerName != null) {
+            builder.setSubServer(subServerName);
+        }
 
         OverrideServerRichStatusMessage message = builder.build();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
