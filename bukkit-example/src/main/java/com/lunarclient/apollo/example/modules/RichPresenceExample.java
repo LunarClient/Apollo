@@ -24,21 +24,21 @@
 package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.module.richstatus.RichStatusModule;
-import com.lunarclient.apollo.module.richstatus.ServerRichStatus;
+import com.lunarclient.apollo.module.richpresence.RichPresenceModule;
+import com.lunarclient.apollo.module.richpresence.ServerRichPresence;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Optional;
 import org.bukkit.entity.Player;
 
-public class RichStatusExample {
+public class RichPresenceExample {
 
-    private final RichStatusModule richStatusModule = Apollo.getModuleManager().getModule(RichStatusModule.class);
+    private final RichPresenceModule richPresenceModule = Apollo.getModuleManager().getModule(RichPresenceModule.class);
 
-    public void overrideRichStatusExample(Player viewer) {
+    public void overrideServerRichPresenceExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
-            this.richStatusModule.overrideRichStatus(apolloPlayer, ServerRichStatus.builder()
+            this.richPresenceModule.overrideServerRichPresence(apolloPlayer, ServerRichPresence.builder()
                 .gameName("BedWars")
                 .gameVariantName("Solo")
                 .gameState("In Game")
@@ -52,9 +52,9 @@ public class RichStatusExample {
         });
     }
 
-    public void resetRichStatusExample(Player viewer) {
+    public void resetServerRichPresenceExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(this.richStatusModule::resetRichStatus);
+        apolloPlayerOpt.ifPresent(this.richPresenceModule::resetServerRichPresence);
     }
 
 }

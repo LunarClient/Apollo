@@ -24,16 +24,16 @@
 package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.RichStatusExample;
+import com.lunarclient.apollo.example.modules.RichPresenceExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class RichStatusCommand implements CommandExecutor {
+public class RichPresenceCommand implements CommandExecutor {
 
-    private final RichStatusExample richStatusExample = ApolloExamplePlugin.getPlugin().getRichStatusExample();
+    private final RichPresenceExample richPresenceExample = ApolloExamplePlugin.getPlugin().getRichPresenceExample();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,25 +45,25 @@ public class RichStatusCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /richstatus <override|reset>");
+            player.sendMessage("Usage: /richpresence <override|reset>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
             case "override": {
-                this.richStatusExample.overrideRichStatusExample(player);
-                player.sendMessage("Overriding rich status....");
+                this.richPresenceExample.overrideServerRichPresenceExample(player);
+                player.sendMessage("Overriding rich presence....");
                 break;
             }
 
             case "reset": {
-                this.richStatusExample.resetRichStatusExample(player);
-                player.sendMessage("Resetting rich status...");
+                this.richPresenceExample.resetServerRichPresenceExample(player);
+                player.sendMessage("Resetting rich presence...");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /richstatus <override|reset>");
+                player.sendMessage("Usage: /richpresence <override|reset>");
                 break;
             }
         }

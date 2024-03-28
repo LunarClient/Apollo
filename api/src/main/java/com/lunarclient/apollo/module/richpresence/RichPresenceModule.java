@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.richstatus;
+package com.lunarclient.apollo.module.richpresence;
 
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
@@ -29,29 +29,29 @@ import com.lunarclient.apollo.recipients.Recipients;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Represents the rich status module.
+ * Represents the rich presence module.
  *
  * @since 1.1.2
  */
 @ApiStatus.NonExtendable
-@ModuleDefinition(id = "rich_status", name = "RichStatus")
-public abstract class RichStatusModule extends ApolloModule {
+@ModuleDefinition(id = "rich_presence", name = "RichPresence")
+public abstract class RichPresenceModule extends ApolloModule {
 
     /**
-     * Overrides the {@link ServerRichStatus} for the {@link Recipients}.
+     * Overrides the {@link ServerRichPresence} for the {@link Recipients}.
      *
-     * @param recipients the recipients that are receiving the packet
-     * @param richStatus the rich status
+     * @param recipients   the recipients that are receiving the packet
+     * @param richPresence the rich presence
      * @since 1.1.2
      */
-    public abstract void overrideRichStatus(Recipients recipients, ServerRichStatus richStatus);
+    public abstract void overrideServerRichPresence(Recipients recipients, ServerRichPresence richPresence);
 
     /**
-     * Resets the {@link ServerRichStatus} for the given {@link Recipients}.
+     * Resets the {@link ServerRichPresence} for the given {@link Recipients}.
      *
      * @param recipients the recipients that are receiving the packet
      * @since 1.1.2
      */
-    public abstract void resetRichStatus(Recipients recipients);
+    public abstract void resetServerRichPresence(Recipients recipients);
 
 }

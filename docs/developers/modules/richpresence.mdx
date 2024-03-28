@@ -1,4 +1,4 @@
-# Rich Status Module
+# Rich Presence Module
 
 ## Overview
 
@@ -8,11 +8,11 @@
 ### Sample Code
 
 ```java
-public void overrideRichStatusExample(Player viewer) {
+public void overrideServerRichPresenceExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
-        this.richStatusModule.overrideRichStatus(apolloPlayer, ServerRichStatus.builder()
+        this.richPresenceModule.overrideServerRichPresence(apolloPlayer, ServerRichPresence.builder()
             .gameName("BedWars")
             .gameVariantName("Solo")
             .gameState("In Game")
@@ -27,7 +27,7 @@ public void overrideRichStatusExample(Player viewer) {
 }
 ```
 
-### `ServerRichStatus` Options
+### `ServerRichPresence` Options
 
 `.gameName(String)` the name of the game the player is playing on.
 
@@ -77,11 +77,11 @@ public void overrideRichStatusExample(Player viewer) {
 .teamMaxSize(4)
 ```
 
-### Resetting the rich server for a player
+### Resetting the server rich presence for a player
 
 ```java
-public void resetRichStatusExample(Player viewer) {
+public void resetServerRichPresenceExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.richStatusModule::resetRichStatus);
+    apolloPlayerOpt.ifPresent(this.richPresenceModule::resetServerRichPresence);
 }
 ```

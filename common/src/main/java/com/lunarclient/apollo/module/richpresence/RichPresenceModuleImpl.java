@@ -21,64 +21,64 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.richstatus;
+package com.lunarclient.apollo.module.richpresence;
 
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
-import com.lunarclient.apollo.richstatus.v1.OverrideServerRichStatusMessage;
-import com.lunarclient.apollo.richstatus.v1.ResetServerRichStatusMessage;
+import com.lunarclient.apollo.richpresence.v1.OverrideServerRichPresenceMessage;
+import com.lunarclient.apollo.richpresence.v1.ResetServerRichPresenceMessage;
 import lombok.NonNull;
 
 /**
- * Provides the rich status module.
+ * Provides the rich presence module.
  *
  * @since 1.1.2
  */
-public final class RichStatusModuleImpl extends RichStatusModule {
+public final class RichPresenceModuleImpl extends RichPresenceModule {
 
     @Override
-    public void overrideRichStatus(@NonNull Recipients recipients, @NonNull ServerRichStatus richStatus) {
-        OverrideServerRichStatusMessage.Builder builder = OverrideServerRichStatusMessage.newBuilder()
-            .setTeamCurrentSize(richStatus.getTeamCurrentSize())
-            .setTeamMaxSize(richStatus.getTeamMaxSize());
+    public void overrideServerRichPresence(@NonNull Recipients recipients, @NonNull ServerRichPresence richPresence) {
+        OverrideServerRichPresenceMessage.Builder builder = OverrideServerRichPresenceMessage.newBuilder()
+            .setTeamCurrentSize(richPresence.getTeamCurrentSize())
+            .setTeamMaxSize(richPresence.getTeamMaxSize());
 
-        String gameName = richStatus.getGameName();
+        String gameName = richPresence.getGameName();
         if (gameName != null) {
             builder.setGameName(gameName);
         }
 
-        String gameVariantName = richStatus.getGameVariantName();
+        String gameVariantName = richPresence.getGameVariantName();
         if (gameVariantName != null) {
             builder.setGameVariantName(gameVariantName);
         }
 
-        String gameState = richStatus.getGameState();
+        String gameState = richPresence.getGameState();
         if (gameState != null) {
             builder.setGameState(gameState);
         }
 
-        String playerState = richStatus.getPlayerState();
+        String playerState = richPresence.getPlayerState();
         if (playerState != null) {
             builder.setPlayerState(playerState);
         }
 
-        String mapName = richStatus.getMapName();
+        String mapName = richPresence.getMapName();
         if (mapName != null) {
             builder.setMapName(mapName);
         }
 
-        String subServerName = richStatus.getSubServerName();
+        String subServerName = richPresence.getSubServerName();
         if (subServerName != null) {
             builder.setSubServer(subServerName);
         }
 
-        OverrideServerRichStatusMessage message = builder.build();
+        OverrideServerRichPresenceMessage message = builder.build();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void resetRichStatus(@NonNull Recipients recipients) {
-        ResetServerRichStatusMessage message = ResetServerRichStatusMessage.getDefaultInstance();
+    public void resetServerRichPresence(@NonNull Recipients recipients) {
+        ResetServerRichPresenceMessage message = ResetServerRichPresenceMessage.getDefaultInstance();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 

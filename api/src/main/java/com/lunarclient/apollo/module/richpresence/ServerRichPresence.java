@@ -21,20 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.richstatus;
+package com.lunarclient.apollo.module.richpresence;
 
 import lombok.Builder;
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents a server rich status for the rich status module.
+ * Represents a server rich presence for the rich presence module.
  *
  * @since 1.1.2
  */
 @Getter
 @Builder
-public class ServerRichStatus {
+public class ServerRichPresence {
 
     /**
      * Returns the {@link String} name of the game the player is playing on (e.g. 'BedWars').
