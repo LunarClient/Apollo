@@ -67,6 +67,17 @@ public final class ModTitles {
         .build();
 
     /**
+     * Keep the title centered around the center of the mod on-screen.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> KEEP_TITLE_CENTERED = SimpleOption.<Boolean>builder()
+        .comment("Keep the title centered around the center of the mod on-screen")
+        .node("titles", "keep-title-centered").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.0.0
