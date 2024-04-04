@@ -25,6 +25,7 @@ package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.common.icon.ItemStackIcon;
+import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.module.cooldown.Cooldown;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
@@ -36,7 +37,7 @@ public class CooldownExample {
 
     private final CooldownModule cooldownModule = Apollo.getModuleManager().getModule(CooldownModule.class);
 
-    public void displayCooldownExample(Player viewer) {
+    public void displayCooldownItemExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
@@ -52,9 +53,30 @@ public class CooldownExample {
         });
     }
 
+    public void displayCooldownResourceExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            this.cooldownModule.displayCooldown(apolloPlayer, Cooldown.builder()
+                .name("lunar-cooldown")
+                .duration(Duration.ofSeconds(15))
+                .icon(SimpleResourceLocationIcon.builder()
+                    .resourceLocation("lunar:logo/logo-200x182.svg")
+                    .size(12)
+                    .build()
+                )
+                .build()
+            );
+        });
+    }
+
     public void removeCooldownExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown"));
+
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown");
+            this.cooldownModule.removeCooldown(apolloPlayer, "lunar-cooldown");
+        });
     }
 
     public void resetCooldownsExample(Player viewer) {
