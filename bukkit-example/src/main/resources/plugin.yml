@@ -34,6 +34,8 @@ commands:
         description: "Nick Hider!"
     notification:
         description: "Notifications!"
+    richpresence:
+        description: "Rich Presence!"
     serverrule:
         description: "Server Rule!"
     staffmod:
