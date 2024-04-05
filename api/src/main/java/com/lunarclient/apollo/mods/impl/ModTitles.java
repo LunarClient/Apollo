@@ -69,7 +69,7 @@ public final class ModTitles {
     /**
      * Keep the title centered around the center of the mod on-screen.
      *
-     * @since %release_version%
+     * @since 1.1.2
      */
     public static final SimpleOption<Boolean> KEEP_TITLE_CENTERED = SimpleOption.<Boolean>builder()
         .comment("Keep the title centered around the center of the mod on-screen")

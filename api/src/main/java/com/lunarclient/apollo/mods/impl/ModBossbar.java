@@ -89,7 +89,7 @@ public final class ModBossbar {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.2
      */
     public static final SimpleOption<Boolean> USE_MINECRAFT_GUISCALE = SimpleOption.<Boolean>builder()
         .node("bossbar", "use-minecraft-g-u-i-scale").type(TypeToken.get(Boolean.class))
