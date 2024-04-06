@@ -1,6 +1,6 @@
 name: Apollo-Example
 main: com.lunarclient.apollo.example.ApolloExamplePlugin
-version: 1.1.1
+version: 1.1.2
 author: Moonsworth
 depend: [ Apollo-Bukkit ]
 api-version: 1.13
@@ -34,6 +34,8 @@ commands:
         description: "Nick Hider!"
     notification:
         description: "Notifications!"
+    richpresence:
+        description: "Rich Presence!"
     serverrule:
         description: "Server Rule!"
     staffmod:
