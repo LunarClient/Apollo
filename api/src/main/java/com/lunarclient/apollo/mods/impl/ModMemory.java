@@ -173,7 +173,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.3
      */
     public static final SimpleOption<Boolean> COLOR_BASED_ON_USAGE = SimpleOption.<Boolean>builder()
         .node("memory", "color-based-on-usage").type(TypeToken.get(Boolean.class))
@@ -183,7 +183,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.3
      */
     public static final SimpleOption<Color> LOW_MEM_COLOR = SimpleOption.<Color>builder()
         .node("memory", "low-mem-color").type(TypeToken.get(Color.class))
@@ -193,7 +193,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.3
      */
     public static final SimpleOption<Color> MED_MEM_COLOR = SimpleOption.<Color>builder()
         .node("memory", "med-mem-color").type(TypeToken.get(Color.class))
@@ -203,7 +203,7 @@ public final class ModMemory {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.3
      */
     public static final SimpleOption<Color> HIGH_MEM_COLOR = SimpleOption.<Color>builder()
         .node("memory", "high-mem-color").type(TypeToken.get(Color.class))

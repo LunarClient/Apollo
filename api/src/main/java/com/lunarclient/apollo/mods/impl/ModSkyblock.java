@@ -78,7 +78,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.3
      */
     public static final SimpleOption<Boolean> SKYBLOCK_HIDE_HEARTS = SimpleOption.<Boolean>builder()
         .node("skyblock", "skyblock-hide-hearts").type(TypeToken.get(Boolean.class))
@@ -88,7 +88,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.3
      */
     public static final SimpleOption<Boolean> SKYBLOCK_HIDE_ABSORB = SimpleOption.<Boolean>builder()
         .node("skyblock", "skyblock-hide-absorb").type(TypeToken.get(Boolean.class))

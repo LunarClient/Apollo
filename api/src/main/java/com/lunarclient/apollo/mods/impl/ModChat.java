@@ -260,7 +260,7 @@ public final class ModChat {
     /**
      * Displays a preview of an image when hovering over it.
      *
-     * @since %release_version%
+     * @since 1.1.3
      */
     public static final SimpleOption<Boolean> HOVER_IMAGE_PREVIEW = SimpleOption.<Boolean>builder()
         .comment("Displays a preview of an image when hovering over it.")
@@ -271,7 +271,7 @@ public final class ModChat {
     /**
      * The minimum size for an image to be displayed, as a percentage of your screen.
      *
-     * @since %release_version%
+     * @since 1.1.3
      */
     public static final NumberOption<Double> MIN_IMAGE_SIZE = NumberOption.<Double>number()
         .comment("The minimum size for an image to be displayed, as a percentage of your screen.")
@@ -283,7 +283,7 @@ public final class ModChat {
     /**
      * The maximum size for an image to be displayed, as a percentage of your screen.
      *
-     * @since %release_version%
+     * @since 1.1.3
      */
     public static final NumberOption<Double> MAX_IMAGE_SIZE = NumberOption.<Double>number()
         .comment("The maximum size for an image to be displayed, as a percentage of your screen.")
