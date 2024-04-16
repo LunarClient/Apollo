@@ -78,6 +78,26 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_HEARTS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-hearts").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_ABSORB = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-absorb").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.9
      */
     public static final SimpleOption<Boolean> HIDE_MIDAS_STAFF = SimpleOption.<Boolean>builder()
