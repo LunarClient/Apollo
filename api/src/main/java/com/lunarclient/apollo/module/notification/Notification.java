@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.module.notification;
 
+import com.lunarclient.apollo.common.icon.Icon;
 import java.time.Duration;
 import lombok.Builder;
 import lombok.Getter;
@@ -78,10 +79,11 @@ public final class Notification {
      * <p>Represents an icon that will appear for the player
      * if empty (null) it'll display a generic info message</p>
      *
+     * @deprecated for removal since 1.1.3, use {@link Notification#icon} instead.
      * @return the notification resource location
      * @since 1.0.0
      */
-    @Nullable String resourceLocation;
+    @Deprecated @Nullable String resourceLocation;
 
     /**
      * Returns the notification {@link Duration} display time.
@@ -90,4 +92,16 @@ public final class Notification {
      * @since 1.0.0
      */
     Duration displayTime;
+
+    /**
+     * Returns the notification {@link Icon}.
+     *
+     * <p>Can be any of the icons found in {@link com.lunarclient.apollo.common.icon} package,
+     * for the most common use case, use {@link com.lunarclient.apollo.common.icon.ItemStackIcon}.</p>
+     *
+     * @return the notification icon
+     * @since 1.1.3
+     */
+    Icon icon;
+
 }

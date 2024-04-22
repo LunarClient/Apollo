@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.module.notification;
 
 import com.lunarclient.apollo.common.ApolloComponent;
+import com.lunarclient.apollo.common.icon.Icon;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.notification.v1.DisplayNotificationMessage;
 import com.lunarclient.apollo.notification.v1.ResetNotificationsMessage;
@@ -67,6 +68,11 @@ public final class NotificationModuleImpl extends NotificationModule {
         String resourceLocation = notification.getResourceLocation();
         if (resourceLocation != null) {
             builder.setResourceLocation(resourceLocation);
+        }
+
+        Icon icon = notification.getIcon();
+        if (icon != null) {
+            builder.setIcon(NetworkTypes.toProtobuf(icon));
         }
 
         DisplayNotificationMessage message = builder.build();
