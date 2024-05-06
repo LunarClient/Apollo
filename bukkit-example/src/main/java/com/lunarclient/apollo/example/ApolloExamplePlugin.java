@@ -63,6 +63,7 @@ import com.lunarclient.apollo.example.modules.ModSettingsExample;
 import com.lunarclient.apollo.example.modules.NametagExample;
 import com.lunarclient.apollo.example.modules.NickHiderExample;
 import com.lunarclient.apollo.example.modules.NotificationExample;
+import com.lunarclient.apollo.example.modules.PingMarkerExample;
 import com.lunarclient.apollo.example.modules.RichPresenceExample;
 import com.lunarclient.apollo.example.modules.ServerRuleExample;
 import com.lunarclient.apollo.example.modules.StaffModExample;
@@ -96,6 +97,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private NametagExample nametagExample;
     private NickHiderExample nickHiderExample;
     private NotificationExample notificationExample;
+    private PingMarkerExample pingMarkerExample;
     private RichPresenceExample richPresenceExample;
     private ServerRuleExample serverRuleExample;
     private StaffModExample staffModExample;
@@ -136,6 +138,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.nametagExample = new NametagExample();
         this.nickHiderExample = new NickHiderExample();
         this.notificationExample = new NotificationExample();
+        this.pingMarkerExample = new PingMarkerExample();
         this.richPresenceExample = new RichPresenceExample();
         this.serverRuleExample = new ServerRuleExample();
         this.staffModExample = new StaffModExample();
