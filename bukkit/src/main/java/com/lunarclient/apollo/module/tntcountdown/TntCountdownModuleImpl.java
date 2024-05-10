@@ -34,7 +34,6 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -103,7 +102,8 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     private void onTntSpawn(EntitySpawnEvent event) {
-        if (event.getEntityType() != EntityType.PRIMED_TNT) {
+        String entityName = event.getEntityType().name();
+        if (!entityName.equals("PRIMED_TNT") && !entityName.equals("TNT")) {
             return;
         }
 
