@@ -78,6 +78,26 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_HEARTS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-hearts").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_ABSORB = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-absorb").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.9
      */
     public static final SimpleOption<Boolean> HIDE_MIDAS_STAFF = SimpleOption.<Boolean>builder()
@@ -103,6 +123,17 @@ public final class ModSkyblock {
     public static final SimpleOption<Boolean> AUTO_COPY_RARE_DROPS = SimpleOption.<Boolean>builder()
         .comment("Automatically copies rare drops and pet drops to the clipboard.")
         .node("skyblock", "auto-copy-rare-drops").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Hides the hud previews in the edit hud layout menu if you're not currently on SkyBlock.
+     *
+     * @since 1.1.1
+     */
+    public static final SimpleOption<Boolean> ONLY_MOVERS_ON_SKYBLOCK = SimpleOption.<Boolean>builder()
+        .comment("Hides the hud previews in the edit hud layout menu if you're not currently on SkyBlock.")
+        .node("skyblock", "only-movers-on-skyblock").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

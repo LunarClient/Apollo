@@ -27,6 +27,7 @@ import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.NumberOption;
+import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Range;
@@ -51,9 +52,20 @@ public abstract class TntCountdownModule extends ApolloModule {
         .defaultValue(80).min(1).max(Integer.MAX_VALUE)
         .notifyClient().build();
 
+    /**
+     * Whether to override the amount of ticks for TNT ignited by a plugin.
+     *
+     * @since 1.1.0
+     */
+    public static final SimpleOption<Boolean> OVERRIDE_CUSTOM_TICKS = SimpleOption.<Boolean>builder()
+        .comment("Whether to override custom TNT explosion ticks.")
+        .node("override-custom-ticks").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
     TntCountdownModule() {
         this.registerOptions(
-            TntCountdownModule.TNT_TICKS
+            TntCountdownModule.TNT_TICKS,
+            TntCountdownModule.OVERRIDE_CUSTOM_TICKS
         );
     }
 

@@ -21,34 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.listeners;
+package com.lunarclient.apollo.example.modules;
 
-import com.lunarclient.apollo.event.ApolloListener;
-import com.lunarclient.apollo.event.Listen;
-import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
-import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.TeamExample;
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.module.nickhider.NickHiderModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import java.util.Optional;
 import org.bukkit.entity.Player;
 
-public class PlayerListener implements ApolloListener {
+public class NickHiderExample {
 
-    private final ApolloExamplePlugin plugin = ApolloExamplePlugin.getPlugin();
-    private final TeamExample.Team defaultTeam = this.plugin.getTeamExample().createTeam();
+    private final NickHiderModule nickHiderModule = Apollo.getModuleManager().getModule(NickHiderModule.class);
 
-    @Listen
-    private void onApolloRegister(ApolloRegisterPlayerEvent event) {
-        ApolloPlayer apolloPlayer = event.getPlayer();
-        Player player = (Player) apolloPlayer.getPlayer();
+    public void overrideNickExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.nickHiderModule.overrideNick(apolloPlayer, "Notch"));
+    }
 
-        // Default team view markers
-        this.defaultTeam.addMember(player);
-
-        this.plugin.getBeamExample().displayBeamExample(player);
-        this.plugin.getBorderExample().displayBorderExample(player);
-        this.plugin.getCooldownExample().displayCooldownItemExample(player);
-        this.plugin.getNametagExample().overrideNametagExample(player);
-        this.plugin.getWaypointExample().displayWaypointExample(player);
+    public void resetNickExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        apolloPlayerOpt.ifPresent(this.nickHiderModule::resetNick);
     }
 
 }

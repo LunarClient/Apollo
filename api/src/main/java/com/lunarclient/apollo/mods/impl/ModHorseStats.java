@@ -23,80 +23,68 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
-import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Allows you to hide, move or customize the Minecraft boss bar.
+ * Display the stats of the horse you are riding in the horse's inventory.
  *
- * @since 1.0.0
+ * @since 1.1.1
  */
-public final class ModBossbar {
+public final class ModHorseStats {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.1.1
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("bossbar", "enabled").type(TypeToken.get(Boolean.class))
+        .node("horse-stats", "enabled").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.1.1
      */
-    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
-        .node("bossbar", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+    public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
+        .node("horse-stats", "text-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.1.1
      */
-    public static final SimpleOption<Boolean> RENDER_BAR = SimpleOption.<Boolean>builder()
-        .node("bossbar", "render-bar").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Color> SPEED_COLOR = SimpleOption.<Color>builder()
+        .node("horse-stats", "speed-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.1.1
      */
-    public static final SimpleOption<Boolean> CUSTOM_BOSS_BAR = SimpleOption.<Boolean>builder()
-        .node("bossbar", "custom-boss-bar").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Color> JUMP_COLOR = SimpleOption.<Color>builder()
+        .node("horse-stats", "jump-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.1.1
      */
-    public static final SimpleOption<Color> BAR_COLOR = SimpleOption.<Color>builder()
-        .node("bossbar", "bar-color").type(TypeToken.get(Color.class))
+    public static final SimpleOption<Color> HEALTH_COLOR = SimpleOption.<Color>builder()
+        .node("horse-stats", "health-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.2
-     */
-    public static final SimpleOption<Boolean> USE_MINECRAFT_GUISCALE = SimpleOption.<Boolean>builder()
-        .node("bossbar", "use-minecraft-g-u-i-scale").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    private ModBossbar() {
+    private ModHorseStats() {
     }
 
 }

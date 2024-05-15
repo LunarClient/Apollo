@@ -24,16 +24,16 @@
 package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.CooldownExample;
+import com.lunarclient.apollo.example.modules.NickHiderExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class CooldownCommand implements CommandExecutor {
+public class NickHiderCommand implements CommandExecutor {
 
-    private final CooldownExample cooldownExample = ApolloExamplePlugin.getPlugin().getCooldownExample();
+    private final NickHiderExample nickHiderExample = ApolloExamplePlugin.getPlugin().getNickHiderExample();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,37 +45,25 @@ public class CooldownCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /cooldown <displayItem|displayResource|remove|reset>");
+            player.sendMessage("Usage: /nickhider <override|reset>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
-            case "displayitem": {
-                this.cooldownExample.displayCooldownItemExample(player);
-                player.sendMessage("Displaying cooldown item....");
-                break;
-            }
-
-            case "displayresource": {
-                this.cooldownExample.displayCooldownResourceExample(player);
-                player.sendMessage("Displaying cooldown resource....");
-                break;
-            }
-
-            case "remove": {
-                this.cooldownExample.removeCooldownExample(player);
-                player.sendMessage("Removing cooldown....");
+            case "override": {
+                this.nickHiderExample.overrideNickExample(player);
+                player.sendMessage("Overriding nick....");
                 break;
             }
 
             case "reset": {
-                this.cooldownExample.resetCooldownsExample(player);
-                player.sendMessage("Resetting cooldowns...");
+                this.nickHiderExample.resetNickExample(player);
+                player.sendMessage("Resetting nick...");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /cooldown <displayItem|displayResource|remove|reset>");
+                player.sendMessage("Usage: /nickhider <override|reset>");
                 break;
             }
         }

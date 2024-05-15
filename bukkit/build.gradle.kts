@@ -9,6 +9,7 @@ setupDynamicDependency("adventure4", "shadowJarAdventure4", "adventure/4/", "dep
 
 dependencies {
     compileOnly(libs.bukkit)
+    compileOnly(libs.protobuf)
 
     api(project(path = ":apollo-api", configuration = "shadow"))
     api(project(path = ":apollo-common", configuration = "shadow"))

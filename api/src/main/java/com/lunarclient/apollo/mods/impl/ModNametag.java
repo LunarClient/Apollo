@@ -66,17 +66,6 @@ public final class ModNametag {
         .build();
 
     /**
-     * An option to toggle LC logos in nametags.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> NAMETAG_LOGO = SimpleOption.<Boolean>builder()
-        .comment("An option to toggle LC logos in nametags")
-        .node("nametag", "nametag-logo").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
      * Determines if we should send the message when nametags are toggled.
      *
      * @since 1.0.0
@@ -95,6 +84,18 @@ public final class ModNametag {
     public static final NumberOption<Float> NAMETAG_BACKGROUND_OPACITY = NumberOption.<Float>number()
         .node("nametag", "nametag-background-opacity").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * An option to toggle LC logos in nametags.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> NAMETAG_LOGO = SimpleOption.<Boolean>builder()
+        .comment("An option to toggle LC logos in nametags")
+        .node("nametag", "nametag-logo").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
