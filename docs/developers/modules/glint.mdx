@@ -17,4 +17,8 @@ The glint module allows you to control, display, and override a custom glint eff
 
 ### How to set custom glint of an item
 
-You set a custom NBT, with the tag `{lunar:{glint:value}}` then set the `{value}` to the RGB color (as an integer) you want to display on the item. Example: `{lunar:{glint:65535}}` will display a light blue glint.
+You set a custom NBT, with the tag `{lunar:{glint:value}}` then set the `{value}` to the HEX color (as an string) format or the ARGB color (as an integer) you want to display on the item.
+
+Examples:
+- `{lunar:{glint:-65535}}` will display a light blue glint.
+- `{lunar:{glint:"#FFFF00"}}` will display a yellow glint.
