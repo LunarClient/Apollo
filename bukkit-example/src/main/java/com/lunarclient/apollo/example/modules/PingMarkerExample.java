@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.module.pingmarker.PingMarker;
 import com.lunarclient.apollo.module.pingmarker.PingMarkerModule;
@@ -45,6 +46,11 @@ public class PingMarkerExample {
             .type(type)
             .location(location)
             .color(Color.WHITE)
+            .icon(SimpleResourceLocationIcon.builder()
+                .resourceLocation("lunar:icons/fluent-black-circle-icon.svg")
+                .size(12)
+                .build()
+            )
             .duration(Duration.ofSeconds(3))
             .focus(true)
             .build());
