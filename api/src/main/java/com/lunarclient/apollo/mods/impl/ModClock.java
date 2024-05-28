@@ -180,6 +180,16 @@ public final class ModClock {
         .notifyClient()
         .build();
 
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_AM_PM = SimpleOption.<Boolean>builder()
+        .node("clock", "show-am-pm").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
     private ModClock() {
     }
 
