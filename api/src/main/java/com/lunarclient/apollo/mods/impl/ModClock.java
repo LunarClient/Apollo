@@ -183,7 +183,7 @@ public final class ModClock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.3
      */
     public static final SimpleOption<Boolean> SHOW_AM_PM = SimpleOption.<Boolean>builder()
         .node("clock", "show-am-pm").type(TypeToken.get(Boolean.class))

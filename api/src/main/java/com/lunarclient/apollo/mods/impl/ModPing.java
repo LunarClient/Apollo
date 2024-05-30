@@ -80,7 +80,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.3
      */
     public static final SimpleOption<Boolean> PING_SHOW_MS = SimpleOption.<Boolean>builder()
         .node("ping", "ping-show-ms").type(TypeToken.get(Boolean.class))

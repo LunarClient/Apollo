@@ -100,7 +100,7 @@ public final class ModTitles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.3
      */
     public static final SimpleOption<Boolean> USE_MINECRAFT_GUISCALE = SimpleOption.<Boolean>builder()
         .node("titles", "use-minecraft-g-u-i-scale").type(TypeToken.get(Boolean.class))
