@@ -1,0 +1,30 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Glint Module
+
+## Overview
+
+The glint module allows you to control, display, and override a custom glint effect on an item.
+
+- Adds the ability to add glint on none enchanted items.
+- Adds the ability to set custom glint colors.
+
+<Callout type="info">
+  This module is only supported for 1.7 to 1.12 versions of Lunar Client.
+</Callout>
+
+![Glint Module Example](https://i.imgur.com/UcIY0YO.png#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Set enchantment glints on any item with any color!</small>
+</div>
+
+## Integration
+
+### How to set custom glint of an item
+
+You set a custom NBT, with the tag `{lunar:{glint:value}}` then set the `{value}` to the HEX color (as an string) format or the ARGB color (as an integer) you want to display on the item.
+
+Examples:
+- `{lunar:{glint:-65535}}` will display a light blue glint.
+- `{lunar:{glint:"#FFFF00"}}` will display a yellow glint.
