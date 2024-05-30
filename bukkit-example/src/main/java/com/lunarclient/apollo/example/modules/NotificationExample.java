@@ -24,8 +24,6 @@
 package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.common.icon.ItemStackIcon;
-import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.module.notification.Notification;
 import com.lunarclient.apollo.module.notification.NotificationModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
@@ -39,49 +37,21 @@ public class NotificationExample {
 
     private final NotificationModule notificationModule = Apollo.getModuleManager().getModule(NotificationModule.class);
 
-    public void displayNotificationItemExample(Player viewer) {
+    private final Notification uhcAnnouncement = Notification.builder()
+        .titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
+        .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
+            .appendNewline()
+            .append(Component.text("Get ready!", NamedTextColor.WHITE))
+            .appendNewline()
+            .append(Component.text("Good luck!", NamedTextColor.GOLD))
+        )
+        .resourceLocation("icons/golden_apple.png") // This field is optional
+        .displayTime(Duration.ofSeconds(5))
+        .build();
+
+    public void displayNotificationExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-        apolloPlayerOpt.ifPresent(apolloPlayer -> {
-            this.notificationModule.displayNotification(apolloPlayer, Notification.builder()
-                .titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
-                .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
-                    .appendNewline()
-                    .append(Component.text("Get ready!", NamedTextColor.WHITE))
-                    .appendNewline()
-                    .append(Component.text("Good luck!", NamedTextColor.GOLD))
-                )
-                .displayTime(Duration.ofSeconds(5))
-                .icon(ItemStackIcon.builder()
-                    .itemName("GOLDEN_APPLE")
-                    .build()
-                )
-                .build()
-            );
-        });
-    }
-
-    public void displayNotificationResourceExample(Player viewer) {
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-        apolloPlayerOpt.ifPresent(apolloPlayer -> {
-            this.notificationModule.displayNotification(apolloPlayer, Notification.builder()
-                .titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
-                .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
-                    .appendNewline()
-                    .append(Component.text("Get ready!", NamedTextColor.WHITE))
-                    .appendNewline()
-                    .append(Component.text("Good luck!", NamedTextColor.GOLD))
-                )
-                .displayTime(Duration.ofSeconds(5))
-                .icon(SimpleResourceLocationIcon.builder()
-                    .resourceLocation("lunar:logo/logo-200x182.svg")
-                    .size(12)
-                    .build()
-                )
-                .build()
-            );
-        });
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.notificationModule.displayNotification(apolloPlayer, this.uhcAnnouncement));
     }
 
     public void resetNotificationsExample(Player viewer) {

@@ -45,20 +45,14 @@ public class NotificationCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /notification <displayItem|displayResource|reset>");
+            player.sendMessage("Usage: /notification <display|reset>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
-            case "displayitem": {
-                this.notificationExample.displayNotificationItemExample(player);
-                player.sendMessage("Displaying notification item....");
-                break;
-            }
-
-            case "displayresource": {
-                this.notificationExample.displayNotificationResourceExample(player);
-                player.sendMessage("Displaying notification resource....");
+            case "display": {
+                this.notificationExample.displayNotificationExample(player);
+                player.sendMessage("Displaying notification....");
                 break;
             }
 
@@ -69,7 +63,7 @@ public class NotificationCommand implements CommandExecutor {
             }
 
             default: {
-                player.sendMessage("Usage: /notification <displayItem|displayResource|reset>");
+                player.sendMessage("Usage: /notification <display|reset>");
                 break;
             }
         }
