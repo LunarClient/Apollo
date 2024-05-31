@@ -80,6 +80,16 @@ public final class ModPing {
     /**
      * No documentation available.
      *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> PING_SHOW_MS = SimpleOption.<Boolean>builder()
+        .node("ping", "ping-show-ms").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.1.1
      */
     public static final SimpleOption<Color> PING_PREFIX_COLOR = SimpleOption.<Color>builder()
