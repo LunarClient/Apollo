@@ -13,7 +13,7 @@ The transfer module allows you to transfer players from one server to another, w
 When you combine the usage of the ping packet and transfer packet, you can do connection-based optimizing for your players.
 
 <Callout type="warning">
-  Players are prompted with a confirmation screen, where they can accept or decline the transfer-packet.
+  Players are prompted with a confirmation screen, where they can accept or decline the transfer-packet. However, the prompt can be skipped via the transfer consent DNS record. See the section below for more info.
 </Callout>
 
 ![Transfer Module Example](https://i.imgur.com/TjdBfYn.png#center)
@@ -21,6 +21,49 @@ When you combine the usage of the ping packet and transfer packet, you can do co
 <div style={{ textAlign: "center" }}>
     <small>Attempt to transfer users from one server to another! (1.20.4 & lower)</small>
 </div>
+
+## Transfer Consent DNS Record
+
+Instead of requiring users to click "Accept" on the transfer popup, transfers can also be auto-accepted by the target server. This produces a smoother user experience, without the friction of manually needing to accept.
+
+The intent of the confirmation screen is to ensure users are aware they're changing to a third-party server. However, many use cases of the transfer
+packet involve moving around the same server, or between IPs owned by the same party. In these cases, the confirmation can be skipped entirely if
+the **target** server has whitelisted the **sender** server in a `mc_transfer_accept_from` TXT DNS record.
+
+### Building the whitelist
+When attempting to transfer to a server, Lunar Client first performs a DNS lookup for TXT records at the target server's IP. For example, if directed to connect to `na.lunar.gg`, the client will send a TXT DNS query for `na.lunar.gg`.
+
+The results of this query are split by a comma (`,`), and added to the whitelist. The same query is then sent for any parent domains. For example, if the user is connecting to `foo.na.lunar.gg`, the effective whitelist of sender servers is the **combination** of the results for `foo.na.lunar.gg`, `na.lunar.gg`, and `lunar.gg`.
+
+This hierarchy method is intended to allow transfering to dynamically generated subdomains, without requiring a TXT record be set on each of them.
+
+For example, if the following DNS records are present in your DNS provider:
+
+* na.lunar.gg `TXT mc_transfer_accept_from=*.hypixel.net`
+* lunar.gg `TXT mc_transfer_accept_from=*.lunar.gg,lunar.gg`
+
+When transfering to `na.lunar.gg`, the effective whitelist would be:
+* `*.hypixel.net`
+* `*.lunar.gg`
+* `lunar.gg`
+
+When transfering to `lunar.gg` (or any other subdomains, like `eu.lunar.gg`), the effective whitelist would be:
+* `*.lunar.gg`
+* `lunar.gg`
+
+### Checking the whitelist
+Once a whitelist of allowed sender IPs has been built, Lunar Client checks if the IP the user is currently connected to is in this whitelist. If it is, the transfer is accepted immediately. If it is not, the user receives a transfer popup.
+
+Note that wildcards are accepted. For example, `*.lunar.gg` will allow `na.lunar.gg`, `eu.lunar.gg`, `sa.lunar.gg`, etc. to transfer to this server.
+
+### Practical Examples
+
+If you own `example.com` and want to auto-accept transfers between any subdomains, create the following records:
+* `example.com` -> `TXT mc_transfer_accept_from=*.example.com,example.com`
+
+If you own `example.com` and `server.net`, and want to auto-accept transfers between them, create the following records:
+* `example.com` -> `TXT mc_transfer_accept_from=*.example.com,example.com,*.server.net,server.net`
+* `server.net` -> `TXT mc_transfer_accept_from=*.example.com,example.com,*.server.net,server.net`
 
 ## Integration
 
