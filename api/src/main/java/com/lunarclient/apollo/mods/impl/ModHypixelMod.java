@@ -129,8 +129,8 @@ public final class ModHypixelMod {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> LEVEL_HEAD = SimpleOption.<Boolean>builder()
-        .node("hypixel-mod", "level-head").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> HYPIXEL_AUTOCOMPLETE = SimpleOption.<Boolean>builder()
+        .node("hypixel-mod", "hypixel-autocomplete").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -139,8 +139,8 @@ public final class ModHypixelMod {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> HYPIXEL_AUTOCOMPLETE = SimpleOption.<Boolean>builder()
-        .node("hypixel-mod", "hypixel-autocomplete").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> LEVEL_HEAD = SimpleOption.<Boolean>builder()
+        .node("hypixel-mod", "level-head").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
