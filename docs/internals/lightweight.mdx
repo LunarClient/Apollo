@@ -25,10 +25,6 @@ The message format used to communicate, follows a loosely structured JSON schema
 ### Usage Methods 
 Explore each method by cycling through each tab, to find the best fit for your requirements and needs.
 
-<Tabs items={['Protos Library & Native Serialization', 'Manual JSON Object Construction', 'Direct JSON String Serialization']}>
-
-<Tab>
-
 ### Method 1: Using the `apollo-protos` library and Protobuf Native Serialization
 
 This method leverages the apollo-protos library and protobuf's native serialization mechanism, which offers efficient serialization and maintains strong typing and schema validation. It involves creating a type registry, serializing messages into protobuf format, and then converting them into JSON for transmission.
@@ -96,9 +92,7 @@ This method leverages the apollo-protos library and protobuf's native serializat
     }
     ```
 
-</Tab>
-
-<Tab>
+---
 
 ### Method 2: Manual JSON Object Construction
 
@@ -144,9 +138,7 @@ This method involves manually constructing JSON objects using a JSON library (e.
         player.sendPluginMessage(this, "apollo:json", waypointObject.toString().getBytes());
         ```
 
-</Tab>
-
-<Tab>
+---
 
 ### Method 3: Direct JSON String Serialization
 
@@ -165,8 +157,3 @@ This method directly uses JSON strings to send the messages. The JSON strings ar
     player.sendPluginMessage(this, "apollo:json", enableModuleData.getBytes());
     player.sendPluginMessage(this, "apollo:json", displayWaypointData.getBytes());
     ```
-
-
-</Tab>
-
-</Tabs>
