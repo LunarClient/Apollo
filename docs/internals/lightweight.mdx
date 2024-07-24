@@ -1,3 +1,5 @@
+import { Tabs } from 'nextra/components'
+
 # Lightweight
 
 Our lightweight integration allows for Apollo features to be used, without the need for running the entire Apollo plugin. We will introduce you to three different methods that all achieve the same goal, while utilizing separate approaches. At the end of the day, all the methods displayed send the JSON message through the plugin messaging channel `apollo:json`. Each method offers different trade-offs between complexity, flexibility, and performance. Choose the method that best fits your use case and environment.
@@ -24,6 +26,10 @@ The message format used to communicate, follows a loosely structured JSON schema
 
 ### Usage Methods 
 Explore each method by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Protos Library & Native Serialization', 'Manual JSON Object Construction', 'Direct JSON String Serialization']}>
+
+<Tab>
 
 ### Method 1: Using the `apollo-protos` library and Protobuf Native Serialization
 
@@ -92,7 +98,9 @@ This method leverages the apollo-protos library and protobuf's native serializat
     }
     ```
 
----
+</Tab>
+
+<Tab>
 
 ### Method 2: Manual JSON Object Construction
 
@@ -138,7 +146,9 @@ This method involves manually constructing JSON objects using a JSON library (e.
         player.sendPluginMessage(this, "apollo:json", waypointObject.toString().getBytes());
         ```
 
----
+</Tab>
+
+<Tab>
 
 ### Method 3: Direct JSON String Serialization
 
@@ -157,3 +167,8 @@ This method directly uses JSON strings to send the messages. The JSON strings ar
     player.sendPluginMessage(this, "apollo:json", enableModuleData.getBytes());
     player.sendPluginMessage(this, "apollo:json", displayWaypointData.getBytes());
     ```
+
+
+</Tab>
+
+</Tabs>
