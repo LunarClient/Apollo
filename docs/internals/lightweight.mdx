@@ -1,10 +1,10 @@
 # Lightweight
 
-Our lightweight integration allows for Apollo features to be used, without the need for running the entire Apollo plugin. We will introduce you to three different methods that all achieve the same goal, while utilizing separate approaches. At the end of the day, all the methods displayed send the JSON message through the plugin messaging channel `"apollo:json"`. Each method offers different trade-offs between complexity, flexibility, and performance. Choose the method that best fits your use case and environment.
+Our lightweight integration allows for Apollo features to be used, without the need for running the entire Apollo plugin. We will introduce you to three different methods that all achieve the same goal, while utilizing separate approaches. At the end of the day, all the methods displayed send the JSON message through the plugin messaging channel `apollo:json`. Each method offers different trade-offs between complexity, flexibility, and performance. Choose the method that best fits your use case and environment.
 
 ## Message format
 
-The message format used to communicate, follows a loosely structured JSON schema. The schema is defined using Protocol Buffers (protobuf) and includes various fields to achieve the end result, in this example-case displaying a waypoint. While the fields will change depending on the feature you're trying to implement, the `@type` will also remain. It should always be at the top, as shown. You can locate all the `@type` protos from this page: https://buf.build/lunarclient/apollo
+The message format used to communicate, follows a loosely structured JSON schema. The schema is defined using Protocol Buffers (protobuf) and includes various fields to achieve the end result, in this example-case displaying a waypoint. While the fields will change depending on the feature you're trying to implement, the `@type` will also remain. It should always be at the top, as shown. You can locate all the `@type` protos from this page: https://buf.build/lunarclient/apollo.
 ```JSON
 {
   "@type": "type.googleapis.com/lunarclient.apollo.waypoint.v1.DisplayWaypointMessage", // The protobuf message type
@@ -26,7 +26,7 @@ The message format used to communicate, follows a loosely structured JSON schema
 
 This method leverages the apollo-protos library and protobuf's native serialization mechanism, which offers efficient serialization and maintains strong typing and schema validation. It involves creating a type registry, serializing messages into protobuf format, and then converting them into JSON for transmission. 
 
-#### Steps
+**Steps**
 
 1. **Create a TypeRegistry**: Register the message types you are using.
     ```java
@@ -95,7 +95,7 @@ This method leverages the apollo-protos library and protobuf's native serializat
 
 This method involves manually constructing JSON objects using a JSON library (e.g., Gson) and then converting these objects into byte arrays for transmission. It allows for dynamic and programmatic construction of JSON objects, offering flexibility in modifying the JSON structure. Available fields for each message, including their types, are available on the Buf Schema Registry at https://buf.build/lunarclient/apollo.
 
-#### Steps
+**Steps**
 
 1. **Create JSON objects**:
     - **Enable Module Message**:
@@ -141,7 +141,7 @@ This method involves manually constructing JSON objects using a JSON library (e.
 
 This method directly uses JSON strings to send the messages. The JSON strings are manually constructed to match the required format, offering a simple and straightforward approach without requiring external dependencies for serialization. Available fields for each message, including their types, are available on the Buf Schema Registry at https://buf.build/lunarclient/apollo.
 
-#### Steps
+**Steps**
 
 1. **Construct JSON strings**:
     ```java
