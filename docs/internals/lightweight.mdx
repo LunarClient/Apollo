@@ -25,8 +25,10 @@ The message format used to communicate, follows a loosely structured JSON schema
 ### Usage Methods 
 Explore each method by cycling through each tab, to find the best fit for your requirements and needs.
 
-<Tabs items={['Apollo-Protos Library & Native Serialization', 'Manual JSON Object Construction', 'Direct JSON String Serialization']}>
+<Tabs items={['Protos Library & Native Serialization', 'Manual JSON Object Construction', 'Direct JSON String Serialization']}>
+
 <Tab>
+
 ### Method 1: Using the `apollo-protos` library and Protobuf Native Serialization
 
 This method leverages the apollo-protos library and protobuf's native serialization mechanism, which offers efficient serialization and maintains strong typing and schema validation. It involves creating a type registry, serializing messages into protobuf format, and then converting them into JSON for transmission.
@@ -93,9 +95,11 @@ This method leverages the apollo-protos library and protobuf's native serializat
         throw new RuntimeException(e);
     }
     ```
-   
+
 </Tab>
+
 <Tab>
+
 ### Method 2: Manual JSON Object Construction
 
 This method involves manually constructing JSON objects using a JSON library (e.g., Gson) and then converting these objects into byte arrays for transmission. It allows for dynamic and programmatic construction of JSON objects, offering flexibility in modifying the JSON structure. Available fields for each message, including their types, are available on the Buf Schema Registry at https://buf.build/lunarclient/apollo.
@@ -141,7 +145,9 @@ This method involves manually constructing JSON objects using a JSON library (e.
         ```
 
 </Tab>
+
 <Tab>
+
 ### Method 3: Direct JSON String Serialization
 
 This method directly uses JSON strings to send the messages. The JSON strings are manually constructed to match the required format, offering a simple and straightforward approach without requiring external dependencies for serialization. Available fields for each message, including their types, are available on the Buf Schema Registry at https://buf.build/lunarclient/apollo.
@@ -159,5 +165,8 @@ This method directly uses JSON strings to send the messages. The JSON strings ar
     player.sendPluginMessage(this, "apollo:json", enableModuleData.getBytes());
     player.sendPluginMessage(this, "apollo:json", displayWaypointData.getBytes());
     ```
+
+
 </Tab>
+
 </Tabs>
