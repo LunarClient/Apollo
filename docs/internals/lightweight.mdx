@@ -1,0 +1,181 @@
+# Lightweight
+
+This documentation covers three different methods for using Apollo features without using the API. Each method utilizes different approaches to achieve the same goal. All three methods ultimately send the JSON through the plugin message channel `"apollo:json"`.
+
+## Message format
+
+```JSON
+{
+  "@type": "type.googleapis.com/lunarclient.apollo.waypoint.v1.DisplayWaypointMessage", // The protobuf message type
+  "name": "KoTH",
+  "location": {
+    "world": "world",
+    "x": 150,
+    "y": 100,
+    "z": -150
+  },
+  "color": {
+    "color": 255
+  },
+  "preventRemoval": true
+}
+```
+
+The methods are:
+
+1. **Using the `apollo-protos` library and protobuf native serialization**
+2. **Manual JSON object construction**
+3. **Direct JSON string serialization**
+
+## Method 1: Using the `apollo-protos` library and Protobuf Native Serialization
+
+This method leverages the `apollo-protos` library and protobuf's native serialization mechanism. It involves creating a type registry, serializing messages into protobuf format, and then converting them into JSON for transmission.
+
+### Steps
+
+1. **Create a TypeRegistry**: Register the message types you are using.
+    ```java
+    TypeRegistry registry = TypeRegistry.newBuilder()
+        .add(DisplayWaypointMessage.getDescriptor())
+        .add(ConfigurableSettings.getDescriptor())
+        .add(OverrideConfigurableSettingsMessage.getDescriptor())
+        .build();
+    ```
+
+2. **Create the protobuf printer with the registry**:
+    ```java
+    JsonFormat.Printer printer = JsonFormat.printer().usingTypeRegistry(registry);
+    ```
+
+3. **Construct the messages**:
+    - **Enable Module Message**:
+        ```java
+        OverrideConfigurableSettingsMessage enableModuleMessage = OverrideConfigurableSettingsMessage.newBuilder()
+            .addConfigurableSettings(
+                ConfigurableSettings.newBuilder()
+                    .setApolloModule("waypoint")
+                    .setEnable(true)
+                    .build()
+            ).build();
+        ```
+
+    - **Display Waypoint Message**:
+        ```java
+        DisplayWaypointMessage waypointMessage = DisplayWaypointMessage.newBuilder()
+            .setName("KoTH")
+            .setLocation(
+                BlockLocation.newBuilder()
+                    .setWorld("world")
+                    .setX(150)
+                    .setY(100)
+                    .setZ(-150)
+                    .build())
+            .setColor(
+                Color.newBuilder()
+                    .setColor(255)
+                    .build())
+            .setPreventRemoval(true)
+            .build();
+        ```
+
+4. **Pack the messages into `Any` type and serialize**:
+    ```java
+    Any enableModuleAny = Any.pack(enableModuleMessage);
+    Any displayWaypointAny = Any.pack(waypointMessage);
+
+    try {
+        byte[] enableModuleBytes = printer.print(enableModuleAny).getBytes();
+        byte[] displayWaypointBytes = printer.print(displayWaypointAny).getBytes();
+
+        player.sendPluginMessage(this, "apollo:json", enableModuleBytes);
+        player.sendPluginMessage(this, "apollo:json", displayWaypointBytes);
+    } catch (InvalidProtocolBufferException e) {
+        throw new RuntimeException(e);
+    }
+    ```
+
+### Advantages
+
+- Leverages protobuf's efficient serialization.
+- Maintains strong typing and schema validation.
+
+---
+
+## Method 2: Manual JSON Object Construction
+
+This method involves manually constructing JSON objects using a JSON library (e.g., Gson) and then converting these objects into byte arrays for transmission. Available fields for each message including their type are available on the Buf Schema Registry, at https://buf.build/lunarclient/apollo
+
+### Steps
+
+1. **Create JSON objects**:
+    - **Enable Module Message**:
+        ```java
+        JsonObject configurableSetting = new JsonObject();
+        configurableSetting.addProperty("apolloModule", "waypoint");
+        configurableSetting.addProperty("enable", true);
+
+        JsonArray configurableSettingsArray = new JsonArray();
+        configurableSettingsArray.add(configurableSetting);
+
+        JsonObject settingsObject = new JsonObject();
+        settingsObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage");
+        settingsObject.add("configurableSettings", configurableSettingsArray);
+
+        player.sendPluginMessage(this, "apollo:json", settingsObject.toString().getBytes());
+        ```
+
+    - **Display Waypoint Message**:
+        ```java
+        JsonObject location = new JsonObject();
+        location.addProperty("world", "world");
+        location.addProperty("x", 150);
+        location.addProperty("y", 100);
+        location.addProperty("z", -150);
+
+        JsonObject color = new JsonObject();
+        color.addProperty("color", 255);
+
+        JsonObject waypointObject = new JsonObject();
+        waypointObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.waypoint.v1.DisplayWaypointMessage");
+        waypointObject.addProperty("name", "KoTH");
+        waypointObject.add("location", location);
+        waypointObject.add("color", color);
+        waypointObject.addProperty("preventRemoval", true);
+
+        player.sendPluginMessage(this, "apollo:json", waypointObject.toString().getBytes());
+        ```
+
+### Advantages
+
+- Allows for dynamic and programmatic construction of JSON objects.
+- Flexibility in modifying the JSON structure.
+
+---
+
+## Method 3: Direct JSON String Serialization
+
+This method directly uses JSON strings to send the messages. The JSON strings are manually constructed to match the required format.
+Available fields for each message including their type are available on the Buf Schema Registry, at https://buf.build/lunarclient/apollo
+
+### Steps
+
+1. **Construct JSON strings**:
+    ```java
+    String enableModuleData = "{\"@type\":\"type.googleapis.com/lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage\",\"configurableSettings\":[{\"apolloModule\":\"waypoint\",\"enable\":true}]}";
+    String displayWaypointData = "{\"@type\":\"type.googleapis.com/lunarclient.apollo.waypoint.v1.DisplayWaypointMessage\",\"name\":\"KoTH\",\"location\":{\"world\":\"world\",\"x\":150,\"y\":100,\"z\":-150},\"color\":{\"color\":255},\"preventRemoval\":true}";
+    ```
+
+2. **Send the JSON strings as plugin messages**:
+    ```java
+    player.sendPluginMessage(this, "apollo:json", enableModuleData.getBytes());
+    player.sendPluginMessage(this, "apollo:json", displayWaypointData.getBytes());
+    ```
+
+### Advantages
+
+- Simple and straightforward.
+- No external dependencies required for serialization.
+
+---
+
+Each method offers different trade-offs between complexity, flexibility, and performance. Choose the method that best fits your use case and environment.
