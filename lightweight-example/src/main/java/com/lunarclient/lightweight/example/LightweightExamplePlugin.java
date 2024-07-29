@@ -53,7 +53,12 @@ public class LightweightExamplePlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        // Register the normal apollo channel for player detection
+        Bukkit.getMessenger().registerIncomingPluginChannel(this, REGISTER_CHANNEL, (s, player, bytes) -> { });
+
+        // Register the lightweight channel for apollo features
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, LIGHTWEIGHT_CHANNEL);
+
         Bukkit.getPluginManager().registerEvents(this, this);
     }
 
