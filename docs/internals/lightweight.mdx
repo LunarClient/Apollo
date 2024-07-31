@@ -98,6 +98,36 @@ This method leverages the apollo-protos library and protobuf's native serializat
     }
     ```
 
+## Protobuf Repository
+
+<Tabs items={['Maven', 'Gradle (Groovy)', 'Gradle (Kotlin)']}>
+  <Tab>
+    ```xml filename="pom.xml"
+    <dependencies>
+        <dependency>
+            <groupId>com.lunarclient</groupId>
+            <artifactId>apollo-protos</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    ```
+  </Tab>
+  <Tab>
+    ```groovy filename="build.gradle"
+    dependencies {
+        compileOnly 'com.lunarclient:apollo-protos:1.0-SNAPSHOT'
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```kotlin filename="build.gradle.kts"
+    dependencies {
+        compileOnly("com.lunarclient:apollo-protos:1.0-SNAPSHOT")
+    }
+    ```
+  </Tab>
+</Tabs>
+
 </Tab>
 
 <Tab>
