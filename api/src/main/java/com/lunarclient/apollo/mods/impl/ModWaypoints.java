@@ -55,17 +55,6 @@ public final class ModWaypoints {
         .build();
 
     /**
-     * Adds a waypoint if coordinates are clicked in chat.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> ADD_FROM_CHAT = SimpleOption.<Boolean>builder()
-        .comment("Adds a waypoint if coordinates are clicked in chat.")
-        .node("waypoints", "add-from-chat").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
      * No documentation available.
      *
      * @since 1.0.0
@@ -147,6 +136,18 @@ public final class ModWaypoints {
     public static final NumberOption<Float> ICON_SCALE = NumberOption.<Float>number()
         .node("waypoints", "icon-scale").type(TypeToken.get(Float.class))
         .min(0.1F).max(3.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * Adds a waypoint if coordinates are clicked in chat.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> ADD_FROM_CHAT = SimpleOption.<Boolean>builder()
+        .comment("Adds a waypoint if coordinates are clicked in chat.")
+        .node("waypoints", "add-from-chat").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
