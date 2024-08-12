@@ -31,7 +31,7 @@ Explore each method by cycling through each tab, to find the best fit for your r
 
 <Tab>
 
-### Method 1: Using the `apollo-protos` library and Protobuf Native Serialization
+### Method 1: Using the `apollo-protos` & 'protobuf-java-util' libraries
 
 This method leverages the apollo-protos library and protobuf's native serialization mechanism, which offers efficient serialization and maintains strong typing and schema validation. It involves creating a type registry, serializing messages into protobuf format, and then converting them into JSON for transmission.
 
@@ -98,31 +98,59 @@ This method leverages the apollo-protos library and protobuf's native serializat
     }
     ```
 
-## Protobuf Repository
+## Adding the repository and dependencies
 
 <Tabs items={['Maven', 'Gradle (Groovy)', 'Gradle (Kotlin)']}>
   <Tab>
     ```xml filename="pom.xml"
+    <repositories>
+        <repository>
+            <id>lunarclient</id>
+            <url>https://repo.lunarclient.dev</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>com.lunarclient</groupId>
             <artifactId>apollo-protos</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java-util</artifactId>
+            <version>3.25.0</version>
+        </dependency>
     </dependencies>
     ```
   </Tab>
   <Tab>
     ```groovy filename="build.gradle"
+    repositories {
+        maven {
+            name = 'lunarclient'
+            url = 'https://repo.lunarclient.dev'
+        }
+    }
+
     dependencies {
-        compileOnly 'com.lunarclient:apollo-protos:1.0-SNAPSHOT'
+        api 'com.lunarclient:apollo-protos:1.0-SNAPSHOT'
+        api 'com.google.protobuf:protobuf-java-util:3.25.0'
     }
     ```
   </Tab>
   <Tab>
     ```kotlin filename="build.gradle.kts"
+    repositories {
+        maven {
+            name = "lunarclient"
+            url = uri("https://repo.lunarclient.dev")
+        }
+    }
+
     dependencies {
-        compileOnly("com.lunarclient:apollo-protos:1.0-SNAPSHOT")
+        api("com.lunarclient:apollo-protos:1.0-SNAPSHOT")
+        api("com.google.protobuf:protobuf-java-util:3.25.0")
     }
     ```
   </Tab>
