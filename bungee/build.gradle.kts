@@ -16,4 +16,6 @@ dependencies {
 
     "baseAdventure4"(project(path = ":extra:apollo-extra-adventure4", configuration = "base"))
     "adventure4"(project(path = ":extra:apollo-extra-adventure4", configuration = "dependency"))
+
+    "baseAdventure4"(libs.adventure.platform.bungee)
 }
