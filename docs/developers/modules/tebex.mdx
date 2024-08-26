@@ -9,15 +9,14 @@ TODO
 ### Sample Code
 
 ```java
-public void displayTebexEmbeddedCheckoutExample(Player viewer) {
+public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketId) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
-        if (apolloPlayer.getTebexCheckoutSupportType() == TebexCheckoutSupportType.UNSUPPORTED) {
+        if (apolloPlayer.getTebexEmbeddedCheckoutSupport() == TebexEmbeddedCheckoutSupport.UNSUPPORTED) {
             return;
         }
 
-        // The basket ids expire, so this example may not work
-        this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayer, "c4rodk-b8d3439942d859decf45f6ed8b4dad2455f06738");
+        this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayer, basketId);
     });
 }
 ```

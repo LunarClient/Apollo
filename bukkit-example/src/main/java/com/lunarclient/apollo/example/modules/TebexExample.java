@@ -24,7 +24,7 @@
 package com.lunarclient.apollo.example.modules;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.module.tebex.TebexCheckoutSupportType;
+import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.module.tebex.TebexModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Optional;
@@ -34,15 +34,14 @@ public class TebexExample {
 
     private final TebexModule tebexModule = Apollo.getModuleManager().getModule(TebexModule.class);
 
-    public void displayTebexEmbeddedCheckoutExample(Player viewer) {
+    public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketId) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
-            if (apolloPlayer.getTebexCheckoutSupportType() == TebexCheckoutSupportType.UNSUPPORTED) {
+            if (apolloPlayer.getTebexEmbeddedCheckoutSupport() == TebexEmbeddedCheckoutSupport.UNSUPPORTED) {
                 return;
             }
 
-            // The basket ids expire, so this example may not work
-            this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayer, "c4rodk-b8d3439942d859decf45f6ed8b4dad2455f06738");
+            this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayer, basketId);
         });
     }
 

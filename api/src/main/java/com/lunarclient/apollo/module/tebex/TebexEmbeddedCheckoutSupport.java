@@ -28,7 +28,7 @@ package com.lunarclient.apollo.module.tebex;
  *
  * @since 1.1.5
  */
-public enum TebexCheckoutSupportType {
+public enum TebexEmbeddedCheckoutSupport {
 
     /**
      * External checkout is supported as a game overlay.

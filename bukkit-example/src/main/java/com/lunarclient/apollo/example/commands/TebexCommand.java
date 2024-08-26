@@ -44,20 +44,20 @@ public class TebexCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (args.length != 1) {
-            player.sendMessage("Usage: /tebex <display>");
+        if (args.length != 2) {
+            player.sendMessage("Usage: /tebex <display> <basketId>");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
             case "display": {
-                this.tebexExample.displayTebexEmbeddedCheckoutExample(player);
+                this.tebexExample.displayTebexEmbeddedCheckoutExample(player, args[1]);
                 player.sendMessage("Displaying checkout....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /tebex <display>");
+                player.sendMessage("Usage: /tebex <display> <basketId>");
                 break;
             }
         }

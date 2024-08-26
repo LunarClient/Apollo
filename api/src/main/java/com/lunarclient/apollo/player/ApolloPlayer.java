@@ -27,7 +27,7 @@ import com.lunarclient.apollo.client.mod.LunarClientMod;
 import com.lunarclient.apollo.client.version.LunarClientVersion;
 import com.lunarclient.apollo.client.version.MinecraftVersion;
 import com.lunarclient.apollo.common.location.ApolloLocation;
-import com.lunarclient.apollo.module.tebex.TebexCheckoutSupportType;
+import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.recipients.Recipients;
@@ -136,11 +136,11 @@ public interface ApolloPlayer extends Recipients {
     List<LunarClientMod> getInstalledMods();
 
     /**
-     * Returns the {@link TebexCheckoutSupportType} type.
+     * Returns the {@link TebexEmbeddedCheckoutSupport} type.
      *
      * @return the Tebex checkout support type
      * @since 1.1.5
      */
-    TebexCheckoutSupportType getTebexCheckoutSupportType();
+    TebexEmbeddedCheckoutSupport getTebexEmbeddedCheckoutSupport();
 
 }
