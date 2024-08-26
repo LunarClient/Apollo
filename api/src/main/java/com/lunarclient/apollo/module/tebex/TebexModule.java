@@ -38,12 +38,12 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class TebexModule extends ApolloModule {
 
     /**
-     * Displays the checkout with the provided {@link String} basked id to the {@link Recipients}.
+     * Displays the checkout with the provided {@link String} basked ident to the {@link Recipients}.
      *
-     * @param recipients the recipients that are receiving the packet
-     * @param basketId   the tebex basket id
+     * @param recipients  the recipients that are receiving the packet
+     * @param basketIdent the tebex basket ident
      * @since 1.1.5
      */
-    public abstract void displayTebexEmbeddedCheckout(Recipients recipients, String basketId);
+    public abstract void displayTebexEmbeddedCheckout(Recipients recipients, String basketIdent);
 
 }

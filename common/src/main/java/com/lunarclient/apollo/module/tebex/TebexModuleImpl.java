@@ -36,9 +36,9 @@ import lombok.NonNull;
 public final class TebexModuleImpl extends TebexModule {
 
     @Override
-    public void displayTebexEmbeddedCheckout(@NonNull Recipients recipients, @NonNull String basketId) {
+    public void displayTebexEmbeddedCheckout(@NonNull Recipients recipients, @NonNull String basketIdent) {
         OpenTebexEmbeddedCheckoutMessage message = OpenTebexEmbeddedCheckoutMessage.newBuilder()
-            .setBasketIdent(basketId)
+            .setBasketIdent(basketIdent)
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));

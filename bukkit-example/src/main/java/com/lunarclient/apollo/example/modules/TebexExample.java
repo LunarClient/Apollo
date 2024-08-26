@@ -34,14 +34,14 @@ public class TebexExample {
 
     private final TebexModule tebexModule = Apollo.getModuleManager().getModule(TebexModule.class);
 
-    public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketId) {
+    public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             if (apolloPlayer.getTebexEmbeddedCheckoutSupport() == TebexEmbeddedCheckoutSupport.UNSUPPORTED) {
                 return;
             }
 
-            this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayer, basketId);
+            this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayer, basketIdent);
         });
     }
 

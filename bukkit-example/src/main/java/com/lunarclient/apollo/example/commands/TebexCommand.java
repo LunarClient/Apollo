@@ -45,7 +45,7 @@ public class TebexCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 2) {
-            player.sendMessage("Usage: /tebex <display> <basketId>");
+            player.sendMessage("Usage: /tebex <display> <basketIdent>");
             return true;
         }
 
@@ -57,7 +57,7 @@ public class TebexCommand implements CommandExecutor {
             }
 
             default: {
-                player.sendMessage("Usage: /tebex <display> <basketId>");
+                player.sendMessage("Usage: /tebex <display> <basketIdent>");
                 break;
             }
         }
