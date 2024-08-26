@@ -32,6 +32,7 @@ import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.player.ApolloPlayerHandshakeEvent;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
+import com.lunarclient.apollo.module.tebex.TebexCheckoutSupportType;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.player.v1.PlayerHandshakeMessage;
 import java.util.Collection;
@@ -136,12 +137,25 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
                 .build()
         ).collect(Collectors.toList());
 
+        TebexCheckoutSupportType checkoutSupportType;
+        try {
+            checkoutSupportType = TebexCheckoutSupportType.values()[message.getEmbeddedCheckoutSupportValue() - 1];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            checkoutSupportType = TebexCheckoutSupportType.UNSUPPORTED;
+        }
+
         EventBus.EventResult<ApolloPlayerHandshakeEvent> result = EventBus.getBus()
-            .post(new ApolloPlayerHandshakeEvent(player, minecraftVersion, lunarClientVersion, mods));
+            .post(new ApolloPlayerHandshakeEvent(player, minecraftVersion, lunarClientVersion, mods, checkoutSupportType));
 
         for (Throwable throwable : result.getThrowing()) {
             throwable.printStackTrace();
         }
+
+        AbstractApolloPlayer apolloPlayer = ((AbstractApolloPlayer) player);
+        apolloPlayer.setMinecraftVersion(minecraftVersion);
+        apolloPlayer.setLunarClientVersion(lunarClientVersion);
+        apolloPlayer.setInstalledMods(mods);
+        apolloPlayer.setTebexCheckoutSupportType(checkoutSupportType);
     }
 
 }

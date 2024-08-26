@@ -1,0 +1,23 @@
+# Tebex Module
+
+## Overview
+
+TODO
+
+## Integration
+
+### Sample Code
+
+```java
+public void displayTebexEmbeddedCheckoutExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        if (apolloPlayer.getTebexCheckoutSupportType() == TebexCheckoutSupportType.UNSUPPORTED) {
+            return;
+        }
+
+        // The basket ids expire, so this example may not work
+        this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayer, "c4rodk-b8d3439942d859decf45f6ed8b4dad2455f06738");
+    });
+}
+```

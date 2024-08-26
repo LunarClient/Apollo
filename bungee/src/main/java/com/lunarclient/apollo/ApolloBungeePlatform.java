@@ -57,6 +57,8 @@ import com.lunarclient.apollo.module.stopwatch.StopwatchModule;
 import com.lunarclient.apollo.module.stopwatch.StopwatchModuleImpl;
 import com.lunarclient.apollo.module.team.TeamModule;
 import com.lunarclient.apollo.module.team.TeamModuleImpl;
+import com.lunarclient.apollo.module.tebex.TebexModule;
+import com.lunarclient.apollo.module.tebex.TebexModuleImpl;
 import com.lunarclient.apollo.module.title.TitleModule;
 import com.lunarclient.apollo.module.title.TitleModuleImpl;
 import com.lunarclient.apollo.module.transfer.TransferModule;
@@ -114,6 +116,7 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(StaffModModule.class, new StaffModModuleImpl())
             .addModule(StopwatchModule.class, new StopwatchModuleImpl())
             .addModule(TeamModule.class, new TeamModuleImpl())
+            .addModule(TebexModule.class, new TebexModuleImpl())
             .addModule(TitleModule.class, new TitleModuleImpl())
             .addModule(TransferModule.class, new TransferModuleImpl())
             .addModule(VignetteModule.class, new VignetteModuleImpl())
