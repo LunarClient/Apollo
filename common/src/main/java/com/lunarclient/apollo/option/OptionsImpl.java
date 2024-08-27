@@ -276,9 +276,12 @@ public class OptionsImpl implements Options {
             if (current instanceof String) {
                 String string = (String) current;
                 return valueBuilder.setStringValue(string).build();
-            } else {
+            } else if (current instanceof Color) {
                 Color currentColor = (Color) current;
                 return valueBuilder.setStringValue(Integer.toHexString(currentColor.getRGB())).build();
+            } else {
+                throw new RuntimeException("Unable to wrap Color value of type '" + clazz.getSimpleName() + "'!");
+
             }
         }
 
