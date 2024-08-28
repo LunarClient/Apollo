@@ -84,6 +84,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
@@ -100,12 +101,17 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
 
     @Getter private final Options options = new OptionsImpl(null);
     @Getter private final JavaPlugin plugin;
+
+    @Getter private BukkitAudiences audiences;
     private ApolloStats stats;
 
     @Override
     public void onEnable() {
         ApolloBukkitPlatform.instance = this;
+
+        this.audiences = BukkitAudiences.create(this.plugin);
         this.stats = new BukkitApolloStats();
+
         ApolloManager.bootstrap(this);
 
         new ApolloPlayerListener(this.plugin);

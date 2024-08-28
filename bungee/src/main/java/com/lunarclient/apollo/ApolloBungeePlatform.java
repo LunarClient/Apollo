@@ -73,6 +73,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
@@ -89,12 +90,17 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
 
     @Getter private final Options options = new OptionsImpl(null);
     @Getter private final Plugin plugin;
+
+    @Getter private BungeeAudiences audiences;
     private ApolloStats stats;
 
     @Override
     public void onEnable() {
         ApolloBungeePlatform.instance = this;
+
+        this.audiences = BungeeAudiences.create(this.plugin);
         this.stats = new BungeeApolloStats();
+
         ApolloManager.bootstrap(this);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
