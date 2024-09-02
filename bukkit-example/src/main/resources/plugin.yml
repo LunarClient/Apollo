@@ -44,6 +44,8 @@ commands:
         description: "Stopwatch!"
     team:
         description: "Teams!"
+    tebex:
+        description: "Tebex!"
     title:
         description: "Titles!"
     tntcountdown:

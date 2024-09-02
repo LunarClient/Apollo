@@ -23,11 +23,16 @@
  */
 package com.lunarclient.apollo.player;
 
+import com.lunarclient.apollo.client.mod.LunarClientMod;
+import com.lunarclient.apollo.client.version.LunarClientVersion;
+import com.lunarclient.apollo.client.version.MinecraftVersion;
 import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.world.ApolloWorld;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import net.kyori.adventure.audience.ForwardingAudience;
@@ -105,5 +110,38 @@ public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
      * @since 1.0.9
      */
     Object getPlayer();
+
+    // TODO: nullable or optional?
+    /**
+     * Returns the {@link MinecraftVersion} the player is running.
+     *
+     * @return the minecraft version
+     * @since 1.1.5
+     */
+    MinecraftVersion getMinecraftVersion();
+
+    /**
+     * Returns the {@link LunarClientVersion} the player is running.
+     *
+     * @return the lunar client version
+     * @since 1.1.5
+     */
+    LunarClientVersion getLunarClientVersion();
+
+    /**
+     * Returns a {@link List} of {@link LunarClientMod} the player has installed.
+     *
+     * @return the installed mods
+     * @since 1.1.5
+     */
+    List<LunarClientMod> getInstalledMods();
+
+    /**
+     * Returns the {@link TebexEmbeddedCheckoutSupport} type.
+     *
+     * @return the Tebex checkout support type
+     * @since 1.1.5
+     */
+    TebexEmbeddedCheckoutSupport getTebexEmbeddedCheckoutSupport();
 
 }
