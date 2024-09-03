@@ -1,0 +1,56 @@
+name: Apollo-Example
+main: com.lunarclient.apollo.example.ApolloExamplePlugin
+version: 1.1.4
+author: Moonsworth
+depend: [ Apollo-Bukkit ]
+api-version: 1.13
+
+commands:
+    beam:
+        description: "Beams!"
+    border:
+        description: "Borders!"
+    chat:
+        description: "Chat!"
+    coloredfire:
+        description: "Colored Fires!"
+    combat:
+        description: "Combat!"
+    cooldown:
+        description: "Cooldowns!"
+    entity:
+        description: "Entity!"
+    glow:
+        description: "Glow!"
+    hologram:
+        description: "Holograms!"
+    limb:
+        description: "Limb!"
+    modsettings:
+        description: "ModSettings!"
+    nametag:
+        description: "Nametags!"
+    nickhider:
+        description: "Nick Hider!"
+    notification:
+        description: "Notifications!"
+    richpresence:
+        description: "Rich Presence!"
+    serverrule:
+        description: "Server Rule!"
+    staffmod:
+        description: "Staff Mods!"
+    stopwatch:
+        description: "Stopwatch!"
+    team:
+        description: "Teams!"
+    title:
+        description: "Titles!"
+    tntcountdown:
+        description: "TNT Countdown!"
+    transfer:
+        description: "Transfer!"
+    vignette:
+        description: "Vignette!"
+    waypoint:
+        description: "Waypoints!"
