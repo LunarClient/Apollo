@@ -24,25 +24,20 @@
 package com.lunarclient.apollo.example.utilities;
 
 import com.google.protobuf.Timestamp;
-import com.lunarclient.apollo.common.cuboid.Cuboid2D;
-import com.lunarclient.apollo.common.cuboid.Cuboid3D;
-import com.lunarclient.apollo.common.icon.AdvancedResourceLocationIcon;
-import com.lunarclient.apollo.common.icon.Icon;
-import com.lunarclient.apollo.common.icon.ItemStackIcon;
-import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
-import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Uuid;
-import com.lunarclient.apollo.module.packetenrichment.PlayerInfo;
+import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid2D;
+import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid3D;
+import com.lunarclient.apollo.example.utilities.objects.icon.AdvancedResourceLocationIcon;
+import com.lunarclient.apollo.example.utilities.objects.icon.Icon;
+import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
+import com.lunarclient.apollo.example.utilities.objects.icon.SimpleResourceLocationIcon;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import java.awt.*;
 import java.time.Duration;
 import java.util.UUID;
-
-import static com.lunarclient.apollo.util.Ranges.checkPositive;
-import static com.lunarclient.apollo.util.Ranges.checkRange;
 
 /**
  * Utility class for converting objects to and from their
@@ -276,19 +271,19 @@ public final class ProtobufUtil {
 
             builder.setSimpleResourceLocation(com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon.newBuilder()
                 .setResourceLocation(simple.getResourceLocation())
-                .setSize(checkPositive(simple.getSize(), "SimpleResourceLocationIcon#size"))
+                .setSize(simple.getSize())
                 .build());
         } else if (icon instanceof AdvancedResourceLocationIcon) {
             AdvancedResourceLocationIcon advanced = (AdvancedResourceLocationIcon) icon;
 
             builder.setAdvancedResourceLocation(com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon.newBuilder()
                 .setResourceLocation(advanced.getResourceLocation())
-                .setWidth(checkPositive(advanced.getWidth(), "AdvancedResourceLocationIcon#width"))
-                .setHeight(checkPositive(advanced.getHeight(), "AdvancedResourceLocationIcon#height"))
-                .setMinU(checkRange(advanced.getMinU(), 0, 1, "AdvancedResourceLocationIcon#minU"))
-                .setMaxU(checkRange(advanced.getMaxU(), 0, 1, "AdvancedResourceLocationIcon#maxU"))
-                .setMinV(checkRange(advanced.getMinV(), 0, 1, "AdvancedResourceLocationIcon#minV"))
-                .setMaxV(checkRange(advanced.getMaxV(), 0, 1, "AdvancedResourceLocationIcon#maxV"))
+                .setWidth(advanced.getWidth())
+                .setHeight(advanced.getHeight())
+                .setMinU(advanced.getMinU())
+                .setMaxU(advanced.getMaxU())
+                .setMinV(advanced.getMinV())
+                .setMaxV(advanced.getMaxV())
                 .build());
         }
 

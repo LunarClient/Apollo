@@ -25,18 +25,26 @@ package com.lunarclient.apollo.example;
 
 import com.lunarclient.apollo.example.listeners.PlayerDetectionListener;
 import com.lunarclient.apollo.example.modules.json.BeamJsonExample;
+import com.lunarclient.apollo.example.modules.json.ChatJsonExample;
 import com.lunarclient.apollo.example.modules.json.ColoredFireJsonExample;
+import com.lunarclient.apollo.example.modules.json.CombatJsonExample;
+import com.lunarclient.apollo.example.modules.json.CooldownJsonExample;
 import com.lunarclient.apollo.example.modules.json.EntityJsonExample;
 import com.lunarclient.apollo.example.modules.json.GlowJsonExample;
+import com.lunarclient.apollo.example.modules.json.HologramJsonExample;
 import com.lunarclient.apollo.example.modules.json.NickHiderJsonExample;
 import com.lunarclient.apollo.example.modules.json.StopwatchJsonExample;
 import com.lunarclient.apollo.example.modules.json.TransferJsonExample;
 import com.lunarclient.apollo.example.modules.json.VignetteJsonExample;
 import com.lunarclient.apollo.example.modules.json.WaypointJsonExample;
 import com.lunarclient.apollo.example.modules.proto.BeamProtoExample;
+import com.lunarclient.apollo.example.modules.proto.ChatProtoExample;
 import com.lunarclient.apollo.example.modules.proto.ColoredFireProtoExample;
+import com.lunarclient.apollo.example.modules.proto.CombatProtoExample;
+import com.lunarclient.apollo.example.modules.proto.CooldownProtoExample;
 import com.lunarclient.apollo.example.modules.proto.EntityProtoExample;
 import com.lunarclient.apollo.example.modules.proto.GlowProtoExample;
+import com.lunarclient.apollo.example.modules.proto.HologramProtoExample;
 import com.lunarclient.apollo.example.modules.proto.NickHiderProtoExample;
 import com.lunarclient.apollo.example.modules.proto.StopwatchProtoExample;
 import com.lunarclient.apollo.example.modules.proto.TransferProtoExample;
@@ -50,15 +58,19 @@ public class ApolloExamplePlugin extends JavaPlugin {
 
     // TODO:
     // snake / camel
-    // Finish utils
+    // Finish utils & merge utils
 
     @Getter
     private static ApolloExamplePlugin plugin;
 
     private BeamJsonExample beamJsonExample;
+    private ChatJsonExample chatJsonExample;
     private ColoredFireJsonExample coloredFireJsonExample;
+    private CombatJsonExample combatJsonExample;
+    private CooldownJsonExample cooldownJsonExample;
     private EntityJsonExample entityJsonExample;
     private GlowJsonExample glowJsonExample;
+    private HologramJsonExample hologramJsonExample;
     private NickHiderJsonExample nickHiderJsonExample;
     private StopwatchJsonExample stopwatchJsonExample;
     private TransferJsonExample transferJsonExample;
@@ -66,9 +78,13 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private WaypointJsonExample waypointJsonExample;
 
     private BeamProtoExample beamProtoExample;
+    private ChatProtoExample chatProtoExample;
     private ColoredFireProtoExample coloredFireProtoExample;
+    private CombatProtoExample combatProtoExample;
+    private CooldownProtoExample cooldownProtoExample;
     private EntityProtoExample entityProtoExample;
     private GlowProtoExample glowProtoExample;
+    private HologramProtoExample hologramProtoExample;
     private NickHiderProtoExample nickHiderProtoExample;
     private StopwatchProtoExample stopwatchProtoExample;
     private TransferProtoExample transferProtoExample;
@@ -91,9 +107,13 @@ public class ApolloExamplePlugin extends JavaPlugin {
 
     private void registerModuleExamples() {
         this.beamJsonExample = new BeamJsonExample();
+        this.chatJsonExample = new ChatJsonExample();
         this.coloredFireJsonExample = new ColoredFireJsonExample();
+        this.combatJsonExample = new CombatJsonExample();
+        this.cooldownJsonExample = new CooldownJsonExample();
         this.entityJsonExample = new EntityJsonExample();
         this.glowJsonExample = new GlowJsonExample();
+        this.hologramJsonExample = new HologramJsonExample();
         this.nickHiderJsonExample = new NickHiderJsonExample();
         this.stopwatchJsonExample = new StopwatchJsonExample();
         this.transferJsonExample = new TransferJsonExample();
@@ -101,9 +121,13 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.waypointJsonExample = new WaypointJsonExample();
 
         this.beamProtoExample = new BeamProtoExample();
+        this.chatProtoExample = new ChatProtoExample();
         this.coloredFireProtoExample = new ColoredFireProtoExample();
+        this.combatProtoExample = new CombatProtoExample();
+        this.cooldownProtoExample = new CooldownProtoExample();
         this.entityProtoExample = new EntityProtoExample();
         this.glowProtoExample = new GlowProtoExample();
+        this.hologramProtoExample = new HologramProtoExample();
         this.nickHiderProtoExample = new NickHiderProtoExample();
         this.stopwatchProtoExample = new StopwatchProtoExample();
         this.transferProtoExample = new TransferProtoExample();
