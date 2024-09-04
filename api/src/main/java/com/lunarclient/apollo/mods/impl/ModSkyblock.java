@@ -138,6 +138,28 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * Provides QOL for the Diana mayor that helps the user quickly locate burrows.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> GRIFFIN_BURROW_ESTIMATES = SimpleOption.<Boolean>builder()
+        .comment("Provides QOL for the Diana mayor that helps the user quickly locate burrows.")
+        .node("skyblock", "griffin-burrow-estimates").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Makes Giant HP more visible by showing their HP at their feet.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_GIANT_HPAT_FEET = SimpleOption.<Boolean>builder()
+        .comment("Makes Giant HP more visible by showing their HP at their feet.")
+        .node("skyblock", "show-giant-h-p-at-feet").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.
      *
      * @since 1.0.9
@@ -243,6 +265,16 @@ public final class ModSkyblock {
     public static final SimpleOption<Boolean> GRAVITY_WELL_WAYPOINTS = SimpleOption.<Boolean>builder()
         .comment("Shows the positions where you can trap the gray blazes.")
         .node("skyblock", "gravity-well-waypoints").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_KUUDRA_HEALTH = SimpleOption.<Boolean>builder()
+        .node("skyblock", "show-kuudra-health").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
