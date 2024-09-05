@@ -273,7 +273,16 @@ public class OptionsImpl implements Options {
 
             return valueBuilder.setListValue(listBuilder.build()).build();
         } else if (Color.class.isAssignableFrom(clazz)) {
-            return valueBuilder.setStringValue((String) current).build();
+            if (current instanceof String) {
+                String string = (String) current;
+                return valueBuilder.setStringValue(string).build();
+            } else if (current instanceof Color) {
+                Color currentColor = (Color) current;
+                return valueBuilder.setStringValue(Integer.toHexString(currentColor.getRGB())).build();
+            } else {
+                throw new RuntimeException("Unable to wrap Color value of type '" + clazz.getSimpleName() + "'!");
+
+            }
         }
 
         throw new RuntimeException("Unable to wrap value of type '" + clazz.getSimpleName() + "'!");
