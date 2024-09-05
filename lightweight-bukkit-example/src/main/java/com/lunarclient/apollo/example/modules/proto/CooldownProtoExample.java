@@ -26,7 +26,7 @@ package com.lunarclient.apollo.example.modules.proto;
 import com.lunarclient.apollo.cooldown.v1.DisplayCooldownMessage;
 import com.lunarclient.apollo.cooldown.v1.RemoveCooldownMessage;
 import com.lunarclient.apollo.cooldown.v1.ResetCooldownsMessage;
-import com.lunarclient.apollo.example.utilities.PacketUtil;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
 import com.lunarclient.apollo.example.utilities.objects.icon.SimpleResourceLocationIcon;
@@ -45,7 +45,7 @@ public class CooldownProtoExample {
                 .build()))
             .build();
 
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     public void displayCooldownResourceExample(Player viewer) {
@@ -58,7 +58,7 @@ public class CooldownProtoExample {
                     .build()))
             .build();
 
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     public void removeCooldownExample(Player viewer) {
@@ -66,12 +66,12 @@ public class CooldownProtoExample {
             .setName("enderpearl-cooldown")
             .build();
 
-        PacketUtil.sendPacket(viewer, enderpearlMessage);
+        ProtobufPacketUtil.sendPacket(viewer, enderpearlMessage);
     }
 
     public void resetCooldownsExample(Player viewer) {
         ResetCooldownsMessage message = ResetCooldownsMessage.getDefaultInstance();
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
 }

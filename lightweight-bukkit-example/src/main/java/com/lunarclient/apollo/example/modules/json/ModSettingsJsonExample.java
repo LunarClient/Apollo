@@ -21,26 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.modules.proto;
+package com.lunarclient.apollo.example.modules.json;
 
-import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
-import com.lunarclient.apollo.nickhider.v1.OverrideNickHiderMessage;
-import com.lunarclient.apollo.nickhider.v1.ResetNickHiderMessage;
 import org.bukkit.entity.Player;
 
-public class NickHiderProtoExample {
+// TODO
+public class ModSettingsJsonExample {
 
-    public void overrideNickExample(Player viewer) {
-        OverrideNickHiderMessage message = OverrideNickHiderMessage.newBuilder()
-            .setNick("Notch")
-            .build();
-
-        ProtobufPacketUtil.sendPacket(viewer, message);
+    public void disableLightningModExample(Player viewer) {
     }
 
-    public void resetNickExample(Player viewer) {
-        ResetNickHiderMessage message = ResetNickHiderMessage.getDefaultInstance();
-        ProtobufPacketUtil.sendPacket(viewer, message);
+    public void rollbackLightningModEnabledState(Player viewer) {
+    }
+
+    public void broadcastDisableLightningModExample() {
     }
 
 }

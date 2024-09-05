@@ -24,22 +24,32 @@
 package com.lunarclient.apollo.example.modules.proto;
 
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
-import com.lunarclient.apollo.nickhider.v1.OverrideNickHiderMessage;
-import com.lunarclient.apollo.nickhider.v1.ResetNickHiderMessage;
+import com.lunarclient.apollo.staffmod.v1.DisableStaffModsMessage;
+import com.lunarclient.apollo.staffmod.v1.EnableStaffModsMessage;
+import com.lunarclient.apollo.staffmod.v1.StaffMod;
 import org.bukkit.entity.Player;
 
-public class NickHiderProtoExample {
+import java.util.Collections;
 
-    public void overrideNickExample(Player viewer) {
-        OverrideNickHiderMessage message = OverrideNickHiderMessage.newBuilder()
-            .setNick("Notch")
+public class StaffModProtoExample {
+
+    public void enableStaffModsExample(Player viewer) {
+        if (!viewer.hasPermission("apollo.staff")) {
+            return;
+        }
+
+        EnableStaffModsMessage message = EnableStaffModsMessage.newBuilder()
+            .addAllStaffMods(Collections.singletonList(StaffMod.STAFF_MOD_XRAY))
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
-    public void resetNickExample(Player viewer) {
-        ResetNickHiderMessage message = ResetNickHiderMessage.getDefaultInstance();
+    public void disableStaffModsExample(Player viewer) {
+        DisableStaffModsMessage message = DisableStaffModsMessage.newBuilder()
+            .addAllStaffMods(Collections.singletonList(StaffMod.STAFF_MOD_XRAY))
+            .build();
+
         ProtobufPacketUtil.sendPacket(viewer, message);
     }
 

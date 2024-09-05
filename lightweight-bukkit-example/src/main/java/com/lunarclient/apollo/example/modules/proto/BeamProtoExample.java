@@ -3,7 +3,7 @@ package com.lunarclient.apollo.example.modules.proto;
 import com.lunarclient.apollo.beam.v1.DisplayBeaconBeamMessage;
 import com.lunarclient.apollo.beam.v1.RemoveBeaconBeamMessage;
 import com.lunarclient.apollo.beam.v1.ResetBeaconBeamsMessage;
-import com.lunarclient.apollo.example.utilities.PacketUtil;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -19,7 +19,7 @@ public class BeamProtoExample {
             .setLocation(ProtobufUtil.toBlockLocationProtobuf(new Location(viewer.getWorld(), 0, 60, 0)))
             .build();
 
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     public void removeBeamExample(Player viewer) {
@@ -27,12 +27,12 @@ public class BeamProtoExample {
             .setId("spawn-beacon")
             .build();
 
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     public void resetBeamsExample(Player viewer) {
         ResetBeaconBeamsMessage message = ResetBeaconBeamsMessage.getDefaultInstance();
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
 }

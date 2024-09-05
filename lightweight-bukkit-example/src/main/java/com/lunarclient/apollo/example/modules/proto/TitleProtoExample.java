@@ -23,37 +23,43 @@
  */
 package com.lunarclient.apollo.example.modules.proto;
 
-import com.lunarclient.apollo.coloredfire.v1.OverrideColoredFireMessage;
-import com.lunarclient.apollo.coloredfire.v1.ResetColoredFireMessage;
-import com.lunarclient.apollo.coloredfire.v1.ResetColoredFiresMessage;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
+import com.lunarclient.apollo.title.v1.DisplayTitleMessage;
+import com.lunarclient.apollo.title.v1.ResetTitlesMessage;
+import com.lunarclient.apollo.title.v1.TitleType;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
-import java.util.UUID;
+import java.time.Duration;
 
-public class ColoredFireProtoExample {
+public class TitleProtoExample {
 
-    public void overrideColoredFireExample(UUID burningPlayer) {
-        OverrideColoredFireMessage message = OverrideColoredFireMessage.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(burningPlayer))
-            .setColor(ProtobufUtil.toProtobuf(Color.BLUE))
-            .build();
+    private final DisplayTitleMessage helloTitle = DisplayTitleMessage.newBuilder()
+        .setTitleType(TitleType.TITLE_TYPE_TITLE)
+        .setAdventureJsonMessage(null) // TODO
+        .setScale(1.0f)
+        .setFadeInTime(ProtobufUtil.toProtobuf(Duration.ofMillis(1500)))
+        .setDisplayTime(ProtobufUtil.toProtobuf(Duration.ofMillis(250)))
+        .setFadeOutTime(ProtobufUtil.toProtobuf(Duration.ofMillis(300)))
+        .build();
 
-        ProtobufPacketUtil.broadcastPacket(message);
+    private final DisplayTitleMessage interpolatedTitle = DisplayTitleMessage.newBuilder()
+        .setTitleType(TitleType.TITLE_TYPE_TITLE)
+        .setAdventureJsonMessage(null) // TODO
+        .setScale(0.1f)
+        .setInterpolationScale(1.0f)
+        .setInterpolationRate(0.01f)
+        .setFadeInTime(ProtobufUtil.toProtobuf(Duration.ofMillis(5000)))
+        .setDisplayTime(ProtobufUtil.toProtobuf(Duration.ofMillis(250)))
+        .setFadeOutTime(ProtobufUtil.toProtobuf(Duration.ofMillis(300)))
+        .build();
+
+    public void displayTitleExample(Player viewer) {
+        ProtobufPacketUtil.sendPacket(viewer, this.helloTitle);
     }
 
-    public void resetColoredFireExample(UUID burningPlayer) {
-        ResetColoredFireMessage message = ResetColoredFireMessage.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(burningPlayer))
-            .build();
-
-        ProtobufPacketUtil.broadcastPacket(message);
-    }
-
-    public void resetColoredFiresExample(Player viewer) {
-        ResetColoredFiresMessage message = ResetColoredFiresMessage.getDefaultInstance();
+    public void resetTitlesExample(Player viewer) {
+        ResetTitlesMessage message = ResetTitlesMessage.getDefaultInstance();
         ProtobufPacketUtil.sendPacket(viewer, message);
     }
 

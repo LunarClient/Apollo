@@ -13,11 +13,13 @@ import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.waypoint.v1.DisplayWaypointMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public final class PacketUtil {
+public final class ProtobufPacketUtil {
 
     private static final Pattern PROTO_MESSAGE_PATTERN = Pattern.compile("^com\\.lunarclient\\.apollo.*Message$");
     private static final JsonFormat.Printer PRINTER;
@@ -53,7 +55,16 @@ public final class PacketUtil {
         } catch (IOException ignored) { }
 
         // Create the protobuf printer with the registry
+        TypeRegistry registry = registryBuilder.build(); // TODO: Remove
         PRINTER = JsonFormat.printer().usingTypeRegistry(registryBuilder.build());
+
+        try {
+            Field field = TypeRegistry.class.getDeclaredField("types");
+            field.setAccessible(true);
+            System.out.println(field.get(registry));;
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void enableModule(Player player, String module) {
@@ -83,7 +94,6 @@ public final class PacketUtil {
 
         sendPacket(player, builder.build());
     }
-
 
     public static void sendPacket(Player player, GeneratedMessageV3 message) {
         Any any = Any.pack(message);

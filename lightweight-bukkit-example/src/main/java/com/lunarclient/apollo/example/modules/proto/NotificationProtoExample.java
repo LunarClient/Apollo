@@ -24,22 +24,34 @@
 package com.lunarclient.apollo.example.modules.proto;
 
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
-import com.lunarclient.apollo.nickhider.v1.OverrideNickHiderMessage;
-import com.lunarclient.apollo.nickhider.v1.ResetNickHiderMessage;
+import com.lunarclient.apollo.example.utilities.ProtobufUtil;
+import com.lunarclient.apollo.notification.v1.DisplayNotificationMessage;
+import com.lunarclient.apollo.notification.v1.ResetNotificationsMessage;
 import org.bukkit.entity.Player;
 
-public class NickHiderProtoExample {
+import java.time.Duration;
 
-    public void overrideNickExample(Player viewer) {
-        OverrideNickHiderMessage message = OverrideNickHiderMessage.newBuilder()
-            .setNick("Notch")
+public class NotificationProtoExample {
+
+    public void displayNotificationExample(Player viewer) {
+        // TODO
+        DisplayNotificationMessage message = DisplayNotificationMessage.newBuilder()
+//            .titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
+//            .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
+//                .appendNewline()
+//                .append(Component.text("Get ready!", NamedTextColor.WHITE))
+//                .appendNewline()
+//                .append(Component.text("Good luck!", NamedTextColor.GOLD))
+//            )
+            .setResourceLocation("icons/golden_apple.png") // This field is optional
+            .setDisplayTime(ProtobufUtil.toProtobuf(Duration.ofSeconds(5)))
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
-    public void resetNickExample(Player viewer) {
-        ResetNickHiderMessage message = ResetNickHiderMessage.getDefaultInstance();
+    public void resetNotificationsExample(Player viewer) {
+        ResetNotificationsMessage message = ResetNotificationsMessage.getDefaultInstance();
         ProtobufPacketUtil.sendPacket(viewer, message);
     }
 

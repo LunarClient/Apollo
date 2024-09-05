@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.example.modules.proto;
 
-import com.lunarclient.apollo.example.utilities.PacketUtil;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.glow.v1.OverrideGlowEffectMessage;
 import com.lunarclient.apollo.glow.v1.ResetGlowEffectMessage;
@@ -41,7 +41,7 @@ public class GlowProtoExample {
             .setColor(ProtobufUtil.toProtobuf(Color.RED))
             .build();
 
-        PacketUtil.broadcastPacket(message);
+        ProtobufPacketUtil.broadcastPacket(message);
     }
 
     public void resetGlowEffectExample(UUID glowingPlayer) {
@@ -49,12 +49,12 @@ public class GlowProtoExample {
             .setPlayerUuid(ProtobufUtil.toProtobuf(glowingPlayer))
             .build();
 
-        PacketUtil.broadcastPacket(message);
+        ProtobufPacketUtil.broadcastPacket(message);
     }
 
     public void resetGlowEffectsExample(Player viewer) {
         ResetGlowEffectsMessage message = ResetGlowEffectsMessage.getDefaultInstance();
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
 }

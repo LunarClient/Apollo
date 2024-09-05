@@ -1,6 +1,8 @@
 package com.lunarclient.apollo.example.utilities;
 
 import com.google.gson.JsonObject;
+import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid2D;
+import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid3D;
 import com.lunarclient.apollo.example.utilities.objects.icon.AdvancedResourceLocationIcon;
 import com.lunarclient.apollo.example.utilities.objects.icon.Icon;
 import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
@@ -63,6 +65,26 @@ public final class JsonUtil {
         entityIdObject.addProperty("entity_id", entity.getEntityId());
         entityIdObject.add("uuid", JsonUtil.createUuidObject(entity.getUniqueId()));
         return entityIdObject;
+    }
+
+    public static JsonObject createCuboid2DObject(Cuboid2D cuboid2D) {
+        JsonObject cuboid2DObject = new JsonObject();
+        cuboid2DObject.addProperty("min_x", cuboid2D.getMinX());
+        cuboid2DObject.addProperty("min_z", cuboid2D.getMinZ());
+        cuboid2DObject.addProperty("max_x", cuboid2D.getMaxX());
+        cuboid2DObject.addProperty("max_z", cuboid2D.getMaxZ());
+        return cuboid2DObject;
+    }
+
+    public static JsonObject createCuboid3DObject(Cuboid3D cuboid3D) {
+        JsonObject cuboid3DObject = new JsonObject();
+        cuboid3DObject.addProperty("min_x", cuboid3D.getMinX());
+        cuboid3DObject.addProperty("min_y", cuboid3D.getMinY());
+        cuboid3DObject.addProperty("min_z", cuboid3D.getMinZ());
+        cuboid3DObject.addProperty("max_x", cuboid3D.getMaxX());
+        cuboid3DObject.addProperty("max_y", cuboid3D.getMaxY());
+        cuboid3DObject.addProperty("max_z", cuboid3D.getMaxZ());
+        return cuboid3DObject;
     }
 
     public static JsonObject createIconObject(Icon icon) {

@@ -24,22 +24,29 @@
 package com.lunarclient.apollo.example.modules.proto;
 
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
-import com.lunarclient.apollo.nickhider.v1.OverrideNickHiderMessage;
-import com.lunarclient.apollo.nickhider.v1.ResetNickHiderMessage;
+import com.lunarclient.apollo.richpresence.v1.OverrideServerRichPresenceMessage;
+import com.lunarclient.apollo.richpresence.v1.ResetServerRichPresenceMessage;
 import org.bukkit.entity.Player;
 
-public class NickHiderProtoExample {
+public class RichPresenceProtoExample {
 
-    public void overrideNickExample(Player viewer) {
-        OverrideNickHiderMessage message = OverrideNickHiderMessage.newBuilder()
-            .setNick("Notch")
+    public void overrideServerRichPresenceExample(Player viewer) {
+        OverrideServerRichPresenceMessage message = OverrideServerRichPresenceMessage.newBuilder()
+            .setGameName("BedWars")
+            .setGameVariantName("Solo")
+            .setGameState("In Game")
+            .setPlayerState("Playing")
+            .setMapName("Winter")
+            .setSubServer("BW02")
+            .setTeamCurrentSize(3)
+            .setTeamMaxSize(4)
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
-    public void resetNickExample(Player viewer) {
-        ResetNickHiderMessage message = ResetNickHiderMessage.getDefaultInstance();
+    public void resetServerRichPresenceExample(Player viewer) {
+        ResetServerRichPresenceMessage message = ResetServerRichPresenceMessage.getDefaultInstance();
         ProtobufPacketUtil.sendPacket(viewer, message);
     }
 

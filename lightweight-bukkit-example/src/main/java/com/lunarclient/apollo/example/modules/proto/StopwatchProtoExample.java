@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.example.modules.proto;
 
-import com.lunarclient.apollo.example.utilities.PacketUtil;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.stopwatch.v1.ResetStopwatchMessage;
 import com.lunarclient.apollo.stopwatch.v1.StartStopwatchMessage;
 import com.lunarclient.apollo.stopwatch.v1.StopStopwatchMessage;
@@ -33,17 +33,17 @@ public class StopwatchProtoExample {
 
     public void startStopwatchExample(Player viewer) {
         StartStopwatchMessage message = StartStopwatchMessage.getDefaultInstance();
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     public void stopStopwatchExample(Player viewer) {
         StopStopwatchMessage message = StopStopwatchMessage.getDefaultInstance();
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     public void resetStopwatchExample(Player viewer) {
         ResetStopwatchMessage message = ResetStopwatchMessage.getDefaultInstance();
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.lunarclient.apollo.example.listeners;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.utilities.PacketUtil;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-public class PlayerDetectionListener implements Listener {
+public class ApolloPlayerListener implements Listener {
 
     private static final List<String> APOLLO_MODULES = Arrays.asList("limb", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
         "entity", "glow", "hologram", "mod_setting", "nametag", "nick_hider", "notification", "packet_enrichment", "rich_presence",
@@ -27,11 +27,13 @@ public class PlayerDetectionListener implements Listener {
 
     private final Set<UUID> playersRunningApollo = new HashSet<>();
 
-    public PlayerDetectionListener(ApolloExamplePlugin plugin) {
+    public ApolloPlayerListener(ApolloExamplePlugin plugin) {
         Messenger messenger = Bukkit.getServer().getMessenger();
         messenger.registerIncomingPluginChannel(plugin, REGISTER_CHANNEL, (s, player, bytes) -> { });
+
         messenger.registerOutgoingPluginChannel(plugin, LIGHTWEIGHT_CHANNEL);
         messenger.registerIncomingPluginChannel(plugin, LIGHTWEIGHT_CHANNEL, new ApolloRoundtripListener());
+        messenger.registerIncomingPluginChannel(plugin, LIGHTWEIGHT_CHANNEL, new ApolloPacketReceiveListener());
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
@@ -50,7 +52,7 @@ public class PlayerDetectionListener implements Listener {
     }
 
     private void onApolloRegister(Player player) {
-        PacketUtil.enableModules(player, APOLLO_MODULES);
+        ProtobufPacketUtil.enableModules(player, APOLLO_MODULES);
 
         this.playersRunningApollo.add(player.getUniqueId());
         player.sendMessage("You are using LunarClient!");

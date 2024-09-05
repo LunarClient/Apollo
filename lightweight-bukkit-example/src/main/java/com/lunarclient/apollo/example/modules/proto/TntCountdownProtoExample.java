@@ -23,24 +23,25 @@
  */
 package com.lunarclient.apollo.example.modules.proto;
 
-import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
-import com.lunarclient.apollo.nickhider.v1.OverrideNickHiderMessage;
-import com.lunarclient.apollo.nickhider.v1.ResetNickHiderMessage;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
+import org.bukkit.event.Listener;
 
-public class NickHiderProtoExample {
+// TODO
+public class TntCountdownProtoExample implements Listener {
 
-    public void overrideNickExample(Player viewer) {
-        OverrideNickHiderMessage message = OverrideNickHiderMessage.newBuilder()
-            .setNick("Notch")
-            .build();
-
-        ProtobufPacketUtil.sendPacket(viewer, message);
+    public void setTntCountdownExample() {
     }
 
-    public void resetNickExample(Player viewer) {
-        ResetNickHiderMessage message = ResetNickHiderMessage.getDefaultInstance();
-        ProtobufPacketUtil.sendPacket(viewer, message);
+    public void overrideTntCountdownExample(Player viewer) {
+        Location location = viewer.getLocation();
+        World world = viewer.getWorld();
+        TNTPrimed entity = world.spawn(location, TNTPrimed.class);
+    }
+
+    public void clearTntCountdownOptionExample() {
     }
 
 }

@@ -25,7 +25,7 @@ package com.lunarclient.apollo.example.modules.proto;
 
 import com.lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage;
 import com.lunarclient.apollo.chat.v1.RemoveLiveChatMessageMessage;
-import com.lunarclient.apollo.example.utilities.PacketUtil;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 
 public class ChatProtoExample {
 
@@ -45,7 +45,7 @@ public class ChatProtoExample {
             this.countdown = 5;
         }
 
-        PacketUtil.broadcastPacket(message);
+        ProtobufPacketUtil.broadcastPacket(message);
     }
 
     public void removeLiveChatMessageExample() {
@@ -53,7 +53,7 @@ public class ChatProtoExample {
             .setMessageId(13)
             .build();
 
-        PacketUtil.broadcastPacket(message);
+        ProtobufPacketUtil.broadcastPacket(message);
     }
 
 }

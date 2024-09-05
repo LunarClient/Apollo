@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.example.modules.proto;
 
-import com.lunarclient.apollo.example.utilities.PacketUtil;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.hologram.v1.DisplayHologramMessage;
 import com.lunarclient.apollo.hologram.v1.RemoveHologramMessage;
@@ -57,7 +57,7 @@ public class HologramProtoExample {
             .setShowBackground(true)
             .build();
 
-        PacketUtil.broadcastPacket(message);
+        ProtobufPacketUtil.broadcastPacket(message);
     }
 
     public void removeHologramExample() {
@@ -65,12 +65,12 @@ public class HologramProtoExample {
             .setId("welcome-hologram")
             .build();
 
-        PacketUtil.broadcastPacket(message);
+        ProtobufPacketUtil.broadcastPacket(message);
     }
 
     public void resetHologramsExample(Player viewer) {
         ResetHologramsMessage message = ResetHologramsMessage.getDefaultInstance();
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
 }

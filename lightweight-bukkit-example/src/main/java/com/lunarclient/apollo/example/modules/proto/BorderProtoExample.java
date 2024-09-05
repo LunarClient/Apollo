@@ -23,23 +23,48 @@
  */
 package com.lunarclient.apollo.example.modules.proto;
 
+import com.lunarclient.apollo.border.v1.DisplayBorderMessage;
+import com.lunarclient.apollo.border.v1.RemoveBorderMessage;
+import com.lunarclient.apollo.border.v1.ResetBordersMessage;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
-import com.lunarclient.apollo.nickhider.v1.OverrideNickHiderMessage;
-import com.lunarclient.apollo.nickhider.v1.ResetNickHiderMessage;
+import com.lunarclient.apollo.example.utilities.ProtobufUtil;
+import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid2D;
 import org.bukkit.entity.Player;
 
-public class NickHiderProtoExample {
+import java.awt.*;
 
-    public void overrideNickExample(Player viewer) {
-        OverrideNickHiderMessage message = OverrideNickHiderMessage.newBuilder()
-            .setNick("Notch")
+public class BorderProtoExample {
+
+    public void displayBorderExample(Player viewer) {
+        DisplayBorderMessage message = DisplayBorderMessage.newBuilder()
+            .setId("pvp-tagged-spawn")
+            .setWorld("world")
+            .setCancelEntry(true)
+            .setCancelExit(true)
+            .setCanShrinkOrExpand(false)
+            .setColor(ProtobufUtil.toProtobuf(Color.RED))
+            .setBounds(ProtobufUtil.toProtobuf(Cuboid2D.builder()
+                .minX(-50)
+                .minZ(-50)
+                .maxX(50)
+                .maxZ(50)
+                .build()))
+            .setDurationTicks(1000)
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
-    public void resetNickExample(Player viewer) {
-        ResetNickHiderMessage message = ResetNickHiderMessage.getDefaultInstance();
+    public void removeBorderExample(Player viewer) {
+        RemoveBorderMessage message = RemoveBorderMessage.newBuilder()
+            .setId("pvp-tagged-spawn")
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    public void resetBordersExample(Player viewer) {
+        ResetBordersMessage message = ResetBordersMessage.getDefaultInstance();
         ProtobufPacketUtil.sendPacket(viewer, message);
     }
 

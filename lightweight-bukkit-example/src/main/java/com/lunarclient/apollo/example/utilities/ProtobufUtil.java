@@ -97,46 +97,6 @@ public final class ProtobufUtil {
         return message.getSeconds() * 1000 + message.getNanos() / 1000000;
     }
 
-    /**
-     * Converts an {@link PlayerInfo} object to an
-     * {@link com.lunarclient.apollo.packetenrichment.v1.PlayerInfo} proto message.
-     *
-     * @param object the player info
-     * @return the proto player info message
-     * @since 1.0.7
-     */
-    public static com.lunarclient.apollo.packetenrichment.v1.PlayerInfo toProtobuf(PlayerInfo object) {
-        return com.lunarclient.apollo.packetenrichment.v1.PlayerInfo.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(object.getPlayerUuid()))
-            .setLocation(ProtobufUtil.toProtobuf(object.getLocation()))
-            .setSprinting(object.isSprinting())
-            .setSneaking(object.isSneaking())
-            .setJumping(object.isJumping())
-            .setForwardSpeed(object.getForwardSpeed())
-            .setStrafeSpeed(object.getStrafeSpeed())
-            .build();
-    }
-
-    /**
-     * Converts an {@link com.lunarclient.apollo.packetenrichment.v1.PlayerInfo}
-     * proto message to an {@link PlayerInfo} object.
-     *
-     * @param message the player info message
-     * @return the apollo player info object
-     * @since 1.0.7
-     */
-    public static PlayerInfo fromProtobuf(com.lunarclient.apollo.packetenrichment.v1.PlayerInfo message) {
-        return PlayerInfo.builder()
-            .playerUuid(ProtobufUtil.fromProtobuf(message.getPlayerUuid()))
-            .location(ProtobufUtil.fromProtobuf(message.getLocation()))
-            .sneaking(message.getSneaking())
-            .sprinting(message.getSprinting())
-            .jumping(message.getJumping())
-            .forwardSpeed(message.getForwardSpeed())
-            .strafeSpeed(message.getStrafeSpeed())
-            .build();
-    }
-
     public static com.lunarclient.apollo.common.v1.Location toLocationProtobuf(Location location) {
         return com.lunarclient.apollo.common.v1.Location.newBuilder()
             .setWorld(location.getWorld().getName())
@@ -187,14 +147,6 @@ public final class ProtobufUtil {
             .build();
     }
 
-    /**
-     * Converts an {@link com.lunarclient.apollo.common.v1.Cuboid2D}
-     * proto message to an {@link Cuboid2D} object.
-     *
-     * @param message the cuboid 2D message
-     * @return the cuboid 2D object
-     * @since 1.0.0
-     */
     public static Cuboid2D fromProtobuf(com.lunarclient.apollo.common.v1.Cuboid2D message) {
         return Cuboid2D.builder()
             .minX(message.getMinX())
@@ -204,14 +156,6 @@ public final class ProtobufUtil {
             .build();
     }
 
-    /**
-     * Converts an {@link Cuboid3D} object to an
-     * {@link com.lunarclient.apollo.common.v1.Cuboid3D} proto message.
-     *
-     * @param object the cuboid 3D
-     * @return the proto cuboid 3D message
-     * @since 1.0.0
-     */
     public static com.lunarclient.apollo.common.v1.Cuboid3D toProtobuf(Cuboid3D object) {
         return com.lunarclient.apollo.common.v1.Cuboid3D.newBuilder()
             .setMinX(object.getMinX())
@@ -223,14 +167,6 @@ public final class ProtobufUtil {
             .build();
     }
 
-    /**
-     * Converts an {@link com.lunarclient.apollo.common.v1.Cuboid3D}
-     * proto message to an {@link Cuboid3D} object.
-     *
-     * @param message the cuboid 3D message
-     * @return the cuboid 3D object
-     * @since 1.0.0
-     */
     public static Cuboid3D fromProtobuf(com.lunarclient.apollo.common.v1.Cuboid3D message) {
         return Cuboid3D.builder()
             .minX(message.getMinX())
@@ -242,14 +178,6 @@ public final class ProtobufUtil {
             .build();
     }
 
-    /**
-     * Converts an {@link Icon} object to an
-     * {@link com.lunarclient.apollo.common.v1.Icon} proto message.
-     *
-     * @param icon the icon
-     * @return the proto icon message
-     * @since 1.0.0
-     */
     public static com.lunarclient.apollo.common.v1.Icon toProtobuf(Icon icon) {
         com.lunarclient.apollo.common.v1.Icon.Builder builder = com.lunarclient.apollo.common.v1.Icon.newBuilder();
 
@@ -290,14 +218,6 @@ public final class ProtobufUtil {
         return builder.build();
     }
 
-    /**
-     * Converts an {@link com.lunarclient.apollo.common.v1.Icon}
-     * proto message to an {@link Icon} object.
-     *
-     * @param icon the icon message
-     * @return the icon object
-     * @since 1.0.0
-     */
     public static Icon fromProtobuf(com.lunarclient.apollo.common.v1.Icon icon) {
         if (icon.hasItemStack()) {
             com.lunarclient.apollo.common.v1.ItemStackIcon item = icon.getItemStack();

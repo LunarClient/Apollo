@@ -23,24 +23,7 @@
  */
 package com.lunarclient.apollo.example.modules.proto;
 
-import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
-import com.lunarclient.apollo.nickhider.v1.OverrideNickHiderMessage;
-import com.lunarclient.apollo.nickhider.v1.ResetNickHiderMessage;
-import org.bukkit.entity.Player;
-
-public class NickHiderProtoExample {
-
-    public void overrideNickExample(Player viewer) {
-        OverrideNickHiderMessage message = OverrideNickHiderMessage.newBuilder()
-            .setNick("Notch")
-            .build();
-
-        ProtobufPacketUtil.sendPacket(viewer, message);
-    }
-
-    public void resetNickExample(Player viewer) {
-        ResetNickHiderMessage message = ResetNickHiderMessage.getDefaultInstance();
-        ProtobufPacketUtil.sendPacket(viewer, message);
-    }
+// TODO
+public class TeamProtoExample {
 
 }

@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.example.modules.proto;
 
-import com.lunarclient.apollo.example.utilities.PacketUtil;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.vignette.v1.DisplayVignetteMessage;
 import com.lunarclient.apollo.vignette.v1.ResetVignetteMessage;
 import org.bukkit.entity.Player;
@@ -36,12 +36,12 @@ public class VignetteProtoExample {
             .setOpacity(0.75f)
             .build();
 
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     public void resetVignetteExample(Player viewer) {
         ResetVignetteMessage message = ResetVignetteMessage.getDefaultInstance();
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
 }

@@ -28,7 +28,7 @@ import com.lunarclient.apollo.entity.v1.FlipEntityMessage;
 import com.lunarclient.apollo.entity.v1.OverrideRainbowSheepMessage;
 import com.lunarclient.apollo.entity.v1.ResetFlipedEntityMessage;
 import com.lunarclient.apollo.entity.v1.ResetRainbowSheepMessage;
-import com.lunarclient.apollo.example.utilities.PacketUtil;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Player;
@@ -48,7 +48,7 @@ public class EntityProtoExample {
             .addAllEntityIds(sheepUuidsProto)
             .build();
 
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     public void resetRainbowSheepExample(Player viewer) {
@@ -60,7 +60,7 @@ public class EntityProtoExample {
             .addAllEntityIds(sheepUuidsProto)
             .build();
 
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     public void flipEntityExample(Player viewer) {
@@ -74,7 +74,7 @@ public class EntityProtoExample {
             .addAllEntityIds(entityUuidsProto)
             .build();
 
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     public void resetFlippedEntityExample(Player viewer) {
@@ -88,7 +88,7 @@ public class EntityProtoExample {
             .addAllEntityIds(entityUuidsProto)
             .build();
 
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
 }

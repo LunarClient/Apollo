@@ -26,54 +26,41 @@ package com.lunarclient.apollo.example.modules.json;
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
-import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
-import com.lunarclient.apollo.example.utilities.objects.icon.SimpleResourceLocationIcon;
+import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid2D;
 import org.bukkit.entity.Player;
 
-import java.time.Duration;
+import java.awt.*;
 
-public class CooldownJsonExample {
+public class BorderJsonExample {
 
-    public void displayCooldownItemExample(Player viewer) {
+    public void displayBorderExample(Player viewer) {
         JsonObject message = new JsonObject();
-        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
-        message.addProperty("name", "enderpearl-cooldown");
-        message.add("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
-        message.add("icon", JsonUtil.createIconObject(
-            ItemStackIcon.builder()
-                .itemName("ENDER_PEARL")
-                .build())
-        );
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.border.v1.DisplayBorderMessage");
+        message.addProperty("id", "pvp-tagged-spawn");
+        message.addProperty("world", "world");
+        message.addProperty("cancel_entry", true);
+        message.addProperty("cancel_exit", true);
+        message.addProperty("can_shrink_or_expand", false);
+        message.add("color", JsonUtil.createColorObject(Color.RED));
+        message.add("bounds", JsonUtil.createCuboid2DObject(
+            Cuboid2D.builder().minX(-50).minZ(-50).maxX(50).maxZ(50).build()
+        ));
+        message.addProperty("duration_ticks", 1000);
 
         viewer.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "apollo:json", message.toString().getBytes());
     }
 
-    public void displayCooldownResourceExample(Player viewer) {
+    public void removeBorderExample(Player viewer) {
         JsonObject message = new JsonObject();
-        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
-        message.addProperty("name", "lunar-cooldown");
-        message.add("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
-        message.add("icon", JsonUtil.createIconObject(
-            SimpleResourceLocationIcon.builder()
-                .resourceLocation("lunar:logo/logo-200x182.svg")
-                .size(12)
-                .build())
-        );
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.border.v1.RemoveBorderMessage");
+        message.addProperty("id", "pvp-tagged-spawn");
 
         viewer.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "apollo:json", message.toString().getBytes());
     }
 
-    public void removeCooldownExample(Player viewer) {
+    public void resetBordersExample(Player viewer) {
         JsonObject message = new JsonObject();
-        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.RemoveCooldownMessage");
-        message.addProperty("name", "lunar-cooldown");
-
-        viewer.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "apollo:json", message.toString().getBytes());
-    }
-
-    public void resetCooldownsExample(Player viewer) {
-        JsonObject message = new JsonObject();
-        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.ResetCooldownsMessage");
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.border.v1.ResetBordersMessage");
 
         viewer.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "apollo:json", message.toString().getBytes());
     }

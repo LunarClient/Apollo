@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.example.modules.proto;
 
-import com.lunarclient.apollo.example.utilities.PacketUtil;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.waypoint.v1.DisplayWaypointMessage;
 import com.lunarclient.apollo.waypoint.v1.RemoveWaypointMessage;
@@ -44,7 +44,7 @@ public class WaypointProtoExample {
             .setHidden(false)
             .build();
 
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     public void removeWaypointExample(Player viewer) {
@@ -52,12 +52,12 @@ public class WaypointProtoExample {
             .setName("KoTH")
             .build();
 
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     public void resetWaypointsExample(Player viewer) {
         ResetWaypointsMessage message = ResetWaypointsMessage.getDefaultInstance();
-        PacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
 }

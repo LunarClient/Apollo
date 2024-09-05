@@ -3,7 +3,7 @@ package com.lunarclient.apollo.example.listeners;
 import com.google.protobuf.Any;
 import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.lunarclient.apollo.example.utilities.PacketUtil;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.transfer.v1.PingResponse;
 import com.lunarclient.apollo.transfer.v1.TransferResponse;
 import lombok.Getter;
@@ -50,7 +50,7 @@ public class ApolloRoundtripListener implements PluginMessageListener {
 
     public <T extends GeneratedMessageV3> void sendRequest(Player player, UUID requestId, GeneratedMessageV3 request,
                                                             Class<T> response, Consumer<T> action) {
-        PacketUtil.sendPacket(player, request);
+        ProtobufPacketUtil.sendPacket(player, request);
 
         this.roundTripPacketConsumers.computeIfAbsent(player.getUniqueId(), k -> new HashMap<>())
             .put(requestId, (Consumer<GeneratedMessageV3>) action);
