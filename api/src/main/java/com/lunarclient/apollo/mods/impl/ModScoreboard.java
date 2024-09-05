@@ -69,6 +69,16 @@ public final class ModScoreboard {
     /**
      * No documentation available.
      *
+     * @since 1.1.5
+     */
+    public static final SimpleOption<Boolean> HIDE_SCOREBOARD = SimpleOption.<Boolean>builder()
+        .node("scoreboard", "hide-scoreboard").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
