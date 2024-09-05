@@ -140,7 +140,7 @@ public final class ModSkyblock {
     /**
      * Provides QOL for the Diana mayor that helps the user quickly locate burrows.
      *
-     * @since %release_version%
+     * @since 1.1.5
      */
     public static final SimpleOption<Boolean> GRIFFIN_BURROW_ESTIMATES = SimpleOption.<Boolean>builder()
         .comment("Provides QOL for the Diana mayor that helps the user quickly locate burrows.")
@@ -151,7 +151,7 @@ public final class ModSkyblock {
     /**
      * Makes Giant HP more visible by showing their HP at their feet.
      *
-     * @since %release_version%
+     * @since 1.1.5
      */
     public static final SimpleOption<Boolean> SHOW_GIANT_HPAT_FEET = SimpleOption.<Boolean>builder()
         .comment("Makes Giant HP more visible by showing their HP at their feet.")
@@ -271,7 +271,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.5
      */
     public static final SimpleOption<Boolean> SHOW_KUUDRA_HEALTH = SimpleOption.<Boolean>builder()
         .node("skyblock", "show-kuudra-health").type(TypeToken.get(Boolean.class))

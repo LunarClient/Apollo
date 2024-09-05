@@ -80,7 +80,7 @@ public final class ModTitles {
     /**
      * Show title of height limit display.
      *
-     * @since %release_version%
+     * @since 1.1.5
      */
     public static final SimpleOption<Boolean> SHOW_TITLE = SimpleOption.<Boolean>builder()
         .comment("Show title of height limit display")
@@ -91,7 +91,7 @@ public final class ModTitles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.5
      */
     public static final SimpleOption<Boolean> SHOW_SUBTITLE = SimpleOption.<Boolean>builder()
         .node("titles", "show-subtitle").type(TypeToken.get(Boolean.class))

@@ -69,7 +69,7 @@ public final class ModBossbar {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.5
      */
     public static final SimpleOption<Boolean> RENDER_BOSS_TEXT = SimpleOption.<Boolean>builder()
         .node("bossbar", "render-boss-text").type(TypeToken.get(Boolean.class))
