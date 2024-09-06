@@ -21,40 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.modules;
+package com.lunarclient.apollo.example.modules.impl.proto;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.module.team.TeamMember;
-import com.lunarclient.apollo.module.team.TeamModule;
-import java.awt.Color;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
+import com.lunarclient.apollo.example.utilities.ProtobufUtil;
+import com.lunarclient.apollo.team.v1.ResetTeamMembersMessage;
+import com.lunarclient.apollo.team.v1.TeamMember;
+import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class TeamExample implements Listener {
+import java.awt.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
-    private final TeamModule teamModule = Apollo.getModuleManager().getModule(TeamModule.class);
+public class TeamProtoExample implements Listener {
 
     private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
     private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
 
-    public TeamExample() {
+    public TeamProtoExample() {
         new TeamUpdateTask();
 
         Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
@@ -106,33 +103,28 @@ public class TeamExample implements Listener {
 
         public void addMember(Player player) {
             this.members.add(player);
-            TeamExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
+            TeamProtoExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
         }
 
         public void removeMember(Player player) {
             this.members.remove(player);
-            TeamExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
+            TeamProtoExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
 
-            Apollo.getPlayerManager().getPlayer(player.getUniqueId())
-                .ifPresent(TeamExample.this.teamModule::resetTeamMembers);
+            ResetTeamMembersMessage message = ResetTeamMembersMessage.getDefaultInstance();
+            ProtobufPacketUtil.sendPacket(player, message);
         }
 
         private TeamMember createTeamMember(Player member) {
-            Location location = member.getLocation();
+            // Component.text()
+            //                    .content(member.getName())
+            //                    .color(NamedTextColor.WHITE)
+            //                    .build()
 
-            return TeamMember.builder()
-                .playerUuid(member.getUniqueId())
-                .displayName(Component.text()
-                    .content(member.getName())
-                    .color(NamedTextColor.WHITE)
-                    .build())
-                .markerColor(Color.WHITE)
-                .location(ApolloLocation.builder()
-                    .world(location.getWorld().getName())
-                    .x(location.getX())
-                    .y(location.getY())
-                    .z(location.getZ())
-                    .build())
+            return TeamMember.newBuilder()
+                .setPlayerUuid(ProtobufUtil.toProtobuf(member.getUniqueId()))
+                .setAdventureJsonPlayerName("") // TODO
+                .setMarkerColor(ProtobufUtil.toProtobuf(Color.WHITE))
+                .setLocation(ProtobufUtil.toLocationProtobuf(member.getLocation()))
                 .build();
         }
 
@@ -142,8 +134,11 @@ public class TeamExample implements Listener {
                 .map(this::createTeamMember)
                 .collect(Collectors.toList());
 
-            this.members.forEach(member -> Apollo.getPlayerManager().getPlayer(member.getUniqueId())
-                .ifPresent(apolloPlayer -> TeamExample.this.teamModule.updateTeamMembers(apolloPlayer, teammates)));
+            UpdateTeamMembersMessage message = UpdateTeamMembersMessage.newBuilder()
+                .addAllMembers(teammates)
+                .build();
+
+            this.members.forEach(member -> ProtobufPacketUtil.sendPacket(member, message));
         }
 
         public UUID getTeamId() {
@@ -183,7 +178,7 @@ public class TeamExample implements Listener {
 
         @Override
         public void run() {
-            TeamExample.this.teamsByTeamId.values().forEach(Team::refresh);
+            TeamProtoExample.this.teamsByTeamId.values().forEach(Team::refresh);
         }
     }
 

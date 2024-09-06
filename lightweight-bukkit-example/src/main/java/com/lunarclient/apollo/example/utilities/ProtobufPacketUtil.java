@@ -16,10 +16,14 @@ import org.bukkit.entity.Player;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public final class ProtobufPacketUtil {
+
+    // TODO: no need to serialize
 
     private static final Pattern PROTO_MESSAGE_PATTERN = Pattern.compile("^com\\.lunarclient\\.apollo.*Message$");
     private static final JsonFormat.Printer PRINTER;
@@ -68,31 +72,27 @@ public final class ProtobufPacketUtil {
     }
 
     public static void enableModule(Player player, String module) {
-        // Create a message to enable a specific module
-        OverrideConfigurableSettingsMessage enableModuleMessage = OverrideConfigurableSettingsMessage.newBuilder()
-            .addConfigurableSettings(
-                ConfigurableSettings.newBuilder()
-                    .setApolloModule(module)
-                    .setEnable(true)
-                    .build()
-            ).build();
-
-        sendPacket(player, enableModuleMessage);
+        ProtobufPacketUtil.enableModules(player, Collections.singletonList(module));
     }
 
     public static void enableModules(Player player, List<String> modules) {
-        OverrideConfigurableSettingsMessage.Builder builder = OverrideConfigurableSettingsMessage.newBuilder();
+        List<ConfigurableSettings> settings = modules.stream()
+            .map(ProtobufPacketUtil::createEnableModuleMessage)
+            .collect(Collectors.toList());
 
-        for (String module : modules) {
-            builder.addConfigurableSettings(
-                ConfigurableSettings.newBuilder()
-                    .setApolloModule(module)
-                    .setEnable(true)
-                    .build()
-            );
-        }
+        OverrideConfigurableSettingsMessage message = OverrideConfigurableSettingsMessage
+            .newBuilder()
+            .addAllConfigurableSettings(settings)
+            .build();
 
-        sendPacket(player, builder.build());
+        ProtobufPacketUtil.sendPacket(player, message);
+    }
+
+    private static ConfigurableSettings createEnableModuleMessage(String module) {
+        return ConfigurableSettings.newBuilder()
+            .setApolloModule(module)
+            .setEnable(true)
+            .build();
     }
 
     public static void sendPacket(Player player, GeneratedMessageV3 message) {
@@ -117,7 +117,8 @@ public final class ProtobufPacketUtil {
             byte[] enableModuleBytes = PRINTER.print(any).getBytes();
 
             // Finally, send the data through the "apollo:json" lightweight channel
-            Bukkit.getOnlinePlayers().forEach(player -> player.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "apollo:json", enableModuleBytes));
+            Bukkit.getOnlinePlayers().forEach(player ->
+                player.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "apollo:json", enableModuleBytes));
         } catch (InvalidProtocolBufferException e) {
             throw new RuntimeException(e);
         }
