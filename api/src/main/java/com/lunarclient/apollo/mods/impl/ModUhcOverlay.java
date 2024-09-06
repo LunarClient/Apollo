@@ -49,6 +49,7 @@ public final class ModUhcOverlay {
      *
      * @since 1.0.0
      */
+    @Deprecated
     public static final NumberOption<Float> GOLD_INGOT_SCALE = NumberOption.<Float>number()
         .node("uhc-overlay", "gold-ingot-scale").type(TypeToken.get(Float.class))
         .min(1.0F).max(5.0F)
@@ -60,6 +61,7 @@ public final class ModUhcOverlay {
      *
      * @since 1.0.0
      */
+    @Deprecated
     public static final NumberOption<Float> GOLD_NUGGET_SCALE = NumberOption.<Float>number()
         .node("uhc-overlay", "gold-nugget-scale").type(TypeToken.get(Float.class))
         .min(1.0F).max(5.0F)
@@ -71,6 +73,7 @@ public final class ModUhcOverlay {
      *
      * @since 1.0.0
      */
+    @Deprecated
     public static final NumberOption<Float> GOLD_ORE_SCALE = NumberOption.<Float>number()
         .node("uhc-overlay", "gold-ore-scale").type(TypeToken.get(Float.class))
         .min(1.0F).max(5.0F)
@@ -82,6 +85,7 @@ public final class ModUhcOverlay {
      *
      * @since 1.0.0
      */
+    @Deprecated
     public static final NumberOption<Float> GOLD_APPLE_SCALE = NumberOption.<Float>number()
         .node("uhc-overlay", "gold-apple-scale").type(TypeToken.get(Float.class))
         .min(1.0F).max(5.0F)
@@ -93,6 +97,7 @@ public final class ModUhcOverlay {
      *
      * @since 1.0.0
      */
+    @Deprecated
     public static final NumberOption<Float> SKULL_SCALE = NumberOption.<Float>number()
         .node("uhc-overlay", "skull-scale").type(TypeToken.get(Float.class))
         .min(1.0F).max(5.0F)
