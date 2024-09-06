@@ -30,6 +30,8 @@ import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -117,7 +119,12 @@ public class TeamJsonExample implements Listener {
             JsonObject message = new JsonObject();
             message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.team.v1.TeamMember");
             message.add("player_uuid", JsonUtil.createUuidObject(member.getUniqueId()));
-            message.addProperty("adventure_json_player_name", ""); //  TODO
+            message.addProperty("adventure_json_player_name", JsonUtil.toJson(
+                Component.text()
+                    .content(member.getName())
+                    .color(NamedTextColor.WHITE)
+                    .build()
+            ));
             message.add("marker_color", JsonUtil.createColorObject(Color.WHITE));
             message.add("location", JsonUtil.createLocationObject(member.getLocation()));
 

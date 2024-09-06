@@ -24,11 +24,12 @@
 package com.lunarclient.apollo.example.modules.impl.json;
 
 import com.google.gson.JsonObject;
-import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.modules.impl.NotificationExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
 import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -39,8 +40,16 @@ public class NotificationJsonExample extends NotificationExample {
     public void displayNotificationExample(Player viewer) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.notification.v1.DisplayNotificationMessage");
-        message.addProperty("title_adventure_json_lines", ""); // TODO
-        message.addProperty("description_adventure_json_lines", ""); // TODO
+        message.addProperty("title_adventure_json_lines", JsonUtil.toJson(
+            Component.text("UHC Announcement", NamedTextColor.GREEN)
+        ));
+        message.addProperty("description_adventure_json_lines", JsonUtil.toJson(
+            Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
+                .appendNewline()
+                .append(Component.text("Get ready!", NamedTextColor.WHITE))
+                .appendNewline()
+                .append(Component.text("Good luck!", NamedTextColor.GOLD))
+        ));
 
         message.add("display_time", JsonUtil.createDurationObject(Duration.ofSeconds(5)));
         message.add("icon", JsonUtil.createIconObject(ItemStackIcon.builder().build())); // TODO

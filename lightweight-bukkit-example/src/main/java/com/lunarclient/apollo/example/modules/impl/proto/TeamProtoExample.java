@@ -26,11 +26,14 @@ package com.lunarclient.apollo.example.modules.impl.proto;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.utilities.JsonUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.team.v1.ResetTeamMembersMessage;
 import com.lunarclient.apollo.team.v1.TeamMember;
 import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -122,7 +125,12 @@ public class TeamProtoExample implements Listener {
 
             return TeamMember.newBuilder()
                 .setPlayerUuid(ProtobufUtil.toProtobuf(member.getUniqueId()))
-                .setAdventureJsonPlayerName("") // TODO
+                .setAdventureJsonPlayerName(JsonUtil.toJson(
+                    Component.text()
+                        .content(member.getName())
+                        .color(NamedTextColor.WHITE)
+                        .build()
+                ))
                 .setMarkerColor(ProtobufUtil.toProtobuf(Color.WHITE))
                 .setLocation(ProtobufUtil.toLocationProtobuf(member.getLocation()))
                 .build();

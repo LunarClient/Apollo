@@ -7,8 +7,12 @@ import com.lunarclient.apollo.example.utilities.objects.icon.AdvancedResourceLoc
 import com.lunarclient.apollo.example.utilities.objects.icon.Icon;
 import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
 import com.lunarclient.apollo.example.utilities.objects.icon.SimpleResourceLocationIcon;
+import lombok.NonNull;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.time.Duration;
@@ -16,22 +20,23 @@ import java.util.UUID;
 
 public final class JsonUtil {
 
-    public static String component(Object object) {
-        return null; // TODO
+    public static String toJson(@NonNull Component component) {
+        return GsonComponentSerializer.gson().serialize(component);
     }
 
-    public static JsonObject createDurationObject(Duration duration) {
-        return null; // TODO
+    // TODO: needs testing
+    public static JsonObject createDurationObject(@NotNull Duration duration) {
+        return null; // TODO + test
     }
 
-    public static JsonObject createColorObject(Color color) {
+    public static JsonObject createColorObject(@NotNull Color color) {
         JsonObject colorObject = new JsonObject();
         colorObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.Color");
         colorObject.addProperty("color", color.getRGB());
         return colorObject;
     }
 
-    public static JsonObject createUuidObject(UUID uuid) {
+    public static JsonObject createUuidObject(@NotNull UUID uuid) {
         JsonObject uuidObject = new JsonObject();
         uuidObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.Uuid");
         uuidObject.addProperty("high64", uuid.getMostSignificantBits());
@@ -39,7 +44,7 @@ public final class JsonUtil {
         return uuidObject;
     }
 
-    public static JsonObject createLocationObject(Location location) {
+    public static JsonObject createLocationObject(@NotNull Location location) {
         JsonObject locationObject = new JsonObject();
         locationObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.Location");
         locationObject.addProperty("world", location.getWorld().getName());
@@ -49,7 +54,7 @@ public final class JsonUtil {
         return locationObject;
     }
 
-    public static JsonObject createBlockLocationObject(Location location) {
+    public static JsonObject createBlockLocationObject(@NotNull Location location) {
         JsonObject locationObject = new JsonObject();
         locationObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.Location");
         locationObject.addProperty("world", location.getWorld().getName());
@@ -59,7 +64,7 @@ public final class JsonUtil {
         return locationObject;
     }
 
-    public static JsonObject createEntityIdObject(Entity entity) {
+    public static JsonObject createEntityIdObject(@NotNull Entity entity) {
         JsonObject entityIdObject = new JsonObject();
         entityIdObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.EntityId");
         entityIdObject.addProperty("entity_id", entity.getEntityId());
@@ -67,7 +72,7 @@ public final class JsonUtil {
         return entityIdObject;
     }
 
-    public static JsonObject createCuboid2DObject(Cuboid2D cuboid2D) {
+    public static JsonObject createCuboid2DObject(@NotNull Cuboid2D cuboid2D) {
         JsonObject cuboid2DObject = new JsonObject();
         cuboid2DObject.addProperty("min_x", cuboid2D.getMinX());
         cuboid2DObject.addProperty("min_z", cuboid2D.getMinZ());
@@ -76,7 +81,7 @@ public final class JsonUtil {
         return cuboid2DObject;
     }
 
-    public static JsonObject createCuboid3DObject(Cuboid3D cuboid3D) {
+    public static JsonObject createCuboid3DObject(@NotNull Cuboid3D cuboid3D) {
         JsonObject cuboid3DObject = new JsonObject();
         cuboid3DObject.addProperty("min_x", cuboid3D.getMinX());
         cuboid3DObject.addProperty("min_y", cuboid3D.getMinY());
@@ -87,7 +92,7 @@ public final class JsonUtil {
         return cuboid3DObject;
     }
 
-    public static JsonObject createIconObject(Icon icon) {
+    public static JsonObject createIconObject(@NotNull Icon icon) {
         JsonObject iconObject = new JsonObject();
 
         if (icon instanceof ItemStackIcon) {

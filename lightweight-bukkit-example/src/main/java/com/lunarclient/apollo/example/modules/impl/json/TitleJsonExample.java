@@ -24,14 +24,17 @@
 package com.lunarclient.apollo.example.modules.impl.json;
 
 import com.google.gson.JsonObject;
-import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.modules.impl.TitleExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
 
+// TODO
 public class TitleJsonExample extends TitleExample {
 
     @Override
@@ -39,6 +42,13 @@ public class TitleJsonExample extends TitleExample {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.title.v1.DisplayTitleMessage");
         message.addProperty("title_type", ""); // TODO
+        message.addProperty("adventure_json_message", JsonUtil.toJson(
+            Component.text()
+                .content("Hello, player!")
+                .color(NamedTextColor.GREEN)
+                .decorate(TextDecoration.BOLD)
+                .build()
+        ));
         message.addProperty("scale", 0.1f);
         message.addProperty("interpolation_scale", 1.0f);
         message.addProperty("interpolation_rate", 0.01f);

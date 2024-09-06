@@ -23,37 +23,47 @@
  */
 package com.lunarclient.apollo.example.modules.impl.proto;
 
+import com.google.common.collect.Lists;
 import com.lunarclient.apollo.example.modules.impl.HologramExample;
+import com.lunarclient.apollo.example.utilities.JsonUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.hologram.v1.DisplayHologramMessage;
 import com.lunarclient.apollo.hologram.v1.RemoveHologramMessage;
 import com.lunarclient.apollo.hologram.v1.ResetHologramsMessage;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class HologramProtoExample extends HologramExample {
 
     @Override
     public void displayHologramExample() {
-        // Lists.newArrayList(
-        //                Component.text()
-        //                    .content("Welcome to my server!")
-        //                    .color(NamedTextColor.RED)
-        //                    .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
-        //                    .build(),
-        //                Component.text()
-        //                    .content("Type /help to get started!")
-        //                    .build()
-        //            )
+        List<String> lines = Lists.newArrayList(
+                Component.text()
+                    .content("Welcome to my server!")
+                    .color(NamedTextColor.RED)
+                    .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
+                    .build(),
+                Component.text()
+                    .content("Type /help to get started!")
+                    .build()
+            )
+            .stream().map(JsonUtil::toJson)
+            .collect(Collectors.toList());
 
         DisplayHologramMessage message = DisplayHologramMessage.newBuilder()
             .setId("welcome-hologram")
             .setLocation(ProtobufUtil.toLocationProtobuf(
                 new Location(Bukkit.getWorld("world"), 5, 105, 0)
             ))
-            //.addAllAdventureJsonLines() // TODO
+            .addAllAdventureJsonLines(lines)
             .setShowThroughWalls(true)
             .setShowShadow(false)
             .setShowBackground(true)

@@ -34,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
+// TODO
 public class TeamCommand implements CommandExecutor {
 
     private final TeamExample teamExample = ApolloExamplePlugin.getPlugin().getTeamExample();

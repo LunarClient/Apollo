@@ -24,10 +24,13 @@
 package com.lunarclient.apollo.example.modules.impl.proto;
 
 import com.lunarclient.apollo.example.modules.impl.NotificationExample;
+import com.lunarclient.apollo.example.utilities.JsonUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.notification.v1.DisplayNotificationMessage;
 import com.lunarclient.apollo.notification.v1.ResetNotificationsMessage;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -36,15 +39,18 @@ public class NotificationProtoExample extends NotificationExample {
 
     @Override
     public void displayNotificationExample(Player viewer) {
-        // TODO
         DisplayNotificationMessage message = DisplayNotificationMessage.newBuilder()
-//            .titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
-//            .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
-//                .appendNewline()
-//                .append(Component.text("Get ready!", NamedTextColor.WHITE))
-//                .appendNewline()
-//                .append(Component.text("Good luck!", NamedTextColor.GOLD))
-//            )
+            .setTitleAdventureJsonLines(JsonUtil.toJson(
+                Component.text("UHC Announcement", NamedTextColor.GREEN)
+            ))
+            .setDescriptionAdventureJsonLines(JsonUtil.toJson(
+                Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
+                    .appendNewline()
+                    .append(Component.text("Get ready!", NamedTextColor.WHITE))
+                    .appendNewline()
+                    .append(Component.text("Good luck!", NamedTextColor.GOLD))
+                )
+            )
             .setResourceLocation("icons/golden_apple.png") // This field is optional
             .setDisplayTime(ProtobufUtil.toProtobuf(Duration.ofSeconds(5)))
             .build();

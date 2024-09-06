@@ -24,11 +24,15 @@
 package com.lunarclient.apollo.example.modules.impl.proto;
 
 import com.lunarclient.apollo.example.modules.impl.json.TitleJsonExample;
+import com.lunarclient.apollo.example.utilities.JsonUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.title.v1.DisplayTitleMessage;
 import com.lunarclient.apollo.title.v1.ResetTitlesMessage;
 import com.lunarclient.apollo.title.v1.TitleType;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -37,7 +41,13 @@ public class TitleProtoExample extends TitleJsonExample {
 
     private final DisplayTitleMessage helloTitle = DisplayTitleMessage.newBuilder()
         .setTitleType(TitleType.TITLE_TYPE_TITLE)
-        .setAdventureJsonMessage(null) // TODO
+        .setAdventureJsonMessage(JsonUtil.toJson(
+            Component.text()
+                .content("Hello, player!")
+                .color(NamedTextColor.GREEN)
+                .decorate(TextDecoration.BOLD)
+                .build()
+        ))
         .setScale(1.0f)
         .setFadeInTime(ProtobufUtil.toProtobuf(Duration.ofMillis(1500)))
         .setDisplayTime(ProtobufUtil.toProtobuf(Duration.ofMillis(250)))
@@ -46,7 +56,13 @@ public class TitleProtoExample extends TitleJsonExample {
 
     private final DisplayTitleMessage interpolatedTitle = DisplayTitleMessage.newBuilder()
         .setTitleType(TitleType.TITLE_TYPE_TITLE)
-        .setAdventureJsonMessage(null) // TODO
+        .setAdventureJsonMessage(JsonUtil.toJson(
+            Component.text()
+                .content("This title expands!")
+                .color(NamedTextColor.GREEN)
+                .decorate(TextDecoration.BOLD)
+                .build()
+        ))
         .setScale(0.1f)
         .setInterpolationScale(1.0f)
         .setInterpolationRate(0.01f)

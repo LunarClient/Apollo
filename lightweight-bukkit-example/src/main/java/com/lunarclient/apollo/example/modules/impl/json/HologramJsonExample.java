@@ -23,10 +23,15 @@
  */
 package com.lunarclient.apollo.example.modules.impl.json;
 
+import com.google.common.collect.Lists;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.HologramExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -35,13 +40,25 @@ public class HologramJsonExample extends HologramExample {
 
     @Override
     public void displayHologramExample() {
+        JsonArray lines = Lists.newArrayList(
+            Component.text()
+                .content("Welcome to my server!")
+                .color(NamedTextColor.RED)
+                .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
+                .build(),
+            Component.text()
+                .content("Type /help to get started!")
+                .build()
+        ).stream().map(JsonUtil::toJson)
+            .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.hologram.v1.DisplayHologramMessage");
         message.addProperty("id", "welcome-hologram");
         message.add("location", JsonUtil.createLocationObject(
             new Location(Bukkit.getWorld("world"), 5, 105, 0)
         ));
-        //message.add("adventure_json_lines", ); //  TODO
+        message.add("adventure_json_lines", lines);
         message.addProperty("show_through_walls", true);
         message.addProperty("show_shadow", false);
         message.addProperty("show_background", true);

@@ -34,7 +34,6 @@ public class TebexProtoExample extends TebexExample {
     public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent) {
         // TODO
         // apolloPlayer.getTebexEmbeddedCheckoutSupport() == TebexEmbeddedCheckoutSupport.UNSUPPORTED
-
         OpenTebexEmbeddedCheckoutMessage message = OpenTebexEmbeddedCheckoutMessage.newBuilder()
             .setBasketIdent(basketIdent)
             .build();

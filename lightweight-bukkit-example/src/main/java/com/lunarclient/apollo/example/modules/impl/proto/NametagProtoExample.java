@@ -23,33 +23,44 @@
  */
 package com.lunarclient.apollo.example.modules.impl.proto;
 
+import com.google.common.collect.Lists;
 import com.lunarclient.apollo.example.modules.impl.NametagExample;
+import com.lunarclient.apollo.example.utilities.JsonUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.nametag.v1.OverrideNametagMessage;
 import com.lunarclient.apollo.nametag.v1.ResetNametagMessage;
 import com.lunarclient.apollo.nametag.v1.ResetNametagsMessage;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class NametagProtoExample extends NametagExample {
 
     @Override
     public void overrideNametagExample(Player target) {
-        // Lists.newArrayList(
-        //                Component.text()
-        //                    .content("[StaffMode]")
-        //                    .decorate(TextDecoration.ITALIC)
-        //                    .color(NamedTextColor.GRAY)
-        //                    .build(),
-        //                Component.text()
-        //                    .content(target.getName())
-        //                    .color(NamedTextColor.RED)
-        //                    .build()
-        //            )
+        List<String> lines = Lists.newArrayList(
+                Component.text()
+                    .content("[StaffMode]")
+                    .decorate(TextDecoration.ITALIC)
+                    .color(NamedTextColor.GRAY)
+                    .build(),
+                Component.text()
+                    .content(target.getName())
+                    .color(NamedTextColor.RED)
+                    .build()
+                )
+            .stream().map(JsonUtil::toJson)
+            .collect(Collectors.toList());
+
 
         OverrideNametagMessage message = OverrideNametagMessage.newBuilder()
             .setPlayerUuid(ProtobufUtil.toProtobuf(target.getUniqueId()))
-            .addAllAdventureJsonLines(null) // TODO
+            .addAllAdventureJsonLines(lines)
             .build();
 
         ProtobufPacketUtil.broadcastPacket(message);

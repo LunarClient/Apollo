@@ -108,6 +108,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
     // snake / camel
     // Finish utils & merge utils
     // Packet enrichment
+    // Available module options
 
     @Getter
     private static ApolloExamplePlugin plugin;
