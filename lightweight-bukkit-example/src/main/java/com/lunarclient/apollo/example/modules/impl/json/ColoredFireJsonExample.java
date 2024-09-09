@@ -37,7 +37,7 @@ public class ColoredFireJsonExample extends ColoredFireExample {
     public void overrideColoredFireExample(UUID burningPlayer) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.coloredfire.v1.OverrideColoredFireMessage");
-        message.add("uuid", JsonUtil.createUuidObject(burningPlayer));
+        message.add("player_uuid", JsonUtil.createUuidObject(burningPlayer));
         message.add("color", JsonUtil.createColorObject(Color.BLUE));
 
         JsonPacketUtil.broadcastPacket(message);
@@ -47,7 +47,7 @@ public class ColoredFireJsonExample extends ColoredFireExample {
     public void resetColoredFireExample(UUID burningPlayer) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.coloredfire.v1.ResetColoredFireMessage");
-        message.add("uuid", JsonUtil.createUuidObject(burningPlayer));
+        message.add("player_uuid", JsonUtil.createUuidObject(burningPlayer));
 
         JsonPacketUtil.broadcastPacket(message);
     }

@@ -46,9 +46,9 @@ public final class JsonUtil {
         return GsonComponentSerializer.gson().serialize(component);
     }
 
+    // TODO: broken
     public static JsonObject createDurationObject(@NotNull Duration duration) {
         JsonObject durationObject = new JsonObject();
-        durationObject.addProperty("@type", "type.googleapis.com/google.protobuf.Duration");
         durationObject.addProperty("seconds", duration.getSeconds());
         durationObject.addProperty("nanos", duration.getNano());
         return durationObject;
@@ -56,14 +56,13 @@ public final class JsonUtil {
 
     public static JsonObject createColorObject(@NotNull Color color) {
         JsonObject colorObject = new JsonObject();
-        colorObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.Color");
         colorObject.addProperty("color", color.getRGB());
         return colorObject;
     }
 
+    // TODO: broken
     public static JsonObject createUuidObject(@NotNull UUID uuid) {
         JsonObject uuidObject = new JsonObject();
-        uuidObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.Uuid");
         uuidObject.addProperty("high64", uuid.getMostSignificantBits());
         uuidObject.addProperty("low64", uuid.getLeastSignificantBits());
         return uuidObject;
@@ -71,7 +70,6 @@ public final class JsonUtil {
 
     public static JsonObject createLocationObject(@NotNull Location location) {
         JsonObject locationObject = new JsonObject();
-        locationObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.Location");
         locationObject.addProperty("world", location.getWorld().getName());
         locationObject.addProperty("x", location.getX());
         locationObject.addProperty("y", location.getY());
@@ -81,7 +79,6 @@ public final class JsonUtil {
 
     public static JsonObject createBlockLocationObject(@NotNull Location location) {
         JsonObject locationObject = new JsonObject();
-        locationObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.BlockLocation");
         locationObject.addProperty("world", location.getWorld().getName());
         locationObject.addProperty("x", location.getBlockX());
         locationObject.addProperty("y", location.getBlockY());
@@ -91,9 +88,8 @@ public final class JsonUtil {
 
     public static JsonObject createEntityIdObject(@NotNull Entity entity) {
         JsonObject entityIdObject = new JsonObject();
-        entityIdObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.EntityId");
         entityIdObject.addProperty("entity_id", entity.getEntityId());
-        entityIdObject.add("uuid", JsonUtil.createUuidObject(entity.getUniqueId()));
+        entityIdObject.add("entity_uuid", JsonUtil.createUuidObject(entity.getUniqueId()));
         return entityIdObject;
     }
 

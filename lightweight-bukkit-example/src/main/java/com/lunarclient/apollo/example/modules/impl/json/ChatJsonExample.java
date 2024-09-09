@@ -30,6 +30,7 @@ import com.lunarclient.apollo.example.utilities.JsonUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
+// DONE
 public class ChatJsonExample extends ChatExample {
 
     private int countdown = 5;

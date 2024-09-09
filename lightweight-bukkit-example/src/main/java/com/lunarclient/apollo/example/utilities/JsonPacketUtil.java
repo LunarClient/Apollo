@@ -51,7 +51,7 @@ public final class JsonPacketUtil {
 
     private static JsonObject createEnableModuleObject(String module) {
         JsonObject message = new JsonObject();
-        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.configurable.v1.ConfigurableSettings");
+        // message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.configurable.v1.ConfigurableSettings");
         message.addProperty("apollo_module", module);
         message.addProperty("enable", true);
 
