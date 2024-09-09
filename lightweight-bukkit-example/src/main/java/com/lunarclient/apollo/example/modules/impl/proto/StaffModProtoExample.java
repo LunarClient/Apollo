@@ -28,10 +28,10 @@ import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.staffmod.v1.DisableStaffModsMessage;
 import com.lunarclient.apollo.staffmod.v1.EnableStaffModsMessage;
 import com.lunarclient.apollo.staffmod.v1.StaffMod;
+import java.util.Collections;
 import org.bukkit.entity.Player;
 
-import java.util.Collections;
-
+// DONE
 public class StaffModProtoExample extends StaffModExample {
 
     @Override

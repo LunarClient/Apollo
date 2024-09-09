@@ -29,6 +29,7 @@ import com.lunarclient.apollo.nickhider.v1.OverrideNickHiderMessage;
 import com.lunarclient.apollo.nickhider.v1.ResetNickHiderMessage;
 import org.bukkit.entity.Player;
 
+// DONE
 public class NickHiderProtoExample extends NickHiderExample {
 
     @Override

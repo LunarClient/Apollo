@@ -24,9 +24,8 @@
 package com.lunarclient.apollo.example.modules.impl;
 
 import com.lunarclient.apollo.example.modules.ApolloExample;
-import org.bukkit.entity.Player;
-
 import java.util.UUID;
+import org.bukkit.entity.Player;
 
 public abstract class GlowExample extends ApolloExample {
 

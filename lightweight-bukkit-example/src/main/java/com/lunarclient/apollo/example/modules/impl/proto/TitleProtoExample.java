@@ -30,13 +30,13 @@ import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.title.v1.DisplayTitleMessage;
 import com.lunarclient.apollo.title.v1.ResetTitlesMessage;
 import com.lunarclient.apollo.title.v1.TitleType;
+import java.time.Duration;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
-import java.time.Duration;
-
+// DONE
 public class TitleProtoExample extends TitleJsonExample {
 
     private final DisplayTitleMessage helloTitle = DisplayTitleMessage.newBuilder()

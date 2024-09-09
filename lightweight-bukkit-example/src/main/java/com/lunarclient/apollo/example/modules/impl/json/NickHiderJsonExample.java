@@ -24,7 +24,6 @@
 package com.lunarclient.apollo.example.modules.impl.json;
 
 import com.google.gson.JsonObject;
-import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.modules.impl.NickHiderExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import org.bukkit.entity.Player;

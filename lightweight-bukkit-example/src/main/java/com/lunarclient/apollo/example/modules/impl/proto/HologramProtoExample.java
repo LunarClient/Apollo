@@ -31,6 +31,8 @@ import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.hologram.v1.DisplayHologramMessage;
 import com.lunarclient.apollo.hologram.v1.RemoveHologramMessage;
 import com.lunarclient.apollo.hologram.v1.ResetHologramsMessage;
+import java.util.List;
+import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -38,9 +40,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+// DONE
 public class HologramProtoExample extends HologramExample {
 
     @Override

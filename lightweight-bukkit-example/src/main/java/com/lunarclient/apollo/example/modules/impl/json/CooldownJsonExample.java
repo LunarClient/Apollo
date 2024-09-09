@@ -29,9 +29,8 @@ import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
 import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
 import com.lunarclient.apollo.example.utilities.objects.icon.SimpleResourceLocationIcon;
-import org.bukkit.entity.Player;
-
 import java.time.Duration;
+import org.bukkit.entity.Player;
 
 public class CooldownJsonExample extends CooldownExample {
 

@@ -29,11 +29,11 @@ import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.waypoint.v1.DisplayWaypointMessage;
 import com.lunarclient.apollo.waypoint.v1.RemoveWaypointMessage;
 import com.lunarclient.apollo.waypoint.v1.ResetWaypointsMessage;
+import java.awt.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
-
+// DONE
 public class WaypointProtoExample extends WaypointExample {
 
     @Override

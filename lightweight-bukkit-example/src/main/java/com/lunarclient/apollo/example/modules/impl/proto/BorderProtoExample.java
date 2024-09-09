@@ -30,10 +30,10 @@ import com.lunarclient.apollo.example.modules.impl.BorderExample;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid2D;
+import java.awt.Color;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
-
+// DONE
 public class BorderProtoExample extends BorderExample {
 
     @Override

@@ -1,3 +1,26 @@
+/*
+ * This file is part of Apollo, licensed under the MIT License.
+ *
+ * Copyright (c) 2023 Moonsworth
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.lunarclient.apollo.example.utilities;
 
 import com.google.gson.JsonObject;
@@ -7,6 +30,9 @@ import com.lunarclient.apollo.example.utilities.objects.icon.AdvancedResourceLoc
 import com.lunarclient.apollo.example.utilities.objects.icon.Icon;
 import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
 import com.lunarclient.apollo.example.utilities.objects.icon.SimpleResourceLocationIcon;
+import java.awt.Color;
+import java.time.Duration;
+import java.util.UUID;
 import lombok.NonNull;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
@@ -14,19 +40,18 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
-import java.time.Duration;
-import java.util.UUID;
-
 public final class JsonUtil {
 
     public static String toJson(@NonNull Component component) {
         return GsonComponentSerializer.gson().serialize(component);
     }
 
-    // TODO: needs testing
     public static JsonObject createDurationObject(@NotNull Duration duration) {
-        return null; // TODO + test
+        JsonObject durationObject = new JsonObject();
+        durationObject.addProperty("@type", "type.googleapis.com/google.protobuf.Duration");
+        durationObject.addProperty("seconds", duration.getSeconds());
+        durationObject.addProperty("nanos", duration.getNano());
+        return durationObject;
     }
 
     public static JsonObject createColorObject(@NotNull Color color) {
@@ -56,7 +81,7 @@ public final class JsonUtil {
 
     public static JsonObject createBlockLocationObject(@NotNull Location location) {
         JsonObject locationObject = new JsonObject();
-        locationObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.Location");
+        locationObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.BlockLocation");
         locationObject.addProperty("world", location.getWorld().getName());
         locationObject.addProperty("x", location.getBlockX());
         locationObject.addProperty("y", location.getBlockY());
@@ -126,6 +151,9 @@ public final class JsonUtil {
         }
 
         return iconObject;
+    }
+
+    private JsonUtil() {
     }
 
 }

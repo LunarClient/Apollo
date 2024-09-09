@@ -27,12 +27,10 @@ import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.NotificationExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
-import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
+import java.time.Duration;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
-
-import java.time.Duration;
 
 public class NotificationJsonExample extends NotificationExample {
 
@@ -52,7 +50,7 @@ public class NotificationJsonExample extends NotificationExample {
         ));
 
         message.add("display_time", JsonUtil.createDurationObject(Duration.ofSeconds(5)));
-        message.add("icon", JsonUtil.createIconObject(ItemStackIcon.builder().build())); // TODO
+        message.addProperty("resource_location", "icons/golden_apple.png");
 
         JsonPacketUtil.sendPacket(viewer, message);
     }

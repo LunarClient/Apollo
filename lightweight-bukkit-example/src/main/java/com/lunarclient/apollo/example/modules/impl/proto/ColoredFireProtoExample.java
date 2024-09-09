@@ -29,11 +29,11 @@ import com.lunarclient.apollo.coloredfire.v1.ResetColoredFiresMessage;
 import com.lunarclient.apollo.example.modules.impl.ColoredFireExample;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
+import java.awt.Color;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
-import java.util.UUID;
-
+// DONE
 public class ColoredFireProtoExample extends ColoredFireExample {
 
     @Override

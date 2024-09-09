@@ -32,10 +32,10 @@ import com.lunarclient.apollo.limb.v1.HideArmorPiecesMessage;
 import com.lunarclient.apollo.limb.v1.HideBodyPartMessage;
 import com.lunarclient.apollo.limb.v1.ResetArmorPiecesMessage;
 import com.lunarclient.apollo.limb.v1.ResetBodyPartMessage;
+import java.util.EnumSet;
 import org.bukkit.entity.Player;
 
-import java.util.EnumSet;
-
+// DONE
 public class LimbProtoExample extends LimbExample {
 
     @Override

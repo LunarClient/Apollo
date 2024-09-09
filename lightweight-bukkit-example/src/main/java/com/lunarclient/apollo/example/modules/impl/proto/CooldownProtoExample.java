@@ -31,10 +31,10 @@ import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
 import com.lunarclient.apollo.example.utilities.objects.icon.SimpleResourceLocationIcon;
+import java.time.Duration;
 import org.bukkit.entity.Player;
 
-import java.time.Duration;
-
+// DONE
 public class CooldownProtoExample extends CooldownExample {
 
     @Override

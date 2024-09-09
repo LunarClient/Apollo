@@ -25,14 +25,13 @@ package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.modules.impl.TeamExample;
+import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Optional;
 
 // TODO
 public class TeamCommand implements CommandExecutor {
@@ -69,7 +68,7 @@ public class TeamCommand implements CommandExecutor {
                     Optional<TeamExample.Team> teamOpt = this.teamExample.getByPlayerUuid(player.getUniqueId());
 
                     if (teamOpt.isPresent()) {
-                        this.teamExample.deleteTeam(teamOpt.get().getTeamId());
+                        // TODO this.teamExample.deleteTeam(teamOpt.get().getTeamId());
                         player.sendMessage("Deleting team...");
                         break;
                     }

@@ -28,9 +28,8 @@ import com.lunarclient.apollo.example.modules.impl.BorderExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
 import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid2D;
+import java.awt.Color;
 import org.bukkit.entity.Player;
-
-import java.awt.*;
 
 public class BorderJsonExample extends BorderExample {
 

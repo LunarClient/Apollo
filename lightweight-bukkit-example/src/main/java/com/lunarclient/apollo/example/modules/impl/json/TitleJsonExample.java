@@ -27,21 +27,19 @@ import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.TitleExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
+import java.time.Duration;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
-import java.time.Duration;
-
-// TODO
 public class TitleJsonExample extends TitleExample {
 
     @Override
     public void displayTitleExample(Player viewer) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.title.v1.DisplayTitleMessage");
-        message.addProperty("title_type", ""); // TODO
+        message.addProperty("title_type", 1); // 1 = title, 2 = subtitle
         message.addProperty("adventure_json_message", JsonUtil.toJson(
             Component.text()
                 .content("Hello, player!")

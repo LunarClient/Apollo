@@ -31,14 +31,14 @@ import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.nametag.v1.OverrideNametagMessage;
 import com.lunarclient.apollo.nametag.v1.ResetNametagMessage;
 import com.lunarclient.apollo.nametag.v1.ResetNametagsMessage;
+import java.util.List;
+import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+// DONE
 public class NametagProtoExample extends NametagExample {
 
     @Override
@@ -56,7 +56,6 @@ public class NametagProtoExample extends NametagExample {
                 )
             .stream().map(JsonUtil::toJson)
             .collect(Collectors.toList());
-
 
         OverrideNametagMessage message = OverrideNametagMessage.newBuilder()
             .setPlayerUuid(ProtobufUtil.toProtobuf(target.getUniqueId()))

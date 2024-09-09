@@ -24,15 +24,13 @@
 package com.lunarclient.apollo.example.modules.impl.json;
 
 import com.google.gson.JsonObject;
-import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.modules.impl.WaypointExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
+import java.awt.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-
-import java.awt.*;
 
 public class WaypointJsonExample extends WaypointExample {
 

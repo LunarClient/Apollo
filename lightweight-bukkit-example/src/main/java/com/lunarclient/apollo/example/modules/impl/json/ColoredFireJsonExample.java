@@ -27,10 +27,9 @@ import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.ColoredFireExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
-import org.bukkit.entity.Player;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.UUID;
+import org.bukkit.entity.Player;
 
 public class ColoredFireJsonExample extends ColoredFireExample {
 

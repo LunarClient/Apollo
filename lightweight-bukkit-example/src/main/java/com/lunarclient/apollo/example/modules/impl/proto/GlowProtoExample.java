@@ -29,11 +29,11 @@ import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.glow.v1.OverrideGlowEffectMessage;
 import com.lunarclient.apollo.glow.v1.ResetGlowEffectMessage;
 import com.lunarclient.apollo.glow.v1.ResetGlowEffectsMessage;
+import java.awt.Color;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
-import java.util.UUID;
-
+// DONE
 public class GlowProtoExample extends GlowExample {
 
     @Override

@@ -31,13 +31,13 @@ import com.lunarclient.apollo.entity.v1.ResetRainbowSheepMessage;
 import com.lunarclient.apollo.example.modules.impl.EntityExample;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
+// DONE
 public class EntityProtoExample extends EntityExample {
 
     @Override

@@ -31,21 +31,22 @@ public class LimbJsonExample extends LimbExample {
 
     @Override
     public void hideArmorExample(Player viewer, Player target) {
-
+        this.sendNotImplemented(viewer);
     }
 
     @Override
     public void resetArmorExample(Player viewer, Player target) {
+        this.sendNotImplemented(viewer);
     }
 
     @Override
     public void hideBodyExample(Player viewer, Player target) {
-
+        this.sendNotImplemented(viewer);
     }
 
     @Override
     public void resetBodyExample(Player viewer, Player target) {
-
+        this.sendNotImplemented(viewer);
     }
 
 }

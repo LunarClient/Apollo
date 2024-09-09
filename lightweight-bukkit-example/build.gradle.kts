@@ -1,5 +1,6 @@
 plugins {
     id("apollo.base-conventions")
+    id("apollo.shadow-conventions")
 }
 
 dependencies {

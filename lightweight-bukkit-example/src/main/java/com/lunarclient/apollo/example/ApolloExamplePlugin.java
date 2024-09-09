@@ -23,7 +23,33 @@
  */
 package com.lunarclient.apollo.example;
 
+import com.lunarclient.apollo.example.commands.BeamCommand;
+import com.lunarclient.apollo.example.commands.BorderCommand;
+import com.lunarclient.apollo.example.commands.ChatCommand;
+import com.lunarclient.apollo.example.commands.ColoredFireCommand;
+import com.lunarclient.apollo.example.commands.CombatCommand;
+import com.lunarclient.apollo.example.commands.CooldownCommand;
+import com.lunarclient.apollo.example.commands.EntityCommand;
+import com.lunarclient.apollo.example.commands.GlowCommand;
+import com.lunarclient.apollo.example.commands.HologramCommand;
+import com.lunarclient.apollo.example.commands.LimbCommand;
+import com.lunarclient.apollo.example.commands.ModSettingsCommand;
+import com.lunarclient.apollo.example.commands.NametagCommand;
+import com.lunarclient.apollo.example.commands.NickHiderCommand;
+import com.lunarclient.apollo.example.commands.NotificationCommand;
+import com.lunarclient.apollo.example.commands.RichPresenceCommand;
+import com.lunarclient.apollo.example.commands.ServerRuleCommand;
+import com.lunarclient.apollo.example.commands.StaffModCommand;
+import com.lunarclient.apollo.example.commands.StopwatchCommand;
+import com.lunarclient.apollo.example.commands.TeamCommand;
+import com.lunarclient.apollo.example.commands.TebexCommand;
+import com.lunarclient.apollo.example.commands.TitleCommand;
+import com.lunarclient.apollo.example.commands.TntCountdownCommand;
+import com.lunarclient.apollo.example.commands.TransferCommand;
+import com.lunarclient.apollo.example.commands.VignetteCommand;
+import com.lunarclient.apollo.example.commands.WaypointCommand;
 import com.lunarclient.apollo.example.listeners.json.ApolloPlayerJsonListener;
+import com.lunarclient.apollo.example.listeners.proto.ApolloPlayerProtoListener;
 import com.lunarclient.apollo.example.modules.ApolloExampleType;
 import com.lunarclient.apollo.example.modules.impl.BeamExample;
 import com.lunarclient.apollo.example.modules.impl.BorderExample;
@@ -109,9 +135,12 @@ public class ApolloExamplePlugin extends JavaPlugin {
     // Finish utils & merge utils
     // Packet enrichment
     // Available module options
+    // Switch command
 
     @Getter
     private static ApolloExamplePlugin plugin;
+
+    public static ApolloExampleType TYPE;
 
     private BeamExample beamExample;
     private BorderExample borderExample;
@@ -143,7 +172,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
-        this.registerModuleExamples(ApolloExampleType.API);
+        this.registerModuleExamples(ApolloExampleType.JSON);
         this.registerCommands();
         this.registerListeners();
     }
@@ -154,6 +183,8 @@ public class ApolloExamplePlugin extends JavaPlugin {
     }
 
     private void registerModuleExamples(ApolloExampleType type) {
+        TYPE = type;
+
         switch (type) {
             case API: {
                 break;
@@ -220,12 +251,49 @@ public class ApolloExamplePlugin extends JavaPlugin {
     }
 
     private void registerCommands() {
-
+        this.getCommand("beam").setExecutor(new BeamCommand());
+        this.getCommand("border").setExecutor(new BorderCommand());
+        this.getCommand("chat").setExecutor(new ChatCommand());
+        this.getCommand("coloredfire").setExecutor(new ColoredFireCommand());
+        this.getCommand("combat").setExecutor(new CombatCommand());
+        this.getCommand("cooldown").setExecutor(new CooldownCommand());
+        this.getCommand("entity").setExecutor(new EntityCommand());
+        this.getCommand("glow").setExecutor(new GlowCommand());
+        this.getCommand("hologram").setExecutor(new HologramCommand());
+        this.getCommand("limb").setExecutor(new LimbCommand());
+        this.getCommand("modsettings").setExecutor(new ModSettingsCommand());
+        this.getCommand("nametag").setExecutor(new NametagCommand());
+        this.getCommand("nickhider").setExecutor(new NickHiderCommand());
+        this.getCommand("notification").setExecutor(new NotificationCommand());
+        this.getCommand("richpresence").setExecutor(new RichPresenceCommand());
+        this.getCommand("serverrule").setExecutor(new ServerRuleCommand());
+        this.getCommand("staffmod").setExecutor(new StaffModCommand());
+        this.getCommand("stopwatch").setExecutor(new StopwatchCommand());
+        this.getCommand("team").setExecutor(new TeamCommand());
+        this.getCommand("tebex").setExecutor(new TebexCommand());
+        this.getCommand("title").setExecutor(new TitleCommand());
+        this.getCommand("tntcountdown").setExecutor(new TntCountdownCommand());
+        this.getCommand("transfer").setExecutor(new TransferCommand());
+        this.getCommand("vignette").setExecutor(new VignetteCommand());
+        this.getCommand("waypoint").setExecutor(new WaypointCommand());
     }
 
     private void registerListeners() {
-        //new ApolloPlayerProtoListener(this);
-        new ApolloPlayerJsonListener(this);
+        switch (TYPE) {
+            case API: {
+                break;
+            }
+
+            case JSON: {
+                new ApolloPlayerJsonListener(this);
+                break;
+            }
+
+            case PROTO: {
+                new ApolloPlayerProtoListener(this);
+                break;
+            }
+        }
     }
 
 }

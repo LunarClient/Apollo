@@ -30,6 +30,7 @@ import com.lunarclient.apollo.stopwatch.v1.StartStopwatchMessage;
 import com.lunarclient.apollo.stopwatch.v1.StopStopwatchMessage;
 import org.bukkit.entity.Player;
 
+// DONE
 public class StopwatchProtoExample extends StopwatchExample {
 
     @Override

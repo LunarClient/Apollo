@@ -32,12 +32,11 @@ import com.lunarclient.apollo.example.utilities.objects.icon.AdvancedResourceLoc
 import com.lunarclient.apollo.example.utilities.objects.icon.Icon;
 import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
 import com.lunarclient.apollo.example.utilities.objects.icon.SimpleResourceLocationIcon;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-
-import java.awt.*;
+import java.awt.Color;
 import java.time.Duration;
 import java.util.UUID;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 /**
  * Utility class for converting objects to and from their
