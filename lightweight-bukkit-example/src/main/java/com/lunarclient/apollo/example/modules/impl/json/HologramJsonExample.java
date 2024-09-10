@@ -27,6 +27,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.HologramExample;
+import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
 import net.kyori.adventure.text.Component;
@@ -50,7 +51,7 @@ public class HologramJsonExample extends HologramExample {
             Component.text()
                 .content("Type /help to get started!")
                 .build()
-        ).stream().map(JsonUtil::toJson)
+        ).stream().map(AdventureUtil::toJson)
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
         JsonObject message = new JsonObject();

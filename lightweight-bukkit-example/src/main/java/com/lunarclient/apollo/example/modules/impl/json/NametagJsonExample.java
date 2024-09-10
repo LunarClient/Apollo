@@ -27,6 +27,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.NametagExample;
+import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
 import net.kyori.adventure.text.Component;
@@ -49,7 +50,7 @@ public class NametagJsonExample extends NametagExample {
                     .color(NamedTextColor.RED)
                     .build()
             )
-            .stream().map(JsonUtil::toJson)
+            .stream().map(AdventureUtil::toJson)
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
         JsonObject message = new JsonObject();

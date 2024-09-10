@@ -66,7 +66,7 @@ public final class JsonUtil {
         enableModuleObject.addProperty("enable", true);
         return enableModuleObject;
     }
-    
+
     public static JsonObject createLocationObject(@NotNull Location location) {
         JsonObject locationObject = new JsonObject();
         locationObject.addProperty("world", location.getWorld().getName());

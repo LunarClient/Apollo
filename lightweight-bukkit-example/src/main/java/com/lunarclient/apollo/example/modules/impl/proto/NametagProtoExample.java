@@ -25,7 +25,7 @@ package com.lunarclient.apollo.example.modules.impl.proto;
 
 import com.google.common.collect.Lists;
 import com.lunarclient.apollo.example.modules.impl.NametagExample;
-import com.lunarclient.apollo.example.utilities.JsonUtil;
+import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.nametag.v1.OverrideNametagMessage;
@@ -54,7 +54,7 @@ public class NametagProtoExample extends NametagExample {
                     .color(NamedTextColor.RED)
                     .build()
                 )
-            .stream().map(JsonUtil::toJson)
+            .stream().map(AdventureUtil::toJson)
             .collect(Collectors.toList());
 
         OverrideNametagMessage message = OverrideNametagMessage.newBuilder()

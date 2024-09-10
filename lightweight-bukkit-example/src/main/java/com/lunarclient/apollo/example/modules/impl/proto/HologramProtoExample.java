@@ -25,7 +25,7 @@ package com.lunarclient.apollo.example.modules.impl.proto;
 
 import com.google.common.collect.Lists;
 import com.lunarclient.apollo.example.modules.impl.HologramExample;
-import com.lunarclient.apollo.example.utilities.JsonUtil;
+import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.hologram.v1.DisplayHologramMessage;
@@ -55,7 +55,7 @@ public class HologramProtoExample extends HologramExample {
                     .content("Type /help to get started!")
                     .build()
             )
-            .stream().map(JsonUtil::toJson)
+            .stream().map(AdventureUtil::toJson)
             .collect(Collectors.toList());
 
         DisplayHologramMessage message = DisplayHologramMessage.newBuilder()
