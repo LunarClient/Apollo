@@ -5,6 +5,8 @@ author: Moonsworth
 api-version: 1.13
 
 commands:
+    switch:
+        description: "Switch the implementation type!"
     beam:
         description: "Beams!"
     border:

@@ -21,19 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.StaffModExample;
+import com.lunarclient.apollo.example.modules.impl.ColoredFireExample;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class StaffModCommand implements CommandExecutor {
-
-    private final StaffModExample staffModExample = ApolloExamplePlugin.getPlugin().getStaffModExample();
+public class ColoredFireCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -43,27 +42,41 @@ public class StaffModCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+        ColoredFireExample coloredFireExample = ApolloExamplePlugin.getPlugin().getColoredFireExample();
 
-        if (args.length != 1) {
-            player.sendMessage("Usage: /staffmod <enable|disable>");
+        if (args.length == 1 && args[0].equalsIgnoreCase("clear")) {
+            coloredFireExample.resetColoredFiresExample(player);
+            player.sendMessage("Resetting colored fires...");
+            return true;
+        }
+
+        if (args.length != 2) {
+            player.sendMessage("Usage: /coloredfire <override|reset|clear> <player>");
+            return true;
+        }
+
+        Player target = Bukkit.getPlayer(args[1]);
+
+        if (target == null) {
+            player.sendMessage("Player '" + args[1] + "' not found!");
             return true;
         }
 
         switch (args[0].toLowerCase()) {
-            case "enable": {
-                this.staffModExample.enableStaffModsExample(player);
-                player.sendMessage("Enabling staff mods....");
+            case "override": {
+                coloredFireExample.overrideColoredFireExample(target.getUniqueId());
+                player.sendMessage("Displaying colored fire....");
                 break;
             }
 
-            case "disable": {
-                this.staffModExample.disableStaffModsExample(player);
-                player.sendMessage("Disabling staff mods....");
+            case "reset": {
+                coloredFireExample.resetColoredFireExample(target.getUniqueId());
+                player.sendMessage("Resetting colored fire....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /staffmod <enable|disable>");
+                player.sendMessage("Usage: /coloredfire <override|reset|clear> <player>");
                 break;
             }
         }

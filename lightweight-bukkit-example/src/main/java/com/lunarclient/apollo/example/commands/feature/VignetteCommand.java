@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.WaypointExample;
+import com.lunarclient.apollo.example.modules.impl.VignetteExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class WaypointCommand implements CommandExecutor {
-
-    private final WaypointExample waypointExample = ApolloExamplePlugin.getPlugin().getWaypointExample();
+public class VignetteCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,30 +43,27 @@ public class WaypointCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /waypoint <display|remove|reset>");
+            player.sendMessage("Usage: /vignette <display|reset>");
             return true;
         }
 
+        VignetteExample vignetteExample = ApolloExamplePlugin.getPlugin().getVignetteExample();
+
         switch (args[0].toLowerCase()) {
             case "display": {
-                this.waypointExample.displayWaypointExample(player);
-                player.sendMessage("Displaying waypoint....");
+                vignetteExample.displayVignetteExample(player);
+                player.sendMessage("Displaying vignette....");
                 break;
             }
 
-            case "remove": {
-                this.waypointExample.removeWaypointExample(player);
-                player.sendMessage("Removing waypoint....");
-                break;
-            }
             case "reset": {
-                this.waypointExample.resetWaypointsExample(player);
-                player.sendMessage("Resetting waypoints...");
+                vignetteExample.resetVignetteExample(player);
+                player.sendMessage("Resetting vignette....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /waypoint <display|remove|reset>");
+                player.sendMessage("Usage: /vignette <display|reset>");
                 break;
             }
         }

@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.NotificationExample;
+import com.lunarclient.apollo.example.modules.impl.TitleExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class NotificationCommand implements CommandExecutor {
-
-    private final NotificationExample notificationExample = ApolloExamplePlugin.getPlugin().getNotificationExample();
+public class TitleCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,25 +43,27 @@ public class NotificationCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /notification <display|reset>");
+            player.sendMessage("Usage: /title <display|reset>");
             return true;
         }
 
+        TitleExample titleExample = ApolloExamplePlugin.getPlugin().getTitleExample();
+
         switch (args[0].toLowerCase()) {
             case "display": {
-                this.notificationExample.displayNotificationExample(player);
-                player.sendMessage("Displaying notification....");
+                titleExample.displayTitleExample(player);
+                player.sendMessage("Displaying title....");
                 break;
             }
 
             case "reset": {
-                this.notificationExample.resetNotificationsExample(player);
-                player.sendMessage("Resetting notifications...");
+                titleExample.resetTitlesExample(player);
+                player.sendMessage("Resetting titles....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /notification <display|reset>");
+                player.sendMessage("Usage: /title <display|reset>");
                 break;
             }
         }

@@ -33,6 +33,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.plugin.messaging.Messenger;
@@ -47,15 +48,30 @@ public class ApolloPlayerJsonListener implements Listener {
     private static final String REGISTER_CHANNEL = "lunar:apollo"; // Used for detecting whether the player supports Apollo
     private static final String LIGHTWEIGHT_CHANNEL = "apollo:json"; // Used for sending and receiving feature packets
 
+    private final ApolloExamplePlugin plugin;
+
     private final Set<UUID> playersRunningApollo = new HashSet<>();
 
     public ApolloPlayerJsonListener(ApolloExamplePlugin plugin) {
+        this.plugin = plugin;
+
         Messenger messenger = Bukkit.getServer().getMessenger();
         messenger.registerIncomingPluginChannel(plugin, REGISTER_CHANNEL, (s, player, bytes) -> { });
         messenger.registerIncomingPluginChannel(plugin, LIGHTWEIGHT_CHANNEL, (s, player, bytes) -> { });
         messenger.registerOutgoingPluginChannel(plugin, LIGHTWEIGHT_CHANNEL);
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
+    }
+
+    public void disable() {
+        this.playersRunningApollo.clear();
+
+        Messenger messenger = Bukkit.getServer().getMessenger();
+        messenger.unregisterIncomingPluginChannel(this.plugin, REGISTER_CHANNEL);
+        messenger.unregisterIncomingPluginChannel(this.plugin, LIGHTWEIGHT_CHANNEL);
+        messenger.unregisterOutgoingPluginChannel(this.plugin, LIGHTWEIGHT_CHANNEL);
+
+        HandlerList.unregisterAll(this);
     }
 
     @EventHandler

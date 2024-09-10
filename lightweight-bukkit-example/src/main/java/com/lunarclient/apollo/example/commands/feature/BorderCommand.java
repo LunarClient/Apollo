@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.CooldownExample;
+import com.lunarclient.apollo.example.modules.impl.BorderExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class CooldownCommand implements CommandExecutor {
-
-    private final CooldownExample cooldownExample = ApolloExamplePlugin.getPlugin().getCooldownExample();
+public class BorderCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,37 +43,33 @@ public class CooldownCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /cooldown <displayItem|displayResource|remove|reset>");
+            player.sendMessage("Usage: /border <display|remove|reset>");
             return true;
         }
 
-        switch (args[0].toLowerCase()) {
-            case "displayitem": {
-                this.cooldownExample.displayCooldownItemExample(player);
-                player.sendMessage("Displaying cooldown item....");
-                break;
-            }
+        BorderExample borderExample = ApolloExamplePlugin.getPlugin().getBorderExample();
 
-            case "displayresource": {
-                this.cooldownExample.displayCooldownResourceExample(player);
-                player.sendMessage("Displaying cooldown resource....");
+        switch (args[0].toLowerCase()) {
+            case "display": {
+                borderExample.displayBorderExample(player);
+                player.sendMessage("Displaying border....");
                 break;
             }
 
             case "remove": {
-                this.cooldownExample.removeCooldownExample(player);
-                player.sendMessage("Removing cooldown....");
+                borderExample.removeBorderExample(player);
+                player.sendMessage("Removing border....");
                 break;
             }
 
             case "reset": {
-                this.cooldownExample.resetCooldownsExample(player);
-                player.sendMessage("Resetting cooldowns...");
+                borderExample.resetBordersExample(player);
+                player.sendMessage("Resetting borders...");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /cooldown <displayItem|displayResource|remove|reset>");
+                player.sendMessage("Usage: /border <display|remove|reset>");
                 break;
             }
         }

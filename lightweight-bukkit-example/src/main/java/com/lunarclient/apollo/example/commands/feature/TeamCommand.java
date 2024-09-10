@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.modules.impl.TeamExample;
@@ -36,8 +36,6 @@ import org.jetbrains.annotations.NotNull;
 // TODO
 public class TeamCommand implements CommandExecutor {
 
-    private final TeamExample teamExample = ApolloExamplePlugin.getPlugin().getTeamExample();
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
@@ -46,18 +44,19 @@ public class TeamCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+        TeamExample teamExample = ApolloExamplePlugin.getPlugin().getTeamExample();
 
         if (args.length == 1) {
             switch (args[0].toLowerCase()) {
                 case "create": {
-                    Optional<TeamExample.Team> teamOpt = this.teamExample.getByPlayerUuid(player.getUniqueId());
+                    Optional<TeamExample.Team> teamOpt = teamExample.getByPlayerUuid(player.getUniqueId());
 
                     if (teamOpt.isPresent()) {
                         player.sendMessage("You already have a team...");
                         break;
                     }
 
-                    TeamExample.Team team = this.teamExample.createTeam();
+                    TeamExample.Team team = teamExample.createTeam();
                     team.addMember(player);
 
                     player.sendMessage("Creating team...");
@@ -65,10 +64,10 @@ public class TeamCommand implements CommandExecutor {
                 }
 
                 case "delete": {
-                    Optional<TeamExample.Team> teamOpt = this.teamExample.getByPlayerUuid(player.getUniqueId());
+                    Optional<TeamExample.Team> teamOpt = teamExample.getByPlayerUuid(player.getUniqueId());
 
                     if (teamOpt.isPresent()) {
-                        // TODO this.teamExample.deleteTeam(teamOpt.get().getTeamId());
+                        // TODO teamExample.deleteTeam(teamOpt.get().getTeamId());
                         player.sendMessage("Deleting team...");
                         break;
                     }
@@ -95,8 +94,8 @@ public class TeamCommand implements CommandExecutor {
                 return true;
             }
 
-            Optional<TeamExample.Team> teamOpt = this.teamExample.getByPlayerUuid(player.getUniqueId());
-            Optional<TeamExample.Team> targetTeamOpt = this.teamExample.getByPlayerUuid(target.getUniqueId());
+            Optional<TeamExample.Team> teamOpt = teamExample.getByPlayerUuid(player.getUniqueId());
+            Optional<TeamExample.Team> targetTeamOpt = teamExample.getByPlayerUuid(target.getUniqueId());
 
             switch (args[0].toLowerCase()) {
                 case "addmember": {

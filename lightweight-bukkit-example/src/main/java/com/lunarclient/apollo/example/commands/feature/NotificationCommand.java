@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.VignetteExample;
+import com.lunarclient.apollo.example.modules.impl.NotificationExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class VignetteCommand implements CommandExecutor {
-
-    private final VignetteExample vignetteExample = ApolloExamplePlugin.getPlugin().getVignetteExample();
+public class NotificationCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,25 +43,27 @@ public class VignetteCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /vignette <display|reset>");
+            player.sendMessage("Usage: /notification <display|reset>");
             return true;
         }
 
+        NotificationExample notificationExample = ApolloExamplePlugin.getPlugin().getNotificationExample();
+
         switch (args[0].toLowerCase()) {
             case "display": {
-                this.vignetteExample.displayVignetteExample(player);
-                player.sendMessage("Displaying vignette....");
+                notificationExample.displayNotificationExample(player);
+                player.sendMessage("Displaying notification....");
                 break;
             }
 
             case "reset": {
-                this.vignetteExample.resetVignetteExample(player);
-                player.sendMessage("Resetting vignette....");
+                notificationExample.resetNotificationsExample(player);
+                player.sendMessage("Resetting notifications...");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /vignette <display|reset>");
+                player.sendMessage("Usage: /notification <display|reset>");
                 break;
             }
         }

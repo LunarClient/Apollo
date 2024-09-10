@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.ChatExample;
+import com.lunarclient.apollo.example.modules.impl.EntityExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ChatCommand implements CommandExecutor {
-
-    private final ChatExample chatExample = ApolloExamplePlugin.getPlugin().getChatExample();
+public class EntityCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,25 +43,39 @@ public class ChatCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /chat <display|remove>");
+            player.sendMessage("Usage: /entity <overrideSheep|resetSheep|flipEntities|resetFlippedEntities>");
             return true;
         }
 
+        EntityExample entityExample = ApolloExamplePlugin.getPlugin().getEntityExample();
+
         switch (args[0].toLowerCase()) {
-            case "display": {
-                this.chatExample.displayLiveChatMessageExample();
-                player.sendMessage("Displaying live message....");
+            case "overridesheep": {
+                entityExample.overrideRainbowSheepExample(player);
+                player.sendMessage("Overriding rainbow sheep....");
                 break;
             }
 
-            case "remove": {
-                this.chatExample.removeLiveChatMessageExample();
-                player.sendMessage("Removing live message....");
+            case "resetsheep": {
+                entityExample.resetRainbowSheepExample(player);
+                player.sendMessage("Resetting rainbow sheep....");
+                break;
+            }
+
+            case "flipentities": {
+                entityExample.flipEntityExample(player);
+                player.sendMessage("Flipping entities....");
+                break;
+            }
+
+            case "resetflippedentities": {
+                entityExample.resetFlippedEntityExample(player);
+                player.sendMessage("Resetting flipped entities....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /chat <display|remove>");
+                player.sendMessage("Usage: /entity <overrideSheep|resetSheep|flipEntities|resetFlippedEntities>");
                 break;
             }
         }

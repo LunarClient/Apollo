@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.TransferExample;
+import com.lunarclient.apollo.example.modules.impl.ChatExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class TransferCommand implements CommandExecutor {
-
-    private final TransferExample transferExample = ApolloExamplePlugin.getPlugin().getTransferExample();
+public class ChatCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,30 +43,31 @@ public class TransferCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /transfer <transfer|ping>");
+            player.sendMessage("Usage: /chat <display|remove>");
             return true;
         }
 
+        ChatExample chatExample = ApolloExamplePlugin.getPlugin().getChatExample();
+
         switch (args[0].toLowerCase()) {
-            case "transfer": {
-                this.transferExample.transferExample(player);
-                player.sendMessage("Transferring player...");
+            case "display": {
+                chatExample.displayLiveChatMessageExample();
+                player.sendMessage("Displaying live message....");
                 break;
             }
 
-            case "ping": {
-                this.transferExample.pingExample(player);
-                player.sendMessage("Pinging....");
+            case "remove": {
+                chatExample.removeLiveChatMessageExample();
+                player.sendMessage("Removing live message....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /transfer <transfer|ping>");
+                player.sendMessage("Usage: /chat <display|remove>");
                 break;
             }
         }
 
         return true;
     }
-
 }

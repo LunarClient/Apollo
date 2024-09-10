@@ -21,20 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.LimbExample;
-import org.bukkit.Bukkit;
+import com.lunarclient.apollo.example.modules.impl.TntCountdownExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class LimbCommand implements CommandExecutor {
-
-    private final LimbExample limbExample = ApolloExamplePlugin.getPlugin().getLimbExample();
+public class TntCountdownCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,49 +42,39 @@ public class LimbCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (args.length != 2) {
-            player.sendMessage("Usage: /limb <hideArmor|resetArmor|hideBody|resetBody> <player>");
+        if (args.length != 1) {
+            player.sendMessage("Usage: /tntcountdown <override|set|clear>");
             return true;
         }
 
-        Player target = Bukkit.getPlayer(args[1]);
-
-        if (target == null) {
-            player.sendMessage("Player '" + args[1] + "' not found!");
-            return true;
-        }
+        TntCountdownExample tntCountdownExample = ApolloExamplePlugin.getPlugin().getTntCountdownExample();
 
         switch (args[0].toLowerCase()) {
-            case "hidearmor": {
-                this.limbExample.hideArmorExample(player, target);
-                player.sendMessage("Hiding armor....");
+            case "override": {
+                tntCountdownExample.overrideTntCountdownExample(player);
+                player.sendMessage("Overriding custom tnt countdown option...");
                 break;
             }
 
-            case "resetarmor": {
-                this.limbExample.resetArmorExample(player, target);
-                player.sendMessage("Resetting armor....");
+            case "set": {
+                tntCountdownExample.setTntCountdownExample();
+                player.sendMessage("Setting custom tnt countdown option....");
                 break;
             }
 
-            case "hidebody": {
-                this.limbExample.hideBodyExample(player, target);
-                player.sendMessage("Hiding body....");
-                break;
-            }
-
-            case "resetbody": {
-                this.limbExample.resetBodyExample(player, target);
-                player.sendMessage("Resetting body....");
+            case "clear": {
+                tntCountdownExample.clearTntCountdownOptionExample();
+                player.sendMessage("Removing custom tnt countdown option....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /limb <hideArmor|resetArmor|hideBody|resetBody>");
+                player.sendMessage("Usage: /tntcountdown <override|set|clear>");
                 break;
             }
         }
 
         return true;
     }
+
 }

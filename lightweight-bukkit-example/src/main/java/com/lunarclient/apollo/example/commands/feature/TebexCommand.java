@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.NametagExample;
+import com.lunarclient.apollo.example.modules.impl.TebexExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class NametagCommand implements CommandExecutor {
-
-    private final NametagExample nametagExample = ApolloExamplePlugin.getPlugin().getNametagExample();
+public class TebexCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -44,36 +42,27 @@ public class NametagCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (args.length != 1) {
-            player.sendMessage("Usage: /nametag <override|reset|clear>");
+        if (args.length != 2) {
+            player.sendMessage("Usage: /tebex <display> <basketIdent>");
             return true;
         }
 
+        TebexExample tebexExample = ApolloExamplePlugin.getPlugin().getTebexExample();
+
         switch (args[0].toLowerCase()) {
-            case "override": {
-                this.nametagExample.overrideNametagExample(player);
-                player.sendMessage("Overriding nametag....");
-                break;
-            }
-
-            case "reset": {
-                this.nametagExample.resetNametagExample(player);
-                player.sendMessage("Resetting nametag....");
-                break;
-            }
-
-            case "clear": {
-                this.nametagExample.resetNametagsExample(player);
-                player.sendMessage("Clearing nametags...");
+            case "display": {
+                tebexExample.displayTebexEmbeddedCheckoutExample(player, args[1]);
+                player.sendMessage("Displaying checkout....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /nametag <override|reset|clear>");
+                player.sendMessage("Usage: /tebex <display> <basketIdent>");
                 break;
             }
         }
 
         return true;
     }
+
 }

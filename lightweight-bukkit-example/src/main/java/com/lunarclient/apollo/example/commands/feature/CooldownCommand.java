@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.TebexExample;
+import com.lunarclient.apollo.example.modules.impl.CooldownExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class TebexCommand implements CommandExecutor {
-
-    private final TebexExample tebexExample = ApolloExamplePlugin.getPlugin().getTebexExample();
+public class CooldownCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -44,25 +42,44 @@ public class TebexCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (args.length != 2) {
-            player.sendMessage("Usage: /tebex <display> <basketIdent>");
+        if (args.length != 1) {
+            player.sendMessage("Usage: /cooldown <displayItem|displayResource|remove|reset>");
             return true;
         }
 
+        CooldownExample cooldownExample = ApolloExamplePlugin.getPlugin().getCooldownExample();
+
         switch (args[0].toLowerCase()) {
-            case "display": {
-                this.tebexExample.displayTebexEmbeddedCheckoutExample(player, args[1]);
-                player.sendMessage("Displaying checkout....");
+            case "displayitem": {
+                cooldownExample.displayCooldownItemExample(player);
+                player.sendMessage("Displaying cooldown item....");
+                break;
+            }
+
+            case "displayresource": {
+                cooldownExample.displayCooldownResourceExample(player);
+                player.sendMessage("Displaying cooldown resource....");
+                break;
+            }
+
+            case "remove": {
+                cooldownExample.removeCooldownExample(player);
+                player.sendMessage("Removing cooldown....");
+                break;
+            }
+
+            case "reset": {
+                cooldownExample.resetCooldownsExample(player);
+                player.sendMessage("Resetting cooldowns...");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /tebex <display> <basketIdent>");
+                player.sendMessage("Usage: /cooldown <displayItem|displayResource|remove|reset>");
                 break;
             }
         }
 
         return true;
     }
-
 }

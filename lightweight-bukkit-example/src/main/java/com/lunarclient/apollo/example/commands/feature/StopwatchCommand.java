@@ -21,20 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.ColoredFireExample;
-import org.bukkit.Bukkit;
+import com.lunarclient.apollo.example.modules.impl.StopwatchExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ColoredFireCommand implements CommandExecutor {
-
-    private final ColoredFireExample coloredFireExample = ApolloExamplePlugin.getPlugin().getColoredFireExample();
+public class StopwatchCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,39 +42,34 @@ public class ColoredFireCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (args.length == 1 && args[0].equalsIgnoreCase("clear")) {
-            this.coloredFireExample.resetColoredFiresExample(player);
-            player.sendMessage("Resetting colored fires...");
+        if (args.length != 1) {
+            player.sendMessage("Usage: /stopwatch <start|stop|reset>");
             return true;
         }
 
-        if (args.length != 2) {
-            player.sendMessage("Usage: /coloredfire <override|reset|clear> <player>");
-            return true;
-        }
-
-        Player target = Bukkit.getPlayer(args[1]);
-
-        if (target == null) {
-            player.sendMessage("Player '" + args[1] + "' not found!");
-            return true;
-        }
+        StopwatchExample stopwatchExample = ApolloExamplePlugin.getPlugin().getStopwatchExample();
 
         switch (args[0].toLowerCase()) {
-            case "override": {
-                this.coloredFireExample.overrideColoredFireExample(target.getUniqueId());
-                player.sendMessage("Displaying colored fire....");
+            case "start": {
+                stopwatchExample.startStopwatchExample(player);
+                player.sendMessage("Starting stopwatch....");
+                break;
+            }
+
+            case "stop": {
+                stopwatchExample.stopStopwatchExample(player);
+                player.sendMessage("Stopping stopwatch....");
                 break;
             }
 
             case "reset": {
-                this.coloredFireExample.resetColoredFireExample(target.getUniqueId());
-                player.sendMessage("Resetting colored fire....");
+                stopwatchExample.resetStopwatchExample(player);
+                player.sendMessage("Resetting stopwatch....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /coloredfire <override|reset|clear> <player>");
+                player.sendMessage("Usage: /stopwatch <start|stop|reset>");
                 break;
             }
         }

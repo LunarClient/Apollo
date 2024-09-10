@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.BeamExample;
+import com.lunarclient.apollo.example.modules.impl.StaffModExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class BeamCommand implements CommandExecutor {
-
-    private final BeamExample beamExample = ApolloExamplePlugin.getPlugin().getBeamExample();
+public class StaffModCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,31 +43,27 @@ public class BeamCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /beam <display|remove|reset>");
+            player.sendMessage("Usage: /staffmod <enable|disable>");
             return true;
         }
 
+        StaffModExample staffModExample = ApolloExamplePlugin.getPlugin().getStaffModExample();
+
         switch (args[0].toLowerCase()) {
-            case "display": {
-                this.beamExample.displayBeamExample(player);
-                player.sendMessage("Displaying beam....");
+            case "enable": {
+                staffModExample.enableStaffModsExample(player);
+                player.sendMessage("Enabling staff mods....");
                 break;
             }
 
-            case "remove": {
-                this.beamExample.removeBeamExample(player);
-                player.sendMessage("Removing beam....");
-                break;
-            }
-
-            case "reset": {
-                this.beamExample.resetBeamsExample(player);
-                player.sendMessage("Resetting beams...");
+            case "disable": {
+                staffModExample.disableStaffModsExample(player);
+                player.sendMessage("Disabling staff mods....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /beam <display|remove|reset>");
+                player.sendMessage("Usage: /staffmod <enable|disable>");
                 break;
             }
         }

@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.BorderExample;
+import com.lunarclient.apollo.example.modules.impl.TransferExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class BorderCommand implements CommandExecutor {
-
-    private final BorderExample borderExample = ApolloExamplePlugin.getPlugin().getBorderExample();
+public class TransferCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,35 +43,32 @@ public class BorderCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /border <display|remove|reset>");
+            player.sendMessage("Usage: /transfer <transfer|ping>");
             return true;
         }
 
+        TransferExample transferExample = ApolloExamplePlugin.getPlugin().getTransferExample();
+
         switch (args[0].toLowerCase()) {
-            case "display": {
-                this.borderExample.displayBorderExample(player);
-                player.sendMessage("Displaying border....");
+            case "transfer": {
+                transferExample.transferExample(player);
+                player.sendMessage("Transferring player...");
                 break;
             }
 
-            case "remove": {
-                this.borderExample.removeBorderExample(player);
-                player.sendMessage("Removing border....");
-                break;
-            }
-
-            case "reset": {
-                this.borderExample.resetBordersExample(player);
-                player.sendMessage("Resetting borders...");
+            case "ping": {
+                transferExample.pingExample(player);
+                player.sendMessage("Pinging....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /border <display|remove|reset>");
+                player.sendMessage("Usage: /transfer <transfer|ping>");
                 break;
             }
         }
 
         return true;
     }
+
 }

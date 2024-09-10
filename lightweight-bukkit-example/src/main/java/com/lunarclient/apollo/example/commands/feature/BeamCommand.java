@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.EntityExample;
+import com.lunarclient.apollo.example.modules.impl.BeamExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class EntityCommand implements CommandExecutor {
-
-    private final EntityExample entityExample = ApolloExamplePlugin.getPlugin().getEntityExample();
+public class BeamCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,37 +43,33 @@ public class EntityCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /entity <overrideSheep|resetSheep|flipEntities|resetFlippedEntities>");
+            player.sendMessage("Usage: /beam <display|remove|reset>");
             return true;
         }
 
+        BeamExample beamExample = ApolloExamplePlugin.getPlugin().getBeamExample();
+
         switch (args[0].toLowerCase()) {
-            case "overridesheep": {
-                this.entityExample.overrideRainbowSheepExample(player);
-                player.sendMessage("Overriding rainbow sheep....");
+            case "display": {
+                beamExample.displayBeamExample(player);
+                player.sendMessage("Displaying beam....");
                 break;
             }
 
-            case "resetsheep": {
-                this.entityExample.resetRainbowSheepExample(player);
-                player.sendMessage("Resetting rainbow sheep....");
+            case "remove": {
+                beamExample.removeBeamExample(player);
+                player.sendMessage("Removing beam....");
                 break;
             }
 
-            case "flipentities": {
-                this.entityExample.flipEntityExample(player);
-                player.sendMessage("Flipping entities....");
-                break;
-            }
-
-            case "resetflippedentities": {
-                this.entityExample.resetFlippedEntityExample(player);
-                player.sendMessage("Resetting flipped entities....");
+            case "reset": {
+                beamExample.resetBeamsExample(player);
+                player.sendMessage("Resetting beams...");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /entity <overrideSheep|resetSheep|flipEntities|resetFlippedEntities>");
+                player.sendMessage("Usage: /beam <display|remove|reset>");
                 break;
             }
         }

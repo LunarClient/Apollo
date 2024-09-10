@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.CombatExample;
+import com.lunarclient.apollo.example.modules.impl.HologramExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class CombatCommand implements CommandExecutor {
-
-    private final CombatExample combatExample = ApolloExamplePlugin.getPlugin().getCombatExample();
+public class HologramCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -44,18 +42,36 @@ public class CombatCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (args.length != 2) {
-            player.sendMessage("Usage: /combat <disablemisspenalty> <value>");
+        if (args.length != 1) {
+            player.sendMessage("Usage: /hologram <display|remove|reset>");
             return true;
         }
 
-        if (args[0].equalsIgnoreCase("disablemisspenalty")) {
-            boolean value = Boolean.parseBoolean(args[1]);
-            this.combatExample.setDisableMissPenalty(value);
+        HologramExample hologramExample = ApolloExamplePlugin.getPlugin().getHologramExample();
 
-            player.sendMessage("Disable miss penalty rule has been set to " + value);
-        } else {
-            player.sendMessage("Usage: /combat <disablemisspenalty> <value>");
+        switch (args[0].toLowerCase()) {
+            case "display": {
+                hologramExample.displayHologramExample();
+                player.sendMessage("Displaying hologram....");
+                break;
+            }
+
+            case "remove": {
+                hologramExample.removeHologramExample();
+                player.sendMessage("Removing hologram....");
+                break;
+            }
+
+            case "reset": {
+                hologramExample.resetHologramsExample(player);
+                player.sendMessage("Resetting holograms...");
+                break;
+            }
+
+            default: {
+                player.sendMessage("Usage: /hologram <display|remove|reset>");
+                break;
+            }
         }
 
         return true;

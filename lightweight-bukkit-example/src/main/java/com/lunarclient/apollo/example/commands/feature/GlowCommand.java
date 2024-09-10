@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.modules.impl.GlowExample;
@@ -34,8 +34,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class GlowCommand implements CommandExecutor {
 
-    private final GlowExample glowExample = ApolloExamplePlugin.getPlugin().getGlowExample();
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
@@ -44,9 +42,10 @@ public class GlowCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+        GlowExample glowExample = ApolloExamplePlugin.getPlugin().getGlowExample();
 
         if (args.length == 1 && args[0].equalsIgnoreCase("clear")) {
-            this.glowExample.resetGlowEffectsExample(player);
+            glowExample.resetGlowEffectsExample(player);
             player.sendMessage("Resetting glow effects...");
             return true;
         }
@@ -65,13 +64,13 @@ public class GlowCommand implements CommandExecutor {
 
         switch (args[0].toLowerCase()) {
             case "override": {
-                this.glowExample.overrideGlowEffectExample(target.getUniqueId());
+                glowExample.overrideGlowEffectExample(target.getUniqueId());
                 player.sendMessage("Displaying glow effect....");
                 break;
             }
 
             case "reset": {
-                this.glowExample.resetGlowEffectExample(target.getUniqueId());
+                glowExample.resetGlowEffectExample(target.getUniqueId());
                 player.sendMessage("Resetting glow effect....");
                 break;
             }

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.modules.impl.ServerRuleExample;
@@ -32,8 +32,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class ServerRuleCommand implements CommandExecutor {
-
-    private final ServerRuleExample serverRuleExample = ApolloExamplePlugin.getPlugin().getServerRuleExample();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -49,10 +47,12 @@ public class ServerRuleCommand implements CommandExecutor {
             return true;
         }
 
+        ServerRuleExample serverRuleExample = ApolloExamplePlugin.getPlugin().getServerRuleExample();
+
         switch (args[0].toLowerCase()) {
             case "antiportaltraps": {
                 boolean value = Boolean.parseBoolean(args[1]);
-                this.serverRuleExample.setAntiPortalTraps(value);
+                serverRuleExample.setAntiPortalTraps(value);
 
                 player.sendMessage("Anti portal traps rule has been set to " + value);
                 break;
@@ -60,7 +60,7 @@ public class ServerRuleCommand implements CommandExecutor {
 
             case "overridenametagrenderdistance": {
                 boolean value = Boolean.parseBoolean(args[1]);
-                this.serverRuleExample.setOverrideNametagRenderDistance(player, value);
+                serverRuleExample.setOverrideNametagRenderDistance(player, value);
 
                 player.sendMessage("Override nametag render distance rule has been set to " + value);
                 break;
@@ -76,7 +76,7 @@ public class ServerRuleCommand implements CommandExecutor {
                     return true;
                 }
 
-                this.serverRuleExample.setNametagRenderDistanceExample(value);
+                serverRuleExample.setNametagRenderDistanceExample(value);
                 player.sendMessage("Nametag render distance has been set to " + value);
                 break;
             }

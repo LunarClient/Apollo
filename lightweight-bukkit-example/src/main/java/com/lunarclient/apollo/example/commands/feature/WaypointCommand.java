@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.ModSettingsExample;
+import com.lunarclient.apollo.example.modules.impl.WaypointExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ModSettingsCommand implements CommandExecutor {
-
-    private final ModSettingsExample modSettingsExample = ApolloExamplePlugin.getPlugin().getModSettingsExample();
+public class WaypointCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,31 +43,32 @@ public class ModSettingsCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /modsettings <disable|reset|broadcast>");
+            player.sendMessage("Usage: /waypoint <display|remove|reset>");
             return true;
         }
 
+        WaypointExample waypointExample = ApolloExamplePlugin.getPlugin().getWaypointExample();
+
         switch (args[0].toLowerCase()) {
-            case "disable": {
-                this.modSettingsExample.disableLightningModExample(player);
-                player.sendMessage("Disabling lightning mod....");
+            case "display": {
+                waypointExample.displayWaypointExample(player);
+                player.sendMessage("Displaying waypoint....");
                 break;
             }
 
+            case "remove": {
+                waypointExample.removeWaypointExample(player);
+                player.sendMessage("Removing waypoint....");
+                break;
+            }
             case "reset": {
-                this.modSettingsExample.rollbackLightningModEnabledState(player);
-                player.sendMessage("Rollbacking lightning mod enabled state....");
-                break;
-            }
-
-            case "broadcast": {
-                this.modSettingsExample.broadcastDisableLightningModExample();
-                player.sendMessage("Broadcasting disable lightning mod....");
+                waypointExample.resetWaypointsExample(player);
+                player.sendMessage("Resetting waypoints...");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /modsettings <disable|reset|broadcast>");
+                player.sendMessage("Usage: /waypoint <display|remove|reset>");
                 break;
             }
         }

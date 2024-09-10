@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.impl.NickHiderExample;
+import com.lunarclient.apollo.example.modules.impl.ModSettingsExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class NickHiderCommand implements CommandExecutor {
-
-    private final NickHiderExample nickHiderExample = ApolloExamplePlugin.getPlugin().getNickHiderExample();
+public class ModSettingsCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -45,25 +43,33 @@ public class NickHiderCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /nickhider <override|reset>");
+            player.sendMessage("Usage: /modsettings <disable|reset|broadcast>");
             return true;
         }
 
+        ModSettingsExample modSettingsExample = ApolloExamplePlugin.getPlugin().getModSettingsExample();
+
         switch (args[0].toLowerCase()) {
-            case "override": {
-                this.nickHiderExample.overrideNickExample(player);
-                player.sendMessage("Overriding nick....");
+            case "disable": {
+                modSettingsExample.disableLightningModExample(player);
+                player.sendMessage("Disabling lightning mod....");
                 break;
             }
 
             case "reset": {
-                this.nickHiderExample.resetNickExample(player);
-                player.sendMessage("Resetting nick...");
+                modSettingsExample.rollbackLightningModEnabledState(player);
+                player.sendMessage("Rollbacking lightning mod enabled state....");
+                break;
+            }
+
+            case "broadcast": {
+                modSettingsExample.broadcastDisableLightningModExample();
+                player.sendMessage("Broadcasting disable lightning mod....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /nickhider <override|reset>");
+                player.sendMessage("Usage: /modsettings <disable|reset|broadcast>");
                 break;
             }
         }

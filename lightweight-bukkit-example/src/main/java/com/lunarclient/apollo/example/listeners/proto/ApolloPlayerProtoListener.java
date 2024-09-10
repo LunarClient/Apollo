@@ -33,6 +33,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.plugin.messaging.Messenger;
@@ -46,15 +47,29 @@ public class ApolloPlayerProtoListener implements Listener {
 
     private static final String APOLLO_CHANNEL = "lunar:apollo"; // Used for detecting whether the player supports Apollo
 
+    private final ApolloExamplePlugin plugin;
+
     private final Set<UUID> playersRunningApollo = new HashSet<>();
 
     public ApolloPlayerProtoListener(ApolloExamplePlugin plugin) {
+        this.plugin = plugin;
+
         Messenger messenger = Bukkit.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(plugin, APOLLO_CHANNEL);
         messenger.registerIncomingPluginChannel(plugin, APOLLO_CHANNEL, new ApolloRoundtripProtoListener());
         messenger.registerIncomingPluginChannel(plugin, APOLLO_CHANNEL, new ApolloPacketReceiveProtoListener());
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
+    }
+
+    public void disable() {
+        this.playersRunningApollo.clear();
+
+        Messenger messenger = Bukkit.getServer().getMessenger();
+        messenger.unregisterOutgoingPluginChannel(this.plugin, APOLLO_CHANNEL);
+        messenger.unregisterIncomingPluginChannel(this.plugin, APOLLO_CHANNEL);
+
+        HandlerList.unregisterAll(this);
     }
 
     @EventHandler

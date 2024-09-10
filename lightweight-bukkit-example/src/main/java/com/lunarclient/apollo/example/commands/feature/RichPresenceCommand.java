@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands;
+package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.modules.impl.RichPresenceExample;
@@ -32,8 +32,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class RichPresenceCommand implements CommandExecutor {
-
-    private final RichPresenceExample richPresenceExample = ApolloExamplePlugin.getPlugin().getRichPresenceExample();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -49,15 +47,17 @@ public class RichPresenceCommand implements CommandExecutor {
             return true;
         }
 
+        RichPresenceExample richPresenceExample = ApolloExamplePlugin.getPlugin().getRichPresenceExample();
+
         switch (args[0].toLowerCase()) {
             case "override": {
-                this.richPresenceExample.overrideServerRichPresenceExample(player);
+                richPresenceExample.overrideServerRichPresenceExample(player);
                 player.sendMessage("Overriding rich presence....");
                 break;
             }
 
             case "reset": {
-                this.richPresenceExample.resetServerRichPresenceExample(player);
+                richPresenceExample.resetServerRichPresenceExample(player);
                 player.sendMessage("Resetting rich presence...");
                 break;
             }
