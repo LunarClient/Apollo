@@ -40,8 +40,8 @@ public class WaypointProtoExample extends WaypointExample {
     public void displayWaypointExample(Player viewer) {
         DisplayWaypointMessage message = DisplayWaypointMessage.newBuilder()
             .setName("KoTH")
-            .setLocation(ProtobufUtil.toBlockLocationProtobuf(new Location(viewer.getWorld(), 500, 100, 500)))
-            .setColor(ProtobufUtil.toProtobuf(Color.ORANGE))
+            .setLocation(ProtobufUtil.createBlockLocationProto(new Location(viewer.getWorld(), 500, 100, 500)))
+            .setColor(ProtobufUtil.createColorProto(Color.ORANGE))
             .setPreventRemoval(false)
             .setHidden(false)
             .build();

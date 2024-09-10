@@ -25,6 +25,7 @@ package com.lunarclient.apollo.example.modules.impl.json;
 
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.NotificationExample;
+import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
 import java.time.Duration;
@@ -38,10 +39,10 @@ public class NotificationJsonExample extends NotificationExample {
     public void displayNotificationExample(Player viewer) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.notification.v1.DisplayNotificationMessage");
-        message.addProperty("title_adventure_json_lines", JsonUtil.toJson(
+        message.addProperty("title_adventure_json_lines", AdventureUtil.toJson(
             Component.text("UHC Announcement", NamedTextColor.GREEN)
         ));
-        message.addProperty("description_adventure_json_lines", JsonUtil.toJson(
+        message.addProperty("description_adventure_json_lines", AdventureUtil.toJson(
             Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
                 .appendNewline()
                 .append(Component.text("Get ready!", NamedTextColor.WHITE))

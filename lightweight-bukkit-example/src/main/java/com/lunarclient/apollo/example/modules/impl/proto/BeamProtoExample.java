@@ -40,8 +40,8 @@ public class BeamProtoExample extends BeamExample {
     public void displayBeamExample(Player viewer) {
         DisplayBeaconBeamMessage message = DisplayBeaconBeamMessage.newBuilder()
             .setId("spawn-beacon")
-            .setColor(ProtobufUtil.toProtobuf(Color.CYAN))
-            .setLocation(ProtobufUtil.toBlockLocationProtobuf(new Location(viewer.getWorld(), 0, 60, 0)))
+            .setColor(ProtobufUtil.createColorProto(Color.CYAN))
+            .setLocation(ProtobufUtil.createBlockLocationProto(new Location(viewer.getWorld(), 0, 60, 0)))
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);

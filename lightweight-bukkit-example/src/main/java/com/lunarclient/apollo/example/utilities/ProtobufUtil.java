@@ -27,7 +27,6 @@ import com.google.protobuf.Timestamp;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Uuid;
 import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid2D;
-import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid3D;
 import com.lunarclient.apollo.example.utilities.objects.icon.AdvancedResourceLocationIcon;
 import com.lunarclient.apollo.example.utilities.objects.icon.Icon;
 import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
@@ -38,65 +37,56 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-/**
- * Utility class for converting objects to and from their
- * corresponding Protocol Buffers representations.
- *
- * @since 1.0.0
- */
+// DONE
 public final class ProtobufUtil {
 
-    public static EntityId toProtobuf(int id, UUID uuid) {
+    public static UUID toJavaUuid(Uuid message) {
+        return new UUID(message.getHigh64(), message.getLow64());
+    }
+
+    public static long toJavaTimestamp(Timestamp message) {
+        return message.getSeconds() * 1000 + message.getNanos() / 1000000;
+    }
+
+    public static Location toBukkitLocation(com.lunarclient.apollo.common.v1.Location message) {
+        return new Location(Bukkit.getWorld(message.getWorld()), message.getX(), message.getY(), message.getZ());
+    }
+
+    public static Location toBukkitLocation(com.lunarclient.apollo.common.v1.PlayerLocation message) {
+        Location location = ProtobufUtil.toBukkitLocation(message.getLocation());
+        location.setYaw(message.getYaw());
+        location.setPitch(message.getPitch());
+        return location;
+    }
+
+    public static EntityId createEntityIdProto(int id, UUID uuid) {
         return EntityId.newBuilder()
             .setEntityId(id)
-            .setEntityUuid(ProtobufUtil.toProtobuf(uuid))
+            .setEntityUuid(ProtobufUtil.createUuidProto(uuid))
             .build();
     }
 
-    public static Uuid toProtobuf(UUID object) {
+    public static Uuid createUuidProto(UUID object) {
         return Uuid.newBuilder()
             .setHigh64(object.getMostSignificantBits())
             .setLow64(object.getLeastSignificantBits())
             .build();
     }
 
-    public static UUID fromProtobuf(Uuid message) {
-        return new UUID(message.getHigh64(), message.getLow64());
-    }
-
-    public static com.lunarclient.apollo.common.v1.Color toProtobuf(Color object) {
+    public static com.lunarclient.apollo.common.v1.Color createColorProto(Color object) {
         return com.lunarclient.apollo.common.v1.Color.newBuilder()
             .setColor(object.getRGB())
             .build();
     }
 
-    public static Color fromProtobuf(com.lunarclient.apollo.common.v1.Color message) {
-        return new Color(message.getColor());
-    }
-
-    public static com.google.protobuf.Duration toProtobuf(Duration object) {
+    public static com.google.protobuf.Duration createDurationProto(Duration object) {
         return com.google.protobuf.Duration.newBuilder()
             .setSeconds(object.getSeconds())
             .setNanos(object.getNano())
             .build();
     }
 
-    public static Duration fromProtobuf(com.google.protobuf.Duration message) {
-        return Duration.ofSeconds(message.getSeconds()).withNanos(message.getNanos());
-    }
-
-    public static Timestamp toProtobuf(long millis) {
-        return Timestamp.newBuilder()
-            .setSeconds(millis / 1000)
-            .setNanos((int) ((millis % 1000) * 1000000))
-            .build();
-    }
-
-    public static long fromProtobuf(Timestamp message) {
-        return message.getSeconds() * 1000 + message.getNanos() / 1000000;
-    }
-
-    public static com.lunarclient.apollo.common.v1.Location toLocationProtobuf(Location location) {
+    public static com.lunarclient.apollo.common.v1.Location createLocationProto(Location location) {
         return com.lunarclient.apollo.common.v1.Location.newBuilder()
             .setWorld(location.getWorld().getName())
             .setX(location.getX())
@@ -105,11 +95,7 @@ public final class ProtobufUtil {
             .build();
     }
 
-    public static Location fromProtobuf(com.lunarclient.apollo.common.v1.Location message) {
-        return new Location(Bukkit.getWorld(message.getWorld()), message.getX(), message.getY(), message.getZ());
-    }
-
-    public static com.lunarclient.apollo.common.v1.BlockLocation toBlockLocationProtobuf(Location location) {
+    public static com.lunarclient.apollo.common.v1.BlockLocation createBlockLocationProto(Location location) {
         return com.lunarclient.apollo.common.v1.BlockLocation.newBuilder()
             .setWorld(location.getWorld().getName())
             .setX(location.getBlockX())
@@ -118,26 +104,7 @@ public final class ProtobufUtil {
             .build();
     }
 
-    public static Location fromProtobuf(com.lunarclient.apollo.common.v1.BlockLocation message) {
-        return new Location(Bukkit.getWorld(message.getWorld()), message.getX(), message.getY(), message.getZ());
-    }
-
-    public static com.lunarclient.apollo.common.v1.PlayerLocation toProtobuf(Location location) {
-        return com.lunarclient.apollo.common.v1.PlayerLocation.newBuilder()
-            .setLocation(ProtobufUtil.toLocationProtobuf(location))
-            .setYaw(location.getYaw())
-            .setPitch(location.getPitch())
-            .build();
-    }
-
-    public static Location fromProtobuf(com.lunarclient.apollo.common.v1.PlayerLocation message) {
-        Location location = ProtobufUtil.fromProtobuf(message.getLocation());
-        location.setYaw(message.getYaw());
-        location.setPitch(message.getPitch());
-        return location;
-    }
-
-    public static com.lunarclient.apollo.common.v1.Cuboid2D toProtobuf(Cuboid2D object) {
+    public static com.lunarclient.apollo.common.v1.Cuboid2D createCuboid2DProto(Cuboid2D object) {
         return com.lunarclient.apollo.common.v1.Cuboid2D.newBuilder()
             .setMinX(object.getMinX())
             .setMinZ(object.getMinZ())
@@ -146,38 +113,7 @@ public final class ProtobufUtil {
             .build();
     }
 
-    public static Cuboid2D fromProtobuf(com.lunarclient.apollo.common.v1.Cuboid2D message) {
-        return Cuboid2D.builder()
-            .minX(message.getMinX())
-            .minZ(message.getMinZ())
-            .maxX(message.getMaxX())
-            .maxZ(message.getMaxZ())
-            .build();
-    }
-
-    public static com.lunarclient.apollo.common.v1.Cuboid3D toProtobuf(Cuboid3D object) {
-        return com.lunarclient.apollo.common.v1.Cuboid3D.newBuilder()
-            .setMinX(object.getMinX())
-            .setMinY(object.getMinY())
-            .setMinZ(object.getMinZ())
-            .setMaxX(object.getMaxX())
-            .setMaxY(object.getMaxY())
-            .setMaxZ(object.getMaxZ())
-            .build();
-    }
-
-    public static Cuboid3D fromProtobuf(com.lunarclient.apollo.common.v1.Cuboid3D message) {
-        return Cuboid3D.builder()
-            .minX(message.getMinX())
-            .minY(message.getMinY())
-            .minZ(message.getMinZ())
-            .maxX(message.getMaxX())
-            .maxY(message.getMaxY())
-            .maxZ(message.getMaxZ())
-            .build();
-    }
-
-    public static com.lunarclient.apollo.common.v1.Icon toProtobuf(Icon icon) {
+    public static com.lunarclient.apollo.common.v1.Icon createIconProto(Icon icon) {
         com.lunarclient.apollo.common.v1.Icon.Builder builder = com.lunarclient.apollo.common.v1.Icon.newBuilder();
 
         if (icon instanceof ItemStackIcon) {
@@ -215,39 +151,6 @@ public final class ProtobufUtil {
         }
 
         return builder.build();
-    }
-
-    public static Icon fromProtobuf(com.lunarclient.apollo.common.v1.Icon icon) {
-        if (icon.hasItemStack()) {
-            com.lunarclient.apollo.common.v1.ItemStackIcon item = icon.getItemStack();
-
-            return ItemStackIcon.builder()
-                .itemName(item.getItemName())
-                .itemId(item.getItemId())
-                .customModelData(item.getCustomModelData())
-                .build();
-        } else if (icon.hasSimpleResourceLocation()) {
-            com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon simple = icon.getSimpleResourceLocation();
-
-            return SimpleResourceLocationIcon.builder()
-                .resourceLocation(simple.getResourceLocation())
-                .size(simple.getSize())
-                .build();
-        } else if (icon.hasAdvancedResourceLocation()) {
-            com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon advanced = icon.getAdvancedResourceLocation();
-
-            return AdvancedResourceLocationIcon.builder()
-                .resourceLocation(advanced.getResourceLocation())
-                .width(advanced.getWidth())
-                .height(advanced.getHeight())
-                .minU(advanced.getMinU())
-                .maxU(advanced.getMaxU())
-                .minV(advanced.getMinV())
-                .maxV(advanced.getMaxV())
-                .build();
-        }
-
-        return null;
     }
 
     private ProtobufUtil() {

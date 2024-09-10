@@ -39,8 +39,8 @@ public class GlowProtoExample extends GlowExample {
     @Override
     public void overrideGlowEffectExample(UUID glowingPlayer) {
         OverrideGlowEffectMessage message = OverrideGlowEffectMessage.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(glowingPlayer))
-            .setColor(ProtobufUtil.toProtobuf(Color.RED))
+            .setPlayerUuid(ProtobufUtil.createUuidProto(glowingPlayer))
+            .setColor(ProtobufUtil.createColorProto(Color.RED))
             .build();
 
         ProtobufPacketUtil.broadcastPacket(message);
@@ -49,7 +49,7 @@ public class GlowProtoExample extends GlowExample {
     @Override
     public void resetGlowEffectExample(UUID glowingPlayer) {
         ResetGlowEffectMessage message = ResetGlowEffectMessage.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(glowingPlayer))
+            .setPlayerUuid(ProtobufUtil.createUuidProto(glowingPlayer))
             .build();
 
         ProtobufPacketUtil.broadcastPacket(message);

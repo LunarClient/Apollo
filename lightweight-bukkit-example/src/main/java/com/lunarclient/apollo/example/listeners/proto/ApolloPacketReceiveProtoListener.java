@@ -41,6 +41,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
+// DONE
 public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
 
     @Override
@@ -85,7 +86,7 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
     }
 
     private void onPlayerAttack(PlayerAttackMessage message) {
-         long instantiationTimeMs = ProtobufUtil.fromProtobuf(message.getPacketInfo().getInstantiationTime());
+         long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
 
         PlayerInfo targetInfo = message.getTargetInfo();
         PlayerInfo attackerInfo = message.getAttackerInfo();
@@ -95,21 +96,21 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
     }
 
     private void onPlayerChatOpen(PlayerChatOpenMessage message) {
-        long instantiationTimeMs = ProtobufUtil.fromProtobuf(message.getPacketInfo().getInstantiationTime());
+        long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
 
         PlayerInfo playerInfo = message.getPlayerInfo();
         this.onPlayerInfo(playerInfo);
     }
 
     private void onPlayerChatClose(PlayerChatCloseMessage message) {
-        long instantiationTimeMs = ProtobufUtil.fromProtobuf(message.getPacketInfo().getInstantiationTime());
+        long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
 
         PlayerInfo playerInfo = message.getPlayerInfo();
         this.onPlayerInfo(playerInfo);
     }
 
     private void onPlayerUseItem(PlayerUseItemMessage message) {
-        long instantiationTimeMs = ProtobufUtil.fromProtobuf(message.getPacketInfo().getInstantiationTime());
+        long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
 
         PlayerInfo playerInfo = message.getPlayerInfo();
         this.onPlayerInfo(playerInfo);
@@ -118,8 +119,8 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
     }
 
     private void onPlayerInfo(PlayerInfo info) {
-        UUID uuid = ProtobufUtil.fromProtobuf(info.getPlayerUuid());
-        Location location = ProtobufUtil.fromProtobuf(info.getLocation());
+        UUID uuid = ProtobufUtil.toJavaUuid(info.getPlayerUuid());
+        Location location = ProtobufUtil.toBukkitLocation(info.getLocation());
         boolean sneaking = info.getSneaking();
         boolean sprinting = info.getSprinting();
         boolean jumping = info.getJumping();

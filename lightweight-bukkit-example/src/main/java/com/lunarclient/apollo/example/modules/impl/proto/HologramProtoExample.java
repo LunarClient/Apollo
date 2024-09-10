@@ -60,7 +60,7 @@ public class HologramProtoExample extends HologramExample {
 
         DisplayHologramMessage message = DisplayHologramMessage.newBuilder()
             .setId("welcome-hologram")
-            .setLocation(ProtobufUtil.toLocationProtobuf(
+            .setLocation(ProtobufUtil.createLocationProto(
                 new Location(Bukkit.getWorld("world"), 5, 105, 0)
             ))
             .addAllAdventureJsonLines(lines)

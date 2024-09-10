@@ -26,37 +26,14 @@ package com.lunarclient.apollo.example.utilities.objects.icon;
 import lombok.Builder;
 import lombok.Getter;
 
-/**
- * Represents an item stack icon.
- *
- * @since 1.0.0
- */
 @Getter
 @Builder
 public final class ItemStackIcon extends Icon {
 
-    /**
-     * Returns the icon {@link String} item name.
-     *
-     * @return the icon item name
-     * @since 1.0.0
-     */
     String itemName;
 
-    /**
-     * Returns the icon {@link Integer} item id.
-     *
-     * @return the icon item id
-     * @since 1.0.0
-     */
     int itemId;
 
-    /**
-     * Returns the icon {@link Integer} custom model data.
-     *
-     * @return the icon custom model data
-     * @since 1.0.7
-     */
     int customModelData;
 
 }

@@ -41,7 +41,7 @@ public class LimbProtoExample extends LimbExample {
     @Override
     public void hideArmorExample(Player viewer, Player target) {
         HideArmorPiecesMessage message = HideArmorPiecesMessage.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(target.getUniqueId()))
+            .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
             .addAllArmorPieces(EnumSet.of(ArmorPiece.ARMOR_PIECE_HELMET, ArmorPiece.ARMOR_PIECE_LEGGINGS))
             .build();
 
@@ -51,7 +51,7 @@ public class LimbProtoExample extends LimbExample {
     @Override
     public void resetArmorExample(Player viewer, Player target) {
         ResetArmorPiecesMessage message = ResetArmorPiecesMessage.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(target.getUniqueId()))
+            .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
             .addAllArmorPieces(EnumSet.of(ArmorPiece.ARMOR_PIECE_HELMET, ArmorPiece.ARMOR_PIECE_LEGGINGS))
             .build();
 
@@ -61,7 +61,7 @@ public class LimbProtoExample extends LimbExample {
     @Override
     public void hideBodyExample(Player viewer, Player target) {
         HideBodyPartMessage message = HideBodyPartMessage.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(target.getUniqueId()))
+            .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
             .addAllBodyParts(EnumSet.of(BodyPart.BODY_PART_HEAD, BodyPart.BODY_PART_RIGHT_ARM))
             .build();
 
@@ -71,7 +71,7 @@ public class LimbProtoExample extends LimbExample {
     @Override
     public void resetBodyExample(Player viewer, Player target) {
         ResetBodyPartMessage message = ResetBodyPartMessage.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(target.getUniqueId()))
+            .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
             .addAllBodyParts(EnumSet.of(BodyPart.BODY_PART_HEAD, BodyPart.BODY_PART_RIGHT_ARM))
             .build();
 

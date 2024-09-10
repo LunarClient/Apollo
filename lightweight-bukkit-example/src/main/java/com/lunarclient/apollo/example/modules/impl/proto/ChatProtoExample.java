@@ -26,7 +26,7 @@ package com.lunarclient.apollo.example.modules.impl.proto;
 import com.lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage;
 import com.lunarclient.apollo.chat.v1.RemoveLiveChatMessageMessage;
 import com.lunarclient.apollo.example.modules.impl.ChatExample;
-import com.lunarclient.apollo.example.utilities.JsonUtil;
+import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -39,7 +39,7 @@ public class ChatProtoExample extends ChatExample {
     @Override
     public void displayLiveChatMessageExample() {
         DisplayLiveChatMessageMessage message = DisplayLiveChatMessageMessage.newBuilder()
-            .setAdventureJsonLines(JsonUtil.toJson(
+            .setAdventureJsonLines(AdventureUtil.toJson(
                 Component.text("Game starting in ", NamedTextColor.GREEN)
                     .append(Component.text(this.countdown, NamedTextColor.BLUE)))
             )

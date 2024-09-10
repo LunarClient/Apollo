@@ -24,7 +24,7 @@
 package com.lunarclient.apollo.example.modules.impl.proto;
 
 import com.lunarclient.apollo.example.modules.impl.NotificationExample;
-import com.lunarclient.apollo.example.utilities.JsonUtil;
+import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.notification.v1.DisplayNotificationMessage;
@@ -40,10 +40,10 @@ public class NotificationProtoExample extends NotificationExample {
     @Override
     public void displayNotificationExample(Player viewer) {
         DisplayNotificationMessage message = DisplayNotificationMessage.newBuilder()
-            .setTitleAdventureJsonLines(JsonUtil.toJson(
+            .setTitleAdventureJsonLines(AdventureUtil.toJson(
                 Component.text("UHC Announcement", NamedTextColor.GREEN)
             ))
-            .setDescriptionAdventureJsonLines(JsonUtil.toJson(
+            .setDescriptionAdventureJsonLines(AdventureUtil.toJson(
                 Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
                     .appendNewline()
                     .append(Component.text("Get ready!", NamedTextColor.WHITE))
@@ -52,7 +52,7 @@ public class NotificationProtoExample extends NotificationExample {
                 )
             )
             .setResourceLocation("icons/golden_apple.png") // This field is optional
-            .setDisplayTime(ProtobufUtil.toProtobuf(Duration.ofSeconds(5)))
+            .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofSeconds(5)))
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);

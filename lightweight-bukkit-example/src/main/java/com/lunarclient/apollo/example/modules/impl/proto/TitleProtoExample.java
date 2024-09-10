@@ -24,7 +24,7 @@
 package com.lunarclient.apollo.example.modules.impl.proto;
 
 import com.lunarclient.apollo.example.modules.impl.json.TitleJsonExample;
-import com.lunarclient.apollo.example.utilities.JsonUtil;
+import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.title.v1.DisplayTitleMessage;
@@ -41,7 +41,7 @@ public class TitleProtoExample extends TitleJsonExample {
 
     private final DisplayTitleMessage helloTitle = DisplayTitleMessage.newBuilder()
         .setTitleType(TitleType.TITLE_TYPE_TITLE)
-        .setAdventureJsonMessage(JsonUtil.toJson(
+        .setAdventureJsonMessage(AdventureUtil.toJson(
             Component.text()
                 .content("Hello, player!")
                 .color(NamedTextColor.GREEN)
@@ -49,14 +49,14 @@ public class TitleProtoExample extends TitleJsonExample {
                 .build()
         ))
         .setScale(1.0f)
-        .setFadeInTime(ProtobufUtil.toProtobuf(Duration.ofMillis(1500)))
-        .setDisplayTime(ProtobufUtil.toProtobuf(Duration.ofMillis(250)))
-        .setFadeOutTime(ProtobufUtil.toProtobuf(Duration.ofMillis(300)))
+        .setFadeInTime(ProtobufUtil.createDurationProto(Duration.ofMillis(1500)))
+        .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofMillis(250)))
+        .setFadeOutTime(ProtobufUtil.createDurationProto(Duration.ofMillis(300)))
         .build();
 
     private final DisplayTitleMessage interpolatedTitle = DisplayTitleMessage.newBuilder()
         .setTitleType(TitleType.TITLE_TYPE_TITLE)
-        .setAdventureJsonMessage(JsonUtil.toJson(
+        .setAdventureJsonMessage(AdventureUtil.toJson(
             Component.text()
                 .content("This title expands!")
                 .color(NamedTextColor.GREEN)
@@ -66,9 +66,9 @@ public class TitleProtoExample extends TitleJsonExample {
         .setScale(0.1f)
         .setInterpolationScale(1.0f)
         .setInterpolationRate(0.01f)
-        .setFadeInTime(ProtobufUtil.toProtobuf(Duration.ofMillis(5000)))
-        .setDisplayTime(ProtobufUtil.toProtobuf(Duration.ofMillis(250)))
-        .setFadeOutTime(ProtobufUtil.toProtobuf(Duration.ofMillis(300)))
+        .setFadeInTime(ProtobufUtil.createDurationProto(Duration.ofMillis(5000)))
+        .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofMillis(250)))
+        .setFadeOutTime(ProtobufUtil.createDurationProto(Duration.ofMillis(300)))
         .build();
 
     @Override

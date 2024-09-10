@@ -28,6 +28,7 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
 import java.awt.Color;
@@ -118,7 +119,7 @@ public class TeamJsonExample implements Listener {
             JsonObject message = new JsonObject();
             message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.team.v1.TeamMember");
             message.add("player_uuid", JsonUtil.createUuidObject(member.getUniqueId()));
-            message.addProperty("adventure_json_player_name", JsonUtil.toJson(
+            message.addProperty("adventure_json_player_name", AdventureUtil.toJson(
                 Component.text()
                     .content(member.getName())
                     .color(NamedTextColor.WHITE)

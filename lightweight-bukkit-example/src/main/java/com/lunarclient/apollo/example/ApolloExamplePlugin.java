@@ -132,10 +132,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class ApolloExamplePlugin extends JavaPlugin {
 
     // TODO:
-    // Finish utils & merge utils
-    // Packet enrichment
     // Available module options
-    // Switch command
 
     @Getter
     private static ApolloExamplePlugin plugin;

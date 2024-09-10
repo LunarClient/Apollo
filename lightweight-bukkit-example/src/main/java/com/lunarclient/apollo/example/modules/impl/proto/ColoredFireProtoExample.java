@@ -39,8 +39,8 @@ public class ColoredFireProtoExample extends ColoredFireExample {
     @Override
     public void overrideColoredFireExample(UUID burningPlayer) {
         OverrideColoredFireMessage message = OverrideColoredFireMessage.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(burningPlayer))
-            .setColor(ProtobufUtil.toProtobuf(Color.BLUE))
+            .setPlayerUuid(ProtobufUtil.createUuidProto(burningPlayer))
+            .setColor(ProtobufUtil.createColorProto(Color.BLUE))
             .build();
 
         ProtobufPacketUtil.broadcastPacket(message);
@@ -49,7 +49,7 @@ public class ColoredFireProtoExample extends ColoredFireExample {
     @Override
     public void resetColoredFireExample(UUID burningPlayer) {
         ResetColoredFireMessage message = ResetColoredFireMessage.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(burningPlayer))
+            .setPlayerUuid(ProtobufUtil.createUuidProto(burningPlayer))
             .build();
 
         ProtobufPacketUtil.broadcastPacket(message);

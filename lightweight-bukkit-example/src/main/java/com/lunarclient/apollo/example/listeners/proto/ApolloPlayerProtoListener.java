@@ -38,6 +38,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.plugin.messaging.Messenger;
 
+// DONE
 public class ApolloPlayerProtoListener implements Listener {
 
     private static final List<String> APOLLO_MODULES = Arrays.asList("limb", "beam", "border", "chat", "colored_fire", "combat", "cooldown",

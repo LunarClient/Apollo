@@ -41,8 +41,8 @@ public class CooldownProtoExample extends CooldownExample {
     public void displayCooldownItemExample(Player viewer) {
         DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
             .setName("enderpearl-cooldown")
-            .setDuration(ProtobufUtil.toProtobuf(Duration.ofSeconds(15)))
-            .setIcon(ProtobufUtil.toProtobuf(ItemStackIcon.builder()
+            .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
+            .setIcon(ProtobufUtil.createIconProto(ItemStackIcon.builder()
                 .itemName("ENDER_PEARL")
                 .build()))
             .build();
@@ -54,8 +54,8 @@ public class CooldownProtoExample extends CooldownExample {
     public void displayCooldownResourceExample(Player viewer) {
         DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
             .setName("lunar-cooldown")
-            .setDuration(ProtobufUtil.toProtobuf(Duration.ofSeconds(15)))
-            .setIcon(ProtobufUtil.toProtobuf(SimpleResourceLocationIcon.builder()
+            .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
+            .setIcon(ProtobufUtil.createIconProto(SimpleResourceLocationIcon.builder()
                     .resourceLocation("lunar:logo/logo-200x182.svg")
                     .size(12)
                     .build()))

@@ -39,7 +39,7 @@ public final class JsonPacketUtil {
 
     public static void enableModules(Player player, List<String> modules) {
         JsonArray settings = modules.stream()
-            .map(JsonPacketUtil::createEnableModuleObject)
+            .map(JsonUtil::createEnableModuleObject)
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
         JsonObject message = new JsonObject();
@@ -47,15 +47,6 @@ public final class JsonPacketUtil {
         message.add("configurable_settings", settings);
 
         JsonPacketUtil.sendPacket(player, message);
-    }
-
-    private static JsonObject createEnableModuleObject(String module) {
-        JsonObject message = new JsonObject();
-        // message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.configurable.v1.ConfigurableSettings");
-        message.addProperty("apollo_module", module);
-        message.addProperty("enable", true);
-
-        return message;
     }
 
     public static void sendPacket(Player player, JsonObject message) {

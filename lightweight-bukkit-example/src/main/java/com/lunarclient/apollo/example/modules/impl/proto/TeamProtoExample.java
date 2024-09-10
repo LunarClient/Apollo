@@ -26,7 +26,7 @@ package com.lunarclient.apollo.example.modules.impl.proto;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.utilities.JsonUtil;
+import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
 import com.lunarclient.apollo.team.v1.ResetTeamMembersMessage;
@@ -123,15 +123,15 @@ public class TeamProtoExample implements Listener {
             //                    .build()
 
             return TeamMember.newBuilder()
-                .setPlayerUuid(ProtobufUtil.toProtobuf(member.getUniqueId()))
-                .setAdventureJsonPlayerName(JsonUtil.toJson(
+                .setPlayerUuid(ProtobufUtil.createUuidProto(member.getUniqueId()))
+                .setAdventureJsonPlayerName(AdventureUtil.toJson(
                     Component.text()
                         .content(member.getName())
                         .color(NamedTextColor.WHITE)
                         .build()
                 ))
-                .setMarkerColor(ProtobufUtil.toProtobuf(Color.WHITE))
-                .setLocation(ProtobufUtil.toLocationProtobuf(member.getLocation()))
+                .setMarkerColor(ProtobufUtil.createColorProto(Color.WHITE))
+                .setLocation(ProtobufUtil.createLocationProto(member.getLocation()))
                 .build();
         }
 

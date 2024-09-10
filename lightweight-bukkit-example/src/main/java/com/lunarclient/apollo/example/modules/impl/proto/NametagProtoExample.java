@@ -58,7 +58,7 @@ public class NametagProtoExample extends NametagExample {
             .collect(Collectors.toList());
 
         OverrideNametagMessage message = OverrideNametagMessage.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(target.getUniqueId()))
+            .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
             .addAllAdventureJsonLines(lines)
             .build();
 
@@ -68,7 +68,7 @@ public class NametagProtoExample extends NametagExample {
     @Override
     public void resetNametagExample(Player target) {
         ResetNametagMessage message = ResetNametagMessage.newBuilder()
-            .setPlayerUuid(ProtobufUtil.toProtobuf(target.getUniqueId()))
+            .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
             .build();
 
         ProtobufPacketUtil.broadcastPacket(message);

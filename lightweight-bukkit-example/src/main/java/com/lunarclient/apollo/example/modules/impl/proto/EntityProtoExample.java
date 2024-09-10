@@ -43,7 +43,7 @@ public class EntityProtoExample extends EntityExample {
     @Override
     public void overrideRainbowSheepExample(Player viewer) {
         Set<EntityId> sheepUuidsProto = viewer.getWorld().getEntitiesByClass(Sheep.class).stream()
-            .map(sheep -> ProtobufUtil.toProtobuf(sheep.getEntityId(), sheep.getUniqueId()))
+            .map(sheep -> ProtobufUtil.createEntityIdProto(sheep.getEntityId(), sheep.getUniqueId()))
             .collect(Collectors.toSet());
 
         OverrideRainbowSheepMessage message = OverrideRainbowSheepMessage.newBuilder()
@@ -56,7 +56,7 @@ public class EntityProtoExample extends EntityExample {
     @Override
     public void resetRainbowSheepExample(Player viewer) {
         Set<EntityId> sheepUuidsProto = viewer.getWorld().getEntitiesByClass(Sheep.class).stream()
-            .map(sheep -> ProtobufUtil.toProtobuf(sheep.getEntityId(), sheep.getUniqueId()))
+            .map(sheep -> ProtobufUtil.createEntityIdProto(sheep.getEntityId(), sheep.getUniqueId()))
             .collect(Collectors.toSet());
 
         ResetRainbowSheepMessage message = ResetRainbowSheepMessage.newBuilder()
@@ -71,7 +71,7 @@ public class EntityProtoExample extends EntityExample {
         Set<EntityId> entityUuidsProto = viewer.getWorld()
             .getNearbyEntities(viewer.getLocation(), 10, 10, 10)
             .stream().filter(entity -> entity instanceof Cow)
-            .map(sheep -> ProtobufUtil.toProtobuf(sheep.getEntityId(), sheep.getUniqueId()))
+            .map(sheep -> ProtobufUtil.createEntityIdProto(sheep.getEntityId(), sheep.getUniqueId()))
             .collect(Collectors.toSet());
 
         FlipEntityMessage message = FlipEntityMessage.newBuilder()
@@ -86,7 +86,7 @@ public class EntityProtoExample extends EntityExample {
         Set<EntityId> entityUuidsProto = viewer.getWorld()
             .getNearbyEntities(viewer.getLocation(), 10, 10, 10)
             .stream().filter(entity -> entity instanceof Cow)
-            .map(sheep -> ProtobufUtil.toProtobuf(sheep.getEntityId(), sheep.getUniqueId()))
+            .map(sheep -> ProtobufUtil.createEntityIdProto(sheep.getEntityId(), sheep.getUniqueId()))
             .collect(Collectors.toSet());
 
         ResetFlipedEntityMessage message = ResetFlipedEntityMessage.newBuilder()

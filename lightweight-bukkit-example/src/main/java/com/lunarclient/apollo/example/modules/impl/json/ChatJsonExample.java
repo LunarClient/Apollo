@@ -25,8 +25,8 @@ package com.lunarclient.apollo.example.modules.impl.json;
 
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.ChatExample;
+import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
-import com.lunarclient.apollo.example.utilities.JsonUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -40,7 +40,7 @@ public class ChatJsonExample extends ChatExample {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage");
         message.addProperty("message_id", 13);
-        message.addProperty("adventure_json_lines", JsonUtil.toJson(
+        message.addProperty("adventure_json_lines", AdventureUtil.toJson(
             Component.text("Game starting in ", NamedTextColor.GREEN)
                 .append(Component.text(this.countdown, NamedTextColor.BLUE))
         ));

@@ -27,34 +27,12 @@ import lombok.Builder;
 import lombok.Getter;
 import org.jetbrains.annotations.Range;
 
-/**
- * Represents a simple resource location icon.
- *
- * @since 1.0.0
- */
 @Getter
 @Builder
 public final class SimpleResourceLocationIcon extends Icon {
 
-    /**
-     * Returns the icon {@link String} resource location.
-     *
-     * <p>Represents a path to an icon that will appear for the player.</p>
-     *
-     * @return the icon resource location
-     * @since 1.0.0
-     */
     String resourceLocation;
 
-    /**
-     * Returns the icon {@link Integer} size.
-     *
-     * <p>Size of the image height and width (in pixels). Must be equal to or
-     * greater than 0.</p>
-     *
-     * @return the icon size
-     * @since 1.0.0
-     */
     @Range(from = 0, to = Integer.MAX_VALUE) int size;
 
 }

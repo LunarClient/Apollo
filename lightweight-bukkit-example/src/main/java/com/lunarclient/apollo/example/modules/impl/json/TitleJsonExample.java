@@ -25,6 +25,7 @@ package com.lunarclient.apollo.example.modules.impl.json;
 
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.TitleExample;
+import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
 import java.time.Duration;
@@ -40,7 +41,7 @@ public class TitleJsonExample extends TitleExample {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.title.v1.DisplayTitleMessage");
         message.addProperty("title_type", 1); // 1 = title, 2 = subtitle
-        message.addProperty("adventure_json_message", JsonUtil.toJson(
+        message.addProperty("adventure_json_message", AdventureUtil.toJson(
             Component.text()
                 .content("Hello, player!")
                 .color(NamedTextColor.GREEN)
