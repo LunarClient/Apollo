@@ -95,6 +95,7 @@ import com.lunarclient.apollo.example.modules.impl.json.RichPresenceJsonExample;
 import com.lunarclient.apollo.example.modules.impl.json.ServerRuleJsonExample;
 import com.lunarclient.apollo.example.modules.impl.json.StaffModJsonExample;
 import com.lunarclient.apollo.example.modules.impl.json.StopwatchJsonExample;
+import com.lunarclient.apollo.example.modules.impl.json.TeamJsonExample;
 import com.lunarclient.apollo.example.modules.impl.json.TebexJsonExample;
 import com.lunarclient.apollo.example.modules.impl.json.TitleJsonExample;
 import com.lunarclient.apollo.example.modules.impl.json.TntCountdownJsonExample;
@@ -119,6 +120,7 @@ import com.lunarclient.apollo.example.modules.impl.proto.RichPresenceProtoExampl
 import com.lunarclient.apollo.example.modules.impl.proto.ServerRuleProtoExample;
 import com.lunarclient.apollo.example.modules.impl.proto.StaffModProtoExample;
 import com.lunarclient.apollo.example.modules.impl.proto.StopwatchProtoExample;
+import com.lunarclient.apollo.example.modules.impl.proto.TeamProtoExample;
 import com.lunarclient.apollo.example.modules.impl.proto.TebexProtoExample;
 import com.lunarclient.apollo.example.modules.impl.proto.TitleProtoExample;
 import com.lunarclient.apollo.example.modules.impl.proto.TntCountdownProtoExample;
@@ -253,7 +255,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
                 this.serverRuleExample = new ServerRuleJsonExample();
                 this.staffModExample = new StaffModJsonExample();
                 this.stopwatchExample = new StopwatchJsonExample();
-                // this.teamExample = new TeamJsonExample(); // TODO
+                this.teamExample = new TeamJsonExample();
                 this.tebexExample = new TebexJsonExample();
                 this.titleExample = new TitleJsonExample();
                 this.tntCountdownExample = new TntCountdownJsonExample();
@@ -282,7 +284,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
                 this.serverRuleExample = new ServerRuleProtoExample();
                 this.staffModExample = new StaffModProtoExample();
                 this.stopwatchExample = new StopwatchProtoExample();
-                // this.teamExample = new TeamProtoExample(); // TODO
+                this.teamExample = new TeamProtoExample();
                 this.tebexExample = new TebexProtoExample();
                 this.titleExample = new TitleProtoExample();
                 this.tntCountdownExample = new TntCountdownProtoExample();

@@ -23,10 +23,13 @@
  */
 package com.lunarclient.apollo.example.modules.impl.json;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.StaffModExample;
+import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
+import java.util.stream.Stream;
 import org.bukkit.entity.Player;
 
-// TODO
 public class StaffModJsonExample extends StaffModExample {
 
     @Override
@@ -34,11 +37,29 @@ public class StaffModJsonExample extends StaffModExample {
         if (!viewer.hasPermission("apollo.staff")) {
             return;
         }
+
+        // 1 = xray
+        JsonArray staffMods = Stream.of(1)
+            .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.staffmod.v1.EnableStaffModsMessage");
+        message.add("staff_mods", staffMods);
+
+        JsonPacketUtil.sendPacket(viewer, message);
     }
 
     @Override
     public void disableStaffModsExample(Player viewer) {
+        // 1 = xray
+        JsonArray staffMods = Stream.of(1)
+            .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.staffmod.v1.DisableStaffModsMessage");
+        message.add("staff_mods", staffMods);
+
+        JsonPacketUtil.sendPacket(viewer, message);
     }
 
 }

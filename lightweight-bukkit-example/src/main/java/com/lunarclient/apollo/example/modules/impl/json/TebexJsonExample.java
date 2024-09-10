@@ -36,9 +36,6 @@ public class TebexJsonExample extends TebexExample {
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.tebex.v1.OpenTebexEmbeddedCheckoutMessage");
         message.addProperty("basket_ident", basketIdent);
 
-        // TODO
-        // apolloPlayer.getTebexEmbeddedCheckoutSupport() == TebexEmbeddedCheckoutSupport.UNSUPPORTED
-
         JsonPacketUtil.sendPacket(viewer, message);
     }
 

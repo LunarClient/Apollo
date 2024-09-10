@@ -24,27 +24,16 @@
 package com.lunarclient.apollo.example.modules.impl;
 
 import com.lunarclient.apollo.example.modules.ApolloExample;
-import java.util.Optional;
-import java.util.UUID;
 import org.bukkit.entity.Player;
 
-// TODO
 public abstract class TeamExample extends ApolloExample {
 
-    public abstract Optional<TeamExample.Team> getByPlayerUuid(UUID playerUuid);
+    public abstract void createTeam(Player player);
 
-    public abstract Optional<TeamExample.Team> getByTeamId(UUID teamId);
+    public abstract void deleteTeam(Player player);
 
-    public abstract TeamExample.Team createTeam();
+    public abstract void addMember(Player player, Player target);
 
-    public abstract void deleteTeam(UUID teamId);
+    public abstract void removeMember(Player player, Player target);
 
-    public abstract class Team {
-
-        public abstract void addMember(Player player);
-
-        public abstract void removeMember(Player player);
-
-        public abstract void refresh();
-    }
 }

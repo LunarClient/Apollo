@@ -26,6 +26,7 @@ package com.lunarclient.apollo.example.modules.impl.proto;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.modules.impl.TeamExample;
 import com.lunarclient.apollo.example.utilities.AdventureUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
@@ -48,7 +49,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class TeamProtoExample implements Listener {
+public class TeamProtoExample extends TeamExample implements Listener {
 
     private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
     private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
@@ -117,11 +118,6 @@ public class TeamProtoExample implements Listener {
         }
 
         private TeamMember createTeamMember(Player member) {
-            // Component.text()
-            //                    .content(member.getName())
-            //                    .color(NamedTextColor.WHITE)
-            //                    .build()
-
             return TeamMember.newBuilder()
                 .setPlayerUuid(ProtobufUtil.createUuidProto(member.getUniqueId()))
                 .setAdventureJsonPlayerName(AdventureUtil.toJson(
@@ -187,6 +183,72 @@ public class TeamProtoExample implements Listener {
         public void run() {
             TeamProtoExample.this.teamsByTeamId.values().forEach(Team::refresh);
         }
+    }
+
+    @Override
+    public void createTeam(Player player) {
+        Optional<Team> teamOpt = this.getByPlayerUuid(player.getUniqueId());
+
+        if (teamOpt.isPresent()) {
+            player.sendMessage("You already have a team...");
+            return;
+        }
+
+        Team team = this.createTeam();
+        team.addMember(player);
+
+        player.sendMessage("Creating team...");
+    }
+
+    @Override
+    public void deleteTeam(Player player) {
+        Optional<Team> teamOpt = this.getByPlayerUuid(player.getUniqueId());
+
+        if (teamOpt.isPresent()) {
+            this.deleteTeam(teamOpt.get().getTeamId());
+            player.sendMessage("Deleting team...");
+            return;
+        }
+
+        player.sendMessage("No team found...");
+    }
+
+    @Override
+    public void addMember(Player player, Player target) {
+        Optional<Team> teamOpt = this.getByPlayerUuid(player.getUniqueId());
+        Optional<Team> targetTeamOpt = this.getByPlayerUuid(target.getUniqueId());
+
+        if (targetTeamOpt.isPresent()) {
+            player.sendMessage("Player " + target.getName() + " already has a team...");
+            return;
+        }
+
+        if (teamOpt.isPresent()) {
+            teamOpt.get().addMember(target);
+            player.sendMessage("Added " + target.getName() + " to your team...");
+            return;
+        }
+
+        player.sendMessage("No team found...");
+    }
+
+    @Override
+    public void removeMember(Player player, Player target) {
+        Optional<Team> teamOpt = this.getByPlayerUuid(player.getUniqueId());
+        Optional<Team> targetTeamOpt = this.getByPlayerUuid(target.getUniqueId());
+
+        if (!targetTeamOpt.isPresent()) {
+            player.sendMessage("Player " + target.getName() + " doesn't have a team...");
+            return;
+        }
+
+        if (teamOpt.isPresent()) {
+            teamOpt.get().removeMember(target);
+            player.sendMessage("Removed " + target.getName() + " from your team...");
+            return;
+        }
+
+        player.sendMessage("No team found...");
     }
 
 }

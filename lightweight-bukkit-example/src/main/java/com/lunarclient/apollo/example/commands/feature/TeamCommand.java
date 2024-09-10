@@ -25,7 +25,6 @@ package com.lunarclient.apollo.example.commands.feature;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.modules.impl.TeamExample;
-import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,7 +32,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-// TODO
 public class TeamCommand implements CommandExecutor {
 
     @Override
@@ -49,30 +47,12 @@ public class TeamCommand implements CommandExecutor {
         if (args.length == 1) {
             switch (args[0].toLowerCase()) {
                 case "create": {
-                    Optional<TeamExample.Team> teamOpt = teamExample.getByPlayerUuid(player.getUniqueId());
-
-                    if (teamOpt.isPresent()) {
-                        player.sendMessage("You already have a team...");
-                        break;
-                    }
-
-                    TeamExample.Team team = teamExample.createTeam();
-                    team.addMember(player);
-
-                    player.sendMessage("Creating team...");
+                    teamExample.createTeam(player);
                     break;
                 }
 
                 case "delete": {
-                    Optional<TeamExample.Team> teamOpt = teamExample.getByPlayerUuid(player.getUniqueId());
-
-                    if (teamOpt.isPresent()) {
-                        // TODO teamExample.deleteTeam(teamOpt.get().getTeamId());
-                        player.sendMessage("Deleting team...");
-                        break;
-                    }
-
-                    player.sendMessage("No team found...");
+                    teamExample.deleteTeam(player);
                     break;
                 }
 
@@ -94,39 +74,14 @@ public class TeamCommand implements CommandExecutor {
                 return true;
             }
 
-            Optional<TeamExample.Team> teamOpt = teamExample.getByPlayerUuid(player.getUniqueId());
-            Optional<TeamExample.Team> targetTeamOpt = teamExample.getByPlayerUuid(target.getUniqueId());
-
             switch (args[0].toLowerCase()) {
                 case "addmember": {
-                    if (targetTeamOpt.isPresent()) {
-                        player.sendMessage("Player " + target.getName() + " already has a team...");
-                        break;
-                    }
-
-                    if (teamOpt.isPresent()) {
-                        teamOpt.get().addMember(target);
-                        player.sendMessage("Added " + target.getName() + " to your team...");
-                        break;
-                    }
-
-                    player.sendMessage("No team found...");
+                    teamExample.addMember(player, target);
                     break;
                 }
 
                 case "removemember": {
-                    if (!targetTeamOpt.isPresent()) {
-                        player.sendMessage("Player " + target.getName() + " doesn't have a team...");
-                        break;
-                    }
-
-                    if (teamOpt.isPresent()) {
-                        teamOpt.get().removeMember(target);
-                        player.sendMessage("Removed " + target.getName() + " from your team...");
-                        break;
-                    }
-
-                    player.sendMessage("No team found...");
+                    teamExample.removeMember(player, target);
                     break;
                 }
 
