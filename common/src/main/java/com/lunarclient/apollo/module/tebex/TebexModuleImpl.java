@@ -36,6 +36,11 @@ import lombok.NonNull;
 public final class TebexModuleImpl extends TebexModule {
 
     @Override
+    public void displayTebexEmbeddedCheckout(@NonNull Recipients recipients, @NonNull String basketIdent) {
+        this.displayTebexEmbeddedCheckout(recipients, basketIdent, null);
+    }
+
+    @Override
     public void displayTebexEmbeddedCheckout(@NonNull Recipients recipients, @NonNull String basketIdent, String locale) {
         OpenTebexEmbeddedCheckoutMessage.Builder builder = OpenTebexEmbeddedCheckoutMessage.newBuilder()
             .setBasketIdent(basketIdent);
