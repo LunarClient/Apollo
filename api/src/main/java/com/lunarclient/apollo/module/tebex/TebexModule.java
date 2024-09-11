@@ -46,4 +46,15 @@ public abstract class TebexModule extends ApolloModule {
      */
     public abstract void displayTebexEmbeddedCheckout(Recipients recipients, String basketIdent);
 
+    /**
+     * Displays the checkout with the provided {@link String} basked ident
+     * with optional {@link String} locale to the {@link Recipients}.
+     *
+     * @param recipients  the recipients that are receiving the packet
+     * @param basketIdent the tebex basket ident
+     * @param locale      the locale
+     * @since 1.1.5
+     */
+    public abstract void displayTebexEmbeddedCheckout(Recipients recipients, String basketIdent, String locale);
+
 }
