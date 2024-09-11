@@ -49,7 +49,7 @@ public class TebexCommand implements CommandExecutor {
             return true;
         }
 
-        String locale = args.length == 3 ? args[1] : null;
+        String locale = args.length == 3 ? args[2] : null;
 
         switch (args[0].toLowerCase()) {
             case "display": {
@@ -59,7 +59,7 @@ public class TebexCommand implements CommandExecutor {
             }
 
             default: {
-                player.sendMessage("Usage: /tebex <display> <basketIdent>");
+                player.sendMessage("Usage: /tebex <display> <basketIdent> [locale]");
                 break;
             }
         }
