@@ -33,6 +33,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
+// DONE
 public class NotificationJsonExample extends NotificationExample {
 
     @Override
@@ -50,7 +51,7 @@ public class NotificationJsonExample extends NotificationExample {
                 .append(Component.text("Good luck!", NamedTextColor.GOLD))
         ));
 
-        message.add("display_time", JsonUtil.createDurationObject(Duration.ofSeconds(5)));
+        message.addProperty("display_time", JsonUtil.createDurationObject(Duration.ofSeconds(5)));
         message.addProperty("resource_location", "icons/golden_apple.png");
 
         JsonPacketUtil.sendPacket(viewer, message);

@@ -51,9 +51,9 @@ public class TitleJsonExample extends TitleExample {
         message.addProperty("scale", 0.1f);
         message.addProperty("interpolation_scale", 1.0f);
         message.addProperty("interpolation_rate", 0.01f);
-        message.add("fade_in_time", JsonUtil.createDurationObject(Duration.ofMillis(5000)));
-        message.add("display_time", JsonUtil.createDurationObject(Duration.ofMillis(250)));
-        message.add("fade_out_time", JsonUtil.createDurationObject(Duration.ofMillis(300)));
+        message.addProperty("fade_in_time", JsonUtil.createDurationObject(Duration.ofMillis(5000)));
+        message.addProperty("display_time", JsonUtil.createDurationObject(Duration.ofMillis(250)));
+        message.addProperty("fade_out_time", JsonUtil.createDurationObject(Duration.ofMillis(300)));
 
         JsonPacketUtil.sendPacket(viewer, message);
     }

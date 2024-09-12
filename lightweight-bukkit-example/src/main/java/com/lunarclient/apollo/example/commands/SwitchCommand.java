@@ -44,13 +44,20 @@ public class SwitchCommand implements CommandExecutor {
         ApolloExampleType type;
         try {
             type = ApolloExampleType.valueOf(args[0].toUpperCase());
-            ApolloExamplePlugin.getPlugin().changeImplementationType(type);
-            sender.sendMessage("Successfully switched example implementation to " + type.name() + "!");
-            sender.sendMessage("Re-join the server to apply the changes!");
         } catch (NoSuchElementException e) {
             sender.sendMessage("No implementation '" + args[0] + "' found!");
+            return false;
         }
 
+        if (type == ApolloExamplePlugin.TYPE) {
+            sender.sendMessage("The implementation type is already set to " + ApolloExamplePlugin.TYPE.name());
+            return true;
+        }
+
+        ApolloExamplePlugin.getPlugin().changeImplementationType(type);
+        sender.sendMessage("Successfully switched example implementation to " + type.name() + "!");
+        sender.sendMessage("Re-join the server to apply the changes!");
         return true;
     }
+
 }

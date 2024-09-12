@@ -38,12 +38,21 @@ import org.jetbrains.annotations.NotNull;
 
 public final class JsonUtil {
 
-    // TODO: broken
-    public static JsonObject createDurationObject(@NotNull Duration duration) {
-        JsonObject durationObject = new JsonObject();
-        durationObject.addProperty("seconds", duration.getSeconds());
-        durationObject.addProperty("nanos", duration.getNano());
-        return durationObject;
+    public static String createDurationObject(@NotNull Duration duration) {
+        long seconds = duration.getSeconds();
+        int nanos = duration.getNano();
+
+        // Is there a better way to do this?
+        String durationString;
+        if (nanos == 0) {
+            durationString = seconds + "s";
+        } else {
+            durationString = String.format("%d.%09ds", seconds, nanos)
+                .replaceAll("0+$", "")
+                .replaceAll("\\.$", "");
+        }
+
+        return durationString;
     }
 
     public static JsonObject createColorObject(@NotNull Color color) {
@@ -52,11 +61,10 @@ public final class JsonUtil {
         return colorObject;
     }
 
-    // TODO: broken
     public static JsonObject createUuidObject(@NotNull UUID uuid) {
         JsonObject uuidObject = new JsonObject();
-        uuidObject.addProperty("high64", uuid.getMostSignificantBits());
-        uuidObject.addProperty("low64", uuid.getLeastSignificantBits());
+        uuidObject.addProperty("high64", Long.toUnsignedString(uuid.getMostSignificantBits()));
+        uuidObject.addProperty("low64", Long.toUnsignedString(uuid.getLeastSignificantBits()));
         return uuidObject;
     }
 
@@ -108,27 +116,34 @@ public final class JsonUtil {
             ItemStackIcon item = (ItemStackIcon) icon;
             String itemName = item.getItemName();
 
-            iconObject.addProperty("item_id", item.getItemId());
-            iconObject.addProperty("custom_model_data", item.getCustomModelData());
-
+            JsonObject itemIconObject = new JsonObject();
             if (itemName != null) {
-                iconObject.addProperty("item_name", itemName);
+                itemIconObject.addProperty("item_name", itemName);
+            } else {
+                itemIconObject.addProperty("item_id", item.getItemId());
             }
+
+            itemIconObject.addProperty("custom_model_data", item.getCustomModelData());
+            iconObject.add("item_stack", itemIconObject);
         } else if (icon instanceof SimpleResourceLocationIcon) {
             SimpleResourceLocationIcon simple = (SimpleResourceLocationIcon) icon;
 
-            iconObject.addProperty("resource_location", simple.getResourceLocation());
-            iconObject.addProperty("size", simple.getSize());
+            JsonObject simpleIconObject = new JsonObject();
+            simpleIconObject.addProperty("resource_location", simple.getResourceLocation());
+            simpleIconObject.addProperty("size", simple.getSize());
+            iconObject.add("simple_resource_location", simpleIconObject);
         } else if (icon instanceof AdvancedResourceLocationIcon) {
             AdvancedResourceLocationIcon advanced = (AdvancedResourceLocationIcon) icon;
 
-            iconObject.addProperty("resource_location", advanced.getResourceLocation());
-            iconObject.addProperty("width", advanced.getWidth());
-            iconObject.addProperty("height", advanced.getHeight());
-            iconObject.addProperty("min_u", advanced.getMinU());
-            iconObject.addProperty("max_u", advanced.getMaxU());
-            iconObject.addProperty("min_v", advanced.getMinV());
-            iconObject.addProperty("max_v", advanced.getMaxV());
+            JsonObject advancedIcon = new JsonObject();
+            advancedIcon.addProperty("resource_location", advanced.getResourceLocation());
+            advancedIcon.addProperty("width", advanced.getWidth());
+            advancedIcon.addProperty("height", advanced.getHeight());
+            advancedIcon.addProperty("min_u", advanced.getMinU());
+            advancedIcon.addProperty("max_u", advanced.getMaxU());
+            advancedIcon.addProperty("min_v", advanced.getMinV());
+            advancedIcon.addProperty("max_v", advanced.getMaxV());
+            iconObject.add("advanced_resource_location", advancedIcon);
         }
 
         return iconObject;
