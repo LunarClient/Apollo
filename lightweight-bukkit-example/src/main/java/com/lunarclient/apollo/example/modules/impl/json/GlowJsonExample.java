@@ -47,7 +47,7 @@ public class GlowJsonExample extends GlowExample {
     public void resetGlowEffectExample(UUID glowingPlayer) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.glow.v1.ResetGlowEffectMessage");
-        message.add("uuid", JsonUtil.createUuidObject(glowingPlayer));
+        message.add("player_uuid", JsonUtil.createUuidObject(glowingPlayer));
 
         JsonPacketUtil.broadcastPacket(message);
     }

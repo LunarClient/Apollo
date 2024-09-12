@@ -108,7 +108,6 @@ public final class JsonUtil {
             ItemStackIcon item = (ItemStackIcon) icon;
             String itemName = item.getItemName();
 
-            iconObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.ItemStackIcon");
             iconObject.addProperty("item_id", item.getItemId());
             iconObject.addProperty("custom_model_data", item.getCustomModelData());
 
@@ -118,13 +117,11 @@ public final class JsonUtil {
         } else if (icon instanceof SimpleResourceLocationIcon) {
             SimpleResourceLocationIcon simple = (SimpleResourceLocationIcon) icon;
 
-            iconObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.SimpleResourceLocationIcon");
             iconObject.addProperty("resource_location", simple.getResourceLocation());
             iconObject.addProperty("size", simple.getSize());
         } else if (icon instanceof AdvancedResourceLocationIcon) {
             AdvancedResourceLocationIcon advanced = (AdvancedResourceLocationIcon) icon;
 
-            iconObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.common.v1.AdvancedResourceLocationIcon");
             iconObject.addProperty("resource_location", advanced.getResourceLocation());
             iconObject.addProperty("width", advanced.getWidth());
             iconObject.addProperty("height", advanced.getHeight());

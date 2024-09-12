@@ -28,6 +28,7 @@ import com.lunarclient.apollo.example.modules.impl.VignetteExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import org.bukkit.entity.Player;
 
+// DONE
 public class VignetteJsonExample extends VignetteExample {
 
     @Override

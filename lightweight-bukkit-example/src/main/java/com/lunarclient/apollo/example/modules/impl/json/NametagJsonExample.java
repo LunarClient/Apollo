@@ -55,7 +55,7 @@ public class NametagJsonExample extends NametagExample {
 
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.nametag.v1.OverrideNametagMessage");
-        message.add("uuid", JsonUtil.createUuidObject(target.getUniqueId()));
+        message.add("player_uuid", JsonUtil.createUuidObject(target.getUniqueId()));
         message.add("adventure_json_lines", lines);
 
         JsonPacketUtil.broadcastPacket(message);
@@ -65,7 +65,7 @@ public class NametagJsonExample extends NametagExample {
     public void resetNametagExample(Player target) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.nametag.v1.ResetNametagMessage");
-        message.add("uuid", JsonUtil.createUuidObject(target.getUniqueId()));
+        message.add("player_uuid", JsonUtil.createUuidObject(target.getUniqueId()));
 
         JsonPacketUtil.broadcastPacket(message);
     }

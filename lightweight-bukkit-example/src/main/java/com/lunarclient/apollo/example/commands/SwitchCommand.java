@@ -37,6 +37,7 @@ public class SwitchCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length != 1) {
             sender.sendMessage("Usage: /switch <API|PROTO|JSON|>");
+            sender.sendMessage("Current implementation: " + ApolloExamplePlugin.TYPE.name());
             return true;
         }
 

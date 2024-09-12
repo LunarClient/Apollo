@@ -28,6 +28,7 @@ import com.lunarclient.apollo.example.modules.impl.TebexExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import org.bukkit.entity.Player;
 
+// TODO: remove until the module is out
 public class TebexJsonExample extends TebexExample {
 
     @Override

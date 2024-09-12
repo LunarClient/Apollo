@@ -28,6 +28,7 @@ import com.lunarclient.apollo.example.modules.impl.NickHiderExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import org.bukkit.entity.Player;
 
+// DONE
 public class NickHiderJsonExample extends NickHiderExample {
 
     @Override

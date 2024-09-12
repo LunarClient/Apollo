@@ -26,7 +26,6 @@ package com.lunarclient.apollo.example.modules;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.module.chat.ChatModule;
 import com.lunarclient.apollo.recipients.Recipients;
-import java.util.concurrent.ThreadLocalRandom;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -34,14 +33,13 @@ public class ChatExample {
 
     private final ChatModule chatModule = Apollo.getModuleManager().getModule(ChatModule.class);
 
-    private final int messageId = ThreadLocalRandom.current().nextInt(100);
     private int countdown = 5;
 
     public void displayLiveChatMessageExample() {
         this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
             Component.text("Game starting in ", NamedTextColor.GREEN)
                 .append(Component.text(this.countdown, NamedTextColor.BLUE)),
-            this.messageId
+            13
         );
 
         if (--this.countdown == 0) {
@@ -50,7 +48,7 @@ public class ChatExample {
     }
 
     public void removeLiveChatMessageExample() {
-        this.chatModule.removeLiveChatMessage(Recipients.ofEveryone(), this.messageId);
+        this.chatModule.removeLiveChatMessage(Recipients.ofEveryone(), 13);
     }
 
 }
