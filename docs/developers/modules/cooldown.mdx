@@ -1,3 +1,5 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Cooldown Module
 
 ## Overview
@@ -17,6 +19,13 @@ Apollo's cooldown module allows servers to interact with the Cooldown mod found 
 ## Integration
 
 ### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Displaying a Cooldown with an item
 
 ```java
 public void displayCooldownItemExample(Player viewer) {
@@ -34,7 +43,11 @@ public void displayCooldownItemExample(Player viewer) {
         );
     });
 }
+```
 
+### Displaying a Cooldown with a resource
+
+```java
 public void displayCooldownResourceExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
@@ -52,6 +65,154 @@ public void displayCooldownResourceExample(Player viewer) {
     });
 }
 ```
+
+### Removing a Cooldown
+
+```java
+public void removeCooldownExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown");
+        this.cooldownModule.removeCooldown(apolloPlayer, "lunar-cooldown");
+    });
+}
+```
+
+### Resetting all Cooldowns
+
+```java
+public void resetCooldownsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.cooldownModule::resetCooldowns);
+}
+```
+
+</Tab>
+
+<Tab>
+
+### Displaying a Cooldown with an item
+
+```java
+public void displayCooldownItemExample(Player viewer) {
+    DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
+        .setName("enderpearl-cooldown")
+        .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
+        .setIcon(ProtobufUtil.createIconProto(ItemStackIcon.builder()
+            .itemName("ENDER_PEARL")
+            .build()))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Displaying a Cooldown with a resource
+
+```java
+public void displayCooldownResourceExample(Player viewer) {
+    DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
+        .setName("lunar-cooldown")
+        .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
+        .setIcon(ProtobufUtil.createIconProto(SimpleResourceLocationIcon.builder()
+                .resourceLocation("lunar:logo/logo-200x182.svg")
+                .size(12)
+                .build()))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Removing a Cooldown
+
+```java
+public void removeCooldownExample(Player viewer) {
+    RemoveCooldownMessage enderpearlMessage = RemoveCooldownMessage.newBuilder()
+        .setName("enderpearl-cooldown")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, enderpearlMessage);
+}
+```
+
+### Resetting all Cooldowns
+
+```java
+public void resetCooldownsExample(Player viewer) {
+    ResetCooldownsMessage message = ResetCooldownsMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+<Tab>
+
+### Displaying a Cooldown with an item
+
+```java
+public void displayCooldownItemExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
+    message.addProperty("name", "enderpearl-cooldown");
+    message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
+    message.add("icon", JsonUtil.createIconObject(
+        ItemStackIcon.builder()
+            .itemName("ENDER_PEARL")
+            .build())
+    );
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Displaying a Cooldown with a resource
+
+```java
+public void displayCooldownResourceExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
+    message.addProperty("name", "lunar-cooldown");
+    message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
+    message.add("icon", JsonUtil.createIconObject(
+        SimpleResourceLocationIcon.builder()
+            .resourceLocation("lunar:logo/logo-200x182.svg")
+            .size(12)
+            .build())
+    );
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Removing a Cooldown
+
+```java
+public void removeCooldownExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.RemoveCooldownMessage");
+    message.addProperty("name", "enderpearl-cooldown");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting all Cooldowns
+
+```java
+public void resetCooldownsExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.ResetCooldownsMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>
 
 ### `Cooldown` Options
 
@@ -73,26 +234,4 @@ public void displayCooldownResourceExample(Player viewer) {
 `.icon(SimpleResourceLocationIcon)` is how you display a custom texture icon. Read the [icons utilities page](/apollo/developers/utilities/icons) to learn more about icons.
 ```java
 .icon(SimpleResourceLocationIcon.builder().resourceLocation("lunar:logo/logo-200x182.svg").size(12).build())
-```
-
-### Removing a specific cooldown for a player
-
-```java
-public void removeCooldownExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-    apolloPlayerOpt.ifPresent(apolloPlayer -> {
-        this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown");
-        this.cooldownModule.removeCooldown(apolloPlayer, "lunar-cooldown");
-    });
-}
-```
-
-### Resetting all cooldowns for a player
-
-```java
-public void resetCooldownsExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.cooldownModule::resetCooldowns);
-}
 ```
