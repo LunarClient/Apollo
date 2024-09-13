@@ -68,6 +68,62 @@ public void resetBeamsExample(Player viewer) {
 }
 ```
 
+### `Beam` Options
+
+`.id(String)` should include a unique identifier for the beam.
+
+```java
+.id("spawn-beacon")
+```
+
+`.color(java.awt.Color)` is how you dictate the color of the beam. See the [colors page](/apollo/developers/utilities/colors) for more.
+
+**Color Types**
+
+<Tabs items={['Java Presets', 'Minecraft Presets', 'Hex & RGB']}>
+<Tab>
+
+The `java.awt.Color` class statically exposes some colors, although they do not correspond to any existing colors used in Minecraft.
+
+```java
+.color(Color.CYAN)
+```
+
+</Tab>
+
+<Tab>
+
+The `ApolloColors` class statically exposes colors that correspond to Bukkit/Spigot's `ChatColor` enum.
+
+```java
+.color(ApolloColors.LIGHT_PURPLE)
+```
+
+</Tab>
+
+<Tab>
+
+Custom colors can be created from any RGB values using `new Color(int red, int green, int blue)`, or from any hex color using `Color.decode(String hex)`.
+
+```java
+.color(Color.decode("#FF00FF"))
+```
+
+</Tab>
+</Tabs>
+
+`.location(ApolloBlockLocation)` used to determine the exact block you want the beam to be displayed on. See the [locations utilities page](/apollo/developers/utilities/locations) for more.
+
+```java
+.location(ApolloBlockLocation.builder()
+    .world("world")
+    .x(0)
+    .y(60)
+    .z(0)
+    .build()
+)
+```
+
 </Tab>
 
 <Tab>
@@ -154,59 +210,4 @@ public void resetBeamsExample(Player viewer) {
 
 </Tabs>
 
-### `Beam` Options
-
-`.id(String)` should include a unique identifier for the beam.
-
-```java
-.id("spawn-beacon")
-```
-
-`.color(java.awt.Color)` is how you dictate the color of the beam. See the [colors page](/apollo/developers/utilities/colors) for more.
-
-**Color Types**
-
-<Tabs items={['Java Presets', 'Minecraft Presets', 'Hex & RGB']}>
-<Tab>
-
-The `java.awt.Color` class statically exposes some colors, although they do not correspond to any existing colors used in Minecraft.
-
-```java
-.color(Color.CYAN)
-```
-
-</Tab>
-
-<Tab>
-
-The `ApolloColors` class statically exposes colors that correspond to Bukkit/Spigot's `ChatColor` enum.
-
-```java
-.color(ApolloColors.LIGHT_PURPLE)
-```
-
-</Tab>
-
-<Tab>
-
-Custom colors can be created from any RGB values using `new Color(int red, int green, int blue)`, or from any hex color using `Color.decode(String hex)`.
-
-```java
-.color(Color.decode("#FF00FF"))
-```
-
-</Tab>
-</Tabs>
-
-`.location(ApolloBlockLocation)` used to determine the exact block you want the beam to be displayed on. See the [locations utilities page](/apollo/developers/utilities/locations) for more.
-
-```java
-.location(ApolloBlockLocation.builder()
-    .world("world")
-    .x(0)
-    .y(60)
-    .z(0)
-    .build()
-)
-```
 
