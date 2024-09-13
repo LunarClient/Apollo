@@ -88,6 +88,28 @@ public void resetCooldownsExample(Player viewer) {
 }
 ```
 
+### `Cooldown` Options
+
+`.name(String)` should include a unique identifier for the each cooldown.
+```java
+.name("enderpearl-cooldown")
+```
+
+`.duration(java.time.Duration)` the duration the cooldown should last for. See the [java.time.Duration Javadocs](https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html) for more.
+```java
+.duration(Duration.ofSeconds(15))
+```
+
+`.icon(itemStackIcon)` is how you display a custom item icon. Read the [icons utilities page](/apollo/developers/utilities/icons) to learn more about icons.
+```java
+.icon(ItemStackIcon.builder().itemId("ENDER_PEARL").build())
+```
+
+`.icon(SimpleResourceLocationIcon)` is how you display a custom texture icon. Read the [icons utilities page](/apollo/developers/utilities/icons) to learn more about icons.
+```java
+.icon(SimpleResourceLocationIcon.builder().resourceLocation("lunar:logo/logo-200x182.svg").size(12).build())
+```
+
 </Tab>
 
 <Tab>
@@ -213,25 +235,3 @@ public void resetCooldownsExample(Player viewer) {
 </Tab>
 
 </Tabs>
-
-### `Cooldown` Options
-
-`.name(String)` should include a unique identifier for the each cooldown.
-```java
-.name("enderpearl-cooldown")
-```
-
-`.duration(java.time.Duration)` the duration the cooldown should last for. See the [java.time.Duration Javadocs](https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html) for more.
-```java
-.duration(Duration.ofSeconds(15))
-```
-
-`.icon(itemStackIcon)` is how you display a custom item icon. Read the [icons utilities page](/apollo/developers/utilities/icons) to learn more about icons.
-```java
-.icon(ItemStackIcon.builder().itemId("ENDER_PEARL").build())
-```
-
-`.icon(SimpleResourceLocationIcon)` is how you display a custom texture icon. Read the [icons utilities page](/apollo/developers/utilities/icons) to learn more about icons.
-```java
-.icon(SimpleResourceLocationIcon.builder().resourceLocation("lunar:logo/logo-200x182.svg").size(12).build())
-```

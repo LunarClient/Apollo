@@ -67,6 +67,92 @@ public void resetBordersExample(Player viewer) {
 }
 ```
 
+### `Border` Options
+
+`.id(String)` should include a unique identifier for the border. It's important when you have multiple borders in a single world.
+
+```java
+.id("pvp-tagged-spawn")
+```
+
+`.world(String)` is the world, by name, that you wish to add the border to.
+
+```java
+.world("world")
+```
+
+`.cancelEntry(boolean)` is a boolean option to prevent players from entering the border, if they're outside the border bounds.
+
+```java
+.cancelEntry(true)
+```
+
+`.cancelExit(boolean)` is a boolean option to prevent players from exiting the border, if they're currently inside the border bounds.
+
+```java
+.cancelExit(true)
+```
+
+`.canShrinkOrExpand(boolean)` is a boolean option to control if the border has the ability to expand or shrink.
+
+```java
+.canShrinkOrExpand(false)
+```
+
+`.color(java.awt.Color)` is how you dictate the color of the border. See the [colors page](/apollo/developers/utilities/colors) for more.
+
+**Color Types**
+
+<Tabs items={['Java Presets', 'Minecraft Presets', 'Hex & RGB']}>
+<Tab>
+
+The `java.awt.Color` class statically exposes some colors, although they do not correspond to any existing colors used in Minecraft.
+
+```java
+.color(Color.CYAN)
+```
+
+</Tab>
+
+<Tab>
+
+The `ApolloColors` class statically exposes colors that correspond to Bukkit/Spigot's `ChatColor` enum.
+
+```java
+.color(ApolloColors.LIGHT_PURPLE)
+```
+
+</Tab>
+
+<Tab>
+
+Custom colors can be created from any RGB values using `new Color(int red, int green, int blue)`, or from any hex color using `Color.decode(String hex)`.
+
+```java
+.color(Color.decode("#FF00FF"))
+```
+
+</Tab>
+</Tabs>
+
+`.bounds(Cuboid2D)` is used to determine the bounds of the border, using a 2D cuboid. See the [cuboids page](/apollo/developers/utilities/cuboids) for more.
+
+```java
+.bounds(Cuboid2D.builder()
+    .minX(-50)
+    .minZ(-50)
+    .maxX(50)
+    .maxZ(50)
+    .build()
+)
+```
+
+`.durationTicks(Integer)` is used to determine the speed of expansion or shrinkage.
+
+```java
+.durationTicks(0)
+```
+
 </Tab>
 
 <Tab>
@@ -167,89 +253,3 @@ public void resetBordersExample(Player viewer) {
 </Tab>
 
 </Tabs>
-
-### `Border` Options
-
-`.id(String)` should include a unique identifier for the border. It's important when you have multiple borders in a single world.
-
-```java
-.id("pvp-tagged-spawn")
-```
-
-`.world(String)` is the world, by name, that you wish to add the border to.
-
-```java
-.world("world")
-```
-
-`.cancelEntry(boolean)` is a boolean option to prevent players from entering the border, if they're outside the border bounds.
-
-```java
-.cancelEntry(true)
-```
-
-`.cancelExit(boolean)` is a boolean option to prevent players from exiting the border, if they're currently inside the border bounds.
-
-```java
-.cancelExit(true)
-```
-
-`.canShrinkOrExpand(boolean)` is a boolean option to control if the border has the ability to expand or shrink.
-
-```java
-.canShrinkOrExpand(false)
-```
-
-`.color(java.awt.Color)` is how you dictate the color of the border. See the [colors page](/apollo/developers/utilities/colors) for more.
-
-**Color Types**
-
-<Tabs items={['Java Presets', 'Minecraft Presets', 'Hex & RGB']}>
-<Tab>
-
-The `java.awt.Color` class statically exposes some colors, although they do not correspond to any existing colors used in Minecraft.
-
-```java
-.color(Color.CYAN)
-```
-
-</Tab>
-
-<Tab>
-
-The `ApolloColors` class statically exposes colors that correspond to Bukkit/Spigot's `ChatColor` enum.
-
-```java
-.color(ApolloColors.LIGHT_PURPLE)
-```
-
-</Tab>
-
-<Tab>
-
-Custom colors can be created from any RGB values using `new Color(int red, int green, int blue)`, or from any hex color using `Color.decode(String hex)`.
-
-```java
-.color(Color.decode("#FF00FF"))
-```
-
-</Tab>
-</Tabs>
-
-`.bounds(Cuboid2D)` is used to determine the bounds of the border, using a 2D cuboid. See the [cuboids page](/apollo/developers/utilities/cuboids) for more.
-
-```java
-.bounds(Cuboid2D.builder()
-    .minX(-50)
-    .minZ(-50)
-    .maxX(50)
-    .maxZ(50)
-    .build()
-)
-```
-
-`.durationTicks(Integer)` is used to determine the speed of expansion or shrinkage.
-
-```java
-.durationTicks(0)
-```

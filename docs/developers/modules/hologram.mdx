@@ -68,6 +68,59 @@ public void resetHologramsExample(Player viewer) {
 }
 ```
 
+### `Hologram` Options
+
+`.id(String)` should include a unique identifier for the hologram.
+
+```java
+.id("welcome-hologram")
+```
+
+`.location(ApolloLocation)` is using the `ApolloLocation` builder to create the location. See the [locations page](/apollo/developers/utilities/locations) for more.
+
+```java
+.location(ApolloLocation.builder()
+    .world("world")
+    .x(5)
+    .y(100)
+    .z(0)
+    .build()
+)
+```
+
+`.lines(Component)` should be a string, or an Adventure `Component`. See the [chat components](https://docs.advntr.dev/text.html) page for more.
+
+```java
+.lines(List.of(
+    Component.text()
+        .content("Welcome to my server!")
+        .color(NamedTextColor.RED)
+        .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
+        .build(),
+    Component.text()
+        .content("Type /help to get started!")
+        .build()
+))
+```
+
+`.showThroughWalls(Boolean)` if the player is able to see the hologram through walls.
+
+```java
+.showThroughWalls(true)
+```
+
+`.showShadow(Boolean)` if the player is able to see the hologram shadow.
+
+```java
+.showShadow(false)
+```
+
+`.showBackground(Boolean)` if the player is able to see the hologram background.
+
+```java
+.showBackground(true)
+```
+
 </Tab>
 
 <Tab>
@@ -186,56 +239,3 @@ public void resetHologramsExample(Player viewer) {
 </Tab>
 
 </Tabs>
-
-### `Hologram` Options
-
-`.id(String)` should include a unique identifier for the hologram.
-
-```java
-.id("welcome-hologram")
-```
-
-`.location(ApolloLocation)` is using the `ApolloLocation` builder to create the location. See the [locations page](/apollo/developers/utilities/locations) for more.
-
-```java
-.location(ApolloLocation.builder()
-    .world("world")
-    .x(5)
-    .y(100)
-    .z(0)
-    .build()
-)
-```
-
-`.lines(Component)` should be a string, or an Adventure `Component`. See the [chat components](https://docs.advntr.dev/text.html) page for more.
-
-```java
-.lines(List.of(
-    Component.text()
-        .content("Welcome to my server!")
-        .color(NamedTextColor.RED)
-        .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
-        .build(),
-    Component.text()
-        .content("Type /help to get started!")
-        .build()
-))
-```
-
-`.showThroughWalls(Boolean)` if the player is able to see the hologram through walls.
-
-```java
-.showThroughWalls(true)
-```
-
-`.showShadow(Boolean)` if the player is able to see the hologram shadow.
-
-```java
-.showShadow(false)
-```
-
-`.showBackground(Boolean)` if the player is able to see the hologram background.
-
-```java
-.showBackground(true)
-```
