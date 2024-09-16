@@ -121,9 +121,7 @@ public void displayCooldownItemExample(Player viewer) {
     DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
         .setName("enderpearl-cooldown")
         .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
-        .setIcon(ProtobufUtil.createIconProto(ItemStackIcon.builder()
-            .itemName("ENDER_PEARL")
-            .build()))
+        .setIcon(ProtobufUtil.createItemStackIconProto("ENDER_PEARL", 0, 0))
         .build();
 
     ProtobufPacketUtil.sendPacket(viewer, message);
@@ -137,10 +135,7 @@ public void displayCooldownResourceExample(Player viewer) {
     DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
         .setName("lunar-cooldown")
         .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
-        .setIcon(ProtobufUtil.createIconProto(SimpleResourceLocationIcon.builder()
-                .resourceLocation("lunar:logo/logo-200x182.svg")
-                .size(12)
-                .build()))
+        .setIcon(ProtobufUtil.createSimpleResourceLocationIconProto("lunar:logo/logo-200x182.svg", 12))
         .build();
 
     ProtobufPacketUtil.sendPacket(viewer, message);
@@ -180,11 +175,7 @@ public void displayCooldownItemExample(Player viewer) {
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
     message.addProperty("name", "enderpearl-cooldown");
     message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
-    message.add("icon", JsonUtil.createIconObject(
-        ItemStackIcon.builder()
-            .itemName("ENDER_PEARL")
-            .build())
-    );
+    message.add("icon", JsonUtil.createItemStackIconObject("ENDER_PEARL", 0, 0));
 
     JsonPacketUtil.sendPacket(viewer, message);
 }
@@ -198,12 +189,7 @@ public void displayCooldownResourceExample(Player viewer) {
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
     message.addProperty("name", "lunar-cooldown");
     message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
-    message.add("icon", JsonUtil.createIconObject(
-        SimpleResourceLocationIcon.builder()
-            .resourceLocation("lunar:logo/logo-200x182.svg")
-            .size(12)
-            .build())
-    );
+    message.add("icon", JsonUtil.createSimpleResourceLocationIconObject("lunar:logo/logo-200x182.svg", 12));
 
     JsonPacketUtil.sendPacket(viewer, message);
 }

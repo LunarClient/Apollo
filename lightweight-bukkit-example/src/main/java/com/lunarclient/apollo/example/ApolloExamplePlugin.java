@@ -133,9 +133,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 @Getter
 public class ApolloExamplePlugin extends JavaPlugin {
 
-    // TODO:
-    // Available module options
-
     @Getter
     private static ApolloExamplePlugin plugin;
 

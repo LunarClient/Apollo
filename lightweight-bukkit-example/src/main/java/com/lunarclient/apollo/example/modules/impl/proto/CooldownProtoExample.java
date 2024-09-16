@@ -29,8 +29,6 @@ import com.lunarclient.apollo.cooldown.v1.ResetCooldownsMessage;
 import com.lunarclient.apollo.example.modules.impl.CooldownExample;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
-import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
-import com.lunarclient.apollo.example.utilities.objects.icon.SimpleResourceLocationIcon;
 import java.time.Duration;
 import org.bukkit.entity.Player;
 
@@ -41,9 +39,7 @@ public class CooldownProtoExample extends CooldownExample {
         DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
             .setName("enderpearl-cooldown")
             .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
-            .setIcon(ProtobufUtil.createIconProto(ItemStackIcon.builder()
-                .itemName("ENDER_PEARL")
-                .build()))
+            .setIcon(ProtobufUtil.createItemStackIconProto("ENDER_PEARL", 0, 0))
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);
@@ -54,10 +50,7 @@ public class CooldownProtoExample extends CooldownExample {
         DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
             .setName("lunar-cooldown")
             .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
-            .setIcon(ProtobufUtil.createIconProto(SimpleResourceLocationIcon.builder()
-                    .resourceLocation("lunar:logo/logo-200x182.svg")
-                    .size(12)
-                    .build()))
+            .setIcon(ProtobufUtil.createSimpleResourceLocationIconProto("lunar:logo/logo-200x182.svg", 12))
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);

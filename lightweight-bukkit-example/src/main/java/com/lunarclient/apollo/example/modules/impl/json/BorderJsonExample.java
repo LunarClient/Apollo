@@ -27,7 +27,6 @@ import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.BorderExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
-import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid2D;
 import java.awt.Color;
 import org.bukkit.entity.Player;
 
@@ -43,9 +42,7 @@ public class BorderJsonExample extends BorderExample {
         message.addProperty("cancel_exit", true);
         message.addProperty("can_shrink_or_expand", false);
         message.add("color", JsonUtil.createColorObject(Color.RED));
-        message.add("bounds", JsonUtil.createCuboid2DObject(
-            Cuboid2D.builder().minX(-50).minZ(-50).maxX(50).maxZ(50).build()
-        ));
+        message.add("bounds", JsonUtil.createCuboid2DObject(-50, -50, 50, 50));
         message.addProperty("duration_ticks", 1000);
 
         JsonPacketUtil.sendPacket(viewer, message);

@@ -168,12 +168,7 @@ public void displayBorderExample(Player viewer) {
         .setCancelExit(true)
         .setCanShrinkOrExpand(false)
         .setColor(ProtobufUtil.createColorProto(Color.RED))
-        .setBounds(ProtobufUtil.createCuboid2DProto(Cuboid2D.builder()
-            .minX(-50)
-            .minZ(-50)
-            .maxX(50)
-            .maxZ(50)
-            .build()))
+        .setBounds(ProtobufUtil.createCuboid2DProto(-50, -50, 50, 50))
         .setDurationTicks(1000)
         .build();
 
@@ -218,9 +213,7 @@ public void displayBorderExample(Player viewer) {
     message.addProperty("cancel_exit", true);
     message.addProperty("can_shrink_or_expand", false);
     message.add("color", JsonUtil.createColorObject(Color.RED));
-    message.add("bounds", JsonUtil.createCuboid2DObject(
-        Cuboid2D.builder().minX(-50).minZ(-50).maxX(50).maxZ(50).build()
-    ));
+    message.add("bounds", JsonUtil.createCuboid2DObject(-50, -50, 50, 50));
     message.addProperty("duration_ticks", 1000);
 
     JsonPacketUtil.sendPacket(viewer, message);

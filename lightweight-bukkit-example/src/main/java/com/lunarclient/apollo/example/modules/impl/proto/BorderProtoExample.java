@@ -29,7 +29,6 @@ import com.lunarclient.apollo.border.v1.ResetBordersMessage;
 import com.lunarclient.apollo.example.modules.impl.BorderExample;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.utilities.ProtobufUtil;
-import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid2D;
 import java.awt.Color;
 import org.bukkit.entity.Player;
 
@@ -44,12 +43,7 @@ public class BorderProtoExample extends BorderExample {
             .setCancelExit(true)
             .setCanShrinkOrExpand(false)
             .setColor(ProtobufUtil.createColorProto(Color.RED))
-            .setBounds(ProtobufUtil.createCuboid2DProto(Cuboid2D.builder()
-                .minX(-50)
-                .minZ(-50)
-                .maxX(50)
-                .maxZ(50)
-                .build()))
+            .setBounds(ProtobufUtil.createCuboid2DProto(-50, -50, 50, 50))
             .setDurationTicks(1000)
             .build();
 

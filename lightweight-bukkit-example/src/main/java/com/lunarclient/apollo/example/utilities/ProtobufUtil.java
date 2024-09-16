@@ -24,18 +24,20 @@
 package com.lunarclient.apollo.example.utilities;
 
 import com.google.protobuf.Timestamp;
+import com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon;
+import com.lunarclient.apollo.common.v1.BlockLocation;
+import com.lunarclient.apollo.common.v1.Cuboid2D;
 import com.lunarclient.apollo.common.v1.EntityId;
+import com.lunarclient.apollo.common.v1.Icon;
+import com.lunarclient.apollo.common.v1.ItemStackIcon;
+import com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.common.v1.Uuid;
-import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid2D;
-import com.lunarclient.apollo.example.utilities.objects.icon.AdvancedResourceLocationIcon;
-import com.lunarclient.apollo.example.utilities.objects.icon.Icon;
-import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
-import com.lunarclient.apollo.example.utilities.objects.icon.SimpleResourceLocationIcon;
 import java.awt.Color;
 import java.time.Duration;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.jetbrains.annotations.Nullable;
 
 public final class ProtobufUtil {
 
@@ -94,8 +96,8 @@ public final class ProtobufUtil {
             .build();
     }
 
-    public static com.lunarclient.apollo.common.v1.BlockLocation createBlockLocationProto(Location location) {
-        return com.lunarclient.apollo.common.v1.BlockLocation.newBuilder()
+    public static BlockLocation createBlockLocationProto(Location location) {
+        return BlockLocation.newBuilder()
             .setWorld(location.getWorld().getName())
             .setX(location.getBlockX())
             .setY(location.getBlockY())
@@ -103,53 +105,49 @@ public final class ProtobufUtil {
             .build();
     }
 
-    public static com.lunarclient.apollo.common.v1.Cuboid2D createCuboid2DProto(Cuboid2D object) {
-        return com.lunarclient.apollo.common.v1.Cuboid2D.newBuilder()
-            .setMinX(object.getMinX())
-            .setMinZ(object.getMinZ())
-            .setMaxX(object.getMaxX())
-            .setMaxZ(object.getMaxZ())
+    public static Cuboid2D createCuboid2DProto(double minX, double minZ, double maxX, double maxZ) {
+        return Cuboid2D.newBuilder()
+            .setMinX(minX)
+            .setMinZ(minZ)
+            .setMaxX(maxX)
+            .setMaxZ(maxZ)
             .build();
     }
 
-    public static com.lunarclient.apollo.common.v1.Icon createIconProto(Icon icon) {
-        com.lunarclient.apollo.common.v1.Icon.Builder builder = com.lunarclient.apollo.common.v1.Icon.newBuilder();
+    public static Icon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData) {
+        ItemStackIcon.Builder iconBuilder = ItemStackIcon.newBuilder()
+            .setItemId(itemId)
+            .setCustomModelData(customModelData);
 
-        if (icon instanceof ItemStackIcon) {
-            ItemStackIcon item = (ItemStackIcon) icon;
-            String itemName = item.getItemName();
-
-            com.lunarclient.apollo.common.v1.ItemStackIcon.Builder itemBuilder = com.lunarclient.apollo.common.v1.ItemStackIcon.newBuilder()
-                .setItemId(item.getItemId())
-                .setCustomModelData(item.getCustomModelData());
-
-            if (itemName != null) {
-                itemBuilder.setItemName(itemName);
-            }
-
-            builder.setItemStack(itemBuilder.build());
-        } else if (icon instanceof SimpleResourceLocationIcon) {
-            SimpleResourceLocationIcon simple = (SimpleResourceLocationIcon) icon;
-
-            builder.setSimpleResourceLocation(com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon.newBuilder()
-                .setResourceLocation(simple.getResourceLocation())
-                .setSize(simple.getSize())
-                .build());
-        } else if (icon instanceof AdvancedResourceLocationIcon) {
-            AdvancedResourceLocationIcon advanced = (AdvancedResourceLocationIcon) icon;
-
-            builder.setAdvancedResourceLocation(com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon.newBuilder()
-                .setResourceLocation(advanced.getResourceLocation())
-                .setWidth(advanced.getWidth())
-                .setHeight(advanced.getHeight())
-                .setMinU(advanced.getMinU())
-                .setMaxU(advanced.getMaxU())
-                .setMinV(advanced.getMinV())
-                .setMaxV(advanced.getMaxV())
-                .build());
+        if (itemName != null) {
+            iconBuilder.setItemName(itemName);
         }
 
-        return builder.build();
+        return Icon.newBuilder().setItemStack(iconBuilder.build()).build();
+    }
+
+    public static Icon createSimpleResourceLocationIconProto(String resourceLocation, int size) {
+        SimpleResourceLocationIcon icon = SimpleResourceLocationIcon.newBuilder()
+            .setResourceLocation(resourceLocation)
+            .setSize(size)
+            .build();
+
+        return Icon.newBuilder().setSimpleResourceLocation(icon).build();
+    }
+
+    public static Icon createAdvancedResourceLocationIconProto(String resourceLocation, float width, float height,
+                                                               float minU, float maxU, float minV, float maxV) {
+        AdvancedResourceLocationIcon icon = AdvancedResourceLocationIcon.newBuilder()
+            .setResourceLocation(resourceLocation)
+            .setWidth(width)
+            .setHeight(height)
+            .setMinU(minU)
+            .setMaxU(maxU)
+            .setMinV(minV)
+            .setMaxV(maxV)
+            .build();
+
+        return Icon.newBuilder().setAdvancedResourceLocation(icon).build();
     }
 
     private ProtobufUtil() {

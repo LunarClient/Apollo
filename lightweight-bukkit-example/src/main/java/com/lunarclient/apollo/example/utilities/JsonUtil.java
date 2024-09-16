@@ -24,17 +24,13 @@
 package com.lunarclient.apollo.example.utilities;
 
 import com.google.gson.JsonObject;
-import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid2D;
-import com.lunarclient.apollo.example.utilities.objects.icon.AdvancedResourceLocationIcon;
-import com.lunarclient.apollo.example.utilities.objects.icon.Icon;
-import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
-import com.lunarclient.apollo.example.utilities.objects.icon.SimpleResourceLocationIcon;
 import java.awt.Color;
 import java.time.Duration;
 import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class JsonUtil {
 
@@ -100,51 +96,54 @@ public final class JsonUtil {
         return entityIdObject;
     }
 
-    public static JsonObject createCuboid2DObject(@NotNull Cuboid2D cuboid2D) {
+    public static JsonObject createCuboid2DObject(double minX, double minZ, double maxX, double maxZ) {
         JsonObject cuboid2DObject = new JsonObject();
-        cuboid2DObject.addProperty("min_x", cuboid2D.getMinX());
-        cuboid2DObject.addProperty("min_z", cuboid2D.getMinZ());
-        cuboid2DObject.addProperty("max_x", cuboid2D.getMaxX());
-        cuboid2DObject.addProperty("max_z", cuboid2D.getMaxZ());
+        cuboid2DObject.addProperty("min_x", minX);
+        cuboid2DObject.addProperty("min_z", minZ);
+        cuboid2DObject.addProperty("max_x", maxX);
+        cuboid2DObject.addProperty("max_z", maxZ);
         return cuboid2DObject;
     }
 
-    public static JsonObject createIconObject(@NotNull Icon icon) {
-        JsonObject iconObject = new JsonObject();
-
-        if (icon instanceof ItemStackIcon) {
-            ItemStackIcon item = (ItemStackIcon) icon;
-            String itemName = item.getItemName();
-
-            JsonObject itemIconObject = new JsonObject();
-            if (itemName != null) {
-                itemIconObject.addProperty("item_name", itemName);
-            } else {
-                itemIconObject.addProperty("item_id", item.getItemId());
-            }
-
-            itemIconObject.addProperty("custom_model_data", item.getCustomModelData());
-            iconObject.add("item_stack", itemIconObject);
-        } else if (icon instanceof SimpleResourceLocationIcon) {
-            SimpleResourceLocationIcon simple = (SimpleResourceLocationIcon) icon;
-
-            JsonObject simpleIconObject = new JsonObject();
-            simpleIconObject.addProperty("resource_location", simple.getResourceLocation());
-            simpleIconObject.addProperty("size", simple.getSize());
-            iconObject.add("simple_resource_location", simpleIconObject);
-        } else if (icon instanceof AdvancedResourceLocationIcon) {
-            AdvancedResourceLocationIcon advanced = (AdvancedResourceLocationIcon) icon;
-
-            JsonObject advancedIcon = new JsonObject();
-            advancedIcon.addProperty("resource_location", advanced.getResourceLocation());
-            advancedIcon.addProperty("width", advanced.getWidth());
-            advancedIcon.addProperty("height", advanced.getHeight());
-            advancedIcon.addProperty("min_u", advanced.getMinU());
-            advancedIcon.addProperty("max_u", advanced.getMaxU());
-            advancedIcon.addProperty("min_v", advanced.getMinV());
-            advancedIcon.addProperty("max_v", advanced.getMaxV());
-            iconObject.add("advanced_resource_location", advancedIcon);
+    public static JsonObject createItemStackIconObject(@Nullable String itemName, int itemId, int customModelData) {
+        JsonObject itemIconObject = new JsonObject();
+        if (itemName != null) {
+            itemIconObject.addProperty("item_name", itemName);
+        } else {
+            itemIconObject.addProperty("item_id", itemId);
         }
+
+        itemIconObject.addProperty("custom_model_data", customModelData);
+
+        JsonObject iconObject = new JsonObject();
+        iconObject.add("item_stack", itemIconObject);
+        return iconObject;
+    }
+
+    public static JsonObject createSimpleResourceLocationIconObject(String resourceLocation, int size) {
+        JsonObject simpleIconObject = new JsonObject();
+        simpleIconObject.addProperty("resource_location", resourceLocation);
+        simpleIconObject.addProperty("size", size);
+
+        JsonObject iconObject = new JsonObject();
+        iconObject.add("simple_resource_location", simpleIconObject);
+
+        return iconObject;
+    }
+
+    public static JsonObject createAdvancedResourceLocationIconObject(String resourceLocation, float width, float height,
+                                                               float minU, float maxU, float minV, float maxV) {
+        JsonObject advancedIcon = new JsonObject();
+        advancedIcon.addProperty("resource_location", resourceLocation);
+        advancedIcon.addProperty("width", width);
+        advancedIcon.addProperty("height", height);
+        advancedIcon.addProperty("min_u", minU);
+        advancedIcon.addProperty("max_u", maxU);
+        advancedIcon.addProperty("min_v", minV);
+        advancedIcon.addProperty("max_v", maxV);
+
+        JsonObject iconObject = new JsonObject();
+        iconObject.add("advanced_resource_location", advancedIcon);
 
         return iconObject;
     }

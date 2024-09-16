@@ -27,8 +27,6 @@ import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.CooldownExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import com.lunarclient.apollo.example.utilities.JsonUtil;
-import com.lunarclient.apollo.example.utilities.objects.icon.ItemStackIcon;
-import com.lunarclient.apollo.example.utilities.objects.icon.SimpleResourceLocationIcon;
 import java.time.Duration;
 import org.bukkit.entity.Player;
 
@@ -40,11 +38,7 @@ public class CooldownJsonExample extends CooldownExample {
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
         message.addProperty("name", "enderpearl-cooldown");
         message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
-        message.add("icon", JsonUtil.createIconObject(
-            ItemStackIcon.builder()
-                .itemName("ENDER_PEARL")
-                .build())
-        );
+        message.add("icon", JsonUtil.createItemStackIconObject("ENDER_PEARL", 0, 0));
 
         JsonPacketUtil.sendPacket(viewer, message);
     }
@@ -55,12 +49,7 @@ public class CooldownJsonExample extends CooldownExample {
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
         message.addProperty("name", "lunar-cooldown");
         message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
-        message.add("icon", JsonUtil.createIconObject(
-            SimpleResourceLocationIcon.builder()
-                .resourceLocation("lunar:logo/logo-200x182.svg")
-                .size(12)
-                .build())
-        );
+        message.add("icon", JsonUtil.createSimpleResourceLocationIconObject("lunar:logo/logo-200x182.svg", 12));
 
         JsonPacketUtil.sendPacket(viewer, message);
     }
