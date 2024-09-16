@@ -29,7 +29,6 @@ import com.lunarclient.apollo.richpresence.v1.OverrideServerRichPresenceMessage;
 import com.lunarclient.apollo.richpresence.v1.ResetServerRichPresenceMessage;
 import org.bukkit.entity.Player;
 
-// DONE
 public class RichPresenceProtoExample extends RichPresenceExample {
 
     @Override

@@ -38,7 +38,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
-// DONE
 public class NametagProtoExample extends NametagExample {
 
     @Override

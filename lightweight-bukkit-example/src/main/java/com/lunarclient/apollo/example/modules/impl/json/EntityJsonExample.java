@@ -32,7 +32,6 @@ import org.bukkit.entity.Cow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
 
-// DONE
 public class EntityJsonExample extends EntityExample {
 
     @Override

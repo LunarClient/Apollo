@@ -37,7 +37,6 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-// DONE
 public final class ProtobufUtil {
 
     public static UUID toJavaUuid(Uuid message) {

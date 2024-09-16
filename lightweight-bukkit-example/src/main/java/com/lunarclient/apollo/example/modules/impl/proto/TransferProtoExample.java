@@ -35,7 +35,6 @@ import com.lunarclient.apollo.transfer.v1.TransferResponse;
 import java.util.UUID;
 import org.bukkit.entity.Player;
 
-// DONE
 public class TransferProtoExample extends TransferExample {
 
     @Override

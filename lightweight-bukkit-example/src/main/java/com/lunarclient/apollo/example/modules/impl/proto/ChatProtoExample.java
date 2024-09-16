@@ -31,7 +31,6 @@ import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
-// DONE
 public class ChatProtoExample extends ChatExample {
 
     private int countdown = 5;

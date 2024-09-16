@@ -33,7 +33,6 @@ import java.awt.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-// DONE
 public class WaypointProtoExample extends WaypointExample {
 
     @Override

@@ -31,7 +31,6 @@ import java.awt.Color;
 import java.util.UUID;
 import org.bukkit.entity.Player;
 
-// DONE
 public class GlowJsonExample extends GlowExample {
 
     @Override

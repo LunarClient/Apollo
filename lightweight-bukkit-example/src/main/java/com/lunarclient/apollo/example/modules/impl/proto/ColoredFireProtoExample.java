@@ -33,7 +33,6 @@ import java.awt.Color;
 import java.util.UUID;
 import org.bukkit.entity.Player;
 
-// DONE
 public class ColoredFireProtoExample extends ColoredFireExample {
 
     @Override

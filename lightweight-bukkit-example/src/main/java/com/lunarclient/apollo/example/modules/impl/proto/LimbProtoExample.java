@@ -35,7 +35,6 @@ import com.lunarclient.apollo.limb.v1.ResetBodyPartMessage;
 import java.util.EnumSet;
 import org.bukkit.entity.Player;
 
-// DONE
 public class LimbProtoExample extends LimbExample {
 
     @Override

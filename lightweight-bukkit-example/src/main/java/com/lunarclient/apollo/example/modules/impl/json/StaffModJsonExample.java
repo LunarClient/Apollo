@@ -30,7 +30,6 @@ import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import java.util.stream.Stream;
 import org.bukkit.entity.Player;
 
-// DONE
 public class StaffModJsonExample extends StaffModExample {
 
     @Override

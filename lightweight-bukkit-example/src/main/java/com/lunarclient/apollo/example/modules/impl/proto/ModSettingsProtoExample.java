@@ -23,22 +23,42 @@
  */
 package com.lunarclient.apollo.example.modules.impl.proto;
 
+import com.google.protobuf.NullValue;
+import com.google.protobuf.Value;
+import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.example.modules.impl.ModSettingsExample;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
+import java.util.HashMap;
+import java.util.Map;
 import org.bukkit.entity.Player;
 
-// TODO
 public class ModSettingsProtoExample extends ModSettingsExample {
 
     @Override
     public void disableLightningModExample(Player viewer) {
+        Map<String, Value> properties = new HashMap<>();
+        properties.put("lighting.enabled", Value.newBuilder().setBoolValue(false).build());
+
+        ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("mod_setting", properties);
+        ProtobufPacketUtil.sendPacket(viewer, settings);
     }
 
     @Override
     public void rollbackLightningModEnabledState(Player viewer) {
+        Map<String, Value> properties = new HashMap<>();
+        properties.put("lighting.enabled", Value.newBuilder().setNullValue(NullValue.NULL_VALUE).build());
+
+        ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("mod_setting", properties);
+        ProtobufPacketUtil.sendPacket(viewer, settings);
     }
 
     @Override
     public void broadcastDisableLightningModExample() {
+        Map<String, Value> properties = new HashMap<>();
+        properties.put("lighting.enabled", Value.newBuilder().setBoolValue(false).build());
+
+        ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("mod_setting", properties);
+        ProtobufPacketUtil.broadcastPacket(settings);
     }
 
 }

@@ -36,7 +36,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
-// DONE
 public class TitleProtoExample extends TitleJsonExample {
 
     private final DisplayTitleMessage helloTitle = DisplayTitleMessage.newBuilder()

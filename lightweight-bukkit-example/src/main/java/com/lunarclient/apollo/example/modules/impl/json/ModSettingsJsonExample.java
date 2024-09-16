@@ -26,7 +26,6 @@ package com.lunarclient.apollo.example.modules.impl.json;
 import com.lunarclient.apollo.example.modules.impl.ModSettingsExample;
 import org.bukkit.entity.Player;
 
-// TODO
 public class ModSettingsJsonExample extends ModSettingsExample {
 
     @Override

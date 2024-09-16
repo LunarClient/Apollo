@@ -31,7 +31,6 @@ import com.lunarclient.apollo.staffmod.v1.StaffMod;
 import java.util.Collections;
 import org.bukkit.entity.Player;
 
-// DONE
 public class StaffModProtoExample extends StaffModExample {
 
     @Override

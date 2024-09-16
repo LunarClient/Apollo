@@ -31,7 +31,6 @@ import com.lunarclient.apollo.example.utilities.objects.cuboid.Cuboid2D;
 import java.awt.Color;
 import org.bukkit.entity.Player;
 
-// DONE
 public class BorderJsonExample extends BorderExample {
 
     @Override

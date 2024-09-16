@@ -23,14 +23,22 @@
  */
 package com.lunarclient.apollo.example.modules.impl.proto;
 
+import com.google.protobuf.Value;
+import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.example.modules.impl.CombatExample;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CombatProtoExample extends CombatExample {
 
-    // TODO
     @Override
     public void setDisableMissPenalty(boolean value) {
+        Map<String, Value> properties = new HashMap<>();
+        properties.put("disable-miss-penalty", Value.newBuilder().setBoolValue(value).build());
 
+        ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("combat", properties);
+        ProtobufPacketUtil.broadcastPacket(settings);
     }
 
 }

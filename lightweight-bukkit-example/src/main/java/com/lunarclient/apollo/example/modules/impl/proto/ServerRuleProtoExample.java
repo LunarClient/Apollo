@@ -23,23 +23,41 @@
  */
 package com.lunarclient.apollo.example.modules.impl.proto;
 
+import com.google.protobuf.Value;
+import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.example.modules.impl.ServerRuleExample;
+import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
+import java.util.HashMap;
+import java.util.Map;
 import org.bukkit.entity.Player;
 
-// TODO
 public class ServerRuleProtoExample extends ServerRuleExample {
 
     @Override
     public void setAntiPortalTraps(boolean value) {
+        Map<String, Value> properties = new HashMap<>();
+        properties.put("anti-portal-traps", Value.newBuilder().setBoolValue(value).build());
+
+        ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("server_rule", properties);
+        ProtobufPacketUtil.broadcastPacket(settings);
     }
 
     @Override
     public void setOverrideNametagRenderDistance(Player viewer, boolean value) {
+        Map<String, Value> properties = new HashMap<>();
+        properties.put("override-nametag-render-distance", Value.newBuilder().setBoolValue(value).build());
 
+        ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("server_rule", properties);
+        ProtobufPacketUtil.sendPacket(viewer, settings);
     }
 
     @Override
     public void setNametagRenderDistanceExample(int value) {
+        Map<String, Value> properties = new HashMap<>();
+        properties.put("nametag-render-distance", Value.newBuilder().setNumberValue(value).build());
 
+        ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("server_rule", properties);
+        ProtobufPacketUtil.broadcastPacket(settings);
     }
+
 }

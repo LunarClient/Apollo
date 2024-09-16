@@ -41,7 +41,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
-// DONE
 public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
 
     @Override

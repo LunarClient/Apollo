@@ -23,6 +23,10 @@
  */
 package com.lunarclient.apollo.example.listeners.proto;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
+import com.google.protobuf.ListValue;
+import com.google.protobuf.Value;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.utilities.ProtobufPacketUtil;
 import java.util.Arrays;
@@ -38,13 +42,41 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.plugin.messaging.Messenger;
 
-// DONE
 public class ApolloPlayerProtoListener implements Listener {
 
     private static final List<String> APOLLO_MODULES = Arrays.asList("limb", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
         "entity", "glow", "hologram", "mod_setting", "nametag", "nick_hider", "notification", "packet_enrichment", "rich_presence",
         "server_rule", "staff_mod", "stopwatch", "team", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
     );
+
+    // Module Id -> Option key -> Value
+    private static final Table<String, String, Value> PROPERTIES = HashBasedTable.create();
+
+    static {
+        // Module Options that the client needs to notified about, these properties are sent with the enable module packet
+        // While using the Apollo plugin this would be equivalent to modifying the config.yml
+        PROPERTIES.put("combat", "disable-miss-penalty", Value.newBuilder().setBoolValue(false).build());
+        PROPERTIES.put("server_rule", "competitive-game", Value.newBuilder().setBoolValue(false).build());
+        PROPERTIES.put("server_rule", "competitive-commands", Value.newBuilder().setListValue(
+            ListValue.newBuilder().addAllValues(Arrays.asList(
+                Value.newBuilder().setStringValue("/server").build(),
+                Value.newBuilder().setStringValue("/servers").build(),
+                Value.newBuilder().setStringValue("/hub").build()))
+                    .build()
+        ).build());
+        PROPERTIES.put("server_rule", "disable-shaders", Value.newBuilder().setBoolValue(false).build());
+        PROPERTIES.put("server_rule", "disable-chunk-reloading", Value.newBuilder().setBoolValue(false).build());
+        PROPERTIES.put("server_rule", "disable-broadcasting", Value.newBuilder().setBoolValue(false).build());
+        PROPERTIES.put("server_rule", "anti-portal-traps", Value.newBuilder().setBoolValue(true).build());
+        PROPERTIES.put("server_rule", "override-brightness", Value.newBuilder().setBoolValue(false).build());
+        PROPERTIES.put("server_rule", "brightness", Value.newBuilder().setNumberValue(50).build());
+        PROPERTIES.put("server_rule", "override-nametag-render-distance", Value.newBuilder().setBoolValue(false).build());
+        PROPERTIES.put("server_rule", "nametag-render-distance", Value.newBuilder().setNumberValue(64).build());
+        PROPERTIES.put("server_rule", "override-max-chat-length", Value.newBuilder().setBoolValue(false).build());
+        PROPERTIES.put("server_rule", "max-chat-length", Value.newBuilder().setNumberValue(256).build());
+        PROPERTIES.put("tnt_countdown", "tnt-ticks", Value.newBuilder().setNumberValue(80).build());
+        PROPERTIES.put("waypoint", "server-handles-waypoints", Value.newBuilder().setBoolValue(false).build());
+    }
 
     private static final String APOLLO_CHANNEL = "lunar:apollo"; // Used for detecting whether the player supports Apollo
 
@@ -87,7 +119,7 @@ public class ApolloPlayerProtoListener implements Listener {
     }
 
     private void onApolloRegister(Player player) {
-        ProtobufPacketUtil.enableModules(player, APOLLO_MODULES);
+        ProtobufPacketUtil.enableModules(player, APOLLO_MODULES, PROPERTIES);
 
         this.playersRunningApollo.add(player.getUniqueId());
         player.sendMessage("You are using LunarClient!");

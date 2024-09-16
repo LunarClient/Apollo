@@ -28,7 +28,6 @@ import com.lunarclient.apollo.example.modules.impl.StopwatchExample;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import org.bukkit.entity.Player;
 
-// DONE
 public class StopwatchJsonExample extends StopwatchExample {
 
     @Override

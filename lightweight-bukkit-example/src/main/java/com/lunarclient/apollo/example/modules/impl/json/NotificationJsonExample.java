@@ -33,7 +33,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
-// DONE
 public class NotificationJsonExample extends NotificationExample {
 
     @Override

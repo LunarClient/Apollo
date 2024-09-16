@@ -29,7 +29,6 @@ import com.lunarclient.apollo.vignette.v1.DisplayVignetteMessage;
 import com.lunarclient.apollo.vignette.v1.ResetVignetteMessage;
 import org.bukkit.entity.Player;
 
-// DONE
 public class VignetteProtoExample extends VignetteExample {
 
     @Override

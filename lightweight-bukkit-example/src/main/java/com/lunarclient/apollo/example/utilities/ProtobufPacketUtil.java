@@ -23,26 +23,24 @@
  */
 package com.lunarclient.apollo.example.utilities;
 
+import com.google.common.collect.Table;
 import com.google.protobuf.Any;
 import com.google.protobuf.GeneratedMessageV3;
+import com.google.protobuf.Value;
 import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public final class ProtobufPacketUtil {
 
-    public static void enableModule(Player player, String module) {
-        ProtobufPacketUtil.enableModules(player, Collections.singletonList(module));
-    }
-
-    public static void enableModules(Player player, List<String> modules) {
+    public static void enableModules(Player player, List<String> modules, Table<String, String, Value> properties) {
         List<ConfigurableSettings> settings = modules.stream()
-            .map(ProtobufPacketUtil::createEnableModuleMessage)
+            .map(module -> createModuleMessage(module, properties.row(module)))
             .collect(Collectors.toList());
 
         OverrideConfigurableSettingsMessage message = OverrideConfigurableSettingsMessage
@@ -53,11 +51,16 @@ public final class ProtobufPacketUtil {
         ProtobufPacketUtil.sendPacket(player, message);
     }
 
-    private static ConfigurableSettings createEnableModuleMessage(String module) {
-        return ConfigurableSettings.newBuilder()
+    public static ConfigurableSettings createModuleMessage(String module, Map<String, Value> properties) {
+        ConfigurableSettings.Builder moduleBuilder = ConfigurableSettings.newBuilder()
             .setApolloModule(module)
-            .setEnable(true)
-            .build();
+            .setEnable(true);
+
+        if (properties != null) {
+            moduleBuilder.putAllProperties(properties);
+        }
+
+        return moduleBuilder.build();
     }
 
     public static void sendPacket(Player player, GeneratedMessageV3 message) {
