@@ -23,6 +23,8 @@
  */
 package com.lunarclient.apollo.example.listeners.json;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
 import java.util.Arrays;
@@ -44,6 +46,29 @@ public class ApolloPlayerJsonListener implements Listener {
         "entity", "glow", "hologram", "mod_setting", "nametag", "nick_hider", "notification", "packet_enrichment", "rich_presence",
         "server_rule", "staff_mod", "stopwatch", "team", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
     );
+
+    // Module Id -> Option key -> Object
+    private static final Table<String, String, Object> PROPERTIES = HashBasedTable.create();
+
+    static {
+        // Module Options that the client needs to notified about, these properties are sent with the enable module packet
+        // While using the Apollo plugin this would be equivalent to modifying the config.yml
+        PROPERTIES.put("combat", "disable-miss-penalty", false);
+        PROPERTIES.put("server_rule", "competitive-game", false);
+        PROPERTIES.put("server_rule", "competitive-commands", Arrays.asList("/server", "/servers", "/hub"));
+        PROPERTIES.put("server_rule", "disable-shaders", false);
+        PROPERTIES.put("server_rule", "disable-chunk-reloading", false);
+        PROPERTIES.put("server_rule", "disable-broadcasting", false);
+        PROPERTIES.put("server_rule", "anti-portal-traps", true);
+        PROPERTIES.put("server_rule", "override-brightness", false);
+        PROPERTIES.put("server_rule", "brightness", 50);
+        PROPERTIES.put("server_rule", "override-nametag-render-distance", false);
+        PROPERTIES.put("server_rule", "nametag-render-distance", 64);
+        PROPERTIES.put("server_rule", "override-max-chat-length", false);
+        PROPERTIES.put("server_rule", "max-chat-length", 256);
+        PROPERTIES.put("tnt_countdown", "tnt-ticks", 80);
+        PROPERTIES.put("waypoint", "server-handles-waypoints", false);
+    }
 
     private static final String REGISTER_CHANNEL = "lunar:apollo"; // Used for detecting whether the player supports Apollo
     private static final String LIGHTWEIGHT_CHANNEL = "apollo:json"; // Used for sending and receiving feature packets
@@ -88,7 +113,7 @@ public class ApolloPlayerJsonListener implements Listener {
     }
 
     private void onApolloRegister(Player player) {
-        JsonPacketUtil.enableModules(player, APOLLO_MODULES);
+        JsonPacketUtil.enableModules(player, APOLLO_MODULES, PROPERTIES);
 
         this.playersRunningApollo.add(player.getUniqueId());
         player.sendMessage("You are using LunarClient!");

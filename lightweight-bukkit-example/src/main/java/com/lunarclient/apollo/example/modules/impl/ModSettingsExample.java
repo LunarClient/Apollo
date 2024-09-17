@@ -26,7 +26,6 @@ package com.lunarclient.apollo.example.modules.impl;
 import com.lunarclient.apollo.example.modules.ApolloExample;
 import org.bukkit.entity.Player;
 
-// TODO
 public abstract class ModSettingsExample extends ApolloExample {
 
     public abstract void disableLightningModExample(Player viewer);

@@ -23,23 +23,19 @@
  */
 package com.lunarclient.apollo.example.utilities;
 
+import com.google.common.collect.Table;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import java.util.Collections;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public final class JsonPacketUtil {
 
-    public static void enableModule(Player player, String module) {
-        JsonPacketUtil.enableModules(player, Collections.singletonList(module));
-    }
-
-    public static void enableModules(Player player, List<String> modules) {
+    public static void enableModules(Player player, List<String> modules, Table<String, String, Object> properties) {
         JsonArray settings = modules.stream()
-            .map(JsonUtil::createEnableModuleObject)
+            .map(module -> JsonUtil.createEnableModuleObject(module, properties.row(module)))
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
         JsonObject message = new JsonObject();

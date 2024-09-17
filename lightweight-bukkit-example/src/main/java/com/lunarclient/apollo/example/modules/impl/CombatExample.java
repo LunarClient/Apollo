@@ -27,7 +27,6 @@ import com.lunarclient.apollo.example.modules.ApolloExample;
 
 public abstract class CombatExample extends ApolloExample {
 
-    // TODO
     public abstract void setDisableMissPenalty(boolean value);
 
 }

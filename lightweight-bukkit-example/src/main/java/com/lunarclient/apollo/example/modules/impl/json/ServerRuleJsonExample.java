@@ -23,23 +23,41 @@
  */
 package com.lunarclient.apollo.example.modules.impl.json;
 
+import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.ServerRuleExample;
+import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
+import com.lunarclient.apollo.example.utilities.JsonUtil;
+import java.util.HashMap;
+import java.util.Map;
 import org.bukkit.entity.Player;
 
-// TODO
 public class ServerRuleJsonExample extends ServerRuleExample {
 
     @Override
     public void setAntiPortalTraps(boolean value) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("anti-portal-traps", value);
+
+        JsonObject message = JsonUtil.createEnableModuleObjectWithType("server_rule", properties);
+        JsonPacketUtil.broadcastPacket(message);
     }
 
     @Override
     public void setOverrideNametagRenderDistance(Player viewer, boolean value) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("override-nametag-render-distance", value);
 
+        JsonObject message = JsonUtil.createEnableModuleObjectWithType("server_rule", properties);
+        JsonPacketUtil.sendPacket(viewer, message);
     }
 
     @Override
     public void setNametagRenderDistanceExample(int value) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("nametag-render-distance", value);
 
+        JsonObject message = JsonUtil.createEnableModuleObjectWithType("server_rule", properties);
+        JsonPacketUtil.broadcastPacket(message);
     }
+
 }

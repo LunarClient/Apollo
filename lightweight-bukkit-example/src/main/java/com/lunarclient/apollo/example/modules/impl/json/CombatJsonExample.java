@@ -23,14 +23,22 @@
  */
 package com.lunarclient.apollo.example.modules.impl.json;
 
+import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.CombatExample;
+import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
+import com.lunarclient.apollo.example.utilities.JsonUtil;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CombatJsonExample extends CombatExample {
 
-    // TODO
     @Override
     public void setDisableMissPenalty(boolean value) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("disable-miss-penalty", value);
 
+        JsonObject message = JsonUtil.createEnableModuleObjectWithType("combat", properties);
+        JsonPacketUtil.broadcastPacket(message);
     }
 
 }

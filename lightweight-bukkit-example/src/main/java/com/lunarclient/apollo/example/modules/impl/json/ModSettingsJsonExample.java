@@ -23,21 +23,41 @@
  */
 package com.lunarclient.apollo.example.modules.impl.json;
 
+import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.modules.impl.ModSettingsExample;
+import com.lunarclient.apollo.example.utilities.JsonPacketUtil;
+import com.lunarclient.apollo.example.utilities.JsonUtil;
+import java.util.HashMap;
+import java.util.Map;
 import org.bukkit.entity.Player;
 
 public class ModSettingsJsonExample extends ModSettingsExample {
 
     @Override
     public void disableLightningModExample(Player viewer) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("lighting.enabled", false);
+
+        JsonObject message = JsonUtil.createEnableModuleObjectWithType("mod_setting", properties);
+        JsonPacketUtil.sendPacket(viewer, message);
     }
 
     @Override
     public void rollbackLightningModEnabledState(Player viewer) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("lighting.enabled", null);
+
+        JsonObject message = JsonUtil.createEnableModuleObjectWithType("mod_setting", properties);
+        JsonPacketUtil.sendPacket(viewer, message);
     }
 
     @Override
     public void broadcastDisableLightningModExample() {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("lighting.enabled", false);
+
+        JsonObject message = JsonUtil.createEnableModuleObjectWithType("mod_setting", properties);
+        JsonPacketUtil.broadcastPacket(message);
     }
 
 }
