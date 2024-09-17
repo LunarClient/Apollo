@@ -20,8 +20,9 @@ The beam module allows you to create custom beams resembling beacon beams, which
 
 ## Integration
 
-### Sample Code
 Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+### Sample Code
 
 <Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
 
@@ -162,6 +163,27 @@ public void resetBeamsExample(Player viewer) {
     ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
+
+### `Beam` Options
+
+`.setId(String)` should include a unique identifier for the beam.
+
+```java
+.setId("spawn-beacon")
+```
+
+`.setColor()` Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+```java
+.setColor(ProtobufUtil.createColorProto(Color.CYAN))
+```
+
+`.setLocation()` Lorem ipsum odor amet, consectetuer adipiscing elit.
+
+```java
+.setLocation(ProtobufUtil.createBlockLocationProto(new Location(viewer.getWorld(), 0, 60, 0)))
+```
+
 
 </Tab>
 
