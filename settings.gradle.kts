@@ -37,7 +37,6 @@ listOfNotNull(
     "common",
     "bukkit",
     "bukkit-example",
-    "lightweight-bukkit-example",
     if (loadAllVersions) "bungee" else null,
     if (loadAllVersions) "velocity" else null
 ).forEach {

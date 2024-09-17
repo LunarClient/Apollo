@@ -2,6 +2,6 @@
 set -e
 ./gradlew clean build
 # scp bukkit/build/libs/apollo-bukkit-1.1.6-SNAPSHOT.jar ubuntu@147.135.8.94:/home/ubuntu/apollo/plugins/
-scp lightweight-bukkit-example/build/libs/apollo-lightweight-bukkit-example-1.1.6-SNAPSHOT.jar ubuntu@147.135.8.94:/home/ubuntu/apollo/plugins/
+scp bukkit-example/build/libs/apollo-bukkit-example-1.1.6-SNAPSHOT.jar ubuntu@147.135.8.94:/home/ubuntu/apollo/plugins/
 # scp bukkit/build/libs/apollo-bukkit-1.1.6-SNAPSHOT.jar ubuntu@147.135.8.94:/home/ubuntu/lctest/plugins/
-# scp lightweight-bukkit-example/build/libs/apollo-bukkit-example-1.1.6-SNAPSHOT.jar ubuntu@147.135.8.94:/home/ubuntu/lctest/plugins/
+# scp bukkit-example/build/libs/apollo-bukkit-example-1.1.6-SNAPSHOT.jar ubuntu@147.135.8.94:/home/ubuntu/lctest/plugins/

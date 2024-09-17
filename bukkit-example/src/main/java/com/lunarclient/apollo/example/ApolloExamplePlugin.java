@@ -23,58 +23,136 @@
  */
 package com.lunarclient.apollo.example;
 
-import com.lunarclient.apollo.event.EventBus;
-import com.lunarclient.apollo.example.commands.BeamCommand;
-import com.lunarclient.apollo.example.commands.BorderCommand;
-import com.lunarclient.apollo.example.commands.ChatCommand;
-import com.lunarclient.apollo.example.commands.ColoredFireCommand;
-import com.lunarclient.apollo.example.commands.CombatCommand;
-import com.lunarclient.apollo.example.commands.CooldownCommand;
-import com.lunarclient.apollo.example.commands.EntityCommand;
-import com.lunarclient.apollo.example.commands.GlowCommand;
-import com.lunarclient.apollo.example.commands.HologramCommand;
-import com.lunarclient.apollo.example.commands.LimbCommand;
-import com.lunarclient.apollo.example.commands.ModSettingsCommand;
-import com.lunarclient.apollo.example.commands.NametagCommand;
-import com.lunarclient.apollo.example.commands.NickHiderCommand;
-import com.lunarclient.apollo.example.commands.NotificationCommand;
-import com.lunarclient.apollo.example.commands.RichPresenceCommand;
-import com.lunarclient.apollo.example.commands.ServerRuleCommand;
-import com.lunarclient.apollo.example.commands.StaffModCommand;
-import com.lunarclient.apollo.example.commands.StopwatchCommand;
-import com.lunarclient.apollo.example.commands.TeamCommand;
-import com.lunarclient.apollo.example.commands.TebexCommand;
-import com.lunarclient.apollo.example.commands.TitleCommand;
-import com.lunarclient.apollo.example.commands.TntCountdownCommand;
-import com.lunarclient.apollo.example.commands.TransferCommand;
-import com.lunarclient.apollo.example.commands.VignetteCommand;
-import com.lunarclient.apollo.example.commands.WaypointCommand;
-import com.lunarclient.apollo.example.listeners.PlayerListener;
-import com.lunarclient.apollo.example.modules.BeamExample;
-import com.lunarclient.apollo.example.modules.BorderExample;
-import com.lunarclient.apollo.example.modules.ChatExample;
-import com.lunarclient.apollo.example.modules.ColoredFireExample;
-import com.lunarclient.apollo.example.modules.CombatExample;
-import com.lunarclient.apollo.example.modules.CooldownExample;
-import com.lunarclient.apollo.example.modules.EntityExample;
-import com.lunarclient.apollo.example.modules.GlowExample;
-import com.lunarclient.apollo.example.modules.HologramExample;
-import com.lunarclient.apollo.example.modules.LimbExample;
-import com.lunarclient.apollo.example.modules.ModSettingsExample;
-import com.lunarclient.apollo.example.modules.NametagExample;
-import com.lunarclient.apollo.example.modules.NickHiderExample;
-import com.lunarclient.apollo.example.modules.NotificationExample;
-import com.lunarclient.apollo.example.modules.RichPresenceExample;
-import com.lunarclient.apollo.example.modules.ServerRuleExample;
-import com.lunarclient.apollo.example.modules.StaffModExample;
-import com.lunarclient.apollo.example.modules.StopwatchExample;
-import com.lunarclient.apollo.example.modules.TeamExample;
-import com.lunarclient.apollo.example.modules.TebexExample;
-import com.lunarclient.apollo.example.modules.TitleExample;
-import com.lunarclient.apollo.example.modules.TntCountdownExample;
-import com.lunarclient.apollo.example.modules.TransferExample;
-import com.lunarclient.apollo.example.modules.VignetteExample;
-import com.lunarclient.apollo.example.modules.WaypointExample;
+import com.lunarclient.apollo.example.api.examples.BeamApiExample;
+import com.lunarclient.apollo.example.api.examples.BorderApiExample;
+import com.lunarclient.apollo.example.api.examples.ChatApiExample;
+import com.lunarclient.apollo.example.api.examples.ColoredFireApiExample;
+import com.lunarclient.apollo.example.api.examples.CombatApiExample;
+import com.lunarclient.apollo.example.api.examples.CooldownApiExample;
+import com.lunarclient.apollo.example.api.examples.EntityApiExample;
+import com.lunarclient.apollo.example.api.examples.GlowApiExample;
+import com.lunarclient.apollo.example.api.examples.HologramApiExample;
+import com.lunarclient.apollo.example.api.examples.LimbApiExample;
+import com.lunarclient.apollo.example.api.examples.ModSettingsApiExample;
+import com.lunarclient.apollo.example.api.examples.NametagApiExample;
+import com.lunarclient.apollo.example.api.examples.NickHiderApiExample;
+import com.lunarclient.apollo.example.api.examples.NotificationApiExample;
+import com.lunarclient.apollo.example.api.examples.RichPresenceApiExample;
+import com.lunarclient.apollo.example.api.examples.ServerRuleApiExample;
+import com.lunarclient.apollo.example.api.examples.StaffModApiExample;
+import com.lunarclient.apollo.example.api.examples.StopwatchApiExample;
+import com.lunarclient.apollo.example.api.examples.TeamApiExample;
+import com.lunarclient.apollo.example.api.examples.TebexApiExample;
+import com.lunarclient.apollo.example.api.examples.TitleApiExample;
+import com.lunarclient.apollo.example.api.examples.TntCountdownApiExample;
+import com.lunarclient.apollo.example.api.examples.TransferApiExample;
+import com.lunarclient.apollo.example.api.examples.VignetteApiExample;
+import com.lunarclient.apollo.example.api.examples.WaypointApiExample;
+import com.lunarclient.apollo.example.api.listeners.ApolloPlayerApiListener;
+import com.lunarclient.apollo.example.common.commands.SwitchCommand;
+import com.lunarclient.apollo.example.common.commands.module.BeamCommand;
+import com.lunarclient.apollo.example.common.commands.module.BorderCommand;
+import com.lunarclient.apollo.example.common.commands.module.ChatCommand;
+import com.lunarclient.apollo.example.common.commands.module.ColoredFireCommand;
+import com.lunarclient.apollo.example.common.commands.module.CombatCommand;
+import com.lunarclient.apollo.example.common.commands.module.CooldownCommand;
+import com.lunarclient.apollo.example.common.commands.module.EntityCommand;
+import com.lunarclient.apollo.example.common.commands.module.GlowCommand;
+import com.lunarclient.apollo.example.common.commands.module.HologramCommand;
+import com.lunarclient.apollo.example.common.commands.module.LimbCommand;
+import com.lunarclient.apollo.example.common.commands.module.ModSettingsCommand;
+import com.lunarclient.apollo.example.common.commands.module.NametagCommand;
+import com.lunarclient.apollo.example.common.commands.module.NickHiderCommand;
+import com.lunarclient.apollo.example.common.commands.module.NotificationCommand;
+import com.lunarclient.apollo.example.common.commands.module.RichPresenceCommand;
+import com.lunarclient.apollo.example.common.commands.module.ServerRuleCommand;
+import com.lunarclient.apollo.example.common.commands.module.StaffModCommand;
+import com.lunarclient.apollo.example.common.commands.module.StopwatchCommand;
+import com.lunarclient.apollo.example.common.commands.module.TeamCommand;
+import com.lunarclient.apollo.example.common.commands.module.TebexCommand;
+import com.lunarclient.apollo.example.common.commands.module.TitleCommand;
+import com.lunarclient.apollo.example.common.commands.module.TntCountdownCommand;
+import com.lunarclient.apollo.example.common.commands.module.TransferCommand;
+import com.lunarclient.apollo.example.common.commands.module.VignetteCommand;
+import com.lunarclient.apollo.example.common.commands.module.WaypointCommand;
+import com.lunarclient.apollo.example.common.modules.ApolloExampleType;
+import com.lunarclient.apollo.example.common.modules.impl.BeamExample;
+import com.lunarclient.apollo.example.common.modules.impl.BorderExample;
+import com.lunarclient.apollo.example.common.modules.impl.ChatExample;
+import com.lunarclient.apollo.example.common.modules.impl.ColoredFireExample;
+import com.lunarclient.apollo.example.common.modules.impl.CombatExample;
+import com.lunarclient.apollo.example.common.modules.impl.CooldownExample;
+import com.lunarclient.apollo.example.common.modules.impl.EntityExample;
+import com.lunarclient.apollo.example.common.modules.impl.GlowExample;
+import com.lunarclient.apollo.example.common.modules.impl.HologramExample;
+import com.lunarclient.apollo.example.common.modules.impl.LimbExample;
+import com.lunarclient.apollo.example.common.modules.impl.ModSettingsExample;
+import com.lunarclient.apollo.example.common.modules.impl.NametagExample;
+import com.lunarclient.apollo.example.common.modules.impl.NickHiderExample;
+import com.lunarclient.apollo.example.common.modules.impl.NotificationExample;
+import com.lunarclient.apollo.example.common.modules.impl.RichPresenceExample;
+import com.lunarclient.apollo.example.common.modules.impl.ServerRuleExample;
+import com.lunarclient.apollo.example.common.modules.impl.StaffModExample;
+import com.lunarclient.apollo.example.common.modules.impl.StopwatchExample;
+import com.lunarclient.apollo.example.common.modules.impl.TeamExample;
+import com.lunarclient.apollo.example.common.modules.impl.TebexExample;
+import com.lunarclient.apollo.example.common.modules.impl.TitleExample;
+import com.lunarclient.apollo.example.common.modules.impl.TntCountdownExample;
+import com.lunarclient.apollo.example.common.modules.impl.TransferExample;
+import com.lunarclient.apollo.example.common.modules.impl.VignetteExample;
+import com.lunarclient.apollo.example.common.modules.impl.WaypointExample;
+import com.lunarclient.apollo.example.json.examples.BeamJsonExample;
+import com.lunarclient.apollo.example.json.examples.BorderJsonExample;
+import com.lunarclient.apollo.example.json.examples.ChatJsonExample;
+import com.lunarclient.apollo.example.json.examples.ColoredFireJsonExample;
+import com.lunarclient.apollo.example.json.examples.CombatJsonExample;
+import com.lunarclient.apollo.example.json.examples.CooldownJsonExample;
+import com.lunarclient.apollo.example.json.examples.EntityJsonExample;
+import com.lunarclient.apollo.example.json.examples.GlowJsonExample;
+import com.lunarclient.apollo.example.json.examples.HologramJsonExample;
+import com.lunarclient.apollo.example.json.examples.LimbJsonExample;
+import com.lunarclient.apollo.example.json.examples.ModSettingsJsonExample;
+import com.lunarclient.apollo.example.json.examples.NametagJsonExample;
+import com.lunarclient.apollo.example.json.examples.NickHiderJsonExample;
+import com.lunarclient.apollo.example.json.examples.NotificationJsonExample;
+import com.lunarclient.apollo.example.json.examples.RichPresenceJsonExample;
+import com.lunarclient.apollo.example.json.examples.ServerRuleJsonExample;
+import com.lunarclient.apollo.example.json.examples.StaffModJsonExample;
+import com.lunarclient.apollo.example.json.examples.StopwatchJsonExample;
+import com.lunarclient.apollo.example.json.examples.TeamJsonExample;
+import com.lunarclient.apollo.example.json.examples.TebexJsonExample;
+import com.lunarclient.apollo.example.json.examples.TitleJsonExample;
+import com.lunarclient.apollo.example.json.examples.TntCountdownJsonExample;
+import com.lunarclient.apollo.example.json.examples.TransferJsonExample;
+import com.lunarclient.apollo.example.json.examples.VignetteJsonExample;
+import com.lunarclient.apollo.example.json.examples.WaypointJsonExample;
+import com.lunarclient.apollo.example.json.listeners.ApolloPlayerJsonListener;
+import com.lunarclient.apollo.example.proto.examples.BeamProtoExample;
+import com.lunarclient.apollo.example.proto.examples.BorderProtoExample;
+import com.lunarclient.apollo.example.proto.examples.ChatProtoExample;
+import com.lunarclient.apollo.example.proto.examples.ColoredFireProtoExample;
+import com.lunarclient.apollo.example.proto.examples.CombatProtoExample;
+import com.lunarclient.apollo.example.proto.examples.CooldownProtoExample;
+import com.lunarclient.apollo.example.proto.examples.EntityProtoExample;
+import com.lunarclient.apollo.example.proto.examples.GlowProtoExample;
+import com.lunarclient.apollo.example.proto.examples.HologramProtoExample;
+import com.lunarclient.apollo.example.proto.examples.LimbProtoExample;
+import com.lunarclient.apollo.example.proto.examples.ModSettingsProtoExample;
+import com.lunarclient.apollo.example.proto.examples.NametagProtoExample;
+import com.lunarclient.apollo.example.proto.examples.NickHiderProtoExample;
+import com.lunarclient.apollo.example.proto.examples.NotificationProtoExample;
+import com.lunarclient.apollo.example.proto.examples.RichPresenceProtoExample;
+import com.lunarclient.apollo.example.proto.examples.ServerRuleProtoExample;
+import com.lunarclient.apollo.example.proto.examples.StaffModProtoExample;
+import com.lunarclient.apollo.example.proto.examples.StopwatchProtoExample;
+import com.lunarclient.apollo.example.proto.examples.TeamProtoExample;
+import com.lunarclient.apollo.example.proto.examples.TebexProtoExample;
+import com.lunarclient.apollo.example.proto.examples.TitleProtoExample;
+import com.lunarclient.apollo.example.proto.examples.TntCountdownProtoExample;
+import com.lunarclient.apollo.example.proto.examples.TransferProtoExample;
+import com.lunarclient.apollo.example.proto.examples.VignetteProtoExample;
+import com.lunarclient.apollo.example.proto.examples.WaypointProtoExample;
+import com.lunarclient.apollo.example.proto.listeners.ApolloPlayerProtoListener;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -83,6 +161,12 @@ public class ApolloExamplePlugin extends JavaPlugin {
 
     @Getter
     private static ApolloExamplePlugin plugin;
+
+    public static ApolloExampleType TYPE;
+
+    private ApolloPlayerApiListener playerApiListener;
+    private ApolloPlayerProtoListener playerProtoListener;
+    private ApolloPlayerJsonListener playerJsonListener;
 
     private BeamExample beamExample;
     private BorderExample borderExample;
@@ -114,9 +198,8 @@ public class ApolloExamplePlugin extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
-        this.registerModuleExamples();
+        this.changeImplementationType(ApolloExampleType.JSON);
         this.registerCommands();
-        this.registerListeners();
     }
 
     @Override
@@ -124,35 +207,9 @@ public class ApolloExamplePlugin extends JavaPlugin {
 
     }
 
-    private void registerModuleExamples() {
-        this.beamExample = new BeamExample();
-        this.borderExample = new BorderExample();
-        this.chatExample = new ChatExample();
-        this.coloredFireExample = new ColoredFireExample();
-        this.combatExample = new CombatExample();
-        this.cooldownExample = new CooldownExample();
-        this.entityExample = new EntityExample();
-        this.glowExample = new GlowExample();
-        this.hologramExample = new HologramExample();
-        this.limbExample = new LimbExample();
-        this.modSettingsExample = new ModSettingsExample();
-        this.nametagExample = new NametagExample();
-        this.nickHiderExample = new NickHiderExample();
-        this.notificationExample = new NotificationExample();
-        this.richPresenceExample = new RichPresenceExample();
-        this.serverRuleExample = new ServerRuleExample();
-        this.staffModExample = new StaffModExample();
-        this.stopwatchExample = new StopwatchExample();
-        this.teamExample = new TeamExample();
-        this.tebexExample = new TebexExample();
-        this.titleExample = new TitleExample();
-        this.tntCountdownExample = new TntCountdownExample();
-        this.transferExample = new TransferExample();
-        this.vignetteExample = new VignetteExample();
-        this.waypointExample = new WaypointExample();
-    }
-
     private void registerCommands() {
+        this.getCommand("switch").setExecutor(new SwitchCommand());
+
         this.getCommand("beam").setExecutor(new BeamCommand());
         this.getCommand("border").setExecutor(new BorderCommand());
         this.getCommand("chat").setExecutor(new ChatCommand());
@@ -180,8 +237,136 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("waypoint").setExecutor(new WaypointCommand());
     }
 
+    public void changeImplementationType(ApolloExampleType type) {
+        TYPE = type;
+
+        if (this.playerApiListener != null) {
+            this.playerApiListener.disable();
+            this.playerApiListener = null;
+        }
+
+        if (this.playerProtoListener != null) {
+            this.playerProtoListener.disable();
+            this.playerProtoListener = null;
+        }
+
+        if (this.playerJsonListener != null) {
+            this.playerJsonListener.disable();
+            this.playerJsonListener = null;
+        }
+
+        this.registerModuleExamples();
+        this.registerListeners();
+    }
+
+    private void registerModuleExamples() {
+        switch (TYPE) {
+            case API: {
+                this.beamExample = new BeamApiExample();
+                this.borderExample = new BorderApiExample();
+                this.chatExample = new ChatApiExample();
+                this.coloredFireExample = new ColoredFireApiExample();
+                this.combatExample = new CombatApiExample();
+                this.cooldownExample = new CooldownApiExample();
+                this.entityExample = new EntityApiExample();
+                this.glowExample = new GlowApiExample();
+                this.hologramExample = new HologramApiExample();
+                this.limbExample = new LimbApiExample();
+                this.modSettingsExample = new ModSettingsApiExample();
+                this.nametagExample = new NametagApiExample();
+                this.nickHiderExample = new NickHiderApiExample();
+                this.notificationExample = new NotificationApiExample();
+                this.richPresenceExample = new RichPresenceApiExample();
+                this.serverRuleExample = new ServerRuleApiExample();
+                this.staffModExample = new StaffModApiExample();
+                this.stopwatchExample = new StopwatchApiExample();
+                this.teamExample = new TeamApiExample();
+                this.tebexExample = new TebexApiExample();
+                this.titleExample = new TitleApiExample();
+                this.tntCountdownExample = new TntCountdownApiExample();
+                this.transferExample = new TransferApiExample();
+                this.vignetteExample = new VignetteApiExample();
+                this.waypointExample = new WaypointApiExample();
+                break;
+            }
+
+            case JSON: {
+                this.beamExample = new BeamJsonExample();
+                this.borderExample = new BorderJsonExample();
+                this.chatExample = new ChatJsonExample();
+                this.coloredFireExample = new ColoredFireJsonExample();
+                this.combatExample = new CombatJsonExample();
+                this.cooldownExample = new CooldownJsonExample();
+                this.entityExample = new EntityJsonExample();
+                this.glowExample = new GlowJsonExample();
+                this.hologramExample = new HologramJsonExample();
+                this.limbExample = new LimbJsonExample();
+                this.modSettingsExample = new ModSettingsJsonExample();
+                this.nametagExample = new NametagJsonExample();
+                this.nickHiderExample = new NickHiderJsonExample();
+                this.notificationExample = new NotificationJsonExample();
+                this.richPresenceExample = new RichPresenceJsonExample();
+                this.serverRuleExample = new ServerRuleJsonExample();
+                this.staffModExample = new StaffModJsonExample();
+                this.stopwatchExample = new StopwatchJsonExample();
+                this.teamExample = new TeamJsonExample();
+                this.tebexExample = new TebexJsonExample();
+                this.titleExample = new TitleJsonExample();
+                this.tntCountdownExample = new TntCountdownJsonExample();
+                this.transferExample = new TransferJsonExample();
+                this.vignetteExample = new VignetteJsonExample();
+                this.waypointExample = new WaypointJsonExample();
+                break;
+            }
+
+            case PROTO: {
+                this.beamExample = new BeamProtoExample();
+                this.borderExample = new BorderProtoExample();
+                this.chatExample = new ChatProtoExample();
+                this.coloredFireExample = new ColoredFireProtoExample();
+                this.combatExample = new CombatProtoExample();
+                this.cooldownExample = new CooldownProtoExample();
+                this.entityExample = new EntityProtoExample();
+                this.glowExample = new GlowProtoExample();
+                this.hologramExample = new HologramProtoExample();
+                this.limbExample = new LimbProtoExample();
+                this.modSettingsExample = new ModSettingsProtoExample();
+                this.nametagExample = new NametagProtoExample();
+                this.nickHiderExample = new NickHiderProtoExample();
+                this.notificationExample = new NotificationProtoExample();
+                this.richPresenceExample = new RichPresenceProtoExample();
+                this.serverRuleExample = new ServerRuleProtoExample();
+                this.staffModExample = new StaffModProtoExample();
+                this.stopwatchExample = new StopwatchProtoExample();
+                this.teamExample = new TeamProtoExample();
+                this.tebexExample = new TebexProtoExample();
+                this.titleExample = new TitleProtoExample();
+                this.tntCountdownExample = new TntCountdownProtoExample();
+                this.transferExample = new TransferProtoExample();
+                this.vignetteExample = new VignetteProtoExample();
+                this.waypointExample = new WaypointProtoExample();
+                break;
+            }
+        }
+    }
+
     private void registerListeners() {
-        EventBus.getBus().register(new PlayerListener());
+        switch (TYPE) {
+            case API: {
+                this.playerApiListener = new ApolloPlayerApiListener(this);
+                break;
+            }
+
+            case JSON: {
+                this.playerJsonListener = new ApolloPlayerJsonListener(this);
+                break;
+            }
+
+            case PROTO: {
+                this.playerProtoListener = new ApolloPlayerProtoListener(this);
+                break;
+            }
+        }
     }
 
 }
