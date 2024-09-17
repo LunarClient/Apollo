@@ -37,10 +37,19 @@ public final class TebexModuleImpl extends TebexModule {
 
     @Override
     public void displayTebexEmbeddedCheckout(@NonNull Recipients recipients, @NonNull String basketIdent) {
-        OpenTebexEmbeddedCheckoutMessage message = OpenTebexEmbeddedCheckoutMessage.newBuilder()
-            .setBasketIdent(basketIdent)
-            .build();
+        this.displayTebexEmbeddedCheckout(recipients, basketIdent, null);
+    }
 
+    @Override
+    public void displayTebexEmbeddedCheckout(@NonNull Recipients recipients, @NonNull String basketIdent, String locale) {
+        OpenTebexEmbeddedCheckoutMessage.Builder builder = OpenTebexEmbeddedCheckoutMessage.newBuilder()
+            .setBasketIdent(basketIdent);
+
+        if (locale != null) {
+            builder.setLocale(locale);
+        }
+
+        OpenTebexEmbeddedCheckoutMessage message = builder.build();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
