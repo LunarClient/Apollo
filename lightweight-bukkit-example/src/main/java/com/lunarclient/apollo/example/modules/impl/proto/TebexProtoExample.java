@@ -31,11 +31,15 @@ import org.bukkit.entity.Player;
 public class TebexProtoExample extends TebexExample {
 
     @Override
-    public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent) {
-        OpenTebexEmbeddedCheckoutMessage message = OpenTebexEmbeddedCheckoutMessage.newBuilder()
-            .setBasketIdent(basketIdent)
-            .build();
+    public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent, String locale) {
+        OpenTebexEmbeddedCheckoutMessage.Builder builder = OpenTebexEmbeddedCheckoutMessage.newBuilder()
+            .setBasketIdent(basketIdent);
 
+        if (locale != null) {
+            builder.setLocale(locale);
+        }
+
+        OpenTebexEmbeddedCheckoutMessage message = builder.build();
         ProtobufPacketUtil.sendPacket(viewer, message);
     }
 

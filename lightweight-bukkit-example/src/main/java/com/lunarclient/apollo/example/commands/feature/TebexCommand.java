@@ -42,22 +42,23 @@ public class TebexCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (args.length != 2) {
-            player.sendMessage("Usage: /tebex <display> <basketIdent>");
+        if (args.length < 2) {
+            player.sendMessage("Usage: /tebex <display> <basketIdent> [locale]");
             return true;
         }
 
         TebexExample tebexExample = ApolloExamplePlugin.getPlugin().getTebexExample();
+        String locale = args.length == 3 ? args[2] : null;
 
         switch (args[0].toLowerCase()) {
             case "display": {
-                tebexExample.displayTebexEmbeddedCheckoutExample(player, args[1]);
+                tebexExample.displayTebexEmbeddedCheckoutExample(player, args[1], locale);
                 player.sendMessage("Displaying checkout....");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /tebex <display> <basketIdent>");
+                player.sendMessage("Usage: /tebex <display> <basketIdent> [locale]");
                 break;
             }
         }

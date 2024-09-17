@@ -31,10 +31,14 @@ import org.bukkit.entity.Player;
 public class TebexJsonExample extends TebexExample {
 
     @Override
-    public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent) {
+    public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent, String locale) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.tebex.v1.OpenTebexEmbeddedCheckoutMessage");
         message.addProperty("basket_ident", basketIdent);
+
+        if (locale != null) {
+            message.addProperty("locale", locale);
+        }
 
         JsonPacketUtil.sendPacket(viewer, message);
     }

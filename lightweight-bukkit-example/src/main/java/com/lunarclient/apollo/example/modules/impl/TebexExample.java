@@ -28,6 +28,6 @@ import org.bukkit.entity.Player;
 
 public abstract class TebexExample extends ApolloExample {
 
-    public abstract void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent);
+    public abstract void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent, String locale);
 
 }
