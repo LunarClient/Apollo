@@ -50,35 +50,33 @@ public class ApolloPlayerProtoListener implements Listener {
     );
 
     // Module Id -> Option key -> Value
-    private static final Table<String, String, Value> PROPERTIES = HashBasedTable.create();
+    private static final Table<String, String, Value> CONFIG_MODULE_PROPERTIES = HashBasedTable.create();
 
     static {
         // Module Options that the client needs to notified about, these properties are sent with the enable module packet
         // While using the Apollo plugin this would be equivalent to modifying the config.yml
-        PROPERTIES.put("combat", "disable-miss-penalty", Value.newBuilder().setBoolValue(false).build());
-        PROPERTIES.put("server_rule", "competitive-game", Value.newBuilder().setBoolValue(false).build());
-        PROPERTIES.put("server_rule", "competitive-commands", Value.newBuilder().setListValue(
+        CONFIG_MODULE_PROPERTIES.put("combat", "disable-miss-penalty", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-game", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-commands", Value.newBuilder().setListValue(
             ListValue.newBuilder().addAllValues(Arrays.asList(
                 Value.newBuilder().setStringValue("/server").build(),
                 Value.newBuilder().setStringValue("/servers").build(),
                 Value.newBuilder().setStringValue("/hub").build()))
                     .build()
         ).build());
-        PROPERTIES.put("server_rule", "disable-shaders", Value.newBuilder().setBoolValue(false).build());
-        PROPERTIES.put("server_rule", "disable-chunk-reloading", Value.newBuilder().setBoolValue(false).build());
-        PROPERTIES.put("server_rule", "disable-broadcasting", Value.newBuilder().setBoolValue(false).build());
-        PROPERTIES.put("server_rule", "anti-portal-traps", Value.newBuilder().setBoolValue(true).build());
-        PROPERTIES.put("server_rule", "override-brightness", Value.newBuilder().setBoolValue(false).build());
-        PROPERTIES.put("server_rule", "brightness", Value.newBuilder().setNumberValue(50).build());
-        PROPERTIES.put("server_rule", "override-nametag-render-distance", Value.newBuilder().setBoolValue(false).build());
-        PROPERTIES.put("server_rule", "nametag-render-distance", Value.newBuilder().setNumberValue(64).build());
-        PROPERTIES.put("server_rule", "override-max-chat-length", Value.newBuilder().setBoolValue(false).build());
-        PROPERTIES.put("server_rule", "max-chat-length", Value.newBuilder().setNumberValue(256).build());
-        PROPERTIES.put("tnt_countdown", "tnt-ticks", Value.newBuilder().setNumberValue(80).build());
-        PROPERTIES.put("waypoint", "server-handles-waypoints", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-shaders", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-chunk-reloading", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-broadcasting", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "anti-portal-traps", Value.newBuilder().setBoolValue(true).build());
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "override-brightness", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "brightness", Value.newBuilder().setNumberValue(50).build());
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "override-nametag-render-distance", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "nametag-render-distance", Value.newBuilder().setNumberValue(64).build());
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "override-max-chat-length", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "max-chat-length", Value.newBuilder().setNumberValue(256).build());
+        CONFIG_MODULE_PROPERTIES.put("tnt_countdown", "tnt-ticks", Value.newBuilder().setNumberValue(80).build());
+        CONFIG_MODULE_PROPERTIES.put("waypoint", "server-handles-waypoints", Value.newBuilder().setBoolValue(false).build());
     }
-
-    private static final String APOLLO_CHANNEL = "lunar:apollo"; // Used for detecting whether the player supports Apollo
 
     private final ApolloExamplePlugin plugin;
 
@@ -88,9 +86,9 @@ public class ApolloPlayerProtoListener implements Listener {
         this.plugin = plugin;
 
         Messenger messenger = Bukkit.getServer().getMessenger();
-        messenger.registerOutgoingPluginChannel(plugin, APOLLO_CHANNEL);
-        messenger.registerIncomingPluginChannel(plugin, APOLLO_CHANNEL, new ApolloRoundtripProtoListener());
-        messenger.registerIncomingPluginChannel(plugin, APOLLO_CHANNEL, new ApolloPacketReceiveProtoListener());
+        messenger.registerOutgoingPluginChannel(plugin, "lunar:apollo");
+        messenger.registerIncomingPluginChannel(plugin, "lunar:apollo", new ApolloRoundtripProtoListener());
+        messenger.registerIncomingPluginChannel(plugin, "lunar:apollo", new ApolloPacketReceiveProtoListener());
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
@@ -99,15 +97,15 @@ public class ApolloPlayerProtoListener implements Listener {
         this.playersRunningApollo.clear();
 
         Messenger messenger = Bukkit.getServer().getMessenger();
-        messenger.unregisterOutgoingPluginChannel(this.plugin, APOLLO_CHANNEL);
-        messenger.unregisterIncomingPluginChannel(this.plugin, APOLLO_CHANNEL);
+        messenger.unregisterOutgoingPluginChannel(this.plugin, "lunar:apollo");
+        messenger.unregisterIncomingPluginChannel(this.plugin, "lunar:apollo");
 
         HandlerList.unregisterAll(this);
     }
 
     @EventHandler
     private void onRegisterChannel(PlayerRegisterChannelEvent event) {
-        if (!event.getChannel().equalsIgnoreCase(APOLLO_CHANNEL)) {
+        if (!event.getChannel().equalsIgnoreCase("lunar:apollo")) {
             return;
         }
 
@@ -119,7 +117,7 @@ public class ApolloPlayerProtoListener implements Listener {
     }
 
     private void onApolloRegister(Player player) {
-        ProtobufPacketUtil.enableModules(player, APOLLO_MODULES, PROPERTIES);
+        ProtobufPacketUtil.enableModules(player, APOLLO_MODULES, CONFIG_MODULE_PROPERTIES);
 
         this.playersRunningApollo.add(player.getUniqueId());
         player.sendMessage("You are using LunarClient!");

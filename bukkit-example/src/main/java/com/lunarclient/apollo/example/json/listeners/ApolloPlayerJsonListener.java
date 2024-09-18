@@ -48,26 +48,26 @@ public class ApolloPlayerJsonListener implements Listener {
     );
 
     // Module Id -> Option key -> Object
-    private static final Table<String, String, Object> PROPERTIES = HashBasedTable.create();
+    private static final Table<String, String, Object> CONFIG_MODULE_PROPERTIES = HashBasedTable.create();
 
     static {
         // Module Options that the client needs to notified about, these properties are sent with the enable module packet
         // While using the Apollo plugin this would be equivalent to modifying the config.yml
-        PROPERTIES.put("combat", "disable-miss-penalty", false);
-        PROPERTIES.put("server_rule", "competitive-game", false);
-        PROPERTIES.put("server_rule", "competitive-commands", Arrays.asList("/server", "/servers", "/hub"));
-        PROPERTIES.put("server_rule", "disable-shaders", false);
-        PROPERTIES.put("server_rule", "disable-chunk-reloading", false);
-        PROPERTIES.put("server_rule", "disable-broadcasting", false);
-        PROPERTIES.put("server_rule", "anti-portal-traps", true);
-        PROPERTIES.put("server_rule", "override-brightness", false);
-        PROPERTIES.put("server_rule", "brightness", 50);
-        PROPERTIES.put("server_rule", "override-nametag-render-distance", false);
-        PROPERTIES.put("server_rule", "nametag-render-distance", 64);
-        PROPERTIES.put("server_rule", "override-max-chat-length", false);
-        PROPERTIES.put("server_rule", "max-chat-length", 256);
-        PROPERTIES.put("tnt_countdown", "tnt-ticks", 80);
-        PROPERTIES.put("waypoint", "server-handles-waypoints", false);
+        CONFIG_MODULE_PROPERTIES.put("combat", "disable-miss-penalty", false);
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-game", false);
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-commands", Arrays.asList("/server", "/servers", "/hub"));
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-shaders", false);
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-chunk-reloading", false);
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-broadcasting", false);
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "anti-portal-traps", true);
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "override-brightness", false);
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "brightness", 50);
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "override-nametag-render-distance", false);
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "nametag-render-distance", 64);
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "override-max-chat-length", false);
+        CONFIG_MODULE_PROPERTIES.put("server_rule", "max-chat-length", 256);
+        CONFIG_MODULE_PROPERTIES.put("tnt_countdown", "tnt-ticks", 80);
+        CONFIG_MODULE_PROPERTIES.put("waypoint", "server-handles-waypoints", false);
     }
 
     private static final String REGISTER_CHANNEL = "lunar:apollo"; // Used for detecting whether the player supports Apollo
@@ -113,7 +113,7 @@ public class ApolloPlayerJsonListener implements Listener {
     }
 
     private void onApolloRegister(Player player) {
-        JsonPacketUtil.enableModules(player, APOLLO_MODULES, PROPERTIES);
+        JsonPacketUtil.enableModules(player, APOLLO_MODULES, CONFIG_MODULE_PROPERTIES);
 
         this.playersRunningApollo.add(player.getUniqueId());
         player.sendMessage("You are using LunarClient!");
