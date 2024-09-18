@@ -48,6 +48,26 @@ public class TitleJsonExample extends TitleExample {
                 .decorate(TextDecoration.BOLD)
                 .build()
         ));
+        message.addProperty("scale", 1.0f);
+        message.addProperty("fade_in_time", JsonUtil.createDurationObject(Duration.ofMillis(1500)));
+        message.addProperty("display_time", JsonUtil.createDurationObject(Duration.ofMillis(250)));
+        message.addProperty("fade_out_time", JsonUtil.createDurationObject(Duration.ofMillis(300)));
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void displayTitleInterpolatedExample(Player viewer) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.title.v1.DisplayTitleMessage");
+        message.addProperty("title_type", 1); // 1 = title, 2 = subtitle
+        message.addProperty("adventure_json_message", AdventureUtil.toJson(
+            Component.text()
+                .content("This title expands!")
+                .color(NamedTextColor.GREEN)
+                .decorate(TextDecoration.BOLD)
+                .build()
+        ));
         message.addProperty("scale", 0.1f);
         message.addProperty("interpolation_scale", 1.0f);
         message.addProperty("interpolation_rate", 0.01f);

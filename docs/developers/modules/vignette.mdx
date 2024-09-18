@@ -10,7 +10,14 @@ The vignette module gives the ability to apply a full-screen image overlay with 
 
 ## Integration
 
-### Display vignette to a player
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Display Vignette
 
 ```java
 public void displayVignetteExample(Player viewer) {
@@ -23,6 +30,15 @@ public void displayVignetteExample(Player viewer) {
             .build()
         );
     });
+}
+```
+
+### Reset Vignette
+
+```java
+public void resetVignetteExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.vignetteModule::resetVignette);
 }
 ```
 
@@ -40,11 +56,60 @@ public void displayVignetteExample(Player viewer) {
 .opacity(0.75f)
 ```
 
-#### Resetting the vignette for a player
+</Tab>
+
+<Tab>
+
+### Display Vignette
+
+```java
+public void displayVignetteExample(Player viewer) {
+    DisplayVignetteMessage message = DisplayVignetteMessage.newBuilder()
+        .setResourceLocation("textures/misc/pumpkinblur.png")
+        .setOpacity(0.75f)
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Reset Vignette
 
 ```java
 public void resetVignetteExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.vignetteModule::resetVignette);
+    ResetVignetteMessage message = ResetVignetteMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+### Display Vignette
+
+```java
+public void displayVignetteExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.vignette.v1.DisplayVignetteMessage");
+    message.addProperty("resource_location", "textures/misc/pumpkinblur.png");
+    message.addProperty("opacity", 0.75f);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Reset Vignette
+
+```java
+public void resetVignetteExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.vignette.v1.ResetVignetteMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

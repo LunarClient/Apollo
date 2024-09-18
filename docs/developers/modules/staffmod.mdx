@@ -17,9 +17,16 @@ The staff mod module allows you to interact with Lunar Client's built in staff m
 
 ## Integration
 
-### How to enable staff mods for a player
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
 
-```java 
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Enable Staff Mods
+
+```java
 public void enableStaffModsExample(Player viewer) {
     if (!viewer.hasPermission("apollo.staff")) {
         return;
@@ -30,14 +37,7 @@ public void enableStaffModsExample(Player viewer) {
 }
 ```
 
-#### `enableStaffMods` Parameters
-
-1. `ApolloPlayer`
-   - The player you want to enable the staff mod for.
-2. `StaffMod.TYPE`
-   - The type of staff mod(s) you want to enable for the `ApolloPlayer` player. See the [staff mod types](#staffmod-types) section for more.
-
-### How to disable staff mods for a player
+### Disable Staff Mods
 
 ```java
 public void disableStaffModsExample(Player viewer) {
@@ -46,14 +46,89 @@ public void disableStaffModsExample(Player viewer) {
 }
 ```
 
-#### `disableStaffMods` Parameters
+#### `enableStaffMods` & `disableStaffMods` Parameters
 
-1. `ApolloPlayer`
-   - The player you want to disable the staff mod for.
+1. `Recipients recipients`
+   - A list of all the player(s) you want to enable or disable the staff mod.
 2. `StaffMod.TYPE`
-   - The type of staff mod(s) you want to disable for the `ApolloPlayer` player. See the [staff mod types](#staffmod-types) section for more.
+   - The type of staff mod(s) you want to enable for the `Recipients` player. See the [staff mod types](#staffmod-types) section for more.
 
 ## `StaffMod` Types
 
 * `XRAY`
 
+</Tab>
+
+<Tab>
+
+### Enable Staff Mods
+
+```java
+public void enableStaffModsExample(Player viewer) {
+    if (!viewer.hasPermission("apollo.staff")) {
+        return;
+    }
+
+    EnableStaffModsMessage message = EnableStaffModsMessage.newBuilder()
+        .addAllStaffMods(Collections.singletonList(StaffMod.STAFF_MOD_XRAY))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Disable Staff Mods
+
+```java
+public void disableStaffModsExample(Player viewer) {
+    DisableStaffModsMessage message = DisableStaffModsMessage.newBuilder()
+        .addAllStaffMods(Collections.singletonList(StaffMod.STAFF_MOD_XRAY))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+<Tab>
+
+### Enable Staff Mods
+
+```java
+public void enableStaffModsExample(Player viewer) {
+    if (!viewer.hasPermission("apollo.staff")) {
+        return;
+    }
+
+    // 1 = xray
+    JsonArray staffMods = Stream.of(1)
+        .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.staffmod.v1.EnableStaffModsMessage");
+    message.add("staff_mods", staffMods);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Disable Staff Mods
+
+```java
+public void disableStaffModsExample(Player viewer) {
+    // 1 = xray
+    JsonArray staffMods = Stream.of(1)
+        .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.staffmod.v1.DisableStaffModsMessage");
+    message.add("staff_mods", staffMods);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

@@ -40,38 +40,40 @@ public class TitleApiExample extends TitleExample {
 
     private final TitleModule titleModule = Apollo.getModuleManager().getModule(TitleModule.class);
 
-    private final Title helloTitle = Title.builder()
-        .type(TitleType.TITLE)
-        .message(Component.text()
-            .content("Hello, player!")
-            .color(NamedTextColor.GREEN)
-            .decorate(TextDecoration.BOLD)
-            .build())
-        .scale(1.0f)
-        .displayTime(Duration.ofMillis(1500L))
-        .fadeInTime(Duration.ofMillis(250))
-        .fadeOutTime(Duration.ofMillis(300))
-        .build();
-
-    private final Title interpolatedTitle = Title.builder()
-        .type(TitleType.TITLE)
-        .message(Component.text()
-            .content("This title expands!")
-            .color(NamedTextColor.GREEN)
-            .decorate(TextDecoration.BOLD)
-            .build())
-        .scale(0.1f)
-        .interpolationScale(1.0f)
-        .interpolationRate(0.01f)
-        .displayTime(Duration.ofMillis(5000L))
-        .fadeInTime(Duration.ofMillis(250))
-        .fadeOutTime(Duration.ofMillis(300))
-        .build();
-
     @Override
     public void displayTitleExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, this.helloTitle));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, Title.builder()
+            .type(TitleType.TITLE)
+            .message(Component.text()
+                .content("Hello, player!")
+                .color(NamedTextColor.GREEN)
+                .decorate(TextDecoration.BOLD)
+                .build())
+            .scale(1.0f)
+            .displayTime(Duration.ofMillis(1500L))
+            .fadeInTime(Duration.ofMillis(250))
+            .fadeOutTime(Duration.ofMillis(300))
+            .build()));
+    }
+
+    @Override
+    public void displayTitleInterpolatedExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, Title.builder()
+            .type(TitleType.TITLE)
+            .message(Component.text()
+                .content("This title expands!")
+                .color(NamedTextColor.GREEN)
+                .decorate(TextDecoration.BOLD)
+                .build())
+            .scale(0.1f)
+            .interpolationScale(1.0f)
+            .interpolationRate(0.01f)
+            .displayTime(Duration.ofMillis(5000L))
+            .fadeInTime(Duration.ofMillis(250))
+            .fadeOutTime(Duration.ofMillis(300))
+            .build()));
     }
 
     @Override

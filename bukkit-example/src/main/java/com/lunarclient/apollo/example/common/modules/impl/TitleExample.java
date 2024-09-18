@@ -30,6 +30,8 @@ public abstract class TitleExample extends ApolloExample {
 
     public abstract void displayTitleExample(Player viewer);
 
+    public abstract void displayTitleInterpolatedExample(Player viewer);
+
     public abstract void resetTitlesExample(Player viewer);
 
 }

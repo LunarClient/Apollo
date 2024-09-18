@@ -43,7 +43,7 @@ public class TitleCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /title <display|reset>");
+            player.sendMessage("Usage: /title <display|displayinterpolation|reset>");
             return true;
         }
 
@@ -56,6 +56,12 @@ public class TitleCommand implements CommandExecutor {
                 break;
             }
 
+            case "displayinterpolation": {
+                titleExample.displayTitleInterpolatedExample(player);
+                player.sendMessage("Displaying interpolated title...");
+                break;
+            }
+
             case "reset": {
                 titleExample.resetTitlesExample(player);
                 player.sendMessage("Resetting titles....");
@@ -63,7 +69,7 @@ public class TitleCommand implements CommandExecutor {
             }
 
             default: {
-                player.sendMessage("Usage: /title <display|reset>");
+                player.sendMessage("Usage: /title <display|displayinterpolation|reset>");
                 break;
             }
         }

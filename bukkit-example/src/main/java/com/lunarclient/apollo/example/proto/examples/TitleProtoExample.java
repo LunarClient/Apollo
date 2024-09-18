@@ -38,41 +38,46 @@ import org.bukkit.entity.Player;
 
 public class TitleProtoExample extends TitleJsonExample {
 
-    private final DisplayTitleMessage helloTitle = DisplayTitleMessage.newBuilder()
-        .setTitleType(TitleType.TITLE_TYPE_TITLE)
-        .setAdventureJsonMessage(AdventureUtil.toJson(
-            Component.text()
-                .content("Hello, player!")
-                .color(NamedTextColor.GREEN)
-                .decorate(TextDecoration.BOLD)
-                .build()
-        ))
-        .setScale(1.0f)
-        .setFadeInTime(ProtobufUtil.createDurationProto(Duration.ofMillis(1500)))
-        .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofMillis(250)))
-        .setFadeOutTime(ProtobufUtil.createDurationProto(Duration.ofMillis(300)))
-        .build();
-
-    private final DisplayTitleMessage interpolatedTitle = DisplayTitleMessage.newBuilder()
-        .setTitleType(TitleType.TITLE_TYPE_TITLE)
-        .setAdventureJsonMessage(AdventureUtil.toJson(
-            Component.text()
-                .content("This title expands!")
-                .color(NamedTextColor.GREEN)
-                .decorate(TextDecoration.BOLD)
-                .build()
-        ))
-        .setScale(0.1f)
-        .setInterpolationScale(1.0f)
-        .setInterpolationRate(0.01f)
-        .setFadeInTime(ProtobufUtil.createDurationProto(Duration.ofMillis(5000)))
-        .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofMillis(250)))
-        .setFadeOutTime(ProtobufUtil.createDurationProto(Duration.ofMillis(300)))
-        .build();
-
     @Override
     public void displayTitleExample(Player viewer) {
-        ProtobufPacketUtil.sendPacket(viewer, this.helloTitle);
+        DisplayTitleMessage message = DisplayTitleMessage.newBuilder()
+            .setTitleType(TitleType.TITLE_TYPE_TITLE)
+            .setAdventureJsonMessage(AdventureUtil.toJson(
+                Component.text()
+                    .content("Hello, player!")
+                    .color(NamedTextColor.GREEN)
+                    .decorate(TextDecoration.BOLD)
+                    .build()
+            ))
+            .setScale(1.0f)
+            .setFadeInTime(ProtobufUtil.createDurationProto(Duration.ofMillis(1500)))
+            .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofMillis(250)))
+            .setFadeOutTime(ProtobufUtil.createDurationProto(Duration.ofMillis(300)))
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void displayTitleInterpolatedExample(Player viewer) {
+        DisplayTitleMessage message = DisplayTitleMessage.newBuilder()
+            .setTitleType(TitleType.TITLE_TYPE_TITLE)
+            .setAdventureJsonMessage(AdventureUtil.toJson(
+                Component.text()
+                    .content("This title expands!")
+                    .color(NamedTextColor.GREEN)
+                    .decorate(TextDecoration.BOLD)
+                    .build()
+            ))
+            .setScale(0.1f)
+            .setInterpolationScale(1.0f)
+            .setInterpolationRate(0.01f)
+            .setFadeInTime(ProtobufUtil.createDurationProto(Duration.ofMillis(5000)))
+            .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofMillis(250)))
+            .setFadeOutTime(ProtobufUtil.createDurationProto(Duration.ofMillis(300)))
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     @Override

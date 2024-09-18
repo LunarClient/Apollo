@@ -60,7 +60,7 @@ public class TntCountdownApiExample extends TntCountdownExample implements Liste
 
     @Override
     public void clearTntCountdownOptionExample() {
-        this.tntCountdownModule.getOptions().remove(TntCountdownModule.TNT_TICKS, 160);
+        this.tntCountdownModule.getOptions().remove(TntCountdownModule.TNT_TICKS, 80);
     }
 
 }

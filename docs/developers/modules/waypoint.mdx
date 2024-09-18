@@ -21,6 +21,15 @@ The waypoint module allows you to interact with the Waypoints mod in Lunar Clien
 
 ## Integration
 
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Displaying a Waypoint
+
 ```java
 public void displayWaypointExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
@@ -41,6 +50,24 @@ public void displayWaypointExample(Player viewer) {
             .build()
         );
     });
+}
+```
+
+### Removing a Waypoint
+
+```java
+public void removeWaypointExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.waypointModule.removeWaypoint(apolloPlayer, "KoTH"));
+}
+```
+
+### Resetting all Waypoints
+
+```java
+public void resetWaypointsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.waypointModule::resetWaypoints);
 }
 ```
 
@@ -112,23 +139,96 @@ Custom colors can be created from any RGB values using `new Color(int red, int g
 .hidden(false)
 ```
 
-### Removing specific waypoints for a player
+</Tab>
+
+<Tab>
+
+### Displaying a Waypoint
+
+```java
+public void displayWaypointExample(Player viewer) {
+    DisplayWaypointMessage message = DisplayWaypointMessage.newBuilder()
+        .setName("KoTH")
+        .setLocation(ProtobufUtil.createBlockLocationProto(new Location(viewer.getWorld(), 500, 100, 500)))
+        .setColor(ProtobufUtil.createColorProto(Color.ORANGE))
+        .setPreventRemoval(false)
+        .setHidden(false)
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Removing a Waypoint
 
 ```java
 public void removeWaypointExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.waypointModule.removeWaypoint(apolloPlayer, "KoTH"));
+    RemoveWaypointMessage message = RemoveWaypointMessage.newBuilder()
+        .setName("KoTH")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
 
-### Resetting all waypoints for a player
+### Resetting all Waypoints
 
 ```java
 public void resetWaypointsExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.waypointModule::resetWaypoints);
+    ResetWaypointsMessage message = ResetWaypointsMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+### Displaying a Waypoint
+
+```java
+public void displayWaypointExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.waypoint.v1.DisplayWaypointMessage");
+    message.addProperty("name", "KoTH");
+    message.add("location", JsonUtil.createBlockLocationObject(
+        new Location(Bukkit.getWorld("world"), 500, 100, 500)
+    ));
+    message.add("color", JsonUtil.createColorObject(Color.ORANGE));
+    message.addProperty("prevent_removal", false);
+    message.addProperty("hidden", false);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Removing a Waypoint
+
+```java
+public void removeWaypointExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.waypoint.v1.RemoveWaypointMessage");
+    message.addProperty("name", "KoTH");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting all Waypoints
+
+```java
+public void resetWaypointsExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.waypoint.v1.ResetWaypointsMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>
+
 
 ## Available options
 
