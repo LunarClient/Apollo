@@ -120,7 +120,6 @@ private void onRegisterChannel(PlayerRegisterChannelEvent event) {
 Here are some util methods that will be used throughout shown examples, such as for sending or broadcasting packets, and a method that constructs the enable module messages.
 
 ```java
-
 public static void sendPacket(Player player, GeneratedMessageV3 message) {
     byte[] bytes = Any.pack(message).toByteArray();
     player.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "lunar:apollo", bytes);
@@ -253,6 +252,8 @@ public void resetWaypointsExample(Player viewer) {
 🔗 [Receive Apollo Packet Example]((https://github.com/LunarClient/Apollo/tree/master/bukkit-example/src/main/java/com/lunarclient/apollo/example/proto/listeners/ApolloPacketReceiveProtoListener.java)) - Used to handle packets sent from the client such as the `PlayerHandshakeMessage` & `PacketEnrichment Module` packets<br/>
 🔗 [Roundtrip Apollo Packet Example]((https://github.com/LunarClient/Apollo/tree/master/bukkit-example/src/main/java/com/lunarclient/apollo/example/proto/listeners/ApolloPacketReceiveProtoListener.java)) - Used to handle round-trip packets such as the ones sent by the `Transfer Module`
 
+</Tab>
+
 <Tab>
 
 ### Method 2: Manual JSON Object Construction
@@ -267,6 +268,4 @@ This method involves manually constructing JSON objects using a JSON library (e.
 **Steps**
 
 </Tab>
-
-
 </Tabs>
