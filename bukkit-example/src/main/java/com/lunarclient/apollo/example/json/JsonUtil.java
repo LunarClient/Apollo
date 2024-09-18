@@ -23,14 +23,9 @@
  */
 package com.lunarclient.apollo.example.json;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import java.awt.Color;
 import java.time.Duration;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.bukkit.Location;
@@ -71,25 +66,8 @@ public final class JsonUtil {
     }
 
     public static JsonObject createEnableModuleObjectWithType(@NotNull String module, Map<String, Object> properties) {
-        JsonObject enableModuleObject = JsonUtil.createEnableModuleObject(module, properties);
+        JsonObject enableModuleObject = JsonPacketUtil.createEnableModuleObject(module, properties);
         enableModuleObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.configurable.v1.ConfigurableSettings");
-        return enableModuleObject;
-    }
-
-    public static JsonObject createEnableModuleObject(@NotNull String module, Map<String, Object> properties) {
-        JsonObject enableModuleObject = new JsonObject();
-        enableModuleObject.addProperty("apollo_module", module);
-        enableModuleObject.addProperty("enable", true);
-
-        if (properties != null) {
-            JsonObject propertiesObject = new JsonObject();
-            for (Map.Entry<String, Object> entry : properties.entrySet()) {
-                propertiesObject.add(entry.getKey(), JsonUtil.convertToJsonElement(entry.getValue()));
-            }
-
-            enableModuleObject.add("properties", propertiesObject);
-        }
-
         return enableModuleObject;
     }
 
@@ -168,26 +146,6 @@ public final class JsonUtil {
         iconObject.add("advanced_resource_location", advancedIcon);
 
         return iconObject;
-    }
-
-    private static JsonElement convertToJsonElement(Object value) {
-        if (value == null) {
-            return JsonNull.INSTANCE;
-        } else if (value instanceof String) {
-            return new JsonPrimitive((String) value);
-        } else if (value instanceof Number) {
-            return new JsonPrimitive((Number) value);
-        } else if (value instanceof Boolean) {
-            return new JsonPrimitive((Boolean) value);
-        } else if (value instanceof List) {
-            JsonArray jsonArray = new JsonArray();
-            for (Object item : (List<?>) value) {
-                jsonArray.add(convertToJsonElement(item));
-            }
-            return jsonArray;
-        }
-
-        throw new RuntimeException("Unable to wrap value of type '" + value.getClass().getSimpleName() + "'!");
     }
 
     private JsonUtil() {

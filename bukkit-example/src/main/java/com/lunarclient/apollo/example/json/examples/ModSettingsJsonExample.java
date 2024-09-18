@@ -45,6 +45,7 @@ public class ModSettingsJsonExample extends ModSettingsExample {
     @Override
     public void rollbackLightningModEnabledState(Player viewer) {
         Map<String, Object> properties = new HashMap<>();
+        // To rollback the server override value of the setting, simply set the value to "null"
         properties.put("lighting.enabled", null);
 
         JsonObject message = JsonUtil.createEnableModuleObjectWithType("mod_setting", properties);

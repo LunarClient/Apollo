@@ -46,6 +46,7 @@ public class ModSettingsProtoExample extends ModSettingsExample {
     @Override
     public void rollbackLightningModEnabledState(Player viewer) {
         Map<String, Value> properties = new HashMap<>();
+        // To rollback the server override value of the setting, simply set the value to "null"
         properties.put("lighting.enabled", Value.newBuilder().setNullValue(NullValue.NULL_VALUE).build());
 
         ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("mod_setting", properties);
