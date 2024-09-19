@@ -1,0 +1,104 @@
+# Serverbound Packets
+
+## Overview
+
+Players using Lunar Client may send packets to the server for specific Apollo modules, such as the `PacketEnrichment Module` or during a the player joining the server. This example demonstrates how to handle packets sent from the client that are related to Apollo.
+
+Additionally, the `Transfer Module` expects a response packet from the client after the server sends a request. For an example of how to handle roundtrip packets, visit [Packet Roundtrip Example](apollo/developers/lightweight/protobuf/roundtrip-packets)
+
+TODO: provide a direct link to the source code for this class?
+
+## Integration
+
+```java
+public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
+
+    public ApolloPacketReceiveProtoListener(ApolloExamplePlugin plugin) {
+        Bukkit.getServer().getMessenger().registerIncomingPluginChannel(plugin, "lunar:apollo", this);
+    }
+
+    @Override
+    public void onPluginMessageReceived(String s, Player player, byte[] bytes) {
+        try {
+            Any any = Any.parseFrom(bytes);
+
+            if (any.is(PlayerHandshakeMessage.class)) {
+                this.onPlayerHandshake(any.unpack(PlayerHandshakeMessage.class));
+            }
+
+            // Packet Enrichment Module
+            if (any.is(PlayerAttackMessage.class)) {
+                this.onPlayerAttack(any.unpack(PlayerAttackMessage.class));
+            } else if (any.is(PlayerChatOpenMessage.class)) {
+                this.onPlayerChatOpen(any.unpack(PlayerChatOpenMessage.class));
+            } else if (any.is(PlayerChatCloseMessage.class)) {
+                this.onPlayerChatClose(any.unpack(PlayerChatCloseMessage.class));
+            } else if (any.is(PlayerUseItemMessage.class)) {
+                this.onPlayerUseItem(any.unpack(PlayerUseItemMessage.class));
+            }
+        } catch (InvalidProtocolBufferException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void onPlayerHandshake(PlayerHandshakeMessage message) {
+        MinecraftVersion minecraftVersion = message.getMinecraftVersion();
+
+        LunarClientVersion lunarClientVersion = message.getLunarClientVersion();
+        String gitBranch = lunarClientVersion.getGitBranch();
+        String gitCommit = lunarClientVersion.getGitCommit();
+        String semVer = lunarClientVersion.getSemver();
+
+        List<ModMessage> installedMods = message.getInstalledModsList();
+        for (ModMessage mod : installedMods) {
+            String modId = mod.getId();
+            String displayName = mod.getName();
+            String version = mod.getVersion();
+            ModMessage.Type type = mod.getType();
+        }
+    }
+
+    private void onPlayerAttack(PlayerAttackMessage message) {
+         long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
+
+        PlayerInfo targetInfo = message.getTargetInfo();
+        PlayerInfo attackerInfo = message.getAttackerInfo();
+
+        this.onPlayerInfo(targetInfo);
+        this.onPlayerInfo(attackerInfo);
+    }
+
+    private void onPlayerChatOpen(PlayerChatOpenMessage message) {
+        long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
+
+        PlayerInfo playerInfo = message.getPlayerInfo();
+        this.onPlayerInfo(playerInfo);
+    }
+
+    private void onPlayerChatClose(PlayerChatCloseMessage message) {
+        long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
+
+        PlayerInfo playerInfo = message.getPlayerInfo();
+        this.onPlayerInfo(playerInfo);
+    }
+
+    private void onPlayerUseItem(PlayerUseItemMessage message) {
+        long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
+
+        PlayerInfo playerInfo = message.getPlayerInfo();
+        this.onPlayerInfo(playerInfo);
+
+        boolean mainHand = message.getMainHand();
+    }
+
+    private void onPlayerInfo(PlayerInfo info) {
+        UUID uuid = ProtobufUtil.toJavaUuid(info.getPlayerUuid());
+        Location location = ProtobufUtil.toBukkitLocation(info.getLocation());
+        boolean sneaking = info.getSneaking();
+        boolean sprinting = info.getSprinting();
+        boolean jumping = info.getJumping();
+        float forwardSpeed = info.getForwardSpeed();
+        float strafeSpeed = info.getStrafeSpeed();
+    }
+}
+```

@@ -1,0 +1,128 @@
+# Protobuf Object Util
+
+## Overview
+
+These utilities facilitate the creation of Apollo objects, commonly used across various Apollo Modules. The utility methods are used for converting objects to and from their corresponding Protocol Buffers representations.
+
+TODO: provide a direct link to the source code for this class?
+
+## Integration
+
+```java
+public static UUID toJavaUuid(Uuid message) {
+    return new UUID(message.getHigh64(), message.getLow64());
+}
+
+public static long toJavaTimestamp(Timestamp message) {
+    return message.getSeconds() * 1000 + message.getNanos() / 1000000;
+}
+
+public static Uuid createUuidProto(UUID object) {
+    return Uuid.newBuilder()
+        .setHigh64(object.getMostSignificantBits())
+        .setLow64(object.getLeastSignificantBits())
+        .build();
+}
+
+public static com.lunarclient.apollo.common.v1.Color createColorProto(Color object) {
+    return com.lunarclient.apollo.common.v1.Color.newBuilder()
+        .setColor(object.getRGB())
+        .build();
+}
+
+public static com.google.protobuf.Duration createDurationProto(Duration object) {
+    return com.google.protobuf.Duration.newBuilder()
+        .setSeconds(object.getSeconds())
+        .setNanos(object.getNano())
+        .build();
+}
+
+public static Cuboid2D createCuboid2DProto(double minX, double minZ, double maxX, double maxZ) {
+    return Cuboid2D.newBuilder()
+        .setMinX(minX)
+        .setMinZ(minZ)
+        .setMaxX(maxX)
+        .setMaxZ(maxZ)
+        .build();
+}
+
+public static EntityId createEntityIdProto(int id, UUID uuid) {
+    return EntityId.newBuilder()
+        .setEntityId(id)
+        .setEntityUuid(ProtobufUtil.createUuidProto(uuid))
+        .build();
+}
+```
+
+Location-related methods
+
+```java
+public static com.lunarclient.apollo.common.v1.Location createLocationProto(Location location) {
+    return com.lunarclient.apollo.common.v1.Location.newBuilder()
+        .setWorld(location.getWorld().getName())
+        .setX(location.getX())
+        .setY(location.getY())
+        .setZ(location.getZ())
+        .build();
+}
+
+public static BlockLocation createBlockLocationProto(Location location) {
+    return BlockLocation.newBuilder()
+        .setWorld(location.getWorld().getName())
+        .setX(location.getBlockX())
+        .setY(location.getBlockY())
+        .setZ(location.getBlockZ())
+        .build();
+}
+
+public static Location toBukkitLocation(com.lunarclient.apollo.common.v1.Location message) {
+    return new Location(Bukkit.getWorld(message.getWorld()), message.getX(), message.getY(), message.getZ());
+}
+
+public static Location toBukkitLocation(com.lunarclient.apollo.common.v1.PlayerLocation message) {
+    Location location = ProtobufUtil.toBukkitLocation(message.getLocation());
+    location.setYaw(message.getYaw());
+    location.setPitch(message.getPitch());
+    return location;
+}
+```
+
+Icon-related methods
+
+```java
+public static Icon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData) {
+    ItemStackIcon.Builder iconBuilder = ItemStackIcon.newBuilder()
+        .setItemId(itemId)
+        .setCustomModelData(customModelData);
+
+    if (itemName != null) {
+        iconBuilder.setItemName(itemName);
+    }
+
+    return Icon.newBuilder().setItemStack(iconBuilder.build()).build();
+}
+
+public static Icon createSimpleResourceLocationIconProto(String resourceLocation, int size) {
+    SimpleResourceLocationIcon icon = SimpleResourceLocationIcon.newBuilder()
+        .setResourceLocation(resourceLocation)
+        .setSize(size)
+        .build();
+
+    return Icon.newBuilder().setSimpleResourceLocation(icon).build();
+}
+
+public static Icon createAdvancedResourceLocationIconProto(String resourceLocation, float width, float height,
+                                                           float minU, float maxU, float minV, float maxV) {
+    AdvancedResourceLocationIcon icon = AdvancedResourceLocationIcon.newBuilder()
+        .setResourceLocation(resourceLocation)
+        .setWidth(width)
+        .setHeight(height)
+        .setMinU(minU)
+        .setMaxU(maxU)
+        .setMinV(minV)
+        .setMaxV(maxV)
+        .build();
+
+    return Icon.newBuilder().setAdvancedResourceLocation(icon).build();
+}
+```
