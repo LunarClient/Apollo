@@ -46,7 +46,7 @@ public void resetRainbowSheepExample(Player viewer) {
             .stream().map(sheep -> new ApolloEntity(sheep.getEntityId(), sheep.getUniqueId()))
             .collect(Collectors.toList());
 
-        this.entityModule.overrideRainbowSheep(apolloPlayer, sheepEntities);
+        this.entityModule.resetRainbowSheep(apolloPlayer, sheepEntities);
     });
 }
 ```
@@ -89,12 +89,12 @@ public void resetFlippedEntityExample(Player viewer) {
 }
 ```
 
-#### `Entity` Parameters
+#### `overrideRainbowSheep`, `resetRainbowSheep`, `flipEntity` & `resetFlippedEntity` Parameters
 
 1. `Recipients recipients`
-   - A list of all the player(s) you want to be able to see the updated fire color.
+   - A list of all the player(s) you want to be able to see the updated entities.
 2. `List<ApolloEntity> entities`
-   - A list of all entities you want to reset the flip state from.
+   - A list of all entities you want to reset the flip or colored sheep state from.
 
 </Tab>
 

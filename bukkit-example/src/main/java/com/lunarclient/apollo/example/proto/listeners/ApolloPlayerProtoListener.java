@@ -28,11 +28,13 @@ import com.lunarclient.apollo.example.proto.ProtobufPacketUtil;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import com.lunarclient.apollo.player.v1.UpdatePlayerWorldMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.plugin.messaging.Messenger;
 
@@ -72,12 +74,29 @@ public class ApolloPlayerProtoListener implements Listener {
         this.onApolloRegister(event.getPlayer());
     }
 
+    @EventHandler
+    private void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
+        Player player = event.getPlayer();
+
+        // Sending the player's world name to the client is required for some modules
+        ProtobufPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
+    }
+
+    private UpdatePlayerWorldMessage createUpdatePlayerWorldMessage(Player player) {
+        return UpdatePlayerWorldMessage.newBuilder()
+            .setWorld(player.getWorld().getName())
+            .build();
+    }
+
     private boolean isPlayerRunningApollo(Player player) {
         return this.playersRunningApollo.contains(player.getUniqueId());
     }
 
     private void onApolloRegister(Player player) {
         ProtobufPacketUtil.enableModules(player);
+
+        // Sending the player's world name to the client is required for some modules
+        ProtobufPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
 
         this.playersRunningApollo.add(player.getUniqueId());
         player.sendMessage("You are using LunarClient!");

@@ -29,8 +29,25 @@ public class ApolloPlayerProtoListener implements Listener {
 
         ProtobufPacketUtil.enableModules(player);
 
+        // Sending the player's world name to the client is required for some modules
+        ProtobufPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
+
         this.playersRunningApollo.add(player.getUniqueId());
         player.sendMessage("You are using LunarClient!");
+    }
+
+    @EventHandler
+    private void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
+        Player player = event.getPlayer();
+
+        // Sending the player's world name to the client is required for some modules
+        ProtobufPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
+    }
+
+    private UpdatePlayerWorldMessage createUpdatePlayerWorldMessage(Player player) {
+        return UpdatePlayerWorldMessage.newBuilder()
+            .setWorld(player.getWorld().getName())
+            .build();
     }
 }
 ```
