@@ -25,10 +25,10 @@ package com.lunarclient.apollo.example.proto.listeners;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.proto.ProtobufPacketUtil;
+import com.lunarclient.apollo.player.v1.UpdatePlayerWorldMessage;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import com.lunarclient.apollo.player.v1.UpdatePlayerWorldMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

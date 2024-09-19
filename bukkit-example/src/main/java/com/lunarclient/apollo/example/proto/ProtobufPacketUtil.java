@@ -32,7 +32,6 @@ import com.google.protobuf.Value;
 import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
