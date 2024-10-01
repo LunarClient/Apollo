@@ -1,0 +1,22 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+# Getting Started
+
+## Overview
+
+This method involves manually constructing JSON objects using a JSON library (e.g., Gson) and then converting these objects into byte arrays for transmission. It allows for dynamic and programmatic construction of JSON objects, offering flexibility in modifying the JSON structure. Available fields for each message, including their types, are available on the Buf Schema Registry at https://buf.build/lunarclient/apollo.
+While constructing messages, note that the `@type` field isn't required if the message is being sent within a message.
+
+<Callout type="info">
+    Note that this method uses a different plugin channel for sending packets,
+    which is `apollo:json`, while still using the `lunar:apollo` for player detection.
+</Callout>
+
+## Integration Examples
+
+🔗 [Sending Apollo packets & Enabling Apollo modules](/apollo/developers/lightweight/json/packet-util)<br/>
+🔗 [Detecting players using LunarClient](/apollo/developers/lightweight/json/player-detection)<br/>
+🔗 [Common Apollo Objects](/apollo/developers/lightweight/json/object-util)<br/>
+🔗 [Adventure Util](/apollo/developers/lightweight/json/adventure-util)<br/>
+
+TODO mention module examples

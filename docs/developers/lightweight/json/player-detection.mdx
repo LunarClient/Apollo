@@ -1,0 +1,62 @@
+# Player Detection
+
+## Overview
+
+This example demonstrates how to detect whether a player is using Lunar Client by listening for the `PlayerRegisterChannelEvent` on the `lunar:apollo` channel. Additionally, it showcases how to enable Apollo Modules using utility methods from [JsonPacketUtil](/apollo/developers/lightweight/json/packet-util)
+
+<Callout type="info">
+    Note that this method uses a different plugin channel for sending packets,
+    which is `apollo:json`, while still using the `lunar:apollo` for player detection.
+</Callout>
+
+## Integration
+
+```java
+public class ApolloPlayerProtoListener implements Listener {
+
+    private final Set<UUID> playersRunningApollo = new HashSet<>();
+
+    public ApolloPlayerProtoListener(ApolloExamplePlugin plugin) {
+        Messenger messenger = Bukkit.getServer().getMessenger();
+        messenger.registerIncomingPluginChannel(plugin, "lunar:apollo", (s, player, bytes) -> { });
+        messenger.registerIncomingPluginChannel(plugin, "apollo:json", (s, player, bytes) -> { });
+        messenger.registerOutgoingPluginChannel(plugin, "apollo:json");
+
+        Bukkit.getPluginManager().registerEvents(this, plugin);
+    }
+
+    private boolean isPlayerRunningApollo(Player player) {
+        return this.playersRunningApollo.contains(player.getUniqueId());
+    }
+
+    @EventHandler
+    private void onRegisterChannel(PlayerRegisterChannelEvent event) {
+        if (!event.getChannel().equalsIgnoreCase("lunar:apollo")) {
+            return;
+        }
+
+        JsonPacketUtil.enableModules(player);
+
+        // Sending the player's world name to the client is required for some modules
+        JsonPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
+
+        this.playersRunningApollo.add(player.getUniqueId());
+        player.sendMessage("You are using LunarClient!");
+    }
+
+    @EventHandler
+    private void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
+        Player player = event.getPlayer();
+
+        // Sending the player's world name to the client is required for some modules
+        JsonPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
+    }
+
+    private JsonObject createUpdatePlayerWorldMessage(Player player) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.player.v1.UpdatePlayerWorldMessage");
+        message.addProperty("world", player.getWorld().getName());
+        return message;
+    }
+}
+```

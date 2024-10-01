@@ -35,6 +35,25 @@ import org.jetbrains.annotations.Nullable;
 
 public final class JsonUtil {
 
+    public static JsonObject createEnableModuleObjectWithType(@NotNull String module, Map<String, Object> properties) {
+        JsonObject enableModuleObject = JsonPacketUtil.createEnableModuleObject(module, properties);
+        enableModuleObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.configurable.v1.ConfigurableSettings");
+        return enableModuleObject;
+    }
+
+    public static JsonObject createUuidObject(@NotNull UUID uuid) {
+        JsonObject uuidObject = new JsonObject();
+        uuidObject.addProperty("high64", Long.toUnsignedString(uuid.getMostSignificantBits()));
+        uuidObject.addProperty("low64", Long.toUnsignedString(uuid.getLeastSignificantBits()));
+        return uuidObject;
+    }
+
+    public static JsonObject createColorObject(@NotNull Color color) {
+        JsonObject colorObject = new JsonObject();
+        colorObject.addProperty("color", color.getRGB());
+        return colorObject;
+    }
+
     public static String createDurationObject(@NotNull Duration duration) {
         long seconds = duration.getSeconds();
         int nanos = duration.getNano();
@@ -52,23 +71,20 @@ public final class JsonUtil {
         return durationString;
     }
 
-    public static JsonObject createColorObject(@NotNull Color color) {
-        JsonObject colorObject = new JsonObject();
-        colorObject.addProperty("color", color.getRGB());
-        return colorObject;
+    public static JsonObject createCuboid2DObject(double minX, double minZ, double maxX, double maxZ) {
+        JsonObject cuboid2DObject = new JsonObject();
+        cuboid2DObject.addProperty("min_x", minX);
+        cuboid2DObject.addProperty("min_z", minZ);
+        cuboid2DObject.addProperty("max_x", maxX);
+        cuboid2DObject.addProperty("max_z", maxZ);
+        return cuboid2DObject;
     }
 
-    public static JsonObject createUuidObject(@NotNull UUID uuid) {
-        JsonObject uuidObject = new JsonObject();
-        uuidObject.addProperty("high64", Long.toUnsignedString(uuid.getMostSignificantBits()));
-        uuidObject.addProperty("low64", Long.toUnsignedString(uuid.getLeastSignificantBits()));
-        return uuidObject;
-    }
-
-    public static JsonObject createEnableModuleObjectWithType(@NotNull String module, Map<String, Object> properties) {
-        JsonObject enableModuleObject = JsonPacketUtil.createEnableModuleObject(module, properties);
-        enableModuleObject.addProperty("@type", "type.googleapis.com/lunarclient.apollo.configurable.v1.ConfigurableSettings");
-        return enableModuleObject;
+    public static JsonObject createEntityIdObject(@NotNull Entity entity) {
+        JsonObject entityIdObject = new JsonObject();
+        entityIdObject.addProperty("entity_id", entity.getEntityId());
+        entityIdObject.add("entity_uuid", JsonUtil.createUuidObject(entity.getUniqueId()));
+        return entityIdObject;
     }
 
     public static JsonObject createLocationObject(@NotNull Location location) {
@@ -87,22 +103,6 @@ public final class JsonUtil {
         locationObject.addProperty("y", location.getBlockY());
         locationObject.addProperty("z", location.getBlockZ());
         return locationObject;
-    }
-
-    public static JsonObject createEntityIdObject(@NotNull Entity entity) {
-        JsonObject entityIdObject = new JsonObject();
-        entityIdObject.addProperty("entity_id", entity.getEntityId());
-        entityIdObject.add("entity_uuid", JsonUtil.createUuidObject(entity.getUniqueId()));
-        return entityIdObject;
-    }
-
-    public static JsonObject createCuboid2DObject(double minX, double minZ, double maxX, double maxZ) {
-        JsonObject cuboid2DObject = new JsonObject();
-        cuboid2DObject.addProperty("min_x", minX);
-        cuboid2DObject.addProperty("min_z", minZ);
-        cuboid2DObject.addProperty("max_x", maxX);
-        cuboid2DObject.addProperty("max_z", maxZ);
-        return cuboid2DObject;
     }
 
     public static JsonObject createItemStackIconObject(@Nullable String itemName, int itemId, int customModelData) {

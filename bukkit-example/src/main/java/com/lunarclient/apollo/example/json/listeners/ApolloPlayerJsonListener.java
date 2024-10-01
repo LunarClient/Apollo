@@ -23,13 +23,10 @@
  */
 package com.lunarclient.apollo.example.json.listeners;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
+import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.json.JsonPacketUtil;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import org.bukkit.Bukkit;
@@ -37,41 +34,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.plugin.messaging.Messenger;
 
 public class ApolloPlayerJsonListener implements Listener {
-
-    private static final List<String> APOLLO_MODULES = Arrays.asList("limb", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
-        "entity", "glow", "hologram", "mod_setting", "nametag", "nick_hider", "notification", "packet_enrichment", "rich_presence",
-        "server_rule", "staff_mod", "stopwatch", "team", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
-    );
-
-    // Module Id -> Option key -> Object
-    private static final Table<String, String, Object> CONFIG_MODULE_PROPERTIES = HashBasedTable.create();
-
-    static {
-        // Module Options that the client needs to notified about, these properties are sent with the enable module packet
-        // While using the Apollo plugin this would be equivalent to modifying the config.yml
-        CONFIG_MODULE_PROPERTIES.put("combat", "disable-miss-penalty", false);
-        CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-game", false);
-        CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-commands", Arrays.asList("/server", "/servers", "/hub"));
-        CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-shaders", false);
-        CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-chunk-reloading", false);
-        CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-broadcasting", false);
-        CONFIG_MODULE_PROPERTIES.put("server_rule", "anti-portal-traps", true);
-        CONFIG_MODULE_PROPERTIES.put("server_rule", "override-brightness", false);
-        CONFIG_MODULE_PROPERTIES.put("server_rule", "brightness", 50);
-        CONFIG_MODULE_PROPERTIES.put("server_rule", "override-nametag-render-distance", false);
-        CONFIG_MODULE_PROPERTIES.put("server_rule", "nametag-render-distance", 64);
-        CONFIG_MODULE_PROPERTIES.put("server_rule", "override-max-chat-length", false);
-        CONFIG_MODULE_PROPERTIES.put("server_rule", "max-chat-length", 256);
-        CONFIG_MODULE_PROPERTIES.put("tnt_countdown", "tnt-ticks", 80);
-        CONFIG_MODULE_PROPERTIES.put("waypoint", "server-handles-waypoints", false);
-    }
-
-    private static final String REGISTER_CHANNEL = "lunar:apollo"; // Used for detecting whether the player supports Apollo
-    private static final String LIGHTWEIGHT_CHANNEL = "apollo:json"; // Used for sending and receiving feature packets
 
     private final ApolloExamplePlugin plugin;
 
@@ -81,9 +48,9 @@ public class ApolloPlayerJsonListener implements Listener {
         this.plugin = plugin;
 
         Messenger messenger = Bukkit.getServer().getMessenger();
-        messenger.registerIncomingPluginChannel(plugin, REGISTER_CHANNEL, (s, player, bytes) -> { });
-        messenger.registerIncomingPluginChannel(plugin, LIGHTWEIGHT_CHANNEL, (s, player, bytes) -> { });
-        messenger.registerOutgoingPluginChannel(plugin, LIGHTWEIGHT_CHANNEL);
+        messenger.registerIncomingPluginChannel(plugin, "lunar:apollo", (s, player, bytes) -> { });
+        messenger.registerIncomingPluginChannel(plugin, "apollo:json", (s, player, bytes) -> { });
+        messenger.registerOutgoingPluginChannel(plugin, "apollo:json");
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
@@ -92,20 +59,35 @@ public class ApolloPlayerJsonListener implements Listener {
         this.playersRunningApollo.clear();
 
         Messenger messenger = Bukkit.getServer().getMessenger();
-        messenger.unregisterIncomingPluginChannel(this.plugin, REGISTER_CHANNEL);
-        messenger.unregisterIncomingPluginChannel(this.plugin, LIGHTWEIGHT_CHANNEL);
-        messenger.unregisterOutgoingPluginChannel(this.plugin, LIGHTWEIGHT_CHANNEL);
+        messenger.unregisterIncomingPluginChannel(this.plugin, "lunar:apollo");
+        messenger.unregisterIncomingPluginChannel(this.plugin, "apollo:json");
+        messenger.unregisterOutgoingPluginChannel(this.plugin, "apollo:json");
 
         HandlerList.unregisterAll(this);
     }
 
     @EventHandler
     private void onRegisterChannel(PlayerRegisterChannelEvent event) {
-        if (!event.getChannel().equalsIgnoreCase(REGISTER_CHANNEL)) {
+        if (!event.getChannel().equalsIgnoreCase("lunar:apollo")) {
             return;
         }
 
         this.onApolloRegister(event.getPlayer());
+    }
+
+    @EventHandler
+    private void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
+        Player player = event.getPlayer();
+
+        // Sending the player's world name to the client is required for some modules
+        JsonPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
+    }
+
+    private JsonObject createUpdatePlayerWorldMessage(Player player) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.player.v1.UpdatePlayerWorldMessage");
+        message.addProperty("world", player.getWorld().getName());
+        return message;
     }
 
     private boolean isPlayerRunningApollo(Player player) {
@@ -113,7 +95,10 @@ public class ApolloPlayerJsonListener implements Listener {
     }
 
     private void onApolloRegister(Player player) {
-        JsonPacketUtil.enableModules(player, APOLLO_MODULES, CONFIG_MODULE_PROPERTIES);
+        JsonPacketUtil.enableModules(player);
+
+        // Sending the player's world name to the client is required for some modules
+        JsonPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
 
         this.playersRunningApollo.add(player.getUniqueId());
         player.sendMessage("You are using LunarClient!");

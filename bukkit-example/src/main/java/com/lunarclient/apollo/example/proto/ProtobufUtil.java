@@ -56,6 +56,19 @@ public final class ProtobufUtil {
             .build();
     }
 
+    public static com.lunarclient.apollo.common.v1.Color createColorProto(Color object) {
+        return com.lunarclient.apollo.common.v1.Color.newBuilder()
+            .setColor(object.getRGB())
+            .build();
+    }
+
+    public static com.google.protobuf.Duration createDurationProto(Duration object) {
+        return com.google.protobuf.Duration.newBuilder()
+            .setSeconds(object.getSeconds())
+            .setNanos(object.getNano())
+            .build();
+    }
+
     public static Cuboid2D createCuboid2DProto(double minX, double minZ, double maxX, double maxZ) {
         return Cuboid2D.newBuilder()
             .setMinX(minX)
@@ -69,19 +82,6 @@ public final class ProtobufUtil {
         return EntityId.newBuilder()
             .setEntityId(id)
             .setEntityUuid(ProtobufUtil.createUuidProto(uuid))
-            .build();
-    }
-
-    public static com.lunarclient.apollo.common.v1.Color createColorProto(Color object) {
-        return com.lunarclient.apollo.common.v1.Color.newBuilder()
-            .setColor(object.getRGB())
-            .build();
-    }
-
-    public static com.google.protobuf.Duration createDurationProto(Duration object) {
-        return com.google.protobuf.Duration.newBuilder()
-            .setSeconds(object.getSeconds())
-            .setNanos(object.getNano())
             .build();
     }
 
