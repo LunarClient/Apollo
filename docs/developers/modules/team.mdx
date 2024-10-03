@@ -20,6 +20,11 @@ The team module will allow you to interact with the Team View mod in Lunar Clien
 ## Integration
 
 ### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
 
 ```java
 private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
@@ -224,3 +229,292 @@ Custom colors can be created from any RGB values using `new Color(int red, int g
     .build()
 )
 ```
+
+</Tab>
+
+<Tab>
+
+```java
+private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
+private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
+
+public TeamProtoExample() {
+    new TeamUpdateTask();
+
+    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
+}
+
+@EventHandler
+private void onPlayerQuit(PlayerQuitEvent event) {
+    Player player = event.getPlayer();
+
+    this.getByPlayerUuid(player.getUniqueId()).ifPresent(team -> {
+        if (team.getMembers().size() == 1) {
+            this.deleteTeam(team.getTeamId());
+        }
+    });
+}
+
+public Optional<Team> getByPlayerUuid(UUID playerUuid) {
+    return Optional.ofNullable(this.teamsByPlayerUuid.get(playerUuid));
+}
+
+public Optional<Team> getByTeamId(UUID teamId) {
+    return Optional.ofNullable(this.teamsByTeamId.get(teamId));
+}
+
+public Team createTeam() {
+    Team team = new Team();
+    this.teamsByTeamId.put(team.getTeamId(), team);
+
+    return team;
+}
+
+public void deleteTeam(UUID teamId) {
+    Team team = this.teamsByTeamId.remove(teamId);
+
+    if (team != null) {
+        team.getMembers().forEach(team::removeMember);
+    }
+}
+
+public class Team {
+
+    private final UUID teamId;
+    private final Set<Player> members;
+
+    public Team() {
+        this.teamId = UUID.randomUUID();
+        this.members = Sets.newHashSet();
+    }
+
+    public void addMember(Player player) {
+        this.members.add(player);
+        TeamProtoExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
+    }
+
+    public void removeMember(Player player) {
+        this.members.remove(player);
+        TeamProtoExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
+
+        ResetTeamMembersMessage message = ResetTeamMembersMessage.getDefaultInstance();
+        ProtobufPacketUtil.sendPacket(player, message);
+    }
+
+    private TeamMember createTeamMember(Player member) {
+        return TeamMember.newBuilder()
+            .setPlayerUuid(ProtobufUtil.createUuidProto(member.getUniqueId()))
+            .setAdventureJsonPlayerName(AdventureUtil.toJson(
+                Component.text()
+                    .content(member.getName())
+                    .color(NamedTextColor.WHITE)
+                    .build()
+            ))
+            .setMarkerColor(ProtobufUtil.createColorProto(Color.WHITE))
+            .setLocation(ProtobufUtil.createLocationProto(member.getLocation()))
+            .build();
+    }
+
+    // The refresh method used for updating members locations
+    public void refresh() {
+        List<TeamMember> teammates = this.members.stream().filter(Player::isOnline)
+            .map(this::createTeamMember)
+            .collect(Collectors.toList());
+
+        UpdateTeamMembersMessage message = UpdateTeamMembersMessage.newBuilder()
+            .addAllMembers(teammates)
+            .build();
+
+        this.members.forEach(member -> ProtobufPacketUtil.sendPacket(member, message));
+    }
+
+    public UUID getTeamId() {
+        return this.teamId;
+    }
+
+    public Set<Player> getMembers() {
+        return this.members;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (other == null || other.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Team team = (Team) other;
+        return this.teamId.equals(team.getTeamId());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.teamId.hashCode();
+    }
+}
+
+// Updates players location every 1 tick (50ms)
+public class TeamUpdateTask extends BukkitRunnable {
+
+    public TeamUpdateTask() {
+        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getPlugin(), 1L, 1L);
+    }
+
+    @Override
+    public void run() {
+        TeamProtoExample.this.teamsByTeamId.values().forEach(Team::refresh);
+    }
+}
+```
+
+</Tab>
+
+<Tab>
+
+```java
+private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
+private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
+
+public TeamJsonExample() {
+    new TeamUpdateTask();
+
+    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
+}
+
+@EventHandler
+private void onPlayerQuit(PlayerQuitEvent event) {
+    Player player = event.getPlayer();
+
+    this.getByPlayerUuid(player.getUniqueId()).ifPresent(team -> {
+        if (team.getMembers().size() == 1) {
+            this.deleteTeam(team.getTeamId());
+        }
+    });
+}
+
+public Optional<Team> getByPlayerUuid(UUID playerUuid) {
+    return Optional.ofNullable(this.teamsByPlayerUuid.get(playerUuid));
+}
+
+public Optional<Team> getByTeamId(UUID teamId) {
+    return Optional.ofNullable(this.teamsByTeamId.get(teamId));
+}
+
+public Team createTeam() {
+    Team team = new Team();
+    this.teamsByTeamId.put(team.getTeamId(), team);
+
+    return team;
+}
+
+public void deleteTeam(UUID teamId) {
+    Team team = this.teamsByTeamId.remove(teamId);
+
+    if (team != null) {
+        team.getMembers().forEach(team::removeMember);
+    }
+}
+
+public class Team {
+
+    private final UUID teamId;
+    private final Set<Player> members;
+
+    public Team() {
+        this.teamId = UUID.randomUUID();
+        this.members = Sets.newHashSet();
+    }
+
+    public void addMember(Player player) {
+        this.members.add(player);
+        TeamJsonExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
+    }
+
+    public void removeMember(Player player) {
+        this.members.remove(player);
+        TeamJsonExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
+
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.team.v1.ResetTeamMembersMessage");
+
+        JsonPacketUtil.sendPacket(player, message);
+    }
+
+    private JsonObject createTeamMember(Player member) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.team.v1.TeamMember");
+        message.add("player_uuid", JsonUtil.createUuidObject(member.getUniqueId()));
+        message.addProperty("adventure_json_player_name", AdventureUtil.toJson(
+            Component.text()
+                .content(member.getName())
+                .color(NamedTextColor.WHITE)
+                .build()
+        ));
+        message.add("marker_color", JsonUtil.createColorObject(Color.WHITE));
+        message.add("location", JsonUtil.createLocationObject(member.getLocation()));
+
+        return message;
+    }
+
+    // The refresh method used for updating members locations
+    public void refresh() {
+        JsonArray teammates = this.members.stream().filter(Player::isOnline)
+            .map(this::createTeamMember)
+            .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.team.v1.UpdateTeamMembersMessage");
+        message.add("members", teammates);
+
+        this.members.forEach(member -> JsonPacketUtil.sendPacket(member, message));
+    }
+
+    public UUID getTeamId() {
+        return this.teamId;
+    }
+
+    public Set<Player> getMembers() {
+        return this.members;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (other == null || other.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Team team = (Team) other;
+        return this.teamId.equals(team.getTeamId());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.teamId.hashCode();
+    }
+}
+
+// Updates players location every 1 tick (50ms)
+public class TeamUpdateTask extends BukkitRunnable {
+
+    public TeamUpdateTask() {
+        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getPlugin(), 1L, 1L);
+    }
+
+    @Override
+    public void run() {
+        TeamJsonExample.this.teamsByTeamId.values().forEach(Team::refresh);
+    }
+}
+```
+
+
+</Tab>
+
+</Tabs>
