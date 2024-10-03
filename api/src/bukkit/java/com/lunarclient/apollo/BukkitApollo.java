@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo;
 
+import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
@@ -38,6 +39,7 @@ import java.util.stream.Collectors;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 /**
@@ -133,6 +135,17 @@ public final class BukkitApollo {
             .yaw(location.getYaw())
             .pitch(location.getPitch())
             .build();
+    }
+
+    /**
+     * Converts a {@link Entity} to an {@link ApolloEntity} object.
+     *
+     * @param entity the entity
+     * @return the converted apollo entity object
+     * @since 1.1.1
+     */
+    public static ApolloEntity toApolloEntity(@NonNull Entity entity) {
+        return new ApolloEntity(entity.getEntityId(), entity.getUniqueId());
     }
 
     /**

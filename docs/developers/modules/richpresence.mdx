@@ -1,0 +1,109 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Rich Presence Module
+
+## Overview
+
+The rich presence module allows you to interact with Discord and Lunar Client's launcher rich presence.
+
+- Display various information about gamemodes and your server on player's rich presence.
+  - Ability to display different gamemode related attributes;
+    - Gamemode Name
+    - Gamemode Variant
+    - Current Game State
+    - Current Player State
+    - Map Name
+    - Team Size Attributes
+
+<Callout type="info">
+  Your server must be a part of Lunar Client's [ServerMappings](/server-mappings/introduction) to use this module.
+</Callout>
+
+![Rich Presence Module Example](https://i.imgur.com/k788SQ2.png#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Display information about your server on Discord and Lunar Client's rich presence!</small>
+</div>
+
+## Integration
+
+### Sample Code
+
+```java
+public void overrideServerRichPresenceExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.richPresenceModule.overrideServerRichPresence(apolloPlayer, ServerRichPresence.builder()
+            .gameName("BedWars")
+            .gameVariantName("Solo")
+            .gameState("In Game")
+            .playerState("Playing")
+            .mapName("Winter")
+            .subServerName("BW02")
+            .teamCurrentSize(3)
+            .teamMaxSize(4)
+            .build()
+        );
+    });
+}
+```
+
+### `ServerRichPresence` Options
+
+`.gameName(String)` the name of the game the player is playing on.
+
+```java
+.gameName("BedWars")
+```
+
+`.gameVariantName(String)` the variant of the game the player is playing on.
+
+```java
+.gameVariantName("Solo")
+```
+
+`.gameState(String)` the state of the current game.
+
+```java
+.gameState("In Game")
+```
+
+`.playerState(String)` what the player is currently doing in the game.
+
+```java
+.playerState("Playing")
+```
+
+`.mapName(String)` the name of the map the player is playing on.
+
+```java
+.mapName("Winter")
+```
+
+`.subServerName(String)` the sub server name of the server the player is playing on.
+
+```java
+.subServerName("BW02")
+```
+
+`.teamCurrentSize(Integer)` the current size of the player's team.
+
+```java
+.teamCurrentSize(3)
+```
+
+`.teamMaxSize(Integer)` the max size of the player's team.
+
+```java
+.teamMaxSize(4)
+```
+
+### Resetting the server rich presence for a player
+
+```java
+public void resetServerRichPresenceExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.richPresenceModule::resetServerRichPresence);
+}
+```

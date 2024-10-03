@@ -21,46 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command;
+package com.lunarclient.apollo.module.richpresence;
 
-import com.lunarclient.apollo.common.ApolloComponent;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.plugin.Command;
+import com.lunarclient.apollo.module.ApolloModule;
+import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.recipients.Recipients;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
- * The general Apollo command.
+ * Represents the rich presence module.
  *
- * @since 1.0.5
+ * @since 1.1.2
  */
-public final class ApolloCommand extends AbstractApolloCommand<CommandSender> {
+@ApiStatus.NonExtendable
+@ModuleDefinition(id = "rich_presence", name = "RichPresence")
+public abstract class RichPresenceModule extends ApolloModule {
 
     /**
-     * Returns a new instance of this command.
+     * Overrides the {@link ServerRichPresence} for the {@link Recipients}.
      *
-     * @return a new command
-     * @since 1.0.5
+     * @param recipients   the recipients that are receiving the packet
+     * @param richPresence the rich presence
+     * @since 1.1.2
      */
-    public static Command create() {
-        return new Command("apollo", "apollo.command") {
-            private final ApolloCommand command = new ApolloCommand();
+    public abstract void overrideServerRichPresence(Recipients recipients, ServerRichPresence richPresence);
 
-            @Override
-            public void execute(CommandSender sender, String[] args) {
-                this.command.execute(sender, args);
-            }
-        };
-    }
-
-    ApolloCommand() {
-        super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
-    }
-
-    void execute(CommandSender sender, String[] args) {
-        if(args.length < 1) {
-            this.getCurrentVersion(sender);
-        } else if(args[0].equalsIgnoreCase("reload")) {
-            this.reloadConfiguration(sender);
-        }
-    }
+    /**
+     * Resets the {@link ServerRichPresence} for the given {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @since 1.1.2
+     */
+    public abstract void resetServerRichPresence(Recipients recipients);
 
 }

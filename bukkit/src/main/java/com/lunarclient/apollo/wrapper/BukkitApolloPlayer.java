@@ -32,17 +32,21 @@ import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.world.ApolloWorld;
 import java.util.Optional;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.audience.Audience;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The Bukkit implementation of {@link ApolloPlayer}.
  *
  * @since 1.0.0
  */
-@AllArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public final class BukkitApolloPlayer extends AbstractApolloPlayer {
 
     private final Player player;
@@ -86,4 +90,8 @@ public final class BukkitApolloPlayer extends AbstractApolloPlayer {
         this.player.sendPluginMessage(ApolloBukkitPlatform.getInstance().getPlugin(), ApolloManager.PLUGIN_MESSAGE_CHANNEL, messages);
     }
 
+    @Override
+    public @NotNull Audience audience() {
+        return ApolloBukkitPlatform.getInstance().getAudiences().player(this.player);
+    }
 }

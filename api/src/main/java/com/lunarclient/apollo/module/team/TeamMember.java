@@ -79,4 +79,5 @@ public final class TeamMember {
      * @since 1.0.0
      */
     ApolloLocation location;
+
 }

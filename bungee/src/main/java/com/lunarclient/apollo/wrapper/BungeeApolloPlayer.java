@@ -23,18 +23,23 @@
  */
 package com.lunarclient.apollo.wrapper;
 
+import com.lunarclient.apollo.ApolloBungeePlatform;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.UUID;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.audience.Audience;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The Bungee implementation of {@link ApolloPlayer}.
  *
  * @since 1.0.0
  */
+@Getter
 @RequiredArgsConstructor
 public final class BungeeApolloPlayer extends AbstractApolloPlayer {
 
@@ -60,4 +65,8 @@ public final class BungeeApolloPlayer extends AbstractApolloPlayer {
         this.player.sendData(ApolloManager.PLUGIN_MESSAGE_CHANNEL, messages);
     }
 
+    @Override
+    public @NotNull Audience audience() {
+        return ApolloBungeePlatform.getInstance().getAudiences().player(this.player);
+    }
 }

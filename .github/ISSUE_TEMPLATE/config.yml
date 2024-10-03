@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+    - name: ❓ Questions & Feature Request
+      url: https://discord.gg/3T9Atyb6pf
+      about: Join our Discord to ask questions and request features for Apollo.
+    - name: 📄 Documentation
+      url: https://lunarclient.dev/apollo/introduction
+      about: Visit our documentation page to understand Apollo better.

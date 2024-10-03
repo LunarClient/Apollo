@@ -130,6 +130,41 @@ public final class ModChat {
         .build();
 
     /**
+     * Displays a preview of an image when hovering over it.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> HOVER_IMAGE_PREVIEW = SimpleOption.<Boolean>builder()
+        .comment("Displays a preview of an image when hovering over it.")
+        .node("chat", "hover-image-preview").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * The minimum size for an image to be displayed, as a percentage of your screen.
+     *
+     * @since 1.1.3
+     */
+    public static final NumberOption<Double> MIN_IMAGE_SIZE = NumberOption.<Double>number()
+        .comment("The minimum size for an image to be displayed, as a percentage of your screen.")
+        .node("chat", "min-image-size").type(TypeToken.get(Double.class))
+        .min(0.0D).max(100.0D)
+        .notifyClient()
+        .build();
+
+    /**
+     * The maximum size for an image to be displayed, as a percentage of your screen.
+     *
+     * @since 1.1.3
+     */
+    public static final NumberOption<Double> MAX_IMAGE_SIZE = NumberOption.<Double>number()
+        .comment("The maximum size for an image to be displayed, as a percentage of your screen.")
+        .node("chat", "max-image-size").type(TypeToken.get(Double.class))
+        .min(0.0D).max(100.0D)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.0.0

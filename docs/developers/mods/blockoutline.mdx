@@ -21,17 +21,11 @@ public void toggleBlockOutlineExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
-- __`BLOCK_OUTLINE_COLOR`__
-    - Config Key: `block-outline-color`
+- __`BLOCK_OUTLINE`__
+    - Config Key: `block-outline`
     - Values
-        - Type: `String`
-        - Default: `#66000000`
-
-- __`BLOCK_OVERLAY_COLOR`__
-    - Config Key: `block-overlay-color`
-    - Values
-        - Type: `String`
-        - Default: `#66000000`
+        - Type: `Boolean`
+        - Default: `true`
 
 - __`BLOCK_OUTLINE_WIDTH`__
     - Config Key: `block-outline-width`
@@ -41,15 +35,123 @@ public void toggleBlockOutlineExample(Player viewer, boolean value) {
         - Minimum: `1.0F`
         - Maximum: `10.0F`
 
+- __`BLOCK_OUTLINE_COLOR`__
+    - Primary block outline color
+    - Config Key: `block-outline-color`
+    - Values
+        - Type: `String`
+        - Default: `#66000000`
+
+- __`BLOCK_OUTLINE_COLOR_END`__
+    - Secondary block outline color
+    - Config Key: `block-outline-color-end`
+    - Values
+        - Type: `String`
+        - Default: `#66000000`
+
+- __`BLOCK_OUTLINE_INTERPOLATE_ALPHA`__
+    - If the transparency should also blend between both outline colors
+    - Config Key: `block-outline-interpolate-alpha`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BLOCK_OUTLINE_ACCURATE`__
+    - If the exact block bounding box should be used, this comes at a slight performance cost
+    - Config Key: `block-outline-accurate`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BLOCK_OUTLINE_TRAVERSAL`__
+    - If the outline colors should travel through the block
+    - Config Key: `block-outline-traversal`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BLOCK_OUTLINE_TRAVERSAL_SPEED`__
+    - Config Key: `block-outline-traversal-speed`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.15F`
+        - Maximum: `5.0F`
+
 - __`BLOCK_OVERLAY`__
     - Config Key: `block-overlay`
     - Values
         - Type: `Boolean`
         - Default: `false`
 
-- __`BLOCK_OUTLINE`__
-    - Config Key: `block-outline`
+- __`BLOCK_OVERLAY_COLOR`__
+    - Primary block overlay color
+    - Config Key: `block-overlay-color`
+    - Values
+        - Type: `String`
+        - Default: `#1A000000`
+
+- __`BLOCK_OVERLAY_COLOR_END`__
+    - Secondary block overlay color
+    - Config Key: `block-overlay-color-end`
+    - Values
+        - Type: `String`
+        - Default: `#1A000000`
+
+- __`BLOCK_OVERLAY_INTERPOLATE_ALPHA`__
+    - If the transparency should also blend between both overlay colors
+    - Config Key: `block-overlay-interpolate-alpha`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BLOCK_OVERLAY_ACCURATE`__
+    - If the exact block bounding box should be used, this comes at a slight performance cost
+    - Config Key: `block-overlay-accurate`
     - Values
         - Type: `Boolean`
         - Default: `true`
+
+- __`BLOCK_OVERLAY_TRAVERSAL`__
+    - If the overlay colors should travel through the block
+    - Config Key: `block-overlay-traversal`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BLOCK_OVERLAY_TRAVERSAL_SPEED`__
+    - Config Key: `block-overlay-traversal-speed`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.15F`
+        - Maximum: `5.0F`
+
+- __`BLOCK_OUTLINE_SIDE`__
+    - If only a single side of the block should have outlines
+    - Config Key: `block-outline-side`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BLOCK_OUTLINE_SHOW_HIDDEN_FOLIAGE`__
+    - If using hide foliage, should outlines still show on foliage
+    - Config Key: `block-outline-show-hidden-foliage`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BLOCK_OUTLINE_MULTI_BLOCK`__
+    - If blocks that connect together should share an outline
+    - Config Key: `block-outline-multi-block`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_IN_SPECTATOR`__
+    - If outlines should be visible in spectator mode
+    - Config Key: `show-in-spectator`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
 

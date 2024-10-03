@@ -26,9 +26,11 @@ package com.lunarclient.apollo.example.utilities;
 import com.google.common.collect.Lists;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.BukkitApollo;
+import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.module.coloredfire.ColoredFireModule;
+import com.lunarclient.apollo.module.entity.EntityModule;
 import com.lunarclient.apollo.module.hologram.Hologram;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.waypoint.Waypoint;
@@ -37,16 +39,20 @@ import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.awt.Color;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Sheep;
 
 public final class BukkitApolloExample {
 
     private final ColoredFireModule coloredFireModule = Apollo.getModuleManager().getModule(ColoredFireModule.class);
+    private final EntityModule entityModule = Apollo.getModuleManager().getModule(EntityModule.class);
     private final HologramModule hologramModule = Apollo.getModuleManager().getModule(HologramModule.class);
     private final WaypointModule waypointModule = Apollo.getModuleManager().getModule(WaypointModule.class);
 
@@ -98,6 +104,14 @@ public final class BukkitApolloExample {
             .hidden(false)
             .build()
         );
+    }
+
+    public void runEntityExample(Player player, ApolloPlayer apolloPlayer) {
+        List<ApolloEntity> sheepEntities = player.getWorld().getEntitiesByClass(Sheep.class)
+            .stream().map(BukkitApollo::toApolloEntity)
+            .collect(Collectors.toList());
+
+        this.entityModule.overrideRainbowSheep(apolloPlayer, sheepEntities);
     }
 
     private BukkitApolloExample() {

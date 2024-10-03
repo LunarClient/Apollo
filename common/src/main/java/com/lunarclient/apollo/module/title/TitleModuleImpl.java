@@ -32,6 +32,8 @@ import com.lunarclient.apollo.title.v1.ResetTitlesMessage;
 import com.lunarclient.apollo.title.v1.TitleType;
 import lombok.NonNull;
 
+import static com.lunarclient.apollo.util.Ranges.checkPositive;
+
 /**
  * Provides the title module.
  *
@@ -44,12 +46,12 @@ public final class TitleModuleImpl extends TitleModule {
         DisplayTitleMessage message = DisplayTitleMessage.newBuilder()
             .setTitleType(TitleType.forNumber(title.getType().ordinal() + 1))
             .setAdventureJsonMessage(ApolloComponent.toJson(title.getMessage()))
-            .setScale(title.getScale())
+            .setScale(checkPositive(title.getScale(), "Title#scale"))
             .setFadeInTime(NetworkTypes.toProtobuf(title.getFadeInTime()))
             .setDisplayTime(NetworkTypes.toProtobuf(title.getDisplayTime()))
             .setFadeOutTime(NetworkTypes.toProtobuf(title.getFadeOutTime()))
-            .setInterpolationScale(title.getInterpolationScale())
-            .setInterpolationRate(title.getInterpolationRate())
+            .setInterpolationScale(checkPositive(title.getInterpolationScale(), "Title#interpolationScale"))
+            .setInterpolationRate(checkPositive(title.getInterpolationRate(), "Title#interpolationRate"))
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));

@@ -10,6 +10,12 @@ The notification module allows you to send Lunar Client notifications to players
   - Custom notification color can be provided.
   - Custom icons can be provided.
 
+![Notification Module Example](https://i.imgur.com/pBgRxda.png#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Send notifications using Lunar Client, with any icon, title, and description!</small>
+</div>
+
 ## Integration
 
 ### `Notification` Builder
@@ -17,7 +23,12 @@ The notification module allows you to send Lunar Client notifications to players
 ```java
 private final Notification uhcAnnouncement = Notification.builder()
     .titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
-    .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED))
+    .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
+        .appendNewline()
+        .append(Component.text("Get ready!", NamedTextColor.WHITE))
+        .appendNewline()
+        .append(Component.text("Good luck!", NamedTextColor.GOLD))
+    )
     .resourceLocation("icons/golden_apple.png") // This field is optional
     .displayTime(Duration.ofSeconds(5))
     .build();

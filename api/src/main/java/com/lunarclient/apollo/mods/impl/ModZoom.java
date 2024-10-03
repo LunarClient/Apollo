@@ -100,6 +100,18 @@ public final class ModZoom {
         .notifyClient()
         .build();
 
+    /**
+     * Change the camera sensitivity when zoomed in.
+     *
+     * @since 1.0.9
+     */
+    public static final NumberOption<Float> CAMERA_SENSITIVITY = NumberOption.<Float>number()
+        .comment("Change the camera sensitivity when zoomed in.")
+        .node("zoom", "camera-sensitivity").type(TypeToken.get(Float.class))
+        .min(0.1F).max(2.0F)
+        .notifyClient()
+        .build();
+
     private ModZoom() {
     }
 

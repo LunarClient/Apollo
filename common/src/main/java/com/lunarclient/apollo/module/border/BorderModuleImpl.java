@@ -31,6 +31,8 @@ import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 
+import static com.lunarclient.apollo.util.Ranges.checkPositive;
+
 /**
  * Provides the border module.
  *
@@ -48,7 +50,7 @@ public final class BorderModuleImpl extends BorderModule {
             .setCanShrinkOrExpand(border.isCanShrinkOrExpand())
             .setColor(NetworkTypes.toProtobuf(border.getColor()))
             .setBounds(NetworkTypes.toProtobuf(border.getBounds()))
-            .setDurationTicks(border.getDurationTicks())
+            .setDurationTicks(checkPositive(border.getDurationTicks(), "Border#durationTicks"))
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));

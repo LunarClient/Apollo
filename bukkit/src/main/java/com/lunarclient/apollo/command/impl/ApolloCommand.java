@@ -21,8 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command;
+package com.lunarclient.apollo.command.impl;
 
+import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.command.BukkitApolloCommand;
 import com.lunarclient.apollo.common.ApolloComponent;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,7 +35,7 @@ import org.bukkit.command.CommandSender;
  *
  * @since 1.0.5
  */
-public final class ApolloCommand extends AbstractApolloCommand<CommandSender> implements CommandExecutor {
+public final class ApolloCommand extends BukkitApolloCommand<CommandSender> implements CommandExecutor {
 
     /**
      * Returns a new instance of this command.
@@ -45,11 +47,16 @@ public final class ApolloCommand extends AbstractApolloCommand<CommandSender> im
     }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(args.length < 1) {
-            this.getCurrentVersion(commandSender);
+            this.getCurrentVersion(sender);
         } else if(args[0].equalsIgnoreCase("reload")) {
-            this.reloadConfiguration(commandSender);
+            this.reloadConfiguration(sender);
+        } else if(args[0].equalsIgnoreCase("update")) {
+            ApolloManager.getVersionManager().forceUpdate(
+                "bukkit",
+                message -> this.textConsumer.accept(sender, message)
+            );
         }
 
         return true;

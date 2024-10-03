@@ -8,12 +8,18 @@ Apollo's cooldown module allows servers to interact with the Cooldown mod found 
   - Add your own custom icon, visible within the cooldown.
   - Set your own duration for each cooldown.
 
+![Cooldown Module Example](https://i.imgur.com/EPPNIQw.png#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Display any in-game item, SVGs or textures found within resourcepacks! (1.7+)</small>
+</div>
+
 ## Integration
 
 ### Sample Code
 
 ```java
-public void displayCooldownExample(Player viewer) {
+public void displayCooldownItemExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
@@ -21,7 +27,24 @@ public void displayCooldownExample(Player viewer) {
             .name("enderpearl-cooldown")
             .duration(Duration.ofSeconds(15))
             .icon(ItemStackIcon.builder()
-                .itemId(Material.ENDER_PEARL.getId())
+                .itemName("ENDER_PEARL")
+                .build()
+            )
+            .build()
+        );
+    });
+}
+
+public void displayCooldownResourceExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.cooldownModule.displayCooldown(apolloPlayer, Cooldown.builder()
+            .name("lunar-cooldown")
+            .duration(Duration.ofSeconds(15))
+            .icon(SimpleResourceLocationIcon.builder()
+                .resourceLocation("lunar:logo/logo-200x182.svg")
+                .size(12)
                 .build()
             )
             .build()
@@ -42,9 +65,14 @@ public void displayCooldownExample(Player viewer) {
 .duration(Duration.ofSeconds(15))
 ```
 
-`.icon(itemStackIcon)` is how you display a custom icon. Read the [icons utilities page](/apollo/developers/utilities/icons) to learn more about icons.
+`.icon(itemStackIcon)` is how you display a custom item icon. Read the [icons utilities page](/apollo/developers/utilities/icons) to learn more about icons.
 ```java
-.icon(ItemStackIcon.builder().itemId(Material.ENDER_PEARL.getId()).build())
+.icon(ItemStackIcon.builder().itemId("ENDER_PEARL").build())
+```
+
+`.icon(SimpleResourceLocationIcon)` is how you display a custom texture icon. Read the [icons utilities page](/apollo/developers/utilities/icons) to learn more about icons.
+```java
+.icon(SimpleResourceLocationIcon.builder().resourceLocation("lunar:logo/logo-200x182.svg").size(12).build())
 ```
 
 ### Removing a specific cooldown for a player
@@ -52,7 +80,11 @@ public void displayCooldownExample(Player viewer) {
 ```java
 public void removeCooldownExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown"));
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown");
+        this.cooldownModule.removeCooldown(apolloPlayer, "lunar-cooldown");
+    });
 }
 ```
 

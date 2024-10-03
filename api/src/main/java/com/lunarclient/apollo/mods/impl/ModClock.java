@@ -61,16 +61,6 @@ public final class ModClock {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> MILITARY_TIME = SimpleOption.<Boolean>builder()
-        .node("clock", "military-time").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("clock", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -177,6 +167,26 @@ public final class ModClock {
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("clock", "border-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> MILITARY_TIME = SimpleOption.<Boolean>builder()
+        .node("clock", "military-time").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> SHOW_AM_PM = SimpleOption.<Boolean>builder()
+        .node("clock", "show-am-pm").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

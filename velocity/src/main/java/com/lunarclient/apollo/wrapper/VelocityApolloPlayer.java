@@ -28,13 +28,17 @@ import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.velocitypowered.api.proxy.Player;
 import java.util.UUID;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.audience.Audience;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The Velocity implementation of {@link ApolloPlayer}.
  *
  * @since 1.0.0
  */
+@Getter
 @RequiredArgsConstructor
 public final class VelocityApolloPlayer extends AbstractApolloPlayer {
 
@@ -60,4 +64,8 @@ public final class VelocityApolloPlayer extends AbstractApolloPlayer {
         this.player.sendPluginMessage(ApolloVelocityPlatform.PLUGIN_CHANNEL, messages);
     }
 
+    @Override
+    public @NotNull Audience audience() {
+        return this.player;
+    }
 }

@@ -42,4 +42,47 @@ public final class VersionResponse implements ApiResponse {
      */
     String version;
 
+    /**
+     * Returns the apollo {@link Assets}.
+     *
+     * @return the apollo assets
+     * @since 1.0.9
+     */
+    Assets assets;
+
+    /**
+     * Represents the apollo assets.
+     *
+     * @since 1.0.9
+     */
+    @Getter
+    public static final class Assets {
+
+        /**
+         * Returns the latest version of apollo {@link String} Bukkit download URL.
+         *
+         * @return the apollo bukkit download url
+         * @since 1.0.9
+         */
+        String bukkit;
+
+        /**
+         * Returns the latest version of apollo {@link String} Bungee download URL.
+         *
+         * @return the apollo bungee download url
+         * @since 1.0.9
+         */
+        String bungee;
+
+        /**
+         * Returns the latest version of apollo {@link String} Velocity download URL.
+         *
+         * @return the apollo velocity download url
+         * @since 1.0.9
+         */
+        String velocity;
+
+
+    }
+
 }

@@ -41,6 +41,9 @@ import java.awt.Color;
 import java.time.Duration;
 import java.util.UUID;
 
+import static com.lunarclient.apollo.util.Ranges.checkPositive;
+import static com.lunarclient.apollo.util.Ranges.checkRange;
+
 /**
  * Utility class for converting objects to and from their
  * corresponding Protocol Buffers representations.
@@ -424,19 +427,19 @@ public final class NetworkTypes {
 
             builder.setSimpleResourceLocation(com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon.newBuilder()
                 .setResourceLocation(simple.getResourceLocation())
-                .setSize(simple.getSize())
+                .setSize(checkPositive(simple.getSize(), "SimpleResourceLocationIcon#size"))
                 .build());
         } else if (icon instanceof AdvancedResourceLocationIcon) {
             AdvancedResourceLocationIcon advanced = (AdvancedResourceLocationIcon) icon;
 
             builder.setAdvancedResourceLocation(com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon.newBuilder()
                 .setResourceLocation(advanced.getResourceLocation())
-                .setWidth(advanced.getWidth())
-                .setHeight(advanced.getHeight())
-                .setMinU(advanced.getMinU())
-                .setMaxU(advanced.getMaxU())
-                .setMinV(advanced.getMinV())
-                .setMaxV(advanced.getMaxV())
+                .setWidth(checkPositive(advanced.getWidth(), "AdvancedResourceLocationIcon#width"))
+                .setHeight(checkPositive(advanced.getHeight(), "AdvancedResourceLocationIcon#height"))
+                .setMinU(checkRange(advanced.getMinU(), 0, 1, "AdvancedResourceLocationIcon#minU"))
+                .setMaxU(checkRange(advanced.getMaxU(), 0, 1, "AdvancedResourceLocationIcon#maxU"))
+                .setMinV(checkRange(advanced.getMinV(), 0, 1, "AdvancedResourceLocationIcon#minV"))
+                .setMaxV(checkRange(advanced.getMaxV(), 0, 1, "AdvancedResourceLocationIcon#maxV"))
                 .build());
         }
 

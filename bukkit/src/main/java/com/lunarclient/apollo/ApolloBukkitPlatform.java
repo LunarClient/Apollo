@@ -23,7 +23,8 @@
  */
 package com.lunarclient.apollo;
 
-import com.lunarclient.apollo.command.ApolloCommand;
+import com.lunarclient.apollo.command.impl.ApolloCommand;
+import com.lunarclient.apollo.command.impl.LunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
@@ -57,10 +58,14 @@ import com.lunarclient.apollo.module.limb.LimbModuleImpl;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
+import com.lunarclient.apollo.module.nickhider.NickHiderModule;
+import com.lunarclient.apollo.module.nickhider.NickHiderModuleImpl;
 import com.lunarclient.apollo.module.notification.NotificationModule;
 import com.lunarclient.apollo.module.notification.NotificationModuleImpl;
 import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentImpl;
 import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentModule;
+import com.lunarclient.apollo.module.richpresence.RichPresenceModule;
+import com.lunarclient.apollo.module.richpresence.RichPresenceModuleImpl;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
@@ -81,13 +86,12 @@ import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
-import com.lunarclient.apollo.stats.ApolloStatsManager;
-import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BukkitApolloStats;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -105,12 +109,17 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
 
     @Getter private final Options options = new OptionsImpl(null);
     @Getter private final JavaPlugin plugin;
+
+    @Getter private BukkitAudiences audiences;
     private ApolloStats stats;
 
     @Override
     public void onEnable() {
         ApolloBukkitPlatform.instance = this;
+
+        this.audiences = BukkitAudiences.create(this.plugin);
         this.stats = new BukkitApolloStats();
+
         ApolloManager.bootstrap(this);
 
         new ApolloPlayerListener(this.plugin);
@@ -130,8 +139,10 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(LimbModule.class, new LimbModuleImpl())
             .addModule(ModSettingModule.class)
             .addModule(NametagModule.class, new NametagModuleImpl())
+            .addModule(NickHiderModule.class, new NickHiderModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())
             .addModule(PacketEnrichmentModule.class, new PacketEnrichmentImpl())
+            .addModule(RichPresenceModule.class, new RichPresenceModuleImpl())
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())
             .addModule(StopwatchModule.class, new StopwatchModuleImpl())
@@ -141,9 +152,6 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(TransferModule.class, new TransferModuleImpl())
             .addModule(VignetteModule.class, new VignetteModuleImpl())
             .addModule(WaypointModule.class, new WaypointModuleImpl());
-
-        ApolloStatsManager statsManager = new ApolloStatsManager();
-        ApolloVersionManager versionManager = new ApolloVersionManager();
 
         try {
             ApolloManager.setConfigPath(this.plugin.getDataFolder().toPath());
@@ -167,10 +175,11 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             (channel, player, bytes) -> ApolloManager.getNetworkManager().receivePacket(player.getUniqueId(), bytes)
         );
 
-        this.getPlugin().getCommand("apollo").setExecutor(new ApolloCommand());
+        this.plugin.getCommand("apollo").setExecutor(new ApolloCommand());
+        this.plugin.getCommand("lunarclient").setExecutor(new LunarClientCommand());
 
-        statsManager.enable();
-        versionManager.checkForUpdates();
+        ApolloManager.getStatsManager().enable();
+        ApolloManager.getVersionManager().checkForUpdates();
 
         if (Bukkit.getPluginManager().getPlugin("LunarClient-API") != null) {
             this.getPlatformLogger().log(Level.WARNING, "Please remove the legacy API to prevent compatibility issues with Apollo!");

@@ -25,6 +25,7 @@ package com.lunarclient.apollo.stats;
 
 import java.util.List;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents Apollo tracked stats.
@@ -88,6 +89,6 @@ public interface ApolloStats {
      * @return the servers total players
      * @since 1.0.0
      */
-    int getTotalPlayers();
+    @Range(from = 0, to = Integer.MAX_VALUE) int getTotalPlayers();
 
 }

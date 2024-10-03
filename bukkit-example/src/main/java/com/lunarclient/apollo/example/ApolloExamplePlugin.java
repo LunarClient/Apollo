@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.example;
 
+import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.example.commands.BeamCommand;
 import com.lunarclient.apollo.example.commands.BorderCommand;
 import com.lunarclient.apollo.example.commands.ChatCommand;
@@ -36,7 +37,9 @@ import com.lunarclient.apollo.example.commands.HologramCommand;
 import com.lunarclient.apollo.example.commands.LimbCommand;
 import com.lunarclient.apollo.example.commands.ModSettingsCommand;
 import com.lunarclient.apollo.example.commands.NametagCommand;
+import com.lunarclient.apollo.example.commands.NickHiderCommand;
 import com.lunarclient.apollo.example.commands.NotificationCommand;
+import com.lunarclient.apollo.example.commands.RichPresenceCommand;
 import com.lunarclient.apollo.example.commands.ServerRuleCommand;
 import com.lunarclient.apollo.example.commands.StaffModCommand;
 import com.lunarclient.apollo.example.commands.StopwatchCommand;
@@ -46,6 +49,7 @@ import com.lunarclient.apollo.example.commands.TntCountdownCommand;
 import com.lunarclient.apollo.example.commands.TransferCommand;
 import com.lunarclient.apollo.example.commands.VignetteCommand;
 import com.lunarclient.apollo.example.commands.WaypointCommand;
+import com.lunarclient.apollo.example.listeners.PlayerListener;
 import com.lunarclient.apollo.example.modules.BeamExample;
 import com.lunarclient.apollo.example.modules.BorderExample;
 import com.lunarclient.apollo.example.modules.ChatExample;
@@ -59,7 +63,9 @@ import com.lunarclient.apollo.example.modules.HologramExample;
 import com.lunarclient.apollo.example.modules.LimbExample;
 import com.lunarclient.apollo.example.modules.ModSettingsExample;
 import com.lunarclient.apollo.example.modules.NametagExample;
+import com.lunarclient.apollo.example.modules.NickHiderExample;
 import com.lunarclient.apollo.example.modules.NotificationExample;
+import com.lunarclient.apollo.example.modules.RichPresenceExample;
 import com.lunarclient.apollo.example.modules.ServerRuleExample;
 import com.lunarclient.apollo.example.modules.StaffModExample;
 import com.lunarclient.apollo.example.modules.StopwatchExample;
@@ -91,7 +97,9 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private LimbExample limbExample;
     private ModSettingsExample modSettingsExample;
     private NametagExample nametagExample;
+    private NickHiderExample nickHiderExample;
     private NotificationExample notificationExample;
+    private RichPresenceExample richPresenceExample;
     private ServerRuleExample serverRuleExample;
     private StaffModExample staffModExample;
     private StopwatchExample stopwatchExample;
@@ -108,6 +116,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
 
         this.registerModuleExamples();
         this.registerCommands();
+        this.registerListeners();
     }
 
     @Override
@@ -129,7 +138,9 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.limbExample = new LimbExample();
         this.modSettingsExample = new ModSettingsExample();
         this.nametagExample = new NametagExample();
+        this.nickHiderExample = new NickHiderExample();
         this.notificationExample = new NotificationExample();
+        this.richPresenceExample = new RichPresenceExample();
         this.serverRuleExample = new ServerRuleExample();
         this.staffModExample = new StaffModExample();
         this.stopwatchExample = new StopwatchExample();
@@ -155,7 +166,9 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("limb").setExecutor(new LimbCommand());
         this.getCommand("modsettings").setExecutor(new ModSettingsCommand());
         this.getCommand("nametag").setExecutor(new NametagCommand());
+        this.getCommand("nickhider").setExecutor(new NickHiderCommand());
         this.getCommand("notification").setExecutor(new NotificationCommand());
+        this.getCommand("richpresence").setExecutor(new RichPresenceCommand());
         this.getCommand("serverrule").setExecutor(new ServerRuleCommand());
         this.getCommand("staffmod").setExecutor(new StaffModCommand());
         this.getCommand("stopwatch").setExecutor(new StopwatchCommand());
@@ -165,6 +178,10 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("transfer").setExecutor(new TransferCommand());
         this.getCommand("vignette").setExecutor(new VignetteCommand());
         this.getCommand("waypoint").setExecutor(new WaypointCommand());
+    }
+
+    private void registerListeners() {
+        EventBus.getBus().register(new PlayerListener());
     }
 
 }

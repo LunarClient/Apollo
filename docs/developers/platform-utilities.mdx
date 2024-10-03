@@ -84,6 +84,21 @@ public void runBlockLocationExample(ApolloPlayer apolloPlayer, Location location
     );
 }
 ```
+
+## `toApolloEntity` Method
+
+The `toApolloEntity` method is a way of converting a Bukkit `Entity` to an `ApolloEntity`.
+
+```java
+public void runEntityExample(Player player, ApolloPlayer apolloPlayer) {
+    List<ApolloEntity> sheepEntities = player.getWorld().getEntitiesByClass(Sheep.class)
+        .stream().map(BukkitApollo::toApolloEntity)
+        .collect(Collectors.toList());
+
+    this.entityModule.overrideRainbowSheep(apolloPlayer, sheepEntities);
+}
+```
+
 ## `toBukkitLocation` Method
 
 The `toBukkitLocation` method is a way of converting an `ApolloLocation`, `ApolloBlockLocation` or `ApolloPlayerLocation` back to a platform specific `Location`.

@@ -30,6 +30,7 @@ import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.world.ApolloWorld;
 import java.util.Optional;
 import java.util.UUID;
+import net.kyori.adventure.audience.ForwardingAudience;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -38,7 +39,7 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
-public interface ApolloPlayer extends Recipients {
+public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
 
     /**
      * Gets the players unique identifier.
@@ -96,5 +97,13 @@ public interface ApolloPlayer extends Recipients {
      * @since 1.0.0
      */
     boolean hasPermission(String permissionNode);
+
+    /**
+     * Returns the player object associated with the platform.
+     *
+     * @return the associated player object
+     * @since 1.0.9
+     */
+    Object getPlayer();
 
 }

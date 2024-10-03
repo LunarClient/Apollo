@@ -33,6 +33,7 @@ import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import io.leangen.geantyref.GenericTypeReflector;
+import java.awt.Color;
 import java.lang.reflect.AnnotatedParameterizedType;
 import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Type;
@@ -266,12 +267,22 @@ public class OptionsImpl implements Options {
         } else if (List.class.isAssignableFrom(clazz)) {
             AnnotatedType elementType = this.elementType(boxed);
             ListValue.Builder listBuilder = ListValue.newBuilder();
-            List<?> list = (List<?>) current;
-            for (int i = 0; i < list.size(); i++) {
-                listBuilder.addValues(this.wrapValue(Value.newBuilder(), elementType.getType(), list.get(i)));
+            for (Object object : (List<?>) current) {
+                listBuilder.addValues(this.wrapValue(Value.newBuilder(), elementType.getType(), object));
             }
 
             return valueBuilder.setListValue(listBuilder.build()).build();
+        } else if (Color.class.isAssignableFrom(clazz)) {
+            if (current instanceof String) {
+                String string = (String) current;
+                return valueBuilder.setStringValue(string).build();
+            } else if (current instanceof Color) {
+                Color currentColor = (Color) current;
+                return valueBuilder.setStringValue(Integer.toHexString(currentColor.getRGB())).build();
+            } else {
+                throw new RuntimeException("Unable to wrap Color value of type '" + clazz.getSimpleName() + "'!");
+
+            }
         }
 
         throw new RuntimeException("Unable to wrap value of type '" + clazz.getSimpleName() + "'!");
@@ -311,6 +322,8 @@ public class OptionsImpl implements Options {
             }
 
             return Collections.unmodifiableList(list);
+        } else if (Color.class.isAssignableFrom(clazz) && wrapper.hasStringValue()) {
+            return wrapper.getStringValue();
         }
 
         throw new RuntimeException("Unable to unwrap value of type '" + clazz.getSimpleName() + "'!");

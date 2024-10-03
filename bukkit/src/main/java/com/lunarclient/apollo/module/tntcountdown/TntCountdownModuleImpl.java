@@ -34,12 +34,13 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
+
+import static com.lunarclient.apollo.util.Ranges.checkPositive;
 
 /**
  * Provides the tnt countdown module.
@@ -65,6 +66,8 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
 
     @Override
     public void setTntCountdown(ApolloEntity entity, int ticks) {
+        checkPositive(ticks, "TntCountdown#ticks");
+
         TNTPrimed target = null;
         if (TntCountdownModuleImpl.entityGetter != null) {
             try {
@@ -99,20 +102,30 @@ public final class TntCountdownModuleImpl extends TntCountdownModule implements 
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     private void onTntSpawn(EntitySpawnEvent event) {
-        // We only care about TNT
-        if (event.getEntityType() != EntityType.PRIMED_TNT) {
+        String entityName = event.getEntityType().name();
+        if (!entityName.equals("PRIMED_TNT") && !entityName.equals("TNT")) {
             return;
         }
 
         TNTPrimed primed = (TNTPrimed) event.getEntity();
-        int customFuse = this.getOptions().get(TntCountdownModule.TNT_TICKS);
+        int customTicks = this.getOptions().get(TntCountdownModule.TNT_TICKS);
+        int defaultTicks = TntCountdownModule.TNT_TICKS.getDefaultValue();
+        int currentTicks = primed.getFuseTicks();
 
-        // We only care about TNT with a non-standard fuse as well.
-        if (primed.getFuseTicks() == customFuse) {
-            return;
+        if (currentTicks != defaultTicks && !this.getOptions().get(TntCountdownModule.OVERRIDE_CUSTOM_TICKS)) {
+            customTicks = currentTicks;
+
+            SetTntCountdownMessage message = SetTntCountdownMessage.newBuilder()
+                .setEntityId(NetworkTypes.toProtobuf(new ApolloEntity(primed.getEntityId(), primed.getUniqueId())))
+                .setDurationTicks(customTicks)
+                .build();
+
+            for (ApolloPlayer viewer : Apollo.getPlayerManager().getPlayers()) {
+                ((AbstractApolloPlayer) viewer).sendPacket(message);
+            }
         }
 
-        primed.setFuseTicks(customFuse);
+        primed.setFuseTicks(customTicks);
     }
 
 }

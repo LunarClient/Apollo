@@ -48,6 +48,7 @@ import com.lunarclient.apollo.mods.impl.ModFreelook;
 import com.lunarclient.apollo.mods.impl.ModGlintColorizer;
 import com.lunarclient.apollo.mods.impl.ModHitColor;
 import com.lunarclient.apollo.mods.impl.ModHitbox;
+import com.lunarclient.apollo.mods.impl.ModHorseStats;
 import com.lunarclient.apollo.mods.impl.ModHurtCam;
 import com.lunarclient.apollo.mods.impl.ModHypixelBedwars;
 import com.lunarclient.apollo.mods.impl.ModHypixelMod;
@@ -84,6 +85,7 @@ import com.lunarclient.apollo.mods.impl.ModScrollableTooltips;
 import com.lunarclient.apollo.mods.impl.ModServerAddress;
 import com.lunarclient.apollo.mods.impl.ModShinyPots;
 import com.lunarclient.apollo.mods.impl.ModShulkerPreview;
+import com.lunarclient.apollo.mods.impl.ModSkyblock;
 import com.lunarclient.apollo.mods.impl.ModSnaplook;
 import com.lunarclient.apollo.mods.impl.ModSoundChanger;
 import com.lunarclient.apollo.mods.impl.ModStatusSideOverlayLeftHudMod;
@@ -138,10 +140,10 @@ public final class Mods {
             ModCrosshair.class,
             ModPotionEffects.class,
             ModDirectionHud.class,
-            ModTitles.class,
             ModWaypoints.class,
             ModHitColor.class,
             ModScoreboard.class,
+            ModTitles.class,
             ModItemCounter.class,
             ModPing.class,
             ModMotionBlur.class,
@@ -196,7 +198,9 @@ public final class Mods {
             ModWaila.class,
             ModNeu.class,
             ModHurtCam.class,
-            ModDamageTint.class
+            ModDamageTint.class,
+            ModSkyblock.class,
+            ModHorseStats.class
         );
 
     private Mods() {
