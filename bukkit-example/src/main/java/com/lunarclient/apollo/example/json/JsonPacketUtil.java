@@ -108,7 +108,7 @@ public final class JsonPacketUtil {
         } else if (value instanceof List) {
             JsonArray jsonArray = new JsonArray();
             for (Object item : (List<?>) value) {
-                jsonArray.add(convertToJsonElement(item));
+                jsonArray.add(JsonPacketUtil.convertToJsonElement(item));
             }
             return jsonArray;
         }

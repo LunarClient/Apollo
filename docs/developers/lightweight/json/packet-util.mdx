@@ -98,7 +98,7 @@ private static JsonElement convertToJsonElement(Object value) {
     } else if (value instanceof List) {
         JsonArray jsonArray = new JsonArray();
         for (Object item : (List<?>) value) {
-            jsonArray.add(convertToJsonElement(item));
+            jsonArray.add(JsonPacketUtil.convertToJsonElement(item));
         }
         return jsonArray;
     }
