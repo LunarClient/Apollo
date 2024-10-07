@@ -26,6 +26,7 @@ package com.lunarclient.apollo.example.json.examples;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.lunarclient.apollo.example.common.modules.impl.LimbExample;
 import com.lunarclient.apollo.example.json.JsonPacketUtil;
 import com.lunarclient.apollo.example.json.JsonUtil;
@@ -36,7 +37,8 @@ public class LimbJsonExample extends LimbExample {
     @Override
     public void hideArmorExample(Player viewer, Player target) {
         // 1 = helmet, 2 = chestplate, 3 = leggings, 4 = boots
-        JsonArray armorPieces = Lists.newArrayList(1, 3).stream()
+        JsonArray armorPieces = Lists.newArrayList(1, 3)
+            .stream().map(JsonPrimitive::new)
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
         JsonObject message = new JsonObject();
@@ -50,7 +52,8 @@ public class LimbJsonExample extends LimbExample {
     @Override
     public void resetArmorExample(Player viewer, Player target) {
         // 1 = helmet, 2 = chestplate, 3 = leggings, 4 = boots
-        JsonArray armorPieces = Lists.newArrayList(1, 3).stream()
+        JsonArray armorPieces = Lists.newArrayList(1, 3)
+            .stream().map(JsonPrimitive::new)
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
         JsonObject message = new JsonObject();
@@ -64,7 +67,8 @@ public class LimbJsonExample extends LimbExample {
     @Override
     public void hideBodyExample(Player viewer, Player target) {
         // 1 = head, 2 = torso, 3 = left arm, 4 = right arm, 5 = left leg, 6 = right leg
-        JsonArray bodyParts = Lists.newArrayList(1, 4).stream()
+        JsonArray bodyParts = Lists.newArrayList(1, 4)
+            .stream().map(JsonPrimitive::new)
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
         JsonObject message = new JsonObject();
@@ -78,7 +82,8 @@ public class LimbJsonExample extends LimbExample {
     @Override
     public void resetBodyExample(Player viewer, Player target) {
         // 1 = head, 2 = torso, 3 = left arm, 4 = right arm, 5 = left leg, 6 = right leg
-        JsonArray bodyParts = Lists.newArrayList(1, 4).stream()
+        JsonArray bodyParts = Lists.newArrayList(1, 4)
+            .stream().map(JsonPrimitive::new)
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
         JsonObject message = new JsonObject();

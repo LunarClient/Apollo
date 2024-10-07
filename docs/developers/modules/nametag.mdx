@@ -168,7 +168,7 @@ public void overrideNametagExample(Player target) {
                 .color(NamedTextColor.RED)
                 .build()
         )
-        .stream().map(AdventureUtil::toJson)
+        .stream().map(AdventureUtil::toJson).map(JsonPrimitive::new)
         .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
     JsonObject message = new JsonObject();

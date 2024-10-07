@@ -103,6 +103,7 @@ public void enableStaffModsExample(Player viewer) {
 
     // 1 = xray
     JsonArray staffMods = Stream.of(1)
+        .map(JsonPrimitive::new)
         .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
     JsonObject message = new JsonObject();
@@ -119,6 +120,7 @@ public void enableStaffModsExample(Player viewer) {
 public void disableStaffModsExample(Player viewer) {
     // 1 = xray
     JsonArray staffMods = Stream.of(1)
+        .map(JsonPrimitive::new)
         .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
     JsonObject message = new JsonObject();

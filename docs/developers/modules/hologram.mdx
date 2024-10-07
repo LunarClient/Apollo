@@ -195,7 +195,7 @@ public void displayHologramExample() {
         Component.text()
             .content("Type /help to get started!")
             .build()
-    ).stream().map(AdventureUtil::toJson)
+    ).stream().map(AdventureUtil::toJson).map(JsonPrimitive::new)
         .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
     JsonObject message = new JsonObject();

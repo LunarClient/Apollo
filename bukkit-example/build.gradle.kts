@@ -8,14 +8,12 @@ dependencies {
 
     // Used for Proto Implementation
     api(libs.protobuf)
-    api(libs.protobuf.java.util)
 
     // Used for Proto & Json Implementation
     api(libs.bundles.adventure) {
         exclude("org.checkerframework")
         exclude("net.kyori", "adventure-api")
         exclude("net.kyori", "adventure-bom")
-        exclude("com.google.code.gson", "gson")
     }
 
     // Used for API Implementation

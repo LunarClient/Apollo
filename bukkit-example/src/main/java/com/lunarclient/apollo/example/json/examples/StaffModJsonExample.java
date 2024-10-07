@@ -25,6 +25,7 @@ package com.lunarclient.apollo.example.json.examples;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.lunarclient.apollo.example.common.modules.impl.StaffModExample;
 import com.lunarclient.apollo.example.json.JsonPacketUtil;
 import java.util.stream.Stream;
@@ -40,6 +41,7 @@ public class StaffModJsonExample extends StaffModExample {
 
         // 1 = xray
         JsonArray staffMods = Stream.of(1)
+            .map(JsonPrimitive::new)
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
         JsonObject message = new JsonObject();
@@ -53,6 +55,7 @@ public class StaffModJsonExample extends StaffModExample {
     public void disableStaffModsExample(Player viewer) {
         // 1 = xray
         JsonArray staffMods = Stream.of(1)
+            .map(JsonPrimitive::new)
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
         JsonObject message = new JsonObject();

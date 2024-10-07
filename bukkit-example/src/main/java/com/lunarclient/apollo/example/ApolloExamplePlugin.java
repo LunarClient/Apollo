@@ -198,7 +198,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
-        this.changeImplementationType(ApolloExampleType.API);
+        this.changeImplementationType(ApolloExampleType.JSON);
         this.registerCommands();
     }
 
