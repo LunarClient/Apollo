@@ -46,9 +46,9 @@ public class NotificationApiExample extends NotificationExample {
             this.notificationModule.displayNotification(apolloPlayer, Notification.builder()
                 .titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
                 .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
-                    .appendNewline()
+                    .append(Component.newline())
                     .append(Component.text("Get ready!", NamedTextColor.WHITE))
-                    .appendNewline()
+                    .append(Component.newline())
                     .append(Component.text("Good luck!", NamedTextColor.GOLD))
                 )
                 .resourceLocation("icons/golden_apple.png") // This field is optional

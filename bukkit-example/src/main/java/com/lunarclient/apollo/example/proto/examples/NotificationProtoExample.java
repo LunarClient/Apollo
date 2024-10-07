@@ -44,9 +44,9 @@ public class NotificationProtoExample extends NotificationExample {
             ))
             .setDescriptionAdventureJsonLines(AdventureUtil.toJson(
                 Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
-                    .appendNewline()
+                    .append(Component.newline())
                     .append(Component.text("Get ready!", NamedTextColor.WHITE))
-                    .appendNewline()
+                    .append(Component.newline())
                     .append(Component.text("Good luck!", NamedTextColor.GOLD))
                 )
             )
