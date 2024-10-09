@@ -26,13 +26,19 @@ package com.lunarclient.apollo.example.proto.listeners;
 import com.google.protobuf.Any;
 import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.proto.ProtobufPacketUtil;
 import com.lunarclient.apollo.transfer.v1.PingResponse;
 import com.lunarclient.apollo.transfer.v1.TransferResponse;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Consumer;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -42,11 +48,10 @@ public class ApolloRoundtripProtoListener implements PluginMessageListener {
     @Getter
     private static ApolloRoundtripProtoListener instance;
 
-    // Player UUID -> Packet ID -> Response Packet
-    // Consider having a timeout for packets that expect a Response
-    private final Map<UUID, Map<UUID, Consumer<GeneratedMessageV3>>> roundTripPacketConsumers = new HashMap<>();
+    private final Map<UUID, Map<UUID, CompletableFuture<GeneratedMessageV3>>> roundTripPacketFutures = new ConcurrentHashMap<>();
+    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
-    public ApolloRoundtripProtoListener() {
+    public ApolloRoundtripProtoListener(ApolloExamplePlugin plugin) {
         instance = this;
     }
 
@@ -70,24 +75,35 @@ public class ApolloRoundtripProtoListener implements PluginMessageListener {
         }
     }
 
-    public <T extends GeneratedMessageV3> void sendRequest(Player player, UUID requestId, GeneratedMessageV3 request,
-                                                            Class<T> response, Consumer<T> action) {
+    public <T extends GeneratedMessageV3> CompletableFuture<T> sendRequest(Player player, UUID requestId,
+                                                                           GeneratedMessageV3 request,
+                                                                           Class<T> responseType) {
         ProtobufPacketUtil.sendPacket(player, request);
 
-        this.roundTripPacketConsumers.computeIfAbsent(player.getUniqueId(), k -> new HashMap<>())
-            .put(requestId, (Consumer<GeneratedMessageV3>) action);
+        CompletableFuture<T> future = new CompletableFuture<>();
+
+        this.roundTripPacketFutures
+            .computeIfAbsent(player.getUniqueId(), k -> new ConcurrentHashMap<>())
+            .put(requestId, (CompletableFuture<GeneratedMessageV3>) future);
+
+        ScheduledFuture<?> timeoutTask = this.executorService.schedule(() ->
+                future.completeExceptionally(new TimeoutException("Response timed out")),
+            10, TimeUnit.SECONDS
+        );
+
+        future.whenComplete((result, throwable) -> timeoutTask.cancel(false));
+        return future;
     }
 
     private <T extends GeneratedMessageV3> void handleResponse(Player player, UUID requestId, T message) {
-        Map<UUID, Consumer<GeneratedMessageV3>> consumers = this.roundTripPacketConsumers.get(player.getUniqueId());
-        if (consumers == null) {
+        Map<UUID, CompletableFuture<GeneratedMessageV3>> futures = this.roundTripPacketFutures.get(player.getUniqueId());
+        if (futures == null) {
             return;
         }
 
-        Consumer<GeneratedMessageV3> action = consumers.remove(requestId);
-
-        if (action != null) {
-            action.accept(message);
+        CompletableFuture<GeneratedMessageV3> future = futures.remove(requestId);
+        if (future != null) {
+            future.complete(message);
         }
     }
 

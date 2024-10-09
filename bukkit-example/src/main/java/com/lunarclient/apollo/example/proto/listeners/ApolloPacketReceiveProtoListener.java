@@ -27,6 +27,7 @@ import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.lunarclient.apollo.common.v1.LunarClientVersion;
 import com.lunarclient.apollo.common.v1.MinecraftVersion;
+import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.proto.ProtobufUtil;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerAttackMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerChatCloseMessage;
@@ -42,6 +43,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
 public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
+
+    public ApolloPacketReceiveProtoListener(ApolloExamplePlugin plugin) {
+
+    }
 
     @Override
     public void onPluginMessageReceived(String s, Player player, byte[] bytes) {

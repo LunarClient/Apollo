@@ -49,8 +49,8 @@ public class ApolloPlayerProtoListener implements Listener {
 
         Messenger messenger = Bukkit.getServer().getMessenger();
         messenger.registerOutgoingPluginChannel(plugin, "lunar:apollo");
-        messenger.registerIncomingPluginChannel(plugin, "lunar:apollo", new ApolloRoundtripProtoListener());
-        messenger.registerIncomingPluginChannel(plugin, "lunar:apollo", new ApolloPacketReceiveProtoListener());
+        messenger.registerIncomingPluginChannel(plugin, "lunar:apollo", new ApolloRoundtripProtoListener(plugin));
+        messenger.registerIncomingPluginChannel(plugin, "lunar:apollo", new ApolloPacketReceiveProtoListener(plugin));
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }

@@ -46,23 +46,28 @@ public class TransferProtoExample extends TransferExample {
             .setServerIp("mc.hypixel.net")
             .build();
 
-        ApolloRoundtripProtoListener.getInstance().sendRequest(player, requestId, transferRequestMessage, TransferResponse.class, response -> {
-            String message = "";
+        ApolloRoundtripProtoListener.getInstance()
+            .sendRequest(player, requestId, transferRequestMessage, TransferResponse.class)
+            .thenAccept(response -> {
+                String message = "";
 
-            switch (response.getStatus()) {
-                case STATUS_ACCEPTED: {
-                    message = "Transfer accepted! Goodbye!";
-                    break;
+                switch (response.getStatus()) {
+                    case STATUS_ACCEPTED: {
+                        message = "Transfer accepted! Goodbye!";
+                        break;
+                    }
+
+                    case STATUS_REJECTED: {
+                        message = "Transfer rejected by client!";
+                        break;
+                    }
                 }
 
-                case STATUS_REJECTED: {
-                    message = "Transfer rejected by client!";
-                    break;
-                }
-            }
-
-            player.sendMessage(message);
-        });
+                player.sendMessage(message);
+            }).exceptionally(throwable -> {
+                player.sendMessage("Failed to receive a response in time.");
+                return null;
+            });
     }
 
     @Override
@@ -74,27 +79,32 @@ public class TransferProtoExample extends TransferExample {
             .addAllServerIps(Lists.newArrayList("mc.hypixel.net", "minehut.com"))
             .build();
 
-        ApolloRoundtripProtoListener.getInstance().sendRequest(player, requestId, pingRequestMessage, PingResponse.class, response -> {
-            for (PingData pingData : response.getPingDataList()) {
-                String message = "";
+        ApolloRoundtripProtoListener.getInstance()
+            .sendRequest(player, requestId, pingRequestMessage, PingResponse.class)
+            .thenAccept(response -> {
+                for (PingData pingData : response.getPingDataList()) {
+                    String message = "";
 
-                switch (pingData.getStatus()) {
-                    // Displays successful ping request to display the server IP and the players ping to that server.
-                    case STATUS_SUCCESS: {
-                        message = String.format("Ping to %s is %d ms.", pingData.getServerIp(), pingData.getPing());
-                        break;
+                    switch (pingData.getStatus()) {
+                        // Displays successful ping request to display the server IP and the players ping to that server.
+                        case STATUS_SUCCESS: {
+                            message = String.format("Ping to %s is %d ms.", pingData.getServerIp(), pingData.getPing());
+                            break;
+                        }
+
+                        // If the ping request times-out
+                        case STATUS_TIMED_OUT: {
+                            message = String.format("Failed to ping %s", pingData.getServerIp());
+                            break;
+                        }
                     }
 
-                    // If the ping request times-out
-                    case STATUS_TIMED_OUT: {
-                        message = String.format("Failed to ping %s", pingData.getServerIp());
-                        break;
-                    }
+                    player.sendMessage(message);
                 }
-
-                player.sendMessage(message);
-            }
-        });
+            }).exceptionally(throwable -> {
+                player.sendMessage("Failed to receive a response in time.");
+                return null;
+            });
     }
 
 }
