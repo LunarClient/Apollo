@@ -1,0 +1,9 @@
+{
+    "getting-started": "Getting Started",
+    "player-detection": "Player Detection",
+    "serverbound-packets": "Serverbound Packets",
+    "roundtrip-packets": "Roundtrip Packets",
+    "packet-util": "Packet Util",
+    "object-util": "Object Util",
+    "adventure-util": "Adventure Util"
+}

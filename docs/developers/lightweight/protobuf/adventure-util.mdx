@@ -1,0 +1,13 @@
+# Adventure Util
+
+## Overview
+
+Provides a single method responsible for serializing the Adventure Component to a String
+
+## Integration
+
+```java
+public static String toJson(@NonNull Component component) {
+    return GsonComponentSerializer.gson().serialize(component);
+}
+```

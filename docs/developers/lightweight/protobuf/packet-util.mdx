@@ -1,0 +1,105 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Protobuf Packet Util
+
+## Overview
+
+These utilities are designed to handle packet transmission and creation for integrating and configuring Apollo modules with their respective properties. The utility class provides a list of most Apollo modules and their configuration options.
+
+The methods in this utility leverage the same plugin messaging channel as the Apollo API `lunar:apollo`.
+
+## Integration
+
+To utilize Apollo Modules, first define a list of the modules you want to use:
+
+```java
+private static final List<String> APOLLO_MODULES = Arrays.asList("limb", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
+    "entity", "glow", "hologram", "mod_setting", "nametag", "nick_hider", "notification", "packet_enrichment", "rich_presence",
+    "server_rule", "staff_mod", "stopwatch", "team", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
+);
+```
+
+Next, specify the properties for these modules. These properties are included in the enable module packet. When using the Apollo plugin, this corresponds to modifying the `config.yml`
+
+<Callout type="warning" emoji="⚠️">
+  The example below does not encompass all available options and may not be up-to-date.
+  For the latest options, refer to the module documentation ([example](/apollo/developers/modules/serverrule#available-options)).
+</Callout>
+
+```java
+// Module Id -> Option key -> Value
+private static final Table<String, String, Value> CONFIG_MODULE_PROPERTIES = HashBasedTable.create();
+
+static {
+    CONFIG_MODULE_PROPERTIES.put("combat", "disable-miss-penalty", Value.newBuilder().setBoolValue(false).build());
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-game", Value.newBuilder().setBoolValue(false).build());
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-commands", Value.newBuilder().setListValue(
+        ListValue.newBuilder().addAllValues(Arrays.asList(
+                Value.newBuilder().setStringValue("/server").build(),
+                Value.newBuilder().setStringValue("/servers").build(),
+                Value.newBuilder().setStringValue("/hub").build()))
+            .build()
+    ).build());
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-shaders", Value.newBuilder().setBoolValue(false).build());
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-chunk-reloading", Value.newBuilder().setBoolValue(false).build());
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-broadcasting", Value.newBuilder().setBoolValue(false).build());
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "anti-portal-traps", Value.newBuilder().setBoolValue(true).build());
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "override-brightness", Value.newBuilder().setBoolValue(false).build());
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "brightness", Value.newBuilder().setNumberValue(50).build());
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "override-nametag-render-distance", Value.newBuilder().setBoolValue(false).build());
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "nametag-render-distance", Value.newBuilder().setNumberValue(64).build());
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "override-max-chat-length", Value.newBuilder().setBoolValue(false).build());
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "max-chat-length", Value.newBuilder().setNumberValue(256).build());
+    CONFIG_MODULE_PROPERTIES.put("tnt_countdown", "tnt-ticks", Value.newBuilder().setNumberValue(80).build());
+    CONFIG_MODULE_PROPERTIES.put("waypoint", "server-handles-waypoints", Value.newBuilder().setBoolValue(false).build());
+}
+```
+
+Use the following methods to send packets either to a specific player or to all online players:
+
+```java
+public static void sendPacket(Player player, GeneratedMessageV3 message) {
+    byte[] bytes = Any.pack(message).toByteArray();
+    player.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "lunar:apollo", bytes);
+}
+
+public static void broadcastPacket(GeneratedMessageV3 message) {
+    byte[] bytes = Any.pack(message).toByteArray();
+
+    Bukkit.getOnlinePlayers().forEach(player ->
+        player.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "lunar:apollo", bytes));
+}
+```
+
+To create a Module packet, which is used for enabling modules (with or without properties) and for dynamically updating Apollo Options for modules such as the `Mod Settings Module` and `Server Rule Module`, use the following method:
+
+```java
+public static ConfigurableSettings createModuleMessage(String module, Map<String, Value> properties) {
+    ConfigurableSettings.Builder moduleBuilder = ConfigurableSettings.newBuilder()
+        .setApolloModule(module)
+        .setEnable(true);
+
+    if (properties != null) {
+        moduleBuilder.putAllProperties(properties);
+    }
+
+    return moduleBuilder.build();
+}
+```
+
+Enable modules using the methods and fields defined above:
+
+```java
+public static void enableModules(Player player) {
+    List<ConfigurableSettings> settings = APOLLO_MODULES.stream()
+        .map(module -> createModuleMessage(module, CONFIG_MODULE_PROPERTIES.row(module)))
+        .collect(Collectors.toList());
+
+    OverrideConfigurableSettingsMessage message = OverrideConfigurableSettingsMessage
+        .newBuilder()
+        .addAllConfigurableSettings(settings)
+        .build();
+
+    ProtobufPacketUtil.sendPacket(player, message);
+}
+```

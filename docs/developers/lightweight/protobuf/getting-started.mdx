@@ -1,0 +1,74 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+# Getting Started
+
+## Overview
+
+This guide will help you get started with the `apollo-protos` library, which is used to handle Apollo-related packets from Lunar Client in your Minecraft server. The `apollo-protos` library provides strong typing and schema validation for all Apollo messages, ensuring seamless communication between the client and the server.
+
+In this guide, you'll learn how to add the required repository and dependencies to your project. You'll also find links to various examples demonstrating how to integrate and work with Apollo packets, from detecting players using Lunar Client to handling advanced serverbound and roundtrip packets.
+
+Available fields for each message, including their types, are available on the Buf Schema Registry at https://buf.build/lunarclient/apollo.
+
+## Adding the repository and dependencies
+
+<Tabs items={['Maven', 'Gradle (Groovy)', 'Gradle (Kotlin)']}>
+  <Tab>
+    ```xml filename="pom.xml"
+    <repositories>
+        <repository>
+            <id>lunarclient</id>
+            <url>https://repo.lunarclient.dev</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.lunarclient</groupId>
+            <artifactId>apollo-protos</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    ```
+  </Tab>
+  <Tab>
+    ```groovy filename="build.gradle"
+    repositories {
+        maven {
+            name = 'lunarclient'
+            url = 'https://repo.lunarclient.dev'
+        }
+    }
+
+    dependencies {
+        api 'com.lunarclient:apollo-protos:1.0-SNAPSHOT'
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```kotlin filename="build.gradle.kts"
+    repositories {
+        maven {
+            name = "lunarclient"
+            url = uri("https://repo.lunarclient.dev")
+        }
+    }
+
+    dependencies {
+        api("com.lunarclient:apollo-protos:1.0-SNAPSHOT")
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Integration Examples
+
+🔗 [Sending Apollo packets & Enabling Apollo modules](/apollo/developers/lightweight/protobuf/packet-util)<br/>
+🔗 [Detecting players using LunarClient](/apollo/developers/lightweight/protobuf/player-detection)<br/>
+🔗 [Common Apollo Objects](/apollo/developers/lightweight/protobuf/object-util)<br/>
+🔗 [Adventure Util](/apollo/developers/lightweight/protobuf/adventure-util)<br/>
+🔗 [Apollo Serverbound packets](/apollo/developers/lightweight/protobuf/serverbound-packets)<br/>
+🔗 [Apollo Roundtrip packets](/apollo/developers/lightweight/protobuf/roundtrip-packets)<br/>
+
+For examples of module integration, refer to the specific Module pages. Each page contains code samples under the `apollo-protos library` tab. For instance, you can find sample code for the `BorderModule` on its dedicated page [BorderModule](/apollo/developers/modules/border#sample-code) in the `Sample Code` section.
+

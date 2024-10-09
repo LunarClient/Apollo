@@ -1,0 +1,28 @@
+# Lightweight
+
+Our lightweight integration allows for Apollo features to be used, without the need for running the entire Apollo plugin. We will introduce you to two different methods that achieve the same goal, while utilizing separate approaches. Each method offers different trade-offs between complexity, flexibility, and performance. Choose the method that best fits your use case and environment.
+
+## Message format
+
+The message format used to communicate, follows a loosely structured JSON schema. The schema is defined using Protocol Buffers (protobuf) and includes various fields to achieve the end result, in this example-case displaying a waypoint. While the fields will change depending on the feature you're trying to implement, the `@type` will also remain. It should always be at the top, as shown. You can locate all the `@type` protos from this page: https://buf.build/lunarclient/apollo.
+```JSON
+{
+  "@type": "type.googleapis.com/lunarclient.apollo.waypoint.v1.DisplayWaypointMessage", // The protobuf message type
+  "name": "KoTH",
+  "location": {
+    "world": "world",
+    "x": 150,
+    "y": 100,
+    "z": -150
+  },
+  "color": {
+    "color": 255
+  },
+  "preventRemoval": true
+}
+```
+
+### Usage Methods
+
+🔗 [Protobuf](/apollo/developers/lightweight/protobuf/getting-started)<br/>
+🔗 [JSON](/apollo/developers/lightweight/json/getting-started)<br/>

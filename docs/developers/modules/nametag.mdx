@@ -1,3 +1,4 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
 import { Callout } from 'nextra-theme-docs'
 
 # Nametag Module
@@ -24,6 +25,13 @@ The nametag module enhances the vanilla Minecraft nametag.
 ## Integration
 
 ### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Override a Nametag
 
 ```java
 public void overrideNametagExample(Player target) {
@@ -41,6 +49,23 @@ public void overrideNametagExample(Player target) {
         ))
         .build()
     );
+}
+```
+
+### Reset a Nametag
+
+```java
+public void resetNametagExample(Player target) {
+    this.nametagModule.resetNametag(Recipients.ofEveryone(), target.getUniqueId());
+}
+```
+
+### Resetting all Nametags
+
+```java
+public void resetNametagsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.nametagModule::resetNametags);
 }
 ```
 
@@ -72,19 +97,112 @@ public void overrideNametagExample(Player target) {
 ))
 ```
 
-### Reset nametag for players
+</Tab>
+
+<Tab>
+
+### Override a Nametag
+
+```java
+public void overrideNametagExample(Player target) {
+    List<String> lines = Lists.newArrayList(
+            Component.text()
+                .content("[StaffMode]")
+                .decorate(TextDecoration.ITALIC)
+                .color(NamedTextColor.GRAY)
+                .build(),
+            Component.text()
+                .content(target.getName())
+                .color(NamedTextColor.RED)
+                .build()
+            )
+        .stream().map(AdventureUtil::toJson)
+        .collect(Collectors.toList());
+
+    OverrideNametagMessage message = OverrideNametagMessage.newBuilder()
+        .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
+        .addAllAdventureJsonLines(lines)
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+### Reset a Nametag
 
 ```java
 public void resetNametagExample(Player target) {
-    this.nametagModule.resetNametag(Recipients.ofEveryone(), target.getUniqueId());
+    ResetNametagMessage message = ResetNametagMessage.newBuilder()
+        .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
 }
 ```
 
-### Resetting all nametags for a player
+### Resetting all Nametags
 
 ```java
 public void resetNametagsExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.nametagModule::resetNametags);
+    ResetNametagsMessage message = ResetNametagsMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+### Override a Nametag
+
+```java
+public void overrideNametagExample(Player target) {
+    JsonArray lines = Lists.newArrayList(
+            Component.text()
+                .content("[StaffMode]")
+                .decorate(TextDecoration.ITALIC)
+                .color(NamedTextColor.GRAY)
+                .build(),
+            Component.text()
+                .content(target.getName())
+                .color(NamedTextColor.RED)
+                .build()
+        )
+        .stream().map(AdventureUtil::toJson).map(JsonPrimitive::new)
+        .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.nametag.v1.OverrideNametagMessage");
+    message.add("player_uuid", JsonUtil.createUuidObject(target.getUniqueId()));
+    message.add("adventure_json_lines", lines);
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+### Reset a Nametag
+
+```java
+public void resetNametagExample(Player target) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.nametag.v1.ResetNametagMessage");
+    message.add("player_uuid", JsonUtil.createUuidObject(target.getUniqueId()));
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+### Resetting all Nametags
+
+```java
+public void resetNametagsExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.nametag.v1.ResetNametagsMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>
