@@ -28,10 +28,10 @@ import org.bukkit.entity.Player;
 
 public abstract class ModSettingsExample extends ApolloExample {
 
-    public abstract void disableLightningModExample(Player viewer);
+    public abstract void disableLightingModExample(Player viewer);
 
-    public abstract void rollbackLightningModEnabledState(Player viewer);
+    public abstract void rollbackLightingModEnabledState(Player viewer);
 
-    public abstract void broadcastDisableLightningModExample();
+    public abstract void broadcastDisableLightingModExample();
 
 }

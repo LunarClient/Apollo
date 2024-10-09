@@ -35,7 +35,7 @@ import org.bukkit.entity.Player;
 public class ModSettingsProtoExample extends ModSettingsExample {
 
     @Override
-    public void disableLightningModExample(Player viewer) {
+    public void disableLightingModExample(Player viewer) {
         Map<String, Value> properties = new HashMap<>();
         properties.put("lighting.enabled", Value.newBuilder().setBoolValue(false).build());
 
@@ -44,7 +44,7 @@ public class ModSettingsProtoExample extends ModSettingsExample {
     }
 
     @Override
-    public void rollbackLightningModEnabledState(Player viewer) {
+    public void rollbackLightingModEnabledState(Player viewer) {
         Map<String, Value> properties = new HashMap<>();
         // To rollback the server override value of the setting, simply set the value to "null"
         properties.put("lighting.enabled", Value.newBuilder().setNullValue(NullValue.NULL_VALUE).build());
@@ -54,7 +54,7 @@ public class ModSettingsProtoExample extends ModSettingsExample {
     }
 
     @Override
-    public void broadcastDisableLightningModExample() {
+    public void broadcastDisableLightingModExample() {
         Map<String, Value> properties = new HashMap<>();
         properties.put("lighting.enabled", Value.newBuilder().setBoolValue(false).build());
 

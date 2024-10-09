@@ -28,29 +28,29 @@ Explore each integration by cycling through each tab, to find the best fit for y
 
 <Tab>
 
-### Disable Lightning Mod
+### Disable Lighting Mod
 
 ```java
-public void disableLightningModExample(Player viewer) {
+public void disableLightingModExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, false));
 }
 ```
 
-### Reset Lightning Mod to it's default value
+### Reset Lighting Mod to it's default value
 
 ```java
-public void rollbackLightningModEnabledState(Player viewer) {
+public void rollbackLightingModEnabledState(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     // To rollback the server override value of the setting, simply set the value to "null"
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, null));
 }
 ```
 
-### Broadcast Disable Lightning Mod the an entire server
+### Broadcast Disable Lighting Mod the an entire server
 
 ```java
-public void broadcastDisableLightningModExample(Player viewer) {
+public void broadcastDisableLightingModExample(Player viewer) {
     this.modSettingModule.getOptions().set(ModLighting.ENABLED, false);
 }
 ```
@@ -59,10 +59,10 @@ public void broadcastDisableLightningModExample(Player viewer) {
 
 <Tab>
 
-### Disable Lightning Mod
+### Disable Lighting Mod
 
 ```java
-public void disableLightningModExample(Player viewer) {
+public void disableLightingModExample(Player viewer) {
     Map<String, Value> properties = new HashMap<>();
     properties.put("lighting.enabled", Value.newBuilder().setBoolValue(false).build());
 
@@ -71,10 +71,10 @@ public void disableLightningModExample(Player viewer) {
 }
 ```
 
-### Reset Lightning Mod to it's default value
+### Reset Lighting Mod to it's default value
 
 ```java
-public void rollbackLightningModEnabledState(Player viewer) {
+public void rollbackLightingModEnabledState(Player viewer) {
     Map<String, Value> properties = new HashMap<>();
     // To rollback the server override value of the setting, simply set the value to "null"
     properties.put("lighting.enabled", Value.newBuilder().setNullValue(NullValue.NULL_VALUE).build());
@@ -84,10 +84,10 @@ public void rollbackLightningModEnabledState(Player viewer) {
 }
 ```
 
-### Broadcast Disable Lightning Mod the an entire server
+### Broadcast Disable Lighting Mod the an entire server
 
 ```java
-public void broadcastDisableLightningModExample() {
+public void broadcastDisableLightingModExample() {
     Map<String, Value> properties = new HashMap<>();
     properties.put("lighting.enabled", Value.newBuilder().setBoolValue(false).build());
 
@@ -100,10 +100,10 @@ public void broadcastDisableLightningModExample() {
 
 <Tab>
 
-### Disable Lightning Mod
+### Disable Lighting Mod
 
 ```java
-public void disableLightningModExample(Player viewer) {
+public void disableLightingModExample(Player viewer) {
     Map<String, Object> properties = new HashMap<>();
     properties.put("lighting.enabled", false);
 
@@ -112,10 +112,10 @@ public void disableLightningModExample(Player viewer) {
 }
 ```
 
-### Reset Lightning Mod to it's default value
+### Reset Lighting Mod to it's default value
 
 ```java
-public void rollbackLightningModEnabledState(Player viewer) {
+public void rollbackLightingModEnabledState(Player viewer) {
     // To rollback the server override value of the setting, simply set the value to "null"
     Map<String, Object> properties = new HashMap<>();
     properties.put("lighting.enabled", null);
@@ -125,10 +125,10 @@ public void rollbackLightningModEnabledState(Player viewer) {
 }
 ```
 
-### Broadcast Disable Lightning Mod the an entire server
+### Broadcast Disable Lighting Mod the an entire server
 
 ```java
-public void broadcastDisableLightningModExample() {
+public void broadcastDisableLightingModExample() {
     Map<String, Object> properties = new HashMap<>();
     properties.put("lighting.enabled", false);
 

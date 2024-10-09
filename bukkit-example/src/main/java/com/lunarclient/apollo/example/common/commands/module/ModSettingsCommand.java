@@ -51,20 +51,20 @@ public class ModSettingsCommand implements CommandExecutor {
 
         switch (args[0].toLowerCase()) {
             case "disable": {
-                modSettingsExample.disableLightningModExample(player);
-                player.sendMessage("Disabling lightning mod....");
+                modSettingsExample.disableLightingModExample(player);
+                player.sendMessage("Disabling lighting mod....");
                 break;
             }
 
             case "reset": {
-                modSettingsExample.rollbackLightningModEnabledState(player);
-                player.sendMessage("Rollbacking lightning mod enabled state....");
+                modSettingsExample.rollbackLightingModEnabledState(player);
+                player.sendMessage("Rollbacking lighting mod enabled state....");
                 break;
             }
 
             case "broadcast": {
-                modSettingsExample.broadcastDisableLightningModExample();
-                player.sendMessage("Broadcasting disable lightning mod....");
+                modSettingsExample.broadcastDisableLightingModExample();
+                player.sendMessage("Broadcasting disable lighting mod....");
                 break;
             }
 
