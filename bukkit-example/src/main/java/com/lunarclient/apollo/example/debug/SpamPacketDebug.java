@@ -93,7 +93,7 @@ public class SpamPacketDebug implements Listener {
                 }
 
                 try {
-                    Thread.sleep(10); // Runs every 10 milliseconds
+                    Thread.sleep(1);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     break;
