@@ -49,6 +49,8 @@ import com.lunarclient.apollo.example.commands.TntCountdownCommand;
 import com.lunarclient.apollo.example.commands.TransferCommand;
 import com.lunarclient.apollo.example.commands.VignetteCommand;
 import com.lunarclient.apollo.example.commands.WaypointCommand;
+import com.lunarclient.apollo.example.commands.debug.SpamPacketDebugCommand;
+import com.lunarclient.apollo.example.debug.SpamPacketDebug;
 import com.lunarclient.apollo.example.listeners.PlayerListener;
 import com.lunarclient.apollo.example.modules.BeamExample;
 import com.lunarclient.apollo.example.modules.BorderExample;
@@ -110,6 +112,8 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private VignetteExample vignetteExample;
     private WaypointExample waypointExample;
 
+    private SpamPacketDebug spamPacketDebug;
+
     @Override
     public void onEnable() {
         plugin = this;
@@ -150,6 +154,8 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.transferExample = new TransferExample();
         this.vignetteExample = new VignetteExample();
         this.waypointExample = new WaypointExample();
+
+        this.spamPacketDebug = new SpamPacketDebug();
     }
 
     private void registerCommands() {
@@ -178,6 +184,8 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("transfer").setExecutor(new TransferCommand());
         this.getCommand("vignette").setExecutor(new VignetteCommand());
         this.getCommand("waypoint").setExecutor(new WaypointCommand());
+
+        this.getCommand("spampacketdebug").setExecutor(new SpamPacketDebugCommand());
     }
 
     private void registerListeners() {

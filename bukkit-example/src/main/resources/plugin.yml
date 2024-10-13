@@ -56,3 +56,5 @@ commands:
         description: "Vignette!"
     waypoint:
         description: "Waypoints!"
+    spampacketdebug:
+        description: "Spam Packet Debug!"
