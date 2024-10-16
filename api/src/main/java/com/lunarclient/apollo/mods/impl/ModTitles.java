@@ -67,6 +67,36 @@ public final class ModTitles {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Color> TITLE_COLOR = SimpleOption.<Color>builder()
+        .node("titles", "title-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Color> SUBTITLE_COLOR = SimpleOption.<Color>builder()
+        .node("titles", "subtitle-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> USE_MINECRAFT_GUISCALE = SimpleOption.<Boolean>builder()
+        .node("titles", "use-minecraft-g-u-i-scale").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Keep the title centered around the center of the mod on-screen.
      *
      * @since 1.1.2
@@ -95,36 +125,6 @@ public final class ModTitles {
      */
     public static final SimpleOption<Boolean> SHOW_SUBTITLE = SimpleOption.<Boolean>builder()
         .node("titles", "show-subtitle").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Color> TITLE_COLOR = SimpleOption.<Color>builder()
-        .node("titles", "title-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Color> SUBTITLE_COLOR = SimpleOption.<Color>builder()
-        .node("titles", "subtitle-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.3
-     */
-    public static final SimpleOption<Boolean> USE_MINECRAFT_GUISCALE = SimpleOption.<Boolean>builder()
-        .node("titles", "use-minecraft-g-u-i-scale").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

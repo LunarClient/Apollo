@@ -221,16 +221,6 @@ public final class ModTab {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> DYNAMIC_PING_COLOR = SimpleOption.<Boolean>builder()
-        .node("tab", "dynamic-ping-color").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> PING_NUMBER_SHADOW = SimpleOption.<Boolean>builder()
         .node("tab", "ping-number-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -241,8 +231,8 @@ public final class ModTab {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Color> PING_NUMBER_COLOR = SimpleOption.<Color>builder()
-        .node("tab", "ping-number-color").type(TypeToken.get(Color.class))
+    public static final SimpleOption<Boolean> DYNAMIC_PING_COLOR = SimpleOption.<Boolean>builder()
+        .node("tab", "dynamic-ping-color").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -283,6 +273,16 @@ public final class ModTab {
      */
     public static final SimpleOption<Color> EXTREME_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("tab", "extreme-ping-number-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Color> PING_NUMBER_COLOR = SimpleOption.<Color>builder()
+        .node("tab", "ping-number-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
