@@ -160,13 +160,32 @@ public final class ModSkyblock {
         .build();
 
     /**
-     * Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.
+     * No documentation available.
      *
-     * @since 1.0.9
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> TALLER_CROPS = SimpleOption.<Boolean>builder()
-        .comment("Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.")
-        .node("skyblock", "taller-crops").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> SKY_BLOCK_WISHING_COMPASS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-wishing-compass").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_METAL_DETECTOR = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-metal-detector").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_FINISHED_COMMISSIONS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-finished-commissions").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -275,6 +294,18 @@ public final class ModSkyblock {
      */
     public static final SimpleOption<Boolean> SHOW_KUUDRA_HEALTH = SimpleOption.<Boolean>builder()
         .node("skyblock", "show-kuudra-health").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> TALLER_CROPS = SimpleOption.<Boolean>builder()
+        .comment("Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.")
+        .node("skyblock", "taller-crops").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

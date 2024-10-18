@@ -70,6 +70,7 @@ public final class ModHurtCam {
      *
      * @since 1.0.0
      */
+    @Deprecated
     public static final SimpleOption<Boolean> OLD_CAMERA_TILT = SimpleOption.<Boolean>builder()
         .node("hurt-cam", "old-camera-tilt").type(TypeToken.get(Boolean.class))
         .notifyClient()

@@ -48,6 +48,7 @@ public final class ModPackOrganizer {
      *
      * @since 1.0.0
      */
+    @Deprecated
     public static final SimpleOption<Boolean> SHOW_INCOMPATIBLE = SimpleOption.<Boolean>builder()
         .node("pack-organizer", "show-incompatible").type(TypeToken.get(Boolean.class))
         .notifyClient()

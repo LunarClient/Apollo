@@ -44,17 +44,6 @@ public final class ModHypixelBedwars {
         .build();
 
     /**
-     * Recolor the beds in-game according to the team's color.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> COLORED_BEDS = SimpleOption.<Boolean>builder()
-        .comment("Recolor the beds in-game according to the team's color")
-        .node("hypixel-bedwars", "colored-beds").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
      * Replaces normal hearts with hardcore hearts once your bed is lost.
      *
      * @since 1.0.0
@@ -62,6 +51,18 @@ public final class ModHypixelBedwars {
     public static final SimpleOption<Boolean> BW_HARDCORE_HEARTS = SimpleOption.<Boolean>builder()
         .comment("Replaces normal hearts with hardcore hearts once your bed is lost")
         .node("hypixel-bedwars", "bw-hardcore-hearts").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Recolor the beds in-game according to the team's color.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> COLORED_BEDS = SimpleOption.<Boolean>builder()
+        .comment("Recolor the beds in-game according to the team's color")
+        .node("hypixel-bedwars", "colored-beds").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

@@ -101,16 +101,6 @@ public final class ModPotionEffects {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> HIDE_MODERN_ICONS = SimpleOption.<Boolean>builder()
-        .node("potion-effects", "hide-modern-icons").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> POTION_BLINK = SimpleOption.<Boolean>builder()
         .node("potion-effects", "potion-blink").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -384,6 +374,17 @@ public final class ModPotionEffects {
      */
     public static final SimpleOption<Boolean> EXCLUDE_SATURATION = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-saturation").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> HIDE_MODERN_ICONS = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "hide-modern-icons").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

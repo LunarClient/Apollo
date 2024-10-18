@@ -139,16 +139,6 @@ public final class ModHypixelMod {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> HYPIXEL_AUTOCOMPLETE = SimpleOption.<Boolean>builder()
-        .node("hypixel-mod", "hypixel-autocomplete").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Color> LEVEL_COLOR = SimpleOption.<Color>builder()
         .node("hypixel-mod", "level-color").type(TypeToken.get(Color.class))
         .notifyClient()
@@ -281,6 +271,17 @@ public final class ModHypixelMod {
      */
     public static final SimpleOption<Boolean> HIDE_MYSTERY_BOX_ANNOUNCEMENTS = SimpleOption.<Boolean>builder()
         .node("hypixel-mod", "hide-mystery-box-announcements").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> HYPIXEL_AUTOCOMPLETE = SimpleOption.<Boolean>builder()
+        .node("hypixel-mod", "hypixel-autocomplete").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

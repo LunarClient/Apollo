@@ -60,26 +60,6 @@ public final class ModTab {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Color> HEADER_COLOR = SimpleOption.<Color>builder()
-        .node("tab", "header-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Color> FOOTER_COLOR = SimpleOption.<Color>builder()
-        .node("tab", "footer-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("tab", "background-color").type(TypeToken.get(Color.class))
         .notifyClient()
@@ -102,57 +82,6 @@ public final class ModTab {
      */
     public static final SimpleOption<Color> ROWS_COLOR = SimpleOption.<Color>builder()
         .node("tab", "rows-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> DISABLE_HEADER = SimpleOption.<Boolean>builder()
-        .node("tab", "disable-header").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> DISPLAY_PLAYER_HEAD = SimpleOption.<Boolean>builder()
-        .node("tab", "display-player-head").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> DISABLE_FOOTER = SimpleOption.<Boolean>builder()
-        .node("tab", "disable-footer").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * Hide Hypixel NPC on tab.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> HIDE_NPC = SimpleOption.<Boolean>builder()
-        .comment("Hide Hypixel NPC on tab")
-        .node("tab", "hide-n-p-c").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> SHOW_LUNAR_ICONS_ON_RIGHT = SimpleOption.<Boolean>builder()
-        .node("tab", "show-lunar-icons-on-right").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -221,16 +150,6 @@ public final class ModTab {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> DYNAMIC_PING_COLOR = SimpleOption.<Boolean>builder()
-        .node("tab", "dynamic-ping-color").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> PING_NUMBER_SHADOW = SimpleOption.<Boolean>builder()
         .node("tab", "ping-number-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -241,8 +160,8 @@ public final class ModTab {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Color> PING_NUMBER_COLOR = SimpleOption.<Color>builder()
-        .node("tab", "ping-number-color").type(TypeToken.get(Color.class))
+    public static final SimpleOption<Boolean> DYNAMIC_PING_COLOR = SimpleOption.<Boolean>builder()
+        .node("tab", "dynamic-ping-color").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -283,6 +202,94 @@ public final class ModTab {
      */
     public static final SimpleOption<Color> EXTREME_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("tab", "extreme-ping-number-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Color> PING_NUMBER_COLOR = SimpleOption.<Color>builder()
+        .node("tab", "ping-number-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Color> HEADER_COLOR = SimpleOption.<Color>builder()
+        .node("tab", "header-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Color> FOOTER_COLOR = SimpleOption.<Color>builder()
+        .node("tab", "footer-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> DISABLE_HEADER = SimpleOption.<Boolean>builder()
+        .node("tab", "disable-header").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> DISPLAY_PLAYER_HEAD = SimpleOption.<Boolean>builder()
+        .node("tab", "display-player-head").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> DISABLE_FOOTER = SimpleOption.<Boolean>builder()
+        .node("tab", "disable-footer").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Hide Hypixel NPC on tab.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> HIDE_NPC = SimpleOption.<Boolean>builder()
+        .comment("Hide Hypixel NPC on tab")
+        .node("tab", "hide-n-p-c").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SHOW_LUNAR_ICONS_ON_RIGHT = SimpleOption.<Boolean>builder()
+        .node("tab", "show-lunar-icons-on-right").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

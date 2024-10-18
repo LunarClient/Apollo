@@ -66,16 +66,6 @@ public final class ModItemTracker {
         .build();
 
     /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_ONLY = SimpleOption.<Boolean>builder()
-        .node("item-tracker", "skyblock-only").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
      * How long the text should stay on screen (seconds).
      *
      * @since 1.0.0
@@ -84,6 +74,17 @@ public final class ModItemTracker {
         .comment("How long the text should stay on screen (seconds)")
         .node("item-tracker", "popup-duration-sec").type(TypeToken.get(Float.class))
         .min(0.1F).max(30.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_ONLY = SimpleOption.<Boolean>builder()
+        .node("item-tracker", "skyblock-only").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

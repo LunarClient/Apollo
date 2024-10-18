@@ -132,6 +132,7 @@ public final class ModGlintColorizer {
      *
      * @since 1.1.1
      */
+    @Deprecated
     public static final SimpleOption<Color> GLINT_COLOR = SimpleOption.<Color>builder()
         .node("glint-colorizer", "glint-color").type(TypeToken.get(Color.class))
         .notifyClient()

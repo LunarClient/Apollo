@@ -58,8 +58,8 @@ public final class ModShinyPots {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> RENDER_GLINT_BEHIND_POTION = SimpleOption.<Boolean>builder()
-        .node("shiny-pots", "render-glint-behind-potion").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> RENDER_ENTIRE_SLOT = SimpleOption.<Boolean>builder()
+        .node("shiny-pots", "render-entire-slot").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -68,8 +68,9 @@ public final class ModShinyPots {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> RENDER_ENTIRE_SLOT = SimpleOption.<Boolean>builder()
-        .node("shiny-pots", "render-entire-slot").type(TypeToken.get(Boolean.class))
+    @Deprecated
+    public static final SimpleOption<Boolean> RENDER_GLINT_BEHIND_POTION = SimpleOption.<Boolean>builder()
+        .node("shiny-pots", "render-glint-behind-potion").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

@@ -100,17 +100,6 @@ public final class ModBlockOutline {
         .build();
 
     /**
-     * If the exact block bounding box should be used, this comes at a slight performance cost.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> BLOCK_OUTLINE_ACCURATE = SimpleOption.<Boolean>builder()
-        .comment("If the exact block bounding box should be used, this comes at a slight performance cost")
-        .node("block-outline", "block-outline-accurate").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
      * If the outline colors should travel through the block.
      *
      * @since 1.0.9
@@ -176,17 +165,6 @@ public final class ModBlockOutline {
         .build();
 
     /**
-     * If the exact block bounding box should be used, this comes at a slight performance cost.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> BLOCK_OVERLAY_ACCURATE = SimpleOption.<Boolean>builder()
-        .comment("If the exact block bounding box should be used, this comes at a slight performance cost")
-        .node("block-outline", "block-overlay-accurate").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
      * If the overlay colors should travel through the block.
      *
      * @since 1.0.9
@@ -231,10 +209,35 @@ public final class ModBlockOutline {
         .build();
 
     /**
+     * If the exact block bounding box should be used, this comes at a slight performance cost.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> BLOCK_OUTLINE_ACCURATE = SimpleOption.<Boolean>builder()
+        .comment("If the exact block bounding box should be used, this comes at a slight performance cost")
+        .node("block-outline", "block-outline-accurate").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * If the exact block bounding box should be used, this comes at a slight performance cost.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> BLOCK_OVERLAY_ACCURATE = SimpleOption.<Boolean>builder()
+        .comment("If the exact block bounding box should be used, this comes at a slight performance cost")
+        .node("block-outline", "block-overlay-accurate").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * If blocks that connect together should share an outline.
      *
      * @since 1.0.9
      */
+    @Deprecated
     public static final SimpleOption<Boolean> BLOCK_OUTLINE_MULTI_BLOCK = SimpleOption.<Boolean>builder()
         .comment("If blocks that connect together should share an outline")
         .node("block-outline", "block-outline-multi-block").type(TypeToken.get(Boolean.class))
@@ -246,6 +249,7 @@ public final class ModBlockOutline {
      *
      * @since 1.0.9
      */
+    @Deprecated
     public static final SimpleOption<Boolean> SHOW_IN_SPECTATOR = SimpleOption.<Boolean>builder()
         .comment("If outlines should be visible in spectator mode")
         .node("block-outline", "show-in-spectator").type(TypeToken.get(Boolean.class))
