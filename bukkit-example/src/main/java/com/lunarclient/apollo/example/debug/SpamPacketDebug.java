@@ -23,11 +23,11 @@
  */
 package com.lunarclient.apollo.example.debug;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.Maps;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.network.NetworkOptions;
-import java.util.Set;
+import java.util.Map;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -37,39 +37,55 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class SpamPacketDebug implements Listener {
 
-    private final Set<UUID> players = Sets.newConcurrentHashSet();
-
-    private final SpamPacketTask debug;
+    private final Map<UUID, SpamPacketTask> players = Maps.newConcurrentMap();
 
     public SpamPacketDebug() {
-        this.debug = new SpamPacketTask();
-
         Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
     }
 
     @EventHandler
     private void onPlayerQuit(PlayerQuitEvent event) {
-        this.pause(event.getPlayer());
+        this.stop(event.getPlayer());
     }
 
-    public void start(Player player) {
-        this.players.add(player.getUniqueId());
+    public void start(Player player, int amount, long delay, Runnable callback) {
+        UUID playerIdentifier = player.getUniqueId();
+        SpamPacketTask task = new SpamPacketTask(playerIdentifier, amount, delay, callback);
+        this.players.put(playerIdentifier, task);
+        task.start();
+    }
 
-        if(!this.debug.running) {
-            this.debug.start();
+    public void stop(Player player) {
+        UUID playerIdentifier = player.getUniqueId();
+        SpamPacketTask task = this.players.remove(playerIdentifier);
+        if (task != null) {
+            task.stop();
         }
     }
 
-    public void pause(Player player) {
-        this.players.remove(player.getUniqueId());
-    }
+    public void stopAll() {
+        for (SpamPacketTask task : this.players.values()) {
+            task.stop();
+        }
 
-    public void stop() {
         this.players.clear();
     }
 
-    public class SpamPacketTask implements Runnable {
-        private boolean running;
+    public static class SpamPacketTask implements Runnable {
+        private final UUID player;
+        private final int amount;
+        private final long delay;
+        private final Runnable onComplete;
+
+        private volatile boolean running;
+        private int sent;
+
+        public SpamPacketTask(UUID player, int amount, long delay, Runnable onComplete) {
+            this.player = player;
+            this.amount = amount;
+            this.delay = delay;
+            this.onComplete = onComplete;
+        }
 
         public void start() {
             this.running = true;
@@ -79,21 +95,26 @@ public class SpamPacketDebug implements Listener {
             debugThread.start();
         }
 
+        public void stop() {
+            this.running = false;
+        }
+
         @Override
         public void run() {
             while (this.running) {
-                Set<UUID> players = SpamPacketDebug.this.players;
-                if (players.isEmpty()) {
+                if (this.sent > this.amount) {
+                    this.onComplete.run();
                     this.running = false;
+                    break;
                 }
 
-                for (UUID uuid : players) {
-                    Apollo.getPlayerManager().getPlayer(uuid)
-                        .ifPresent(apolloPlayer -> NetworkOptions.sendOptions(Apollo.getModuleManager().getModules(), true, apolloPlayer));
-                }
+                Apollo.getPlayerManager().getPlayer(this.player)
+                    .ifPresent(apolloPlayer -> NetworkOptions.sendOptions(Apollo.getModuleManager().getModules(), true, apolloPlayer));
+
+                this.sent++;
 
                 try {
-                    Thread.sleep(1);
+                    Thread.sleep(this.delay);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     break;

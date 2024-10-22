@@ -21,57 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.commands.debug;
+package com.lunarclient.apollo.example.commands;
 
-import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.debug.SpamPacketDebug;
+import com.lunarclient.apollo.common.ApolloComponent;
+import com.lunarclient.apollo.example.commands.debug.SpamPacketsCommand;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class SpamPacketDebugCommand implements CommandExecutor {
-
-    private final SpamPacketDebug spamPacketDebug = ApolloExamplePlugin.getPlugin().getSpamPacketDebug();
-
+public class ApolloDebugCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player)) {
+        if(!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
             return true;
         }
 
         Player player = (Player) sender;
 
-        if (args.length != 1) {
-            player.sendMessage("Usage: /spampacketdebug <start|pause|stop>");
-            return true;
-        }
-
-        switch (args[0].toLowerCase()) {
-            case "start": {
-                this.spamPacketDebug.start(player);
-                player.sendMessage("Debug started.");
-                break;
-            }
-
-            case "pause": {
-                this.spamPacketDebug.pause(player);
-                player.sendMessage("Debug paused.");
-                break;
-            }
-
-            case "stop": {
-                this.spamPacketDebug.stop();
-                player.sendMessage("Debug stopped.");
-                break;
-            }
-
-            default: {
-                player.sendMessage("Usage: /spampacketdebug <start|pause|stop>");
-                break;
-            }
+        if (args.length < 1) {
+            player.sendMessage(ApolloComponent.toLegacy(Component.text()
+                .append(Component.text("-------------------------------------", NamedTextColor.GRAY, TextDecoration.STRIKETHROUGH))
+                .appendNewline()
+                .append(Component.text("/apollodebug spampackets [start|stop|stopall] ", NamedTextColor.WHITE))
+                .append(Component.text("# Spam modsetting update packets to the client.", NamedTextColor.GREEN))
+                .appendNewline()
+                .append(Component.text("-------------------------------------", NamedTextColor.GRAY, TextDecoration.STRIKETHROUGH))
+                .build()
+            ));
+        } else if(args[0].equalsIgnoreCase("spampackets")) {
+            return new SpamPacketsCommand().onCommand(sender, command, label, args);
         }
 
         return true;
