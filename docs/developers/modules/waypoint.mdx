@@ -143,3 +143,20 @@ public void resetWaypointsExample(Player viewer) {
     - Values
         - Type: `List<Waypoint>`
         - Default: `Empty List`
+
+## Automatic Waypoint Creation from Chat
+
+Our Waypoints mod has a built-in feature that allows players to click on coordinates in chat and generate waypoints for those locations, if the coordinates follow specific regex patterns.
+
+### Regex Patterns for Waypoint Creation from Chat
+
+The following regex patterns are used to extract coordinates from chat messages. The system will automatically generate waypoints when these patterns match a chat message.
+
+- **Bracket Pattern**: Matches coordinates in the format of `"[x, y, z]"`. 
+  - Regex: `\\[(?<x>(?:-|)[0-9.]*), (?<y>(?:-|)[0-9.]*), (?<z>(?:-|)[0-9.]*)]`
+  - Chat Example: `[100.5, 64, -200]`
+
+
+- **Title Pattern**: Matches coordinates in the format of `"X: x, Y: y, Z: z"`.
+    - Regex: `\\[(?<x>(?:-|)[0-9.]*), (?<y>(?:-|)[0-9.]*), (?<z>(?:-|)[0-9.]*)]`
+    - Chat Example: `X: 123, Y: 65, Z: -320`
