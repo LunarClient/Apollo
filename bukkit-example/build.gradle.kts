@@ -19,4 +19,5 @@ dependencies {
     // Used for API Implementation
     compileOnly(project(":extra:apollo-extra-adventure4"))
     compileOnly(project(path = ":apollo-api", configuration = "bukkit"))
+    compileOnly(project(path = ":apollo-common", configuration = "shadow"))
 }

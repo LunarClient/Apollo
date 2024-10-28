@@ -50,6 +50,7 @@ import com.lunarclient.apollo.example.api.examples.VignetteApiExample;
 import com.lunarclient.apollo.example.api.examples.WaypointApiExample;
 import com.lunarclient.apollo.example.api.listeners.ApolloPlayerApiListener;
 import com.lunarclient.apollo.example.common.commands.SwitchCommand;
+import com.lunarclient.apollo.example.common.commands.debug.ApolloDebugCommand;
 import com.lunarclient.apollo.example.common.commands.module.BeamCommand;
 import com.lunarclient.apollo.example.common.commands.module.BorderCommand;
 import com.lunarclient.apollo.example.common.commands.module.ChatCommand;
@@ -101,6 +102,7 @@ import com.lunarclient.apollo.example.common.modules.impl.TntCountdownExample;
 import com.lunarclient.apollo.example.common.modules.impl.TransferExample;
 import com.lunarclient.apollo.example.common.modules.impl.VignetteExample;
 import com.lunarclient.apollo.example.common.modules.impl.WaypointExample;
+import com.lunarclient.apollo.example.debug.SpamPacketDebug;
 import com.lunarclient.apollo.example.json.examples.BeamJsonExample;
 import com.lunarclient.apollo.example.json.examples.BorderJsonExample;
 import com.lunarclient.apollo.example.json.examples.ChatJsonExample;
@@ -194,6 +196,8 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private VignetteExample vignetteExample;
     private WaypointExample waypointExample;
 
+    private SpamPacketDebug spamPacketDebug;
+
     @Override
     public void onEnable() {
         plugin = this;
@@ -208,6 +212,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
     }
 
     private void registerCommands() {
+        this.getCommand("apollodebug").setExecutor(new ApolloDebugCommand());
         this.getCommand("switch").setExecutor(new SwitchCommand());
 
         this.getCommand("beam").setExecutor(new BeamCommand());
@@ -260,6 +265,8 @@ public class ApolloExamplePlugin extends JavaPlugin {
     }
 
     private void registerModuleExamples() {
+        this.spamPacketDebug = new SpamPacketDebug();
+
         switch (TYPE) {
             case API: {
                 this.beamExample = new BeamApiExample();
