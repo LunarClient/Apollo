@@ -1,3 +1,4 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
 import { Callout } from 'nextra-theme-docs'
 
 # Server Rule Module
@@ -16,7 +17,14 @@ This module heavily integrates with our [Options API](/apollo/developers/options
 
 ## Integration
 
-### How to toggle a specific server rule
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Toggle Anti Portal Traps
 
 ```java
 public void setAntiPortalTraps(boolean value) {
@@ -24,7 +32,7 @@ public void setAntiPortalTraps(boolean value) {
 }
 ```
 
-### How to toggle a specific server rule for a specific player
+### Override Nametag Render Distance
 
 ```java
 public void setOverrideNametagRenderDistance(Player viewer, boolean value) {
@@ -36,13 +44,97 @@ public void setOverrideNametagRenderDistance(Player viewer, boolean value) {
 }
 ```
 
-### How to change a specific server rule value
+### Broadcast Nametag Render Distance
 
 ```java
 public void setNametagRenderDistanceExample(int value) {
     this.serverRuleModule.getOptions().set(ServerRuleModule.NAMETAG_RENDER_DISTANCE, value);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+### Toggle Anti Portal Traps
+
+```java
+public void setAntiPortalTraps(boolean value) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("anti-portal-traps", Value.newBuilder().setBoolValue(value).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("server_rule", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+### Override Nametag Render Distance
+
+```java
+public void setOverrideNametagRenderDistance(Player viewer, boolean value) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("override-nametag-render-distance", Value.newBuilder().setBoolValue(value).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("server_rule", properties);
+    ProtobufPacketUtil.sendPacket(viewer, settings);
+}
+```
+
+### Broadcast Nametag Render Distance
+
+```java
+public void setNametagRenderDistanceExample(int value) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("nametag-render-distance", Value.newBuilder().setNumberValue(value).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("server_rule", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+</Tab>
+
+<Tab>
+
+### Toggle Anti Portal Traps
+
+```java
+public void setAntiPortalTraps(boolean value) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("anti-portal-traps", value);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("server_rule", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+### Override Nametag Render Distance
+
+```java
+public void setOverrideNametagRenderDistance(Player viewer, boolean value) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("override-nametag-render-distance", value);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("server_rule", properties);
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Broadcast Nametag Render Distance
+
+```java
+public void setNametagRenderDistanceExample(int value) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("nametag-render-distance", value);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("server_rule", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+</Tab>
+
+</Tabs>
 
 ## Available options
 
