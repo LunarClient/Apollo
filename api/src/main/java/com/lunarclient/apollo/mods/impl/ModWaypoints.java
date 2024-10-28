@@ -142,7 +142,7 @@ public final class ModWaypoints {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.6
      */
     public static final SimpleOption<Boolean> ADD_WAYPOINTS_FROM_CHAT = SimpleOption.<Boolean>builder()
         .node("waypoints", "add-waypoints-from-chat").type(TypeToken.get(Boolean.class))

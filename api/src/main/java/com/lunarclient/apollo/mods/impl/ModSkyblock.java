@@ -173,7 +173,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.6
      */
     public static final SimpleOption<Boolean> SKY_BLOCK_WISHING_COMPASS = SimpleOption.<Boolean>builder()
         .node("skyblock", "sky-block-wishing-compass").type(TypeToken.get(Boolean.class))
@@ -183,7 +183,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.6
      */
     public static final SimpleOption<Boolean> SKY_BLOCK_METAL_DETECTOR = SimpleOption.<Boolean>builder()
         .node("skyblock", "sky-block-metal-detector").type(TypeToken.get(Boolean.class))
@@ -193,7 +193,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.6
      */
     public static final SimpleOption<Boolean> SKY_BLOCK_FINISHED_COMMISSIONS = SimpleOption.<Boolean>builder()
         .node("skyblock", "sky-block-finished-commissions").type(TypeToken.get(Boolean.class))

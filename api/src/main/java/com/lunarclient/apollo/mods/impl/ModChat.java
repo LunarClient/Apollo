@@ -121,7 +121,7 @@ public final class ModChat {
     /**
      * Requires the ping message to exactly contain your name.For example, if your name is Notch, this will ping on Notch but not Notch123.
      *
-     * @since %release_version%
+     * @since 1.1.6
      */
     public static final SimpleOption<Boolean> CHAT_PING_EXACT_MATCH = SimpleOption.<Boolean>builder()
         .comment("Requires the ping message to exactly contain your name.For example, if your name is Notch, this will ping on Notch but not Notch123.")

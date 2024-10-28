@@ -79,7 +79,7 @@ public final class ModServerAddress {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.6
      */
     public static final SimpleOption<Color> BRACKET_COLOR = SimpleOption.<Color>builder()
         .node("server-address", "bracket-color").type(TypeToken.get(Color.class))
@@ -110,7 +110,7 @@ public final class ModServerAddress {
     /**
      * If this is disabled the background will change size with the text.
      *
-     * @since %release_version%
+     * @since 1.1.6
      */
     public static final SimpleOption<Boolean> STATIC_BACKGROUND_HEIGHT = SimpleOption.<Boolean>builder()
         .comment("If this is disabled the background will change size with the text.")
