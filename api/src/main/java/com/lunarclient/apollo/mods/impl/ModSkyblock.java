@@ -171,6 +171,36 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_WISHING_COMPASS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-wishing-compass").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_METAL_DETECTOR = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-metal-detector").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_FINISHED_COMMISSIONS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-finished-commissions").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Fixes your fishing bobber sinking in lava.
      *
      * @since 1.0.9

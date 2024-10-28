@@ -71,6 +71,26 @@ public final class ModPackDisplay {
      *
      * @since 1.0.0
      */
+    public static final SimpleOption<Boolean> BRACKETS = SimpleOption.<Boolean>builder()
+        .node("pack-display", "brackets").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> BRACKET_COLOR = SimpleOption.<Color>builder()
+        .node("pack-display", "bracket-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("pack-display", "background").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -84,6 +104,17 @@ public final class ModPackDisplay {
     public static final SimpleOption<Boolean> STATIC_BACKGROUND_WIDTH = SimpleOption.<Boolean>builder()
         .comment("If this is disabled the background will change size with the text.")
         .node("pack-display", "static-background-width").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * If this is disabled the background will change size with the text.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> STATIC_BACKGROUND_HEIGHT = SimpleOption.<Boolean>builder()
+        .comment("If this is disabled the background will change size with the text.")
+        .node("pack-display", "static-background-height").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -114,16 +145,6 @@ public final class ModPackDisplay {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> BRACKETS = SimpleOption.<Boolean>builder()
-        .node("pack-display", "brackets").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("pack-display", "border").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -145,8 +166,8 @@ public final class ModPackDisplay {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
-        .node("pack-display", "text-color").type(TypeToken.get(Color.class))
+    public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
+        .node("pack-display", "border-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -165,8 +186,8 @@ public final class ModPackDisplay {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
-        .node("pack-display", "border-color").type(TypeToken.get(Color.class))
+    public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
+        .node("pack-display", "text-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

@@ -119,6 +119,17 @@ public final class ModChat {
         .build();
 
     /**
+     * Requires the ping message to exactly contain your name.For example, if your name is Notch, this will ping on Notch but not Notch123.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> CHAT_PING_EXACT_MATCH = SimpleOption.<Boolean>builder()
+        .comment("Requires the ping message to exactly contain your name.For example, if your name is Notch, this will ping on Notch but not Notch123.")
+        .node("chat", "chat-ping-exact-match").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Copies the hovered chat message when holding the keybind and clicking.
      *
      * @since 1.0.0
