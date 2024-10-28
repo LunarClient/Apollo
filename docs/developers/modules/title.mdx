@@ -1,3 +1,5 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Title Module
 
 ## Overview
@@ -10,38 +12,62 @@ The title module backports all vanilla `title` & `subtitle` features found in 1.
 
 ## Integration
 
-### `Title` Builder
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Displaying a Title
 
 ```java
-private final Title helloTitle = Title.builder()
-    .type(TitleType.TITLE)
-    .message(Component.text()
-        .content("Hello, player!")
-        .color(NamedTextColor.GREEN)
-        .decorate(TextDecoration.BOLD)
-        .build())
-    .scale(1.0f)
-    .displayTime(Duration.ofMillis(1500L))
-    .fadeInTime(Duration.ofMillis(250))
-    .fadeOutTime(Duration.ofMillis(300))
-    .build();
+public void displayTitleExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, Title.builder()
+        .type(TitleType.TITLE)
+        .message(Component.text()
+            .content("Hello, player!")
+            .color(NamedTextColor.GREEN)
+            .decorate(TextDecoration.BOLD)
+            .build())
+        .scale(1.0f)
+        .displayTime(Duration.ofMillis(1500L))
+        .fadeInTime(Duration.ofMillis(250))
+        .fadeOutTime(Duration.ofMillis(300))
+        .build()));
+}
 ```
 
+### Displaying a Interpolated Title
+
 ```java
-private final Title interpolatedTitle = Title.builder()
-    .type(TitleType.TITLE)
-    .message(Component.text()
-        .content("This title expands!")
-        .color(NamedTextColor.GREEN)
-        .decorate(TextDecoration.BOLD)
-        .build())
-    .scale(0.1f)
-    .interpolationScale(1.0f)
-    .interpolationRate(0.01f)
-    .displayTime(Duration.ofMillis(5000L))
-    .fadeInTime(Duration.ofMillis(250))
-    .fadeOutTime(Duration.ofMillis(300))
-    .build();
+public void displayTitleInterpolatedExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, Title.builder()
+        .type(TitleType.TITLE)
+        .message(Component.text()
+            .content("This title expands!")
+            .color(NamedTextColor.GREEN)
+            .decorate(TextDecoration.BOLD)
+            .build())
+        .scale(0.1f)
+        .interpolationScale(1.0f)
+        .interpolationRate(0.01f)
+        .displayTime(Duration.ofMillis(5000L))
+        .fadeInTime(Duration.ofMillis(250))
+        .fadeOutTime(Duration.ofMillis(300))
+        .build()));
+}
+```
+
+### Resetting all Titles
+
+```java
+public void resetTitlesExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.titleModule::resetTitles);
+}
 ```
 
 #### `Title` Options
@@ -98,26 +124,135 @@ private final Title interpolatedTitle = Title.builder()
 .interpolationRate(0.01f)
 ```
 
-### Displaying a title for a player
-
-```java
-public void displayTitleExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.titleModule.displayTitle(apolloPlayer, this.helloTitle));
-}
-```
-
-### Resetting all titles for a player
-
-```java
-public void resetTitlesExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.titleModule::resetTitles);
-}
-```
-
 ## `TitleType` Types
 
 * `TITLE`
 * `SUBTITLE`
+
+</Tab>
+
+<Tab>
+
+### Displaying a Title
+
+```java
+public void displayTitleExample(Player viewer) {
+    DisplayTitleMessage message = DisplayTitleMessage.newBuilder()
+        .setTitleType(TitleType.TITLE_TYPE_TITLE)
+        .setAdventureJsonMessage(AdventureUtil.toJson(
+            Component.text()
+                .content("Hello, player!")
+                .color(NamedTextColor.GREEN)
+                .decorate(TextDecoration.BOLD)
+                .build()
+        ))
+        .setScale(1.0f)
+        .setFadeInTime(ProtobufUtil.createDurationProto(Duration.ofMillis(1500)))
+        .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofMillis(250)))
+        .setFadeOutTime(ProtobufUtil.createDurationProto(Duration.ofMillis(300)))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Displaying a Interpolated Title
+
+```java
+public void displayTitleInterpolatedExample(Player viewer) {
+    DisplayTitleMessage message = DisplayTitleMessage.newBuilder()
+        .setTitleType(TitleType.TITLE_TYPE_TITLE)
+        .setAdventureJsonMessage(AdventureUtil.toJson(
+            Component.text()
+                .content("This title expands!")
+                .color(NamedTextColor.GREEN)
+                .decorate(TextDecoration.BOLD)
+                .build()
+        ))
+        .setScale(0.1f)
+        .setInterpolationScale(1.0f)
+        .setInterpolationRate(0.01f)
+        .setFadeInTime(ProtobufUtil.createDurationProto(Duration.ofMillis(5000)))
+        .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofMillis(250)))
+        .setFadeOutTime(ProtobufUtil.createDurationProto(Duration.ofMillis(300)))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting all Titles
+
+```java
+public void resetTitlesExample(Player viewer) {
+    ResetTitlesMessage message = ResetTitlesMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+<Tab>
+
+### Displaying a Title
+
+```java
+public void displayTitleExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.title.v1.DisplayTitleMessage");
+    message.addProperty("title_type", 1); // 1 = title, 2 = subtitle
+    message.addProperty("adventure_json_message", AdventureUtil.toJson(
+        Component.text()
+            .content("Hello, player!")
+            .color(NamedTextColor.GREEN)
+            .decorate(TextDecoration.BOLD)
+            .build()
+    ));
+    message.addProperty("scale", 1.0f);
+    message.addProperty("fade_in_time", JsonUtil.createDurationObject(Duration.ofMillis(1500)));
+    message.addProperty("display_time", JsonUtil.createDurationObject(Duration.ofMillis(250)));
+    message.addProperty("fade_out_time", JsonUtil.createDurationObject(Duration.ofMillis(300)));
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Displaying a Interpolated Title
+
+```java
+public void displayTitleInterpolatedExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.title.v1.DisplayTitleMessage");
+    message.addProperty("title_type", 1); // 1 = title, 2 = subtitle
+    message.addProperty("adventure_json_message", AdventureUtil.toJson(
+        Component.text()
+            .content("This title expands!")
+            .color(NamedTextColor.GREEN)
+            .decorate(TextDecoration.BOLD)
+            .build()
+    ));
+    message.addProperty("scale", 0.1f);
+    message.addProperty("interpolation_scale", 1.0f);
+    message.addProperty("interpolation_rate", 0.01f);
+    message.addProperty("fade_in_time", JsonUtil.createDurationObject(Duration.ofMillis(5000)));
+    message.addProperty("display_time", JsonUtil.createDurationObject(Duration.ofMillis(250)));
+    message.addProperty("fade_out_time", JsonUtil.createDurationObject(Duration.ofMillis(300)));
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting all Titles
+
+```java
+public void resetTitlesExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.title.v1.ResetTitlesMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

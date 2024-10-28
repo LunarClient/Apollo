@@ -1,3 +1,4 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
 import { Callout } from 'nextra-theme-docs'
 
 # TNT Countdown Module
@@ -14,23 +15,22 @@ The TNT Countdown module allows you to interact with and set custom TNT timers f
 
 ## Integration
 
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Set TNT Countdown Ticks Option
+
 ```java
-public void setTntCountdownExample(Player viewer, ApolloEntity tntEntity, int ticks) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.tntCountdownModule.setTntCountdown(apolloPlayer, tntEntity, ticks));
+public void setTntCountdownExample() {
+    this.tntCountdownModule.getOptions().set(TntCountdownModule.TNT_TICKS, 160);
 }
 ```
 
-### `setTntCountdown` Parameters
-
-1. `ApolloPlayer`
-   - The player or viewer you want to display the countdown to.
-2. `ApolloEntity`
-   - The TNT entity you want the custom countdown to be displayed above.
-3. `ticks`
-   - The amount of ticks the TNT entity has before exploding.
-
-### Applying your custom `setTntCountdown` to a TNT.
+### Spawn TNT with Custom Tick amount
 
 ```java
 public void overrideTntCountdownExample(Player viewer) {
@@ -46,6 +46,241 @@ public void overrideTntCountdownExample(Player viewer) {
     });
 }
 ```
+
+### Reset TNT Countdown Ticks Options
+
+```java
+public void clearTntCountdownOptionExample() {
+    this.tntCountdownModule.getOptions().remove(TntCountdownModule.TNT_TICKS, 80);
+}
+```
+
+### `setTntCountdown` Parameters
+
+1. `ApolloEntity`
+   - The TNT entity you want the custom countdown to be displayed above.
+2. `ticks`
+   - The amount of ticks the TNT entity has before exploding.
+
+</Tab>
+
+<Tab>
+
+### Set TNT Countdown Ticks Option
+
+```java
+public void setTntCountdownExample() {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("tnt-ticks", Value.newBuilder().setNumberValue(160).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("tnt_countdown", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+### Spawn TNT with Custom Tick amount
+
+```java
+private static Method entityGetter;
+
+static {
+    try {
+        TntCountdownProtoExample.entityGetter = Bukkit.class.getDeclaredMethod("getEntity", UUID.class);
+    } catch (Throwable throwable) {
+        // Ignore for legacy versions.
+    }
+}
+
+public void overrideTntCountdownExample(Player viewer) {
+    Location location = viewer.getLocation();
+    TNTPrimed entity = viewer.getWorld().spawn(location, TNTPrimed.class);
+    int customTicks = 200;
+
+    TNTPrimed target = null;
+    if (TntCountdownProtoExample.entityGetter != null) {
+        try {
+            target = (TNTPrimed) TntCountdownProtoExample.entityGetter.invoke(null, entity.getUniqueId());
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+    } else {
+        for (World world : Bukkit.getWorlds()) {
+            for (TNTPrimed compare : world.getEntitiesByClass(TNTPrimed.class)) {
+                if (compare.getUniqueId().equals(entity.getUniqueId())) {
+                    target = compare;
+                    break;
+                }
+            }
+        }
+    }
+
+    if (target != null) {
+        target.setFuseTicks(customTicks);
+    }
+
+    SetTntCountdownMessage message = SetTntCountdownMessage.newBuilder()
+        .setEntityId(ProtobufUtil.createEntityIdProto(entity.getEntityId(), entity.getUniqueId()))
+        .setDurationTicks(customTicks)
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Reset TNT Countdown Ticks Options
+
+```java
+public void clearTntCountdownOptionExample() {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("tnt-ticks", Value.newBuilder().setNumberValue(80).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("tnt_countdown", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+### Modify Fuse Ticks on TNT Spawn
+
+```java
+@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+private void onTntSpawn(EntitySpawnEvent event) {
+    String entityName = event.getEntityType().name();
+    if (!entityName.equals("PRIMED_TNT") && !entityName.equals("TNT")) {
+        return;
+    }
+
+    TNTPrimed primed = (TNTPrimed) event.getEntity();
+    int customTicks = 200;
+    int defaultTicks = 80;
+    int currentTicks = primed.getFuseTicks();
+
+    if (currentTicks != defaultTicks) {
+        customTicks = currentTicks;
+
+        SetTntCountdownMessage message = SetTntCountdownMessage.newBuilder()
+            .setEntityId(ProtobufUtil.createEntityIdProto(primed.getEntityId(), primed.getUniqueId()))
+            .setDurationTicks(customTicks)
+            .build();
+
+        ProtobufPacketUtil.broadcastPacket(message);
+    }
+
+    primed.setFuseTicks(customTicks);
+}
+```
+
+</Tab>
+
+<Tab>
+
+### Create TNT Countdown Message
+
+```java
+private JsonObject createTNTCountdownMessage(Entity entity, int ticks) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.tntcountdown.v1.SetTntCountdownMessage");
+    message.add("entity_id", JsonUtil.createEntityIdObject(entity));
+    message.addProperty("duration_ticks", ticks);
+    return message;
+}
+```
+
+### Set TNT Countdown Ticks Option
+
+```java
+public void setTntCountdownExample() {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("tnt-ticks", 160);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("tnt_countdown", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+### Spawn TNT with Custom Tick amount
+
+```java
+private static Method entityGetter;
+
+static {
+    try {
+        TntCountdownJsonExample.entityGetter = Bukkit.class.getDeclaredMethod("getEntity", UUID.class);
+    } catch (Throwable throwable) {
+        // Ignore for legacy versions.
+    }
+}
+
+public void overrideTntCountdownExample(Player viewer) {
+    Location location = viewer.getLocation();
+    TNTPrimed entity = viewer.getWorld().spawn(location, TNTPrimed.class);
+    int customTicks = 200;
+
+    TNTPrimed target = null;
+    if (TntCountdownJsonExample.entityGetter != null) {
+        try {
+            target = (TNTPrimed) TntCountdownJsonExample.entityGetter.invoke(null, entity.getUniqueId());
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+    } else {
+        for (World world : Bukkit.getWorlds()) {
+            for (TNTPrimed compare : world.getEntitiesByClass(TNTPrimed.class)) {
+                if (compare.getUniqueId().equals(entity.getUniqueId())) {
+                    target = compare;
+                    break;
+                }
+            }
+        }
+    }
+
+    if (target != null) {
+        target.setFuseTicks(customTicks);
+    }
+
+    JsonPacketUtil.sendPacket(viewer, this.createTNTCountdownMessage(entity, customTicks));
+}
+```
+
+### Reset TNT Countdown Ticks Options
+
+```java
+public void clearTntCountdownOptionExample() {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("tnt-ticks", 80);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("tnt_countdown", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+### Modify Fuse Ticks on TNT Spawn
+
+```java
+@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+private void onTntSpawn(EntitySpawnEvent event) {
+    String entityName = event.getEntityType().name();
+    if (!entityName.equals("PRIMED_TNT") && !entityName.equals("TNT")) {
+        return;
+    }
+
+    TNTPrimed primed = (TNTPrimed) event.getEntity();
+    int customTicks = 200;
+    int defaultTicks = 80;
+    int currentTicks = primed.getFuseTicks();
+
+    if (currentTicks != defaultTicks) {
+        customTicks = currentTicks;
+
+        JsonPacketUtil.broadcastPacket(this.createTNTCountdownMessage(primed, customTicks));
+    }
+
+    primed.setFuseTicks(customTicks);
+}
+```
+
+</Tab>
+
+</Tabs>
 
 ## Available options
 
