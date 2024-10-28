@@ -37,6 +37,7 @@ import java.util.Optional;
 import java.util.UUID;
 import net.kyori.adventure.audience.ForwardingAudience;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a player on Apollo.
@@ -111,14 +112,13 @@ public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
      */
     Object getPlayer();
 
-    // TODO: nullable or optional?
     /**
      * Returns the {@link MinecraftVersion} the player is running.
      *
      * @return the minecraft version
      * @since 1.1.5
      */
-    MinecraftVersion getMinecraftVersion();
+    @Nullable MinecraftVersion getMinecraftVersion();
 
     /**
      * Returns the {@link LunarClientVersion} the player is running.
@@ -126,7 +126,7 @@ public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
      * @return the lunar client version
      * @since 1.1.5
      */
-    LunarClientVersion getLunarClientVersion();
+    @Nullable LunarClientVersion getLunarClientVersion();
 
     /**
      * Returns a {@link List} of {@link LunarClientMod} the player has installed.
@@ -134,7 +134,7 @@ public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
      * @return the installed mods
      * @since 1.1.5
      */
-    List<LunarClientMod> getInstalledMods();
+    @Nullable List<LunarClientMod> getInstalledMods();
 
     /**
      * Returns the {@link TebexEmbeddedCheckoutSupport} type.
@@ -142,6 +142,6 @@ public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
      * @return the Tebex checkout support type
      * @since 1.1.5
      */
-    TebexEmbeddedCheckoutSupport getTebexEmbeddedCheckoutSupport();
+    @Nullable TebexEmbeddedCheckoutSupport getTebexEmbeddedCheckoutSupport();
 
 }
