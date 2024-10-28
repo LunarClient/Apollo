@@ -140,6 +140,16 @@ public final class ModWaypoints {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since 1.1.6
+     */
+    public static final SimpleOption<Boolean> ADD_WAYPOINTS_FROM_CHAT = SimpleOption.<Boolean>builder()
+        .node("waypoints", "add-waypoints-from-chat").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Adds a waypoint if coordinates are clicked in chat.
      *
      * @since 1.0.0
