@@ -116,7 +116,7 @@ public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
      * Returns the {@link MinecraftVersion} the player is running.
      *
      * @return the minecraft version
-     * @since 1.1.5
+     * @since 1.1.6
      */
     @Nullable MinecraftVersion getMinecraftVersion();
 
@@ -124,7 +124,7 @@ public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
      * Returns the {@link LunarClientVersion} the player is running.
      *
      * @return the lunar client version
-     * @since 1.1.5
+     * @since 1.1.6
      */
     @Nullable LunarClientVersion getLunarClientVersion();
 
@@ -132,7 +132,7 @@ public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
      * Returns a {@link List} of {@link LunarClientMod} the player has installed.
      *
      * @return the installed mods
-     * @since 1.1.5
+     * @since 1.1.6
      */
     @Nullable List<LunarClientMod> getInstalledMods();
 
@@ -140,7 +140,7 @@ public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
      * Returns the {@link TebexEmbeddedCheckoutSupport} type.
      *
      * @return the Tebex checkout support type
-     * @since 1.1.5
+     * @since 1.1.6
      */
     @Nullable TebexEmbeddedCheckoutSupport getTebexEmbeddedCheckoutSupport();
 

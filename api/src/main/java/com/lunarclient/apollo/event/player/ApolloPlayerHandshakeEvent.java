@@ -76,7 +76,7 @@ public class ApolloPlayerHandshakeEvent implements Event {
      * The {@link TebexEmbeddedCheckoutSupport} type.
      *
      * @return the Tebex checkout support type
-     * @since 1.1.5
+     * @since 1.1.6
      */
     TebexEmbeddedCheckoutSupport tebexEmbeddedCheckoutSupport;
 
