@@ -31,7 +31,7 @@ import lombok.NonNull;
 /**
  * Provides the tebex module.
  *
- * @since 1.1.5
+ * @since 1.1.6
  */
 public final class TebexModuleImpl extends TebexModule {
 

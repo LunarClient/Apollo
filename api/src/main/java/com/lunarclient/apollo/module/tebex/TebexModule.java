@@ -31,7 +31,7 @@ import org.jetbrains.annotations.ApiStatus;
 /**
  * Represents the tebex module.
  *
- * @since 1.1.5
+ * @since 1.1.6
  */
 @ApiStatus.NonExtendable
 @ModuleDefinition(id = "tebex", name = "Tebex")
@@ -42,7 +42,7 @@ public abstract class TebexModule extends ApolloModule {
      *
      * @param recipients  the recipients that are receiving the packet
      * @param basketIdent the tebex basket ident
-     * @since 1.1.5
+     * @since 1.1.6
      */
     public abstract void displayTebexEmbeddedCheckout(Recipients recipients, String basketIdent);
 
@@ -53,7 +53,7 @@ public abstract class TebexModule extends ApolloModule {
      * @param recipients  the recipients that are receiving the packet
      * @param basketIdent the tebex basket ident
      * @param locale      the locale
-     * @since 1.1.5
+     * @since 1.1.6
      */
     public abstract void displayTebexEmbeddedCheckout(Recipients recipients, String basketIdent, String locale);
 
