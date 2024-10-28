@@ -69,8 +69,8 @@ public final class ModToggleSneak {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> DOUBLE_TAP = SimpleOption.<Boolean>builder()
-        .node("toggle-sneak", "double-tap").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> TOGGLE_SNEAK_CONTAINER = SimpleOption.<Boolean>builder()
+        .node("toggle-sneak", "toggle-sneak-container").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -79,8 +79,8 @@ public final class ModToggleSneak {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> TOGGLE_SNEAK_CONTAINER = SimpleOption.<Boolean>builder()
-        .node("toggle-sneak", "toggle-sneak-container").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> DOUBLE_TAP = SimpleOption.<Boolean>builder()
+        .node("toggle-sneak", "double-tap").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
