@@ -102,7 +102,8 @@ import com.lunarclient.apollo.example.common.modules.impl.TntCountdownExample;
 import com.lunarclient.apollo.example.common.modules.impl.TransferExample;
 import com.lunarclient.apollo.example.common.modules.impl.VignetteExample;
 import com.lunarclient.apollo.example.common.modules.impl.WaypointExample;
-import com.lunarclient.apollo.example.debug.SpamPacketDebug;
+import com.lunarclient.apollo.example.debug.DebugManager;
+import com.lunarclient.apollo.example.debug.impl.SpamPacketDebug;
 import com.lunarclient.apollo.example.json.examples.BeamJsonExample;
 import com.lunarclient.apollo.example.json.examples.BorderJsonExample;
 import com.lunarclient.apollo.example.json.examples.ChatJsonExample;
@@ -196,6 +197,7 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private VignetteExample vignetteExample;
     private WaypointExample waypointExample;
 
+    private DebugManager debugManager;
     private SpamPacketDebug spamPacketDebug;
 
     @Override
@@ -265,8 +267,6 @@ public class ApolloExamplePlugin extends JavaPlugin {
     }
 
     private void registerModuleExamples() {
-        this.spamPacketDebug = new SpamPacketDebug();
-
         switch (TYPE) {
             case API: {
                 this.beamExample = new BeamApiExample();
@@ -358,6 +358,9 @@ public class ApolloExamplePlugin extends JavaPlugin {
     }
 
     private void registerListeners() {
+        this.debugManager = new DebugManager();
+        this.spamPacketDebug = new SpamPacketDebug();
+
         switch (TYPE) {
             case API: {
                 this.playerApiListener = new ApolloPlayerApiListener(this);

@@ -51,11 +51,15 @@ public class ApolloDebugCommand implements CommandExecutor {
                 .append(Component.text("/apollodebug spampackets [start|stop|stopall] ", NamedTextColor.WHITE))
                 .append(Component.text("# Spam modsetting update packets to the client.", NamedTextColor.GREEN))
                 .appendNewline()
+                .append(Component.text("/apollodebug borders [start|stop] ", NamedTextColor.WHITE))
+                .appendNewline()
                 .append(Component.text("-------------------------------------", NamedTextColor.GRAY, TextDecoration.STRIKETHROUGH))
                 .build()
             ));
         } else if(args[0].equalsIgnoreCase("spampackets")) {
             return new SpamPacketsCommand().onCommand(sender, command, label, args);
+        } else if (args[0].equalsIgnoreCase("borders")) {
+            return new BordersCommand().onCommand(sender, command, label, args);
         }
 
         return true;

@@ -25,7 +25,8 @@ package com.lunarclient.apollo.example.common.commands.debug;
 
 import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.debug.impl.SpamPacketDebug;
+import com.lunarclient.apollo.example.debug.DebugManager;
+import com.lunarclient.apollo.example.debug.impl.BorderCollisionTest;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -35,9 +36,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class SpamPacketsCommand implements CommandExecutor {
+public class BordersCommand implements CommandExecutor {
 
-    private final SpamPacketDebug spamPacketDebug = ApolloExamplePlugin.getPlugin().getSpamPacketDebug();
+    private final DebugManager debugManager = ApolloExamplePlugin.getPlugin().getDebugManager();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -50,52 +51,39 @@ public class SpamPacketsCommand implements CommandExecutor {
 
         if (args.length < 2) {
             this.sendUsage(player);
-        } else {
-            switch (args[1].toLowerCase()) {
-                case "start": {
-                    int amount = args.length > 2 ? Integer.parseInt(args[2]) : Integer.MAX_VALUE;
-                    int delay = args.length > 3 ? Integer.parseInt(args[3]) : 50;
+            return true;
+        }
 
-                    this.spamPacketDebug.start(player, amount, delay, () -> player.sendMessage("Debug completed!"));
+        switch (args[1].toLowerCase()) {
+            case "start": {
+                this.debugManager.start(player, new BorderCollisionTest(player));
+                break;
+            }
 
-                    player.sendMessage("Debug started. (Amount: " + amount + ", Delay: " + delay + "ms)");
-                    break;
-                }
+            case "stop": {
+                this.debugManager.stop(player);
+                break;
+            }
 
-                case "stop": {
-                    this.spamPacketDebug.stop(player);
-                    player.sendMessage("Debug stopped.");
-                    break;
-                }
-
-                case "stopall": {
-                    this.spamPacketDebug.stopAll();
-                    player.sendMessage("Debug stopped for all debuggers.");
-                    break;
-                }
-
-                default: {
-                    this.sendUsage(player);
-                    break;
-                }
+            default: {
+                this.sendUsage(player);
+                break;
             }
         }
 
         return true;
     }
 
+    // TODO
     private void sendUsage(Player player) {
         player.sendMessage(ApolloComponent.toLegacy(Component.text()
             .append(Component.text("-------------------------------------", NamedTextColor.GRAY, TextDecoration.STRIKETHROUGH))
             .appendNewline()
-            .append(Component.text("/apollodebug spampackets start <amount> <delay> ", NamedTextColor.WHITE))
+            .append(Component.text("/apollodebug borders start", NamedTextColor.WHITE))
             .append(Component.text("# Starts spamming modsetting update packets to the client, delay is in milliseconds.", NamedTextColor.GREEN))
             .appendNewline()
-            .append(Component.text("/apollodebug spampackets stop ", NamedTextColor.WHITE))
+            .append(Component.text("/apollodebug borders stop ", NamedTextColor.WHITE))
             .append(Component.text("# Stop spamming modsetting update packets to the client.", NamedTextColor.GREEN))
-            .appendNewline()
-            .append(Component.text("/apollodebug spampackets stopall ", NamedTextColor.WHITE))
-            .append(Component.text("# Stops spamming modsetting update packets to the client, for all debuggers.", NamedTextColor.GREEN))
             .appendNewline()
             .append(Component.text("-------------------------------------", NamedTextColor.GRAY, TextDecoration.STRIKETHROUGH))
             .build()
