@@ -24,7 +24,6 @@
 package com.lunarclient.apollo.example.common.commands.debug;
 
 import com.lunarclient.apollo.common.ApolloComponent;
-import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.debug.DebugManager;
 import com.lunarclient.apollo.example.debug.impl.BorderCollisionTest;
 import net.kyori.adventure.text.Component;
@@ -38,8 +37,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class BordersCommand implements CommandExecutor {
 
-    private final DebugManager debugManager = ApolloExamplePlugin.getPlugin().getDebugManager();
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
@@ -48,6 +45,7 @@ public class BordersCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+        DebugManager debugManager = DebugManager.getInstance();
 
         if (args.length < 2) {
             this.sendUsage(player);
@@ -56,12 +54,12 @@ public class BordersCommand implements CommandExecutor {
 
         switch (args[1].toLowerCase()) {
             case "start": {
-                this.debugManager.start(player, new BorderCollisionTest(player));
+                debugManager.start(player, new BorderCollisionTest(player));
                 break;
             }
 
             case "stop": {
-                this.debugManager.stop(player);
+                debugManager.stop(player);
                 break;
             }
 

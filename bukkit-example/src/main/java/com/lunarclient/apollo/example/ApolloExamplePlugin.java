@@ -197,7 +197,6 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private VignetteExample vignetteExample;
     private WaypointExample waypointExample;
 
-    private DebugManager debugManager;
     private SpamPacketDebug spamPacketDebug;
 
     @Override
@@ -358,12 +357,12 @@ public class ApolloExamplePlugin extends JavaPlugin {
     }
 
     private void registerListeners() {
-        this.debugManager = new DebugManager();
         this.spamPacketDebug = new SpamPacketDebug();
 
         switch (TYPE) {
             case API: {
                 this.playerApiListener = new ApolloPlayerApiListener(this);
+                new DebugManager();
                 break;
             }
 

@@ -24,6 +24,8 @@
 package com.lunarclient.apollo.example.common.commands.debug;
 
 import com.lunarclient.apollo.common.ApolloComponent;
+import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.common.modules.ApolloExampleType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -39,6 +41,12 @@ public class ApolloDebugCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(!(sender instanceof Player)) {
             sender.sendMessage("Player only!");
+            return true;
+        }
+
+        if (ApolloExamplePlugin.TYPE != ApolloExampleType.API) {
+            sender.sendMessage("Debug is only available with the API example type!");
+            sender.sendMessage("Run '/switch API' for more info");
             return true;
         }
 
