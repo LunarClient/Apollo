@@ -24,31 +24,48 @@
 package com.lunarclient.apollo.example.json.examples;
 
 import com.google.gson.JsonObject;
+import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.common.modules.impl.ChatExample;
 import com.lunarclient.apollo.example.json.AdventureUtil;
 import com.lunarclient.apollo.example.json.JsonPacketUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class ChatJsonExample extends ChatExample {
 
-    private int countdown = 5;
-
     @Override
     public void displayLiveChatMessageExample() {
-        JsonObject message = new JsonObject();
-        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage");
-        message.addProperty("message_id", 13);
-        message.addProperty("adventure_json_lines", AdventureUtil.toJson(
-            Component.text("Game starting in ", NamedTextColor.GREEN)
-                .append(Component.text(this.countdown, NamedTextColor.BLUE))
-        ));
+        BukkitRunnable runnable = new BukkitRunnable() {
 
-        if (--this.countdown == 0) {
-            this.countdown = 5;
-        }
+            private int countdown = 5;
 
-        JsonPacketUtil.broadcastPacket(message);
+            @Override
+            public void run() {
+                JsonObject message = new JsonObject();
+                message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage");
+                message.addProperty("message_id", 13);
+
+                if (this.countdown > 0) {
+                    message.addProperty("adventure_json_lines", AdventureUtil.toJson(
+                        Component.text("Game starting in ", NamedTextColor.GREEN)
+                            .append(Component.text(this.countdown, NamedTextColor.BLUE))
+                    ));
+
+                    JsonPacketUtil.broadcastPacket(message);
+                    this.countdown--;
+                } else {
+                    message.addProperty("adventure_json_lines", AdventureUtil.toJson(
+                        Component.text("Game started! ", NamedTextColor.GREEN)
+                    ));
+
+                    JsonPacketUtil.broadcastPacket(message);
+                    this.cancel();
+                }
+            }
+        };
+
+        runnable.runTaskTimer(ApolloExamplePlugin.getPlugin(), 0L, 20L);
     }
 
     @Override

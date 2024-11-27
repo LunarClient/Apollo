@@ -24,29 +24,46 @@
 package com.lunarclient.apollo.example.api.examples;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.common.modules.impl.ChatExample;
 import com.lunarclient.apollo.module.chat.ChatModule;
 import com.lunarclient.apollo.recipients.Recipients;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class ChatApiExample extends ChatExample {
 
     private final ChatModule chatModule = Apollo.getModuleManager().getModule(ChatModule.class);
 
-    private int countdown = 5;
-
     @Override
     public void displayLiveChatMessageExample() {
-        this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
-            Component.text("Game starting in ", NamedTextColor.GREEN)
-                .append(Component.text(this.countdown, NamedTextColor.BLUE)),
-            13
-        );
+        BukkitRunnable runnable = new BukkitRunnable() {
 
-        if (--this.countdown == 0) {
-            this.countdown = 5;
-        }
+            private int countdown = 5;
+
+            @Override
+            public void run() {
+                if (this.countdown > 0) {
+                    ChatApiExample.this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
+                        Component.text("Game starting in ", NamedTextColor.GREEN)
+                            .append(Component.text(this.countdown, NamedTextColor.BLUE)),
+                        13
+                    );
+
+                    this.countdown--;
+                } else {
+                    ChatApiExample.this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
+                        Component.text("Game started! ", NamedTextColor.GREEN),
+                        13
+                    );
+
+                    this.cancel();
+                }
+            }
+        };
+
+        runnable.runTaskTimer(ApolloExamplePlugin.getPlugin(), 0L, 20L);
     }
 
     @Override
