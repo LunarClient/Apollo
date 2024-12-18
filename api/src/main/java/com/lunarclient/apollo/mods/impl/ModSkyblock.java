@@ -308,6 +308,18 @@ public final class ModSkyblock {
         .notifyClient()
         .build();
 
+    /**
+     * Provides a general line thickness option that applies to most features with box/line rendering.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Float> SKYBLOCK_LINE_THICKNESS = NumberOption.<Float>number()
+        .comment("Provides a general line thickness option that applies to most features with box/line rendering.")
+        .node("skyblock", "skyblock-line-thickness").type(TypeToken.get(Float.class))
+        .min(1.0F).max(10.0F)
+        .notifyClient()
+        .build();
+
     private ModSkyblock() {
     }
 

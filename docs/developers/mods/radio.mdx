@@ -1,0 +1,173 @@
+# Radio
+
+Enjoy some of your favorite songs provided by Styngr.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleRadioExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModRadio.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SCALE`__
+    - Config Key: `scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.5F`
+
+- __`VOLUME`__
+    - Config Key: `volume`
+    - Values
+        - Type: `Integer`
+        - Default: `50`
+        - Minimum: `0`
+        - Maximum: `100`
+
+- __`MUTE_RADIO`__
+    - Config Key: `mute-radio`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BACKGROUND`__
+    - Config Key: `background`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`STATIC_BACKGROUND_WIDTH`__
+    - If this is disabled the background will change size with the text.
+    - Config Key: `static-background-width`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`STATIC_BACKGROUND_HEIGHT`__
+    - If this is disabled the background will change size with the text.
+    - Config Key: `static-background-height`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BACKGROUND_WIDTH`__
+    - Config Key: `background-width`
+    - Values
+        - Type: `Integer`
+        - Default: `140`
+        - Minimum: `60`
+        - Maximum: `300`
+
+- __`BACKGROUND_HEIGHT`__
+    - Config Key: `background-height`
+    - Values
+        - Type: `Integer`
+        - Default: `24`
+        - Minimum: `22`
+        - Maximum: `64`
+
+- __`BORDER`__
+    - Config Key: `border`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BORDER_THICKNESS`__
+    - Config Key: `border-thickness`
+    - Values
+        - Type: `Float`
+        - Default: `0.5F`
+        - Minimum: `0.5F`
+        - Maximum: `3.0F`
+
+- __`BORDER_COLOR`__
+    - Config Key: `border-color`
+    - Values
+        - Type: `String`
+        - Default: `#9F000000`
+
+- __`BACKGROUND_COLOR`__
+    - Config Key: `background-color`
+    - Values
+        - Type: `String`
+        - Default: `#6F000000`
+
+- __`SHOW_COVER_ART`__
+    - Config Key: `show-cover-art`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_PROGRESS`__
+    - Config Key: `show-progress`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SONG_SCROLL_ANIMATION`__
+    - Config Key: `song-scroll-animation`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_WHEN_NOTHING_PLAYING`__
+    - Config Key: `show-when-nothing-playing`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BOLD_ARIST_NAME`__
+    - Config Key: `bold-arist-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BOLD_SONG_NAME`__
+    - Config Key: `bold-song-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_DURATION`__
+    - Config Key: `show-duration`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_PLAY_BUTTON`__
+    - Config Key: `show-play-button`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SONG_NAME_TEXT_COLOR`__
+    - Config Key: `song-name-text-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`ARTIST_NAME_TEXT_COLOR`__
+    - Config Key: `artist-name-text-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`RADIO_PROGRESS_BAR_COLOR`__
+    - Config Key: `radio-progress-bar-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF4F94FC`
+
