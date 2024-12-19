@@ -48,7 +48,7 @@ public class BorderApiExample extends BorderExample {
                 .cancelEntry(true)
                 .cancelExit(true)
                 .canShrinkOrExpand(false)
-                .color(Color.BLACK)
+                .color(Color.RED)
                 .bounds(Cuboid2D.builder()
                     .minX(-50)
                     .minZ(-50)
