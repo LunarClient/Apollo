@@ -24,7 +24,7 @@
 package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.modules.EVNTExample;
+import com.lunarclient.apollo.example.common.modules.impl.EVNTExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,8 +32,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class EVNTCommand implements CommandExecutor {
-
-    private final EVNTExample evntExample = ApolloExamplePlugin.getPlugin().getEvntExample();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -58,63 +56,65 @@ public class EVNTCommand implements CommandExecutor {
             return true;
         }
 
+        EVNTExample evntExample = ApolloExamplePlugin.getPlugin().getEvntExample();
+
         switch (args[0].toLowerCase()) {
             case "overridehearttexture": {
-                this.evntExample.overrideHeartTextureExample(player);
+                evntExample.overrideHeartTextureExample(player);
                 player.sendMessage("Displaying heart texture...");
                 break;
             }
 
             case "resethearttexture": {
-                this.evntExample.resetHeartTextureExample(player);
+                evntExample.resetHeartTextureExample(player);
                 player.sendMessage("Resetting heart texture...");
                 break;
             }
 
             case "opengui": {
-                this.evntExample.openGuiExample(player);
+                evntExample.openGuiExample(player);
                 player.sendMessage("Opening GUI...");
                 break;
             }
 
             case "closegui": {
-                this.evntExample.closeGuiExample(player);
+                evntExample.closeGuiExample(player);
                 player.sendMessage("Closing GUI...");
                 break;
             }
 
             case "overridecharacter": {
-                this.evntExample.overrideCharacterExample(player);
+                evntExample.overrideCharacterExample(player);
                 player.sendMessage("Overriding character...");
                 break;
             }
 
             case "overridecharacterability": {
-                this.evntExample.overrideCharacterAbilityExample(player);
+                evntExample.overrideCharacterAbilityExample(player);
                 player.sendMessage("Overriding character ability...");
                 break;
             }
 
             case "overridecharactercosmetic": {
-                this.evntExample.overrideCharacterCosmeticExample(player);
+                evntExample.overrideCharacterCosmeticExample(player);
                 player.sendMessage("Overriding character cosmetic...");
                 break;
             }
 
             case "overridecharacterresources": {
-                this.evntExample.overrideCharacterResources(player);
+                evntExample.overrideCharacterResources(player);
                 player.sendMessage("Overriding character resources...");
                 break;
             }
 
             case "updategameoverview": {
-                this.evntExample.updateGameOverviewExample();
+                evntExample.updateGameOverviewExample();
                 player.sendMessage("Updaing game overview...");
                 break;
             }
 
             case "updatestatusoverview": {
-                this.evntExample.updateStatusOverviewExample();
+                evntExample.updateStatusOverviewExample();
                 player.sendMessage("Updaing status overview...");
                 break;
             }

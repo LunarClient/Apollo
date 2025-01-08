@@ -25,6 +25,7 @@ package com.lunarclient.apollo.example.modules;
 
 import com.google.common.collect.Sets;
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.example.common.modules.impl.EVNTExample;
 import com.lunarclient.apollo.module.evnt.Character;
 import com.lunarclient.apollo.module.evnt.CharacterAbility;
 import com.lunarclient.apollo.module.evnt.CharacterResource;
@@ -37,22 +38,22 @@ import com.lunarclient.apollo.module.evnt.event.EventStatus;
 import com.lunarclient.apollo.module.evnt.event.EventTeam;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.entity.Player;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.entity.Player;
 
-public class EVNTExample {
+public class EVNTApiExample extends EVNTExample {
 
     private final EVNTModule evntModule = Apollo.getModuleManager().getModule(EVNTModule.class);
 
+    @Override
     public void overrideHeartTextureExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
@@ -65,11 +66,13 @@ public class EVNTExample {
         });
     }
 
+    @Override
     public void resetHeartTextureExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(this.evntModule::resetHeartTexture);
     }
 
+    @Override
     public void openGuiExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
@@ -81,11 +84,13 @@ public class EVNTExample {
         });
     }
 
+    @Override
     public void closeGuiExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(this.evntModule::closeGui);
     }
 
+    @Override
     public void overrideCharacterExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
@@ -99,6 +104,7 @@ public class EVNTExample {
         });
     }
 
+    @Override
     public void overrideCharacterAbilityExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
@@ -116,6 +122,7 @@ public class EVNTExample {
         });
     }
 
+    @Override
     public void overrideCharacterCosmeticExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
@@ -124,6 +131,7 @@ public class EVNTExample {
         });
     }
 
+    @Override
     public void overrideCharacterResources(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
@@ -141,6 +149,7 @@ public class EVNTExample {
         });
     }
 
+    @Override
     public void updateGameOverviewExample() {
         EventTeam teamOne = EventTeam.builder()
             .bottomCrystalHealth(1.0F)
@@ -159,6 +168,7 @@ public class EVNTExample {
         this.evntModule.updateGameOverview(Recipients.ofEveryone(), eventGame);
     }
 
+    @Override
     public void updateStatusOverviewExample() {
         Set<EventPlayer> teamOne = Sets.newHashSet(
             EventPlayer.builder()
