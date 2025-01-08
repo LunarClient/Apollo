@@ -1,11 +1,13 @@
 name: Apollo-Example
 main: com.lunarclient.apollo.example.ApolloExamplePlugin
-version: 1.1.5
+version: 1.1.6
 author: Moonsworth
-depend: [ Apollo-Bukkit ]
+softdepend: [ Apollo-Bukkit ]
 api-version: 1.13
 
 commands:
+    switch:
+        description: "Switch the implementation type!"
     beam:
         description: "Beams!"
     border:
@@ -46,6 +48,8 @@ commands:
         description: "Stopwatch!"
     team:
         description: "Teams!"
+    tebex:
+        description: "Tebex!"
     title:
         description: "Titles!"
     tntcountdown:
@@ -56,3 +60,5 @@ commands:
         description: "Vignette!"
     waypoint:
         description: "Waypoints!"
+    apollodebug:
+        description: "Apollo Debug!"

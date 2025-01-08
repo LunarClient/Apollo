@@ -1,3 +1,5 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Mod Setting Module
 
 ## Overview
@@ -19,29 +21,122 @@ You can find all available mods and their options under the mods section.
 
 ## Integration
 
-### Interacting with a specific players `ModSetting`
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Disable Lighting Mod
 
 ```java
-public void disableLightningModExample(Player viewer) {
+public void disableLightingModExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, false));
 }
 ```
 
-### Resetting a specific players `ModSetting`
+### Reset Lighting Mod to it's default value
 
 ```java
-public void rollbackLightningModEnabledState(Player viewer) {
+public void rollbackLightingModEnabledState(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     // To rollback the server override value of the setting, simply set the value to "null"
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLighting.ENABLED, null));
 }
 ```
 
-### Broadcasting a `ModSettings` change to an entire server.
+### Broadcast Disable Lighting Mod the an entire server
 
 ```java
-public void broadcastDisableLightningModExample(Player viewer) {
+public void broadcastDisableLightingModExample(Player viewer) {
     this.modSettingModule.getOptions().set(ModLighting.ENABLED, false);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+### Disable Lighting Mod
+
+```java
+public void disableLightingModExample(Player viewer) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("lighting.enabled", Value.newBuilder().setBoolValue(false).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("mod_setting", properties);
+    ProtobufPacketUtil.sendPacket(viewer, settings);
+}
+```
+
+### Reset Lighting Mod to it's default value
+
+```java
+public void rollbackLightingModEnabledState(Player viewer) {
+    Map<String, Value> properties = new HashMap<>();
+    // To rollback the server override value of the setting, simply set the value to "null"
+    properties.put("lighting.enabled", Value.newBuilder().setNullValue(NullValue.NULL_VALUE).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("mod_setting", properties);
+    ProtobufPacketUtil.sendPacket(viewer, settings);
+}
+```
+
+### Broadcast Disable Lighting Mod the an entire server
+
+```java
+public void broadcastDisableLightingModExample() {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("lighting.enabled", Value.newBuilder().setBoolValue(false).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("mod_setting", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+</Tab>
+
+<Tab>
+
+### Disable Lighting Mod
+
+```java
+public void disableLightingModExample(Player viewer) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("lighting.enabled", false);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("mod_setting", properties);
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Reset Lighting Mod to it's default value
+
+```java
+public void rollbackLightingModEnabledState(Player viewer) {
+    // To rollback the server override value of the setting, simply set the value to "null"
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("lighting.enabled", null);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("mod_setting", properties);
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Broadcast Disable Lighting Mod the an entire server
+
+```java
+public void broadcastDisableLightingModExample() {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("lighting.enabled", false);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("mod_setting", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+</Tab>
+
+</Tabs>

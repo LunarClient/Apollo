@@ -1,5 +1,4 @@
 # Apollo
-![Build Status](https://img.shields.io/github/actions/workflow/status/LunarClient/Apollo/.github/workflows/deploy.yml)
 [![Discord](https://img.shields.io/discord/1080556677004271666?logo=discord&label=discord)](https://discord.gg/3T9Atyb6pf)
 
 Apollo is a powerful tool that allows developers to create custom integrations with Lunar Client.
