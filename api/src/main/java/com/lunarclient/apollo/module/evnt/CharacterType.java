@@ -40,6 +40,7 @@ public enum CharacterType {
     IGNUS,
     TULABOT,
     SIR_BLOCK,
+    HARMONY,
     UNRECOGNIZED
 
 }
