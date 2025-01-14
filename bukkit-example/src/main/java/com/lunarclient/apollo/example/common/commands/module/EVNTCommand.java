@@ -25,11 +25,14 @@ package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.common.modules.impl.EVNTExample;
+import com.lunarclient.apollo.module.evnt.GuiType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class EVNTCommand implements CommandExecutor {
 
@@ -41,22 +44,25 @@ public class EVNTCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+        EVNTExample evntExample = ApolloExamplePlugin.getPlugin().getEvntExample();
 
-        if (args.length != 1) {
-            player.sendMessage("Usage: /evnt <overrideHeartTexture" +
-                "|resetHeartTexture" +
-                "|openGui" +
-                "|closeGui" +
-                "|overrideCharacter" +
-                "|overrideCharacterAbility" +
-                "|overrideCharacterCosmetic" +
-                "|overrideCosmeticResource" +
-                "|updateGameOverview" +
-                "|updateStatusOverview>");
+        if (args.length == 2 && args[0].equalsIgnoreCase("opengui")) {
+            try {
+                GuiType type = GuiType.valueOf(args[1].toUpperCase());
+                evntExample.openGuiExample(player, type);
+                player.sendMessage("Opening GUI...");
+            } catch (IllegalArgumentException e) {
+                player.sendMessage("Invalid GUI menu type!");
+                player.sendMessage("Available GUI types: " + Arrays.toString(GuiType.values()));
+            }
+
             return true;
         }
 
-        EVNTExample evntExample = ApolloExamplePlugin.getPlugin().getEvntExample();
+        if (args.length != 1) {
+            this.sendUsage(player);
+            return true;
+        }
 
         switch (args[0].toLowerCase()) {
             case "overridehearttexture": {
@@ -72,7 +78,10 @@ public class EVNTCommand implements CommandExecutor {
             }
 
             case "opengui": {
-                evntExample.openGuiExample(player);
+                GuiType[] values = GuiType.values();
+                int randomGuiType = ThreadLocalRandom.current().nextInt(values.length);
+
+                evntExample.openGuiExample(player, values[randomGuiType]);
                 player.sendMessage("Opening GUI...");
                 break;
             }
@@ -120,21 +129,25 @@ public class EVNTCommand implements CommandExecutor {
             }
 
             default: {
-                player.sendMessage("Usage: /evnt <overrideHeartTexture" +
-                    "|resetHeartTexture" +
-                    "|openGui" +
-                    "|closeGui" +
-                    "|overrideCharacter" +
-                    "|overrideCharacterAbility" +
-                    "|overrideCharacterCosmetic" +
-                    "|overrideCosmeticResource" +
-                    "|updateGameOverview" +
-                    "|updateStatusOverview>");
+                this.sendUsage(player);
                 break;
             }
         }
 
         return true;
+    }
+
+    private void sendUsage(CommandSender sender) {
+        sender.sendMessage("/evnt overrideHeartTexture");
+        sender.sendMessage("/evnt resetHeartTexture");
+        sender.sendMessage("/evnt openGui <type>");
+        sender.sendMessage("/evnt closeGui");
+        sender.sendMessage("/evnt overrideCharacter");
+        sender.sendMessage("/evnt overrideCharacterAbility");
+        sender.sendMessage("/evnt overrideCharacterCosmetic");
+        sender.sendMessage("/evnt overrideCosmeticResource");
+        sender.sendMessage("/evnt updateGameOverview");
+        sender.sendMessage("/evnt updateStatusOverview");
     }
 
 }

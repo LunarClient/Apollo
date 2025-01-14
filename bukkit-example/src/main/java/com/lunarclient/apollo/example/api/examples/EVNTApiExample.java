@@ -73,14 +73,11 @@ public class EVNTApiExample extends EVNTExample {
     }
 
     @Override
-    public void openGuiExample(Player viewer) {
+    public void openGuiExample(Player viewer, GuiType type) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
-            GuiType[] values = GuiType.values();
-            int randomGuiType = ThreadLocalRandom.current().nextInt(values.length);
-
-            this.evntModule.openGui(apolloPlayer, values[randomGuiType]);
+            this.evntModule.openGui(apolloPlayer, type);
         });
     }
 

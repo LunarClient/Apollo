@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.example.common.modules.impl;
 
 import com.lunarclient.apollo.example.common.modules.ApolloExample;
+import com.lunarclient.apollo.module.evnt.GuiType;
 import org.bukkit.entity.Player;
 
 public abstract class EVNTExample extends ApolloExample {
@@ -32,7 +33,7 @@ public abstract class EVNTExample extends ApolloExample {
 
     public abstract void resetHeartTextureExample(Player viewer);
 
-    public abstract void openGuiExample(Player viewer);
+    public abstract void openGuiExample(Player viewer, GuiType type);
 
     public abstract void closeGuiExample(Player viewer);
 

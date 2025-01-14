@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.example.json.examples;
 
 import com.lunarclient.apollo.example.common.modules.impl.EVNTExample;
+import com.lunarclient.apollo.module.evnt.GuiType;
 import org.bukkit.entity.Player;
 
 public class EVNTJsonExample extends EVNTExample {
@@ -39,7 +40,7 @@ public class EVNTJsonExample extends EVNTExample {
     }
 
     @Override
-    public void openGuiExample(Player viewer) {
+    public void openGuiExample(Player viewer, GuiType type) {
         this.sendNotImplemented(viewer);
     }
 

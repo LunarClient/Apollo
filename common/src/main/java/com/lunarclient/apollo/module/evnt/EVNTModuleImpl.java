@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.module.evnt;
 
 import com.lunarclient.apollo.common.ApolloComponent;
+import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.evnt.v1.CharacterAbilityMessage;
 import com.lunarclient.apollo.evnt.v1.CloseGuiMessage;
 import com.lunarclient.apollo.evnt.v1.EventGameOverviewMessage;
@@ -47,9 +48,10 @@ import com.lunarclient.apollo.module.evnt.event.EventStatus;
 import com.lunarclient.apollo.module.evnt.event.EventTeam;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
-
+import java.awt.Color;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -60,6 +62,17 @@ import java.util.stream.Collectors;
  * @since 1.0.0 // TODO
  */
 public final class EVNTModuleImpl extends EVNTModule {
+
+    /**
+     * Creates a new instance of {@link EVNTModuleImpl}.
+     *
+     * @since 1.0.0
+     */
+    public EVNTModuleImpl() {
+        super();
+        this.handle(ApolloReceivePacketEvent.class, this::onCharacterSelection);
+    }
+
 
     @Override
     public void overrideHeartTexture(@NonNull Recipients recipients, int x, boolean hardcore) {
@@ -193,8 +206,25 @@ public final class EVNTModuleImpl extends EVNTModule {
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
+    private void onCharacterSelection(ApolloReceivePacketEvent event) {
+        event.unpack(OverrideCharacterMessage.class).ifPresent(packet -> {
+            ApolloPlayer apolloPlayer = event.getPlayer();
+
+            this.overrideCharacter(apolloPlayer, Character.builder()
+                    .playerUuid(apolloPlayer.getUniqueId())
+                    .type(this.fromProtobuf(packet.getCharacterType()))
+                    .color(Color.RED)
+                    .equipped(true)
+                .build());
+        });
+    }
+
     private com.lunarclient.apollo.evnt.v1.CharacterType toProtobuf(@NonNull CharacterType type) {
         return com.lunarclient.apollo.evnt.v1.CharacterType.forNumber(type.ordinal() + 1);
+    }
+
+    private CharacterType fromProtobuf(@NonNull com.lunarclient.apollo.evnt.v1.CharacterType type) {
+        return CharacterType.values()[type.ordinal() - 1];
     }
 
     private com.lunarclient.apollo.evnt.v1.CharacterAbilityMessage toProtobuf(@NonNull CharacterAbility ability) {
