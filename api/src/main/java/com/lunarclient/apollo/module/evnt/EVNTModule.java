@@ -126,6 +126,16 @@ public abstract class EVNTModule extends ApolloModule {
         .node("regen-exhaustion-heal-amount").type(TypeToken.get(Integer.class))
         .defaultValue(3).min(0).max(5).build();
 
+    public static final SimpleOption<Boolean> DISABLE_NOTIFY_MISMATCH = Option.<Boolean>builder()
+        .comment("Set to 'true' to disable notifications for players using the wrong branch or version, otherwise 'false'.")
+        .node("disable-notify-mismatch").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    public static final SimpleOption<Boolean> DEBUG = Option.<Boolean>builder()
+        .comment("Used for internal testing only.")
+        .node("debug").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
     EVNTModule() {
         this.registerOptions(
             EVNTModule.DISABLE_ENDERPEARL_COOLDOWN,
@@ -143,7 +153,9 @@ public abstract class EVNTModule extends ApolloModule {
             EVNTModule.OVERRIDE_REGEN,
             EVNTModule.REGEN_INTERVAL,
             EVNTModule.REGEN_HEAL_AMOUNT,
-            EVNTModule.REGEN_EXHAUSTION_HEAL_AMOUNT
+            EVNTModule.REGEN_EXHAUSTION_HEAL_AMOUNT,
+            EVNTModule.DISABLE_NOTIFY_MISMATCH,
+            EVNTModule.DEBUG
         );
     }
 

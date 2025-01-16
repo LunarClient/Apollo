@@ -23,8 +23,11 @@
  */
 package com.lunarclient.apollo.module.evnt;
 
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.client.version.MinecraftVersion;
 import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
+import com.lunarclient.apollo.event.player.ApolloPlayerHandshakeEvent;
 import com.lunarclient.apollo.evnt.v1.CharacterAbilityMessage;
 import com.lunarclient.apollo.evnt.v1.CloseGuiMessage;
 import com.lunarclient.apollo.evnt.v1.EventGameOverviewMessage;
@@ -55,6 +58,9 @@ import java.awt.Color;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 
 /**
  * Provides the EVNT module.
@@ -71,6 +77,7 @@ public final class EVNTModuleImpl extends EVNTModule {
     public EVNTModuleImpl() {
         super();
         this.handle(ApolloReceivePacketEvent.class, this::onCharacterSelection);
+        this.handle(ApolloPlayerHandshakeEvent.class, this::onApolloPlayerHandshake);
     }
 
 
@@ -207,6 +214,10 @@ public final class EVNTModuleImpl extends EVNTModule {
     }
 
     private void onCharacterSelection(ApolloReceivePacketEvent event) {
+        if (!this.getOptions().get(EVNTModule.DEBUG)) {
+            return;
+        }
+
         event.unpack(OverrideCharacterMessage.class).ifPresent(packet -> {
             ApolloPlayer apolloPlayer = event.getPlayer();
 
@@ -217,6 +228,36 @@ public final class EVNTModuleImpl extends EVNTModule {
                     .equipped(true)
                 .build());
         });
+    }
+
+    private void onApolloPlayerHandshake(ApolloPlayerHandshakeEvent event) {
+        if (this.getOptions().get(EVNTModule.DISABLE_NOTIFY_MISMATCH)) {
+            return;
+        }
+
+        boolean isRunningCorrectVersion = event.getMinecraftVersion() == MinecraftVersion.V1_18_2;
+        boolean isOnCorrectBranch = event.getLunarClientVersion().getGitBranch().contains("evnt");
+
+        if (isRunningCorrectVersion && isOnCorrectBranch) {
+            return;
+        }
+
+        String state = null;
+        if (!isRunningCorrectVersion && !isOnCorrectBranch) {
+            state = "branch and version!";
+        } else if (!isRunningCorrectVersion) {
+            state = "version!";
+        } else {
+            state = "branch!";
+        }
+
+        Component message = Component.text(event.getPlayer().getName(), NamedTextColor.RED)
+            .append(Component.text(" has connected without using the correct ", NamedTextColor.GRAY))
+            .append(Component.text(state, NamedTextColor.RED, TextDecoration.BOLD));
+
+        Apollo.getPlayerManager().getPlayers().stream()
+            .filter(player -> player.hasPermission("apollo.evnt.notify"))
+            .forEach(player -> player.sendMessage(message));
     }
 
     private com.lunarclient.apollo.evnt.v1.CharacterType toProtobuf(@NonNull CharacterType type) {
