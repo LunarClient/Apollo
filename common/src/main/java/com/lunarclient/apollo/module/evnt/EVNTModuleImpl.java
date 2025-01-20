@@ -149,6 +149,11 @@ public final class EVNTModuleImpl extends EVNTModule {
     }
 
     @Override
+    public void overrideCharacterSuitResources(@NonNull Recipients recipients, @NonNull List<Integer> cosmeticIds) {
+        // TODO
+    }
+
+    @Override
     public void overrideCharacterCosmetic(@NonNull Recipients recipients, @NonNull UUID playerUuid, @NonNull CharacterType type) {
         OverrideCharacterCosmeticMessage message = OverrideCharacterCosmeticMessage.newBuilder()
             .setPlayerUuid(NetworkTypes.toProtobuf(playerUuid))
@@ -177,6 +182,11 @@ public final class EVNTModuleImpl extends EVNTModule {
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void overrideCharacterSuit(@NonNull Recipients recipients, @NonNull Suit suit) {
+        // TODO
     }
 
     @Override

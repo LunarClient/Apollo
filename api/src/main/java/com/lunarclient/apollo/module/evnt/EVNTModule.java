@@ -176,11 +176,15 @@ public abstract class EVNTModule extends ApolloModule {
 
     public abstract void updateCosmetics(Recipients recipients, List<String> models, List<String> animations);
 
+    public abstract void overrideCharacterSuitResources(Recipients recipients, List<Integer> cosmeticIds);
+
     public abstract void overrideCharacterCosmetic(Recipients recipients, UUID playerUuid, CharacterType type);
 
     public abstract void overrideCharacterAbility(Recipients recipients, List<CharacterAbility> abilities);
 
     public abstract void overrideCharacter(Recipients recipients, Character character);
+
+    public abstract void overrideCharacterSuit(Recipients recipients, Suit suit);
 
     public abstract void updateGameOverview(Recipients recipients, EventGame game);
 
