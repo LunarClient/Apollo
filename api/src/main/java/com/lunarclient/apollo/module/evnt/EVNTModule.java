@@ -126,6 +126,11 @@ public abstract class EVNTModule extends ApolloModule {
         .node("regen-exhaustion-heal-amount").type(TypeToken.get(Integer.class))
         .defaultValue(3).min(0).max(5).build();
 
+    public static final SimpleOption<Boolean> DISABLE_OPTIFINE_CAPES = Option.<Boolean>builder()
+        .comment("Set to 'true' to disable optifine capes, otherwise 'false'.")
+        .node("disable-optifine-capes").type(TypeToken.get(Boolean.class))
+        .defaultValue(true).build();
+
     public static final SimpleOption<Boolean> DISABLE_NOTIFY_MISMATCH = Option.<Boolean>builder()
         .comment("Set to 'true' to disable notifications for players using the wrong branch or version, otherwise 'false'.")
         .node("disable-notify-mismatch").type(TypeToken.get(Boolean.class))
@@ -154,6 +159,7 @@ public abstract class EVNTModule extends ApolloModule {
             EVNTModule.REGEN_INTERVAL,
             EVNTModule.REGEN_HEAL_AMOUNT,
             EVNTModule.REGEN_EXHAUSTION_HEAL_AMOUNT,
+            EVNTModule.DISABLE_OPTIFINE_CAPES,
             EVNTModule.DISABLE_NOTIFY_MISMATCH,
             EVNTModule.DEBUG
         );
