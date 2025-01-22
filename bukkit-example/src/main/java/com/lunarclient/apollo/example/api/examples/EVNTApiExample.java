@@ -102,6 +102,21 @@ public class EVNTApiExample extends EVNTExample {
     }
 
     @Override
+    public void overrideCharacterSuitExample(Player viewer, CharacterType type, String suitName) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            this.evntModule.overrideCharacter(apolloPlayer, Character.builder()
+                    .playerUuid(apolloPlayer.getUniqueId())
+                    .type(type)
+                    .color(Color.RED)
+                    .equipped(true)
+                    .suitName(suitName)
+                .build());
+        });
+    }
+
+    @Override
     public void overrideCharacterAbilityExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
@@ -143,6 +158,15 @@ public class EVNTApiExample extends EVNTExample {
                 .texturePath(null)
                 .animationPath(null)
                 .build());
+        });
+    }
+
+    @Override
+    public void overrideCharacterSuitAccessExample(Player viewer, CharacterType type, List<String> suitNames) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            this.evntModule.overrideCharacterSuitAccess(apolloPlayer, type, suitNames);
         });
     }
 

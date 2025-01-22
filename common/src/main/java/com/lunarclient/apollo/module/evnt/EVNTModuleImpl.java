@@ -40,6 +40,7 @@ import com.lunarclient.apollo.evnt.v1.OpenGuiMessage;
 import com.lunarclient.apollo.evnt.v1.OverrideCharacterAbilityMessage;
 import com.lunarclient.apollo.evnt.v1.OverrideCharacterCosmeticMessage;
 import com.lunarclient.apollo.evnt.v1.OverrideCharacterMessage;
+import com.lunarclient.apollo.evnt.v1.OverrideCharacterSuitResourcesMessage;
 import com.lunarclient.apollo.evnt.v1.OverrideCosmeticResourcesMessage;
 import com.lunarclient.apollo.evnt.v1.OverrideHeartTextureMessage;
 import com.lunarclient.apollo.evnt.v1.ResetHeartTextureMessage;
@@ -61,6 +62,7 @@ import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Provides the EVNT module.
@@ -149,17 +151,31 @@ public final class EVNTModuleImpl extends EVNTModule {
     }
 
     @Override
-    public void overrideCharacterSuitResources(@NonNull Recipients recipients, @NonNull List<Integer> cosmeticIds) {
-        // TODO
+    public void overrideCharacterSuitAccess(@NonNull Recipients recipients, @NonNull CharacterType type, @NonNull List<String> suitNames) {
+        OverrideCharacterSuitResourcesMessage message = OverrideCharacterSuitResourcesMessage.newBuilder()
+            .setCharacterType(this.toProtobuf(type))
+            .addAllSuitNames(suitNames)
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
     public void overrideCharacterCosmetic(@NonNull Recipients recipients, @NonNull UUID playerUuid, @NonNull CharacterType type) {
-        OverrideCharacterCosmeticMessage message = OverrideCharacterCosmeticMessage.newBuilder()
-            .setPlayerUuid(NetworkTypes.toProtobuf(playerUuid))
-            .setCharacterType(this.toProtobuf(type))
-            .build();
+        this.overrideCharacterCosmetic(recipients, playerUuid, type, null);
+    }
 
+    @Override
+    public void overrideCharacterCosmetic(@NonNull Recipients recipients, @NonNull UUID playerUuid, @NonNull CharacterType type, @Nullable String suitName) {
+        OverrideCharacterCosmeticMessage.Builder builder = OverrideCharacterCosmeticMessage.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(playerUuid))
+            .setCharacterType(this.toProtobuf(type));
+
+        if (suitName != null) {
+            builder.setSuitName(suitName);
+        }
+
+        OverrideCharacterCosmeticMessage message = builder.build();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
@@ -174,19 +190,18 @@ public final class EVNTModuleImpl extends EVNTModule {
 
     @Override
     public void overrideCharacter(@NonNull Recipients recipients, @NonNull Character character) {
-        OverrideCharacterMessage message = OverrideCharacterMessage.newBuilder()
+        OverrideCharacterMessage.Builder builder = OverrideCharacterMessage.newBuilder()
             .setPlayerUuid(NetworkTypes.toProtobuf(character.getPlayerUuid()))
             .setCharacterType(this.toProtobuf(character.getType()))
             .setColor(NetworkTypes.toProtobuf(character.getColor()))
-            .setEquipped(character.isEquipped())
-            .build();
+            .setEquipped(character.isEquipped());
 
+        if (character.getSuitName() != null) {
+            builder.setSuitName(character.getSuitName());
+        }
+
+        OverrideCharacterMessage message = builder.build();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
-    }
-
-    @Override
-    public void overrideCharacterSuit(@NonNull Recipients recipients, @NonNull Suit suit) {
-        // TODO
     }
 
     @Override

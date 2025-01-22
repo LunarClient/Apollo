@@ -24,8 +24,10 @@
 package com.lunarclient.apollo.example.json.examples;
 
 import com.lunarclient.apollo.example.common.modules.impl.EVNTExample;
+import com.lunarclient.apollo.module.evnt.CharacterType;
 import com.lunarclient.apollo.module.evnt.GuiType;
 import org.bukkit.entity.Player;
+import java.util.List;
 
 public class EVNTJsonExample extends EVNTExample {
 
@@ -55,12 +57,22 @@ public class EVNTJsonExample extends EVNTExample {
     }
 
     @Override
+    public void overrideCharacterSuitExample(Player viewer, CharacterType type, String suitName) {
+        this.sendNotImplemented(viewer);
+    }
+
+    @Override
     public void overrideCharacterAbilityExample(Player viewer) {
         this.sendNotImplemented(viewer);
     }
 
     @Override
     public void overrideCharacterCosmeticExample(Player viewer) {
+        this.sendNotImplemented(viewer);
+    }
+
+    @Override
+    public void overrideCharacterSuitAccessExample(Player viewer, CharacterType type, List<String> suitNames) {
         this.sendNotImplemented(viewer);
     }
 

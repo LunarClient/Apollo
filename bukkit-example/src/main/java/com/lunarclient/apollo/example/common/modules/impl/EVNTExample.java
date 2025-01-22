@@ -24,8 +24,10 @@
 package com.lunarclient.apollo.example.common.modules.impl;
 
 import com.lunarclient.apollo.example.common.modules.ApolloExample;
+import com.lunarclient.apollo.module.evnt.CharacterType;
 import com.lunarclient.apollo.module.evnt.GuiType;
 import org.bukkit.entity.Player;
+import java.util.List;
 
 public abstract class EVNTExample extends ApolloExample {
 
@@ -39,9 +41,13 @@ public abstract class EVNTExample extends ApolloExample {
 
     public abstract void overrideCharacterExample(Player viewer);
 
+    public abstract void overrideCharacterSuitExample(Player viewer, CharacterType type, String suitName);
+
     public abstract void overrideCharacterAbilityExample(Player viewer);
 
     public abstract void overrideCharacterCosmeticExample(Player viewer);
+
+    public abstract void overrideCharacterSuitAccessExample(Player viewer, CharacterType type, List<String> suitNames);
 
     public abstract void overrideCharacterResources(Player viewer);
 

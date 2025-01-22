@@ -25,6 +25,7 @@ package com.lunarclient.apollo.module.evnt;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.util.UUID;
 
@@ -49,5 +50,7 @@ public final class Character {
     Color color;
 
     boolean equipped;
+
+    @Nullable String suitName;
 
 }

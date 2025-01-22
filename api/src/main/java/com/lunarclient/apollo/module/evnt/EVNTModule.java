@@ -129,7 +129,7 @@ public abstract class EVNTModule extends ApolloModule {
     public static final SimpleOption<Boolean> DISABLE_OPTIFINE_CAPES = Option.<Boolean>builder()
         .comment("Set to 'true' to disable optifine capes, otherwise 'false'.")
         .node("disable-optifine-capes").type(TypeToken.get(Boolean.class))
-        .defaultValue(true).build();
+        .defaultValue(true).notifyClient().build();
 
     public static final SimpleOption<Boolean> DISABLE_NOTIFY_MISMATCH = Option.<Boolean>builder()
         .comment("Set to 'true' to disable notifications for players using the wrong branch or version, otherwise 'false'.")
@@ -182,15 +182,15 @@ public abstract class EVNTModule extends ApolloModule {
 
     public abstract void updateCosmetics(Recipients recipients, List<String> models, List<String> animations);
 
-    public abstract void overrideCharacterSuitResources(Recipients recipients, List<Integer> cosmeticIds);
+    public abstract void overrideCharacterSuitAccess(Recipients recipients, CharacterType type, List<String> suitNames);
 
     public abstract void overrideCharacterCosmetic(Recipients recipients, UUID playerUuid, CharacterType type);
+
+    public abstract void overrideCharacterCosmetic(Recipients recipients, UUID playerUuid, CharacterType type, String suitName);
 
     public abstract void overrideCharacterAbility(Recipients recipients, List<CharacterAbility> abilities);
 
     public abstract void overrideCharacter(Recipients recipients, Character character);
-
-    public abstract void overrideCharacterSuit(Recipients recipients, Suit suit);
 
     public abstract void updateGameOverview(Recipients recipients, EventGame game);
 

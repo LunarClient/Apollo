@@ -25,13 +25,16 @@ package com.lunarclient.apollo.example.commands;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.common.modules.impl.EVNTExample;
+import com.lunarclient.apollo.module.evnt.CharacterType;
 import com.lunarclient.apollo.module.evnt.GuiType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EVNTCommand implements CommandExecutor {
@@ -45,6 +48,34 @@ public class EVNTCommand implements CommandExecutor {
 
         Player player = (Player) sender;
         EVNTExample evntExample = ApolloExamplePlugin.getPlugin().getEvntExample();
+
+        if (args.length > 2) {
+            CharacterType type;
+            try {
+                type = CharacterType.valueOf(args[1]);
+            } catch (IllegalArgumentException e) {
+                player.sendMessage("Invalid Character Type!");
+                player.sendMessage("Available Character types: " + Arrays.toString(CharacterType.values()));
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("overridesuitaccess")) {
+                List<String> suits = new ArrayList<>();
+                for (int i = 2; i < args.length; i++) {
+                    suits.add(args[i]);
+                }
+
+                evntExample.overrideCharacterSuitAccessExample(player, type, suits);
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("overridesuit")) {
+                evntExample.overrideCharacterSuitExample(player, type, args[2]);
+                return true;
+            }
+
+            return true;
+        }
 
         if (args.length == 2 && args[0].equalsIgnoreCase("opengui")) {
             try {
@@ -148,6 +179,8 @@ public class EVNTCommand implements CommandExecutor {
         sender.sendMessage("/evnt overrideCosmeticResource");
         sender.sendMessage("/evnt updateGameOverview");
         sender.sendMessage("/evnt updateStatusOverview");
+        sender.sendMessage("/evnt overrideSuitAccess <type> <suits>");
+        sender.sendMessage("/evnt overrideSuit <type> <suit>");
     }
 
 }
