@@ -129,7 +129,7 @@ public abstract class EVNTModule extends ApolloModule {
     public static final SimpleOption<Boolean> DISABLE_OPTIFINE_CAPES = Option.<Boolean>builder()
         .comment("Set to 'true' to disable optifine capes, otherwise 'false'.")
         .node("disable-optifine-capes").type(TypeToken.get(Boolean.class))
-        .defaultValue(true).notifyClient().build();
+        .defaultValue(false).notifyClient().build();
 
     public static final SimpleOption<Boolean> DISABLE_NOTIFY_MISMATCH = Option.<Boolean>builder()
         .comment("Set to 'true' to disable notifications for players using the wrong branch or version, otherwise 'false'.")
