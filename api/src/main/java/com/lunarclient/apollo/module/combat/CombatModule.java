@@ -43,7 +43,7 @@ public final class CombatModule extends ApolloModule {
      * @since 1.0.4
      */
     public static final SimpleOption<Boolean> DISABLE_MISS_PENALTY = Option.<Boolean>builder()
-        .comment("Set to 'true' to disable the hit delay on 1.8, otherwise 'false'.")
+        .comment("Set to 'true' to disable the hit delay on versions above 1.8, otherwise 'false'.")
         .node("disable-miss-penalty").type(TypeToken.get(Boolean.class))
         .defaultValue(false).notifyClient().build();
 
