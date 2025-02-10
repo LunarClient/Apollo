@@ -27,6 +27,7 @@ public class ApolloPlayerProtoListener implements Listener {
             return;
         }
 
+        Player player = event.getPlayer();
         ProtobufPacketUtil.enableModules(player);
 
         // Sending the player's world name to the client is required for some modules

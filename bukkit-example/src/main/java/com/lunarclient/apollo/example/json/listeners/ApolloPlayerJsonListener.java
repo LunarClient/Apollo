@@ -72,7 +72,14 @@ public class ApolloPlayerJsonListener implements Listener {
             return;
         }
 
-        this.onApolloRegister(event.getPlayer());
+        Player player = event.getPlayer();
+        JsonPacketUtil.enableModules(player);
+
+        // Sending the player's world name to the client is required for some modules
+        JsonPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
+
+        this.playersRunningApollo.add(player.getUniqueId());
+        player.sendMessage("You are using LunarClient!");
     }
 
     @EventHandler
@@ -92,16 +99,6 @@ public class ApolloPlayerJsonListener implements Listener {
 
     private boolean isPlayerRunningApollo(Player player) {
         return this.playersRunningApollo.contains(player.getUniqueId());
-    }
-
-    private void onApolloRegister(Player player) {
-        JsonPacketUtil.enableModules(player);
-
-        // Sending the player's world name to the client is required for some modules
-        JsonPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
-
-        this.playersRunningApollo.add(player.getUniqueId());
-        player.sendMessage("You are using LunarClient!");
     }
 
 }
