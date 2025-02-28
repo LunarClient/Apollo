@@ -37,6 +37,7 @@ public class ApolloPlayerJsonListener implements Listener {
             return;
         }
 
+        Player player = event.getPlayer();
         JsonPacketUtil.enableModules(player);
 
         // Sending the player's world name to the client is required for some modules
