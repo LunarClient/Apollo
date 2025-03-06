@@ -149,6 +149,28 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * Shows the creation date of the item in the lore.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_CREATION_DATE = SimpleOption.<Boolean>builder()
+        .comment("Shows the creation date of the item in the lore.")
+        .node("skyblock", "sky-block-creation-date").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows the item's SkyBlock ID in the lore.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_ITEM_ID = SimpleOption.<Boolean>builder()
+        .comment("Shows the item's SkyBlock ID in the lore.")
+        .node("skyblock", "sky-block-item-id").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Makes Giant HP more visible by showing their HP at their feet.
      *
      * @since 1.1.5
@@ -156,6 +178,16 @@ public final class ModSkyblock {
     public static final SimpleOption<Boolean> SHOW_GIANT_HPAT_FEET = SimpleOption.<Boolean>builder()
         .comment("Makes Giant HP more visible by showing their HP at their feet.")
         .node("skyblock", "show-giant-h-p-at-feet").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> DUNGEON_SECRETS_COLLECTED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "dungeon-secrets-collected").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -305,6 +337,18 @@ public final class ModSkyblock {
      */
     public static final SimpleOption<Boolean> SHOW_KUUDRA_HEALTH = SimpleOption.<Boolean>builder()
         .node("skyblock", "show-kuudra-health").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Provides a general line thickness option that applies to most features with box/line rendering.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Float> SKYBLOCK_LINE_THICKNESS = NumberOption.<Float>number()
+        .comment("Provides a general line thickness option that applies to most features with box/line rendering.")
+        .node("skyblock", "skyblock-line-thickness").type(TypeToken.get(Float.class))
+        .min(1.0F).max(10.0F)
         .notifyClient()
         .build();
 
