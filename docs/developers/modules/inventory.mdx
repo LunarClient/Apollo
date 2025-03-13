@@ -60,6 +60,7 @@ public void inventoryModuleNMSExample(Player player) {
         ChatColor.BLUE.toString() + ChatColor.BOLD + "COPY TO CLIPBOARD"
     );
 
+    copyToClipboardItem = ItemUtil.addTag(copyToClipboardItem, "unclickable", true);
     inventory.setItem(14, ItemUtil.addTag(copyToClipboardItem, "copyToClipboard", "lunarclient.com"));
 
     ItemStack openUrlItem = ItemUtil.itemWithName(
@@ -67,6 +68,7 @@ public void inventoryModuleNMSExample(Player player) {
         ChatColor.GOLD.toString() + ChatColor.BOLD + "OPEN URL"
     );
 
+    openUrlItem = ItemUtil.addTag(openUrlItem, "unclickable", true);
     inventory.setItem(17, ItemUtil.addTag(openUrlItem, "openUrl", "https://lunarclient.com"));
 
     ItemStack suggestCommandItem = ItemUtil.itemWithName(
@@ -74,6 +76,7 @@ public void inventoryModuleNMSExample(Player player) {
         ChatColor.GREEN.toString() + ChatColor.BOLD + "SUGGEST COMMAND"
     );
 
+    suggestCommandItem = ItemUtil.addTag(suggestCommandItem, "unclickable", true);
     inventory.setItem(29, ItemUtil.addTag(suggestCommandItem, "suggestCommand", "/apollo"));
 
     ItemStack runCommandItem = ItemUtil.itemWithName(
@@ -81,6 +84,7 @@ public void inventoryModuleNMSExample(Player player) {
         ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "RUN COMMAND"
     );
 
+    runCommandItem = ItemUtil.addTag(runCommandItem, "unclickable", true);
     inventory.setItem(33, ItemUtil.addTag(runCommandItem, "runCommand", "/apollo"));
 
     player.openInventory(inventory);
