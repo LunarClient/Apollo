@@ -1,0 +1,124 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+import { Callout } from 'nextra-theme-docs'
+
+# Inventory Module
+
+## Overview
+
+## Integration
+
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Minecraft Commands', 'NBT (1.8)']}>
+
+<Tab>
+
+#### Unclickable Item
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:stone",Count:1b,tag:{display:{Name:"§c§lUNCLICKABLE"},lunar:{unclickable:true}}}}`
+
+#### Copy To Clipboard Item
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:paper",Count:1b,tag:{display:{Name:"§9§lCOPY TO CLIPBOARD"},lunar:{copyToClipboard:"lunarclient.com"}}}}`
+
+#### Open URL Item
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:torch",Count:1b,tag:{display:{Name:"§6§lOPEN URL"},lunar:{openUrl:"https://lunarclient.com"}}}}`
+
+#### Suggest Command Item
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:book",Count:1b,tag:{display:{Name:"§2§lSUGGEST COMMAND"},lunar:{suggestCommand:"/apollo"}}}}`
+
+#### Run Command Item
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:writable_book",Count:1b,tag:{display:{Name:"§d§lRUN COMMAND"},lunar:{runCommand:"/apollo"}}}}`
+
+</Tab>
+
+<Tab>
+
+### Item Creation
+
+```java
+public void inventoryModuleNMSExample(Player player) {
+    Inventory inventory = Bukkit.createInventory(player, 5 * 9);
+
+    ItemStack unclickableItem = ItemUtil.itemWithName(
+        Material.STONE,
+        ChatColor.RED.toString() + ChatColor.BOLD + "UNCLICKABLE"
+    );
+
+    inventory.setItem(11, ItemUtil.addTag(unclickableItem, "unclickable", true));
+
+    ItemStack copyToClipboardItem = ItemUtil.itemWithName(
+        Material.PAPER,
+        ChatColor.BLUE.toString() + ChatColor.BOLD + "COPY TO CLIPBOARD"
+    );
+
+    inventory.setItem(14, ItemUtil.addTag(copyToClipboardItem, "copyToClipboard", "lunarclient.com"));
+
+    ItemStack openUrlItem = ItemUtil.itemWithName(
+        Material.TORCH,
+        ChatColor.GOLD.toString() + ChatColor.BOLD + "OPEN URL"
+    );
+
+    inventory.setItem(17, ItemUtil.addTag(openUrlItem, "openUrl", "https://lunarclient.com"));
+
+    ItemStack suggestCommandItem = ItemUtil.itemWithName(
+        Material.BOOK,
+        ChatColor.GREEN.toString() + ChatColor.BOLD + "SUGGEST COMMAND"
+    );
+
+    inventory.setItem(29, ItemUtil.addTag(suggestCommandItem, "suggestCommand", "/apollo"));
+
+    ItemStack runCommandItem = ItemUtil.itemWithName(
+        Material.BOOK_AND_QUILL,
+        ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "RUN COMMAND"
+    );
+
+    inventory.setItem(33, ItemUtil.addTag(runCommandItem, "runCommand", "/apollo"));
+
+    player.openInventory(inventory);
+}
+```
+
+### Helper Methods
+
+```java
+public static ItemStack itemWithName(Material material, String name) {
+    ItemStack item = new ItemStack(material);
+
+    ItemMeta itemMeta = item.getItemMeta();
+    itemMeta.setDisplayName(name);
+
+    item.setItemMeta(itemMeta);
+    return item;
+}
+
+public static ItemStack addTag(ItemStack item, String key, Object value) {
+    net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
+    NBTTagCompound tag = nmsItem.hasTag() ? nmsItem.getTag() : new NBTTagCompound();
+
+    NBTTagCompound lunarTag = tag.getCompound("lunar");
+    if (lunarTag == null) {
+        lunarTag = new NBTTagCompound();
+    }
+
+    if (value instanceof Integer) {
+        lunarTag.setInt(key, (Integer) value);
+    } else if (value instanceof Double) {
+        lunarTag.setDouble(key, (Double) value);
+    } else if (value instanceof Float) {
+        lunarTag.setFloat(key, (Float) value);
+    } else if (value instanceof Boolean) {
+        lunarTag.setBoolean(key, (Boolean) value);
+    } else if (value instanceof String) {
+        lunarTag.setString(key, (String) value);
+    }
+
+    tag.set("lunar", lunarTag);
+    nmsItem.setTag(tag);
+
+    return CraftItemStack.asBukkitCopy(nmsItem);
+}
+```
+
+</Tab>
+
+</Tabs>

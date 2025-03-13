@@ -58,14 +58,17 @@ import com.lunarclient.apollo.example.common.commands.module.ColoredFireCommand;
 import com.lunarclient.apollo.example.common.commands.module.CombatCommand;
 import com.lunarclient.apollo.example.common.commands.module.CooldownCommand;
 import com.lunarclient.apollo.example.common.commands.module.EntityCommand;
+import com.lunarclient.apollo.example.common.commands.module.GlintCommand;
 import com.lunarclient.apollo.example.common.commands.module.GlowCommand;
 import com.lunarclient.apollo.example.common.commands.module.HologramCommand;
+import com.lunarclient.apollo.example.common.commands.module.InventoryCommand;
 import com.lunarclient.apollo.example.common.commands.module.LimbCommand;
 import com.lunarclient.apollo.example.common.commands.module.ModSettingsCommand;
 import com.lunarclient.apollo.example.common.commands.module.NametagCommand;
 import com.lunarclient.apollo.example.common.commands.module.NickHiderCommand;
 import com.lunarclient.apollo.example.common.commands.module.NotificationCommand;
 import com.lunarclient.apollo.example.common.commands.module.RichPresenceCommand;
+import com.lunarclient.apollo.example.common.commands.module.SaturationCommand;
 import com.lunarclient.apollo.example.common.commands.module.ServerRuleCommand;
 import com.lunarclient.apollo.example.common.commands.module.StaffModCommand;
 import com.lunarclient.apollo.example.common.commands.module.StopwatchCommand;
@@ -84,14 +87,17 @@ import com.lunarclient.apollo.example.common.modules.impl.ColoredFireExample;
 import com.lunarclient.apollo.example.common.modules.impl.CombatExample;
 import com.lunarclient.apollo.example.common.modules.impl.CooldownExample;
 import com.lunarclient.apollo.example.common.modules.impl.EntityExample;
+import com.lunarclient.apollo.example.common.modules.impl.GlintExample;
 import com.lunarclient.apollo.example.common.modules.impl.GlowExample;
 import com.lunarclient.apollo.example.common.modules.impl.HologramExample;
+import com.lunarclient.apollo.example.common.modules.impl.InventoryExample;
 import com.lunarclient.apollo.example.common.modules.impl.LimbExample;
 import com.lunarclient.apollo.example.common.modules.impl.ModSettingsExample;
 import com.lunarclient.apollo.example.common.modules.impl.NametagExample;
 import com.lunarclient.apollo.example.common.modules.impl.NickHiderExample;
 import com.lunarclient.apollo.example.common.modules.impl.NotificationExample;
 import com.lunarclient.apollo.example.common.modules.impl.RichPresenceExample;
+import com.lunarclient.apollo.example.common.modules.impl.SaturationExample;
 import com.lunarclient.apollo.example.common.modules.impl.ServerRuleExample;
 import com.lunarclient.apollo.example.common.modules.impl.StaffModExample;
 import com.lunarclient.apollo.example.common.modules.impl.StopwatchExample;
@@ -177,14 +183,17 @@ public class ApolloExamplePlugin extends JavaPlugin {
     private CombatExample combatExample;
     private CooldownExample cooldownExample;
     private EntityExample entityExample;
+    private GlintExample glintExample;
     private GlowExample glowExample;
     private HologramExample hologramExample;
+    private InventoryExample inventoryExample;
     private LimbExample limbExample;
     private ModSettingsExample modSettingsExample;
     private NametagExample nametagExample;
     private NickHiderExample nickHiderExample;
     private NotificationExample notificationExample;
     private RichPresenceExample richPresenceExample;
+    private SaturationExample saturationExample;
     private ServerRuleExample serverRuleExample;
     private StaffModExample staffModExample;
     private StopwatchExample stopwatchExample;
@@ -222,14 +231,17 @@ public class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("combat").setExecutor(new CombatCommand());
         this.getCommand("cooldown").setExecutor(new CooldownCommand());
         this.getCommand("entity").setExecutor(new EntityCommand());
+        this.getCommand("glint").setExecutor(new GlintCommand());
         this.getCommand("glow").setExecutor(new GlowCommand());
         this.getCommand("hologram").setExecutor(new HologramCommand());
+        this.getCommand("inventory").setExecutor(new InventoryCommand());
         this.getCommand("limb").setExecutor(new LimbCommand());
         this.getCommand("modsettings").setExecutor(new ModSettingsCommand());
         this.getCommand("nametag").setExecutor(new NametagCommand());
         this.getCommand("nickhider").setExecutor(new NickHiderCommand());
         this.getCommand("notification").setExecutor(new NotificationCommand());
         this.getCommand("richpresence").setExecutor(new RichPresenceCommand());
+        this.getCommand("saturation").setExecutor(new SaturationCommand());
         this.getCommand("serverrule").setExecutor(new ServerRuleCommand());
         this.getCommand("staffmod").setExecutor(new StaffModCommand());
         this.getCommand("stopwatch").setExecutor(new StopwatchCommand());
@@ -266,6 +278,10 @@ public class ApolloExamplePlugin extends JavaPlugin {
 
     private void registerModuleExamples() {
         this.spamPacketDebug = new SpamPacketDebug();
+
+        this.glintExample = new GlintExample();
+        this.inventoryExample = new InventoryExample();
+        this.saturationExample = new SaturationExample();
 
         switch (TYPE) {
             case API: {
