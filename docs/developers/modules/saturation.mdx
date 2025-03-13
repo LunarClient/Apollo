@@ -1,3 +1,4 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
 import { Callout } from 'nextra-theme-docs'
 
 # Saturation Module
@@ -29,3 +30,104 @@ You set a custom NBT, with the tag `lunar{hunger:{value}}` then set the `{value}
 ### How to set custom saturation level of an item
 
 You set a custom NBT, with the tag `lunar{saturation:{value}}` then set the `{value}` to the value of the saturation level you want to display on the item. The value should be a float.
+
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Minecraft Commands', 'NBT (1.8)']}>
+
+<Tab>
+
+**Custom Saturation & Hunger**
+
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:apple",Count:1b,tag:{lunar:{hunger:22,saturation:3}}}}`
+
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:apple",Count:1b,tag:{lunar:{hunger:7,saturation:7}}}}`
+
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:apple",Count:1b,tag:{lunar:{hunger:30,saturation:26}}}}`
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+  This example is compatible only with Spigot 1.8.
+</Callout>
+
+**Item Creation**
+
+```java
+public void saturationModuleNMSExample(Player player) {
+    Inventory inventory = Bukkit.createInventory(player, 3 * 9);
+
+    ItemStack apple = new ItemStack(Material.APPLE);
+    ItemUtil.addTag(apple, "hunger", 22);
+    ItemUtil.addTag(apple, "saturation", 3);
+
+    ItemStack apple2 = new ItemStack(Material.APPLE);
+    ItemUtil.addTag(apple, "hunger", 7);
+    ItemUtil.addTag(apple, "saturation", 7);
+
+    ItemStack apple3 = new ItemStack(Material.APPLE);
+    ItemUtil.addTag(apple, "hunger", 30);
+    ItemUtil.addTag(apple, "saturation", 26);
+
+    inventory.setItem(11, apple);
+    inventory.setItem(14, apple2);
+    inventory.setItem(17, apple3);
+
+    player.openInventory(inventory);
+}
+```
+
+**Helper Class**
+
+```java
+public final class ItemUtil {
+
+    public static ItemStack itemWithName(Material material, String name) {
+        ItemStack item = new ItemStack(material);
+
+        ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.setDisplayName(name);
+
+        item.setItemMeta(itemMeta);
+        return item;
+    }
+
+    public static ItemStack addTag(ItemStack item, String key, Object value) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
+        NBTTagCompound tag = nmsItem.hasTag() ? nmsItem.getTag() : new NBTTagCompound();
+
+        NBTTagCompound lunarTag = tag.getCompound("lunar");
+        if (lunarTag == null) {
+            lunarTag = new NBTTagCompound();
+        }
+
+        if (value instanceof Integer) {
+            lunarTag.setInt(key, (Integer) value);
+        } else if (value instanceof Double) {
+            lunarTag.setDouble(key, (Double) value);
+        } else if (value instanceof Float) {
+            lunarTag.setFloat(key, (Float) value);
+        } else if (value instanceof Boolean) {
+            lunarTag.setBoolean(key, (Boolean) value);
+        } else if (value instanceof String) {
+            lunarTag.setString(key, (String) value);
+        }
+
+        tag.set("lunar", lunarTag);
+        nmsItem.setTag(tag);
+
+        return CraftItemStack.asBukkitCopy(nmsItem);
+    }
+
+    private ItemUtil() {
+    }
+
+}
+```
+
+</Tab>
+
+</Tabs>
