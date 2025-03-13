@@ -45,10 +45,10 @@ public class InventoryExample extends NMSExample {
 
     public void inventoryModuleCommandExample(Player player) {
         player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:stone\",Count:1b,tag:{display:{Name:\"\\\"§c§lUNCLICKABLE\\\"\"},lunar:{unclickable:true}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:paper\",Count:1b,tag:{display:{Name:\"\\\"§9§lCOPY TO CLIPBOARD\\\"\"},lunar:{copyToClipboard:\"lunarclient.com\"}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:torch\",Count:1b,tag:{display:{Name:\"\\\"§6§lOPEN URL\\\"\"},lunar:{openUrl:\"https://lunarclient.com\"}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:book\",Count:1b,tag:{display:{Name:\"\\\"§2§lSUGGEST COMMAND\\\"\"},lunar:{suggestCommand:\"/apollo\"}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:writable_book\",Count:1b,tag:{display:{Name:\"\\\"§d§lRUN COMMAND\\\"\"},lunar:{runCommand:\"/apollo\"}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:paper\",Count:1b,tag:{display:{Name:\"\\\"§9§lCOPY TO CLIPBOARD\\\"\"},lunar:{unclickable:true,copyToClipboard:\"lunarclient.com\"}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:torch\",Count:1b,tag:{display:{Name:\"\\\"§6§lOPEN URL\\\"\"},lunar:{unclickable:true,openUrl:\"https://lunarclient.com\"}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:book\",Count:1b,tag:{display:{Name:\"\\\"§2§lSUGGEST COMMAND\\\"\"},lunar:{unclickable:true,suggestCommand:\"/apollo\"}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:writable_book\",Count:1b,tag:{display:{Name:\"\\\"§d§lRUN COMMAND\\\"\"},lunar:{unclickable:true,runCommand:\"/apollo\"}}}}");
     }
 
     public void inventoryModuleNMSExample(Player player) {
@@ -66,6 +66,7 @@ public class InventoryExample extends NMSExample {
             ChatColor.BLUE.toString() + ChatColor.BOLD + "COPY TO CLIPBOARD"
         );
 
+        copyToClipboardItem = ItemUtil.addTag(copyToClipboardItem, "unclickable", true);
         inventory.setItem(14, ItemUtil.addTag(copyToClipboardItem, "copyToClipboard", "lunarclient.com"));
 
         ItemStack openUrlItem = ItemUtil.itemWithName(
@@ -73,6 +74,7 @@ public class InventoryExample extends NMSExample {
             ChatColor.GOLD.toString() + ChatColor.BOLD + "OPEN URL"
         );
 
+        openUrlItem = ItemUtil.addTag(openUrlItem, "unclickable", true);
         inventory.setItem(17, ItemUtil.addTag(openUrlItem, "openUrl", "https://lunarclient.com"));
 
         ItemStack suggestCommandItem = ItemUtil.itemWithName(
@@ -80,6 +82,7 @@ public class InventoryExample extends NMSExample {
             ChatColor.GREEN.toString() + ChatColor.BOLD + "SUGGEST COMMAND"
         );
 
+        suggestCommandItem = ItemUtil.addTag(suggestCommandItem, "unclickable", true);
         inventory.setItem(29, ItemUtil.addTag(suggestCommandItem, "suggestCommand", "/apollo"));
 
         ItemStack runCommandItem = ItemUtil.itemWithName(
@@ -87,6 +90,7 @@ public class InventoryExample extends NMSExample {
             ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "RUN COMMAND"
         );
 
+        runCommandItem = ItemUtil.addTag(runCommandItem, "unclickable", true);
         inventory.setItem(33, ItemUtil.addTag(runCommandItem, "runCommand", "/apollo"));
 
         player.openInventory(inventory);
