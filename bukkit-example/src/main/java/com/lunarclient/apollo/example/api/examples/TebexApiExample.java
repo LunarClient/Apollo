@@ -28,8 +28,8 @@ import com.lunarclient.apollo.example.common.modules.impl.TebexExample;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.module.tebex.TebexModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.util.Optional;
 import org.bukkit.entity.Player;
+import java.util.Optional;
 
 public class TebexApiExample extends TebexExample {
 
@@ -38,13 +38,21 @@ public class TebexApiExample extends TebexExample {
     @Override
     public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent, String locale) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> {
-            if (apolloPlayer.getTebexEmbeddedCheckoutSupport() == TebexEmbeddedCheckoutSupport.UNSUPPORTED) {
-                return;
-            }
 
-            this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayer, basketIdent, locale);
-        });
+        if (apolloPlayerOpt.isPresent()) {
+            ApolloPlayer apolloPlayer = apolloPlayerOpt.get();
+            TebexEmbeddedCheckoutSupport embeddedCheckoutSupport = apolloPlayer.getTebexEmbeddedCheckoutSupport();
+
+            this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayerOpt.get(), basketIdent, locale);
+
+            if (embeddedCheckoutSupport == TebexEmbeddedCheckoutSupport.OVERLAY) {
+                viewer.sendMessage("Opening checkout as game overlay!");
+            } else {
+                viewer.sendMessage("Opening checkout in an external window!");
+            }
+        } else {
+            viewer.sendMessage("Complete your purchase at https://pay.tebex.io/" + basketIdent);
+        }
     }
 
 }
