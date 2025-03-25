@@ -1,3 +1,4 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
 import { Callout } from 'nextra-theme-docs'
 
 # Glint Module
@@ -28,3 +29,98 @@ You set a custom NBT, with the tag `{lunar:{glint:value}}` then set the `{value}
 Examples:
 - `{lunar:{glint:-65535}}` will display a light blue glint.
 - `{lunar:{glint:"#FFFF00"}}` will display a yellow glint.
+
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Minecraft Commands', 'NBT (1.8)']}>
+
+<Tab>
+
+**Custom Glint**
+
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:diamond_helmet",Count:1b,tag:{lunar:{glint:"#FF5733"}}}}`
+
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:diamond_helmet",Count:1b,tag:{lunar:{glint:"#33FF57"}}}}`
+
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:diamond_helmet",Count:1b,tag:{lunar:{glint:"#3357FF"}}}}`
+
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:diamond_helmet",Count:1b,tag:{lunar:{glint:"#FFD700"}}}}`
+
+`/summon item ~ ~1 ~ {Item:{id:"minecraft:diamond_helmet",Count:1b,tag:{lunar:{glint:"-16711936"}}}}`
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+  This example is compatible only with Spigot 1.8.
+</Callout>
+
+**Item Creation**
+
+```java
+public void glintModuleNMSExample(Player player) {
+    Inventory inventory = Bukkit.createInventory(player, 5 * 9);
+
+    inventory.setItem(11, ItemUtil.addTag(new ItemStack(Material.DIAMOND_HELMET), "glint", "#FF5733"));
+    inventory.setItem(14, ItemUtil.addTag(new ItemStack(Material.DIAMOND_HELMET), "glint", "#33FF57"));
+    inventory.setItem(17, ItemUtil.addTag(new ItemStack(Material.DIAMOND_HELMET), "glint", "#3357FF"));
+    inventory.setItem(29, ItemUtil.addTag(new ItemStack(Material.DIAMOND_HELMET), "glint", "#FFD700"));
+    inventory.setItem(33, ItemUtil.addTag(new ItemStack(Material.DIAMOND_HELMET), "glint", -16711936));
+
+    player.openInventory(inventory);
+}
+```
+
+**Helper Class**
+
+```java
+public final class ItemUtil {
+
+    public static ItemStack itemWithName(Material material, String name) {
+        ItemStack item = new ItemStack(material);
+
+        ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.setDisplayName(name);
+
+        item.setItemMeta(itemMeta);
+        return item;
+    }
+
+    public static ItemStack addTag(ItemStack item, String key, Object value) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
+        NBTTagCompound tag = nmsItem.hasTag() ? nmsItem.getTag() : new NBTTagCompound();
+
+        NBTTagCompound lunarTag = tag.getCompound("lunar");
+        if (lunarTag == null) {
+            lunarTag = new NBTTagCompound();
+        }
+
+        if (value instanceof Integer) {
+            lunarTag.setInt(key, (Integer) value);
+        } else if (value instanceof Double) {
+            lunarTag.setDouble(key, (Double) value);
+        } else if (value instanceof Float) {
+            lunarTag.setFloat(key, (Float) value);
+        } else if (value instanceof Boolean) {
+            lunarTag.setBoolean(key, (Boolean) value);
+        } else if (value instanceof String) {
+            lunarTag.setString(key, (String) value);
+        }
+
+        tag.set("lunar", lunarTag);
+        nmsItem.setTag(tag);
+
+        return CraftItemStack.asBukkitCopy(nmsItem);
+    }
+
+    private ItemUtil() {
+    }
+
+}
+```
+
+</Tab>
+
+</Tabs>
