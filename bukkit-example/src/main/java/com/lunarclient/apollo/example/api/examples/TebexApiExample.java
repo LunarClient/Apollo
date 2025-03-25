@@ -28,8 +28,8 @@ import com.lunarclient.apollo.example.common.modules.impl.TebexExample;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.module.tebex.TebexModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import org.bukkit.entity.Player;
 import java.util.Optional;
+import org.bukkit.entity.Player;
 
 public class TebexApiExample extends TebexExample {
 
