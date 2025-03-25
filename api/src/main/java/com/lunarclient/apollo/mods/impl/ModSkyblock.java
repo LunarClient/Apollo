@@ -151,7 +151,7 @@ public final class ModSkyblock {
     /**
      * Shows the creation date of the item in the lore.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> SKY_BLOCK_CREATION_DATE = SimpleOption.<Boolean>builder()
         .comment("Shows the creation date of the item in the lore.")
@@ -162,7 +162,7 @@ public final class ModSkyblock {
     /**
      * Shows the item's SkyBlock ID in the lore.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> SKY_BLOCK_ITEM_ID = SimpleOption.<Boolean>builder()
         .comment("Shows the item's SkyBlock ID in the lore.")
@@ -184,7 +184,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> DUNGEON_SECRETS_COLLECTED = SimpleOption.<Boolean>builder()
         .node("skyblock", "dungeon-secrets-collected").type(TypeToken.get(Boolean.class))
@@ -343,7 +343,7 @@ public final class ModSkyblock {
     /**
      * Provides a general line thickness option that applies to most features with box/line rendering.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final NumberOption<Float> SKYBLOCK_LINE_THICKNESS = NumberOption.<Float>number()
         .comment("Provides a general line thickness option that applies to most features with box/line rendering.")

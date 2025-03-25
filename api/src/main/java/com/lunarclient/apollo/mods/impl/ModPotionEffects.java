@@ -320,7 +320,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> EXCLUDE_RESISTANCE = SimpleOption.<Boolean>builder()
         .node("potion-effects", "exclude-resistance").type(TypeToken.get(Boolean.class))

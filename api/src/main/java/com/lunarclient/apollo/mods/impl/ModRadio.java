@@ -31,14 +31,14 @@ import java.awt.Color;
 /**
  * Enjoy some of your favorite songs provided by Styngr.
  *
- * @since %release_version%
+ * @since 1.1.7
  */
 public final class ModRadio {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("radio", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("radio", "scale").type(TypeToken.get(Float.class))
@@ -59,7 +59,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final NumberOption<Integer> VOLUME = NumberOption.<Integer>number()
         .node("radio", "volume").type(TypeToken.get(Integer.class))
@@ -70,7 +70,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> MUTE_RADIO = SimpleOption.<Boolean>builder()
         .node("radio", "mute-radio").type(TypeToken.get(Boolean.class))
@@ -80,7 +80,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("radio", "background").type(TypeToken.get(Boolean.class))
@@ -90,7 +90,7 @@ public final class ModRadio {
     /**
      * If this is disabled the background will change size with the text.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> STATIC_BACKGROUND_WIDTH = SimpleOption.<Boolean>builder()
         .comment("If this is disabled the background will change size with the text.")
@@ -101,7 +101,7 @@ public final class ModRadio {
     /**
      * If this is disabled the background will change size with the text.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> STATIC_BACKGROUND_HEIGHT = SimpleOption.<Boolean>builder()
         .comment("If this is disabled the background will change size with the text.")
@@ -112,7 +112,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final NumberOption<Integer> BACKGROUND_WIDTH = NumberOption.<Integer>number()
         .node("radio", "background-width").type(TypeToken.get(Integer.class))
@@ -123,7 +123,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final NumberOption<Integer> BACKGROUND_HEIGHT = NumberOption.<Integer>number()
         .node("radio", "background-height").type(TypeToken.get(Integer.class))
@@ -134,7 +134,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("radio", "border").type(TypeToken.get(Boolean.class))
@@ -144,7 +144,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("radio", "border-thickness").type(TypeToken.get(Float.class))
@@ -155,7 +155,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("radio", "border-color").type(TypeToken.get(Color.class))
@@ -165,7 +165,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("radio", "background-color").type(TypeToken.get(Color.class))
@@ -175,7 +175,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> SHOW_COVER_ART = SimpleOption.<Boolean>builder()
         .node("radio", "show-cover-art").type(TypeToken.get(Boolean.class))
@@ -185,7 +185,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> SHOW_PROGRESS = SimpleOption.<Boolean>builder()
         .node("radio", "show-progress").type(TypeToken.get(Boolean.class))
@@ -195,7 +195,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> SONG_SCROLL_ANIMATION = SimpleOption.<Boolean>builder()
         .node("radio", "song-scroll-animation").type(TypeToken.get(Boolean.class))
@@ -205,7 +205,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> SHOW_WHEN_NOTHING_PLAYING = SimpleOption.<Boolean>builder()
         .node("radio", "show-when-nothing-playing").type(TypeToken.get(Boolean.class))
@@ -215,7 +215,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> BOLD_ARIST_NAME = SimpleOption.<Boolean>builder()
         .node("radio", "bold-arist-name").type(TypeToken.get(Boolean.class))
@@ -225,7 +225,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> BOLD_SONG_NAME = SimpleOption.<Boolean>builder()
         .node("radio", "bold-song-name").type(TypeToken.get(Boolean.class))
@@ -235,7 +235,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> SHOW_DURATION = SimpleOption.<Boolean>builder()
         .node("radio", "show-duration").type(TypeToken.get(Boolean.class))
@@ -245,7 +245,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Boolean> SHOW_PLAY_BUTTON = SimpleOption.<Boolean>builder()
         .node("radio", "show-play-button").type(TypeToken.get(Boolean.class))
@@ -255,7 +255,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Color> SONG_NAME_TEXT_COLOR = SimpleOption.<Color>builder()
         .node("radio", "song-name-text-color").type(TypeToken.get(Color.class))
@@ -265,7 +265,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Color> ARTIST_NAME_TEXT_COLOR = SimpleOption.<Color>builder()
         .node("radio", "artist-name-text-color").type(TypeToken.get(Color.class))
@@ -275,7 +275,7 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.7
      */
     public static final SimpleOption<Color> RADIO_PROGRESS_BAR_COLOR = SimpleOption.<Color>builder()
         .node("radio", "radio-progress-bar-color").type(TypeToken.get(Color.class))
