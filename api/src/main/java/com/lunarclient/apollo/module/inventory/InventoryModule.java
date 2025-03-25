@@ -36,6 +36,10 @@ import org.jetbrains.annotations.ApiStatus;
 @ModuleDefinition(id = "inventory", name = "Inventory")
 public class InventoryModule extends ApolloModule {
 
+    protected InventoryModule() {
+        this.registerOptions(ApolloModule.ENABLE_OPTION_OFF);
+    }
+
     @Override
     public boolean isClientNotify() {
         return true;
