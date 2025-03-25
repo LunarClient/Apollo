@@ -192,11 +192,12 @@ public final class ModDayCounter {
         .build();
 
     /**
-     * No documentation available.
+     * If enabled, this will show the day of the world. If disabled, it will display your playtime in that world.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> USE_WORLD_TYPE = SimpleOption.<Boolean>builder()
+        .comment("If enabled, this will show the day of the world. If disabled, it will display your playtime in that world.")
         .node("day-counter", "use-world-type").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();

@@ -61,16 +61,6 @@ public final class ModCoordinates {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
-        .node("coordinates", "background").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("coordinates", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -83,6 +73,16 @@ public final class ModCoordinates {
      */
     public static final SimpleOption<Boolean> SHOW_WHILE_TYPING = SimpleOption.<Boolean>builder()
         .node("coordinates", "show-while-typing").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
+        .node("coordinates", "background").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
