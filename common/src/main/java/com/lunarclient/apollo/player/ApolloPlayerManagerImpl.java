@@ -141,7 +141,7 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
         try {
             checkoutSupportType = TebexEmbeddedCheckoutSupport.values()[message.getEmbeddedCheckoutSupportValue() - 1];
         } catch (ArrayIndexOutOfBoundsException e) {
-            checkoutSupportType = null;
+            checkoutSupportType = TebexEmbeddedCheckoutSupport.UNSUPPORTED;
         }
 
         EventBus.EventResult<ApolloPlayerHandshakeEvent> result = EventBus.getBus()

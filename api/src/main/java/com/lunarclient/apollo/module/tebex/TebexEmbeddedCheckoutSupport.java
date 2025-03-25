@@ -42,6 +42,13 @@ public enum TebexEmbeddedCheckoutSupport {
      *
      * @since 1.1.6
      */
-    WINDOW
+    WINDOW,
+
+    /**
+     * The checkout is not supported.
+     *
+     * @since 1.1.6
+     */
+    UNSUPPORTED
 
 }
