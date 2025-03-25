@@ -34,6 +34,7 @@ import com.lunarclient.apollo.packetenrichment.v1.PlayerChatCloseMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerChatOpenMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerInfo;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerUseItemMessage;
+import com.lunarclient.apollo.player.v1.EmbeddedCheckoutSupport;
 import com.lunarclient.apollo.player.v1.ModMessage;
 import com.lunarclient.apollo.player.v1.PlayerHandshakeMessage;
 import java.util.List;
@@ -76,6 +77,7 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
         MinecraftVersion minecraftVersion = message.getMinecraftVersion();
 
         LunarClientVersion lunarClientVersion = message.getLunarClientVersion();
+        EmbeddedCheckoutSupport checkoutSupport = message.getEmbeddedCheckoutSupport();
         String gitBranch = lunarClientVersion.getGitBranch();
         String gitCommit = lunarClientVersion.getGitCommit();
         String semVer = lunarClientVersion.getSemver();
