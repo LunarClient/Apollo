@@ -7,14 +7,14 @@ REMOTE_HOST="147.135.8.94"
 
 usage() {
   echo "Usage: $0 <server> [api|json|proto]"
-  echo "Available servers: bukkit, test"
+  echo "Available servers: apollo, test"
   echo "Optional module (for bukkit servers only): api (default), json, proto"
   exit 1
 }
 
 validate_server() {
   case "$1" in
-    bukkit|test) ;;
+    apollo|test) ;;
     *)
       echo "Unknown server: $1"
       usage
@@ -59,8 +59,8 @@ deploy_files() {
 
 SERVER="$1"
 
-# Only assign an example module if server is bukkit or test
-if [[ "$SERVER" == "bukkit" || "$SERVER" == "test" ]]; then
+# Only assign an example module if server is apollo or test
+if [[ "$SERVER" == "apollo" || "$SERVER" == "test" ]]; then
   MODULE="${2:-api}"  # Default to "api" if not provided
   validate_module "$MODULE"
 else
@@ -76,7 +76,7 @@ declare -a files_to_copy
 declare destination_path
 
 case "$SERVER" in
-  bukkit)
+  apollo)
     files_to_copy=(
       "bukkit/build/libs/apollo-bukkit-${VERSION}.jar"
       "bukkit-example-${MODULE}/build/libs/apollo-bukkit-example-${MODULE}-${VERSION}.jar"
