@@ -1,4 +1,5 @@
 import { Tab, Tabs } from 'nextra-theme-docs'
+import { Callout } from 'nextra-theme-docs'
 
 # Border Module
 
@@ -11,6 +12,10 @@ The border module not only enhances Minecraft's current world border system, but
 -   Adds improvements to further customize the vanilla world border, in addition to being able to create and customize Lunar Client world borders.
     -   Custom border colors can be provided.
     -   Ability to generate and display multiple world borders at once.
+
+<Callout type="info">
+  This module is only supported for 1.7 to 1.12 versions of Lunar Client.
+</Callout>
 
 ## Integration
 
@@ -157,7 +162,7 @@ Custom colors can be created from any RGB values using `new Color(int red, int g
 
 <Tab>
 
-### Displaying a Border
+**Displaying a Border**
 
 ```java
 public void displayBorderExample(Player viewer) {
@@ -176,7 +181,7 @@ public void displayBorderExample(Player viewer) {
 }
 ```
 
-### Removing a Border
+**Removing a Border**
 
 ```java
 public void removeBorderExample(Player viewer) {
@@ -188,7 +193,7 @@ public void removeBorderExample(Player viewer) {
 }
 ```
 
-### Resetting all Borders
+**Resetting all Borders**
 
 ```java
 public void resetBordersExample(Player viewer) {
@@ -201,7 +206,7 @@ public void resetBordersExample(Player viewer) {
 
 <Tab>
 
-### Displaying a Border
+**Displaying a Border**
 
 ```java
 public void displayBorderExample(Player viewer) {
@@ -220,7 +225,7 @@ public void displayBorderExample(Player viewer) {
 }
 ```
 
-### Removing a Border
+**Removing a Border**
 
 ```java
 public void removeBorderExample(Player viewer) {
@@ -232,7 +237,7 @@ public void removeBorderExample(Player viewer) {
 }
 ```
 
-### Resetting all Borders
+**Resetting all Borders**
 
 ```java
 public void resetBordersExample(Player viewer) {

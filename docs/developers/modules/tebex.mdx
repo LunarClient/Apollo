@@ -1,0 +1,157 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+import { Callout } from 'nextra-theme-docs'
+
+# Tebex Module
+
+## Overview
+
+The Tebex module allows Lunar Client users to complete purchases directly within the game, providing a faster, more seamless checkout experience.
+
+**Overlay Mode**
+
+This mode displays the Tebex checkout flow as an overlay on the Minecraft window, similar to opening an inventory. It provides the most seamless experience and is the preferred method. Overlay mode is only available on **Windows**.
+
+![Tebex Overlay Example](https://i.imgur.com/1grfRaX.png#center)
+
+**Window Mode**
+
+As a fallback, and for **macOS** and **Linux** users, a separate window opens to display the Tebex checkout flow. While not as seamless as overlay mode, this ensures compatibility across all operating systems.
+
+![Tebex Window Example](https://i.imgur.com/68wBAYZ.png#center)
+
+## Usage Guidelines
+
+To ensure a smooth user experience, servers must only open checkout windows from user-initiated actions. Examples include, but aren't limited to:
+
+**Allowed (User-Initiated Actions):**
+- Clicking a link in chat
+- Running a command
+- Clicking a button in a GUI
+
+**Not Allowed (Automated/Intrusive Actions):**
+- Triggering on login
+- Automatically opening at set intervals (e.g., every 30 minutes)
+- Automatically opening during flash sales, events, or other promotions without user interaction
+
+This feature is designed to enhance the user experience by providing a seamless checkout process, misuse of this module, such as creating a disruptive or intrusive purchase flow, will result in restricted access in the future.
+
+## Integration
+
+The only piece of information sent from the server to the client to trigger a checkout window is the **Tebex basket ident**. This unique identifier represents an in-progress basket and later converts into a **Tebex transaction ID (tbx-...)** upon purchase.
+
+Optionally, a **locale** value can also be sent to specify the language and regional formatting used when rendering the checkout window (e.g., `en-US`). If no locale is provided, the default locale settings will be used.
+
+If a player is not using Lunar Client, the same Tebex basket can be used on the web at: `https://pay.tebex.io/<basket>`
+
+**Example flow**
+1. Create a basket using the Tebex Headless API.
+2. Add package(s) to basket with Tebex Headless API
+3. If the player is using Lunar Client: Send an Apollo packet to open the checkout modal.
+4. If the player is not using Lunar Client: Send a chat message with a Tebex payment link.
+
+**Tebex Headless API**
+
+Basket idents are created via the [Tebex Headless API](https://docs.tebex.io/developers/headless-api/overview). This API allows programmatic basket creation, package additions, coupon applications, and more. The [Lunar Client Store](https://store.lunarclient.com/) is built on this API, and it is enabled by default for all Tebex stores.
+
+**Getting started with the Tebex Headless API**
+
+🔗 [Documentation](https://docs.tebex.io/developers/headless-api/overview)<br/>
+🔗 [Java SDK](https://github.com/tebexio/TebexHeadless-OpenAPI/tree/main/sdks/java)<br/>
+
+Most implementations of Embedded Checkout only require two API endpoints:
+1. Creating a basket
+2. Adding packages to a basket
+
+For simplicity, you may opt to handle these requests manually rather than using the SDK.
+
+**API Authentication**
+
+You’ll need your **public token** and **private key** from: [Tebex API Keys](https://creator.tebex.io/developers/api-keys)
+
+<Callout type="warning" emoji="⚠️">
+  Never share these credentials with Lunar Client or external servers. They should only be used while communicating with Tebex Headless.
+</Callout>
+
+### Sample Code
+Explore each integration by cycling through each tab to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+**Display Tebex Embedded Checkout**
+
+```java
+public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent, String locale) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    if (!apolloPlayerOpt.isPresent()) {
+        viewer.sendMessage("Complete your purchase at https://pay.tebex.io/" + basketIdent);
+        return;
+    }
+
+    ApolloPlayer apolloPlayer = apolloPlayerOpt.get();
+    TebexEmbeddedCheckoutSupport embeddedCheckoutSupport = apolloPlayer.getTebexEmbeddedCheckoutSupport();
+
+    if (embeddedCheckoutSupport == TebexEmbeddedCheckoutSupport.UNSUPPORTED) {
+        viewer.sendMessage("Complete your purchase at https://pay.tebex.io/" + basketIdent);
+        return;
+    }
+
+    this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayerOpt.get(), basketIdent, locale);
+
+    if (embeddedCheckoutSupport == TebexEmbeddedCheckoutSupport.OVERLAY) {
+        viewer.sendMessage("Opening checkout as game overlay!");
+    } else {
+        viewer.sendMessage("Opening checkout in an external window!");
+    }
+}
+```
+
+</Tab>
+
+<Tab>
+
+**Display Tebex Embedded Checkout**
+
+<Callout type="info">
+  To detect embedded checkout support type visit [Apollo Serverbound packets](/apollo/developers/lightweight/protobuf/serverbound-packets)
+</Callout>
+
+```java
+public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent, String locale) {
+    OpenTebexEmbeddedCheckoutMessage.Builder builder = OpenTebexEmbeddedCheckoutMessage.newBuilder()
+        .setBasketIdent(basketIdent);
+
+    if (locale != null) {
+        builder.setLocale(locale);
+    }
+
+    OpenTebexEmbeddedCheckoutMessage message = builder.build();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+<Tab>
+
+**Display Tebex Embedded Checkout**
+
+```java
+public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent, String locale) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.tebex.v1.OpenTebexEmbeddedCheckoutMessage");
+    message.addProperty("basket_ident", basketIdent);
+
+    if (locale != null) {
+        message.addProperty("locale", locale);
+    }
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

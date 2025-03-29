@@ -3,8 +3,8 @@
 Options are used by the Apollo modules to manage any settings they may have to use on the server or send to the client.
 Many options set by the modules can be modified from the configuration, which will be generated when you start Apollo for the first time.
 
-Alongside changing options globally, options can be modified to only effect a specific player. This can be useful for setting a unique list of waypoints the player can see when they join for example.
-While a specific player has an option set on them, it will ignore any changes made to the options global value. You can remove the option from the specific player to make them use the global value again.
+Alongside changing options globally, options can be modified to only effect a specific player. This can be useful for setting a unique list of waypoints the player can see when they join, for example.
+While a specific player has an option set on them, it will ignore any changes made to the option's global value. You can remove the option from the specific player to make them use the global value again.
 
 ## Integration
 
@@ -19,7 +19,7 @@ public void setTntCountdownOptionExample(Player viewer) {
 ```
 ### Options Methods
 
-`.get(Option)` retrives the global value of the option, or the options default value if it was not set.
+`.get(Option)` retrieves the global value of the option, or the options default value if it was not set.
 
 ```java
 .get(TntCountdownModule.TNT_TICKS)

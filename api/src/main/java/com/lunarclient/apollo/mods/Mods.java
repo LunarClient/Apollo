@@ -75,6 +75,7 @@ import com.lunarclient.apollo.mods.impl.ModPlaytime;
 import com.lunarclient.apollo.mods.impl.ModPotionEffects;
 import com.lunarclient.apollo.mods.impl.ModPvpInfo;
 import com.lunarclient.apollo.mods.impl.ModQuickplay;
+import com.lunarclient.apollo.mods.impl.ModRadio;
 import com.lunarclient.apollo.mods.impl.ModReachDisplay;
 import com.lunarclient.apollo.mods.impl.ModReplaymod;
 import com.lunarclient.apollo.mods.impl.ModSaturation;
@@ -194,7 +195,8 @@ public final class Mods {
             ModHurtCam.class,
             ModDamageTint.class,
             ModSkyblock.class,
-            ModHorseStats.class
+            ModHorseStats.class,
+            ModRadio.class
         );
 
     private Mods() {

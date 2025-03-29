@@ -42,10 +42,12 @@ import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
 import com.lunarclient.apollo.module.entity.EntityModule;
 import com.lunarclient.apollo.module.entity.EntityModuleImpl;
+import com.lunarclient.apollo.module.glint.GlintModule;
 import com.lunarclient.apollo.module.glow.GlowModule;
 import com.lunarclient.apollo.module.glow.GlowModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
+import com.lunarclient.apollo.module.inventory.InventoryModule;
 import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
@@ -59,6 +61,7 @@ import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentImpl;
 import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentModule;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModule;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModuleImpl;
+import com.lunarclient.apollo.module.saturation.SaturationModule;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
@@ -127,8 +130,10 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(CombatModule.class)
             .addModule(CooldownModule.class, new CooldownModuleImpl())
             .addModule(EntityModule.class, new EntityModuleImpl())
+            .addModule(GlintModule.class)
             .addModule(GlowModule.class, new GlowModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
+            .addModule(InventoryModule.class)
             .addModule(LimbModule.class, new LimbModuleImpl())
             .addModule(ModSettingModule.class)
             .addModule(NametagModule.class, new NametagModuleImpl())
@@ -136,6 +141,7 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(NotificationModule.class, new NotificationModuleImpl())
             .addModule(PacketEnrichmentModule.class, new PacketEnrichmentImpl())
             .addModule(RichPresenceModule.class, new RichPresenceModuleImpl())
+            .addModule(SaturationModule.class)
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())
             .addModule(StopwatchModule.class, new StopwatchModuleImpl())

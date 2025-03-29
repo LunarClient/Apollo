@@ -1,6 +1,6 @@
 name: Apollo-Example
 main: com.lunarclient.apollo.example.ApolloExamplePlugin
-version: 1.1.6
+version: 1.1.7
 author: Moonsworth
 softdepend: [ Apollo-Bukkit ]
 api-version: 1.13
@@ -22,10 +22,14 @@ commands:
         description: "Cooldowns!"
     entity:
         description: "Entity!"
+    glint:
+        description: "Glint!"
     glow:
         description: "Glow!"
     hologram:
         description: "Holograms!"
+    inventory:
+        description: "Inventory!"
     limb:
         description: "Limb!"
     modsettings:
@@ -38,6 +42,8 @@ commands:
         description: "Notifications!"
     richpresence:
         description: "Rich Presence!"
+    saturation:
+        description: "Saturation!"
     serverrule:
         description: "Server Rule!"
     staffmod:

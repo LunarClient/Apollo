@@ -27,18 +27,31 @@ Explore each integration by cycling through each tab, to find the best fit for y
 ### Displaying a Live Chat Message
 
 ```java
-private int countdown = 5;
-
 public void displayLiveChatMessageExample() {
-    this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
-        Component.text("Game starting in ", NamedTextColor.GREEN)
-            .append(Component.text(this.countdown, NamedTextColor.BLUE)),
-        13
-    );
+    BukkitRunnable runnable = new BukkitRunnable() {
 
-    if (--this.countdown == 0) {
-        this.countdown = 5;
-    }
+        private int countdown = 5;
+
+        @Override
+        public void run() {
+            ChatApiExample.this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
+                Component.text("Game starting in ", NamedTextColor.GREEN)
+                    .append(Component.text(this.countdown, NamedTextColor.BLUE)),
+                13
+            );
+
+            if (--this.countdown == 0) {
+                ChatApiExample.this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
+                    Component.text("Game started! ", NamedTextColor.GREEN),
+                    13
+                );
+
+                this.cancel();
+            }
+        }
+    };
+
+    runnable.runTaskTimer(ApolloExamplePlugin.getPlugin(), 0L, 20L);
 }
 ```
 
@@ -54,29 +67,44 @@ public void removeLiveChatMessageExample() {
 
 <Tab>
 
-### Displaying a Live Chat Message
+**Displaying a Live Chat Message**
 
 ```java
-private int countdown = 5;
-
+@Override
 public void displayLiveChatMessageExample() {
-    DisplayLiveChatMessageMessage message = DisplayLiveChatMessageMessage.newBuilder()
-        .setAdventureJsonLines(AdventureUtil.toJson(
-            Component.text("Game starting in ", NamedTextColor.GREEN)
-                .append(Component.text(this.countdown, NamedTextColor.BLUE)))
-        )
-        .setMessageId(13)
-        .build();
+    BukkitRunnable runnable = new BukkitRunnable() {
 
-    if (--this.countdown == 0) {
-        this.countdown = 5;
-    }
+        private int countdown = 5;
 
-    ProtobufPacketUtil.broadcastPacket(message);
+        @Override
+        public void run() {
+            DisplayLiveChatMessageMessage.Builder builder = DisplayLiveChatMessageMessage.newBuilder()
+                .setMessageId(13);
+
+            if (this.countdown > 0) {
+                builder.setAdventureJsonLines(AdventureUtil.toJson(
+                    Component.text("Game starting in ", NamedTextColor.GREEN)
+                        .append(Component.text(this.countdown, NamedTextColor.BLUE)))
+                );
+
+                ProtobufPacketUtil.broadcastPacket(builder.build());
+                this.countdown--;
+            } else {
+                builder.setAdventureJsonLines(AdventureUtil.toJson(
+                    Component.text("Game started! ", NamedTextColor.GREEN))
+                );
+
+                ProtobufPacketUtil.broadcastPacket(builder.build());
+                this.cancel();
+            }
+        }
+    };
+
+    runnable.runTaskTimer(ApolloExamplePlugin.getPlugin(), 0L, 20L);
 }
 ```
 
-### Removing a Live Chat Message
+**Removing a Live Chat Message**
 
 ```java
 public void removeLiveChatMessageExample() {
@@ -92,29 +120,45 @@ public void removeLiveChatMessageExample() {
 
 <Tab>
 
-### Displaying a Live Chat Message
+**Displaying a Live Chat Message**
 
 ```java
-private int countdown = 5;
-
+@Override
 public void displayLiveChatMessageExample() {
-    JsonObject message = new JsonObject();
-    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage");
-    message.addProperty("message_id", 13);
-    message.addProperty("adventure_json_lines", AdventureUtil.toJson(
-        Component.text("Game starting in ", NamedTextColor.GREEN)
-            .append(Component.text(this.countdown, NamedTextColor.BLUE))
-    ));
+    BukkitRunnable runnable = new BukkitRunnable() {
 
-    if (--this.countdown == 0) {
-        this.countdown = 5;
-    }
+        private int countdown = 5;
 
-    JsonPacketUtil.broadcastPacket(message);
+        @Override
+        public void run() {
+            JsonObject message = new JsonObject();
+            message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage");
+            message.addProperty("message_id", 13);
+
+            if (this.countdown > 0) {
+                message.addProperty("adventure_json_lines", AdventureUtil.toJson(
+                    Component.text("Game starting in ", NamedTextColor.GREEN)
+                        .append(Component.text(this.countdown, NamedTextColor.BLUE))
+                ));
+
+                JsonPacketUtil.broadcastPacket(message);
+                this.countdown--;
+            } else {
+                message.addProperty("adventure_json_lines", AdventureUtil.toJson(
+                    Component.text("Game started! ", NamedTextColor.GREEN)
+                ));
+
+                JsonPacketUtil.broadcastPacket(message);
+                this.cancel();
+            }
+        }
+    };
+
+    runnable.runTaskTimer(ApolloExamplePlugin.getPlugin(), 0L, 20L);
 }
 ```
 
-### Removing a Live Chat Message
+**Removing a Live Chat Message**
 
 ```java
 public void removeLiveChatMessageExample() {

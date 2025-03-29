@@ -445,7 +445,6 @@ public class Team {
 
     private JsonObject createTeamMember(Player member) {
         JsonObject message = new JsonObject();
-        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.team.v1.TeamMember");
         message.add("player_uuid", JsonUtil.createUuidObject(member.getUniqueId()));
         message.addProperty("adventure_json_player_name", AdventureUtil.toJson(
             Component.text()
