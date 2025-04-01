@@ -7,6 +7,7 @@ dependencies {
     implementation(libs.idea)
     implementation(libs.spotless)
     implementation(libs.shadow)
+    implementation(libs.asm)
 }
 
 dependencies {

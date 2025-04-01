@@ -56,8 +56,6 @@ public class TeamApiExample extends TeamExample implements Listener {
     private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
 
     public TeamApiExample() {
-        new TeamUpdateTask();
-
         Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
     }
 
