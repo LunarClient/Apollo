@@ -25,19 +25,25 @@ package com.lunarclient.apollo.example.api.module;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.common.ApolloEntity;
+import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.module.impl.TntCountdownExample;
 import com.lunarclient.apollo.module.tntcountdown.TntCountdownModule;
-import com.lunarclient.apollo.player.ApolloPlayer;
-import java.util.Optional;
-import org.bukkit.Location;
-import org.bukkit.World;
+import com.lunarclient.apollo.recipients.Recipients;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntitySpawnEvent;
 
 public class TntCountdownApiExample extends TntCountdownExample implements Listener {
 
     private final TntCountdownModule tntCountdownModule = Apollo.getModuleManager().getModule(TntCountdownModule.class);
+
+    public TntCountdownApiExample() {
+        Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getInstance());
+    }
 
     @Override
     public void setTntCountdownExample() {
@@ -46,21 +52,42 @@ public class TntCountdownApiExample extends TntCountdownExample implements Liste
 
     @Override
     public void overrideTntCountdownExample(Player viewer) {
-        Location location = viewer.getLocation();
-        World world = viewer.getWorld();
-        TNTPrimed entity = world.spawn(location, TNTPrimed.class);
+        int customTicks = 200;
 
-        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        TNTPrimed entity = viewer.getWorld().spawn(viewer.getLocation(), TNTPrimed.class);
+        entity.setFuseTicks(customTicks);
 
-        apolloPlayerOpt.ifPresent(apolloPlayer -> {
-            ApolloEntity apolloEntity = new ApolloEntity(entity.getEntityId(), entity.getUniqueId());
-            this.tntCountdownModule.setTntCountdown(apolloEntity, 200);
-        });
+        ApolloEntity apolloEntity = new ApolloEntity(entity.getEntityId(), entity.getUniqueId());
+        this.tntCountdownModule.setTntCountdown(Recipients.ofEveryone(), apolloEntity, customTicks);
     }
 
     @Override
     public void clearTntCountdownOptionExample() {
-        this.tntCountdownModule.getOptions().remove(TntCountdownModule.TNT_TICKS, 80);
+        this.tntCountdownModule.getOptions().remove(TntCountdownModule.TNT_TICKS, 160);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    private void onTntSpawn(EntitySpawnEvent event) {
+        String entityName = event.getEntityType().name();
+        if (!entityName.equals("PRIMED_TNT") && !entityName.equals("TNT")) {
+            return;
+        }
+
+        TNTPrimed primed = (TNTPrimed) event.getEntity();
+        int customTicks = this.tntCountdownModule.getOptions().get(TntCountdownModule.TNT_TICKS);
+        int defaultTicks = TntCountdownModule.TNT_TICKS.getDefaultValue();
+        int currentTicks = primed.getFuseTicks();
+
+        if (currentTicks != defaultTicks && !this.tntCountdownModule.getOptions().get(TntCountdownModule.OVERRIDE_CUSTOM_TICKS)) {
+            customTicks = currentTicks;
+
+            this.tntCountdownModule.setTntCountdown(Recipients.ofEveryone(),
+                new ApolloEntity(primed.getEntityId(), primed.getUniqueId()),
+                customTicks
+            );
+        }
+
+        primed.setFuseTicks(customTicks);
     }
 
 }
