@@ -94,6 +94,7 @@ body:
           multiple: true
           options:
               - Spigot / Bukkit
+              - Folia
               - BungeeCord
               - Velocity
               - Other
