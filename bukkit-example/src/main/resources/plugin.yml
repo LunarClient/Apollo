@@ -2,8 +2,9 @@ name: Apollo-Example
 main: com.lunarclient.apollo.example.ApolloExamplePlugin
 version: 1.1.7
 author: Moonsworth
-softdepend: [ Apollo-Bukkit ]
+softdepend: [ Apollo-Bukkit, Apollo-Folia ]
 api-version: 1.13
+folia-supported: true
 
 commands:
     switch:
