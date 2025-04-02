@@ -28,6 +28,7 @@ import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
+import com.lunarclient.apollo.recipients.Recipients;
 import io.leangen.geantyref.TypeToken;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Range;
@@ -84,5 +85,17 @@ public abstract class TntCountdownModule extends ApolloModule {
      * @since 1.0.0
      */
     public abstract void setTntCountdown(ApolloEntity entity, @Range(from = 0, to = Integer.MAX_VALUE) int ticks);
+
+    /**
+     * Set the amount of ticks before the specified TNT explodes.
+     *
+     * <p>The given ticks must be equal to or greater than 0.</p>
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param entity the TNT entity
+     * @param ticks  the ticks until explosion
+     * @since 1.1.8
+     */
+    public abstract void setTntCountdown(Recipients recipients, ApolloEntity entity, @Range(from = 0, to = Integer.MAX_VALUE) int ticks);
 
 }

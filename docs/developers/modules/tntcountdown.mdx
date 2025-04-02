@@ -34,16 +34,13 @@ public void setTntCountdownExample() {
 
 ```java
 public void overrideTntCountdownExample(Player viewer) {
-    Location location = viewer.getLocation();
-    World world = viewer.getWorld();
-    TNTPrimed entity = world.spawn(location, TNTPrimed.class);
+    int customTicks = 200;
 
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    TNTPrimed entity = viewer.getWorld().spawn(viewer.getLocation(), TNTPrimed.class);
+    entity.setFuseTicks(customTicks);
 
-    apolloPlayerOpt.ifPresent(apolloPlayer -> {
-        ApolloEntity apolloEntity = new ApolloEntity(entity.getEntityId(), entity.getUniqueId());
-        this.tntCountdownModule.setTntCountdown(apolloEntity, 200);
-    });
+    ApolloEntity apolloEntity = new ApolloEntity(entity.getEntityId(), entity.getUniqueId());
+    this.tntCountdownModule.setTntCountdown(Recipients.ofEveryone(), apolloEntity, customTicks);
 }
 ```
 
@@ -51,7 +48,35 @@ public void overrideTntCountdownExample(Player viewer) {
 
 ```java
 public void clearTntCountdownOptionExample() {
-    this.tntCountdownModule.getOptions().remove(TntCountdownModule.TNT_TICKS, 80);
+    this.tntCountdownModule.getOptions().remove(TntCountdownModule.TNT_TICKS, 160);
+}
+```
+
+### Modify Fuse Ticks on TNT Spawn
+
+```java
+@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+private void onTntSpawn(EntitySpawnEvent event) {
+    String entityName = event.getEntityType().name();
+    if (!entityName.equals("PRIMED_TNT") && !entityName.equals("TNT")) {
+        return;
+    }
+
+    TNTPrimed primed = (TNTPrimed) event.getEntity();
+    int customTicks = this.tntCountdownModule.getOptions().get(TntCountdownModule.TNT_TICKS);
+    int defaultTicks = TntCountdownModule.TNT_TICKS.getDefaultValue();
+    int currentTicks = primed.getFuseTicks();
+
+    if (currentTicks != defaultTicks && !this.tntCountdownModule.getOptions().get(TntCountdownModule.OVERRIDE_CUSTOM_TICKS)) {
+        customTicks = currentTicks;
+
+        this.tntCountdownModule.setTntCountdown(Recipients.ofEveryone(),
+            new ApolloEntity(primed.getEntityId(), primed.getUniqueId()),
+            customTicks
+        );
+    }
+
+    primed.setFuseTicks(customTicks);
 }
 ```
 
@@ -81,49 +106,18 @@ public void setTntCountdownExample() {
 **Spawn TNT with Custom Tick amount**
 
 ```java
-private static Method entityGetter;
-
-static {
-    try {
-        TntCountdownProtoExample.entityGetter = Bukkit.class.getDeclaredMethod("getEntity", UUID.class);
-    } catch (Throwable throwable) {
-        // Ignore for legacy versions.
-    }
-}
-
 public void overrideTntCountdownExample(Player viewer) {
-    Location location = viewer.getLocation();
-    TNTPrimed entity = viewer.getWorld().spawn(location, TNTPrimed.class);
     int customTicks = 200;
 
-    TNTPrimed target = null;
-    if (TntCountdownProtoExample.entityGetter != null) {
-        try {
-            target = (TNTPrimed) TntCountdownProtoExample.entityGetter.invoke(null, entity.getUniqueId());
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-    } else {
-        for (World world : Bukkit.getWorlds()) {
-            for (TNTPrimed compare : world.getEntitiesByClass(TNTPrimed.class)) {
-                if (compare.getUniqueId().equals(entity.getUniqueId())) {
-                    target = compare;
-                    break;
-                }
-            }
-        }
-    }
-
-    if (target != null) {
-        target.setFuseTicks(customTicks);
-    }
+    TNTPrimed entity = viewer.getWorld().spawn(viewer.getLocation(), TNTPrimed.class);
+    entity.setFuseTicks(customTicks);
 
     SetTntCountdownMessage message = SetTntCountdownMessage.newBuilder()
         .setEntityId(ProtobufUtil.createEntityIdProto(entity.getEntityId(), entity.getUniqueId()))
         .setDurationTicks(customTicks)
         .build();
 
-    ProtobufPacketUtil.sendPacket(viewer, message);
+    ProtobufPacketUtil.broadcastPacket(message);
 }
 ```
 
@@ -132,7 +126,7 @@ public void overrideTntCountdownExample(Player viewer) {
 ```java
 public void clearTntCountdownOptionExample() {
     Map<String, Value> properties = new HashMap<>();
-    properties.put("tnt-ticks", Value.newBuilder().setNumberValue(80).build());
+    properties.put("tnt-ticks", Value.newBuilder().setNumberValue(160).build());
 
     ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("tnt_countdown", properties);
     ProtobufPacketUtil.broadcastPacket(settings);
@@ -200,42 +194,11 @@ public void setTntCountdownExample() {
 **Spawn TNT with Custom Tick amount**
 
 ```java
-private static Method entityGetter;
-
-static {
-    try {
-        TntCountdownJsonExample.entityGetter = Bukkit.class.getDeclaredMethod("getEntity", UUID.class);
-    } catch (Throwable throwable) {
-        // Ignore for legacy versions.
-    }
-}
-
 public void overrideTntCountdownExample(Player viewer) {
-    Location location = viewer.getLocation();
-    TNTPrimed entity = viewer.getWorld().spawn(location, TNTPrimed.class);
     int customTicks = 200;
 
-    TNTPrimed target = null;
-    if (TntCountdownJsonExample.entityGetter != null) {
-        try {
-            target = (TNTPrimed) TntCountdownJsonExample.entityGetter.invoke(null, entity.getUniqueId());
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-    } else {
-        for (World world : Bukkit.getWorlds()) {
-            for (TNTPrimed compare : world.getEntitiesByClass(TNTPrimed.class)) {
-                if (compare.getUniqueId().equals(entity.getUniqueId())) {
-                    target = compare;
-                    break;
-                }
-            }
-        }
-    }
-
-    if (target != null) {
-        target.setFuseTicks(customTicks);
-    }
+    TNTPrimed entity = viewer.getWorld().spawn(viewer.getLocation(), TNTPrimed.class);
+    entity.setFuseTicks(customTicks);
 
     JsonPacketUtil.sendPacket(viewer, this.createTNTCountdownMessage(entity, customTicks));
 }
