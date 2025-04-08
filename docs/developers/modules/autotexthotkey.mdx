@@ -17,7 +17,9 @@ Explore each integration by cycling through each tab, to find the best fit for y
 
 ```java
 public void setBlockedTextInputs(List<String> blockedTextInputs) {
-    this.autoTextHotkeyModule.getOptions().set(AutoTextHotkeyModule.BLOCKED_TEXT_INPUTS, blockedTextInputs);
+    Options options = this.autoTextHotkeyModule.getOptions();
+    options.set(AutoTextHotkeyModule.BLOCK_TEXT_INPUTS, true);
+    options.set(AutoTextHotkeyModule.BLOCKED_TEXT_INPUTS, blockedTextInputs);
 }
 ```
 
@@ -36,6 +38,7 @@ public void setBlockedTextInputs(List<String> blockedTextInputs) {
         ).build();
 
     Map<String, Value> properties = new HashMap<>();
+    properties.put("block-text-inputs", Value.newBuilder().setBoolValue(true).build());
     properties.put("blocked-text-inputs", Value.newBuilder().setListValue(listValue).build());
 
     ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("auto_text_hotkey", properties);
@@ -52,6 +55,7 @@ public void setBlockedTextInputs(List<String> blockedTextInputs) {
 ```java
 public void setBlockedTextInputs(List<String> blockedTextInputs) {
     Map<String, Object> properties = new HashMap<>();
+    properties.put("block-text-inputs", true);
     properties.put("blocked-text-inputs", blockedTextInputs);
 
     JsonObject message = JsonUtil.createEnableModuleObjectWithType("auto_text_hotkey", properties);
@@ -64,6 +68,12 @@ public void setBlockedTextInputs(List<String> blockedTextInputs) {
 </Tabs>
 
 ## Available options
+
+- __`BLOCK_TEXT_INPUTS`__
+    - Whether to use blocked text inputs in the `BLOCKED_TEXT_INPUTS` option.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
 
 - __`BLOCKED_TEXT_INPUTS`__
     - A list of text inputs that are blocked and cannot be used by the user.

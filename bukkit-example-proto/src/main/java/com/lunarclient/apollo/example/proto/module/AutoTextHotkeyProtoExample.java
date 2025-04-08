@@ -44,6 +44,7 @@ public class AutoTextHotkeyProtoExample extends AutoTextHotkeyExample {
             ).build();
 
         Map<String, Value> properties = new HashMap<>();
+        properties.put("block-text-inputs", Value.newBuilder().setBoolValue(true).build());
         properties.put("blocked-text-inputs", Value.newBuilder().setListValue(listValue).build());
 
         ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("auto_text_hotkey", properties);

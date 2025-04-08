@@ -26,6 +26,7 @@ package com.lunarclient.apollo.example.api.module;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.example.module.impl.AutoTextHotkeyExample;
 import com.lunarclient.apollo.module.autotexthotkey.AutoTextHotkeyModule;
+import com.lunarclient.apollo.option.Options;
 import java.util.List;
 
 public class AutoTextHotkeyApiExample extends AutoTextHotkeyExample {
@@ -34,7 +35,9 @@ public class AutoTextHotkeyApiExample extends AutoTextHotkeyExample {
 
     @Override
     public void setBlockedTextInputs(List<String> blockedTextInputs) {
-        this.autoTextHotkeyModule.getOptions().set(AutoTextHotkeyModule.BLOCKED_TEXT_INPUTS, blockedTextInputs);
+        Options options = this.autoTextHotkeyModule.getOptions();
+        options.set(AutoTextHotkeyModule.BLOCK_TEXT_INPUTS, true);
+        options.set(AutoTextHotkeyModule.BLOCKED_TEXT_INPUTS, blockedTextInputs);
     }
 
 }

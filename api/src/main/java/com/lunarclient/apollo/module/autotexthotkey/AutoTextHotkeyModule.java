@@ -27,6 +27,7 @@ import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.ListOption;
 import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +42,16 @@ import java.util.List;
 public final class AutoTextHotkeyModule extends ApolloModule {
 
     /**
+     * Block text inputs.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> BLOCK_TEXT_INPUTS = Option.<Boolean>builder()
+        .comment("Set to 'true' to block certain text inputs, otherwise 'false'.")
+        .node("block-text-inputs").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    /**
      * A list of text inputs that are blocked and cannot be used by the user.
      *
      * @since 1.1.8
@@ -53,6 +64,7 @@ public final class AutoTextHotkeyModule extends ApolloModule {
 
     AutoTextHotkeyModule() {
         this.registerOptions(
+            AutoTextHotkeyModule.BLOCK_TEXT_INPUTS,
             AutoTextHotkeyModule.BLOCKED_TEXT_INPUTS
         );
     }

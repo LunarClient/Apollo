@@ -36,6 +36,7 @@ public class AutoTextHotkeyJsonExample extends AutoTextHotkeyExample {
     @Override
     public void setBlockedTextInputs(List<String> blockedTextInputs) {
         Map<String, Object> properties = new HashMap<>();
+        properties.put("block-text-inputs", true);
         properties.put("blocked-text-inputs", blockedTextInputs);
 
         JsonObject message = JsonUtil.createEnableModuleObjectWithType("auto_text_hotkey", properties);
