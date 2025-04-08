@@ -6,6 +6,8 @@ softdepend: [ Apollo-Bukkit ]
 api-version: 1.13
 
 commands:
+    autotexthotkey:
+        description: "Auto Text Hotkey!"
     beam:
         description: "Beams!"
     border:

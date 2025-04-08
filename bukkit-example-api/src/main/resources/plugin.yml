@@ -8,6 +8,8 @@ api-version: 1.13
 commands:
     apollodebug:
         description: "Apollo Debug!"
+    autotexthotkey:
+        description: "Auto Text Hotkey!"
     beam:
         description: "Beams!"
     border:

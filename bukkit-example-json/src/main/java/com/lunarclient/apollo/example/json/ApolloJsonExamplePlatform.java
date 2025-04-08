@@ -26,6 +26,7 @@ package com.lunarclient.apollo.example.json;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.ApolloExampleType;
 import com.lunarclient.apollo.example.json.listener.ApolloPlayerJsonListener;
+import com.lunarclient.apollo.example.json.module.AutoTextHotkeyJsonExample;
 import com.lunarclient.apollo.example.json.module.BeamJsonExample;
 import com.lunarclient.apollo.example.json.module.BorderJsonExample;
 import com.lunarclient.apollo.example.json.module.ChatJsonExample;
@@ -66,6 +67,7 @@ public class ApolloJsonExamplePlatform extends ApolloExamplePlugin {
 
     @Override
     public void registerModuleExamples() {
+        this.setAutoTextHotkeyExample(new AutoTextHotkeyJsonExample());
         this.setBeamExample(new BeamJsonExample());
         this.setBorderExample(new BorderJsonExample());
         this.setChatExample(new ChatJsonExample());

@@ -28,6 +28,7 @@ import com.lunarclient.apollo.example.ApolloExampleType;
 import com.lunarclient.apollo.example.api.commands.debug.ApolloDebugCommand;
 import com.lunarclient.apollo.example.api.debug.SpamPacketDebug;
 import com.lunarclient.apollo.example.api.listener.ApolloPlayerApiListener;
+import com.lunarclient.apollo.example.api.module.AutoTextHotkeyApiExample;
 import com.lunarclient.apollo.example.api.module.BeamApiExample;
 import com.lunarclient.apollo.example.api.module.BorderApiExample;
 import com.lunarclient.apollo.example.api.module.ChatApiExample;
@@ -75,6 +76,7 @@ public class ApolloApiExamplePlatform extends ApolloExamplePlugin {
 
     @Override
     public void registerModuleExamples() {
+        this.setAutoTextHotkeyExample(new AutoTextHotkeyApiExample());
         this.setBeamExample(new BeamApiExample());
         this.setBorderExample(new BorderApiExample());
         this.setChatExample(new ChatApiExample());
