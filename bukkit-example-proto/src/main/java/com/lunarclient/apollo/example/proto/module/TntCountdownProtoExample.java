@@ -30,13 +30,9 @@ import com.lunarclient.apollo.example.module.impl.TntCountdownExample;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
 import com.lunarclient.apollo.tntcountdown.v1.SetTntCountdownMessage;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
@@ -45,16 +41,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
 
 public class TntCountdownProtoExample extends TntCountdownExample implements Listener {
-
-    private static Method entityGetter;
-
-    static {
-        try {
-            TntCountdownProtoExample.entityGetter = Bukkit.class.getDeclaredMethod("getEntity", UUID.class);
-        } catch (Throwable throwable) {
-            // Ignore for legacy versions.
-        }
-    }
 
     public TntCountdownProtoExample() {
         Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getInstance());
@@ -71,44 +57,23 @@ public class TntCountdownProtoExample extends TntCountdownExample implements Lis
 
     @Override
     public void overrideTntCountdownExample(Player viewer) {
-        Location location = viewer.getLocation();
-        TNTPrimed entity = viewer.getWorld().spawn(location, TNTPrimed.class);
         int customTicks = 200;
 
-        TNTPrimed target = null;
-        if (TntCountdownProtoExample.entityGetter != null) {
-            try {
-                target = (TNTPrimed) TntCountdownProtoExample.entityGetter.invoke(null, entity.getUniqueId());
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
-        } else {
-            for (World world : Bukkit.getWorlds()) {
-                for (TNTPrimed compare : world.getEntitiesByClass(TNTPrimed.class)) {
-                    if (compare.getUniqueId().equals(entity.getUniqueId())) {
-                        target = compare;
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (target != null) {
-            target.setFuseTicks(customTicks);
-        }
+        TNTPrimed entity = viewer.getWorld().spawn(viewer.getLocation(), TNTPrimed.class);
+        entity.setFuseTicks(customTicks);
 
         SetTntCountdownMessage message = SetTntCountdownMessage.newBuilder()
             .setEntityId(ProtobufUtil.createEntityIdProto(entity.getEntityId(), entity.getUniqueId()))
             .setDurationTicks(customTicks)
             .build();
 
-        ProtobufPacketUtil.sendPacket(viewer, message);
+        ProtobufPacketUtil.broadcastPacket(message);
     }
 
     @Override
     public void clearTntCountdownOptionExample() {
         Map<String, Value> properties = new HashMap<>();
-        properties.put("tnt-ticks", Value.newBuilder().setNumberValue(80).build());
+        properties.put("tnt-ticks", Value.newBuilder().setNumberValue(160).build());
 
         ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("tnt_countdown", properties);
         ProtobufPacketUtil.broadcastPacket(settings);
