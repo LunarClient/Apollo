@@ -70,6 +70,8 @@ import com.lunarclient.apollo.module.tebex.TebexModule;
 import com.lunarclient.apollo.module.tebex.TebexModuleImpl;
 import com.lunarclient.apollo.module.title.TitleModule;
 import com.lunarclient.apollo.module.title.TitleModuleImpl;
+import com.lunarclient.apollo.module.tntcountdown.TntCountdownModule;
+import com.lunarclient.apollo.module.tntcountdown.TntCountdownModuleImpl;
 import com.lunarclient.apollo.module.transfer.TransferModule;
 import com.lunarclient.apollo.module.transfer.TransferModuleImpl;
 import com.lunarclient.apollo.module.vignette.VignetteModule;
@@ -111,7 +113,6 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
         new ApolloPlayerListener(this);
         new ApolloWorldListener(this);
 
-        // TODO: TntCountdown
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
             .addModule(AutoTextHotkeyModule.class)
             .addModule(BeamModule.class, new BeamModuleImpl())
@@ -136,6 +137,7 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
             .addModule(TeamModule.class, new TeamModuleImpl())
             .addModule(TebexModule.class, new TebexModuleImpl())
             .addModule(TitleModule.class, new TitleModuleImpl())
+            .addModule(TntCountdownModule.class, new TntCountdownModuleImpl())
             .addModule(TransferModule.class, new TransferModuleImpl())
             .addModule(VignetteModule.class, new VignetteModuleImpl())
             .addModule(WaypointModule.class, new WaypointModuleImpl());
