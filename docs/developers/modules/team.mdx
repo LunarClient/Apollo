@@ -33,7 +33,7 @@ private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
 public TeamExample() {
     new TeamUpdateTask();
 
-    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
+    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getInstance());
 }
 
 @EventHandler
@@ -154,7 +154,7 @@ public class Team {
 public class TeamUpdateTask extends BukkitRunnable {
 
     public TeamUpdateTask() {
-        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getPlugin(), 1L, 1L);
+        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getInstance(), 1L, 1L);
     }
 
     @Override
@@ -241,7 +241,7 @@ private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
 public TeamProtoExample() {
     new TeamUpdateTask();
 
-    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
+    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getInstance());
 }
 
 @EventHandler
@@ -360,7 +360,7 @@ public class Team {
 public class TeamUpdateTask extends BukkitRunnable {
 
     public TeamUpdateTask() {
-        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getPlugin(), 1L, 1L);
+        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getInstance(), 1L, 1L);
     }
 
     @Override
@@ -381,7 +381,7 @@ private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
 public TeamJsonExample() {
     new TeamUpdateTask();
 
-    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
+    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getInstance());
 }
 
 @EventHandler
@@ -503,7 +503,7 @@ public class Team {
 public class TeamUpdateTask extends BukkitRunnable {
 
     public TeamUpdateTask() {
-        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getPlugin(), 1L, 1L);
+        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getInstance(), 1L, 1L);
     }
 
     @Override

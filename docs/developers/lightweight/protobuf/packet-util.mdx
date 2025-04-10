@@ -60,14 +60,14 @@ Use the following methods to send packets either to a specific player or to all 
 ```java
 public static void sendPacket(Player player, GeneratedMessageV3 message) {
     byte[] bytes = Any.pack(message).toByteArray();
-    player.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "lunar:apollo", bytes);
+    player.sendPluginMessage(ApolloExamplePlugin.getInstance(), "lunar:apollo", bytes);
 }
 
 public static void broadcastPacket(GeneratedMessageV3 message) {
     byte[] bytes = Any.pack(message).toByteArray();
 
     Bukkit.getOnlinePlayers().forEach(player ->
-        player.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "lunar:apollo", bytes));
+        player.sendPluginMessage(ApolloExamplePlugin.getInstance(), "lunar:apollo", bytes));
 }
 ```
 
