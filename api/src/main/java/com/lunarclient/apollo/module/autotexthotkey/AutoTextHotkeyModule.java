@@ -62,10 +62,21 @@ public final class AutoTextHotkeyModule extends ApolloModule {
         .defaultValue(new ArrayList<>(Arrays.asList("/sellall", "/msg", "/pay")))
         .notifyClient().build();
 
+    /**
+     * Block chat message text inputs.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> BLOCK_CHAT_MESSAGE_TEXT_INPUTS = Option.<Boolean>builder()
+        .comment("Set to 'true' to block chat message text inputs, otherwise 'false'.")
+        .node("block-chat-message-text-inputs").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
     AutoTextHotkeyModule() {
         this.registerOptions(
             AutoTextHotkeyModule.BLOCK_TEXT_INPUTS,
-            AutoTextHotkeyModule.BLOCKED_TEXT_INPUTS
+            AutoTextHotkeyModule.BLOCKED_TEXT_INPUTS,
+            AutoTextHotkeyModule.BLOCK_CHAT_MESSAGE_TEXT_INPUTS
         );
     }
 
