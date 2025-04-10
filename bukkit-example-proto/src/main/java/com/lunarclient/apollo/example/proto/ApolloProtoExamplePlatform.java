@@ -26,6 +26,7 @@ package com.lunarclient.apollo.example.proto;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.ApolloExampleType;
 import com.lunarclient.apollo.example.proto.listener.ApolloPlayerProtoListener;
+import com.lunarclient.apollo.example.proto.module.AutoTextHotkeyProtoExample;
 import com.lunarclient.apollo.example.proto.module.BeamProtoExample;
 import com.lunarclient.apollo.example.proto.module.BorderProtoExample;
 import com.lunarclient.apollo.example.proto.module.ChatProtoExample;
@@ -66,6 +67,7 @@ public class ApolloProtoExamplePlatform extends ApolloExamplePlugin {
 
     @Override
     public void registerModuleExamples() {
+        this.setAutoTextHotkeyExample(new AutoTextHotkeyProtoExample());
         this.setBeamExample(new BeamProtoExample());
         this.setBorderExample(new BorderProtoExample());
         this.setChatExample(new ChatProtoExample());

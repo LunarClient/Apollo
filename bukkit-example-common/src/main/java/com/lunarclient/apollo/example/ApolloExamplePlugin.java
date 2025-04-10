@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.example;
 
+import com.lunarclient.apollo.example.command.AutoTextHotkeyCommand;
 import com.lunarclient.apollo.example.command.BeamCommand;
 import com.lunarclient.apollo.example.command.BorderCommand;
 import com.lunarclient.apollo.example.command.ChatCommand;
@@ -51,6 +52,7 @@ import com.lunarclient.apollo.example.command.TntCountdownCommand;
 import com.lunarclient.apollo.example.command.TransferCommand;
 import com.lunarclient.apollo.example.command.VignetteCommand;
 import com.lunarclient.apollo.example.command.WaypointCommand;
+import com.lunarclient.apollo.example.module.impl.AutoTextHotkeyExample;
 import com.lunarclient.apollo.example.module.impl.BeamExample;
 import com.lunarclient.apollo.example.module.impl.BorderExample;
 import com.lunarclient.apollo.example.module.impl.ChatExample;
@@ -89,6 +91,7 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
     @Getter
     private static ApolloExamplePlugin instance;
 
+    private AutoTextHotkeyExample autoTextHotkeyExample;
     private BeamExample beamExample;
     private BorderExample borderExample;
     private ChatExample chatExample;
@@ -137,6 +140,7 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
     }
 
     private void registerCommonCommands() {
+        this.getCommand("autotexthotkey").setExecutor(new AutoTextHotkeyCommand());
         this.getCommand("beam").setExecutor(new BeamCommand());
         this.getCommand("border").setExecutor(new BorderCommand());
         this.getCommand("chat").setExecutor(new ChatCommand());
