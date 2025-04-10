@@ -82,6 +82,13 @@ public final class VersionResponse implements ApiResponse {
          */
         String velocity;
 
+        /**
+         * Returns the latest version of apollo {@link String} Folia download URL.
+         *
+         * @return the apollo folia download url
+         * @since 1.1.8
+         */
+        String folia;
 
     }
 

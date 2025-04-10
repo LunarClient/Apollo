@@ -7,14 +7,14 @@ REMOTE_HOST="147.135.8.94"
 
 usage() {
   echo "Usage: $0 <server> [api|json|proto]"
-  echo "Available servers: apollo, test"
+  echo "Available servers: apollo, test, folia"
   echo "Optional module (for bukkit servers only): api (default), json, proto"
   exit 1
 }
 
 validate_server() {
   case "$1" in
-    apollo|test) ;;
+    apollo|test|folia) ;;
     *)
       echo "Unknown server: $1"
       usage
@@ -89,6 +89,13 @@ case "$SERVER" in
       "bukkit-example-${MODULE}/build/libs/apollo-bukkit-example-${MODULE}-${VERSION}.jar"
     )
     destination_path="/home/ubuntu/lctest/plugins/"
+    ;;
+  folia)
+    files_to_copy=(
+      "folia/build/libs/apollo-folia-${VERSION}.jar"
+      "bukkit-example/build/libs/apollo-bukkit-example-${VERSION}.jar"
+    )
+    destination_path="/home/ubuntu/apollo-folia/plugins/"
     ;;
 esac
 
