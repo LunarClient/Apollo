@@ -26,6 +26,14 @@ public void setBlockedTextInputs(List<String> blockedTextInputs) {
 }
 ```
 
+### Block Chat Message Text Inputs
+
+```java
+public void setBlockChatMesssageTextInputs(boolean value) {
+    this.autoTextHotkeyModule.getOptions().set(AutoTextHotkeyModule.BLOCK_CHAT_MESSAGE_TEXT_INPUTS, value);
+}
+```
+
 </Tab>
 
 <Tab>
@@ -49,6 +57,18 @@ public void setBlockedTextInputs(List<String> blockedTextInputs) {
 }
 ```
 
+### Block Chat Message Text Inputs
+
+```java
+public void setBlockChatMesssageTextInputs(boolean value) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("block-chat-message-text-inputs", Value.newBuilder().setBoolValue(value).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("auto_text_hotkey", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
 </Tab>
 
 <Tab>
@@ -60,6 +80,18 @@ public void setBlockedTextInputs(List<String> blockedTextInputs) {
     Map<String, Object> properties = new HashMap<>();
     properties.put("block-text-inputs", true);
     properties.put("blocked-text-inputs", blockedTextInputs);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("auto_text_hotkey", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+### Block Chat Message Text Inputs
+
+```java
+public void setBlockChatMesssageTextInputs(boolean value) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("block-chat-message-text-inputs", value);
 
     JsonObject message = JsonUtil.createEnableModuleObjectWithType("auto_text_hotkey", properties);
     JsonPacketUtil.broadcastPacket(message);

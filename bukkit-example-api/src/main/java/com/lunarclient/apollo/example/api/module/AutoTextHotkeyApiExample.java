@@ -40,4 +40,9 @@ public class AutoTextHotkeyApiExample extends AutoTextHotkeyExample {
         options.set(AutoTextHotkeyModule.BLOCKED_TEXT_INPUTS, blockedTextInputs);
     }
 
+    @Override
+    public void setBlockChatMesssageTextInputs(boolean value) {
+        this.autoTextHotkeyModule.getOptions().set(AutoTextHotkeyModule.BLOCK_CHAT_MESSAGE_TEXT_INPUTS, value);
+    }
+
 }

@@ -45,21 +45,37 @@ public class AutoTextHotkeyCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length < 2) {
-            player.sendMessage("Usage: /autotexthotkey blockedTextInputs <inputs>");
+            player.sendMessage("/autotexthotkey blockedTextInputs <inputs>");
+            player.sendMessage("/autotexthotkey blockChatMessageTextInputs <true/false>");
             return true;
         }
 
         AutoTextHotkeyExample autoTextHotkeyExample = ApolloExamplePlugin.getInstance().getAutoTextHotkeyExample();
 
-        if (args[0].equalsIgnoreCase("blockedTextInputs")) {
-            List<String> blockedInputs = Arrays.asList(Arrays.copyOfRange(args, 1, args.length));
-            autoTextHotkeyExample.setBlockedTextInputs(blockedInputs);
+        switch (args[0].toLowerCase()) {
+            case "blockedtextinputs": {
+                List<String> blockedInputs = Arrays.asList(Arrays.copyOfRange(args, 1, args.length));
+                autoTextHotkeyExample.setBlockedTextInputs(blockedInputs);
 
-            player.sendMessage("Blocked text inputs have been set to: " + String.join(", ", blockedInputs));
-            return true;
+                player.sendMessage("Blocked text inputs have been set to: " + String.join(", ", blockedInputs));
+                break;
+            }
+
+            case "blockchatmessagetextinputs": {
+                boolean value = Boolean.parseBoolean(args[1]);
+                autoTextHotkeyExample.setBlockChatMesssageTextInputs(value);
+
+                player.sendMessage("Block chat message text inputs has been set to " + value);
+                break;
+            }
+
+            default: {
+                player.sendMessage("/autotexthotkey blockedTextInputs <inputs>");
+                player.sendMessage("/autotexthotkey blockChatMessageTextInputs <true/false>");
+                break;
+            }
         }
 
-        player.sendMessage("Usage: /autotexthotkey blockedTextInputs <inputs>");
         return true;
     }
 }

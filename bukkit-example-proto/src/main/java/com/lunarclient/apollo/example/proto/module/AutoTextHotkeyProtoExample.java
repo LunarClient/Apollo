@@ -51,4 +51,13 @@ public class AutoTextHotkeyProtoExample extends AutoTextHotkeyExample {
         ProtobufPacketUtil.broadcastPacket(settings);
     }
 
+    @Override
+    public void setBlockChatMesssageTextInputs(boolean value) {
+        Map<String, Value> properties = new HashMap<>();
+        properties.put("block-chat-message-text-inputs", Value.newBuilder().setBoolValue(value).build());
+
+        ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("auto_text_hotkey", properties);
+        ProtobufPacketUtil.broadcastPacket(settings);
+    }
+
 }

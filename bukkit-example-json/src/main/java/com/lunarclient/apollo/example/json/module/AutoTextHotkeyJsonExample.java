@@ -43,4 +43,13 @@ public class AutoTextHotkeyJsonExample extends AutoTextHotkeyExample {
         JsonPacketUtil.broadcastPacket(message);
     }
 
+    @Override
+    public void setBlockChatMesssageTextInputs(boolean value) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("block-chat-message-text-inputs", value);
+
+        JsonObject message = JsonUtil.createEnableModuleObjectWithType("auto_text_hotkey", properties);
+        JsonPacketUtil.broadcastPacket(message);
+    }
+
 }

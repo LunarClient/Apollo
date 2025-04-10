@@ -30,4 +30,6 @@ public abstract class AutoTextHotkeyExample extends ApolloModuleExample {
 
     public abstract void setBlockedTextInputs(List<String> blockedTextInputs);
 
+    public abstract void setBlockChatMesssageTextInputs(boolean value);
+
 }
