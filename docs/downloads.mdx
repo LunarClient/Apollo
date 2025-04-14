@@ -8,7 +8,7 @@ import router from "next/router";
 </Text>
 
 <Text textAlign="center" color="rgba(226,232,240)" fontSize="18px" CSS={{ marginBottom: "20px" }}>
-    Below you can download the latest release of Apollo for Bukkit, BungeeCord, and Velocity.
+    Below you can download the latest release of Apollo for Bukkit, Folia, BungeeCord, and Velocity.
 </Text>
 
 <DownloadList
@@ -39,6 +39,30 @@ import router from "next/router";
         },
         {
             backgroundImage: "/backgrounds/2.png",
+            customIcon: <img width={250} src="/folia.png" />,
+            title: "Folia",
+            subtitle: "",
+            button: [
+                {
+                    text: "Download",
+                    onClick: () => {
+                        const asset = fetch("https://api.lunarclientprod.com/apollo/updates")
+                            .then((res) => res.json())
+                            .then((res) => router.push(res.assets.folia));
+                    },
+                },
+            ],
+            CSS: {
+                "> svg:first-child": {
+                    width: "112px",
+                },
+                svg: {
+                    width: "16px",
+                },
+            },
+        },
+        {
+            backgroundImage: "/backgrounds/3.png",
             customIcon: <img width={250} src="/bungee.png" />,
             title: "Bungee",
             subtitle: "",
@@ -61,8 +85,14 @@ import router from "next/router";
                 },
             },
         },
+    ]}
+
+/>
+
+<DownloadList
+    downloadOptions={[
         {
-            backgroundImage: "/backgrounds/3.png",
+            backgroundImage: "/backgrounds/4.png",
             customIcon: <img width={250} src="/velocity.png" />,
             title: "Velocity",
             subtitle: "",
@@ -79,6 +109,47 @@ import router from "next/router";
             CSS: {
                 "> svg:first-child": {
                     width: "112px",
+                },
+                svg: {
+                    width: "16px",
+                },
+            },
+        },
+        {
+            backgroundImage: "/backgrounds/5.png",
+            customIcon: <img width={250} src="/sponge.png" />,
+            title: "Sponge",
+            subtitle: "",
+            button: [
+                {
+                    text: "Coming Soon",
+                },
+            ],
+            CSS: {
+                "> svg:first-child": {
+                    width: "112px",
+                },
+                svg: {
+                    width: "16px",
+                },
+            },
+        },
+        {
+            backgroundImage: "/backgrounds/5.png",
+            customIcon: <img width={250} src="/support.png" />,
+            title: "Missing a platform?",
+            subtitle: "",
+            button: [
+                {
+                    text: "Join Discord",
+                    onClick: () => {
+                        window.open("https://discord.gg/3T9Atyb6pf", "_blank");
+                    },
+                },
+            ],
+            CSS: {
+                "> svg:first-child": {
+                    display: "none",
                 },
                 svg: {
                     width: "16px",
