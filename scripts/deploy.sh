@@ -58,15 +58,9 @@ deploy_files() {
 [ $# -lt 1 ] && usage
 
 SERVER="$1"
+MODULE="${2:-api}"  # Default to "api" if not provided
 
-# Only assign an example module if server is apollo or test
-if [[ "$SERVER" == "apollo" || "$SERVER" == "test" ]]; then
-  MODULE="${2:-api}"  # Default to "api" if not provided
-  validate_module "$MODULE"
-else
-  MODULE=""
-fi
-
+validate_module "$MODULE"
 validate_server "$SERVER"
 
 echo "Building project..."
@@ -93,7 +87,7 @@ case "$SERVER" in
   folia)
     files_to_copy=(
       "folia/build/libs/apollo-folia-${VERSION}.jar"
-      "bukkit-example/build/libs/apollo-bukkit-example-${VERSION}.jar"
+      "bukkit-example-${MODULE}/build/libs/apollo-bukkit-example-${MODULE}-${VERSION}.jar"
     )
     destination_path="/home/ubuntu/apollo-folia/plugins/"
     ;;
