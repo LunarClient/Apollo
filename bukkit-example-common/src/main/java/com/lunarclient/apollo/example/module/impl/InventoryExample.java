@@ -87,7 +87,7 @@ public class InventoryExample extends NMSExample {
         inventory.setItem(29, ItemUtil.addTag(suggestCommandItem, "suggestCommand", "/apollo"));
 
         ItemStack runCommandItem = ItemUtil.itemWithName(
-            Material.BOOK_AND_QUILL,
+            Material.ENCHANTED_BOOK,
             ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "RUN COMMAND"
         );
 

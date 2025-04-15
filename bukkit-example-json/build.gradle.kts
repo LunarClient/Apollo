@@ -3,6 +3,10 @@ plugins {
     id("apollo.shadow-conventions")
 }
 
+java {
+    javaTarget(21)
+}
+
 dependencies {
     api(libs.bundles.adventure) {
         exclude("org.checkerframework")
@@ -11,5 +15,6 @@ dependencies {
     }
 
     compileOnly(libs.bukkit)
+    compileOnly(libs.folia)
     implementation(project(":apollo-bukkit-example-common"))
 }

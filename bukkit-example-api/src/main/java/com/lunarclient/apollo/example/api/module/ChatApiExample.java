@@ -26,10 +26,13 @@ package com.lunarclient.apollo.example.api.module;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.module.impl.ChatExample;
+import com.lunarclient.apollo.example.util.ServerUtil;
 import com.lunarclient.apollo.module.chat.ChatModule;
 import com.lunarclient.apollo.recipients.Recipients;
+import java.util.concurrent.atomic.AtomicInteger;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ChatApiExample extends ChatExample {
@@ -38,6 +41,14 @@ public class ChatApiExample extends ChatExample {
 
     @Override
     public void displayLiveChatMessageExample() {
+        if (ServerUtil.isFolia()) {
+            this.runFoliaChatMessageTask();
+        } else {
+            this.runBukkitChatMessageTask();
+        }
+    }
+
+    private void runBukkitChatMessageTask() {
         BukkitRunnable runnable = new BukkitRunnable() {
 
             private int countdown = 5;
@@ -63,7 +74,29 @@ public class ChatApiExample extends ChatExample {
             }
         };
 
-        runnable.runTaskTimer(ApolloExamplePlugin.getInstance(), 0L, 20L);
+        runnable.runTaskTimer(ApolloExamplePlugin.getInstance(), 1L, 20L);
+    }
+
+    private void runFoliaChatMessageTask() {
+        AtomicInteger countdown = new AtomicInteger(5);
+
+        Bukkit.getGlobalRegionScheduler().runAtFixedRate(ApolloExamplePlugin.getInstance(), task -> {
+            int seconds = countdown.getAndDecrement();
+            if (seconds > 0) {
+                ChatApiExample.this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
+                    Component.text("Game starting in ", NamedTextColor.GREEN)
+                        .append(Component.text(seconds, NamedTextColor.BLUE)),
+                    13
+                );
+            } else {
+                ChatApiExample.this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
+                    Component.text("Game started! ", NamedTextColor.GREEN),
+                    13
+                );
+
+                task.cancel();
+            }
+        }, 1L, 20L);
     }
 
     @Override
