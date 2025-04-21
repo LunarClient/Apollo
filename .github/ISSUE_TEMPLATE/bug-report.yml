@@ -10,7 +10,7 @@ body:
     - type: markdown
       attributes:
           value: |
-              Thanks for taking the time to report this issue, if you want to request a feature join our [Discord](https://discord.gg/3T9Atyb6pf).
+              Thanks for taking the time to report this issue, if you want to request a feature join our [Discord](https://lunarclient.com/developers-discord).
 
     # Checklist
     - type: checkboxes
