@@ -22,3 +22,7 @@ dependencies {
 
     "baseAdventure4"(libs.adventure.platform.bukkit)
 }
+
+tasks.named("compileJava") {
+    dependsOn(":extra:apollo-extra-adventure4:shadowJar")
+}

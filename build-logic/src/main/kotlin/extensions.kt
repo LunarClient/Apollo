@@ -164,8 +164,14 @@ fun Project.setupDynamicLoader() {
     }
 }
 
-fun Project.setupDynamicDependency(configurationName: String, shadowTaskName: String, jarPath: String, jarName: String,
-                                   name: String = configurationName, classifier: String = "all") {
+fun Project.setupDynamicDependency(
+    configurationName: String,
+    shadowTaskName: String,
+    jarPath: String,
+    jarName: String,
+    name: String = configurationName,
+    classifier: String = "all"
+) {
     extensions.configure<JavaPluginExtension> {
         val configuration = configurations.findByName(configurationName) ?: configurations.register(configurationName).get()
 
@@ -176,6 +182,8 @@ fun Project.setupDynamicDependency(configurationName: String, shadowTaskName: St
         val shadowTask by tasks.register(shadowTaskName, ShadowJar::class) {
             archiveClassifier.set("${name}-${classifier}")
             configurations = listOf(configuration)
+
+            mustRunAfter(":extra:apollo-extra-adventure4:shadowJar")
 
             configureExclusions()
         }
