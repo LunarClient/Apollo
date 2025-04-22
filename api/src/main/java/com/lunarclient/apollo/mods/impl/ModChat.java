@@ -67,6 +67,48 @@ public final class ModChat {
         .build();
 
     /**
+     * Choose whether or not you want to stack multiple of the same messages in chat within a timeframe.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> STACK_MESSAGES_TIME_BASED = SimpleOption.<Boolean>builder()
+        .comment("Choose whether or not you want to stack multiple of the same messages in chat within a timeframe")
+        .node("chat", "stack-messages-time-based").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Integer> TIME_BASED_STACK_MESSAGES_TIMEFRAME = NumberOption.<Integer>number()
+        .node("chat", "time-based-stack-messages-timeframe").type(TypeToken.get(Integer.class))
+        .min(1).max(60)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> CHAT_STACK_IGNORE_BLANK = SimpleOption.<Boolean>builder()
+        .node("chat", "chat-stack-ignore-blank").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> CHAT_STACK_IGNORE_BREAK = SimpleOption.<Boolean>builder()
+        .node("chat", "chat-stack-ignore-break").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Moves the chat up 12 pixels so it doesn't block health bar.
      *
      * @since 1.0.0

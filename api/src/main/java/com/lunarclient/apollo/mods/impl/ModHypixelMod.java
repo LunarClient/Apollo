@@ -177,6 +177,16 @@ public final class ModHypixelMod {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> USE_BEDWARS_LEVELS_FORMAT = SimpleOption.<Boolean>builder()
+        .node("hypixel-mod", "use-bedwars-levels-format").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> HIDE_PRIVATE_MESSAGES = SimpleOption.<Boolean>builder()
