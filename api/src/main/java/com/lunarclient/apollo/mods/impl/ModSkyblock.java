@@ -171,6 +171,26 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> HIGHLIGHT_END_NODES = SimpleOption.<Boolean>builder()
+        .node("skyblock", "highlight-end-nodes").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> HIGHLIGHT_GLOWING_MUSHROOMS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "highlight-glowing-mushrooms").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Makes Giant HP more visible by showing their HP at their feet.
      *
      * @since 1.1.5

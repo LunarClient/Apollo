@@ -43,6 +43,17 @@ public final class ModOneSevenVisuals {
         .notifyClient()
         .build();
 
+    /**
+     * Provides better visual feedback when attacking while keeping vanilla behavior.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> ALWAYS_SWING = SimpleOption.<Boolean>builder()
+        .comment("Provides better visual feedback when attacking while keeping vanilla behavior")
+        .node("one-seven-visuals", "always-swing").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
     private ModOneSevenVisuals() {
     }
 

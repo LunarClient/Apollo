@@ -23,50 +23,27 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
-import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Blur your surroundings when moving.
+ * Allows you to set up certain actions to be triggered on received chat messages.
  *
- * @since 1.0.0
+ * @since 1.1.8
  */
-public final class ModMotionBlur {
+public final class ModAutoTextActions {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.1.8
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("motion-blur", "enabled").type(TypeToken.get(Boolean.class))
+        .node("auto-text-actions", "enabled").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Integer> VALUE = NumberOption.<Integer>number()
-        .node("motion-blur", "value").type(TypeToken.get(Integer.class))
-        .min(1).max(10)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    @Deprecated
-    public static final SimpleOption<Boolean> OLD_BLUR = SimpleOption.<Boolean>builder()
-        .node("motion-blur", "old-blur").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    private ModMotionBlur() {
+    private ModAutoTextActions() {
     }
 
 }

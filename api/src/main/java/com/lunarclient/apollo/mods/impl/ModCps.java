@@ -221,6 +221,26 @@ public final class ModCps {
         .notifyClient()
         .build();
 
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> REVERSE_TEXT = SimpleOption.<Boolean>builder()
+        .node("cps", "reverse-text").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> IGNORE_CANCELLED_CLICKS = SimpleOption.<Boolean>builder()
+        .node("cps", "ignore-cancelled-clicks").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
     private ModCps() {
     }
 
