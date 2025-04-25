@@ -79,7 +79,7 @@ public final class ModTimeChanger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final SimpleOption<Boolean> TIME_PASSAGE = SimpleOption.<Boolean>builder()
         .node("time-changer", "time-passage").type(TypeToken.get(Boolean.class))
@@ -89,7 +89,7 @@ public final class ModTimeChanger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final NumberOption<Integer> SPEED = NumberOption.<Integer>number()
         .node("time-changer", "speed").type(TypeToken.get(Integer.class))

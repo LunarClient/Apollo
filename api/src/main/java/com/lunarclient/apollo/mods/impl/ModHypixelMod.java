@@ -177,7 +177,7 @@ public final class ModHypixelMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final SimpleOption<Boolean> USE_BEDWARS_LEVELS_FORMAT = SimpleOption.<Boolean>builder()
         .node("hypixel-mod", "use-bedwars-levels-format").type(TypeToken.get(Boolean.class))

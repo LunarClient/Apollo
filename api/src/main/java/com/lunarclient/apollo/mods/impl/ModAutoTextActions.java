@@ -29,14 +29,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * Allows you to set up certain actions to be triggered on received chat messages.
  *
- * @since %release_version%
+ * @since 1.1.8
  */
 public final class ModAutoTextActions {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("auto-text-actions", "enabled").type(TypeToken.get(Boolean.class))

@@ -46,7 +46,7 @@ public final class ModOneSevenVisuals {
     /**
      * Provides better visual feedback when attacking while keeping vanilla behavior.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final SimpleOption<Boolean> ALWAYS_SWING = SimpleOption.<Boolean>builder()
         .comment("Provides better visual feedback when attacking while keeping vanilla behavior")

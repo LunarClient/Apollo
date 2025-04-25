@@ -224,7 +224,7 @@ public final class ModCps {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final SimpleOption<Boolean> REVERSE_TEXT = SimpleOption.<Boolean>builder()
         .node("cps", "reverse-text").type(TypeToken.get(Boolean.class))
@@ -234,7 +234,7 @@ public final class ModCps {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final SimpleOption<Boolean> IGNORE_CANCELLED_CLICKS = SimpleOption.<Boolean>builder()
         .node("cps", "ignore-cancelled-clicks").type(TypeToken.get(Boolean.class))

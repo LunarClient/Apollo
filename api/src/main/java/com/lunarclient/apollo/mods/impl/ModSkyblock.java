@@ -173,7 +173,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final SimpleOption<Boolean> HIGHLIGHT_END_NODES = SimpleOption.<Boolean>builder()
         .node("skyblock", "highlight-end-nodes").type(TypeToken.get(Boolean.class))
@@ -183,7 +183,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final SimpleOption<Boolean> HIGHLIGHT_GLOWING_MUSHROOMS = SimpleOption.<Boolean>builder()
         .node("skyblock", "highlight-glowing-mushrooms").type(TypeToken.get(Boolean.class))

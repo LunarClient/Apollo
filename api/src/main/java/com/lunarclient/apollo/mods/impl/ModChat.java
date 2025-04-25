@@ -69,7 +69,7 @@ public final class ModChat {
     /**
      * Choose whether or not you want to stack multiple of the same messages in chat within a timeframe.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final SimpleOption<Boolean> STACK_MESSAGES_TIME_BASED = SimpleOption.<Boolean>builder()
         .comment("Choose whether or not you want to stack multiple of the same messages in chat within a timeframe")
@@ -80,7 +80,7 @@ public final class ModChat {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final NumberOption<Integer> TIME_BASED_STACK_MESSAGES_TIMEFRAME = NumberOption.<Integer>number()
         .node("chat", "time-based-stack-messages-timeframe").type(TypeToken.get(Integer.class))
@@ -91,7 +91,7 @@ public final class ModChat {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final SimpleOption<Boolean> CHAT_STACK_IGNORE_BLANK = SimpleOption.<Boolean>builder()
         .node("chat", "chat-stack-ignore-blank").type(TypeToken.get(Boolean.class))
@@ -101,7 +101,7 @@ public final class ModChat {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.8
      */
     public static final SimpleOption<Boolean> CHAT_STACK_IGNORE_BREAK = SimpleOption.<Boolean>builder()
         .node("chat", "chat-stack-ignore-break").type(TypeToken.get(Boolean.class))
