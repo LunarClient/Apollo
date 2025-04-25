@@ -203,6 +203,10 @@ public final class ApolloVersionManager {
             case "velocity": {
                 return this.assets.getVelocity();
             }
+
+            case "folia": {
+                return this.assets.getFolia();
+            }
         }
 
         return null;

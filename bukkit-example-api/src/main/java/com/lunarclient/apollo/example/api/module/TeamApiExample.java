@@ -29,6 +29,7 @@ import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.module.impl.TeamExample;
+import com.lunarclient.apollo.example.util.ServerUtil;
 import com.lunarclient.apollo.module.team.TeamMember;
 import com.lunarclient.apollo.module.team.TeamModule;
 import java.awt.Color;
@@ -37,6 +38,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -46,7 +48,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class TeamApiExample extends TeamExample implements Listener {
 
@@ -56,7 +57,11 @@ public class TeamApiExample extends TeamExample implements Listener {
     private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
 
     public TeamApiExample() {
-        new TeamUpdateTask();
+        if (ServerUtil.isFolia()) {
+            this.runFoliaTeamUpdateTask();
+        } else {
+            this.runBukkitTeamUpdateTask();
+        }
 
         Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getInstance());
     }
@@ -93,6 +98,18 @@ public class TeamApiExample extends TeamExample implements Listener {
         if (team != null) {
             team.getMembers().forEach(team::removeMember);
         }
+    }
+
+    private void runBukkitTeamUpdateTask() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(ApolloExamplePlugin.getInstance(), () -> {
+            this.teamsByTeamId.values().forEach(Team::refresh);
+        }, 1L, 1L);
+    }
+
+    private void runFoliaTeamUpdateTask() {
+        Bukkit.getAsyncScheduler().runAtFixedRate(ApolloExamplePlugin.getInstance(), task -> {
+            this.teamsByTeamId.values().forEach(Team::refresh);
+        }, 50L, 50L, TimeUnit.MILLISECONDS);
     }
 
     public class Team {
@@ -172,19 +189,6 @@ public class TeamApiExample extends TeamExample implements Listener {
         @Override
         public int hashCode() {
             return this.teamId.hashCode();
-        }
-    }
-
-    // Updates players location every 1 tick (50ms)
-    public class TeamUpdateTask extends BukkitRunnable {
-
-        public TeamUpdateTask() {
-            this.runTaskTimerAsynchronously(ApolloExamplePlugin.getInstance(), 1L, 1L);
-        }
-
-        @Override
-        public void run() {
-            TeamApiExample.this.teamsByTeamId.values().forEach(Team::refresh);
         }
     }
 

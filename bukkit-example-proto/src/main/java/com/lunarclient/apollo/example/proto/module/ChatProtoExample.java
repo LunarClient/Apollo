@@ -29,14 +29,25 @@ import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.module.impl.ChatExample;
 import com.lunarclient.apollo.example.proto.util.AdventureUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
+import com.lunarclient.apollo.example.util.ServerUtil;
+import java.util.concurrent.atomic.AtomicInteger;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ChatProtoExample extends ChatExample {
 
     @Override
     public void displayLiveChatMessageExample() {
+        if (ServerUtil.isFolia()) {
+            this.runFoliaChatMessageTask();
+        } else {
+            this.runBukkitChatMessageTask();
+        }
+    }
+
+    private void runBukkitChatMessageTask() {
         BukkitRunnable runnable = new BukkitRunnable() {
 
             private int countdown = 5;
@@ -65,7 +76,33 @@ public class ChatProtoExample extends ChatExample {
             }
         };
 
-        runnable.runTaskTimer(ApolloExamplePlugin.getInstance(), 0L, 20L);
+        runnable.runTaskTimer(ApolloExamplePlugin.getInstance(), 1L, 20L);
+    }
+
+    private void runFoliaChatMessageTask() {
+        AtomicInteger countdown = new AtomicInteger(5);
+
+        Bukkit.getGlobalRegionScheduler().runAtFixedRate(ApolloExamplePlugin.getInstance(), task -> {
+            DisplayLiveChatMessageMessage.Builder builder = DisplayLiveChatMessageMessage.newBuilder()
+                .setMessageId(13);
+
+            int seconds = countdown.getAndDecrement();
+            if (seconds > 0) {
+                builder.setAdventureJsonLines(AdventureUtil.toJson(
+                    Component.text("Game starting in ", NamedTextColor.GREEN)
+                        .append(Component.text(seconds, NamedTextColor.BLUE)))
+                );
+
+                ProtobufPacketUtil.broadcastPacket(builder.build());
+            } else {
+                builder.setAdventureJsonLines(AdventureUtil.toJson(
+                    Component.text("Game started! ", NamedTextColor.GREEN))
+                );
+
+                ProtobufPacketUtil.broadcastPacket(builder.build());
+                task.cancel();
+            }
+        }, 1L, 20L);
     }
 
     @Override

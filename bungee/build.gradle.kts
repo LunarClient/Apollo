@@ -19,3 +19,7 @@ dependencies {
 
     "baseAdventure4"(libs.adventure.platform.bungee)
 }
+
+tasks.named("compileJava") {
+    dependsOn(":extra:apollo-extra-adventure4:shadowJar")
+}
