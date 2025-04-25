@@ -1,6 +1,6 @@
 name: Apollo-API-Example
 main: com.lunarclient.apollo.example.api.ApolloApiExamplePlatform
-version: 1.1.7
+version: 1.1.8
 author: Moonsworth
 softdepend: [ Apollo-Bukkit ]
 api-version: 1.13
