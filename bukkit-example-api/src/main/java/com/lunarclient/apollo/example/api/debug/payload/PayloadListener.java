@@ -29,7 +29,9 @@ import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.Listen;
 import com.lunarclient.apollo.event.player.ApolloPlayerHandshakeEvent;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import org.bukkit.Bukkit;
@@ -39,22 +41,24 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitTask;
 
 public class PayloadListener implements Listener, ApolloListener {
 
     private final Set<UUID> handshakeUuids;
+    private final Map<UUID, BukkitTask> tasks;
 
     public PayloadListener() {
         this.handshakeUuids = new HashSet<>();
+        this.tasks = new HashMap<>();
 
         EventBus.getBus().register(this);
         Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getInstance());
     }
 
     private void checkReceivedPackets(Player player) {
-        Bukkit.getScheduler().runTaskLater(ApolloExamplePlugin.getInstance(), () -> {
-            UUID uuid = player.getUniqueId();
-
+        UUID uuid = player.getUniqueId();
+        BukkitTask task = Bukkit.getScheduler().runTaskLater(ApolloExamplePlugin.getInstance(), () -> {
             boolean register = Apollo.getPlayerManager().hasSupport(uuid);
             boolean handshake = this.handshakeUuids.contains(uuid);
 
@@ -63,7 +67,9 @@ public class PayloadListener implements Listener, ApolloListener {
             } else if (!register && !handshake) {
                 player.sendMessage(ChatColor.RED + "Failed to receive Apollo register and handshake!");
             }
-        }, 20 * 3);
+        }, 20 * 10);
+
+        this.tasks.put(player.getUniqueId(), task);
     }
 
     @EventHandler
@@ -73,7 +79,14 @@ public class PayloadListener implements Listener, ApolloListener {
 
     @EventHandler
     private void onPlayerQuit(PlayerQuitEvent event) {
-        this.handshakeUuids.remove(event.getPlayer().getUniqueId());
+        UUID uuid = event.getPlayer().getUniqueId();
+        BukkitTask task = this.tasks.remove(uuid);
+
+        if (task != null) {
+            task.cancel();
+        }
+
+        this.handshakeUuids.remove(uuid);
     }
 
     @Listen

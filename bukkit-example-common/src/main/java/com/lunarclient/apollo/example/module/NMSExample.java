@@ -28,10 +28,14 @@ import org.bukkit.Bukkit;
 public class NMSExample extends ApolloModuleExample {
 
     public boolean isOneEight() {
-        return Bukkit.getServer().getClass()
-            .getPackage().getName()
-            .split("\\.")[3]
-            .startsWith("v1_8");
+        try {
+            return Bukkit.getServer().getClass()
+                .getPackage().getName()
+                .split("\\.")[3]
+                .startsWith("v1_8");
+        } catch (IndexOutOfBoundsException e) {
+            return false;
+        }
     }
 
 }
