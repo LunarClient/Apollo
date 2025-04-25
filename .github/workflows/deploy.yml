@@ -48,15 +48,15 @@ jobs:
                 fi
 
         -   name: Gradle Publish
-            if: "${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/version/') }}"
+            if: "${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/version/') || github.ref == 'refs/heads/support/folia' }}"
             run: ./gradlew publish
 
         -   name: Gradle Release
-            if: "${{ (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/version/')) && env.STATUS == 'release' }}"
+            if: "${{ (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/version/') || github.ref == 'refs/heads/support/folia') }}"
             uses: softprops/action-gh-release@v1
             with:
                 draft: false
-                prerelease: false
+                prerelease: true
                 name: "Apollo v${{ env.VERSION }}"
                 tag_name: "v${{ env.VERSION }}"
                 target_commitish: "${{ github.sha }}"
