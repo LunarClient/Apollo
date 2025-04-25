@@ -21,21 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.module;
+package com.lunarclient.apollo.example.api.debug;
 
-import org.bukkit.Bukkit;
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.player.ApolloPlayer;
+import java.util.function.BiConsumer;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.bukkit.entity.Player;
 
-public class NMSExample extends ApolloModuleExample {
+@Getter
+@RequiredArgsConstructor
+public class DebugTask {
 
-    public boolean isOneEight() {
-        try {
-            return Bukkit.getServer().getClass()
-                .getPackage().getName()
-                .split("\\.")[3]
-                .startsWith("v1_8");
-        } catch (IndexOutOfBoundsException e) {
-            return false;
-        }
+    private final int durationTicks;
+    private final BiConsumer<Player, ApolloPlayer> action;
+    private final String message;
+
+    public void run(Player player) {
+        Apollo.getPlayerManager().getPlayer(player.getUniqueId())
+            .ifPresent(apolloPlayer -> {
+                player.sendMessage(this.message);
+                this.action.accept(player, apolloPlayer);
+            });
     }
 
 }

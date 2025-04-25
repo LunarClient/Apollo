@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.api.commands.debug;
+package com.lunarclient.apollo.example.api.debug.command;
 
 import com.lunarclient.apollo.common.ApolloComponent;
 import net.kyori.adventure.text.Component;
@@ -51,13 +51,19 @@ public class ApolloDebugCommand implements CommandExecutor {
                 .append(Component.text("/apollodebug spampackets [start|stop|stopall] ", NamedTextColor.WHITE))
                 .append(Component.text("# Spam modsetting update packets to the client.", NamedTextColor.GREEN))
                 .appendNewline()
+                .append(Component.text("/apollodebug borders [start|stop] ", NamedTextColor.WHITE))
+                .append(Component.text("# Border collision test.", NamedTextColor.GREEN))
+                .appendNewline()
                 .append(Component.text("-------------------------------------", NamedTextColor.GRAY, TextDecoration.STRIKETHROUGH))
                 .build()
             ));
         } else if(args[0].equalsIgnoreCase("spampackets")) {
             return new SpamPacketsCommand().onCommand(sender, command, label, args);
+        } else if (args[0].equalsIgnoreCase("borders")) {
+            return new BordersCommand().onCommand(sender, command, label, args);
         }
 
         return true;
     }
+
 }

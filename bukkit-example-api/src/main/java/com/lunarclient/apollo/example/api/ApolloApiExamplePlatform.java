@@ -25,8 +25,9 @@ package com.lunarclient.apollo.example.api;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.ApolloExampleType;
-import com.lunarclient.apollo.example.api.commands.debug.ApolloDebugCommand;
-import com.lunarclient.apollo.example.api.debug.SpamPacketDebug;
+import com.lunarclient.apollo.example.api.debug.DebugManager;
+import com.lunarclient.apollo.example.api.debug.command.ApolloDebugCommand;
+import com.lunarclient.apollo.example.api.debug.impl.SpamPacketDebug;
 import com.lunarclient.apollo.example.api.listener.ApolloPlayerApiListener;
 import com.lunarclient.apollo.example.api.module.AutoTextHotkeyApiExample;
 import com.lunarclient.apollo.example.api.module.BeamApiExample;
@@ -108,6 +109,7 @@ public class ApolloApiExamplePlatform extends ApolloExamplePlugin {
     public void registerListeners() {
         this.spamPacketDebug = new SpamPacketDebug();
 
+        new DebugManager();
         new ApolloPlayerApiListener(this);
     }
 

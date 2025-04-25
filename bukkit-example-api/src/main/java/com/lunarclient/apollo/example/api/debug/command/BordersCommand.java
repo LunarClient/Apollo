@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.api.commands.debug;
+package com.lunarclient.apollo.example.api.debug.command;
 
 import com.lunarclient.apollo.common.ApolloComponent;
-import com.lunarclient.apollo.example.api.ApolloApiExamplePlatform;
-import com.lunarclient.apollo.example.api.debug.SpamPacketDebug;
+import com.lunarclient.apollo.example.api.debug.DebugManager;
+import com.lunarclient.apollo.example.api.debug.impl.BorderCollisionTest;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -35,9 +35,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class SpamPacketsCommand implements CommandExecutor {
-
-    private final SpamPacketDebug spamPacketDebug = ApolloApiExamplePlatform.getInstance().getSpamPacketDebug();
+public class BordersCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -47,37 +45,27 @@ public class SpamPacketsCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+        DebugManager debugManager = DebugManager.getInstance();
 
         if (args.length < 2) {
             this.sendUsage(player);
-        } else {
-            switch (args[1].toLowerCase()) {
-                case "start": {
-                    int amount = args.length > 2 ? Integer.parseInt(args[2]) : Integer.MAX_VALUE;
-                    int delay = args.length > 3 ? Integer.parseInt(args[3]) : 50;
+            return true;
+        }
 
-                    this.spamPacketDebug.start(player, amount, delay, () -> player.sendMessage("Debug completed!"));
+        switch (args[1].toLowerCase()) {
+            case "start": {
+                debugManager.start(player, new BorderCollisionTest(player));
+                break;
+            }
 
-                    player.sendMessage("Debug started. (Amount: " + amount + ", Delay: " + delay + "ms)");
-                    break;
-                }
+            case "stop": {
+                debugManager.stop(player);
+                break;
+            }
 
-                case "stop": {
-                    this.spamPacketDebug.stop(player);
-                    player.sendMessage("Debug stopped.");
-                    break;
-                }
-
-                case "stopall": {
-                    this.spamPacketDebug.stopAll();
-                    player.sendMessage("Debug stopped for all debuggers.");
-                    break;
-                }
-
-                default: {
-                    this.sendUsage(player);
-                    break;
-                }
+            default: {
+                this.sendUsage(player);
+                break;
             }
         }
 
@@ -88,17 +76,15 @@ public class SpamPacketsCommand implements CommandExecutor {
         player.sendMessage(ApolloComponent.toLegacy(Component.text()
             .append(Component.text("-------------------------------------", NamedTextColor.GRAY, TextDecoration.STRIKETHROUGH))
             .appendNewline()
-            .append(Component.text("/apollodebug spampackets start <amount> <delay> ", NamedTextColor.WHITE))
-            .append(Component.text("# Starts spamming modsetting update packets to the client, delay is in milliseconds.", NamedTextColor.GREEN))
+            .append(Component.text("/apollodebug borders start", NamedTextColor.WHITE))
+            .append(Component.text("# Starts the borders collision test, bouncing you towards the border walls", NamedTextColor.GREEN))
             .appendNewline()
-            .append(Component.text("/apollodebug spampackets stop ", NamedTextColor.WHITE))
-            .append(Component.text("# Stop spamming modsetting update packets to the client.", NamedTextColor.GREEN))
-            .appendNewline()
-            .append(Component.text("/apollodebug spampackets stopall ", NamedTextColor.WHITE))
-            .append(Component.text("# Stops spamming modsetting update packets to the client, for all debuggers.", NamedTextColor.GREEN))
+            .append(Component.text("/apollodebug borders stop ", NamedTextColor.WHITE))
+            .append(Component.text("# Stop the borders collision test.", NamedTextColor.GREEN))
             .appendNewline()
             .append(Component.text("-------------------------------------", NamedTextColor.GRAY, TextDecoration.STRIKETHROUGH))
             .build()
         ));
     }
+
 }

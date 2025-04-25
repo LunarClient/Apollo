@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.api.debug;
+package com.lunarclient.apollo.example.api.debug.impl;
 
 import com.google.common.collect.Maps;
 import com.lunarclient.apollo.Apollo;
