@@ -10,6 +10,7 @@ The glow module allows you to take advantage of the vanilla Minecraft Glow Effec
 -   Backports all vanilla Minecraft glow effect functionality, found on 1.9+ to the 1.7 and 1.8 version of Lunar Client.
 -   Adds improvements to glow effect for Lunar Client users.
     -   Customizable colors for the glow effect, different from the vanilla Minecraft colors.
+    -   If no color is specified, the glow effect will default to the player's scoreboard team color.
 
 <Callout type="Warning">
   In Version 1.12, Optifine's 'Fast Render' setting alters player rendering. This is expected behavior for Optifine.
@@ -65,6 +66,7 @@ public void resetGlowEffectsExample(Player viewer) {
 2. `UUID target`
    - The player or living entity you want to display the glow effect on.
 3. `Color glowColor`
+   - If `null` is passed (or if no color is specified), the glow effect will default to the target's scoreboard team color.
    - How you'll dictate the color of the glow effect, see the [colors page](/apollo/developers/utilities/colors) for more.
 
 </Tab>
