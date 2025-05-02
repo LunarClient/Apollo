@@ -27,34 +27,23 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Revert certain visuals and animations to how they behaved on 1.7.
+ * Allows you to set up certain actions to be triggered on received chat messages.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
-public final class ModOneSevenVisuals {
+public final class ModAutoTextActions {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("one-seven-visuals", "enabled").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * Provides better visual feedback when attacking while keeping vanilla behavior.
-     *
      * @since %release_version%
      */
-    public static final SimpleOption<Boolean> ALWAYS_SWING = SimpleOption.<Boolean>builder()
-        .comment("Provides better visual feedback when attacking while keeping vanilla behavior")
-        .node("one-seven-visuals", "always-swing").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
+        .node("auto-text-actions", "enabled").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
-    private ModOneSevenVisuals() {
+    private ModAutoTextActions() {
     }
 
 }

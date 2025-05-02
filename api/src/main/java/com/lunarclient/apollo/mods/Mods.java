@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods;
 import com.lunarclient.apollo.mods.impl.Mod2dItems;
 import com.lunarclient.apollo.mods.impl.Mod3dSkins;
 import com.lunarclient.apollo.mods.impl.ModArmorstatus;
+import com.lunarclient.apollo.mods.impl.ModAutoTextActions;
 import com.lunarclient.apollo.mods.impl.ModAutoTextHotkey;
 import com.lunarclient.apollo.mods.impl.ModBlockOutline;
 import com.lunarclient.apollo.mods.impl.ModBossbar;
@@ -175,6 +176,7 @@ public final class Mods {
             ModFov.class,
             ModFog.class,
             ModAutoTextHotkey.class,
+            ModAutoTextActions.class,
             ModMumbleLink.class,
             Mod2dItems.class,
             ModBossbar.class,

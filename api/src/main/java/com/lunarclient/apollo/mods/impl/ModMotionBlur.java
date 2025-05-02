@@ -49,8 +49,9 @@ public final class ModMotionBlur {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> OLD_BLUR = SimpleOption.<Boolean>builder()
-        .node("motion-blur", "old-blur").type(TypeToken.get(Boolean.class))
+    public static final NumberOption<Integer> VALUE = NumberOption.<Integer>number()
+        .node("motion-blur", "value").type(TypeToken.get(Integer.class))
+        .min(1).max(10)
         .notifyClient()
         .build();
 
@@ -59,9 +60,9 @@ public final class ModMotionBlur {
      *
      * @since 1.0.0
      */
-    public static final NumberOption<Integer> VALUE = NumberOption.<Integer>number()
-        .node("motion-blur", "value").type(TypeToken.get(Integer.class))
-        .min(1).max(10)
+    @Deprecated
+    public static final SimpleOption<Boolean> OLD_BLUR = SimpleOption.<Boolean>builder()
+        .node("motion-blur", "old-blur").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
