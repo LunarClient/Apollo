@@ -1,0 +1,123 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+# Auto Text Hotkey Module
+
+## Overview
+
+The auto text hotkey module allows you to control the auto text hotkey mod inside Lunar Client.
+
+- Ability to prevent specific commands & chat messages from being used as hotkeys.
+- Ability to prevent all chat messages from being used as hotkeys.
+
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Set Blocked Text Inputs
+
+```java
+public void setBlockedTextInputs(List<String> blockedTextInputs) {
+    Options options = this.autoTextHotkeyModule.getOptions();
+    options.set(AutoTextHotkeyModule.BLOCK_TEXT_INPUTS, true);
+    options.set(AutoTextHotkeyModule.BLOCKED_TEXT_INPUTS, blockedTextInputs);
+}
+```
+
+### Block Chat Message Text Inputs
+
+```java
+public void setBlockChatMesssageTextInputs(boolean value) {
+    this.autoTextHotkeyModule.getOptions().set(AutoTextHotkeyModule.BLOCK_CHAT_MESSAGE_TEXT_INPUTS, value);
+}
+```
+
+</Tab>
+
+<Tab>
+
+### Set Blocked Text Inputs
+
+```java
+public void setBlockedTextInputs(List<String> blockedTextInputs) {
+    ListValue listValue = ListValue.newBuilder().addAllValues(
+        blockedTextInputs.stream()
+            .map(input -> Value.newBuilder().setStringValue(input).build())
+            .collect(Collectors.toList())
+        ).build();
+
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("block-text-inputs", Value.newBuilder().setBoolValue(true).build());
+    properties.put("blocked-text-inputs", Value.newBuilder().setListValue(listValue).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("auto_text_hotkey", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+### Block Chat Message Text Inputs
+
+```java
+public void setBlockChatMesssageTextInputs(boolean value) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("block-chat-message-text-inputs", Value.newBuilder().setBoolValue(value).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("auto_text_hotkey", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+</Tab>
+
+<Tab>
+
+### Set Blocked Text Inputs
+
+```java
+public void setBlockedTextInputs(List<String> blockedTextInputs) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("block-text-inputs", true);
+    properties.put("blocked-text-inputs", blockedTextInputs);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("auto_text_hotkey", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+### Block Chat Message Text Inputs
+
+```java
+public void setBlockChatMesssageTextInputs(boolean value) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("block-chat-message-text-inputs", value);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("auto_text_hotkey", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Available options
+
+- __`BLOCK_TEXT_INPUTS`__
+    - Whether to use blocked text inputs in the `BLOCKED_TEXT_INPUTS` option.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BLOCKED_TEXT_INPUTS`__
+    - A list of text inputs that are blocked and cannot be used by the user.
+    - Values
+        - Type: `List<String>`
+        - Default: `["/sellall", "/msg", "/pay"]`
+
+- __`BLOCK_CHAT_MESSAGE_TEXT_INPUTS`__
+    - Whether to block all chat messages from being used as hotkeys.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`

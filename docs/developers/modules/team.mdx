@@ -30,10 +30,14 @@ Explore each integration by cycling through each tab, to find the best fit for y
 private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
 private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
 
-public TeamExample() {
-    new TeamUpdateTask();
+public TeamApiExample() {
+    if (ServerUtil.isFolia()) {
+        this.runFoliaTeamUpdateTask();
+    } else {
+        this.runBukkitTeamUpdateTask();
+    }
 
-    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
+    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getInstance());
 }
 
 @EventHandler
@@ -70,6 +74,18 @@ public void deleteTeam(UUID teamId) {
     }
 }
 
+private void runBukkitTeamUpdateTask() {
+    Bukkit.getScheduler().runTaskTimerAsynchronously(ApolloExamplePlugin.getInstance(), () -> {
+        this.teamsByTeamId.values().forEach(Team::refresh);
+    }, 1L, 1L);
+}
+
+private void runFoliaTeamUpdateTask() {
+    Bukkit.getAsyncScheduler().runAtFixedRate(ApolloExamplePlugin.getInstance(), task -> {
+        this.teamsByTeamId.values().forEach(Team::refresh);
+    }, 50L, 50L, TimeUnit.MILLISECONDS);
+}
+
 public class Team {
 
     private final UUID teamId;
@@ -82,15 +98,15 @@ public class Team {
 
     public void addMember(Player player) {
         this.members.add(player);
-        TeamExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
+        TeamApiExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
     }
 
     public void removeMember(Player player) {
         this.members.remove(player);
-        TeamExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
+        TeamApiExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
 
         Apollo.getPlayerManager().getPlayer(player.getUniqueId())
-            .ifPresent(TeamExample.this.teamModule::resetTeamMembers);
+            .ifPresent(TeamApiExample.this.teamModule::resetTeamMembers);
     }
 
     private TeamMember createTeamMember(Player member) {
@@ -119,7 +135,7 @@ public class Team {
             .collect(Collectors.toList());
 
         this.members.forEach(member -> Apollo.getPlayerManager().getPlayer(member.getUniqueId())
-            .ifPresent(apolloPlayer -> TeamExample.this.teamModule.updateTeamMembers(apolloPlayer, teammates)));
+            .ifPresent(apolloPlayer -> TeamApiExample.this.teamModule.updateTeamMembers(apolloPlayer, teammates)));
     }
 
     public UUID getTeamId() {
@@ -147,19 +163,6 @@ public class Team {
     @Override
     public int hashCode() {
         return this.teamId.hashCode();
-    }
-}
-
-// Updates players location every 1 tick (50ms)
-public class TeamUpdateTask extends BukkitRunnable {
-
-    public TeamUpdateTask() {
-        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getPlugin(), 1L, 1L);
-    }
-
-    @Override
-    public void run() {
-        TeamExample.this.teamsByTeamId.values().forEach(Team::refresh);
     }
 }
 ```
@@ -239,9 +242,13 @@ private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
 private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
 
 public TeamProtoExample() {
-    new TeamUpdateTask();
+    if (ServerUtil.isFolia()) {
+        this.runFoliaTeamUpdateTask();
+    } else {
+        this.runBukkitTeamUpdateTask();
+    }
 
-    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
+    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getInstance());
 }
 
 @EventHandler
@@ -276,6 +283,18 @@ public void deleteTeam(UUID teamId) {
     if (team != null) {
         team.getMembers().forEach(team::removeMember);
     }
+}
+
+private void runBukkitTeamUpdateTask() {
+    Bukkit.getScheduler().runTaskTimerAsynchronously(ApolloExamplePlugin.getInstance(), () -> {
+        this.teamsByTeamId.values().forEach(Team::refresh);
+    }, 1L, 1L);
+}
+
+private void runFoliaTeamUpdateTask() {
+    Bukkit.getAsyncScheduler().runAtFixedRate(ApolloExamplePlugin.getInstance(), task -> {
+        this.teamsByTeamId.values().forEach(Team::refresh);
+    }, 50L, 50L, TimeUnit.MILLISECONDS);
 }
 
 public class Team {
@@ -355,19 +374,6 @@ public class Team {
         return this.teamId.hashCode();
     }
 }
-
-// Updates players location every 1 tick (50ms)
-public class TeamUpdateTask extends BukkitRunnable {
-
-    public TeamUpdateTask() {
-        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getPlugin(), 1L, 1L);
-    }
-
-    @Override
-    public void run() {
-        TeamProtoExample.this.teamsByTeamId.values().forEach(Team::refresh);
-    }
-}
 ```
 
 </Tab>
@@ -379,9 +385,13 @@ private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
 private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
 
 public TeamJsonExample() {
-    new TeamUpdateTask();
+    if (ServerUtil.isFolia()) {
+        this.runFoliaTeamUpdateTask();
+    } else {
+        this.runBukkitTeamUpdateTask();
+    }
 
-    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getPlugin());
+    Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getInstance());
 }
 
 @EventHandler
@@ -416,6 +426,18 @@ public void deleteTeam(UUID teamId) {
     if (team != null) {
         team.getMembers().forEach(team::removeMember);
     }
+}
+
+private void runBukkitTeamUpdateTask() {
+    Bukkit.getScheduler().runTaskTimerAsynchronously(ApolloExamplePlugin.getInstance(), () -> {
+        this.teamsByTeamId.values().forEach(Team::refresh);
+    }, 1L, 1L);
+}
+
+private void runFoliaTeamUpdateTask() {
+    Bukkit.getAsyncScheduler().runAtFixedRate(ApolloExamplePlugin.getInstance(), task -> {
+        this.teamsByTeamId.values().forEach(Team::refresh);
+    }, 50L, 50L, TimeUnit.MILLISECONDS);
 }
 
 public class Team {
@@ -496,19 +518,6 @@ public class Team {
     @Override
     public int hashCode() {
         return this.teamId.hashCode();
-    }
-}
-
-// Updates players location every 1 tick (50ms)
-public class TeamUpdateTask extends BukkitRunnable {
-
-    public TeamUpdateTask() {
-        this.runTaskTimerAsynchronously(ApolloExamplePlugin.getPlugin(), 1L, 1L);
-    }
-
-    @Override
-    public void run() {
-        TeamJsonExample.this.teamsByTeamId.values().forEach(Team::refresh);
     }
 }
 ```

@@ -28,19 +28,29 @@ Explore each integration by cycling through each tab, to find the best fit for y
 
 ```java
 public void displayLiveChatMessageExample() {
+    if (ServerUtil.isFolia()) {
+        this.runFoliaChatMessageTask();
+    } else {
+        this.runBukkitChatMessageTask();
+    }
+}
+
+private void runBukkitChatMessageTask() {
     BukkitRunnable runnable = new BukkitRunnable() {
 
         private int countdown = 5;
 
         @Override
         public void run() {
-            ChatApiExample.this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
-                Component.text("Game starting in ", NamedTextColor.GREEN)
-                    .append(Component.text(this.countdown, NamedTextColor.BLUE)),
-                13
-            );
+            if (this.countdown > 0) {
+                ChatApiExample.this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
+                    Component.text("Game starting in ", NamedTextColor.GREEN)
+                        .append(Component.text(this.countdown, NamedTextColor.BLUE)),
+                    13
+                );
 
-            if (--this.countdown == 0) {
+                this.countdown--;
+            } else {
                 ChatApiExample.this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
                     Component.text("Game started! ", NamedTextColor.GREEN),
                     13
@@ -51,7 +61,29 @@ public void displayLiveChatMessageExample() {
         }
     };
 
-    runnable.runTaskTimer(ApolloExamplePlugin.getPlugin(), 0L, 20L);
+    runnable.runTaskTimer(ApolloExamplePlugin.getInstance(), 1L, 20L);
+}
+
+private void runFoliaChatMessageTask() {
+    AtomicInteger countdown = new AtomicInteger(5);
+
+    Bukkit.getGlobalRegionScheduler().runAtFixedRate(ApolloExamplePlugin.getInstance(), task -> {
+        int seconds = countdown.getAndDecrement();
+        if (seconds > 0) {
+            ChatApiExample.this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
+                Component.text("Game starting in ", NamedTextColor.GREEN)
+                    .append(Component.text(seconds, NamedTextColor.BLUE)),
+                13
+            );
+        } else {
+            ChatApiExample.this.chatModule.displayLiveChatMessage(Recipients.ofEveryone(),
+                Component.text("Game started! ", NamedTextColor.GREEN),
+                13
+            );
+
+            task.cancel();
+        }
+    }, 1L, 20L);
 }
 ```
 
@@ -70,8 +102,15 @@ public void removeLiveChatMessageExample() {
 **Displaying a Live Chat Message**
 
 ```java
-@Override
 public void displayLiveChatMessageExample() {
+    if (ServerUtil.isFolia()) {
+        this.runFoliaChatMessageTask();
+    } else {
+        this.runBukkitChatMessageTask();
+    }
+}
+
+private void runBukkitChatMessageTask() {
     BukkitRunnable runnable = new BukkitRunnable() {
 
         private int countdown = 5;
@@ -100,7 +139,33 @@ public void displayLiveChatMessageExample() {
         }
     };
 
-    runnable.runTaskTimer(ApolloExamplePlugin.getPlugin(), 0L, 20L);
+    runnable.runTaskTimer(ApolloExamplePlugin.getInstance(), 1L, 20L);
+}
+
+private void runFoliaChatMessageTask() {
+    AtomicInteger countdown = new AtomicInteger(5);
+
+    Bukkit.getGlobalRegionScheduler().runAtFixedRate(ApolloExamplePlugin.getInstance(), task -> {
+        DisplayLiveChatMessageMessage.Builder builder = DisplayLiveChatMessageMessage.newBuilder()
+            .setMessageId(13);
+
+        int seconds = countdown.getAndDecrement();
+        if (seconds > 0) {
+            builder.setAdventureJsonLines(AdventureUtil.toJson(
+                Component.text("Game starting in ", NamedTextColor.GREEN)
+                    .append(Component.text(seconds, NamedTextColor.BLUE)))
+            );
+
+            ProtobufPacketUtil.broadcastPacket(builder.build());
+        } else {
+            builder.setAdventureJsonLines(AdventureUtil.toJson(
+                Component.text("Game started! ", NamedTextColor.GREEN))
+            );
+
+            ProtobufPacketUtil.broadcastPacket(builder.build());
+            task.cancel();
+        }
+    }, 1L, 20L);
 }
 ```
 
@@ -123,8 +188,15 @@ public void removeLiveChatMessageExample() {
 **Displaying a Live Chat Message**
 
 ```java
-@Override
 public void displayLiveChatMessageExample() {
+    if (ServerUtil.isFolia()) {
+        this.runFoliaChatMessageTask();
+    } else {
+        this.runBukkitChatMessageTask();
+    }
+}
+
+private void runBukkitChatMessageTask() {
     BukkitRunnable runnable = new BukkitRunnable() {
 
         private int countdown = 5;
@@ -154,7 +226,34 @@ public void displayLiveChatMessageExample() {
         }
     };
 
-    runnable.runTaskTimer(ApolloExamplePlugin.getPlugin(), 0L, 20L);
+    runnable.runTaskTimer(ApolloExamplePlugin.getInstance(), 1L, 20L);
+}
+
+private void runFoliaChatMessageTask() {
+    AtomicInteger countdown = new AtomicInteger(5);
+
+    Bukkit.getGlobalRegionScheduler().runAtFixedRate(ApolloExamplePlugin.getInstance(), task -> {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage");
+        message.addProperty("message_id", 13);
+
+        int seconds = countdown.getAndDecrement();
+        if (seconds > 0) {
+            message.addProperty("adventure_json_lines", AdventureUtil.toJson(
+                Component.text("Game starting in ", NamedTextColor.GREEN)
+                    .append(Component.text(seconds, NamedTextColor.BLUE))
+            ));
+
+            JsonPacketUtil.broadcastPacket(message);
+        } else {
+            message.addProperty("adventure_json_lines", AdventureUtil.toJson(
+                Component.text("Game started! ", NamedTextColor.GREEN)
+            ));
+
+            JsonPacketUtil.broadcastPacket(message);
+            task.cancel();
+        }
+    }, 1L, 20L);
 }
 ```
 

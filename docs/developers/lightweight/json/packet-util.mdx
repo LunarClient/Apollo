@@ -55,14 +55,14 @@ Use the following methods to send packets either to a specific player or to all 
 
 ```java
 public static void sendPacket(Player player, JsonObject message) {
-    player.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "apollo:json", message.toString().getBytes());
+    player.sendPluginMessage(ApolloExamplePlugin.getInstance(), "apollo:json", message.toString().getBytes());
 }
 
 public static void broadcastPacket(JsonObject message) {
     byte[] data = message.toString().getBytes();
 
     Bukkit.getOnlinePlayers().forEach(player ->
-        player.sendPluginMessage(ApolloExamplePlugin.getPlugin(), "apollo:json", data));
+        player.sendPluginMessage(ApolloExamplePlugin.getInstance(), "apollo:json", data));
 }
 ```
 
