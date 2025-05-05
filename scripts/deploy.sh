@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-VERSION="1.1.8"
+VERSION="1.1.9-SNAPSHOT"
 REMOTE_USER="ubuntu"
 REMOTE_HOST="147.135.8.94"
 
