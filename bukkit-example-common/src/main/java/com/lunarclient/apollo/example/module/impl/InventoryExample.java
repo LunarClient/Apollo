@@ -45,11 +45,11 @@ public class InventoryExample extends NMSExample {
     }
 
     public void inventoryModuleCommandExample(Player player) {
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:stone\",Count:1b,tag:{display:{Name:\"\\\"§c§lUNCLICKABLE\\\"\"},lunar:{unclickable:true}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:paper\",Count:1b,tag:{display:{Name:\"\\\"§9§lCOPY TO CLIPBOARD\\\"\"},lunar:{unclickable:true,copyToClipboard:\"lunarclient.com\"}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:torch\",Count:1b,tag:{display:{Name:\"\\\"§6§lOPEN URL\\\"\"},lunar:{unclickable:true,openUrl:\"https://lunarclient.com\"}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:book\",Count:1b,tag:{display:{Name:\"\\\"§2§lSUGGEST COMMAND\\\"\"},lunar:{unclickable:true,suggestCommand:\"/apollo\"}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:writable_book\",Count:1b,tag:{display:{Name:\"\\\"§d§lRUN COMMAND\\\"\"},lunar:{unclickable:true,runCommand:\"/apollo\"}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:stone\",Count:1b,components:{\"minecraft:custom_name\":\"UNCLICKABLE\",\"minecraft:custom_data\":{lunar:{unclickable:true}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:paper\",Count:1b,components:{\"minecraft:custom_name\":\"COPY TO CLIPBOARD\",\"minecraft:custom_data\":{lunar:{unclickable:true,copyToClipboard:\"lunarclient.com\"}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:torch\",Count:1b,components:{\"minecraft:custom_name\":\"OPEN URL\",\"minecraft:custom_data\":{lunar:{unclickable:true,openUrl:\"https://lunarclient.com\"}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:book\",Count:1b,components:{\"minecraft:custom_name\":\"SUGGEST COMMAND\",\"minecraft:custom_data\":{lunar:{unclickable:true,suggestCommand:\"/apollo\"}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:writable_book\",Count:1b,components:{\"minecraft:custom_name\":\"RUN COMMAND\",\"minecraft:custom_data\":{lunar:{unclickable:true,runCommand:\"/apollo\"}}}}}");
     }
 
     public void inventoryModuleNMSExample(Player player) {
