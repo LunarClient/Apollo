@@ -13,7 +13,7 @@ java {
 
 publishing {
     repositories.maven {
-        url = uri("artifactregistry://us-maven.pkg.dev/moonsworth-299m4oir/maven-public")
+        url = uri("artifactregistry://us-maven.pkg.dev/mw-lunarclient-maven-repo/public")
     }
 
     publications.create<MavenPublication>("mavenJava") {
