@@ -44,9 +44,9 @@ public class SaturationExample extends NMSExample {
     }
 
     public void saturationModuleCommandExample(Player player) {
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:apple\",Count:1b,tag:{lunar:{hunger:22,saturation:3}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:apple\",Count:1b,tag:{lunar:{hunger:7,saturation:7}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:apple\",Count:1b,tag:{lunar:{hunger:30,saturation:26}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:apple\",Count:1b,components:{\"minecraft:custom_data\":{lunar:{hunger:22,saturation:3}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:apple\",Count:1b,components:{\"minecraft:custom_data\":{lunar:{hunger:7,saturation:7}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:apple\",Count:1b,components:{\"minecraft:custom_data\":{lunar:{hunger:30,saturation:26}}}}}");
     }
 
     public void saturationModuleNMSExample(Player player) {
