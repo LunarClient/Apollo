@@ -47,6 +47,20 @@ public abstract class GlowModule extends ApolloModule {
     /**
      * Overrides the glow effect for the glowingPlayer, visible by the viewers.
      *
+     * <p>If no color is specified, the glowing color will match the player's scoreboard team color.</p>
+     *
+     *
+     * @param recipients    the recipients that are receiving the packet
+     * @param glowingPlayer the UUID of the player whose glowing effect will be overwrote
+     * @since 1.1.9
+     */
+    public abstract void overrideGlow(Recipients recipients, UUID glowingPlayer);
+
+    /**
+     * Overrides the glow effect for the glowingPlayer, visible by the viewers.
+     *
+     * <p>If the {@code color} parameter is {@code null}, the glowing color will match the player's scoreboard team color.</p>
+     *
      * @param recipients    the recipients that are receiving the packet
      * @param glowingPlayer the UUID of the player whose glowing effect will be overwrote
      * @param color         the new color glowingPlayer should glow in.
