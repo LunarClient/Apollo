@@ -286,6 +286,28 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * Hides players and fishing rods near your bobber while you are fishing.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_FISHING_HIDE_PLAYERS = SimpleOption.<Boolean>builder()
+        .comment("Hides players and fishing rods near your bobber while you are fishing.")
+        .node("skyblock", "skyblock-fishing-hide-players").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows which hotspot the Hotspot Radar item is pointing to.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_FISHING_HOTSPOT_LOCATOR = SimpleOption.<Boolean>builder()
+        .comment("Shows which hotspot the Hotspot Radar item is pointing to.")
+        .node("skyblock", "skyblock-fishing-hotspot-locator").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Provides a chat message on boss kill that tells you how long it took to kill!.
      *
      * @since 1.0.9
