@@ -93,6 +93,7 @@ import com.lunarclient.apollo.mods.impl.ModSoundChanger;
 import com.lunarclient.apollo.mods.impl.ModStopwatch;
 import com.lunarclient.apollo.mods.impl.ModTab;
 import com.lunarclient.apollo.mods.impl.ModTeamView;
+import com.lunarclient.apollo.mods.impl.ModTierTagger;
 import com.lunarclient.apollo.mods.impl.ModTimeChanger;
 import com.lunarclient.apollo.mods.impl.ModTitles;
 import com.lunarclient.apollo.mods.impl.ModTntCountdown;
@@ -195,6 +196,7 @@ public final class Mods {
             ModWaila.class,
             ModNeu.class,
             ModHurtCam.class,
+            ModTierTagger.class,
             ModDamageTint.class,
             ModSkyblock.class,
             ModHorseStats.class,

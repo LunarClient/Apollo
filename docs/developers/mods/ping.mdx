@@ -26,24 +26,61 @@ public void togglePingExample(Player viewer, boolean value) {
     - Config Key: `update-interval-sec`
     - Values
         - Type: `Integer`
-        - Default: `15`
+        - Default: `20`
         - Minimum: `1`
-        - Maximum: `30`
+        - Maximum: `120`
 
-- __`ENABLE_PING_NAMETAG`__
-    - Config Key: `enable-ping-nametag`
+- __`AVERAGE_SAMPLES`__
+    - How many updates to average together (one update happens per the 'update interval' setting)
+    - Config Key: `average-samples`
+    - Values
+        - Type: `Integer`
+        - Default: `3`
+        - Minimum: `2`
+        - Maximum: `20`
+
+- __`PING_SPIKE_DETECTION`__
+    - Config Key: `ping-spike-detection`
     - Values
         - Type: `Boolean`
         - Default: `false`
 
-- __`PING_ABOVE`__
-    - Config Key: `ping-above`
+- __`MEDIUM_SPIKE_THRESHOLD`__
+    - Config Key: `medium-spike-threshold`
+    - Values
+        - Type: `Integer`
+        - Default: `20`
+        - Minimum: `1`
+        - Maximum: `200`
+
+- __`MEDIUM_SPIKE_COLOR`__
+    - Config Key: `medium-spike-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF9100`
+
+- __`LARGE_SPIKE_THRESHOLD`__
+    - Config Key: `large-spike-threshold`
+    - Values
+        - Type: `Integer`
+        - Default: `50`
+        - Minimum: `1`
+        - Maximum: `200`
+
+- __`LARGE_SPIKE_COLOR`__
+    - Config Key: `large-spike-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF0000`
+
+- __`PING_SHOW_MS`__
+    - Config Key: `ping-show-ms`
     - Values
         - Type: `Boolean`
         - Default: `true`
 
-- __`PING_SHOW_MS`__
-    - Config Key: `ping-show-ms`
+- __`SHOW_PING_PREFIX`__
+    - Config Key: `show-ping-prefix`
     - Values
         - Type: `Boolean`
         - Default: `true`
@@ -52,7 +89,7 @@ public void togglePingExample(Player viewer, boolean value) {
     - Config Key: `ping-prefix-color`
     - Values
         - Type: `String`
-        - Default: `#55555555`
+        - Default: `#FFFFFFFF`
 
 - __`DYNAMIC_PING_COLOR`__
     - Config Key: `dynamic-ping-color`
