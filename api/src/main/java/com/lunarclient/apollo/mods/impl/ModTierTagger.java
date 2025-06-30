@@ -23,34 +23,23 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
-import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Make the sprinting and sneaking keys toggleable instead of needing to be held down.
+ * Show player's PvP tier on their Name Tag.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
-public final class ModToggleSneak {
+public final class ModTierTagger {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("toggle-sneak", "enabled").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> TOGGLE_SPRINT = SimpleOption.<Boolean>builder()
-        .node("toggle-sneak", "toggle-sprint").type(TypeToken.get(Boolean.class))
+        .node("tier-tagger", "enabled").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -59,18 +48,8 @@ public final class ModToggleSneak {
      *
      * @since %release_version%
      */
-    public static final SimpleOption<Boolean> SPRINT_KEYBIND_OVERRIDE = SimpleOption.<Boolean>builder()
-        .node("toggle-sneak", "sprint-keybind-override").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> TOGGLE_SNEAK = SimpleOption.<Boolean>builder()
-        .node("toggle-sneak", "toggle-sneak").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> MC_TIERS_FORMAT = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "mc-tiers-format").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -79,53 +58,52 @@ public final class ModToggleSneak {
      *
      * @since %release_version%
      */
-    public static final SimpleOption<Boolean> SNEAK_KEYBIND_OVERRIDE = SimpleOption.<Boolean>builder()
-        .node("toggle-sneak", "sneak-keybind-override").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> SUFFIX = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "suffix").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> TOGGLE_SNEAK_CONTAINER = SimpleOption.<Boolean>builder()
-        .node("toggle-sneak", "toggle-sneak-container").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> SEPARATE_NAMETAG = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "separate-nametag").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> DOUBLE_TAP = SimpleOption.<Boolean>builder()
-        .node("toggle-sneak", "double-tap").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> SHOW_GM_ICONS = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "show-gm-icons").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> FLY_BOOST = SimpleOption.<Boolean>builder()
-        .node("toggle-sneak", "fly-boost").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> SHOW_RETIRED = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "show-retired").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final NumberOption<Integer> FLY_BOOST_AMOUNT = NumberOption.<Integer>number()
-        .node("toggle-sneak", "fly-boost-amount").type(TypeToken.get(Integer.class))
-        .min(2).max(8)
+    public static final SimpleOption<Boolean> SHOW_REGION = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "show-region").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
-    private ModToggleSneak() {
+    private ModTierTagger() {
     }
 
 }

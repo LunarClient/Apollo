@@ -53,10 +53,12 @@ import com.lunarclient.apollo.mods.impl.ModHorseStats;
 import com.lunarclient.apollo.mods.impl.ModHurtCam;
 import com.lunarclient.apollo.mods.impl.ModHypixelBedwars;
 import com.lunarclient.apollo.mods.impl.ModHypixelMod;
+import com.lunarclient.apollo.mods.impl.ModInventoryMod;
 import com.lunarclient.apollo.mods.impl.ModItemCounter;
 import com.lunarclient.apollo.mods.impl.ModItemPhysics;
 import com.lunarclient.apollo.mods.impl.ModItemTracker;
 import com.lunarclient.apollo.mods.impl.ModKeystrokes;
+import com.lunarclient.apollo.mods.impl.ModKillSounds;
 import com.lunarclient.apollo.mods.impl.ModLighting;
 import com.lunarclient.apollo.mods.impl.ModMemory;
 import com.lunarclient.apollo.mods.impl.ModMenuBlur;
@@ -93,6 +95,7 @@ import com.lunarclient.apollo.mods.impl.ModSoundChanger;
 import com.lunarclient.apollo.mods.impl.ModStopwatch;
 import com.lunarclient.apollo.mods.impl.ModTab;
 import com.lunarclient.apollo.mods.impl.ModTeamView;
+import com.lunarclient.apollo.mods.impl.ModTierTagger;
 import com.lunarclient.apollo.mods.impl.ModTimeChanger;
 import com.lunarclient.apollo.mods.impl.ModTitles;
 import com.lunarclient.apollo.mods.impl.ModTntCountdown;
@@ -195,9 +198,12 @@ public final class Mods {
             ModWaila.class,
             ModNeu.class,
             ModHurtCam.class,
+            ModTierTagger.class,
             ModDamageTint.class,
             ModSkyblock.class,
             ModHorseStats.class,
+            ModKillSounds.class,
+            ModInventoryMod.class,
             ModRadio.class
         );
 
