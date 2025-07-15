@@ -41,6 +41,8 @@ commands:
         description: "Nick Hider!"
     notification:
         description: "Notifications!"
+    pingmarker:
+        description: "Ping Marker!"
     richpresence:
         description: "Rich Presence!"
     saturation:
