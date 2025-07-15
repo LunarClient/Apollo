@@ -1,0 +1,124 @@
+import { Callout } from 'nextra-theme-docs'
+
+# JSON Packet Util
+
+## Overview
+
+These utilities are designed to handle packet transmission and creation for integrating and configuring Apollo modules with their respective properties. The utility class provides a list of most Apollo modules and their configuration options.
+
+The methods in this utility leverage the same plugin messaging channel as the Apollo API `lunar:apollo`.
+
+## Integration
+
+To utilize Apollo Modules, first define a list of the modules you want to use:
+
+```java
+private static final List<String> APOLLO_MODULES = Arrays.asList("limb", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
+    "entity", "glow", "hologram", "mod_setting", "nametag", "nick_hider", "notification", "packet_enrichment", "rich_presence",
+    "server_rule", "staff_mod", "stopwatch", "team", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
+);
+```
+
+Next, specify the properties for these modules. These properties are included in the enable module packet. When using the Apollo plugin, this corresponds to modifying the `config.yml`
+
+<Callout type="warning" emoji="⚠️">
+  The example below does not encompass all available options and may not be up-to-date.
+  For the latest options, refer to the module documentation ([example](/apollo/developers/modules/serverrule#available-options)).
+</Callout>
+
+```java
+// Module Id -> Option key -> Object
+private static final Table<String, String, Object> CONFIG_MODULE_PROPERTIES = HashBasedTable.create();
+
+static {
+    // Module Options that the client needs to notified about, these properties are sent with the enable module packet
+    // While using the Apollo plugin this would be equivalent to modifying the config.yml
+    CONFIG_MODULE_PROPERTIES.put("combat", "disable-miss-penalty", false);
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-game", false);
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-commands", Arrays.asList("/server", "/servers", "/hub"));
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-shaders", false);
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-chunk-reloading", false);
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "disable-broadcasting", false);
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "anti-portal-traps", true);
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "override-brightness", false);
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "brightness", 50);
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "override-nametag-render-distance", false);
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "nametag-render-distance", 64);
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "override-max-chat-length", false);
+    CONFIG_MODULE_PROPERTIES.put("server_rule", "max-chat-length", 256);
+    CONFIG_MODULE_PROPERTIES.put("tnt_countdown", "tnt-ticks", 80);
+    CONFIG_MODULE_PROPERTIES.put("waypoint", "server-handles-waypoints", false);
+}
+```
+
+Use the following methods to send packets either to a specific player or to all online players:
+
+```java
+public static void sendPacket(Player player, JsonObject message) {
+    player.sendPluginMessage(ApolloExamplePlugin.getInstance(), "apollo:json", message.toString().getBytes());
+}
+
+public static void broadcastPacket(JsonObject message) {
+    byte[] data = message.toString().getBytes();
+
+    Bukkit.getOnlinePlayers().forEach(player ->
+        player.sendPluginMessage(ApolloExamplePlugin.getInstance(), "apollo:json", data));
+}
+```
+
+To create a Module packet, which is used for enabling modules (with or without properties) and for dynamically updating Apollo Options for modules such as the `Mod Settings Module` and `Server Rule Module`, use the following method:
+
+```java
+public static JsonObject createEnableModuleObject(@NotNull String module, Map<String, Object> properties) {
+    JsonObject enableModuleObject = new JsonObject();
+    enableModuleObject.addProperty("apollo_module", module);
+    enableModuleObject.addProperty("enable", true);
+
+    if (properties != null) {
+        JsonObject propertiesObject = new JsonObject();
+        for (Map.Entry<String, Object> entry : properties.entrySet()) {
+            propertiesObject.add(entry.getKey(), JsonPacketUtil.convertToJsonElement(entry.getValue()));
+        }
+
+        enableModuleObject.add("properties", propertiesObject);
+    }
+
+    return enableModuleObject;
+}
+
+private static JsonElement convertToJsonElement(Object value) {
+    if (value == null) {
+        return JsonNull.INSTANCE;
+    } else if (value instanceof String) {
+        return new JsonPrimitive((String) value);
+    } else if (value instanceof Number) {
+        return new JsonPrimitive((Number) value);
+    } else if (value instanceof Boolean) {
+        return new JsonPrimitive((Boolean) value);
+    } else if (value instanceof List) {
+        JsonArray jsonArray = new JsonArray();
+        for (Object item : (List<?>) value) {
+            jsonArray.add(JsonPacketUtil.convertToJsonElement(item));
+        }
+        return jsonArray;
+    }
+
+    throw new RuntimeException("Unable to wrap value of type '" + value.getClass().getSimpleName() + "'!");
+}
+```
+
+Enable modules using the methods and fields defined above:
+
+```java
+public static void enableModules(Player player) {
+    JsonArray settings = APOLLO_MODULES.stream()
+        .map(module -> JsonPacketUtil.createEnableModuleObject(module, CONFIG_MODULE_PROPERTIES.row(module)))
+        .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage");
+    message.add("configurable_settings", settings);
+
+    JsonPacketUtil.sendPacket(player, message);
+}
+```

@@ -78,6 +78,26 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_HEARTS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-hearts").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_ABSORB = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-absorb").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.9
      */
     public static final SimpleOption<Boolean> HIDE_MIDAS_STAFF = SimpleOption.<Boolean>builder()
@@ -118,6 +138,80 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * Provides QOL for the Diana mayor that helps the user quickly locate burrows.
+     *
+     * @since 1.1.5
+     */
+    public static final SimpleOption<Boolean> GRIFFIN_BURROW_ESTIMATES = SimpleOption.<Boolean>builder()
+        .comment("Provides QOL for the Diana mayor that helps the user quickly locate burrows.")
+        .node("skyblock", "griffin-burrow-estimates").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows the creation date of the item in the lore.
+     *
+     * @since 1.1.7
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_CREATION_DATE = SimpleOption.<Boolean>builder()
+        .comment("Shows the creation date of the item in the lore.")
+        .node("skyblock", "sky-block-creation-date").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows the item's SkyBlock ID in the lore.
+     *
+     * @since 1.1.7
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_ITEM_ID = SimpleOption.<Boolean>builder()
+        .comment("Shows the item's SkyBlock ID in the lore.")
+        .node("skyblock", "sky-block-item-id").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> HIGHLIGHT_END_NODES = SimpleOption.<Boolean>builder()
+        .node("skyblock", "highlight-end-nodes").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> HIGHLIGHT_GLOWING_MUSHROOMS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "highlight-glowing-mushrooms").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Makes Giant HP more visible by showing their HP at their feet.
+     *
+     * @since 1.1.5
+     */
+    public static final SimpleOption<Boolean> SHOW_GIANT_HPAT_FEET = SimpleOption.<Boolean>builder()
+        .comment("Makes Giant HP more visible by showing their HP at their feet.")
+        .node("skyblock", "show-giant-h-p-at-feet").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.7
+     */
+    public static final SimpleOption<Boolean> DUNGEON_SECRETS_COLLECTED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "dungeon-secrets-collected").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.
      *
      * @since 1.0.9
@@ -125,6 +219,36 @@ public final class ModSkyblock {
     public static final SimpleOption<Boolean> TALLER_CROPS = SimpleOption.<Boolean>builder()
         .comment("Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.")
         .node("skyblock", "taller-crops").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.6
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_WISHING_COMPASS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-wishing-compass").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.6
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_METAL_DETECTOR = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-metal-detector").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.6
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_FINISHED_COMMISSIONS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-finished-commissions").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -223,6 +347,28 @@ public final class ModSkyblock {
     public static final SimpleOption<Boolean> GRAVITY_WELL_WAYPOINTS = SimpleOption.<Boolean>builder()
         .comment("Shows the positions where you can trap the gray blazes.")
         .node("skyblock", "gravity-well-waypoints").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.5
+     */
+    public static final SimpleOption<Boolean> SHOW_KUUDRA_HEALTH = SimpleOption.<Boolean>builder()
+        .node("skyblock", "show-kuudra-health").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Provides a general line thickness option that applies to most features with box/line rendering.
+     *
+     * @since 1.1.7
+     */
+    public static final NumberOption<Float> SKYBLOCK_LINE_THICKNESS = NumberOption.<Float>number()
+        .comment("Provides a general line thickness option that applies to most features with box/line rendering.")
+        .node("skyblock", "skyblock-line-thickness").type(TypeToken.get(Float.class))
+        .min(1.0F).max(10.0F)
         .notifyClient()
         .build();
 

@@ -1,3 +1,4 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
 import { Callout } from 'nextra-theme-docs'
 
 # Notification Module
@@ -10,22 +11,50 @@ The notification module allows you to send Lunar Client notifications to players
   - Custom notification color can be provided.
   - Custom icons can be provided.
 
+![Notification Module Example](https://i.imgur.com/pBgRxda.png#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Send notifications using Lunar Client, with any icon, title, and description!</small>
+</div>
+
 ## Integration
 
-### `Notification` Builder
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Displaying a Notification
 
 ```java
-private final Notification uhcAnnouncement = Notification.builder()
-    .titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
-    .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
-        .appendNewline()
-        .append(Component.text("Get ready!", NamedTextColor.WHITE))
-        .appendNewline()
-        .append(Component.text("Good luck!", NamedTextColor.GOLD))
-    )
-    .resourceLocation("icons/golden_apple.png") // This field is optional
-    .displayTime(Duration.ofSeconds(5))
-    .build();
+public void displayNotificationExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.notificationModule.displayNotification(apolloPlayer, Notification.builder()
+            .titleComponent(Component.text("UHC Announcement", NamedTextColor.GREEN))
+            .descriptionComponent(Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
+                .append(Component.newline())
+                .append(Component.text("Get ready!", NamedTextColor.WHITE))
+                .append(Component.newline())
+                .append(Component.text("Good luck!", NamedTextColor.GOLD))
+            )
+            .resourceLocation("icons/golden_apple.png") // This field is optional
+            .displayTime(Duration.ofSeconds(5))
+            .build());
+    });
+}
+```
+
+### Resetting all Notifications
+
+```java
+public void resetNotificationsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.notificationModule::resetNotifications);
+}
 ```
 
 #### `Notification` Options
@@ -76,20 +105,82 @@ If this field is left empty (null) it'll display a generic info icon, as display
 .description("UHC starts in 5 minutes...")
 ```
 
-### Displaying a Notification for a specific player
+</Tab>
+
+<Tab>
+
+**Displaying a Notification**
 
 ```java
 public void displayNotificationExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.notificationModule.displayNotification(apolloPlayer, this.uhcAnnouncement));
+    DisplayNotificationMessage message = DisplayNotificationMessage.newBuilder()
+        .setTitleAdventureJsonLines(AdventureUtil.toJson(
+            Component.text("UHC Announcement", NamedTextColor.GREEN)
+        ))
+        .setDescriptionAdventureJsonLines(AdventureUtil.toJson(
+            Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
+                .append(Component.newline())
+                .append(Component.text("Get ready!", NamedTextColor.WHITE))
+                .append(Component.newline())
+                .append(Component.text("Good luck!", NamedTextColor.GOLD))
+            )
+        )
+        .setResourceLocation("icons/golden_apple.png") // This field is optional
+        .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofSeconds(5)))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
 
-### Resetting all notifications for a player
+**Resetting all Notifications**
 
 ```java
 public void resetNotificationsExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.notificationModule::resetNotifications);
+    ResetNotificationsMessage message = ResetNotificationsMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+**Displaying a Notification**
+
+```java
+public void displayNotificationExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.notification.v1.DisplayNotificationMessage");
+    message.addProperty("title_adventure_json_lines", AdventureUtil.toJson(
+        Component.text("UHC Announcement", NamedTextColor.GREEN)
+    ));
+    message.addProperty("description_adventure_json_lines", AdventureUtil.toJson(
+        Component.text("UHC starts in 5 minutes...", NamedTextColor.RED)
+            .append(Component.newline())
+            .append(Component.text("Get ready!", NamedTextColor.WHITE))
+            .append(Component.newline())
+            .append(Component.text("Good luck!", NamedTextColor.GOLD))
+    ));
+
+    message.addProperty("display_time", JsonUtil.createDurationObject(Duration.ofSeconds(5)));
+    message.addProperty("resource_location", "icons/golden_apple.png");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Notifications**
+
+```java
+public void resetNotificationsExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.notification.v1.ResetNotificationsMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

@@ -3,10 +3,12 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.jvm.tasks.Jar
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.*
+import org.gradle.jvm.toolchain.JavaToolchainService
 
 fun JavaPluginExtension.javaTarget(version: Int) {
     toolchain.languageVersion.set(JavaLanguageVersion.of(version))
@@ -45,7 +47,9 @@ fun Project.setupPlatforms() {
     }
 }
 
-fun Project.setupPlatformDependency(configurationName: String, jarTaskName: String) {
+fun Project.setupPlatformDependency(configurationName: String,
+                                    jarTaskName: String,
+                                    javaVersion: Int? = 8) {
     extensions.configure<JavaPluginExtension> {
         val configuration = configurations.register(configurationName)
 
@@ -59,6 +63,17 @@ fun Project.setupPlatformDependency(configurationName: String, jarTaskName: Stri
 
             configurations.named(this.implementationConfigurationName) {
                 extendsFrom(configuration.get())
+            }
+        }
+
+        if (javaVersion != null) {
+            val javaToolchains = project.extensions.getByType(JavaToolchainService::class.java)
+            tasks.named<JavaCompile>(source.compileJavaTaskName) {
+                javaCompiler.set(javaToolchains.compilerFor {
+                    languageVersion.set(JavaLanguageVersion.of(javaVersion))
+                })
+                sourceCompatibility = javaVersion.toString()
+                targetCompatibility = javaVersion.toString()
             }
         }
 
@@ -149,7 +164,14 @@ fun Project.setupDynamicLoader() {
     }
 }
 
-fun Project.setupDynamicDependency(configurationName: String, shadowTaskName: String, jarPath: String, jarName: String, name: String = configurationName, classifier: String = "all") {
+fun Project.setupDynamicDependency(
+    configurationName: String,
+    shadowTaskName: String,
+    jarPath: String,
+    jarName: String,
+    name: String = configurationName,
+    classifier: String = "all"
+) {
     extensions.configure<JavaPluginExtension> {
         val configuration = configurations.findByName(configurationName) ?: configurations.register(configurationName).get()
 
@@ -160,6 +182,8 @@ fun Project.setupDynamicDependency(configurationName: String, shadowTaskName: St
         val shadowTask by tasks.register(shadowTaskName, ShadowJar::class) {
             archiveClassifier.set("${name}-${classifier}")
             configurations = listOf(configuration)
+
+            mustRunAfter(":extra:apollo-extra-adventure4:shadowJar")
 
             configureExclusions()
         }

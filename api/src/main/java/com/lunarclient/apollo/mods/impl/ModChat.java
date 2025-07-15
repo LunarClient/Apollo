@@ -67,6 +67,48 @@ public final class ModChat {
         .build();
 
     /**
+     * Choose whether or not you want to stack multiple of the same messages in chat within a timeframe.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> STACK_MESSAGES_TIME_BASED = SimpleOption.<Boolean>builder()
+        .comment("Choose whether or not you want to stack multiple of the same messages in chat within a timeframe")
+        .node("chat", "stack-messages-time-based").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.8
+     */
+    public static final NumberOption<Integer> TIME_BASED_STACK_MESSAGES_TIMEFRAME = NumberOption.<Integer>number()
+        .node("chat", "time-based-stack-messages-timeframe").type(TypeToken.get(Integer.class))
+        .min(1).max(60)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> CHAT_STACK_IGNORE_BLANK = SimpleOption.<Boolean>builder()
+        .node("chat", "chat-stack-ignore-blank").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> CHAT_STACK_IGNORE_BREAK = SimpleOption.<Boolean>builder()
+        .node("chat", "chat-stack-ignore-break").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Moves the chat up 12 pixels so it doesn't block health bar.
      *
      * @since 1.0.0
@@ -119,6 +161,17 @@ public final class ModChat {
         .build();
 
     /**
+     * Requires the ping message to exactly contain your name.For example, if your name is Notch, this will ping on Notch but not Notch123.
+     *
+     * @since 1.1.6
+     */
+    public static final SimpleOption<Boolean> CHAT_PING_EXACT_MATCH = SimpleOption.<Boolean>builder()
+        .comment("Requires the ping message to exactly contain your name.For example, if your name is Notch, this will ping on Notch but not Notch123.")
+        .node("chat", "chat-ping-exact-match").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Copies the hovered chat message when holding the keybind and clicking.
      *
      * @since 1.0.0
@@ -126,6 +179,41 @@ public final class ModChat {
     public static final SimpleOption<Boolean> COPY_CHAT = SimpleOption.<Boolean>builder()
         .comment("Copies the hovered chat message when holding the keybind and clicking.")
         .node("chat", "copy-chat").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Displays a preview of an image when hovering over it.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> HOVER_IMAGE_PREVIEW = SimpleOption.<Boolean>builder()
+        .comment("Displays a preview of an image when hovering over it.")
+        .node("chat", "hover-image-preview").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * The minimum size for an image to be displayed, as a percentage of your screen.
+     *
+     * @since 1.1.3
+     */
+    public static final NumberOption<Double> MIN_IMAGE_SIZE = NumberOption.<Double>number()
+        .comment("The minimum size for an image to be displayed, as a percentage of your screen.")
+        .node("chat", "min-image-size").type(TypeToken.get(Double.class))
+        .min(0.0D).max(100.0D)
+        .notifyClient()
+        .build();
+
+    /**
+     * The maximum size for an image to be displayed, as a percentage of your screen.
+     *
+     * @since 1.1.3
+     */
+    public static final NumberOption<Double> MAX_IMAGE_SIZE = NumberOption.<Double>number()
+        .comment("The maximum size for an image to be displayed, as a percentage of your screen.")
+        .node("chat", "max-image-size").type(TypeToken.get(Double.class))
+        .min(0.0D).max(100.0D)
         .notifyClient()
         .build();
 

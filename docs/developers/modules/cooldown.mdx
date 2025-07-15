@@ -1,3 +1,5 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Cooldown Module
 
 ## Overview
@@ -8,9 +10,22 @@ Apollo's cooldown module allows servers to interact with the Cooldown mod found 
   - Add your own custom icon, visible within the cooldown.
   - Set your own duration for each cooldown.
 
+![Cooldown Module Example](https://i.imgur.com/EPPNIQw.png#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Display any in-game item, SVGs or textures found within resourcepacks! (1.7+)</small>
+</div>
+
 ## Integration
 
 ### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Displaying a Cooldown with an item
 
 ```java
 public void displayCooldownItemExample(Player viewer) {
@@ -28,7 +43,11 @@ public void displayCooldownItemExample(Player viewer) {
         );
     });
 }
+```
 
+### Displaying a Cooldown with a resource
+
+```java
 public void displayCooldownResourceExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
@@ -44,6 +63,28 @@ public void displayCooldownResourceExample(Player viewer) {
             .build()
         );
     });
+}
+```
+
+### Removing a Cooldown
+
+```java
+public void removeCooldownExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown");
+        this.cooldownModule.removeCooldown(apolloPlayer, "lunar-cooldown");
+    });
+}
+```
+
+### Resetting all Cooldowns
+
+```java
+public void resetCooldownsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.cooldownModule::resetCooldowns);
 }
 ```
 
@@ -69,24 +110,114 @@ public void displayCooldownResourceExample(Player viewer) {
 .icon(SimpleResourceLocationIcon.builder().resourceLocation("lunar:logo/logo-200x182.svg").size(12).build())
 ```
 
-### Removing a specific cooldown for a player
+</Tab>
+
+<Tab>
+
+**Displaying a Cooldown with an item**
+
+```java
+public void displayCooldownItemExample(Player viewer) {
+    DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
+        .setName("enderpearl-cooldown")
+        .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
+        .setIcon(ProtobufUtil.createItemStackIconProto("ENDER_PEARL", 0, 0))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Displaying a Cooldown with a resource**
+
+```java
+public void displayCooldownResourceExample(Player viewer) {
+    DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
+        .setName("lunar-cooldown")
+        .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
+        .setIcon(ProtobufUtil.createSimpleResourceLocationIconProto("lunar:logo/logo-200x182.svg", 12))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Removing a Cooldown**
 
 ```java
 public void removeCooldownExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    RemoveCooldownMessage enderpearlMessage = RemoveCooldownMessage.newBuilder()
+        .setName("enderpearl-cooldown")
+        .build();
 
-    apolloPlayerOpt.ifPresent(apolloPlayer -> {
-        this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown");
-        this.cooldownModule.removeCooldown(apolloPlayer, "lunar-cooldown");
-    });
+    ProtobufPacketUtil.sendPacket(viewer, enderpearlMessage);
 }
 ```
 
-### Resetting all cooldowns for a player
+**Resetting all Cooldowns**
 
 ```java
 public void resetCooldownsExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.cooldownModule::resetCooldowns);
+    ResetCooldownsMessage message = ResetCooldownsMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+**Displaying a Cooldown with an item**
+
+```java
+public void displayCooldownItemExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
+    message.addProperty("name", "enderpearl-cooldown");
+    message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
+    message.add("icon", JsonUtil.createItemStackIconObject("ENDER_PEARL", 0, 0));
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Displaying a Cooldown with a resource**
+
+```java
+public void displayCooldownResourceExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
+    message.addProperty("name", "lunar-cooldown");
+    message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
+    message.add("icon", JsonUtil.createSimpleResourceLocationIconObject("lunar:logo/logo-200x182.svg", 12));
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Removing a Cooldown**
+
+```java
+public void removeCooldownExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.RemoveCooldownMessage");
+    message.addProperty("name", "enderpearl-cooldown");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Cooldowns**
+
+```java
+public void resetCooldownsExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.ResetCooldownsMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

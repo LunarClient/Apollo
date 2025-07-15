@@ -1,3 +1,5 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Hologram Module
 
 ## Overview
@@ -13,6 +15,13 @@ The hologram module enhances vanilla Minecraft's current system for holograms an
 ## Integration
 
 ### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Displaying a Hologram
 
 ```java
 public void displayHologramExample() {
@@ -42,6 +51,23 @@ public void displayHologramExample() {
 }
 ```
 
+### Removing a Hologram
+
+```java
+public void removeHologramExample() {
+    this.hologramModule.removeHologram(Recipients.ofEveryone(), "welcome-hologram");
+}
+```
+
+### Resetting all Holograms
+
+```java
+public void resetHologramsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.hologramModule::resetHolograms);
+}
+```
+
 ### `Hologram` Options
 
 `.id(String)` should include a unique identifier for the hologram.
@@ -59,7 +85,7 @@ public void displayHologramExample() {
     .y(100)
     .z(0)
     .build()
-) 
+)
 ```
 
 `.lines(Component)` should be a string, or an Adventure `Component`. See the [chat components](https://docs.advntr.dev/text.html) page for more.
@@ -95,20 +121,121 @@ public void displayHologramExample() {
 .showBackground(true)
 ```
 
+</Tab>
 
-### Removing a specific hologram for players
+<Tab>
+
+**Displaying a Hologram**
+
+```java
+public void displayHologramExample() {
+    List<String> lines = Lists.newArrayList(
+            Component.text()
+                .content("Welcome to my server!")
+                .color(NamedTextColor.RED)
+                .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
+                .build(),
+            Component.text()
+                .content("Type /help to get started!")
+                .build()
+        )
+        .stream().map(AdventureUtil::toJson)
+        .collect(Collectors.toList());
+
+    DisplayHologramMessage message = DisplayHologramMessage.newBuilder()
+        .setId("welcome-hologram")
+        .setLocation(ProtobufUtil.createLocationProto(
+            new Location(Bukkit.getWorld("world"), 5, 105, 0)
+        ))
+        .addAllAdventureJsonLines(lines)
+        .setShowThroughWalls(true)
+        .setShowShadow(false)
+        .setShowBackground(true)
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+**Removing a Hologram**
 
 ```java
 public void removeHologramExample() {
-    this.hologramModule.removeHologram(Recipients.ofEveryone(), "welcome-hologram");
+    RemoveHologramMessage message = RemoveHologramMessage.newBuilder()
+        .setId("welcome-hologram")
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
 }
 ```
 
-### Resetting all holograms for a player
+**Resetting all Holograms**
 
 ```java
 public void resetHologramsExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.hologramModule::resetHolograms);
+    ResetHologramsMessage message = ResetHologramsMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+**Displaying a Hologram**
+
+```java
+public void displayHologramExample() {
+    JsonArray lines = Lists.newArrayList(
+        Component.text()
+            .content("Welcome to my server!")
+            .color(NamedTextColor.RED)
+            .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
+            .build(),
+        Component.text()
+            .content("Type /help to get started!")
+            .build()
+    ).stream().map(AdventureUtil::toJson).map(JsonPrimitive::new)
+        .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.hologram.v1.DisplayHologramMessage");
+    message.addProperty("id", "welcome-hologram");
+    message.add("location", JsonUtil.createLocationObject(
+        new Location(Bukkit.getWorld("world"), 5, 105, 0)
+    ));
+    message.add("adventure_json_lines", lines);
+    message.addProperty("show_through_walls", true);
+    message.addProperty("show_shadow", false);
+    message.addProperty("show_background", true);
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Removing a Hologram**
+
+```java
+public void removeHologramExample() {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.hologram.v1.RemoveHologramMessage");
+    message.addProperty("id", "welcome-hologram");
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Resetting all Holograms**
+
+```java
+public void resetHologramsExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.hologram.v1.ResetHologramsMessage");
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+</Tab>
+
+</Tabs>

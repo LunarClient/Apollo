@@ -28,6 +28,7 @@ import com.lunarclient.apollo.command.impl.LunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
+import com.lunarclient.apollo.module.autotexthotkey.AutoTextHotkeyModule;
 import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
 import com.lunarclient.apollo.module.border.BorderModule;
@@ -50,6 +51,8 @@ import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
 import com.lunarclient.apollo.module.notification.NotificationModule;
 import com.lunarclient.apollo.module.notification.NotificationModuleImpl;
+import com.lunarclient.apollo.module.richpresence.RichPresenceModule;
+import com.lunarclient.apollo.module.richpresence.RichPresenceModuleImpl;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
@@ -57,6 +60,8 @@ import com.lunarclient.apollo.module.stopwatch.StopwatchModule;
 import com.lunarclient.apollo.module.stopwatch.StopwatchModuleImpl;
 import com.lunarclient.apollo.module.team.TeamModule;
 import com.lunarclient.apollo.module.team.TeamModuleImpl;
+import com.lunarclient.apollo.module.tebex.TebexModule;
+import com.lunarclient.apollo.module.tebex.TebexModuleImpl;
 import com.lunarclient.apollo.module.title.TitleModule;
 import com.lunarclient.apollo.module.title.TitleModuleImpl;
 import com.lunarclient.apollo.module.transfer.TransferModule;
@@ -73,6 +78,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
@@ -89,15 +95,21 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
 
     @Getter private final Options options = new OptionsImpl(null);
     @Getter private final Plugin plugin;
+
+    @Getter private BungeeAudiences audiences;
     private ApolloStats stats;
 
     @Override
     public void onEnable() {
         ApolloBungeePlatform.instance = this;
+
+        this.audiences = BungeeAudiences.create(this.plugin);
         this.stats = new BungeeApolloStats();
+
         ApolloManager.bootstrap(this);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
+            .addModule(AutoTextHotkeyModule.class)
             .addModule(BeamModule.class, new BeamModuleImpl())
             .addModule(BorderModule.class, new BorderModuleImpl())
             .addModule(ChatModule.class, new ChatModuleImpl())
@@ -110,10 +122,12 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(ModSettingModule.class)
             .addModule(NametagModule.class, new NametagModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())
+            .addModule(RichPresenceModule.class, new RichPresenceModuleImpl())
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())
             .addModule(StopwatchModule.class, new StopwatchModuleImpl())
             .addModule(TeamModule.class, new TeamModuleImpl())
+            .addModule(TebexModule.class, new TebexModuleImpl())
             .addModule(TitleModule.class, new TitleModuleImpl())
             .addModule(TransferModule.class, new TransferModuleImpl())
             .addModule(VignetteModule.class, new VignetteModuleImpl())

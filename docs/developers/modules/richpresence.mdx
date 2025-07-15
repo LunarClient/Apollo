@@ -1,3 +1,4 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
 import { Callout } from 'nextra-theme-docs'
 
 # Rich Presence Module
@@ -19,9 +20,22 @@ The rich presence module allows you to interact with Discord and Lunar Client's 
   Your server must be a part of Lunar Client's [ServerMappings](/server-mappings/introduction) to use this module.
 </Callout>
 
+![Rich Presence Module Example](https://i.imgur.com/k788SQ2.png#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Display information about your server on Discord and Lunar Client's rich presence!</small>
+</div>
+
 ## Integration
 
 ### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Override Rich Presence
 
 ```java
 public void overrideServerRichPresenceExample(Player viewer) {
@@ -40,6 +54,15 @@ public void overrideServerRichPresenceExample(Player viewer) {
             .build()
         );
     });
+}
+```
+
+### Reset Rich Presence
+
+```java
+public void resetServerRichPresenceExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.richPresenceModule::resetServerRichPresence);
 }
 ```
 
@@ -93,11 +116,72 @@ public void overrideServerRichPresenceExample(Player viewer) {
 .teamMaxSize(4)
 ```
 
-### Resetting the server rich presence for a player
+</Tab>
+
+<Tab>
+
+**Override Rich Presence**
+
+```java
+public void overrideServerRichPresenceExample(Player viewer) {
+    OverrideServerRichPresenceMessage message = OverrideServerRichPresenceMessage.newBuilder()
+        .setGameName("BedWars")
+        .setGameVariantName("Solo")
+        .setGameState("In Game")
+        .setPlayerState("Playing")
+        .setMapName("Winter")
+        .setSubServer("BW02")
+        .setTeamCurrentSize(3)
+        .setTeamMaxSize(4)
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Reset Rich Presence**
 
 ```java
 public void resetServerRichPresenceExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.richPresenceModule::resetServerRichPresence);
+    ResetServerRichPresenceMessage message = ResetServerRichPresenceMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+**Override Rich Presence**
+
+```java
+public void overrideServerRichPresenceExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.richpresence.v1.OverrideServerRichPresenceMessage");
+    message.addProperty("game_name", "BedWars");
+    message.addProperty("game_variant_name", "Solo");
+    message.addProperty("game_state", "In Game");
+    message.addProperty("player_state", "Playing");
+    message.addProperty("map_name", "Winter");
+    message.addProperty("sub_server", "BW02");
+    message.addProperty("team_current_size", 3);
+    message.addProperty("team_max_size", 4);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Reset Rich Presence**
+
+```java
+public void resetServerRichPresenceExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.richpresence.v1.ResetServerRichPresenceMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

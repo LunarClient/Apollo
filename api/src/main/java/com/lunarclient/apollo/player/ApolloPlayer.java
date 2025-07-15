@@ -23,14 +23,21 @@
  */
 package com.lunarclient.apollo.player;
 
+import com.lunarclient.apollo.client.mod.LunarClientMod;
+import com.lunarclient.apollo.client.version.LunarClientVersion;
+import com.lunarclient.apollo.client.version.MinecraftVersion;
 import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.world.ApolloWorld;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import net.kyori.adventure.audience.ForwardingAudience;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a player on Apollo.
@@ -38,7 +45,7 @@ import org.jetbrains.annotations.ApiStatus;
  * @since 1.0.0
  */
 @ApiStatus.NonExtendable
-public interface ApolloPlayer extends Recipients {
+public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
 
     /**
      * Gets the players unique identifier.
@@ -104,5 +111,37 @@ public interface ApolloPlayer extends Recipients {
      * @since 1.0.9
      */
     Object getPlayer();
+
+    /**
+     * Returns the {@link MinecraftVersion} the player is running.
+     *
+     * @return the minecraft version
+     * @since 1.1.6
+     */
+    @Nullable MinecraftVersion getMinecraftVersion();
+
+    /**
+     * Returns the {@link LunarClientVersion} the player is running.
+     *
+     * @return the lunar client version
+     * @since 1.1.6
+     */
+    @Nullable LunarClientVersion getLunarClientVersion();
+
+    /**
+     * Returns a {@link List} of {@link LunarClientMod} the player has installed.
+     *
+     * @return the installed mods
+     * @since 1.1.6
+     */
+    @Nullable List<LunarClientMod> getInstalledMods();
+
+    /**
+     * Returns the {@link TebexEmbeddedCheckoutSupport} type.
+     *
+     * @return the Tebex checkout support type
+     * @since 1.1.6
+     */
+    @Nullable TebexEmbeddedCheckoutSupport getTebexEmbeddedCheckoutSupport();
 
 }

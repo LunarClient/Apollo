@@ -67,17 +67,6 @@ public final class ModTitles {
         .build();
 
     /**
-     * Keep the title centered around the center of the mod on-screen.
-     *
-     * @since 1.1.2
-     */
-    public static final SimpleOption<Boolean> KEEP_TITLE_CENTERED = SimpleOption.<Boolean>builder()
-        .comment("Keep the title centered around the center of the mod on-screen")
-        .node("titles", "keep-title-centered").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
      * No documentation available.
      *
      * @since 1.0.0
@@ -94,6 +83,48 @@ public final class ModTitles {
      */
     public static final SimpleOption<Color> SUBTITLE_COLOR = SimpleOption.<Color>builder()
         .node("titles", "subtitle-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> USE_MINECRAFT_GUISCALE = SimpleOption.<Boolean>builder()
+        .node("titles", "use-minecraft-g-u-i-scale").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Keep the title centered around the center of the mod on-screen.
+     *
+     * @since 1.1.2
+     */
+    public static final SimpleOption<Boolean> KEEP_TITLE_CENTERED = SimpleOption.<Boolean>builder()
+        .comment("Keep the title centered around the center of the mod on-screen")
+        .node("titles", "keep-title-centered").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Show title of height limit display.
+     *
+     * @since 1.1.5
+     */
+    public static final SimpleOption<Boolean> SHOW_TITLE = SimpleOption.<Boolean>builder()
+        .comment("Show title of height limit display")
+        .node("titles", "show-title").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.5
+     */
+    public static final SimpleOption<Boolean> SHOW_SUBTITLE = SimpleOption.<Boolean>builder()
+        .node("titles", "show-subtitle").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

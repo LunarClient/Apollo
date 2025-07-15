@@ -1,3 +1,6 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+import { Callout } from 'nextra-theme-docs'
+
 # Glow Module
 
 ## Overview
@@ -8,9 +11,30 @@ The glow module allows you to take advantage of the vanilla Minecraft Glow Effec
 -   Adds improvements to glow effect for Lunar Client users.
     -   Customizable colors for the glow effect, different from the vanilla Minecraft colors.
 
+<Callout type="Warning">
+  In Version 1.12, Optifine's 'Fast Render' setting alters player rendering. This is expected behavior for Optifine.
+</Callout>
+
+![Glow Module Example](https://i.imgur.com/Ra3r363.png#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Highlight any user with the glow effect, of any color on all versions!</small>
+</div>
+
 ## Integration
 
+<Callout type="info">
+  If no color is specified, the glow effect will default to the player's scoreboard team color.
+</Callout>
+
 ### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Override a Glow Effect
 
 ```java
 public void overrideGlowEffectExample(UUID glowingPlayer) {
@@ -21,16 +45,7 @@ public void overrideGlowEffectExample(UUID glowingPlayer) {
 }
 ```
 
-### `overrideGlowEffectExample` Parameters
-
-1. `Recipients recipients`
-   - A list of all the player(s) you want to be able to see the updated glow effect.
-2. `UUID target`
-   - The player or living entity you want to display the glow effect on.
-3. `Color glowColor`
-   - How you'll dictate the color of the glow effect, see the [colors page](/apollo/developers/utilities/colors) for more.
-
-### Removing a specific targets glow effect for viewers
+### Removing a Glow Effect
 
 ```java
 public void resetGlowEffectExample(UUID glowingPlayer) {
@@ -38,7 +53,7 @@ public void resetGlowEffectExample(UUID glowingPlayer) {
 }
 ```
 
-### Resetting all glow effects for all viewers
+### Resetting all Glow Effects
 
 ```java
 public void resetGlowEffectsExample(Player viewer) {
@@ -46,3 +61,95 @@ public void resetGlowEffectsExample(Player viewer) {
     apolloPlayerOpt.ifPresent(this.glowModule::resetGlow);
 }
 ```
+
+### `overrideGlowEffectExample` Parameters
+
+1. `Recipients recipients`
+   - A list of all the player(s) you want to be able to see the updated glow effect.
+2. `UUID target`
+   - The player or living entity you want to display the glow effect on.
+3. `Color glowColor`
+   - If `null` is passed (or if no color is specified), the glow effect will default to the target's scoreboard team color.
+   - How you'll dictate the color of the glow effect, see the [colors page](/apollo/developers/utilities/colors) for more.
+
+</Tab>
+
+<Tab>
+
+**Override a Glow Effect**
+
+```java
+public void overrideGlowEffectExample(UUID glowingPlayer) {
+    OverrideGlowEffectMessage message = OverrideGlowEffectMessage.newBuilder()
+        .setPlayerUuid(ProtobufUtil.createUuidProto(glowingPlayer))
+        .setColor(ProtobufUtil.createColorProto(Color.RED))
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+**Removing a Glow Effect**
+
+```java
+public void resetGlowEffectExample(UUID glowingPlayer) {
+    ResetGlowEffectMessage message = ResetGlowEffectMessage.newBuilder()
+        .setPlayerUuid(ProtobufUtil.createUuidProto(glowingPlayer))
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+**Resetting all Glow Effects**
+
+```java
+public void resetGlowEffectsExample(Player viewer) {
+    ResetGlowEffectsMessage message = ResetGlowEffectsMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+<Tab>
+
+**Override a Glow Effect**
+
+```java
+public void overrideGlowEffectExample(UUID glowingPlayer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.glow.v1.OverrideGlowEffectMessage");
+    message.add("player_uuid", JsonUtil.createUuidObject(glowingPlayer));
+    message.add("color", JsonUtil.createColorObject(Color.RED));
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Removing a Glow Effect**
+
+```java
+public void resetGlowEffectExample(UUID glowingPlayer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.glow.v1.ResetGlowEffectMessage");
+    message.add("player_uuid", JsonUtil.createUuidObject(glowingPlayer));
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Resetting all Glow Effects**
+
+```java
+public void resetGlowEffectsExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.glow.v1.ResetGlowEffectsMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

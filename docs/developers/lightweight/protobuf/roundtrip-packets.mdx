@@ -1,0 +1,111 @@
+# Roundtrip Packets
+
+## Overview
+
+This example demonstrates how to handle roundtrip packets between the server and the Lunar Client. These packets are sent from the server, expecting a corresponding response from the client. The example utilizes a map to track the requests and their corresponding responses. For instance, this pattern is common in modules like `TransferModule` where a request packet is sent and a response is awaited.
+
+## Integration
+
+```java
+public class ApolloRoundtripProtoListener implements PluginMessageListener {
+
+    @Getter
+    private static ApolloRoundtripProtoListener instance;
+
+    private final Map<UUID, Map<UUID, CompletableFuture<GeneratedMessageV3>>> roundTripPacketFutures = new ConcurrentHashMap<>();
+    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+
+    public ApolloRoundtripProtoListener(ApolloExamplePlugin plugin) {
+        instance = this;
+        Bukkit.getServer().getMessenger().registerIncomingPluginChannel(plugin, "lunar:apollo", this);
+    }
+
+    @Override
+    public void onPluginMessageReceived(String s, Player player, byte[] bytes) {
+        try {
+            Any any = Any.parseFrom(bytes);
+
+            if (any.is(PingResponse.class)) {
+                PingResponse message = any.unpack(PingResponse.class);
+                UUID requestId = UUID.fromString(message.getRequestId().toStringUtf8());
+                this.handleResponse(player, requestId, message);
+            } else if (any.is(TransferResponse.class)) {
+                TransferResponse message = any.unpack(TransferResponse.class);
+                UUID requestId = UUID.fromString(message.getRequestId().toStringUtf8());
+                this.handleResponse(player, requestId, message);
+            }
+
+        } catch (InvalidProtocolBufferException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public <T extends GeneratedMessageV3> CompletableFuture<T> sendRequest(Player player, UUID requestId,
+                                                                           GeneratedMessageV3 request,
+                                                                           Class<T> responseType) {
+        ProtobufPacketUtil.sendPacket(player, request);
+
+        CompletableFuture<T> future = new CompletableFuture<>();
+
+        this.roundTripPacketFutures
+            .computeIfAbsent(player.getUniqueId(), k -> new ConcurrentHashMap<>())
+            .put(requestId, (CompletableFuture<GeneratedMessageV3>) future);
+
+        ScheduledFuture<?> timeoutTask = this.executorService.schedule(() ->
+                future.completeExceptionally(new TimeoutException("Response timed out")),
+            10, TimeUnit.SECONDS
+        );
+
+        future.whenComplete((result, throwable) -> timeoutTask.cancel(false));
+        return future;
+    }
+
+    private <T extends GeneratedMessageV3> void handleResponse(Player player, UUID requestId, T message) {
+        Map<UUID, CompletableFuture<GeneratedMessageV3>> futures = this.roundTripPacketFutures.get(player.getUniqueId());
+        if (futures == null) {
+            return;
+        }
+
+        CompletableFuture<GeneratedMessageV3> future = futures.remove(requestId);
+        if (future != null) {
+            future.complete(message);
+        }
+    }
+}
+```
+
+Here's an example demonstrating how to use the code to handle a server-to-client `TransferModule` transfer, where the client responds with a status (`accepted` or `rejected`).
+
+```java
+public void transferExample(Player player) {
+    UUID requestId = UUID.randomUUID();
+
+    TransferRequest transferRequestMessage = TransferRequest.newBuilder()
+        .setRequestId(ByteString.copyFromUtf8(requestId.toString()))
+        .setServerIp("mc.hypixel.net")
+        .build();
+
+    ApolloRoundtripProtoListener.getInstance()
+        .sendRequest(player, requestId, transferRequestMessage, TransferResponse.class)
+        .thenAccept(response -> {
+            String message = "";
+
+            switch (response.getStatus()) {
+                case STATUS_ACCEPTED: {
+                    message = "Transfer accepted! Goodbye!";
+                    break;
+                }
+
+                case STATUS_REJECTED: {
+                    message = "Transfer rejected by client!";
+                    break;
+                }
+            }
+
+            player.sendMessage(message);
+        }).exceptionally(throwable -> {
+            player.sendMessage("Failed to receive a response in time.");
+            return null;
+        });
+}
+```

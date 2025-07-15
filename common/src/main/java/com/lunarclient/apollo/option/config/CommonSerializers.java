@@ -54,7 +54,22 @@ public final class CommonSerializers implements Serializer {
                 return null;
             }
 
-            return Color.decode(node.getString());
+            String stringValue = node.getString();
+            if (stringValue.startsWith("#")) {
+                stringValue = stringValue.substring(1);
+            }
+
+            if (stringValue.length() != 8) {
+                throw new NumberFormatException("Invalid color string length: " + stringValue);
+            }
+
+            long rgba = Long.parseLong(stringValue, 16);
+            int alpha = (int) ((rgba >> 24) & 0xFF);
+            int red = (int) ((rgba >> 16) & 0xFF);
+            int green = (int) ((rgba >> 8) & 0xFF);
+            int blue = (int) (rgba & 0xFF);
+
+            return new Color(red, green, blue, alpha);
         }
 
         @Override

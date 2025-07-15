@@ -1,3 +1,5 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Limb Module
 
 ## Overview
@@ -7,9 +9,22 @@ The limb module allows you to hide the `ArmorPiece` and `BodyPart` limbs of a pl
 - Adds the ability to hide individual armor pieces and body parts of a player.
   - Select certain body parts and armor pieces to hide without needing to do any complex integration.
 
+![Limb Module Example](https://i.imgur.com/nzq1aht.jpeg#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Hide select body parts and armor pieces!</small>
+</div>
+
 ## Integration
 
-### Hiding an armor piece of a player
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Hide Armor Pieces
 
 ```java
 public void hideArmorExample(Player viewer, Player target) {
@@ -24,16 +39,7 @@ public void hideArmorExample(Player viewer, Player target) {
 }
 ```
 
-#### `hideArmorPieces` Parameters
-
-1. `ApolloPlayer Viewer`
-   - The player(s) that you wish to see the hidden armor piece.
-2. `UUID Target`
-   - The player UUID you want to hide the armor piece of.
-3. `ArmorPiece.TYPE`
-   - The armor piece types you wish to hide on the `target` player. See the [armor pieces](#armorpiece-types) section for more.
-
-### Resetting an armor piece of a player
+### Reset Armor Pieces
 
 ```java
 public void resetArmorExample(Player viewer, Player target) {
@@ -48,16 +54,7 @@ public void resetArmorExample(Player viewer, Player target) {
 }
 ```
 
-#### `resetArmorPieces` Parameters
-
-1. `ApolloPlayer Viewer`
-   - The player(s) that you want to reset the armor piece for.
-2. `UUID Target`
-   - The players UUID you want to reset the armor piece of.
-3. `ArmorPiece.TYPE`
-   - The type of armor piece(s) you want to reset on the `target` player. See the [armor pieces](#armorpiece-types) section for more.
-
-### Hiding a body part of a player
+### Hide Body Parts
 
 ```java
 public void hideBodyExample(Player viewer, Player target) {
@@ -72,18 +69,9 @@ public void hideBodyExample(Player viewer, Player target) {
 }
 ```
 
-#### `hideBodyParts` Parameters
+### Reset Body Parts
 
-1. `ApolloPlayer Viewer`
-   - The player(s) you want to see the hidden body part.
-2. `UUID Target`
-   - The players UUID you want to hide the body part of.
-3. `BodyPart.TYPE`
-   - The type of body part(s) you want to hide on the `target` player. See the [body parts](#bodyparts-types) section for more.
-
-### Resetting a body part of a player
-
-```java 
+```java
 public void resetBodyExample(Player viewer, Player target) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
@@ -96,10 +84,19 @@ public void resetBodyExample(Player viewer, Player target) {
 }
 ```
 
-#### `resetBodyParts` Parameters
+#### `hideArmorPieces` & `resetArmorPieces` Parameters
 
-1. `ApolloPlayer Viewer`
-   - The player(s) you want to reset the body part for.
+1. `Recipients recipients`
+   - A list of all the player(s) you want to be able to see the updated armor pieces.
+2. `UUID Target`
+   - The player UUID you want to hide the armor piece of.
+3. `ArmorPiece.TYPE`
+   - The armor piece types you wish to hide on the `target` player. See the [armor pieces](#armorpiece-types) section for more.
+
+#### `hideBodyParts` & `resetBodyParts` Parameters
+
+1. `Recipients recipients`
+   - A list of all the player(s) you want to be able to see the updated armor pieces.
 2. `UUID Target`
    - The players UUID you want to reset the body part of.
 3. `BodyPart.TYPE`
@@ -120,3 +117,139 @@ public void resetBodyExample(Player viewer, Player target) {
 * `RIGHT_ARM`
 * `LEFT_LEG`
 * `RIGHT_LEG`
+
+</Tab>
+
+<Tab>
+
+**Hide Armor Pieces**
+
+```java
+public void hideArmorExample(Player viewer, Player target) {
+    HideArmorPiecesMessage message = HideArmorPiecesMessage.newBuilder()
+        .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
+        .addAllArmorPieces(EnumSet.of(ArmorPiece.ARMOR_PIECE_HELMET, ArmorPiece.ARMOR_PIECE_LEGGINGS))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Reset Armor Pieces**
+
+```java
+public void resetArmorExample(Player viewer, Player target) {
+    ResetArmorPiecesMessage message = ResetArmorPiecesMessage.newBuilder()
+        .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
+        .addAllArmorPieces(EnumSet.of(ArmorPiece.ARMOR_PIECE_HELMET, ArmorPiece.ARMOR_PIECE_LEGGINGS))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Hide Body Parts**
+
+```java
+public void hideBodyExample(Player viewer, Player target) {
+    HideBodyPartMessage message = HideBodyPartMessage.newBuilder()
+        .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
+        .addAllBodyParts(EnumSet.of(BodyPart.BODY_PART_HEAD, BodyPart.BODY_PART_RIGHT_ARM))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);;
+}
+```
+
+**Reset Body Parts**
+
+```java
+public void resetBodyExample(Player viewer, Player target) {
+    ResetBodyPartMessage message = ResetBodyPartMessage.newBuilder()
+        .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
+        .addAllBodyParts(EnumSet.of(BodyPart.BODY_PART_HEAD, BodyPart.BODY_PART_RIGHT_ARM))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);;
+}
+```
+
+</Tab>
+
+<Tab>
+
+**Hide Armor Pieces**
+
+```java
+public void hideArmorExample(Player viewer, Player target) {
+    // 1 = helmet, 2 = chestplate, 3 = leggings, 4 = boots
+    JsonArray armorPieces = Lists.newArrayList(1, 3)
+        .stream().map(JsonPrimitive::new)
+        .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.limb.v1.HideArmorPiecesMessage");
+    message.add("player_uuid", JsonUtil.createUuidObject(target.getUniqueId()));
+    message.add("armor_pieces", armorPieces);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Reset Armor Pieces**
+
+```java
+public void resetArmorExample(Player viewer, Player target) {
+    // 1 = helmet, 2 = chestplate, 3 = leggings, 4 = boots
+    JsonArray armorPieces = Lists.newArrayList(1, 3)
+        .stream().map(JsonPrimitive::new)
+        .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.limb.v1.ResetArmorPiecesMessage");
+    message.add("player_uuid", JsonUtil.createUuidObject(target.getUniqueId()));
+    message.add("armor_pieces", armorPieces);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Hide Body Parts**
+
+```java
+public void hideBodyExample(Player viewer, Player target) {
+    // 1 = head, 2 = torso, 3 = left arm, 4 = right arm, 5 = left leg, 6 = right leg
+    JsonArray bodyParts = Lists.newArrayList(1, 4)
+        .stream().map(JsonPrimitive::new)
+        .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.limb.v1.HideBodyPartMessage");
+    message.add("player_uuid", JsonUtil.createUuidObject(target.getUniqueId()));
+    message.add("body_parts", bodyParts);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Reset Body Parts**
+
+```java
+public void resetBodyExample(Player viewer, Player target) {
+    // 1 = head, 2 = torso, 3 = left arm, 4 = right arm, 5 = left leg, 6 = right leg
+    JsonArray bodyParts = Lists.newArrayList(1, 4)
+        .stream().map(JsonPrimitive::new)
+        .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.limb.v1.ResetBodyPartMessage");
+    message.add("player_uuid", JsonUtil.createUuidObject(target.getUniqueId()));
+    message.add("body_parts", bodyParts);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

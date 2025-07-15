@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     repositories {
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
-        maven("https://us-maven.pkg.dev/moonsworth-299m4oir/maven-public")
+        maven("https://us-maven.pkg.dev/mw-lunarclient-maven-repo/public")
         mavenCentral()
         mavenLocal()
     }
@@ -36,9 +36,13 @@ listOfNotNull(
     "api",
     "common",
     "bukkit",
-    "bukkit-example",
+    "bukkit-example-common",
+    "bukkit-example-api",
+    "bukkit-example-json",
+    "bukkit-example-proto",
     if (loadAllVersions) "bungee" else null,
-    if (loadAllVersions) "velocity" else null
+    if (loadAllVersions) "velocity" else null,
+    if (loadAllVersions) "folia" else null
 ).forEach {
     include(it)
     findProject(":$it")?.name = "apollo-${it.replace(':', '-')}"

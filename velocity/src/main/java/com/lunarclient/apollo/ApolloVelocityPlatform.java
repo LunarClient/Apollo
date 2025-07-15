@@ -28,6 +28,7 @@ import com.lunarclient.apollo.command.impl.ApolloCommand;
 import com.lunarclient.apollo.command.impl.LunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
+import com.lunarclient.apollo.module.autotexthotkey.AutoTextHotkeyModule;
 import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
 import com.lunarclient.apollo.module.border.BorderModule;
@@ -50,6 +51,8 @@ import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
 import com.lunarclient.apollo.module.notification.NotificationModule;
 import com.lunarclient.apollo.module.notification.NotificationModuleImpl;
+import com.lunarclient.apollo.module.richpresence.RichPresenceModule;
+import com.lunarclient.apollo.module.richpresence.RichPresenceModuleImpl;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
@@ -57,6 +60,8 @@ import com.lunarclient.apollo.module.stopwatch.StopwatchModule;
 import com.lunarclient.apollo.module.stopwatch.StopwatchModuleImpl;
 import com.lunarclient.apollo.module.team.TeamModule;
 import com.lunarclient.apollo.module.team.TeamModuleImpl;
+import com.lunarclient.apollo.module.tebex.TebexModule;
+import com.lunarclient.apollo.module.tebex.TebexModuleImpl;
 import com.lunarclient.apollo.module.title.TitleModule;
 import com.lunarclient.apollo.module.title.TitleModuleImpl;
 import com.lunarclient.apollo.module.transfer.TransferModule;
@@ -92,7 +97,7 @@ import lombok.Getter;
 @Plugin(
     id = "apollo",
     name = "Apollo-Velocity",
-    version = "1.1.2",
+    version = "1.1.8",
     url = "https://moonsworth.com",
     description = "Implementation of Apollo for Velocity",
     authors = {"Moonsworth"}
@@ -161,6 +166,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         ApolloManager.bootstrap(this);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
+            .addModule(AutoTextHotkeyModule.class)
             .addModule(BeamModule.class, new BeamModuleImpl())
             .addModule(BorderModule.class, new BorderModuleImpl())
             .addModule(ChatModule.class, new ChatModuleImpl())
@@ -173,10 +179,12 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
             .addModule(ModSettingModule.class)
             .addModule(NametagModule.class, new NametagModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())
+            .addModule(RichPresenceModule.class, new RichPresenceModuleImpl())
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())
             .addModule(StopwatchModule.class, new StopwatchModuleImpl())
             .addModule(TeamModule.class, new TeamModuleImpl())
+            .addModule(TebexModule.class, new TebexModuleImpl())
             .addModule(TitleModule.class, new TitleModuleImpl())
             .addModule(TransferModule.class, new TransferModuleImpl())
             .addModule(VignetteModule.class, new VignetteModuleImpl())

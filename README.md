@@ -1,6 +1,5 @@
 # Apollo
-![Build Status](https://img.shields.io/github/actions/workflow/status/LunarClient/Apollo/.github/workflows/deploy.yml)
-[![Discord](https://img.shields.io/discord/1080556677004271666?logo=discord&label=discord)](https://discord.gg/3T9Atyb6pf)
+[![Discord](https://img.shields.io/discord/1080556677004271666?logo=discord&label=discord)](https://lunarclient.dev/discord)
 
 Apollo is a powerful tool that allows developers to create custom integrations with Lunar Client.
 
@@ -28,6 +27,7 @@ Running the following will compile the Apollo source for Java 8.
 The output jars can be found in the `build/libs` directory relative to each platform.
 
 - Bukkit: `bukkit/plugin/build/libs`
+- Folia: `folia/build/libs`
 - BungeeCord: `bungee/build/libs`
 - Velocity: `velocity/build/libs`
 
@@ -42,10 +42,10 @@ The Apollo project is split into several modules.
 
 - **API** - The publicly available interface for developers wishing to create custom integrations with Lunar Client.
 - **Common** - The abstraction used by platform modules to reduce duplicate code and implement the protocol for Lunar Client.
-- **Bukkit, BungeeCord, Velocity** - Are modules that implement the common module for each respective platform.
+- **Bukkit, Folia, BungeeCord, Velocity** - Are modules that implement the common module for each respective platform.
 
 Contributions can be made to Apollo by creating a pull request for improvements or fixes. For new feature ideas please consider making a 
-suggestion by creating an [issue](https://github.com/LunarClient/Apollo/issues) or joining our [discord](https://discord.gg/3T9Atyb6pf).
+suggestion by creating an [issue](https://github.com/LunarClient/Apollo/issues) or joining our [discord](https://lunarclient.dev/discord).
 
 ## License
 

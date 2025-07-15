@@ -1,3 +1,4 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
 import { Callout } from 'nextra-theme-docs'
 
 # Transfer Module
@@ -13,12 +14,68 @@ The transfer module allows you to transfer players from one server to another, w
 When you combine the usage of the ping packet and transfer packet, you can do connection-based optimizing for your players.
 
 <Callout type="warning">
-  Players are prompted with a confirmation screen, where they can accept or decline the transfer-packet.
+  Players are prompted with a confirmation screen, where they can accept or decline the transfer-packet. However, the prompt can be skipped via the transfer consent DNS record. See the section below for more info.
 </Callout>
+
+![Transfer Module Example](https://i.imgur.com/TjdBfYn.png#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Attempting to transfer users from one server to another! (Works on both modern & legacy versions)</small>
+</div>
+
+## Transfer Consent DNS Record
+
+Instead of requiring users to click "Accept" on the transfer popup, transfers can also be auto-accepted by the target server. This produces a smoother user experience, without the friction of manually needing to accept.
+
+The intent of the confirmation screen is to ensure users are aware they're changing to a third-party server. However, many use cases of the transfer
+packet involve moving around the same server, or between IPs owned by the same party. In these cases, the confirmation can be skipped entirely if
+the **target** server has whitelisted the **sender** server in a `mc_transfer_accept_from` TXT DNS record.
+
+### Building the whitelist
+When attempting to transfer to a server, Lunar Client first performs a DNS lookup for TXT records at the target server's IP. For example, if directed to connect to `na.lunar.gg`, the client will send a TXT DNS query for `na.lunar.gg`.
+
+The results of this query are split by a comma (`,`), and added to the whitelist. The same query is then sent for any parent domains. For example, if the user is connecting to `foo.na.lunar.gg`, the effective whitelist of sender servers is the **combination** of the results for `foo.na.lunar.gg`, `na.lunar.gg`, and `lunar.gg`.
+
+This hierarchy method is intended to allow transfering to dynamically generated subdomains, without requiring a TXT record be set on each of them.
+
+For example, if the following DNS records are present in your DNS provider:
+
+* na.lunar.gg `TXT mc_transfer_accept_from=*.hypixel.net`
+* lunar.gg `TXT mc_transfer_accept_from=*.lunar.gg,lunar.gg`
+
+When transfering to `na.lunar.gg`, the effective whitelist would be:
+* `*.hypixel.net`
+* `*.lunar.gg`
+* `lunar.gg`
+
+When transfering to `lunar.gg` (or any other subdomains, like `eu.lunar.gg`), the effective whitelist would be:
+* `*.lunar.gg`
+* `lunar.gg`
+
+### Checking the whitelist
+Once a whitelist of allowed sender IPs has been built, Lunar Client checks if the IP the user is currently connected to is in this whitelist. If it is, the transfer is accepted immediately. If it is not, the user receives a transfer popup.
+
+Note that wildcards are accepted. For example, `*.lunar.gg` will allow `na.lunar.gg`, `eu.lunar.gg`, `sa.lunar.gg`, etc. to transfer to this server.
+
+### Practical Examples
+
+If you own `example.com` and want to auto-accept transfers between any subdomains, create the following records:
+* `example.com` -> `TXT mc_transfer_accept_from=*.example.com,example.com`
+
+If you own `example.com` and `server.net`, and want to auto-accept transfers between them, create the following records:
+* `example.com` -> `TXT mc_transfer_accept_from=*.example.com,example.com,*.server.net,server.net`
+* `server.net` -> `TXT mc_transfer_accept_from=*.example.com,example.com,*.server.net,server.net`
 
 ## Integration
 
-### Using the Transfer Packet
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Transfer Player
 
 ```java
 public void transferExample(Player viewer) {
@@ -55,11 +112,12 @@ public void transferExample(Player viewer) {
 }
 ```
 
-### Using the Ping Packet
+### Ping Servers
 
 <Callout type="info">
   You can provide up to `10` different addresses per ping packet.
 </Callout>
+
 
 ```java
 public void pingExample(Player viewer) {
@@ -99,3 +157,115 @@ public void pingExample(Player viewer) {
         });
 }
 ```
+
+</Tab>
+
+<Tab>
+
+**Transfer Player**
+
+```java
+public void transferExample(Player player) {
+    UUID requestId = UUID.randomUUID();
+
+    TransferRequest transferRequestMessage = TransferRequest.newBuilder()
+        .setRequestId(ByteString.copyFromUtf8(requestId.toString()))
+        .setServerIp("mc.hypixel.net")
+        .build();
+
+    ApolloRoundtripProtoListener.getInstance()
+        .sendRequest(player, requestId, transferRequestMessage, TransferResponse.class)
+        .thenAccept(response -> {
+            String message = "";
+
+            switch (response.getStatus()) {
+                case STATUS_ACCEPTED: {
+                    message = "Transfer accepted! Goodbye!";
+                    break;
+                }
+
+                case STATUS_REJECTED: {
+                    message = "Transfer rejected by client!";
+                    break;
+                }
+            }
+
+            player.sendMessage(message);
+        }).exceptionally(throwable -> {
+            player.sendMessage("Failed to receive a response in time.");
+            return null;
+        });
+}
+```
+
+**Ping Servers**
+
+<Callout type="info">
+  You can provide up to `10` different addresses per ping packet.
+</Callout>
+
+```java
+public void pingExample(Player player) {
+    UUID requestId = UUID.randomUUID();
+
+    PingRequest pingRequestMessage = PingRequest.newBuilder()
+        .setRequestId(ByteString.copyFromUtf8(requestId.toString()))
+        .addAllServerIps(Lists.newArrayList("mc.hypixel.net", "minehut.com"))
+        .build();
+
+    ApolloRoundtripProtoListener.getInstance()
+        .sendRequest(player, requestId, pingRequestMessage, PingResponse.class)
+        .thenAccept(response -> {
+            for (PingData pingData : response.getPingDataList()) {
+                String message = "";
+
+                switch (pingData.getStatus()) {
+                    // Displays successful ping request to display the server IP and the players ping to that server.
+                    case STATUS_SUCCESS: {
+                        message = String.format("Ping to %s is %d ms.", pingData.getServerIp(), pingData.getPing());
+                        break;
+                    }
+
+                    // If the ping request times-out
+                    case STATUS_TIMED_OUT: {
+                        message = String.format("Failed to ping %s", pingData.getServerIp());
+                        break;
+                    }
+                }
+
+                player.sendMessage(message);
+            }
+        }).exceptionally(throwable -> {
+            player.sendMessage("Failed to receive a response in time.");
+            return null;
+        });
+}
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="warning" emoji="⚠️">
+  This example is not implemented.
+</Callout>
+
+**Transfer Player**
+
+```java
+public void transferExample(Player player) {
+
+}
+```
+
+**Ping Servers**
+
+```java
+public void pingExample(Player player) {
+
+}
+```
+
+</Tab>
+
+</Tabs>

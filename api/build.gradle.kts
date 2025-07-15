@@ -8,6 +8,7 @@ setupPlatforms()
 setupPlatformDependency("bukkit", "bukkitJar")
 setupPlatformDependency("bungee", "bungeeJar")
 setupPlatformDependency("velocity", "velocityJar")
+setupPlatformDependency("folia", "foliaJar", 21)
 
 val main by sourceSets
 
@@ -25,6 +26,9 @@ dependencies {
 
     "velocity"(main.output)
     "velocity"(libs.velocity)
+
+    "folia"(main.output)
+    "folia"(libs.folia)
 }
 
 publishShadowJar()

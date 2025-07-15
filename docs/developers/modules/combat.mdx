@@ -1,4 +1,4 @@
-import { Callout } from 'nextra-theme-docs'
+import { Tab, Tabs } from 'nextra-theme-docs'
 
 # Combat Module
 
@@ -6,11 +6,58 @@ import { Callout } from 'nextra-theme-docs'
 
 The combat module allows you to modify certain aspects of combat that are usually handled client-sided.
 
-* Adds the ability to disable the 1.8 miss penalty, commonly known as 'hit-delay'.
+- Adds the ability to disable the miss penalty, on all versions 1.8 and above.
 
-<Callout type="info">
-  This is a bare bones module to add support for the legacy-API feature 'LEGACY_COMBAT'.
-</Callout>
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Toggle Miss Penalty
+
+```java
+public void setDisableMissPenalty(boolean value) {
+    this.combatModule.getOptions().set(CombatModule.DISABLE_MISS_PENALTY, value);
+}
+```
+
+</Tab>
+
+<Tab>
+
+### Toggle Miss Penalty
+
+```java
+public void setDisableMissPenalty(boolean value) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("disable-miss-penalty", Value.newBuilder().setBoolValue(value).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("combat", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+</Tab>
+
+<Tab>
+
+### Toggle Miss Penalty
+
+```java
+public void setDisableMissPenalty(boolean value) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("disable-miss-penalty", value);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("combat", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+</Tab>
+
+</Tabs>
 
 ## Available options
 

@@ -1,3 +1,5 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Stopwatch Module
 
 ## Overview
@@ -9,9 +11,22 @@ The stopwatch module allows you to control the stopwatch mod inside Lunar Client
   - Stop a player's stopwatch
   - Reset a player's stopwatch
 
+![Stopwatch Module Example](https://i.imgur.com/HEX9q0H.gif#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Start, Stop, and Reset the Lunar Client stopwatch mod!</small>
+</div>
+
 ## Integration
 
-### How to start a player's stopwatch
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Start Stopwatch
 
 ```java
 public void startStopwatchExample(Player viewer) {
@@ -20,7 +35,7 @@ public void startStopwatchExample(Player viewer) {
 }
 ```
 
-### How to stop a player's stopwatch
+### Stop Stopwatch
 
 ```java
 public void stopStopwatchExample(Player viewer) {
@@ -29,7 +44,7 @@ public void stopStopwatchExample(Player viewer) {
 }
 ```
 
-### How to reset a player's stopwatch
+### Reset Stopwatch
 
 ```java
 public void resetStopwatchExample(Player viewer) {
@@ -37,3 +52,75 @@ public void resetStopwatchExample(Player viewer) {
     apolloPlayerOpt.ifPresent(this.stopwatchModule::resetStopwatch);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+**Start Stopwatch**
+
+```java
+public void startStopwatchExample(Player viewer) {
+    StartStopwatchMessage message = StartStopwatchMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Stop Stopwatch**
+
+```java
+public void stopStopwatchExample(Player viewer) {
+    StopStopwatchMessage message = StopStopwatchMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Reset Stopwatch**
+
+```java
+public void resetStopwatchExample(Player viewer) {
+    ResetStopwatchMessage message = ResetStopwatchMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+<Tab>
+
+**Start Stopwatch**
+
+```java
+public void startStopwatchExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.StartStopwatchMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Stop Stopwatch**
+
+```java
+public void stopStopwatchExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.StopStopwatchMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Reset Stopwatch**
+
+```java
+public void resetStopwatchExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.ResetStopwatchMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

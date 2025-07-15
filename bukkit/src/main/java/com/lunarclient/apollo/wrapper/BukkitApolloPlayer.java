@@ -34,9 +34,11 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.audience.Audience;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The Bukkit implementation of {@link ApolloPlayer}.
@@ -88,4 +90,8 @@ public final class BukkitApolloPlayer extends AbstractApolloPlayer {
         this.player.sendPluginMessage(ApolloBukkitPlatform.getInstance().getPlugin(), ApolloManager.PLUGIN_MESSAGE_CHANNEL, messages);
     }
 
+    @Override
+    public @NotNull Audience audience() {
+        return ApolloBukkitPlatform.getInstance().getAudiences().player(this.player);
+    }
 }

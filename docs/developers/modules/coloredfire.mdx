@@ -1,12 +1,27 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Colored Fire Module
 
 ## Overview
 
 The colored fire module allows you to modify the color of the flames that appear on a burning entity.
 
+![Colored Fire Module Example](https://i.imgur.com/Ou4kiYE.png#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Make users burn with any color!</small>
+</div>
+
 ## Integration
 
 ### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Override a Fire Color
 
 ```java
 public void overrideColoredFireExample(UUID burningPlayer) {
@@ -14,6 +29,23 @@ public void overrideColoredFireExample(UUID burningPlayer) {
         burningPlayer,
         Color.BLUE
     );
+}
+```
+
+### Removing a Fire Color
+
+```java
+public void resetColoredFireExample(UUID burningPlayer) {
+    this.coloredFireModule.resetColoredFire(Recipients.ofEveryone(), burningPlayer);
+}
+```
+
+### Resetting all Fire Colors
+
+```java
+public void resetColoredFiresExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.coloredFireModule::resetColoredFires);
 }
 ```
 
@@ -26,19 +58,84 @@ public void overrideColoredFireExample(UUID burningPlayer) {
 3. `Color flameColor`
    - How you'll dictate the color of the fire, see the [colors page](/apollo/developers/utilities/colors) for more.
 
-### Removing a specific targets colored fire for viewers
+</Tab>
+
+<Tab>
+
+**Override a Fire Color**
+
+```java
+public void overrideColoredFireExample(UUID burningPlayer) {
+    OverrideColoredFireMessage message = OverrideColoredFireMessage.newBuilder()
+        .setPlayerUuid(ProtobufUtil.createUuidProto(burningPlayer))
+        .setColor(ProtobufUtil.createColorProto(Color.BLUE))
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+**Removing a Fire Color**
 
 ```java
 public void resetColoredFireExample(UUID burningPlayer) {
-    this.coloredFireModule.resetColoredFire(Recipients.ofEveryone(), burningPlayer);
+    ResetColoredFireMessage message = ResetColoredFireMessage.newBuilder()
+        .setPlayerUuid(ProtobufUtil.createUuidProto(burningPlayer))
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
 }
 ```
 
-### Resetting all colored fires for all viewers
+**Resetting all Fire Colors**
 
 ```java
 public void resetColoredFiresExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.coloredFireModule::resetColoredFires);
+    ResetColoredFiresMessage message = ResetColoredFiresMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+**Override a Fire Color**
+
+```java
+public void overrideColoredFireExample(UUID burningPlayer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.coloredfire.v1.OverrideColoredFireMessage");
+    message.add("player_uuid", JsonUtil.createUuidObject(burningPlayer));
+    message.add("color", JsonUtil.createColorObject(Color.BLUE));
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Removing a Fire Color**
+
+```java
+public void resetColoredFireExample(UUID burningPlayer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.coloredfire.v1.ResetColoredFireMessage");
+    message.add("player_uuid", JsonUtil.createUuidObject(burningPlayer));
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Resetting all Fire Colors**
+
+```java
+public void resetColoredFiresExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.coloredfire.v1.ResetColoredFiresMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

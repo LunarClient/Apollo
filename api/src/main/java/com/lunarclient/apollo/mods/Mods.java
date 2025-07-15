@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods;
 import com.lunarclient.apollo.mods.impl.Mod2dItems;
 import com.lunarclient.apollo.mods.impl.Mod3dSkins;
 import com.lunarclient.apollo.mods.impl.ModArmorstatus;
+import com.lunarclient.apollo.mods.impl.ModAutoTextActions;
 import com.lunarclient.apollo.mods.impl.ModAutoTextHotkey;
 import com.lunarclient.apollo.mods.impl.ModBlockOutline;
 import com.lunarclient.apollo.mods.impl.ModBossbar;
@@ -75,6 +76,7 @@ import com.lunarclient.apollo.mods.impl.ModPlaytime;
 import com.lunarclient.apollo.mods.impl.ModPotionEffects;
 import com.lunarclient.apollo.mods.impl.ModPvpInfo;
 import com.lunarclient.apollo.mods.impl.ModQuickplay;
+import com.lunarclient.apollo.mods.impl.ModRadio;
 import com.lunarclient.apollo.mods.impl.ModReachDisplay;
 import com.lunarclient.apollo.mods.impl.ModReplaymod;
 import com.lunarclient.apollo.mods.impl.ModSaturation;
@@ -134,10 +136,10 @@ public final class Mods {
             ModCrosshair.class,
             ModPotionEffects.class,
             ModDirectionHud.class,
-            ModTitles.class,
             ModWaypoints.class,
             ModHitColor.class,
             ModScoreboard.class,
+            ModTitles.class,
             ModItemCounter.class,
             ModPing.class,
             ModMotionBlur.class,
@@ -174,6 +176,7 @@ public final class Mods {
             ModFov.class,
             ModFog.class,
             ModAutoTextHotkey.class,
+            ModAutoTextActions.class,
             ModMumbleLink.class,
             Mod2dItems.class,
             ModBossbar.class,
@@ -194,7 +197,8 @@ public final class Mods {
             ModHurtCam.class,
             ModDamageTint.class,
             ModSkyblock.class,
-            ModHorseStats.class
+            ModHorseStats.class,
+            ModRadio.class
         );
 
     private Mods() {

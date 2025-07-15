@@ -27,6 +27,7 @@ import com.lunarclient.apollo.client.mod.LunarClientMod;
 import com.lunarclient.apollo.client.version.LunarClientVersion;
 import com.lunarclient.apollo.client.version.MinecraftVersion;
 import com.lunarclient.apollo.event.Event;
+import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.List;
 import lombok.Value;
@@ -70,5 +71,13 @@ public class ApolloPlayerHandshakeEvent implements Event {
      * @since 1.0.6
      */
     List<LunarClientMod> installedMods;
+
+    /**
+     * The {@link TebexEmbeddedCheckoutSupport} type.
+     *
+     * @return the Tebex checkout support type
+     * @since 1.1.6
+     */
+    TebexEmbeddedCheckoutSupport tebexEmbeddedCheckoutSupport;
 
 }

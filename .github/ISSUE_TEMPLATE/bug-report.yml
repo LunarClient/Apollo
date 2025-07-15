@@ -10,7 +10,7 @@ body:
     - type: markdown
       attributes:
           value: |
-              Thanks for taking the time to report this issue, if you want to request a feature join our [Discord](https://discord.gg/3T9Atyb6pf).
+              Thanks for taking the time to report this issue, if you want to request a feature join our [Discord](https://lunarclient.dev/discord).
 
     # Checklist
     - type: checkboxes
@@ -80,7 +80,8 @@ body:
               - 1.17
               - 1.18
               - 1.19
-              - 1.20+
+              - 1.20
+              - 1.21
       validations:
           required: true
 
@@ -93,6 +94,7 @@ body:
           multiple: true
           options:
               - Spigot / Bukkit
+              - Folia
               - BungeeCord
               - Velocity
               - Other
@@ -114,7 +116,8 @@ body:
               - 1.17
               - 1.18
               - 1.19
-              - 1.20+
+              - 1.20
+              - 1.21
               - Other/Not Listed
       validations:
           required: true
@@ -131,6 +134,8 @@ body:
               - "Optifine"
               - "Forge"
               - "Fabric"
+              - "Vanilla"
+              - "Other/Not Listed"
       validations:
           required: false
 

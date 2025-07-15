@@ -35,6 +35,33 @@ public void toggleChatExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
+- __`STACK_MESSAGES_TIME_BASED`__
+    - Choose whether or not you want to stack multiple of the same messages in chat within a timeframe
+    - Config Key: `stack-messages-time-based`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TIME_BASED_STACK_MESSAGES_TIMEFRAME`__
+    - Config Key: `time-based-stack-messages-timeframe`
+    - Values
+        - Type: `Integer`
+        - Default: `10`
+        - Minimum: `1`
+        - Maximum: `60`
+
+- __`CHAT_STACK_IGNORE_BLANK`__
+    - Config Key: `chat-stack-ignore-blank`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CHAT_STACK_IGNORE_BREAK`__
+    - Config Key: `chat-stack-ignore-break`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
 - __`CHAT_HEIGHT`__
     - Moves the chat up 12 pixels so it doesn't block health bar
     - Config Key: `chat-height`
@@ -67,12 +94,45 @@ public void toggleChatExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `true`
 
+- __`CHAT_PING_EXACT_MATCH`__
+    - Requires the ping message to exactly contain your name.
+For example, if your name is Notch, this will ping on Notch but not Notch123.
+    - Config Key: `chat-ping-exact-match`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
 - __`COPY_CHAT`__
     - Copies the hovered chat message when holding the keybind and clicking.
     - Config Key: `copy-chat`
     - Values
         - Type: `Boolean`
         - Default: `false`
+
+- __`HOVER_IMAGE_PREVIEW`__
+    - Displays a preview of an image when hovering over it.
+    - Config Key: `hover-image-preview`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`MIN_IMAGE_SIZE`__
+    - The minimum size for an image to be displayed, as a percentage of your screen.
+    - Config Key: `min-image-size`
+    - Values
+        - Type: `Double`
+        - Default: `0.0D`
+        - Minimum: `0.0D`
+        - Maximum: `100.0D`
+
+- __`MAX_IMAGE_SIZE`__
+    - The maximum size for an image to be displayed, as a percentage of your screen.
+    - Config Key: `max-image-size`
+    - Values
+        - Type: `Double`
+        - Default: `100.0D`
+        - Minimum: `0.0D`
+        - Maximum: `100.0D`
 
 - __`SMOOTH_CHAT`__
     - Config Key: `smooth-chat`

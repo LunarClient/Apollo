@@ -71,6 +71,26 @@ public final class ModMemory {
      *
      * @since 1.0.0
      */
+    public static final SimpleOption<Boolean> BRACKETS = SimpleOption.<Boolean>builder()
+        .node("memory", "brackets").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.6
+     */
+    public static final SimpleOption<Color> BRACKET_COLOR = SimpleOption.<Color>builder()
+        .node("memory", "bracket-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("memory", "background").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -84,6 +104,17 @@ public final class ModMemory {
     public static final SimpleOption<Boolean> STATIC_BACKGROUND_WIDTH = SimpleOption.<Boolean>builder()
         .comment("If this is disabled the background will change size with the text.")
         .node("memory", "static-background-width").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * If this is disabled the background will change size with the text.
+     *
+     * @since 1.1.6
+     */
+    public static final SimpleOption<Boolean> STATIC_BACKGROUND_HEIGHT = SimpleOption.<Boolean>builder()
+        .comment("If this is disabled the background will change size with the text.")
+        .node("memory", "static-background-height").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -114,16 +145,6 @@ public final class ModMemory {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> BRACKETS = SimpleOption.<Boolean>builder()
-        .node("memory", "brackets").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("memory", "border").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -145,8 +166,8 @@ public final class ModMemory {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
-        .node("memory", "text-color").type(TypeToken.get(Color.class))
+    public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
+        .node("memory", "border-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -165,8 +186,48 @@ public final class ModMemory {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
-        .node("memory", "border-color").type(TypeToken.get(Color.class))
+    public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
+        .node("memory", "text-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> COLOR_BASED_ON_USAGE = SimpleOption.<Boolean>builder()
+        .node("memory", "color-based-on-usage").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Color> LOW_MEM_COLOR = SimpleOption.<Color>builder()
+        .node("memory", "low-mem-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Color> MED_MEM_COLOR = SimpleOption.<Color>builder()
+        .node("memory", "med-mem-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Color> HIGH_MEM_COLOR = SimpleOption.<Color>builder()
+        .node("memory", "high-mem-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

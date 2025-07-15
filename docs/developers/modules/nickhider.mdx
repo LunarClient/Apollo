@@ -1,3 +1,5 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
 # Nick Hider Module
 
 ## Overview
@@ -8,7 +10,14 @@ The Nick Hider module allows you to interact with the Nick Hider mod.
 
 ## Integration
 
-### Override the nick for a specific player
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Override a Nick
 
 ```java
 public void overrideNickExample(Player viewer) {
@@ -17,7 +26,7 @@ public void overrideNickExample(Player viewer) {
 }
 ```
 
-### Reset the nick for a specific player
+### Reset a Nick
 
 ```java
 public void resetNickExample(Player viewer) {
@@ -25,3 +34,59 @@ public void resetNickExample(Player viewer) {
     apolloPlayerOpt.ifPresent(this.nickHiderModule::resetNick);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+**Override a Nick**
+
+```java
+public void overrideNickExample(Player viewer) {
+    OverrideNickHiderMessage message = OverrideNickHiderMessage.newBuilder()
+        .setNick("Notch")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Reset a Nick**
+
+```java
+public void resetNickExample(Player viewer) {
+    ResetNickHiderMessage message = ResetNickHiderMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+<Tab>
+
+**Override a Nick**
+
+```java
+public void overrideNickExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.nickhider.v1.OverrideNickHiderMessage");
+    message.addProperty("nick", "Notch");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Reset a Nick**
+
+```java
+public void resetNickExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.nickhider.v1.ResetNickHiderMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

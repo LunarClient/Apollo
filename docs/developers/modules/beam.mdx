@@ -12,9 +12,23 @@ The beam module allows you to create custom beams resembling beacon beams, which
     -   Exact location pinpointing for the beams to be shown on.
     -   Beams appear through blocks, unlike in vanilla Minecraft.
 
+![Beam Module Example](https://i.imgur.com/F539tcr.jpeg#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Beams can be at any location and be any color!</small>
+</div>
+
 ## Integration
 
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
 ### Sample Code
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Displaying a Beam
 
 ```java
 public void displayBeamExample(Player viewer) {
@@ -34,6 +48,24 @@ public void displayBeamExample(Player viewer) {
             .build()
         );
     });
+}
+```
+
+### Removing a Beam
+
+```java
+public void removeBeamExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.beamModule.removeBeam(apolloPlayer, "spawn-beacon"));
+}
+```
+
+### Resetting all Beams
+
+```java
+public void resetBeamsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.beamModule::resetBeams);
 }
 ```
 
@@ -93,20 +125,90 @@ Custom colors can be created from any RGB values using `new Color(int red, int g
 )
 ```
 
-### Removing a specific beam for a player
+</Tab>
+
+<Tab>
+
+**Displaying a Beam**
+
+```java
+public void displayBeamExample(Player viewer) {
+    DisplayBeaconBeamMessage message = DisplayBeaconBeamMessage.newBuilder()
+        .setId("spawn-beacon")
+        .setColor(ProtobufUtil.createColorProto(Color.CYAN))
+        .setLocation(ProtobufUtil.createBlockLocationProto(new Location(viewer.getWorld(), 0, 60, 0)))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Removing a Beam**
 
 ```java
 public void removeBeamExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.beamModule.removeBeam(apolloPlayer, "spawn-beacon"));
+    RemoveBeaconBeamMessage message = RemoveBeaconBeamMessage.newBuilder()
+        .setId("spawn-beacon")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
 
-### Resetting all beams for a player
+**Resetting all Beams**
 
 ```java
 public void resetBeamsExample(Player viewer) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.beamModule::resetBeams);
+    ResetBeaconBeamsMessage message = ResetBeaconBeamsMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
+
+</Tab>
+
+<Tab>
+
+**Displaying a Beam**
+
+```java
+public void displayBeamExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.beam.v1.DisplayBeaconBeamMessage");
+    message.addProperty("id", "spawn-beacon");
+    message.add("location", JsonUtil.createBlockLocationObject(
+        new Location(Bukkit.getWorld("world"), 0, 60, 0)
+    ));
+    message.add("color", JsonUtil.createColorObject(Color.CYAN));
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Removing a Beam**
+
+```java
+public void removeBeamExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.beam.v1.RemoveBeaconBeamMessage");
+    message.addProperty("id", "spawn-beacon");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Beams**
+
+```java
+public void resetBeamsExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.beam.v1.ResetBeaconBeamsMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>
+
+

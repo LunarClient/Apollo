@@ -29,6 +29,7 @@ import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
+import com.lunarclient.apollo.module.autotexthotkey.AutoTextHotkeyModule;
 import com.lunarclient.apollo.module.beam.BeamModule;
 import com.lunarclient.apollo.module.beam.BeamModuleImpl;
 import com.lunarclient.apollo.module.border.BorderModule;
@@ -42,10 +43,12 @@ import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
 import com.lunarclient.apollo.module.entity.EntityModule;
 import com.lunarclient.apollo.module.entity.EntityModuleImpl;
+import com.lunarclient.apollo.module.glint.GlintModule;
 import com.lunarclient.apollo.module.glow.GlowModule;
 import com.lunarclient.apollo.module.glow.GlowModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
+import com.lunarclient.apollo.module.inventory.InventoryModule;
 import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
@@ -61,6 +64,7 @@ import com.lunarclient.apollo.module.pingmarker.PingMarkerModule;
 import com.lunarclient.apollo.module.pingmarker.PingMarkerModuleImpl;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModule;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModuleImpl;
+import com.lunarclient.apollo.module.saturation.SaturationModule;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
@@ -68,6 +72,8 @@ import com.lunarclient.apollo.module.stopwatch.StopwatchModule;
 import com.lunarclient.apollo.module.stopwatch.StopwatchModuleImpl;
 import com.lunarclient.apollo.module.team.TeamModule;
 import com.lunarclient.apollo.module.team.TeamModuleImpl;
+import com.lunarclient.apollo.module.tebex.TebexModule;
+import com.lunarclient.apollo.module.tebex.TebexModuleImpl;
 import com.lunarclient.apollo.module.title.TitleModule;
 import com.lunarclient.apollo.module.title.TitleModuleImpl;
 import com.lunarclient.apollo.module.tntcountdown.TntCountdownModule;
@@ -86,6 +92,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
@@ -102,18 +109,24 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
 
     @Getter private final Options options = new OptionsImpl(null);
     @Getter private final JavaPlugin plugin;
+
+    @Getter private BukkitAudiences audiences;
     private ApolloStats stats;
 
     @Override
     public void onEnable() {
         ApolloBukkitPlatform.instance = this;
+
+        this.audiences = BukkitAudiences.create(this.plugin);
         this.stats = new BukkitApolloStats();
+
         ApolloManager.bootstrap(this);
 
         new ApolloPlayerListener(this.plugin);
         new ApolloWorldListener(this.plugin);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
+            .addModule(AutoTextHotkeyModule.class)
             .addModule(BeamModule.class, new BeamModuleImpl())
             .addModule(BorderModule.class, new BorderModuleImpl())
             .addModule(ChatModule.class, new ChatModuleImpl())
@@ -121,8 +134,10 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(CombatModule.class)
             .addModule(CooldownModule.class, new CooldownModuleImpl())
             .addModule(EntityModule.class, new EntityModuleImpl())
+            .addModule(GlintModule.class)
             .addModule(GlowModule.class, new GlowModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
+            .addModule(InventoryModule.class)
             .addModule(LimbModule.class, new LimbModuleImpl())
             .addModule(ModSettingModule.class)
             .addModule(NametagModule.class, new NametagModuleImpl())
@@ -131,10 +146,12 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(PacketEnrichmentModule.class, new PacketEnrichmentImpl())
             .addModule(PingMarkerModule.class, new PingMarkerModuleImpl())
             .addModule(RichPresenceModule.class, new RichPresenceModuleImpl())
+            .addModule(SaturationModule.class)
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())
             .addModule(StopwatchModule.class, new StopwatchModuleImpl())
             .addModule(TeamModule.class, new TeamModuleImpl())
+            .addModule(TebexModule.class, new TebexModuleImpl())
             .addModule(TitleModule.class, new TitleModuleImpl())
             .addModule(TntCountdownModule.class, new TntCountdownModuleImpl())
             .addModule(TransferModule.class, new TransferModuleImpl())
