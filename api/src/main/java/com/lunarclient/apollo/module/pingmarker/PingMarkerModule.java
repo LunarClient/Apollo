@@ -32,7 +32,7 @@ import org.jetbrains.annotations.ApiStatus;
 /**
  * Represents the ping marker module.
  *
- * @since 1.0.0
+ * @since 1.1.9
  */
 @ApiStatus.NonExtendable
 @ModuleDefinition(id = "ping_marker", name = "Ping Marker")
@@ -43,7 +43,7 @@ public abstract class PingMarkerModule extends ApolloModule {
      *
      * @param recipients the recipients that are receiving the packet
      * @param type       the marker type
-     * @since 1.1.3
+     * @since 1.1.9
      */
     public abstract void setMarkerType(Recipients recipients, PingMarkerType type);
 
@@ -52,7 +52,7 @@ public abstract class PingMarkerModule extends ApolloModule {
      *
      * @param recipients the recipients that are receiving the packet
      * @param name       the marker type name
-     * @since 1.1.3
+     * @since 1.1.9
      */
     public abstract void removeMarkerType(Recipients recipients, String name);
 
@@ -61,7 +61,7 @@ public abstract class PingMarkerModule extends ApolloModule {
      *
      * @param recipients the recipients that are receiving the packet
      * @param type       the marker type
-     * @since 1.1.3
+     * @since 1.1.9
      */
     public abstract void removeMarkerType(Recipients recipients, PingMarkerType type);
 
@@ -69,7 +69,7 @@ public abstract class PingMarkerModule extends ApolloModule {
      * Resets all {@link PingMarkerType}s for the {@link Recipients}.
      *
      * @param recipients the recipients that are receiving the packet
-     * @since 1.1.3
+     * @since 1.1.9
      */
     public abstract void resetMarkerType(Recipients recipients);
 
@@ -78,7 +78,7 @@ public abstract class PingMarkerModule extends ApolloModule {
      *
      * @param recipients the recipients that are receiving the packet
      * @param marker     the marker
-     * @since 1.1.3
+     * @since 1.1.9
      */
     public abstract void displayMarker(Recipients recipients, PingMarker marker);
 
@@ -87,7 +87,7 @@ public abstract class PingMarkerModule extends ApolloModule {
      *
      * @param recipients the recipients that are receiving the packet
      * @param markerId the marker id
-     * @since 1.1.3
+     * @since 1.1.9
      */
     public abstract void removeMarker(Recipients recipients, UUID markerId);
 
@@ -96,7 +96,7 @@ public abstract class PingMarkerModule extends ApolloModule {
      *
      * @param recipients the recipients that are receiving the packet
      * @param marker     the marker
-     * @since 1.1.3
+     * @since 1.1.9
      */
     public abstract void removeMarker(Recipients recipients, PingMarker marker);
 
@@ -104,7 +104,7 @@ public abstract class PingMarkerModule extends ApolloModule {
      * Resets all {@link PingMarker}s for the {@link Recipients}.
      *
      * @param recipients the recipients that are receiving the packet
-     * @since 1.1.3
+     * @since 1.1.9
      */
     public abstract void resetMarkers(Recipients recipients);
 

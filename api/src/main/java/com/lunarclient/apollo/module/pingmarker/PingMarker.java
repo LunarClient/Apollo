@@ -35,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Represents a ping marker which can be shown on the client.
  *
- * @since 1.1.3
+ * @since 1.1.9
  */
 @Getter
 @Builder
@@ -45,7 +45,7 @@ public final class PingMarker {
      * Returns the marker {@link UUID}.
      *
      * @return the ping marker id
-     * @since 1.1.3
+     * @since 1.1.9
      */
     UUID id;
 
@@ -53,7 +53,7 @@ public final class PingMarker {
      * Returns the {@link PingMarkerType}.
      *
      * @return the ping marker type
-     * @since 1.1.3
+     * @since 1.1.9
      */
     @Nullable PingMarkerType type;
 
@@ -61,7 +61,7 @@ public final class PingMarker {
      * Returns the marker {@link ApolloLocation}.
      *
      * @return the ping marker location
-     * @since 1.1.3
+     * @since 1.1.9
      */
     ApolloLocation location;
 
@@ -69,7 +69,7 @@ public final class PingMarker {
      * Returns the marker {@link Color}.
      *
      * @return the ping marker color
-     * @since 1.1.3
+     * @since 1.1.9
      */
     Color color;
 
@@ -77,7 +77,7 @@ public final class PingMarker {
      * Returns the marker {@link Duration}.
      *
      * @return the ping marker duration
-     * @since 1.1.3
+     * @since 1.1.9
      */
     Duration duration;
 
@@ -85,7 +85,7 @@ public final class PingMarker {
      * Returns whether the marker should animate.
      *
      * @return the ping marker focus state
-     * @since 1.1.3
+     * @since 1.1.9
      */
     boolean focus;
 
@@ -96,7 +96,7 @@ public final class PingMarker {
      * for the most common use case, use {@link com.lunarclient.apollo.common.icon.ItemStackIcon}.</p>
      *
      * @return the ping marker icon
-     * @since 1.1.3
+     * @since 1.1.9
      */
     Icon icon;
 

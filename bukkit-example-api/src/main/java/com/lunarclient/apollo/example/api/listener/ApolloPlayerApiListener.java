@@ -26,12 +26,10 @@ package com.lunarclient.apollo.example.api.listener;
 import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.Listen;
-import com.lunarclient.apollo.event.pingmarker.ApolloPlayerRequestPingEvent;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.api.module.TeamApiExample;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.world.ApolloWorld;
 import org.bukkit.entity.Player;
 
 public class ApolloPlayerApiListener implements ApolloListener {
@@ -63,14 +61,6 @@ public class ApolloPlayerApiListener implements ApolloListener {
         this.example.getCooldownExample().displayCooldownItemExample(player);
         this.example.getNametagExample().overrideNametagExample(player);
         this.example.getWaypointExample().displayWaypointExample(player);
-    }
-
-    @Listen
-    private void onPingMarker(ApolloPlayerRequestPingEvent event) {
-        ApolloWorld world = event.getPlayer().getWorld().orElse(null);
-        if (world == null) return;
-
-        this.plugin.getPingMarkerExample().displayMarkerExample(event.getType(), event.getTarget(), world.getPlayers());
     }
 
 }

@@ -36,20 +36,20 @@ import lombok.experimental.NonFinal;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents an event that is fired when the player requests a ping.
+ * Represents an event that is fired when the player requests a ping marker.
  *
- * @since 1.1.3
+ * @since 1.1.9
  */
 @Getter
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public final class ApolloPlayerRequestPingEvent implements EventCancellable {
+public final class ApolloPlayerRequestMarkerEvent implements EventCancellable {
 
     /**
      * The player sending the ping request.
      *
      * @return the source player
-     * @since 1.1.3
+     * @since 1.1.9
      */
     ApolloPlayer player;
 
@@ -57,7 +57,7 @@ public final class ApolloPlayerRequestPingEvent implements EventCancellable {
      * The {@link PingMarkerType} for this request.
      *
      * @return the ping marker type
-     * @since 1.1.3
+     * @since 1.1.9
      */
     @Nullable PingMarkerType type;
 
@@ -65,7 +65,7 @@ public final class ApolloPlayerRequestPingEvent implements EventCancellable {
      * The source {@link ApolloLocation} for this request.
      *
      * @return the source location
-     * @since 1.1.3
+     * @since 1.1.9
      */
     ApolloLocation source;
 
@@ -73,7 +73,7 @@ public final class ApolloPlayerRequestPingEvent implements EventCancellable {
      * The target {@link ApolloLocation} for this request.
      *
      * @return the target location
-     * @since 1.1.3
+     * @since 1.1.9
      */
     ApolloLocation target;
 

@@ -21,38 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.pingmarker;
+package com.lunarclient.apollo.example.module.impl;
 
-import com.lunarclient.apollo.common.icon.Icon;
-import lombok.Builder;
-import lombok.Getter;
+import com.lunarclient.apollo.example.module.ApolloModuleExample;
+import org.bukkit.entity.Player;
 
-/**
- * Represents a ping marker type which can be shown on the client.
- *
- * @since 1.1.9
- */
-@Getter
-@Builder
-public final class PingMarkerType {
+public abstract class PingMarkerExample extends ApolloModuleExample {
 
-    /**
-     * Returns the ping marker type {@link String} name.
-     *
-     * @return the ping marker type name
-     * @since 1.1.9
-     */
-    String name;
+    // TODO: displayMarkerItemExample
 
-    /**
-     * Returns the ping marker {@link Icon}.
-     *
-     * <p>Can be any of the icons found in {@link com.lunarclient.apollo.common.icon} package,
-     * for the most common use case, use {@link com.lunarclient.apollo.common.icon.ItemStackIcon}.</p>
-     *
-     * @return the ping marker icon
-     * @since 1.1.9
-     */
-    Icon icon;
+    public abstract void displayMarkerResourceExample(Player player);
 
 }

@@ -21,38 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.pingmarker;
+package com.lunarclient.apollo.example.json.module;
 
-import com.lunarclient.apollo.common.icon.Icon;
-import lombok.Builder;
-import lombok.Getter;
+import com.lunarclient.apollo.example.module.impl.PingMarkerExample;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
-/**
- * Represents a ping marker type which can be shown on the client.
- *
- * @since 1.1.9
- */
-@Getter
-@Builder
-public final class PingMarkerType {
+public class PingMarkerJsonExample extends PingMarkerExample {
 
-    /**
-     * Returns the ping marker type {@link String} name.
-     *
-     * @return the ping marker type name
-     * @since 1.1.9
-     */
-    String name;
+    @Override
+    public void displayMarkerResourceExample(Player player) {
+        Location location = this.findTargetLocation(player);
 
-    /**
-     * Returns the ping marker {@link Icon}.
-     *
-     * <p>Can be any of the icons found in {@link com.lunarclient.apollo.common.icon} package,
-     * for the most common use case, use {@link com.lunarclient.apollo.common.icon.ItemStackIcon}.</p>
-     *
-     * @return the ping marker icon
-     * @since 1.1.9
-     */
-    Icon icon;
+        if (location == null) {
+            return;
+        }
+
+        // TODO
+    }
+
+    private Location findTargetLocation(Player player) {
+        Block targetBlock = player.getTargetBlockExact(30);
+
+        if (targetBlock == null) {
+            return null;
+        }
+
+        return targetBlock.getLocation().add(0.5D, 0.5D, 0.5D);
+    }
 
 }

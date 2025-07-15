@@ -25,7 +25,7 @@ package com.lunarclient.apollo.module.pingmarker;
 
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.event.EventBus;
-import com.lunarclient.apollo.event.pingmarker.ApolloPlayerRequestPingEvent;
+import com.lunarclient.apollo.event.pingmarker.ApolloPlayerRequestMarkerEvent;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.pingmarker.v1.DisplayPlayerPingMessage;
 import com.lunarclient.apollo.pingmarker.v1.RemovePingMarkerTypeMessage;
@@ -44,7 +44,7 @@ import lombok.NonNull;
 /**
  * Provides the ping marker module.
  *
- * @since 1.1.3
+ * @since 1.1.9
  */
 public final class PingMarkerModuleImpl extends PingMarkerModule {
 
@@ -53,7 +53,7 @@ public final class PingMarkerModuleImpl extends PingMarkerModule {
     /**
      * Creates a new instance of {@link PingMarkerModuleImpl}.
      *
-     * @since 1.1.3
+     * @since 1.1.9
      */
     public PingMarkerModuleImpl() {
         super();
@@ -139,14 +139,18 @@ public final class PingMarkerModuleImpl extends PingMarkerModule {
 
     private void onReceivePacket(ApolloReceivePacketEvent event) {
         event.unpack(RequestPlayerPingMessage.class).ifPresent(packet -> {
-            ApolloPlayerRequestPingEvent playerRequestPingEvent = new ApolloPlayerRequestPingEvent(
+            ApolloPlayerRequestMarkerEvent playerRequestPingEvent = new ApolloPlayerRequestMarkerEvent(
                 event.getPlayer(),
                 this.markerTypes.get(packet.getType()),
                 NetworkTypes.fromProtobuf(packet.getSourceLocation()),
                 NetworkTypes.fromProtobuf(packet.getTargetLocation())
             );
 
-            EventBus.EventResult<ApolloPlayerRequestPingEvent> result = EventBus.getBus().post(playerRequestPingEvent);
+            EventBus.EventResult<ApolloPlayerRequestMarkerEvent> result = EventBus.getBus().post(playerRequestPingEvent);
+
+            if (!result.getEvent().isCancelled()) {
+                // TODO
+            }
 
             for (Throwable throwable : result.getThrowing()) {
                 throwable.printStackTrace();

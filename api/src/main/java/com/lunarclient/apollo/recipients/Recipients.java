@@ -64,7 +64,7 @@ public interface Recipients {
      *
      * @param player the apollo player
      * @return a {@code ForwardingRecipients} instance representing players in the world
-     * @since 1.1.3
+     * @since 1.1.9
      */
     static ForwardingRecipients ofWorld(ApolloPlayer player) {
         return () -> player.getWorld().map(ApolloWorld::getPlayers).orElseGet(() -> Apollo.getPlayerManager().getPlayers());
