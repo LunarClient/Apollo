@@ -47,10 +47,42 @@ public final class ModWaypoints {
     /**
      * No documentation available.
      *
+     * @since 1.1.6
+     */
+    public static final SimpleOption<Boolean> ADD_WAYPOINTS_FROM_CHAT = SimpleOption.<Boolean>builder()
+        .node("waypoints", "add-waypoints-from-chat").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> DEATH_WAYPOINT = SimpleOption.<Boolean>builder()
         .node("waypoints", "death-waypoint").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> LIMIT_DEATH_WAYPOINTS = SimpleOption.<Boolean>builder()
+        .node("waypoints", "limit-death-waypoints").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Maximum amount of Death Waypoints you will see at one time.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Integer> MAX_DEATH_WAYPOINTS = NumberOption.<Integer>number()
+        .comment("Maximum amount of Death Waypoints you will see at one time")
+        .node("waypoints", "max-death-waypoints").type(TypeToken.get(Integer.class))
+        .min(1).max(20)
         .notifyClient()
         .build();
 
@@ -96,17 +128,6 @@ public final class ModWaypoints {
         .build();
 
     /**
-     * Only show each waypoint when looking near then in the world.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> ONLY_SHOW_WHEN_LOOKING_NEAR = SimpleOption.<Boolean>builder()
-        .comment("Only show each waypoint when looking near then in the world")
-        .node("waypoints", "only-show-when-looking-near").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
      * Show simpler text icons above each waypoint.
      *
      * @since 1.0.0
@@ -140,12 +161,13 @@ public final class ModWaypoints {
         .build();
 
     /**
-     * No documentation available.
+     * Only show each waypoint when looking near then in the world.
      *
-     * @since 1.1.6
+     * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> ADD_WAYPOINTS_FROM_CHAT = SimpleOption.<Boolean>builder()
-        .node("waypoints", "add-waypoints-from-chat").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> ONLY_SHOW_WHEN_LOOKING_NEAR = SimpleOption.<Boolean>builder()
+        .comment("Only show each waypoint when looking near then in the world")
+        .node("waypoints", "only-show-when-looking-near").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

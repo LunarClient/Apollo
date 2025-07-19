@@ -58,6 +58,16 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_OTHERS = SimpleOption.<Boolean>builder()
+        .node("3d-skins", "show-others").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> ENABLE_HAT = SimpleOption.<Boolean>builder()

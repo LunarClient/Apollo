@@ -1,0 +1,59 @@
+# Tier Tagger
+
+Show player's PvP tier on their Name Tag
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleTierTaggerExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModTierTagger.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`MC_TIERS_FORMAT`__
+    - Config Key: `mc-tiers-format`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SUFFIX`__
+    - Config Key: `suffix`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SEPARATE_NAMETAG`__
+    - Config Key: `separate-nametag`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_GM_ICONS`__
+    - Config Key: `show-gm-icons`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_RETIRED`__
+    - Config Key: `show-retired`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_REGION`__
+    - Config Key: `show-region`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
