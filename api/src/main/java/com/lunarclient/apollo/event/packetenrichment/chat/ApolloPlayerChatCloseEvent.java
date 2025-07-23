@@ -25,6 +25,7 @@ package com.lunarclient.apollo.event.packetenrichment.chat;
 
 import com.lunarclient.apollo.event.Event;
 import com.lunarclient.apollo.module.packetenrichment.PlayerInfo;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import lombok.Value;
 
 /**
@@ -34,6 +35,14 @@ import lombok.Value;
  */
 @Value
 public class ApolloPlayerChatCloseEvent implements Event {
+
+    /**
+     * The player that sent the packet.
+     *
+     * @return the player
+     * @since 1.1.9
+     */
+    ApolloPlayer player;
 
     /**
      * The {@code long} representing the unix timestamp
