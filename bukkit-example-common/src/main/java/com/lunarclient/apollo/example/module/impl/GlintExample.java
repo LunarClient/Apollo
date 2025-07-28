@@ -44,11 +44,11 @@ public class GlintExample extends NMSExample {
     }
 
     public void glintModuleCommandExample(Player player) {
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:diamond_helmet\",Count:1b,tag:{lunar:{glint:\"#FF5733\"}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:diamond_helmet\",Count:1b,tag:{lunar:{glint:\"#33FF57\"}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:diamond_helmet\",Count:1b,tag:{lunar:{glint:\"#3357FF\"}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:diamond_helmet\",Count:1b,tag:{lunar:{glint:\"#FFD700\"}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:diamond_helmet\",Count:1b,tag:{lunar:{glint:\"-16711936\"}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:diamond_helmet\",Count:1b,components:{\"minecraft:custom_data\":{lunar:{glint:\"#FF5733\"}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:diamond_helmet\",Count:1b,components:{\"minecraft:custom_data\":{lunar:{glint:\"#33FF57\"}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:diamond_helmet\",Count:1b,components:{\"minecraft:custom_data\":{lunar:{glint:\"#3357FF\"}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:diamond_helmet\",Count:1b,components:{\"minecraft:custom_data\":{lunar:{glint:\"#FFD700\"}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:diamond_helmet\",Count:1b,components:{\"minecraft:custom_data\":{lunar:{glint:\"-16711936\"}}}}}");
     }
 
     public void glintModuleNMSExample(Player player) {
