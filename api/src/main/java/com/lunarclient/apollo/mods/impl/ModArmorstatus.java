@@ -69,6 +69,16 @@ public final class ModArmorstatus {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HIDE_UNBREAKABLE_DURABILITY = SimpleOption.<Boolean>builder()
+        .node("armorstatus", "hide-unbreakable-durability").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> ITEM_NAME = SimpleOption.<Boolean>builder()

@@ -28,6 +28,18 @@ public void toggleChatExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `true`
 
+- __`MODERN_CHAT_LENGTH_HYPIXEL`__
+    - Config Key: `modern-chat-length-hypixel`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`LONG_CHAT_SINGLEPLAYER`__
+    - Config Key: `long-chat-singleplayer`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
 - __`STACK_MESSAGES`__
     - Choose whether or not you want to stack multiple of the same messages in chat
     - Config Key: `stack-messages`
@@ -111,6 +123,7 @@ For example, if your name is Notch, this will ping on Notch but not Notch123.
 
 - __`HOVER_IMAGE_PREVIEW`__
     - Displays a preview of an image when hovering over it.
+If a single message has more than one image, press CTRL to cycle through them.
     - Config Key: `hover-image-preview`
     - Values
         - Type: `Boolean`
@@ -130,9 +143,16 @@ For example, if your name is Notch, this will ping on Notch but not Notch123.
     - Config Key: `max-image-size`
     - Values
         - Type: `Double`
-        - Default: `100.0D`
+        - Default: `30.0D`
         - Minimum: `0.0D`
         - Maximum: `100.0D`
+
+- __`FULLSCREEN_IMAGE`__
+    - When your max image size is set to e.g. 50%, when you press shift, the image will expand to 100%
+    - Config Key: `fullscreen-image`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
 
 - __`SMOOTH_CHAT`__
     - Config Key: `smooth-chat`
@@ -147,6 +167,36 @@ For example, if your name is Notch, this will ping on Notch but not Notch123.
         - Default: `3`
         - Minimum: `1`
         - Maximum: `10`
+
+- __`CHAT_NAME_BOLD`__
+    - Config Key: `chat-name-bold`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CHAT_NAME_ITALIC`__
+    - Config Key: `chat-name-italic`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CHAT_NAME_UNDERLINE`__
+    - Config Key: `chat-name-underline`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CHAT_NAME_STRIKETHROUGH`__
+    - Config Key: `chat-name-strikethrough`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CHAT_NAME_OBFUSCATED`__
+    - Config Key: `chat-name-obfuscated`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
 
 - __`CHAT_BACKGROUND_OPACITY`__
     - Config Key: `chat-background-opacity`
