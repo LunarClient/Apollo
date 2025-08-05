@@ -44,6 +44,7 @@ import com.lunarclient.apollo.example.api.module.ModSettingsApiExample;
 import com.lunarclient.apollo.example.api.module.NametagApiExample;
 import com.lunarclient.apollo.example.api.module.NickHiderApiExample;
 import com.lunarclient.apollo.example.api.module.NotificationApiExample;
+import com.lunarclient.apollo.example.api.module.PingMarkerApiExample;
 import com.lunarclient.apollo.example.api.module.RichPresenceApiExample;
 import com.lunarclient.apollo.example.api.module.ServerRuleApiExample;
 import com.lunarclient.apollo.example.api.module.StaffModApiExample;
@@ -92,6 +93,7 @@ public class ApolloApiExamplePlatform extends ApolloExamplePlugin {
         this.setNametagExample(new NametagApiExample());
         this.setNickHiderExample(new NickHiderApiExample());
         this.setNotificationExample(new NotificationApiExample());
+        this.setPingMarkerExample(new PingMarkerApiExample());
         this.setRichPresenceExample(new RichPresenceApiExample());
         this.setServerRuleExample(new ServerRuleApiExample());
         this.setStaffModExample(new StaffModApiExample());

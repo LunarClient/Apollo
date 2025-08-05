@@ -1,0 +1,88 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+import { Callout } from 'nextra-theme-docs'
+
+# Ping Marker Module
+
+## Overview
+
+TODO
+
+![Ping Marker Module Example](https://i.imgur.com)
+
+## Integration
+
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Display a Ping Marker with a resource
+
+```java
+public void displayMarkerResourceExample(Player player) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        Location location = this.findTargetLocation(player);
+
+        if (location == null) {
+            return;
+        }
+
+        this.pingMarkerModule.displayMarker(Recipients.ofWorld(apolloPlayer), PingMarker.builder()
+            .id(UUID.randomUUID())
+            .type(null)
+            .location(BukkitApollo.toApolloLocation(location))
+            .color(Color.WHITE)
+            .icon(SimpleResourceLocationIcon.builder()
+                .resourceLocation("lunar:icons/fluent-black-circle-icon.svg")
+                .size(12)
+                .build()
+            )
+            .duration(Duration.ofSeconds(5))
+            .focus(true)
+            .build());
+    });
+
+}
+
+private Location findTargetLocation(Player player) {
+    Block targetBlock = player.getTargetBlockExact(30);
+
+    if (targetBlock == null) {
+        return null;
+    }
+
+    return targetBlock.getLocation().add(0.5D, 0.5D, 0.5D);
+}
+```
+
+### `PingMarkerType` Options
+
+### `PingMarker` Options
+
+</Tab>
+
+<Tab>
+
+### Display a Ping Marker with a resource
+
+```java
+
+```
+
+</Tab>
+
+<Tab>
+
+### Display a Ping Marker with a resource
+
+```java
+
+```
+
+</Tab>
+
+</Tabs>

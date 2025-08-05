@@ -24,6 +24,8 @@
 package com.lunarclient.apollo.recipients;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.world.ApolloWorld;
 import java.util.function.Consumer;
 
 /**
@@ -54,6 +56,18 @@ public interface Recipients {
      */
     static ForwardingRecipients ofEveryone() {
         return () -> Apollo.getPlayerManager().getPlayers();
+    }
+
+    /**
+     * Creates a {@link ForwardingRecipients} instance representing apollo
+     * players in the same world as the provided {@link ApolloPlayer}.
+     *
+     * @param player the apollo player
+     * @return a {@code ForwardingRecipients} instance representing players in the world
+     * @since 1.1.9
+     */
+    static ForwardingRecipients ofWorld(ApolloPlayer player) {
+        return () -> player.getWorld().map(ApolloWorld::getPlayers).orElseGet(() -> Apollo.getPlayerManager().getPlayers());
     }
 
     /**
