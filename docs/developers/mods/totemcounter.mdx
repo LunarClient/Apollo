@@ -1,0 +1,77 @@
+# Totem Counter
+
+Keep track of players' totem usages. Totem pops aren't tracked when the mod is disabled, so toggling it on mid-game could result in a mismatch.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleTotemCounterExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModTotemCounter.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_FOR_SELF`__
+    - Config Key: `show-for-self`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_TAB_LIST`__
+    - Config Key: `show-tab-list`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`FLIP`__
+    - Config Key: `flip`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`COUNT_COLOR`__
+    - Config Key: `count-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_NAMETAG`__
+    - Config Key: `show-nametag`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_PREFIX`__
+    - Config Key: `show-prefix`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SEPARATE_NAMETAG`__
+    - Config Key: `separate-nametag`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`RENDER_FIRST`__
+    - Config Key: `render-first`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PREFIX_COLOR`__
+    - Config Key: `prefix-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFF55`
+

@@ -149,6 +149,17 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * Replaces left clicks in menus with a middle click. Hold control to override.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_MIDDLE_CLICK_ITEMS = SimpleOption.<Boolean>builder()
+        .comment("Replaces left clicks in menus with a middle click. Hold control to override.")
+        .node("skyblock", "sky-block-middle-click-items").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Shows the creation date of the item in the lore.
      *
      * @since 1.1.7
@@ -191,6 +202,16 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SB_MENU_CLICK_TO_COMMAND = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sb-menu-click-to-command").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Makes Giant HP more visible by showing their HP at their feet.
      *
      * @since 1.1.5
@@ -204,10 +225,10 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since 1.1.7
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> DUNGEON_SECRETS_COLLECTED = SimpleOption.<Boolean>builder()
-        .node("skyblock", "dungeon-secrets-collected").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> SKYBLOCK_SECRETS_COLLECTED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-secrets-collected").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -282,6 +303,28 @@ public final class ModSkyblock {
     public static final SimpleOption<Boolean> REPLACE_LAVA_WITH_WATER_EVERYWHERE = SimpleOption.<Boolean>builder()
         .comment("Changes the texture of lava to water everywhere in SkyBlock.")
         .node("skyblock", "replace-lava-with-water-everywhere").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Hides players and fishing rods near your bobber while you are fishing.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_FISHING_HIDE_PLAYERS = SimpleOption.<Boolean>builder()
+        .comment("Hides players and fishing rods near your bobber while you are fishing.")
+        .node("skyblock", "skyblock-fishing-hide-players").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows which hotspot the Hotspot Radar item is pointing to.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_FISHING_HOTSPOT_LOCATOR = SimpleOption.<Boolean>builder()
+        .comment("Shows which hotspot the Hotspot Radar item is pointing to.")
+        .node("skyblock", "skyblock-fishing-hotspot-locator").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -369,6 +412,27 @@ public final class ModSkyblock {
         .comment("Provides a general line thickness option that applies to most features with box/line rendering.")
         .node("skyblock", "skyblock-line-thickness").type(TypeToken.get(Float.class))
         .min(1.0F).max(10.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_USE_TICK_TIMERS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-use-tick-timers").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.7
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> DUNGEON_SECRETS_COLLECTED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "dungeon-secrets-collected").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
