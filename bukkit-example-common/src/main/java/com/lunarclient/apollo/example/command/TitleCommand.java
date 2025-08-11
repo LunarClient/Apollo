@@ -41,13 +41,21 @@ public class TitleCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+        TitleExample titleExample = ApolloExamplePlugin.getInstance().getTitleExample();
 
-        if (args.length != 1) {
-            player.sendMessage("Usage: /title <display|displayInterpolated|reset>");
+        if (args.length == 2 && args[0].equalsIgnoreCase("clearOnServerSwitch")) {
+            boolean value = Boolean.parseBoolean(args[1]);
+            titleExample.setClearTitleOnServerSwitch(value);
+
+            player.sendMessage("Clear title on server switch has been set to " + value);
             return true;
         }
 
-        TitleExample titleExample = ApolloExamplePlugin.getInstance().getTitleExample();
+        if (args.length != 1) {
+            player.sendMessage("Usage: /title <display|displayInterpolated|reset>");
+            player.sendMessage("Usage: /title <clearOnServerSwitch> <value>");
+            return true;
+        }
 
         switch (args[0].toLowerCase()) {
             case "display": {
@@ -70,6 +78,7 @@ public class TitleCommand implements CommandExecutor {
 
             default: {
                 player.sendMessage("Usage: /title <display|displayInterpolated|reset>");
+                player.sendMessage("Usage: /title <clearOnServerSwitch> <value>");
                 break;
             }
         }
