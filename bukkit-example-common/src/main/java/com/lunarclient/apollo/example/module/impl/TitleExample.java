@@ -34,4 +34,6 @@ public abstract class TitleExample extends ApolloModuleExample {
 
     public abstract void resetTitlesExample(Player viewer);
 
+    public abstract void setClearTitleOnServerSwitch(boolean value);
+
 }

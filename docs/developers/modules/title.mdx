@@ -70,6 +70,14 @@ public void resetTitlesExample(Player viewer) {
 }
 ```
 
+### Clear Title On Server Switch
+
+```java
+public void setClearTitleOnServerSwitch(boolean value) {
+    this.titleModule.getOptions().set(TitleModule.CLEAR_TITLE_ON_SERVER_SWITCH, value);
+}
+```
+
 #### `Title` Options
 
 `.type(TitleType)` is the type of title you want to display. See the [TitleType](#titletype-types) types section for more.
@@ -190,6 +198,18 @@ public void resetTitlesExample(Player viewer) {
 }
 ```
 
+### Clear Title On Server Switch
+
+```java
+public void setClearTitleOnServerSwitch(boolean value) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("clear-title-on-server-switch", Value.newBuilder().setBoolValue(value).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("title", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
 </Tab>
 
 <Tab>
@@ -250,6 +270,18 @@ public void resetTitlesExample(Player viewer) {
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.title.v1.ResetTitlesMessage");
 
     JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Clear Title On Server Switch
+
+```java
+public void setClearTitleOnServerSwitch(boolean value) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("clear-title-on-server-switch", value);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("title", properties);
+    JsonPacketUtil.broadcastPacket(message);
 }
 ```
 
