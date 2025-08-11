@@ -25,7 +25,10 @@ package com.lunarclient.apollo.module.title;
 
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.SimpleOption;
 import com.lunarclient.apollo.recipients.Recipients;
+import io.leangen.geantyref.TypeToken;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -39,6 +42,27 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.NonExtendable
 @ModuleDefinition(id = "title", name = "Title")
 public abstract class TitleModule extends ApolloModule {
+
+    /**
+     * Determines whether the players displayed title should clear when switching servers.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> CLEAR_TITLE_ON_SERVER_SWITCH = Option.<Boolean>builder()
+        .comment("Set to 'true' to clear the shown title when changing servers, otherwise 'false'.")
+        .node("clear-title-on-server-switch").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    TitleModule() {
+        this.registerOptions(
+            TitleModule.CLEAR_TITLE_ON_SERVER_SWITCH
+        );
+    }
+
+    @Override
+    public boolean isClientNotify() {
+        return true;
+    }
 
     /**
      * Sends the {@link Title} to the {@link Recipients}.
