@@ -23,38 +23,50 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
+import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Allows you to set a key or key combination that will send a command or chat message when pressed.
+ * A collection of quality of life tweaks for the inventory.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
-public final class ModAutoTextHotkey {
+public final class ModInventoryMod {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("auto-text-hotkey", "enabled").type(TypeToken.get(Boolean.class))
+        .node("inventory-mod", "enabled").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
-     * Displays a notification when an input is blocked by the server.
+     * Useful for navigating inventory menus on servers.
      *
      * @since %release_version%
      */
-    public static final SimpleOption<Boolean> NOTIFY_ON_BLOCKED_INPUT = SimpleOption.<Boolean>builder()
-        .comment("Displays a notification when an input is blocked by the server")
-        .node("auto-text-hotkey", "notify-on-blocked-input").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> DONT_RESET_CURSOR = SimpleOption.<Boolean>builder()
+        .comment("Useful for navigating inventory menus on servers.")
+        .node("inventory-mod", "dont-reset-cursor").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
-    private ModAutoTextHotkey() {
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Float> RESET_CURSOR_TIMEOUT = NumberOption.<Float>number()
+        .node("inventory-mod", "reset-cursor-timeout").type(TypeToken.get(Float.class))
+        .min(0.1F).max(5.0F)
+        .notifyClient()
+        .build();
+
+    private ModInventoryMod() {
     }
 
 }
