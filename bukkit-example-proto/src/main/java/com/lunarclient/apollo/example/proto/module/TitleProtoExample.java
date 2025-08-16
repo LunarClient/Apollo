@@ -23,6 +23,8 @@
  */
 package com.lunarclient.apollo.example.proto.module;
 
+import com.google.protobuf.Value;
+import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.example.module.impl.TitleExample;
 import com.lunarclient.apollo.example.proto.util.AdventureUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
@@ -31,6 +33,8 @@ import com.lunarclient.apollo.title.v1.DisplayTitleMessage;
 import com.lunarclient.apollo.title.v1.ResetTitlesMessage;
 import com.lunarclient.apollo.title.v1.TitleType;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -84,6 +88,15 @@ public class TitleProtoExample extends TitleExample {
     public void resetTitlesExample(Player viewer) {
         ResetTitlesMessage message = ResetTitlesMessage.getDefaultInstance();
         ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void setClearTitleOnServerSwitch(boolean value) {
+        Map<String, Value> properties = new HashMap<>();
+        properties.put("clear-title-on-server-switch", Value.newBuilder().setBoolValue(value).build());
+
+        ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("title", properties);
+        ProtobufPacketUtil.broadcastPacket(settings);
     }
 
 }

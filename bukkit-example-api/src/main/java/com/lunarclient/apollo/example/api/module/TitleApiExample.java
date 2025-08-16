@@ -82,4 +82,9 @@ public class TitleApiExample extends TitleExample {
         apolloPlayerOpt.ifPresent(this.titleModule::resetTitles);
     }
 
+    @Override
+    public void setClearTitleOnServerSwitch(boolean value) {
+        this.titleModule.getOptions().set(TitleModule.CLEAR_TITLE_ON_SERVER_SWITCH, value);
+    }
+
 }

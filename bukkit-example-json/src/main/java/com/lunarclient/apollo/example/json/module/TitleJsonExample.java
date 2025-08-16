@@ -29,6 +29,8 @@ import com.lunarclient.apollo.example.json.util.JsonPacketUtil;
 import com.lunarclient.apollo.example.json.util.JsonUtil;
 import com.lunarclient.apollo.example.module.impl.TitleExample;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -84,6 +86,15 @@ public class TitleJsonExample extends TitleExample {
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.title.v1.ResetTitlesMessage");
 
         JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void setClearTitleOnServerSwitch(boolean value) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("clear-title-on-server-switch", value);
+
+        JsonObject message = JsonUtil.createEnableModuleObjectWithType("title", properties);
+        JsonPacketUtil.broadcastPacket(message);
     }
 
 }

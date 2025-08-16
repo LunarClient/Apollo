@@ -65,6 +65,7 @@ public final class JsonPacketUtil {
         CONFIG_MODULE_PROPERTIES.put("server_rule", "override-max-chat-length", false);
         CONFIG_MODULE_PROPERTIES.put("server_rule", "max-chat-length", 256);
         CONFIG_MODULE_PROPERTIES.put("tnt_countdown", "tnt-ticks", 80);
+        CONFIG_MODULE_PROPERTIES.put("title", "clear-title-on-server-switch", false);
         CONFIG_MODULE_PROPERTIES.put("waypoint", "server-handles-waypoints", false);
     }
 
