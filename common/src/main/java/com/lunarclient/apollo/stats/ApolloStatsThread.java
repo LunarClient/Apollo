@@ -27,8 +27,9 @@ import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.api.ApolloHttpManager;
-import com.lunarclient.apollo.api.request.ServerHeartbeatRequest;
+import com.lunarclient.apollo.api.request.heartbeat.ServerHeartbeatRequest;
 import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.stats.metadata.ApolloMetadataManager;
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
 import java.util.concurrent.TimeUnit;
@@ -42,7 +43,7 @@ public final class ApolloStatsThread extends Thread {
 
     private static final long MB_BYTES = 1024 * 1024;
     private static final OperatingSystemMXBean MX_BEAN = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
-    private static final long HEARTBEAT_INTERVAL = TimeUnit.MINUTES.toMillis(15);
+    private static final long HEARTBEAT_INTERVAL = TimeUnit.MINUTES.toMillis(2);
 
     /**
      * Constructs the {@link ApolloStatsThread} thread.
@@ -71,8 +72,9 @@ public final class ApolloStatsThread extends Thread {
 
                 boolean performance = options.get(ApolloStatsManager.HEARTBEAT_PERFORMANCE);
                 boolean counts = options.get(ApolloStatsManager.HEARTBEAT_COUNTS);
+                boolean userMetadata = options.get(ApolloStatsManager.HEARTBEAT_USER_METADATA);
 
-                if (!performance && !counts) {
+                if (!performance && !counts && !userMetadata) {
                     break;
                 }
 
@@ -90,6 +92,19 @@ public final class ApolloStatsThread extends Thread {
                 if (counts) {
                     requestBuilder
                         .totalPlayers(stats.getTotalPlayers());
+                }
+
+                if (userMetadata) {
+                    ApolloMetadataManager metadataManager = ApolloManager.getMetadataManager();
+
+                    requestBuilder
+                        .metadata(metadataManager.extract());
+                    System.out.println("Metadata");
+                    System.out.println(metadataManager.extract());
+
+                    metadataManager.clear();
+                    System.out.println("After clear");
+                    System.out.println(metadataManager.extract());
                 }
 
                 final ServerHeartbeatRequest finalRequest = request = requestBuilder.build();

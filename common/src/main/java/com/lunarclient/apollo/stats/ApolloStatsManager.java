@@ -36,12 +36,14 @@ import io.leangen.geantyref.TypeToken;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import lombok.Getter;
 
 /**
  * Manages Apollo statistics.
  *
  * @since 1.0.0
  */
+@Getter
 public final class ApolloStatsManager {
 
     public static final String SESSION_ID = UUID.randomUUID().toString();
@@ -82,6 +84,11 @@ public final class ApolloStatsManager {
         .node(CONFIG_PREFIX, "counts").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
+    public static final SimpleOption<Boolean> HEARTBEAT_USER_METADATA = Option.<Boolean>builder()
+        .comment("Set to 'true' to send players user metadata such as TODO to MCStats, otherwise 'false'.")
+        .node(CONFIG_PREFIX, "user-metadata").type(TypeToken.get(Boolean.class))
+        .defaultValue(true).build();
+
     /**
      * Constructs the {@link ApolloStatsManager}.
      *
@@ -95,7 +102,8 @@ public final class ApolloStatsManager {
             ApolloStatsManager.HARDWARE_INFORMATION,
             ApolloStatsManager.SOFTWARE_INFORMATION,
             ApolloStatsManager.HEARTBEAT_PERFORMANCE,
-            ApolloStatsManager.HEARTBEAT_COUNTS
+            ApolloStatsManager.HEARTBEAT_COUNTS,
+            ApolloStatsManager.HEARTBEAT_USER_METADATA
         );
     }
 
