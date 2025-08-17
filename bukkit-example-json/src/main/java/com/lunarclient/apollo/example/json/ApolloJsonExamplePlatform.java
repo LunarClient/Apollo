@@ -41,6 +41,7 @@ import com.lunarclient.apollo.example.json.module.ModSettingsJsonExample;
 import com.lunarclient.apollo.example.json.module.NametagJsonExample;
 import com.lunarclient.apollo.example.json.module.NickHiderJsonExample;
 import com.lunarclient.apollo.example.json.module.NotificationJsonExample;
+import com.lunarclient.apollo.example.json.module.PingMarkerJsonExample;
 import com.lunarclient.apollo.example.json.module.RichPresenceJsonExample;
 import com.lunarclient.apollo.example.json.module.ServerRuleJsonExample;
 import com.lunarclient.apollo.example.json.module.StaffModJsonExample;
@@ -82,6 +83,7 @@ public class ApolloJsonExamplePlatform extends ApolloExamplePlugin {
         this.setNametagExample(new NametagJsonExample());
         this.setNickHiderExample(new NickHiderJsonExample());
         this.setNotificationExample(new NotificationJsonExample());
+        this.setPingMarkerExample(new PingMarkerJsonExample());
         this.setRichPresenceExample(new RichPresenceJsonExample());
         this.setServerRuleExample(new ServerRuleJsonExample());
         this.setStaffModExample(new StaffModJsonExample());
