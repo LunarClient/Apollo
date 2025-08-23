@@ -33,6 +33,14 @@ import java.nio.charset.StandardCharsets;
  */
 public final class ByteBufUtil {
 
+    /**
+     * Reads an int from the given input stream.
+     *
+     * @param in in the {@link ByteArrayDataInput} to read from
+     * @return the read int
+     * @throws IllegalArgumentException if the value length is invalid or too large
+     * @since 1.1.9
+     */
     public static int readVarInt(ByteArrayDataInput in) {
         int i = 0;
         int j = 0;
@@ -53,6 +61,14 @@ public final class ByteBufUtil {
         return i;
     }
 
+    /**
+     * Reads a UTF-8 encoded string from the given input stream.
+     *
+     * @param in the {@link ByteArrayDataInput} to read from
+     * @return the decoded string
+     * @throws IllegalArgumentException if the value length is invalid or too large
+     * @since 1.1.9
+     */
     public static String readString(ByteArrayDataInput in) {
         int length = ByteBufUtil.readVarInt(in);
         byte[] bytes = new byte[length];

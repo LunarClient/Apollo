@@ -73,15 +73,21 @@ public final class ApolloMetadataListener implements Listener {
      */
     @EventHandler
     public void onPluginMessage(PluginMessageEvent event) {
+        if (!(event.getSender() instanceof ProxiedPlayer)) {
+            System.out.println("Not a player Brand");
+            return;
+        }
+
+        ProxiedPlayer player = (ProxiedPlayer) event.getSender();
         String tag = event.getTag();
 
         if (tag.equals("minecraft:brand") || tag.equals("MC|Brand")) {
-            this.handleBrand(event.getData(), event.getSender());
+            this.handleBrand(event.getData(), player);
             return;
         }
 
         if (tag.equals("fml:handshake") || tag.equals("FML|HS")) {
-            this.handleFml(event.getData(), event.getSender());
+            this.handleFml(event.getData(), player);
         }
     }
 
@@ -100,17 +106,20 @@ public final class ApolloMetadataListener implements Listener {
             return;
         }
 
+        String hostString;
+
+        if (host.getAddress() != null) {
+            hostString = host.getAddress().getHostAddress();
+        } else {
+            hostString = host.getHostName();
+        }
+
         BungeeMetadataManager manager = (BungeeMetadataManager) ApolloManager.getMetadataManager();
-        manager.getServerAddress().add(host.getAddress().getHostAddress() + ":" + host.getPort());
-        ApolloBungeePlatform.getInstance().getPlatformLogger().log(Level.WARNING, host.getAddress().getHostAddress() + ":" + host.getPort());
+        manager.getServerAddress().add(hostString + ":" + host.getPort());
+        ApolloBungeePlatform.getInstance().getPlatformLogger().log(Level.WARNING, hostString + ":" + host.getPort());
     }
 
     private void handleBrand(byte[] data, Connection sender) {
-        if (!(sender instanceof ProxiedPlayer)) {
-            System.out.println("Not a player Brand");
-            return;
-        }
-
         String brand = new String(data, StandardCharsets.UTF_8);
         ApolloBungeePlatform.getInstance().getPlatformLogger().log(Level.WARNING, ((ProxiedPlayer) sender).getName() + " is using client brand: " + brand);
 
@@ -119,18 +128,12 @@ public final class ApolloMetadataListener implements Listener {
     }
 
     private void handleFml(byte[] data, Connection sender) {
-        if (!(sender instanceof ProxiedPlayer)) {
-            System.out.println("Not a player FML");
-            return;
-        }
-
         ProxiedPlayer player = (ProxiedPlayer) sender;
 
         ByteArrayDataInput in = ByteStreams.newDataInput(data);
         byte discriminator = in.readByte();
 
         if (discriminator != 2) {
-            System.out.println("Discriminator is not 2: " + discriminator);
             return;
         }
 

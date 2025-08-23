@@ -25,12 +25,11 @@ package com.lunarclient.apollo.metadata;
 
 import com.lunarclient.apollo.stats.metadata.ApolloMetadataManager;
 import com.lunarclient.apollo.stats.metadata.PlatformMetadata;
-import lombok.Getter;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import lombok.Getter;
 
 /**
  * The Bungee implementation of {@link ApolloMetadataManager}.
@@ -48,11 +47,16 @@ public class BungeeMetadataManager implements ApolloMetadataManager {
     public PlatformMetadata extract() {
         return BungeeMetadata.builder()
             .clientBrands(new HashSet<>(this.clientBrands))
+            .mods(new HashMap<>(this.mods))
+            .serverAddress(new HashSet<>(this.serverAddress))
             .build();
     }
 
     @Override
     public void clear() {
         this.clientBrands.clear();
+        this.mods.clear();
+        this.serverAddress.clear();
     }
+
 }

@@ -221,13 +221,34 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
     }
 
-    static {
+    /**
+     * Creates a {@link MinecraftChannelIdentifier} in a way that supports both
+     * modern and legacy Velocity APIs.
+     *
+     * @param channel the channel in {@code namespace:key} format (e.g. {@code minecraft:brand})
+     * @return the channel identifier object for the provided channel
+     * @throws IllegalArgumentException if the channel format is invalid
+     * @since 1.1.9
+     */
+    public static MinecraftChannelIdentifier createChannelIdentifier(String channel) {
         try {
-            PLUGIN_CHANNEL = MinecraftChannelIdentifier.from(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
-        } catch (NoSuchMethodError e) {
-            String[] messageChannel = ApolloManager.PLUGIN_MESSAGE_CHANNEL.split(":");
-            PLUGIN_CHANNEL = MinecraftChannelIdentifier.create(messageChannel[0], messageChannel[1]);
+            return MinecraftChannelIdentifier.from(channel);
+        } catch (NoSuchMethodError | IllegalArgumentException e) {
+            if (channel.contains("|")) {
+                return MinecraftChannelIdentifier.create(channel, "");
+            }
+
+            String[] parts = channel.split(":", 2);
+            if (parts.length != 2) {
+                throw new IllegalArgumentException("Invalid channel identifier: " + channel);
+            }
+
+            return MinecraftChannelIdentifier.create(parts[0], parts[1]);
         }
+    }
+
+    static {
+        PLUGIN_CHANNEL = ApolloVelocityPlatform.createChannelIdentifier(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
     }
 
 }

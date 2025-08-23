@@ -24,9 +24,10 @@
 package com.lunarclient.apollo.metadata;
 
 import com.lunarclient.apollo.stats.metadata.PlatformMetadata;
+import java.util.Map;
+import java.util.Set;
 import lombok.Builder;
 import lombok.ToString;
-import java.util.Set;
 
 /**
  * Represents the bungee metadata implementation.
@@ -45,5 +46,24 @@ public class BungeeMetadata extends PlatformMetadata {
      * @since 1.1.9
      */
     private final Set<String> clientBrands;
+
+    /**
+     * Tracks forge mods sent with the forge handshake.
+     *
+     * <p>A {@link Map} of {@link String} mod id
+     * as a key and {@link String} version as value.</p>
+     *
+     * @since 1.1.9
+     */
+    private final Map<String, String> mods;
+
+    /**
+     * Tracks the server IP and port the player used to connect.
+     *
+     * <p>A {@link Set} of {@link String} server addresses in the format: <code>host:port</code></p>
+     *
+     * @since 1.1.9
+     */
+    private final Set<String> serverAddress;
 
 }

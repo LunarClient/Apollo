@@ -23,15 +23,12 @@
  */
 package com.lunarclient.apollo.stats.metadata;
 
-import org.jetbrains.annotations.ApiStatus;
-
 /**
  * Represents the Apollo metadata manager, responsible for
  * managing and extracting metadata related to the platform.
  *
  * @since 1.1.9
  */
-@ApiStatus.NonExtendable
 public interface ApolloMetadataManager {
 
     /**
