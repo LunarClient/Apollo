@@ -81,13 +81,6 @@ public final class ApolloHttpManager {
         ApiRequestType requestType = request.getType();
         Type responseType = request.getResponseType();
 
-        System.out.println("Request:");
-        System.out.println(ApolloManager.GSON.toJson(request));
-
-        if (true) {
-            return future;
-        }
-
         this.requestExecutor.submit(() -> {
             try {
                 URL url = new URL("https://" + request.getService().getUrl() + request.getRoute());

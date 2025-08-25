@@ -43,7 +43,7 @@ public final class ApolloStatsThread extends Thread {
 
     private static final long MB_BYTES = 1024 * 1024;
     private static final OperatingSystemMXBean MX_BEAN = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
-    private static final long HEARTBEAT_INTERVAL = TimeUnit.MINUTES.toMillis(2);
+    private static final long HEARTBEAT_INTERVAL = TimeUnit.MINUTES.toMillis(15);
 
     /**
      * Constructs the {@link ApolloStatsThread} thread.
@@ -99,12 +99,8 @@ public final class ApolloStatsThread extends Thread {
 
                     requestBuilder
                         .metadata(metadataManager.extract());
-                    System.out.println("Metadata");
-                    System.out.println(metadataManager.extract());
 
                     metadataManager.clear();
-                    System.out.println("After clear");
-                    System.out.println(metadataManager.extract());
                 }
 
                 final ServerHeartbeatRequest finalRequest = request = requestBuilder.build();
