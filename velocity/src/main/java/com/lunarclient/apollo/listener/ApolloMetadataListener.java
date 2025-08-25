@@ -26,64 +26,56 @@ package com.lunarclient.apollo.listener;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.metadata.BungeeMetadataManager;
+import com.lunarclient.apollo.metadata.VelocityMetadataManager;
 import com.lunarclient.apollo.util.ByteBufUtil;
+import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.connection.PluginMessageEvent;
+import com.velocitypowered.api.event.connection.PreLoginEvent;
+import com.velocitypowered.api.event.player.PlayerClientBrandEvent;
+import com.velocitypowered.api.event.player.PlayerResourcePackStatusEvent;
+import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.PendingConnection;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.PluginMessageEvent;
-import net.md_5.bungee.api.event.PreLoginEvent;
-import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.event.EventHandler;
+import java.util.Map;
 
 /**
  * Handles Apollo metadata listeners.
  *
  * @since 1.1.9
  */
-public final class ApolloMetadataListener implements Listener {
+public final class ApolloMetadataListener {
+
+    public static final MinecraftChannelIdentifier FML_HANDSHAKE_CHANNEL;
 
     /**
-     * Constructs the {@link ApolloMetadataListener}.
-     *
-     * @param plugin the plugin
-     * @since 1.1.9
-     */
-    public ApolloMetadataListener(Plugin plugin) {
-        ProxyServer server = plugin.getProxy();
-
-        server.registerChannel("MC|Brand");
-        server.registerChannel("minecraft:brand");
-
-        server.registerChannel("FML|HS");
-        server.registerChannel("fml:handshake");
-    }
-
-    /**
-     * Handles plugin messages for client brand and FML mod information.
+     * Handles plugin messages for FML mod information.
      *
      * @param event the event
      * @since 1.1.9
      */
-    @EventHandler
+    @Subscribe
     public void onPluginMessage(PluginMessageEvent event) {
-        if (!(event.getSender() instanceof ProxiedPlayer)) {
+        if (!(event.getSource() instanceof Player)) {
             return;
         }
 
-        String tag = event.getTag();
-
-        if (tag.equals("minecraft:brand") || tag.equals("MC|Brand")) {
-            this.handleBrand(event.getData());
+        if (!event.getIdentifier().equals(ApolloMetadataListener.FML_HANDSHAKE_CHANNEL)) {
             return;
         }
 
-        if (tag.equals("fml:handshake") || tag.equals("FML|HS")) {
-            this.handleFml(event.getData());
-        }
+        this.handleFml(event.getData());
+    }
+
+    /**
+     * Handles player client brands.
+     *
+     * @param event the event
+     * @since 1.1.9
+     */
+    @Subscribe
+    public void onPlayerClientBrand(PlayerClientBrandEvent event) {
+        VelocityMetadataManager manager = (VelocityMetadataManager) ApolloManager.getMetadataManager();
+        manager.getClientBrands().add(event.getBrand());
     }
 
     /**
@@ -92,30 +84,31 @@ public final class ApolloMetadataListener implements Listener {
      * @param event the event
      * @since 1.1.9
      */
-    @EventHandler
+    @Subscribe
     public void onPreLogin(PreLoginEvent event) {
-        PendingConnection connection = event.getConnection();
-        InetSocketAddress host = connection.getVirtualHost();
+        InetSocketAddress host = event.getConnection().getVirtualHost().orElse(null);
 
         if (host == null) {
             return;
         }
 
-        String hostString;
-        if (host.getAddress() != null) {
-            hostString = host.getAddress().getHostAddress();
-        } else {
-            hostString = host.getHostName();
-        }
-
-        BungeeMetadataManager manager = (BungeeMetadataManager) ApolloManager.getMetadataManager();
-        manager.getServerAddress().add(hostString + ":" + host.getPort());
+        VelocityMetadataManager manager = (VelocityMetadataManager) ApolloManager.getMetadataManager();
+        manager.getServerAddress().add(host.getHostString() + ":" + host.getPort());
     }
 
-    private void handleBrand(byte[] data) {
-        String brand = new String(data, StandardCharsets.UTF_8);
-        BungeeMetadataManager manager = (BungeeMetadataManager) ApolloManager.getMetadataManager();
-        manager.getClientBrands().add(brand);
+    /**
+     * Tracks the total number of resource pack status events received.
+     *
+     * @param event the event
+     * @since 1.1.9
+     */
+    @Subscribe
+    public void onResourcePackStatus(PlayerResourcePackStatusEvent event) {
+        String status = event.getStatus().name();
+        VelocityMetadataManager manager = (VelocityMetadataManager) ApolloManager.getMetadataManager();
+        Map<String, Integer> statuses = manager.getResourcePackStatuses();
+
+        statuses.put(status, statuses.getOrDefault(status, 0) + 1);
     }
 
     private void handleFml(byte[] data) {
@@ -134,11 +127,15 @@ public final class ApolloMetadataListener implements Listener {
                 String modId = ByteBufUtil.readString(in);
                 String version = ByteBufUtil.readString(in);
 
-                BungeeMetadataManager manager = (BungeeMetadataManager) ApolloManager.getMetadataManager();
+                VelocityMetadataManager manager = (VelocityMetadataManager) ApolloManager.getMetadataManager();
                 manager.getMods().put(modId, version);
             }
         } catch (Exception ignored) {
         }
+    }
+
+    static {
+        FML_HANDSHAKE_CHANNEL = MinecraftChannelIdentifier.create("fml", "handshake");
     }
 
 }

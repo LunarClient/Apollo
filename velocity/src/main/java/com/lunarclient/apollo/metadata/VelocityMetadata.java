@@ -23,37 +23,57 @@
  */
 package com.lunarclient.apollo.metadata;
 
-import com.lunarclient.apollo.stats.metadata.ApolloMetadataManager;
 import com.lunarclient.apollo.stats.metadata.PlatformMetadata;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.ToString;
 
 /**
- * The Bukkit implementation of {@link ApolloMetadataManager}.
+ * Represents the velocity metadata implementation.
  *
  * @since 1.1.9
  */
-@Getter
-public class BukkitMetadataManager implements ApolloMetadataManager {
+@ToString
+@Builder(toBuilder = true)
+public class VelocityMetadata extends PlatformMetadata {
 
-    private final Set<String> clientBrands = new HashSet<>();
-    private final Map<String, Integer> resourcePackStatuses = new HashMap<>();
+    /**
+     * Tracks client brands sent by the players.
+     *
+     * <p>A {@link Set} of {@link String} client brands.</p>
+     *
+     * @since 1.1.9
+     */
+    private final Set<String> clientBrands;
 
-    @Override
-    public PlatformMetadata extract() {
-        return BukkitMetadata.builder()
-            .clientBrands(new HashSet<>(this.clientBrands))
-            .resourcePackStatuses(new HashMap<>(this.resourcePackStatuses))
-            .build();
-    }
+    /**
+     * Tracks forge mods sent with the forge handshake.
+     *
+     * <p>A {@link Map} of {@link String} mod id
+     * as a key and {@link String} version as value.</p>
+     *
+     * @since 1.1.9
+     */
+    private final Map<String, String> mods;
 
-    @Override
-    public void clear() {
-        this.clientBrands.clear();
-        this.resourcePackStatuses.clear();
-    }
+    /**
+     * Tracks the server IP and port the player used to connect.
+     *
+     * <p>A {@link Set} of {@link String} server addresses in the format: <code>host:port</code></p>
+     *
+     * @since 1.1.9
+     */
+    private final Set<String> serverAddress;
+
+    /**
+     * Tracks the total number of resource pack status events received.
+     *
+     * <p>Represents a {@link Map} of {@link String} status enum name as a key
+     * and {@link Integer} count of how many times that status has been reported.</p>
+     *
+     * @since 1.1.9
+     */
+    private final Map<String, Integer> resourcePackStatuses;
 
 }

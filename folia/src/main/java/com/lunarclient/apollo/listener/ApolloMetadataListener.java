@@ -24,16 +24,15 @@
 package com.lunarclient.apollo.listener;
 
 import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.metadata.BukkitMetadataManager;
-import java.nio.charset.StandardCharsets;
+import com.lunarclient.apollo.metadata.FoliaMetadataManager;
 import java.util.Map;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.messaging.Messenger;
-import org.bukkit.plugin.messaging.PluginMessageListener;
 
 /**
  * Handles Apollo metadata listeners.
@@ -53,35 +52,35 @@ public final class ApolloMetadataListener implements Listener {
     public ApolloMetadataListener(JavaPlugin plugin) {
         this.plugin = plugin;
 
-        this.registerBrandListener();
         Bukkit.getPluginManager().registerEvents(this, plugin);
+    }
+
+    @EventHandler
+    private void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+
+        Bukkit.getGlobalRegionScheduler().runDelayed(this.plugin, t -> {
+            if (!player.isOnline()) {
+                return;
+            }
+
+            String brand = player.getClientBrandName();
+            if (brand == null) {
+                return;
+            }
+
+            FoliaMetadataManager manager = (FoliaMetadataManager) ApolloManager.getMetadataManager();
+            manager.getClientBrands().add(brand);
+        }, 20L * 3);
     }
 
     @EventHandler
     private void onResourcePackStatus(PlayerResourcePackStatusEvent event) {
         String status = event.getStatus().name();
-        BukkitMetadataManager manager = (BukkitMetadataManager) ApolloManager.getMetadataManager();
+        FoliaMetadataManager manager = (FoliaMetadataManager) ApolloManager.getMetadataManager();
         Map<String, Integer> statuses = manager.getResourcePackStatuses();
 
         statuses.put(status, statuses.getOrDefault(status, 0) + 1);
-    }
-
-    private void registerBrandListener() {
-        PluginMessageListener listener = (channel, player, bytes) -> {
-            String brand = new String(bytes, StandardCharsets.UTF_8);
-
-            BukkitMetadataManager manager = (BukkitMetadataManager) ApolloManager.getMetadataManager();
-            manager.getClientBrands().add(brand);
-        };
-
-        Messenger messenger = this.plugin.getServer().getMessenger();
-
-        try {
-            messenger.registerIncomingPluginChannel(this.plugin, "MC|Brand", listener);
-        } catch (IllegalArgumentException ignored) {
-        }
-
-        messenger.registerIncomingPluginChannel(this.plugin, "minecraft:brand", listener);
     }
 
 }

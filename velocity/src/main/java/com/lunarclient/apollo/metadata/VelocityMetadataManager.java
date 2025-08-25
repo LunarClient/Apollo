@@ -32,20 +32,24 @@ import java.util.Set;
 import lombok.Getter;
 
 /**
- * The Bukkit implementation of {@link ApolloMetadataManager}.
+ * The Velocity implementation of {@link ApolloMetadataManager}.
  *
  * @since 1.1.9
  */
 @Getter
-public class BukkitMetadataManager implements ApolloMetadataManager {
+public class VelocityMetadataManager implements ApolloMetadataManager {
 
     private final Set<String> clientBrands = new HashSet<>();
+    private final Map<String, String> mods = new HashMap<>();
+    private final Set<String> serverAddress = new HashSet<>();
     private final Map<String, Integer> resourcePackStatuses = new HashMap<>();
 
     @Override
     public PlatformMetadata extract() {
-        return BukkitMetadata.builder()
+        return VelocityMetadata.builder()
             .clientBrands(new HashSet<>(this.clientBrands))
+            .mods(new HashMap<>(this.mods))
+            .serverAddress(new HashSet<>(this.serverAddress))
             .resourcePackStatuses(new HashMap<>(this.resourcePackStatuses))
             .build();
     }
@@ -53,6 +57,8 @@ public class BukkitMetadataManager implements ApolloMetadataManager {
     @Override
     public void clear() {
         this.clientBrands.clear();
+        this.mods.clear();
+        this.serverAddress.clear();
         this.resourcePackStatuses.clear();
     }
 

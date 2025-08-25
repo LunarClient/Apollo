@@ -29,22 +29,23 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import lombok.Getter;
 
 /**
- * The Bukkit implementation of {@link ApolloMetadataManager}.
+ * The Folia implementation of {@link ApolloMetadataManager}.
  *
  * @since 1.1.9
  */
 @Getter
-public class BukkitMetadataManager implements ApolloMetadataManager {
+public class FoliaMetadataManager implements ApolloMetadataManager {
 
-    private final Set<String> clientBrands = new HashSet<>();
-    private final Map<String, Integer> resourcePackStatuses = new HashMap<>();
+    private final Set<String> clientBrands = ConcurrentHashMap.newKeySet();
+    private final Map<String, Integer> resourcePackStatuses = new ConcurrentHashMap<>();
 
     @Override
     public PlatformMetadata extract() {
-        return BukkitMetadata.builder()
+        return FoliaMetadata.builder()
             .clientBrands(new HashSet<>(this.clientBrands))
             .resourcePackStatuses(new HashMap<>(this.resourcePackStatuses))
             .build();
