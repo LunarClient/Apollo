@@ -46,7 +46,7 @@ public final class ModAutoTextHotkey {
     /**
      * Displays a notification when an input is blocked by the server.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> NOTIFY_ON_BLOCKED_INPUT = SimpleOption.<Boolean>builder()
         .comment("Displays a notification when an input is blocked by the server")

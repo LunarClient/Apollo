@@ -79,7 +79,7 @@ public final class ModPackDisplay {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> PACK_EXTENSION = SimpleOption.<Boolean>builder()
         .node("pack-display", "pack-extension").type(TypeToken.get(Boolean.class))
@@ -89,7 +89,7 @@ public final class ModPackDisplay {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> MOVE_TITLE_DOWN = SimpleOption.<Boolean>builder()
         .node("pack-display", "move-title-down").type(TypeToken.get(Boolean.class))
@@ -201,7 +201,7 @@ public final class ModPackDisplay {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> DESCRIPTION_REPLACEMENT_COLOR = SimpleOption.<Color>builder()
         .node("pack-display", "description-replacement-color").type(TypeToken.get(Color.class))
@@ -211,7 +211,7 @@ public final class ModPackDisplay {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> KEEP_BOLD = SimpleOption.<Boolean>builder()
         .node("pack-display", "keep-bold").type(TypeToken.get(Boolean.class))
@@ -221,7 +221,7 @@ public final class ModPackDisplay {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> KEEP_ITALIC = SimpleOption.<Boolean>builder()
         .node("pack-display", "keep-italic").type(TypeToken.get(Boolean.class))
@@ -231,7 +231,7 @@ public final class ModPackDisplay {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> KEEP_UNDERLINE = SimpleOption.<Boolean>builder()
         .node("pack-display", "keep-underline").type(TypeToken.get(Boolean.class))
@@ -241,7 +241,7 @@ public final class ModPackDisplay {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> KEEP_STRIKETHROUGH = SimpleOption.<Boolean>builder()
         .node("pack-display", "keep-strikethrough").type(TypeToken.get(Boolean.class))
@@ -251,7 +251,7 @@ public final class ModPackDisplay {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> KEEP_OBFUSCATED = SimpleOption.<Boolean>builder()
         .node("pack-display", "keep-obfuscated").type(TypeToken.get(Boolean.class))

@@ -99,7 +99,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("potion-effects", "background").type(TypeToken.get(Boolean.class))
@@ -109,7 +109,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> MINIMAL_MODE = SimpleOption.<Boolean>builder()
         .node("potion-effects", "minimal-mode").type(TypeToken.get(Boolean.class))
@@ -119,7 +119,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> MINIMAL_MODE_HORIZONTAL = SimpleOption.<Boolean>builder()
         .node("potion-effects", "minimal-mode-horizontal").type(TypeToken.get(Boolean.class))
@@ -129,7 +129,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("potion-effects", "border").type(TypeToken.get(Boolean.class))
@@ -139,7 +139,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("potion-effects", "border-thickness").type(TypeToken.get(Float.class))
@@ -150,7 +150,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> FORMATTED_DURATIONS = SimpleOption.<Boolean>builder()
         .node("potion-effects", "formatted-durations").type(TypeToken.get(Boolean.class))
@@ -160,7 +160,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> UPPERCASE_POTION_NAMES = SimpleOption.<Boolean>builder()
         .node("potion-effects", "uppercase-potion-names").type(TypeToken.get(Boolean.class))
@@ -170,7 +170,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> REVERSED_TEXT = SimpleOption.<Boolean>builder()
         .node("potion-effects", "reversed-text").type(TypeToken.get(Boolean.class))
@@ -211,7 +211,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("potion-effects", "background-color").type(TypeToken.get(Color.class))
@@ -221,7 +221,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("potion-effects", "border-color").type(TypeToken.get(Color.class))

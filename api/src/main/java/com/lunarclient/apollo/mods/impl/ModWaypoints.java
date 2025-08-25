@@ -67,7 +67,7 @@ public final class ModWaypoints {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> LIMIT_DEATH_WAYPOINTS = SimpleOption.<Boolean>builder()
         .node("waypoints", "limit-death-waypoints").type(TypeToken.get(Boolean.class))
@@ -77,7 +77,7 @@ public final class ModWaypoints {
     /**
      * Maximum amount of Death Waypoints you will see at one time.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final NumberOption<Integer> MAX_DEATH_WAYPOINTS = NumberOption.<Integer>number()
         .comment("Maximum amount of Death Waypoints you will see at one time")

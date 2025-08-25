@@ -60,7 +60,7 @@ public final class ModPing {
     /**
      * How many updates to average together (one update happens per the 'update interval' setting).
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final NumberOption<Integer> AVERAGE_SAMPLES = NumberOption.<Integer>number()
         .comment("How many updates to average together (one update happens per the 'update interval' setting)")
@@ -72,7 +72,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> PING_SPIKE_DETECTION = SimpleOption.<Boolean>builder()
         .node("ping", "ping-spike-detection").type(TypeToken.get(Boolean.class))
@@ -82,7 +82,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final NumberOption<Integer> MEDIUM_SPIKE_THRESHOLD = NumberOption.<Integer>number()
         .node("ping", "medium-spike-threshold").type(TypeToken.get(Integer.class))
@@ -93,7 +93,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> MEDIUM_SPIKE_COLOR = SimpleOption.<Color>builder()
         .node("ping", "medium-spike-color").type(TypeToken.get(Color.class))
@@ -103,7 +103,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final NumberOption<Integer> LARGE_SPIKE_THRESHOLD = NumberOption.<Integer>number()
         .node("ping", "large-spike-threshold").type(TypeToken.get(Integer.class))
@@ -114,7 +114,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> LARGE_SPIKE_COLOR = SimpleOption.<Color>builder()
         .node("ping", "large-spike-color").type(TypeToken.get(Color.class))
@@ -134,7 +134,7 @@ public final class ModPing {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_PING_PREFIX = SimpleOption.<Boolean>builder()
         .node("ping", "show-ping-prefix").type(TypeToken.get(Boolean.class))

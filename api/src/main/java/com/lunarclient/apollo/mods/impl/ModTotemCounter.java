@@ -30,14 +30,14 @@ import java.awt.Color;
 /**
  * Keep track of players' totem usages. Totem pops aren't tracked when the mod is disabled, so toggling it on mid-game could result in a mismatch.
  *
- * @since %release_version%
+ * @since 1.1.9
  */
 public final class ModTotemCounter {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("totem-counter", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModTotemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_FOR_SELF = SimpleOption.<Boolean>builder()
         .node("totem-counter", "show-for-self").type(TypeToken.get(Boolean.class))
@@ -57,7 +57,7 @@ public final class ModTotemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_TAB_LIST = SimpleOption.<Boolean>builder()
         .node("totem-counter", "show-tab-list").type(TypeToken.get(Boolean.class))
@@ -67,7 +67,7 @@ public final class ModTotemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> FLIP = SimpleOption.<Boolean>builder()
         .node("totem-counter", "flip").type(TypeToken.get(Boolean.class))
@@ -77,7 +77,7 @@ public final class ModTotemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> COUNT_COLOR = SimpleOption.<Boolean>builder()
         .node("totem-counter", "count-color").type(TypeToken.get(Boolean.class))
@@ -87,7 +87,7 @@ public final class ModTotemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_NAMETAG = SimpleOption.<Boolean>builder()
         .node("totem-counter", "show-nametag").type(TypeToken.get(Boolean.class))
@@ -97,7 +97,7 @@ public final class ModTotemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_PREFIX = SimpleOption.<Boolean>builder()
         .node("totem-counter", "show-prefix").type(TypeToken.get(Boolean.class))
@@ -107,7 +107,7 @@ public final class ModTotemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SEPARATE_NAMETAG = SimpleOption.<Boolean>builder()
         .node("totem-counter", "separate-nametag").type(TypeToken.get(Boolean.class))
@@ -117,7 +117,7 @@ public final class ModTotemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> RENDER_FIRST = SimpleOption.<Boolean>builder()
         .node("totem-counter", "render-first").type(TypeToken.get(Boolean.class))
@@ -127,7 +127,7 @@ public final class ModTotemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> PREFIX_COLOR = SimpleOption.<Color>builder()
         .node("totem-counter", "prefix-color").type(TypeToken.get(Color.class))

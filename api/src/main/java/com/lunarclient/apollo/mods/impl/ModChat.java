@@ -58,7 +58,7 @@ public final class ModChat {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> MODERN_CHAT_LENGTH_HYPIXEL = SimpleOption.<Boolean>builder()
         .node("chat", "modern-chat-length-hypixel").type(TypeToken.get(Boolean.class))
@@ -68,7 +68,7 @@ public final class ModChat {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> LONG_CHAT_SINGLEPLAYER = SimpleOption.<Boolean>builder()
         .node("chat", "long-chat-singleplayer").type(TypeToken.get(Boolean.class))
@@ -240,7 +240,7 @@ public final class ModChat {
     /**
      * When your max image size is set to e.g. 50%, when you press shift, the image will expand to 100%.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> FULLSCREEN_IMAGE = SimpleOption.<Boolean>builder()
         .comment("When your max image size is set to e.g. 50%, when you press shift, the image will expand to 100%")
@@ -272,7 +272,7 @@ public final class ModChat {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> CHAT_NAME_BOLD = SimpleOption.<Boolean>builder()
         .node("chat", "chat-name-bold").type(TypeToken.get(Boolean.class))
@@ -282,7 +282,7 @@ public final class ModChat {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> CHAT_NAME_ITALIC = SimpleOption.<Boolean>builder()
         .node("chat", "chat-name-italic").type(TypeToken.get(Boolean.class))
@@ -292,7 +292,7 @@ public final class ModChat {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> CHAT_NAME_UNDERLINE = SimpleOption.<Boolean>builder()
         .node("chat", "chat-name-underline").type(TypeToken.get(Boolean.class))
@@ -302,7 +302,7 @@ public final class ModChat {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> CHAT_NAME_STRIKETHROUGH = SimpleOption.<Boolean>builder()
         .node("chat", "chat-name-strikethrough").type(TypeToken.get(Boolean.class))
@@ -312,7 +312,7 @@ public final class ModChat {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> CHAT_NAME_OBFUSCATED = SimpleOption.<Boolean>builder()
         .node("chat", "chat-name-obfuscated").type(TypeToken.get(Boolean.class))

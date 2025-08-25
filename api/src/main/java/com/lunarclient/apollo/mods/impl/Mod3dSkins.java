@@ -58,7 +58,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_OTHERS = SimpleOption.<Boolean>builder()
         .node("3d-skins", "show-others").type(TypeToken.get(Boolean.class))
@@ -161,7 +161,7 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final NumberOption<Float> FIRST_PERSON_VOXEL_SIZE = NumberOption.<Float>number()
         .node("3d-skins", "first-person-voxel-size").type(TypeToken.get(Float.class))

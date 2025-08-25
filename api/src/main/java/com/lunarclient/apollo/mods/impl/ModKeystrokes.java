@@ -149,7 +149,7 @@ public final class ModKeystrokes {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> ANIMATE = SimpleOption.<Boolean>builder()
         .node("keystrokes", "animate").type(TypeToken.get(Boolean.class))
@@ -159,7 +159,7 @@ public final class ModKeystrokes {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final NumberOption<Float> DURATION = NumberOption.<Float>number()
         .node("keystrokes", "duration").type(TypeToken.get(Float.class))
@@ -170,7 +170,7 @@ public final class ModKeystrokes {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> ANIMATE_COLOR = SimpleOption.<Boolean>builder()
         .node("keystrokes", "animate-color").type(TypeToken.get(Boolean.class))
@@ -180,7 +180,7 @@ public final class ModKeystrokes {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> ANIMATION_START_COLOR = SimpleOption.<Color>builder()
         .node("keystrokes", "animation-start-color").type(TypeToken.get(Color.class))
@@ -190,7 +190,7 @@ public final class ModKeystrokes {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> ANIMATION_CENTER_COLOR = SimpleOption.<Color>builder()
         .node("keystrokes", "animation-center-color").type(TypeToken.get(Color.class))
@@ -200,7 +200,7 @@ public final class ModKeystrokes {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> ANIMATION_END_COLOR = SimpleOption.<Color>builder()
         .node("keystrokes", "animation-end-color").type(TypeToken.get(Color.class))
@@ -293,7 +293,7 @@ public final class ModKeystrokes {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final NumberOption<Float> SPACEBAR_THICKNESS = NumberOption.<Float>number()
         .node("keystrokes", "spacebar-thickness").type(TypeToken.get(Float.class))

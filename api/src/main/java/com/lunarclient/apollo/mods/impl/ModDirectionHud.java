@@ -152,7 +152,7 @@ public final class ModDirectionHud {
     /**
      * Choose whether to show the Direction HUD when TAB is open.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_WITH_TAB = SimpleOption.<Boolean>builder()
         .comment("Choose whether to show the Direction HUD when TAB is open.")

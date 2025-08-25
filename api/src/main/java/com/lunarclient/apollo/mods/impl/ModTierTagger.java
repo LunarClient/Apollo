@@ -29,14 +29,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * Show player's PvP tier on their Name Tag.
  *
- * @since %release_version%
+ * @since 1.1.9
  */
 public final class ModTierTagger {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("tier-tagger", "enabled").type(TypeToken.get(Boolean.class))
@@ -46,7 +46,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> MC_TIERS_FORMAT = SimpleOption.<Boolean>builder()
         .node("tier-tagger", "mc-tiers-format").type(TypeToken.get(Boolean.class))
@@ -56,7 +56,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SUFFIX = SimpleOption.<Boolean>builder()
         .node("tier-tagger", "suffix").type(TypeToken.get(Boolean.class))
@@ -66,7 +66,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SEPARATE_NAMETAG = SimpleOption.<Boolean>builder()
         .node("tier-tagger", "separate-nametag").type(TypeToken.get(Boolean.class))
@@ -76,7 +76,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_GM_ICONS = SimpleOption.<Boolean>builder()
         .node("tier-tagger", "show-gm-icons").type(TypeToken.get(Boolean.class))
@@ -86,7 +86,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_RETIRED = SimpleOption.<Boolean>builder()
         .node("tier-tagger", "show-retired").type(TypeToken.get(Boolean.class))
@@ -96,7 +96,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_REGION = SimpleOption.<Boolean>builder()
         .node("tier-tagger", "show-region").type(TypeToken.get(Boolean.class))

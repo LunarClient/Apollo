@@ -29,14 +29,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * Allows you to change kill sounds for players.
  *
- * @since %release_version%
+ * @since 1.1.9
  */
 public final class ModKillSounds {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("kill-sounds", "enabled").type(TypeToken.get(Boolean.class))

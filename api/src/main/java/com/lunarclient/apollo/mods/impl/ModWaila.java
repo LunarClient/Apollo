@@ -59,7 +59,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> ALWAYS_SHOW = SimpleOption.<Boolean>builder()
         .node("waila", "always-show").type(TypeToken.get(Boolean.class))
@@ -130,7 +130,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_BLOCK_COORDS = SimpleOption.<Boolean>builder()
         .node("waila", "show-block-coords").type(TypeToken.get(Boolean.class))
@@ -140,7 +140,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> BLOCK_COORDS_COLOR = SimpleOption.<Color>builder()
         .node("waila", "block-coords-color").type(TypeToken.get(Color.class))
@@ -150,7 +150,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_CORRECT_TOOL = SimpleOption.<Boolean>builder()
         .node("waila", "show-correct-tool").type(TypeToken.get(Boolean.class))
@@ -160,7 +160,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> CORRECT_TOOL_COLOR = SimpleOption.<Color>builder()
         .node("waila", "correct-tool-color").type(TypeToken.get(Color.class))
@@ -170,7 +170,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_BREAK_TIME = SimpleOption.<Boolean>builder()
         .node("waila", "show-break-time").type(TypeToken.get(Boolean.class))
@@ -180,7 +180,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> BREAK_TIME_COLOR = SimpleOption.<Color>builder()
         .node("waila", "break-time-color").type(TypeToken.get(Color.class))
@@ -190,7 +190,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_LIGHT_LEVEL = SimpleOption.<Boolean>builder()
         .node("waila", "show-light-level").type(TypeToken.get(Boolean.class))
@@ -200,7 +200,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Color> LIGHT_LEVEL_COLOR = SimpleOption.<Color>builder()
         .node("waila", "light-level-color").type(TypeToken.get(Color.class))

@@ -30,14 +30,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * A collection of quality of life tweaks for the inventory.
  *
- * @since %release_version%
+ * @since 1.1.9
  */
 public final class ModInventoryMod {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("inventory-mod", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModInventoryMod {
     /**
      * Useful for navigating inventory menus on servers.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> DONT_RESET_CURSOR = SimpleOption.<Boolean>builder()
         .comment("Useful for navigating inventory menus on servers.")
@@ -58,7 +58,7 @@ public final class ModInventoryMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final NumberOption<Float> RESET_CURSOR_TIMEOUT = NumberOption.<Float>number()
         .node("inventory-mod", "reset-cursor-timeout").type(TypeToken.get(Float.class))

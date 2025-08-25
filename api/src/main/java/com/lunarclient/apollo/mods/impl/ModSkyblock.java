@@ -151,7 +151,7 @@ public final class ModSkyblock {
     /**
      * Replaces left clicks in menus with a middle click. Hold control to override.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SKY_BLOCK_MIDDLE_CLICK_ITEMS = SimpleOption.<Boolean>builder()
         .comment("Replaces left clicks in menus with a middle click. Hold control to override.")
@@ -204,7 +204,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SB_MENU_CLICK_TO_COMMAND = SimpleOption.<Boolean>builder()
         .node("skyblock", "sb-menu-click-to-command").type(TypeToken.get(Boolean.class))
@@ -225,7 +225,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SKYBLOCK_SECRETS_COLLECTED = SimpleOption.<Boolean>builder()
         .node("skyblock", "skyblock-secrets-collected").type(TypeToken.get(Boolean.class))
@@ -309,7 +309,7 @@ public final class ModSkyblock {
     /**
      * Hides players and fishing rods near your bobber while you are fishing.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SKYBLOCK_FISHING_HIDE_PLAYERS = SimpleOption.<Boolean>builder()
         .comment("Hides players and fishing rods near your bobber while you are fishing.")
@@ -320,7 +320,7 @@ public final class ModSkyblock {
     /**
      * Shows which hotspot the Hotspot Radar item is pointing to.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SKYBLOCK_FISHING_HOTSPOT_LOCATOR = SimpleOption.<Boolean>builder()
         .comment("Shows which hotspot the Hotspot Radar item is pointing to.")
@@ -418,7 +418,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SKYBLOCK_USE_TICK_TIMERS = SimpleOption.<Boolean>builder()
         .node("skyblock", "skyblock-use-tick-timers").type(TypeToken.get(Boolean.class))

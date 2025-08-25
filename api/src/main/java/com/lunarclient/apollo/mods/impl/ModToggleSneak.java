@@ -57,7 +57,7 @@ public final class ModToggleSneak {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SPRINT_KEYBIND_OVERRIDE = SimpleOption.<Boolean>builder()
         .node("toggle-sneak", "sprint-keybind-override").type(TypeToken.get(Boolean.class))
@@ -77,7 +77,7 @@ public final class ModToggleSneak {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SNEAK_KEYBIND_OVERRIDE = SimpleOption.<Boolean>builder()
         .node("toggle-sneak", "sneak-keybind-override").type(TypeToken.get(Boolean.class))
