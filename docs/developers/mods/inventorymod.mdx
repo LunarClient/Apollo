@@ -1,0 +1,38 @@
+# Inventory Mod
+
+A collection of quality of life tweaks for the inventory.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleInventoryModExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModInventoryMod.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DONT_RESET_CURSOR`__
+    - Useful for navigating inventory menus on servers.
+    - Config Key: `dont-reset-cursor`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`RESET_CURSOR_TIMEOUT`__
+    - Config Key: `reset-cursor-timeout`
+    - Values
+        - Type: `Float`
+        - Default: `0.3F`
+        - Minimum: `0.1F`
+        - Maximum: `5.0F`
+

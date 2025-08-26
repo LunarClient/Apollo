@@ -27,34 +27,23 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Allows you to set a key or key combination that will send a command or chat message when pressed.
+ * Allows you to change kill sounds for players.
  *
- * @since 1.0.0
+ * @since 1.1.9
  */
-public final class ModAutoTextHotkey {
+public final class ModKillSounds {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("auto-text-hotkey", "enabled").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * Displays a notification when an input is blocked by the server.
-     *
      * @since 1.1.9
      */
-    public static final SimpleOption<Boolean> NOTIFY_ON_BLOCKED_INPUT = SimpleOption.<Boolean>builder()
-        .comment("Displays a notification when an input is blocked by the server")
-        .node("auto-text-hotkey", "notify-on-blocked-input").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
+        .node("kill-sounds", "enabled").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
-    private ModAutoTextHotkey() {
+    private ModKillSounds() {
     }
 
 }
