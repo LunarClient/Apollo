@@ -18,5 +18,5 @@ dependencies {
 
     compileOnly(libs.bukkit)
     compileOnly(libs.folia)
-    implementation(project(":apollo-bukkit-example-common"))
+    implementation(project(":example:bukkit:apollo-example-bukkit-common"))
 }
