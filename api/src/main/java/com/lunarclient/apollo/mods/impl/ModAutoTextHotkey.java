@@ -43,6 +43,17 @@ public final class ModAutoTextHotkey {
         .notifyClient()
         .build();
 
+    /**
+     * Displays a notification when an input is blocked by the server.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> NOTIFY_ON_BLOCKED_INPUT = SimpleOption.<Boolean>builder()
+        .comment("Displays a notification when an input is blocked by the server")
+        .node("auto-text-hotkey", "notify-on-blocked-input").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
     private ModAutoTextHotkey() {
     }
 

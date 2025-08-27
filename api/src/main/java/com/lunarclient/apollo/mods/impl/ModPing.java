@@ -53,27 +53,71 @@ public final class ModPing {
     public static final NumberOption<Integer> UPDATE_INTERVAL_SEC = NumberOption.<Integer>number()
         .comment("Faster updates may impact performance")
         .node("ping", "update-interval-sec").type(TypeToken.get(Integer.class))
-        .min(1).max(30)
+        .min(1).max(120)
+        .notifyClient()
+        .build();
+
+    /**
+     * How many updates to average together (one update happens per the 'update interval' setting).
+     *
+     * @since 1.1.9
+     */
+    public static final NumberOption<Integer> AVERAGE_SAMPLES = NumberOption.<Integer>number()
+        .comment("How many updates to average together (one update happens per the 'update interval' setting)")
+        .node("ping", "average-samples").type(TypeToken.get(Integer.class))
+        .min(2).max(20)
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.1.1
+     * @since 1.1.9
      */
-    public static final SimpleOption<Boolean> ENABLE_PING_NAMETAG = SimpleOption.<Boolean>builder()
-        .node("ping", "enable-ping-nametag").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> PING_SPIKE_DETECTION = SimpleOption.<Boolean>builder()
+        .node("ping", "ping-spike-detection").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.1.1
+     * @since 1.1.9
      */
-    public static final SimpleOption<Boolean> PING_ABOVE = SimpleOption.<Boolean>builder()
-        .node("ping", "ping-above").type(TypeToken.get(Boolean.class))
+    public static final NumberOption<Integer> MEDIUM_SPIKE_THRESHOLD = NumberOption.<Integer>number()
+        .node("ping", "medium-spike-threshold").type(TypeToken.get(Integer.class))
+        .min(1).max(200)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Color> MEDIUM_SPIKE_COLOR = SimpleOption.<Color>builder()
+        .node("ping", "medium-spike-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final NumberOption<Integer> LARGE_SPIKE_THRESHOLD = NumberOption.<Integer>number()
+        .node("ping", "large-spike-threshold").type(TypeToken.get(Integer.class))
+        .min(1).max(200)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Color> LARGE_SPIKE_COLOR = SimpleOption.<Color>builder()
+        .node("ping", "large-spike-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -84,6 +128,16 @@ public final class ModPing {
      */
     public static final SimpleOption<Boolean> PING_SHOW_MS = SimpleOption.<Boolean>builder()
         .node("ping", "ping-show-ms").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> SHOW_PING_PREFIX = SimpleOption.<Boolean>builder()
+        .node("ping", "show-ping-prefix").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -154,6 +208,28 @@ public final class ModPing {
      */
     public static final SimpleOption<Color> EXTREME_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("ping", "extreme-ping-number-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.1
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> ENABLE_PING_NAMETAG = SimpleOption.<Boolean>builder()
+        .node("ping", "enable-ping-nametag").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.1
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> PING_ABOVE = SimpleOption.<Boolean>builder()
+        .node("ping", "ping-above").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

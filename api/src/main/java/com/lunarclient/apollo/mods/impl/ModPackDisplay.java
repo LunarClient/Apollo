@@ -61,6 +61,46 @@ public final class ModPackDisplay {
      *
      * @since 1.0.0
      */
+    public static final SimpleOption<Boolean> PACK_ICON = SimpleOption.<Boolean>builder()
+        .node("pack-display", "pack-icon").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> PACK_DESCRIPTION = SimpleOption.<Boolean>builder()
+        .node("pack-display", "pack-description").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> PACK_EXTENSION = SimpleOption.<Boolean>builder()
+        .node("pack-display", "pack-extension").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> MOVE_TITLE_DOWN = SimpleOption.<Boolean>builder()
+        .node("pack-display", "move-title-down").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("pack-display", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -93,39 +133,6 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("pack-display", "background").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * If this is disabled the background will change size with the text.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> STATIC_BACKGROUND_WIDTH = SimpleOption.<Boolean>builder()
-        .comment("If this is disabled the background will change size with the text.")
-        .node("pack-display", "static-background-width").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * If this is disabled the background will change size with the text.
-     *
-     * @since 1.1.6
-     */
-    public static final SimpleOption<Boolean> STATIC_BACKGROUND_HEIGHT = SimpleOption.<Boolean>builder()
-        .comment("If this is disabled the background will change size with the text.")
-        .node("pack-display", "static-background-height").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Integer> BACKGROUND_WIDTH = NumberOption.<Integer>number()
-        .node("pack-display", "background-width").type(TypeToken.get(Integer.class))
-        .min(60).max(300)
         .notifyClient()
         .build();
 
@@ -194,10 +201,84 @@ public final class ModPackDisplay {
     /**
      * No documentation available.
      *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Color> DESCRIPTION_REPLACEMENT_COLOR = SimpleOption.<Color>builder()
+        .node("pack-display", "description-replacement-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> KEEP_BOLD = SimpleOption.<Boolean>builder()
+        .node("pack-display", "keep-bold").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> KEEP_ITALIC = SimpleOption.<Boolean>builder()
+        .node("pack-display", "keep-italic").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> KEEP_UNDERLINE = SimpleOption.<Boolean>builder()
+        .node("pack-display", "keep-underline").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> KEEP_STRIKETHROUGH = SimpleOption.<Boolean>builder()
+        .node("pack-display", "keep-strikethrough").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> KEEP_OBFUSCATED = SimpleOption.<Boolean>builder()
+        .node("pack-display", "keep-obfuscated").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * If this is disabled the background will change size with the text.
+     *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> PACK_ICON = SimpleOption.<Boolean>builder()
-        .node("pack-display", "pack-icon").type(TypeToken.get(Boolean.class))
+    @Deprecated
+    public static final SimpleOption<Boolean> STATIC_BACKGROUND_WIDTH = SimpleOption.<Boolean>builder()
+        .comment("If this is disabled the background will change size with the text.")
+        .node("pack-display", "static-background-width").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * If this is disabled the background will change size with the text.
+     *
+     * @since 1.1.6
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> STATIC_BACKGROUND_HEIGHT = SimpleOption.<Boolean>builder()
+        .comment("If this is disabled the background will change size with the text.")
+        .node("pack-display", "static-background-height").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -206,8 +287,10 @@ public final class ModPackDisplay {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> PACK_DESCRIPTION = SimpleOption.<Boolean>builder()
-        .node("pack-display", "pack-description").type(TypeToken.get(Boolean.class))
+    @Deprecated
+    public static final NumberOption<Integer> BACKGROUND_WIDTH = NumberOption.<Integer>number()
+        .node("pack-display", "background-width").type(TypeToken.get(Integer.class))
+        .min(60).max(300)
         .notifyClient()
         .build();
 

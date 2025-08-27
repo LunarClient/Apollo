@@ -183,6 +183,7 @@ _Called when the player closes their chat._
 
 | Field                      | Description                                        |
 | -------------------------- | -------------------------------------------------- |
+| `ApolloPlayer player`      | The Apollo player that sent the packet.            |
 | `long instantiationTimeMs` | The unix timestamp when the packet was created.    |
 | `PlayerInfo playerInfo`    | The player's general information.                  |
 
@@ -197,6 +198,7 @@ _Called when the player opens their chat._
 
 | Field                      | Description                                        |
 | -------------------------- | -------------------------------------------------- |
+| `ApolloPlayer player`      | The Apollo player that sent the packet.            |
 | `long instantiationTimeMs` | The unix timestamp when the packet was created.    |
 | `PlayerInfo playerInfo`    | The player's general information.                  |
 
@@ -211,6 +213,7 @@ _Called when the player attacks another player._
 
 | Field                      | Description                                        |
 | -------------------------- | -------------------------------------------------- |
+| `ApolloPlayer player`      | The Apollo player that sent the packet.            |
 | `long instantiationTimeMs` | The unix timestamp when the packet was created.    |
 | `PlayerInfo targetInfo`    | The target player general information.             |
 | `PlayerInfo attackerInfo`  | The attacker player general information.           |
@@ -227,6 +230,7 @@ _Called when the player uses an item (1.16.1+)._
 
 | Field                      | Description                                        |
 | -------------------------- | -------------------------------------------------- |
+| `ApolloPlayer player`      | The Apollo player that sent the packet.            |
 | `long instantiationTimeMs` | The unix timestamp when the packet was created.    |
 | `PlayerInfo playerInfo`    | The player's general information.                  |
 | `boolean mainHand`         | Whether the item was in the player's main hand.    |

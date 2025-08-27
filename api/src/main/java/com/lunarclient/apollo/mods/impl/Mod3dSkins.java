@@ -58,6 +58,16 @@ public final class Mod3dSkins {
     /**
      * No documentation available.
      *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> SHOW_OTHERS = SimpleOption.<Boolean>builder()
+        .node("3d-skins", "show-others").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> ENABLE_HAT = SimpleOption.<Boolean>builder()
@@ -145,6 +155,17 @@ public final class Mod3dSkins {
     public static final NumberOption<Float> HEAD_VOXEL_SIZE = NumberOption.<Float>number()
         .node("3d-skins", "head-voxel-size").type(TypeToken.get(Float.class))
         .min(1.001F).max(1.25F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final NumberOption<Float> FIRST_PERSON_VOXEL_SIZE = NumberOption.<Float>number()
+        .node("3d-skins", "first-person-voxel-size").type(TypeToken.get(Float.class))
+        .min(1.001F).max(1.3F)
         .notifyClient()
         .build();
 

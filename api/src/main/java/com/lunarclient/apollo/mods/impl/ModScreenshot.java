@@ -83,6 +83,17 @@ public final class ModScreenshot {
         .notifyClient()
         .build();
 
+    /**
+     * A screenshot file saved with world details enabled has metadata that contains your player coordinates, the biome, and more.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> WORLD_DETAILS = SimpleOption.<Boolean>builder()
+        .comment("A screenshot file saved with world details enabled has metadata that contains your player coordinates, the biome, and more.")
+        .node("screenshot", "world-details").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
     private ModScreenshot() {
     }
 

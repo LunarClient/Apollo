@@ -2,7 +2,7 @@
 <!DOCTYPE suppressions PUBLIC "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN" "http://checkstyle.org/dtds/suppressions_1_2.dtd">
 <suppressions>
     <!-- don't require javadocs on platform modules -->
-    <suppress files="bukkit-example-(api|json|proto|common)[\\/]src[\\/]main[\\/]java[\\/].*" checks="(FilteringWriteTag|MissingJavadoc.*)"/>
+    <suppress files="example[\\/]bukkit[\\/](api|json|proto|common)[\\/]src[\\/]main[\\/]java[\\/].*" checks="(FilteringWriteTag|MissingJavadoc.*)"/>
 
     <!-- ignore illegal import in loader -->
     <suppress files="extra[\\/]loader[\\/]src[\\/]main[\\/]java[\\/].*" checks="(IllegalImport)"/>

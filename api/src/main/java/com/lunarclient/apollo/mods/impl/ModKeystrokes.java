@@ -91,6 +91,16 @@ public final class ModKeystrokes {
      *
      * @since 1.0.0
      */
+    public static final SimpleOption<Boolean> USE_ARROWS = SimpleOption.<Boolean>builder()
+        .node("keystrokes", "use-arrows").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
     public static final SimpleOption<Boolean> KEY_STROKES_MOVEMENT = SimpleOption.<Boolean>builder()
         .node("keystrokes", "key-strokes-movement").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -103,16 +113,6 @@ public final class ModKeystrokes {
      */
     public static final SimpleOption<Boolean> KEY_STROKES_SPACEBAR = SimpleOption.<Boolean>builder()
         .node("keystrokes", "key-strokes-spacebar").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> USE_ARROWS = SimpleOption.<Boolean>builder()
-        .node("keystrokes", "use-arrows").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -143,6 +143,67 @@ public final class ModKeystrokes {
      */
     public static final SimpleOption<Boolean> INNER_BORDER = SimpleOption.<Boolean>builder()
         .node("keystrokes", "inner-border").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> ANIMATE = SimpleOption.<Boolean>builder()
+        .node("keystrokes", "animate").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final NumberOption<Float> DURATION = NumberOption.<Float>number()
+        .node("keystrokes", "duration").type(TypeToken.get(Float.class))
+        .min(0.1F).max(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> ANIMATE_COLOR = SimpleOption.<Boolean>builder()
+        .node("keystrokes", "animate-color").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Color> ANIMATION_START_COLOR = SimpleOption.<Color>builder()
+        .node("keystrokes", "animation-start-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Color> ANIMATION_CENTER_COLOR = SimpleOption.<Color>builder()
+        .node("keystrokes", "animation-center-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Color> ANIMATION_END_COLOR = SimpleOption.<Color>builder()
+        .node("keystrokes", "animation-end-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -226,6 +287,17 @@ public final class ModKeystrokes {
     public static final NumberOption<Long> KEY_FADE_DELAY = NumberOption.<Long>number()
         .node("keystrokes", "key-fade-delay").type(TypeToken.get(Long.class))
         .min(0L).max(500L)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final NumberOption<Float> SPACEBAR_THICKNESS = NumberOption.<Float>number()
+        .node("keystrokes", "spacebar-thickness").type(TypeToken.get(Float.class))
+        .min(1.0F).max(4.25F)
         .notifyClient()
         .build();
 

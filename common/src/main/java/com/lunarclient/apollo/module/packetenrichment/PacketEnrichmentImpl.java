@@ -55,6 +55,7 @@ public final class PacketEnrichmentImpl extends PacketEnrichmentModule {
     private void onReceivePacket(ApolloReceivePacketEvent event) {
         event.unpack(PlayerAttackMessage.class).ifPresent(packet -> {
             ApolloPlayerAttackEvent playerAttackEvent = new ApolloPlayerAttackEvent(
+                event.getPlayer(),
                 NetworkTypes.fromProtobuf(packet.getPacketInfo().getInstantiationTime()),
                 NetworkTypes.fromProtobuf(packet.getTargetInfo()),
                 NetworkTypes.fromProtobuf(packet.getAttackerInfo()),
@@ -70,6 +71,7 @@ public final class PacketEnrichmentImpl extends PacketEnrichmentModule {
 
         event.unpack(PlayerChatOpenMessage.class).ifPresent(packet -> {
             ApolloPlayerChatOpenEvent playerChatOpenEvent = new ApolloPlayerChatOpenEvent(
+                event.getPlayer(),
                 NetworkTypes.fromProtobuf(packet.getPacketInfo().getInstantiationTime()),
                 NetworkTypes.fromProtobuf(packet.getPlayerInfo()));
 
@@ -82,6 +84,7 @@ public final class PacketEnrichmentImpl extends PacketEnrichmentModule {
 
         event.unpack(PlayerChatCloseMessage.class).ifPresent(packet -> {
             ApolloPlayerChatCloseEvent playerChatCloseEvent = new ApolloPlayerChatCloseEvent(
+                event.getPlayer(),
                 NetworkTypes.fromProtobuf(packet.getPacketInfo().getInstantiationTime()),
                 NetworkTypes.fromProtobuf(packet.getPlayerInfo()));
 
@@ -94,6 +97,7 @@ public final class PacketEnrichmentImpl extends PacketEnrichmentModule {
 
         event.unpack(PlayerUseItemMessage.class).ifPresent(packet -> {
             ApolloPlayerUseItemEvent playerUseItemEvent = new ApolloPlayerUseItemEvent(
+                event.getPlayer(),
                 NetworkTypes.fromProtobuf(packet.getPacketInfo().getInstantiationTime()),
                 NetworkTypes.fromProtobuf(packet.getPlayerInfo()),
                 packet.getMainHand()
