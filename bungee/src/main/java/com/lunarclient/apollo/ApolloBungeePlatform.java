@@ -25,8 +25,10 @@ package com.lunarclient.apollo;
 
 import com.lunarclient.apollo.command.impl.ApolloCommand;
 import com.lunarclient.apollo.command.impl.LunarClientCommand;
+import com.lunarclient.apollo.listener.ApolloMetadataListener;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
+import com.lunarclient.apollo.metadata.BungeeMetadataManager;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.autotexthotkey.AutoTextHotkeyModule;
 import com.lunarclient.apollo.module.beam.BeamModule;
@@ -107,6 +109,7 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
         this.stats = new BungeeApolloStats();
 
         ApolloManager.bootstrap(this);
+        ApolloManager.setMetadataManager(new BungeeMetadataManager());
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
             .addModule(AutoTextHotkeyModule.class)
@@ -146,6 +149,7 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
         server.registerChannel(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
 
         PluginManager pluginManager = server.getPluginManager();
+        pluginManager.registerListener(this.plugin, new ApolloMetadataListener(this.plugin));
         pluginManager.registerListener(this.plugin, new ApolloPlayerListener());
         pluginManager.registerCommand(this.plugin, ApolloCommand.create());
         pluginManager.registerCommand(this.plugin, LunarClientCommand.create());

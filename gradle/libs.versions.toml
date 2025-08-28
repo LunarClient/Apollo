@@ -15,7 +15,7 @@ protobuf = "0.0.2"
 gson = "2.10.1"
 shadow = "8.1.1"
 spotless = "6.13.0"
-velocity = "3.0.1"
+velocity = "3.3.0-SNAPSHOT"
 folia = "1.20.1-R0.1-SNAPSHOT"
 asm = "9.7.1"
 

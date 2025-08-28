@@ -34,6 +34,7 @@ import com.lunarclient.apollo.option.config.CommonSerializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
 import com.lunarclient.apollo.stats.ApolloStatsManager;
+import com.lunarclient.apollo.stats.metadata.ApolloMetadataManager;
 import com.lunarclient.apollo.util.ConfigTarget;
 import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
@@ -42,6 +43,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Provides the instances for {@link Apollo}.
@@ -74,6 +76,7 @@ public final class ApolloManager {
     @Getter private static ApolloNetworkManager networkManager;
     @Getter private static ApolloVersionManager versionManager;
     @Getter private static ApolloStatsManager statsManager;
+    @Getter @Setter private static ApolloMetadataManager metadataManager;
 
     @Getter private static Path configPath;
 

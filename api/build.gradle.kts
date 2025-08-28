@@ -7,7 +7,7 @@ setupPlatforms()
 
 setupPlatformDependency("bukkit", "bukkitJar")
 setupPlatformDependency("bungee", "bungeeJar")
-setupPlatformDependency("velocity", "velocityJar")
+setupPlatformDependency("velocity", "velocityJar", 17)
 setupPlatformDependency("folia", "foliaJar", 21)
 
 val main by sourceSets

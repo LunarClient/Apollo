@@ -25,8 +25,10 @@ package com.lunarclient.apollo;
 
 import com.lunarclient.apollo.command.impl.ApolloCommand;
 import com.lunarclient.apollo.command.impl.LunarClientCommand;
+import com.lunarclient.apollo.listener.ApolloMetadataListener;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
+import com.lunarclient.apollo.metadata.FoliaMetadataManager;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.autotexthotkey.AutoTextHotkeyModule;
 import com.lunarclient.apollo.module.beam.BeamModule;
@@ -109,7 +111,9 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
         this.stats = new FoliaApolloStats();
 
         ApolloManager.bootstrap(this);
+        ApolloManager.setMetadataManager(new FoliaMetadataManager());
 
+        new ApolloMetadataListener(this);
         new ApolloPlayerListener(this);
         new ApolloWorldListener(this);
 

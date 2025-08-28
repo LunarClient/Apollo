@@ -26,7 +26,9 @@ package com.lunarclient.apollo;
 import com.google.inject.Inject;
 import com.lunarclient.apollo.command.impl.ApolloCommand;
 import com.lunarclient.apollo.command.impl.LunarClientCommand;
+import com.lunarclient.apollo.listener.ApolloMetadataListener;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
+import com.lunarclient.apollo.metadata.VelocityMetadataManager;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.autotexthotkey.AutoTextHotkeyModule;
 import com.lunarclient.apollo.module.beam.BeamModule;
@@ -75,6 +77,7 @@ import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.wrapper.VelocityApolloStats;
 import com.velocitypowered.api.command.CommandManager;
+import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
@@ -83,6 +86,7 @@ import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.messages.ChannelRegistrar;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -163,7 +167,9 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     public void onProxyInitialization(ProxyInitializeEvent event) {
         ApolloVelocityPlatform.instance = this;
         this.stats = new VelocityApolloStats();
+
         ApolloManager.bootstrap(this);
+        ApolloManager.setMetadataManager(new VelocityMetadataManager());
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
             .addModule(AutoTextHotkeyModule.class)
@@ -199,8 +205,13 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
             this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration and modules!", throwable);
         }
 
-        this.server.getEventManager().register(this, new ApolloPlayerListener());
-        this.server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
+        EventManager eventManager = this.server.getEventManager();
+        eventManager.register(this, new ApolloMetadataListener());
+        eventManager.register(this, new ApolloPlayerListener());
+
+        ChannelRegistrar channelRegistrar = this.server.getChannelRegistrar();
+        channelRegistrar.register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
+        channelRegistrar.register(ApolloMetadataListener.FML_HANDSHAKE_CHANNEL);
 
         CommandManager commandManager = this.server.getCommandManager();
         commandManager.register(ApolloCommand.create());
@@ -222,12 +233,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     }
 
     static {
-        try {
-            PLUGIN_CHANNEL = MinecraftChannelIdentifier.from(ApolloManager.PLUGIN_MESSAGE_CHANNEL);
-        } catch (NoSuchMethodError e) {
-            String[] messageChannel = ApolloManager.PLUGIN_MESSAGE_CHANNEL.split(":");
-            PLUGIN_CHANNEL = MinecraftChannelIdentifier.create(messageChannel[0], messageChannel[1]);
-        }
+        PLUGIN_CHANNEL = MinecraftChannelIdentifier.create("lunar", "apollo");
     }
 
 }
