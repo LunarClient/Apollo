@@ -23,51 +23,44 @@
  */
 package com.lunarclient.apollo.command;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import lombok.NonNull;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.command.type.ApolloCommand;
+import com.lunarclient.apollo.common.ApolloComponent;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 
 /**
- * Provides common command functions for Bukkit.
+ * The general Apollo command.
  *
- * @param <T> the sender type
- * @since 1.0.9
+ * @since 1.0.5
  */
-public abstract class BukkitApolloCommand<T> extends AbstractApolloCommand<T> {
+public final class BukkitApolloCommand extends ApolloCommand<CommandSender> implements CommandExecutor {
 
     /**
-     * Returns a new instance of a Bukkit command.
+     * Returns a new instance of this command.
      *
-     * @param textConsumer the consumer for sending messages to the sender
-     * @since 1.0.9
+     * @since 1.0.5
      */
-    public BukkitApolloCommand(BiConsumer<T, Component> textConsumer) {
-        super(textConsumer);
+    public BukkitApolloCommand() {
+        super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
     }
 
-    /**
-     * Handles a player argument; if the provided player doesn't exist, a not found message
-     * is sent to the sender. Otherwise, the player is passed to the provided player consumer.
-     *
-     * @param sender the command sender
-     * @param argument the argument passed from the command execution
-     * @param playerConsumer a consumer used for processing a desired action if the player is found
-     * @since 1.0.9
-     */
-    protected void handlePlayerArgument(@NonNull T sender, @NonNull String argument, @NonNull Consumer<Player> playerConsumer) {
-        Player player = Bukkit.getPlayer(argument);
-
-        if (player == null) {
-            this.textConsumer.accept(sender, Component.text("Player '", NamedTextColor.RED)
-                .append(Component.text(argument, NamedTextColor.RED))
-                .append(Component.text("' not found!", NamedTextColor.RED)));
-            return;
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if(args.length < 1) {
+            this.getCurrentVersion(sender);
+        } else if(args[0].equalsIgnoreCase("reload")) {
+            this.reloadConfiguration(sender);
+        } else if(args[0].equalsIgnoreCase("update")) {
+            ApolloManager.getVersionManager().forceUpdate(
+                ApolloPlatform.Platform.BUKKIT,
+                message -> this.textConsumer.accept(sender, message)
+            );
         }
 
-        playerConsumer.accept(player);
+        return true;
     }
+
 }

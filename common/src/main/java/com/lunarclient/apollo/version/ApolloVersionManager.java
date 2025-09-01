@@ -39,6 +39,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -54,18 +56,11 @@ public final class ApolloVersionManager {
         .node("send-updater-message").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
-    public static final String UPDATE_MESSAGE = "[Apollo] You're running an outdated version of Apollo. " +
-        "Use \"/apollo update\" to update to the latest version!";
-
-    /**
-     * Returns whether the server needs to update Apollo.
-     *
-     * @since 1.0.0
-     */
-    public static boolean NEEDS_UPDATE;
-
+    @Getter
+    private String latestVersion;
     private VersionResponse.Assets assets;
-    private AtomicBoolean updated = new AtomicBoolean(false);
+
+    private final AtomicBoolean updated = new AtomicBoolean(false);
 
     /**
      * Constructs the {@link ApolloVersionManager}.
@@ -87,15 +82,27 @@ public final class ApolloVersionManager {
                 this.assets = response.getAssets();
 
                 ApolloPlatform platform = Apollo.getPlatform();
+                String version = response.getVersion();
+
                 ApolloVersion currentVersion = new ApolloVersion(platform.getApolloVersion());
-                ApolloVersion latestVersion = new ApolloVersion(response.getVersion());
+                ApolloVersion latestVersion = new ApolloVersion(version);
 
-                if (currentVersion.isUpdateAvailable(latestVersion)) {
-                    ApolloVersionManager.NEEDS_UPDATE = true;
+                if (!currentVersion.isUpdateAvailable(latestVersion)) {
+                    return;
+                }
 
-                    if (platform.getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
-                        platform.getPlatformLogger().warning(UPDATE_MESSAGE);
-                    }
+                this.latestVersion = version;
+
+                if (!platform.getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
+                    return;
+                }
+
+                Logger logger = platform.getPlatformLogger();
+                logger.warning(String.format("A new version of Apollo is available! Latest release: %s", version));
+
+                if (platform.getPlatform() != ApolloPlatform.Platform.MINESTOM) {
+                    logger.warning("Please update by running \"/apollo update\" or by downloading the " +
+                        "latest build from https://lunarclient.dev/apollo/downloads");
                 }
             })
             .onFailure(Throwable::printStackTrace);
@@ -108,7 +115,7 @@ public final class ApolloVersionManager {
      * @param message the message to send to the command sender
      * @since 1.0.9
      */
-    public void forceUpdate(String platform, Consumer<Component> message) {
+    public void forceUpdate(ApolloPlatform.Platform platform, Consumer<Component> message) {
         if (this.updated.get()) {
             message.accept(Component.text(
                 "Apollo is already updated, please restart your server!",
@@ -117,7 +124,7 @@ public final class ApolloVersionManager {
             return;
         }
 
-        if (!ApolloVersionManager.NEEDS_UPDATE) {
+        if (this.latestVersion == null) {
             message.accept(Component.text(
                 "This server is already running the latest version of Apollo.",
                 NamedTextColor.RED)
@@ -190,21 +197,21 @@ public final class ApolloVersionManager {
             });
     }
 
-    private String getPlatformUrl(String platform) {
-        switch (platform.toLowerCase()) {
-            case "bukkit": {
+    private String getPlatformUrl(ApolloPlatform.Platform platform) {
+        switch (platform) {
+            case BUKKIT: {
                 return this.assets.getBukkit();
             }
 
-            case "bungee": {
+            case BUNGEE: {
                 return this.assets.getBungee();
             }
 
-            case "velocity": {
+            case VELOCITY: {
                 return this.assets.getVelocity();
             }
 
-            case "folia": {
+            case FOLIA: {
                 return this.assets.getFolia();
             }
         }

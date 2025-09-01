@@ -23,8 +23,8 @@
  */
 package com.lunarclient.apollo;
 
-import com.lunarclient.apollo.command.FoliaApolloCommand;
-import com.lunarclient.apollo.command.FoliaLunarClientCommand;
+import com.lunarclient.apollo.command.MinestomApolloCommand;
+import com.lunarclient.apollo.command.MinestomLunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
@@ -42,10 +42,12 @@ import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
 import com.lunarclient.apollo.module.entity.EntityModule;
 import com.lunarclient.apollo.module.entity.EntityModuleImpl;
+import com.lunarclient.apollo.module.glint.GlintModule;
 import com.lunarclient.apollo.module.glow.GlowModule;
 import com.lunarclient.apollo.module.glow.GlowModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
+import com.lunarclient.apollo.module.inventory.InventoryModule;
 import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
@@ -59,6 +61,7 @@ import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentImpl;
 import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentModule;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModule;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModuleImpl;
+import com.lunarclient.apollo.module.saturation.SaturationModule;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.module.staffmod.StaffModModuleImpl;
@@ -81,37 +84,61 @@ import com.lunarclient.apollo.module.waypoint.WaypointModuleImpl;
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
-import com.lunarclient.apollo.wrapper.FoliaApolloStats;
+import com.lunarclient.apollo.wrapper.MinestomApolloStats;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.messaging.Messenger;
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.command.CommandManager;
+import net.minestom.server.event.Event;
+import net.minestom.server.event.EventNode;
 
 /**
- * The Folia platform plugin.
+ * The Minestom platform plugin.
  *
- * @since 1.1.8
+ * @since 1.1.9
  */
-public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatform {
+public final class ApolloMinestomPlatform implements ApolloPlatform {
 
-    @Getter private static ApolloFoliaPlatform instance;
+    public static boolean SEND_REGISTER_PACKET = true;
 
-    @Getter private final Options options = new OptionsImpl(null);
+    private static ApolloMinestomPlatform instance;
 
-    private ApolloStats stats;
+    private final Options options;
+    private final Logger logger;
+    private final ApolloStats stats;
 
-    @Override
-    public void onEnable() {
-        ApolloFoliaPlatform.instance = this;
+    /**
+     * Constructs the {@link ApolloMinestomPlatform}.
+     *
+     * @since 1.1.9
+     */
+    public ApolloMinestomPlatform() {
+        this.options = new OptionsImpl(null);
+        this.logger = Logger.getLogger(ApolloMinestomPlatform.class.getName());
+        this.stats = new MinestomApolloStats();
+    }
 
-        this.stats = new FoliaApolloStats();
+    /**
+     * Initialize Apollo for Minestom.
+     *
+     * @since 1.1.9
+     */
+    public static void init() {
+        if (instance != null) {
+            throw new IllegalStateException("ApolloMinestomPlatform is already initialized!");
+        }
 
-        ApolloManager.bootstrap(this);
+        instance = new ApolloMinestomPlatform();
 
-        new ApolloPlayerListener(this);
-        new ApolloWorldListener(this);
+        ApolloManager.bootstrap(instance);
+
+        EventNode<Event> node = EventNode.all("apollo");
+
+        new ApolloPlayerListener(node);
+        new ApolloWorldListener(node);
+
+        MinecraftServer.getGlobalEventHandler().addChild(node);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager())
             .addModule(AutoTextHotkeyModule.class)
@@ -122,8 +149,10 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
             .addModule(CombatModule.class)
             .addModule(CooldownModule.class, new CooldownModuleImpl())
             .addModule(EntityModule.class, new EntityModuleImpl())
+            .addModule(GlintModule.class)
             .addModule(GlowModule.class, new GlowModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
+            .addModule(InventoryModule.class)
             .addModule(LimbModule.class, new LimbModuleImpl())
             .addModule(ModSettingModule.class)
             .addModule(NametagModule.class, new NametagModuleImpl())
@@ -131,6 +160,7 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
             .addModule(NotificationModule.class, new NotificationModuleImpl())
             .addModule(PacketEnrichmentModule.class, new PacketEnrichmentImpl())
             .addModule(RichPresenceModule.class, new RichPresenceModuleImpl())
+            .addModule(SaturationModule.class)
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())
             .addModule(StopwatchModule.class, new StopwatchModuleImpl())
@@ -143,30 +173,23 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
         try {
-            ApolloManager.setConfigPath(this.getDataFolder().toPath());
+            // TODO: config path
+            ApolloManager.setConfigPath(new File("").toPath());
             ApolloManager.loadConfiguration();
             ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
             ApolloManager.saveConfiguration();
         } catch (Throwable throwable) {
-            this.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration and modules!", throwable);
+            instance.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration and modules!", throwable);
         }
 
-        Messenger messenger = this.getServer().getMessenger();
-        messenger.registerOutgoingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL);
-        messenger.registerIncomingPluginChannel(this, ApolloManager.PLUGIN_MESSAGE_CHANNEL,
-            (channel, player, bytes) -> ApolloManager.getNetworkManager().receivePacket(player.getUniqueId(), bytes)
-        );
-
-        this.getCommand("apollo").setExecutor(new FoliaApolloCommand());
-        this.getCommand("lunarclient").setExecutor(new FoliaLunarClientCommand());
+        CommandManager commandManager = MinecraftServer.getCommandManager();
+        commandManager.register(MinestomApolloCommand.create());
+        commandManager.register(MinestomLunarClientCommand.create());
 
         ApolloManager.getStatsManager().enable();
         ApolloManager.getVersionManager().checkForUpdates();
-    }
 
-    @Override
-    public void onDisable() {
-        ((ApolloModuleManagerImpl) Apollo.getModuleManager()).disableModules();
+        instance.getPlatformLogger().log(Level.INFO, "[Apollo] Successfully initialized! (" + instance.getApolloVersion() + ")");
     }
 
     @Override
@@ -176,12 +199,17 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
 
     @Override
     public Platform getPlatform() {
-        return Platform.FOLIA;
+        return Platform.MINESTOM;
+    }
+
+    @Override
+    public Options getOptions() {
+        return this.options;
     }
 
     @Override
     public String getApolloVersion() {
-        return this.getDescription().getVersion();
+        return "1.1.9";
     }
 
     @Override
@@ -190,13 +218,13 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
     }
 
     @Override
-    public Object getPlugin() {
-        return getInstance();
+    public Logger getPlatformLogger() {
+        return this.logger;
     }
 
     @Override
-    public Logger getPlatformLogger() {
-        return Bukkit.getServer().getLogger();
+    public Object getPlugin() {
+        return instance;
     }
 
 }

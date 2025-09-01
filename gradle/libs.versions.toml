@@ -1,7 +1,7 @@
 metadata.format.version = "1.1"
 
 [versions]
-adventure = "4.14.0"
+adventure = "4.24.0"
 adventurePlatform = "4.3.3"
 artifactregistry = "2.2.1"
 bukkit = "1.8.8-R0.1-SNAPSHOT"
@@ -18,6 +18,7 @@ spotless = "6.13.0"
 velocity = "3.0.1"
 folia = "1.20.1-R0.1-SNAPSHOT"
 asm = "9.7.1"
+minestom = "2025.08.18-1.21.8"
 
 [libraries]
 jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains" }
@@ -52,6 +53,9 @@ bungee = { module = "net.md-5:bungeecord-api", version.ref = "bungee" }
 
 # velocity
 velocity = { module = "com.velocitypowered:velocity-api", version.ref = "velocity" }
+
+# minestom
+minestom = { module = "net.minestom:minestom", version.ref = "minestom" }
 
 # build
 artifactregistry = { module = "gradle.plugin.com.google.cloud.artifactregistry:artifactregistry-gradle-plugin", version.ref = "artifactregistry" }

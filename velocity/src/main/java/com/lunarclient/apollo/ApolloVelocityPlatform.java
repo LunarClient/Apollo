@@ -24,8 +24,8 @@
 package com.lunarclient.apollo;
 
 import com.google.inject.Inject;
-import com.lunarclient.apollo.command.impl.ApolloCommand;
-import com.lunarclient.apollo.command.impl.LunarClientCommand;
+import com.lunarclient.apollo.command.VelocityApolloCommand;
+import com.lunarclient.apollo.command.VelocityLunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.autotexthotkey.AutoTextHotkeyModule;
@@ -131,6 +131,11 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
     }
 
     @Override
+    public Platform getPlatform() {
+        return Platform.VELOCITY;
+    }
+
+    @Override
     public String getApolloVersion() {
         return this.server.getPluginManager().fromInstance(this)
             .map(PluginContainer::getDescription)
@@ -203,8 +208,8 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
         this.server.getChannelRegistrar().register(ApolloVelocityPlatform.PLUGIN_CHANNEL);
 
         CommandManager commandManager = this.server.getCommandManager();
-        commandManager.register(ApolloCommand.create());
-        commandManager.register(LunarClientCommand.create());
+        commandManager.register(VelocityApolloCommand.create());
+        commandManager.register(VelocityLunarClientCommand.create());
 
         ApolloManager.getStatsManager().enable();
         ApolloManager.getVersionManager().checkForUpdates();

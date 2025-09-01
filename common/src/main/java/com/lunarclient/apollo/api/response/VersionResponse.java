@@ -90,6 +90,14 @@ public final class VersionResponse implements ApiResponse {
          */
         String folia;
 
+        /**
+         * Returns the latest version of apollo {@link String} Minestom download URL.
+         *
+         * @return the apollo minestom download url
+         * @since 1.1.9
+         */
+        String minestom;
+
     }
 
 }

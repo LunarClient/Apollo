@@ -78,7 +78,7 @@ public final class ServerStartRequest implements ApiRequest<ServerStartResponse>
     private final String platformType;
 
     /**
-     * The platform subtype (Bukkit, Folia, BungeeCord, Velocity...).
+     * The platform subtype (Bukkit, Folia, Minestom, BungeeCord, Velocity...).
      *
      * @since 1.0.0
      */

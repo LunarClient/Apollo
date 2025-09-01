@@ -21,45 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command.impl;
+package com.lunarclient.apollo.command.type;
 
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.command.BukkitApolloCommand;
-import com.lunarclient.apollo.common.ApolloComponent;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import com.lunarclient.apollo.command.AbstractApolloCommand;
+import java.util.function.BiConsumer;
+import net.kyori.adventure.text.Component;
 
 /**
- * The general Apollo command.
+ * The general Lunar Client command.
  *
- * @since 1.0.5
+ * @param <T> the sender type
+ * @since 1.1.9
  */
-public final class ApolloCommand extends BukkitApolloCommand<CommandSender> implements CommandExecutor {
+public class LunarClientCommand<T> extends AbstractApolloCommand<T> {
 
     /**
-     * Returns a new instance of this command.
+     * Returns a new instance of the LunarClientCommand.
      *
-     * @since 1.0.5
+     * @param textConsumer the consumer for sending messages to the sender
+     * @since 1.1.9
      */
-    public ApolloCommand() {
-        super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(args.length < 1) {
-            this.getCurrentVersion(sender);
-        } else if(args[0].equalsIgnoreCase("reload")) {
-            this.reloadConfiguration(sender);
-        } else if(args[0].equalsIgnoreCase("update")) {
-            ApolloManager.getVersionManager().forceUpdate(
-                "bukkit",
-                message -> this.textConsumer.accept(sender, message)
-            );
-        }
-
-        return true;
+    protected LunarClientCommand(BiConsumer<T, Component> textConsumer) {
+        super(textConsumer);
     }
 
 }

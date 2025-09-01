@@ -21,45 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command.impl;
+package com.lunarclient.apollo.wrapper;
 
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.command.FoliaApolloCommand;
-import com.lunarclient.apollo.common.ApolloComponent;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.recipients.ForwardingRecipients;
+import com.lunarclient.apollo.recipients.Recipients;
+import com.lunarclient.apollo.world.ApolloWorld;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import net.minestom.server.instance.Instance;
 
 /**
- * The general Apollo command.
+ * The Bukkit implementation of {@link ApolloWorld}.
  *
- * @since 1.1.8
+ * @since 1.1.9
  */
-public final class ApolloCommand extends FoliaApolloCommand<CommandSender> implements CommandExecutor {
+@AllArgsConstructor
+public final class MinestomApolloWorld implements ApolloWorld, ForwardingRecipients {
 
-    /**
-     * Returns a new instance of this command.
-     *
-     * @since 1.1.8
-     */
-    public ApolloCommand() {
-        super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
+    private final Instance instance;
+
+    @Override
+    public String getName() {
+        return this.instance.getUuid().toString();
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(args.length < 1) {
-            this.getCurrentVersion(sender);
-        } else if(args[0].equalsIgnoreCase("reload")) {
-            this.reloadConfiguration(sender);
-        } else if(args[0].equalsIgnoreCase("update")) {
-            ApolloManager.getVersionManager().forceUpdate(
-                "folia",
-                message -> this.textConsumer.accept(sender, message)
-            );
-        }
+    public Collection<ApolloPlayer> getPlayers() {
+        return this.instance.getPlayers().stream()
+            .map(player -> Apollo.getPlayerManager().getPlayer(player.getUuid()))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .collect(Collectors.toList());
+    }
 
-        return true;
+    @Override
+    public Iterable<? extends Recipients> recipients() {
+        return this.getPlayers();
     }
 
 }

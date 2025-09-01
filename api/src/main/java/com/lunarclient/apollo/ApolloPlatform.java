@@ -45,6 +45,14 @@ public interface ApolloPlatform {
     Kind getKind();
 
     /**
+     * Returns the platform type.
+     *
+     * @return the platform type
+     * @since 1.1.9
+     */
+    Platform getPlatform();
+
+    /**
      * Returns the platform options that don't belong to a specific module.
      *
      * @return the platform options
@@ -93,4 +101,18 @@ public interface ApolloPlatform {
         SERVER,
         PROXY
     }
+
+    /**
+     * Represents the platform type.
+     *
+     * @since 1.1.9
+     */
+    enum Platform {
+        BUKKIT,
+        FOLIA,
+        MINESTOM,
+        BUNGEE,
+        VELOCITY
+    }
+
 }
