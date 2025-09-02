@@ -25,9 +25,11 @@ package com.lunarclient.apollo;
 
 import com.lunarclient.apollo.command.BukkitApolloCommand;
 import com.lunarclient.apollo.command.BukkitLunarClientCommand;
+import com.lunarclient.apollo.listener.ApolloMetadataListener;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
+import com.lunarclient.apollo.metadata.BukkitMetadataManager;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.autotexthotkey.AutoTextHotkeyModule;
 import com.lunarclient.apollo.module.beam.BeamModule;
@@ -119,7 +121,9 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
         this.stats = new BukkitApolloStats();
 
         ApolloManager.bootstrap(this);
+        ApolloManager.setMetadataManager(new BukkitMetadataManager());
 
+        new ApolloMetadataListener(this.plugin);
         new ApolloPlayerListener(this.plugin);
         new ApolloWorldListener(this.plugin);
 
