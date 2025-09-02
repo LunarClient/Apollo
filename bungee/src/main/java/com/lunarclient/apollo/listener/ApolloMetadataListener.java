@@ -28,8 +28,10 @@ import com.google.common.io.ByteStreams;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.metadata.BungeeMetadataManager;
 import com.lunarclient.apollo.util.ByteBufUtil;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -75,14 +77,27 @@ public final class ApolloMetadataListener implements Listener {
         }
 
         String tag = event.getTag();
+        byte[] data = event.getData();
 
-        if (tag.equals("minecraft:brand") || tag.equals("MC|Brand")) {
-            this.handleBrand(event.getData());
-            return;
-        }
+        switch (tag) {
+            case "MC|Brand": {
+                try (DataInputStream in = new DataInputStream(new ByteArrayInputStream(data))) {
+                    this.collectBrand(in.readUTF());
+                } catch (IOException ignored) {
+                }
 
-        if (tag.equals("fml:handshake") || tag.equals("FML|HS")) {
-            this.handleFml(event.getData());
+                break;
+            }
+            case "minecraft:brand": {
+                ByteArrayDataInput in = ByteStreams.newDataInput(data);
+                this.collectBrand(ByteBufUtil.readString(in));
+                break;
+            }
+            case "fml:handshake":
+            case "FML|HS": {
+                this.handleFml(data);
+                break;
+            }
         }
     }
 
@@ -112,8 +127,7 @@ public final class ApolloMetadataListener implements Listener {
         manager.getServerAddress().add(hostString + ":" + host.getPort());
     }
 
-    private void handleBrand(byte[] data) {
-        String brand = new String(data, StandardCharsets.UTF_8);
+    private void collectBrand(String brand) {
         BungeeMetadataManager manager = (BungeeMetadataManager) ApolloManager.getMetadataManager();
         manager.getClientBrands().add(brand);
     }

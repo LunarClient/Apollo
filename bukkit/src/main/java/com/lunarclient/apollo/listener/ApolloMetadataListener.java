@@ -23,9 +23,14 @@
  */
 package com.lunarclient.apollo.listener;
 
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteStreams;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.metadata.BukkitMetadataManager;
-import java.nio.charset.StandardCharsets;
+import com.lunarclient.apollo.util.ByteBufUtil;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -67,21 +72,29 @@ public final class ApolloMetadataListener implements Listener {
     }
 
     private void registerBrandListener() {
-        PluginMessageListener listener = (channel, player, bytes) -> {
-            String brand = new String(bytes, StandardCharsets.UTF_8);
-
-            BukkitMetadataManager manager = (BukkitMetadataManager) ApolloManager.getMetadataManager();
-            manager.getClientBrands().add(brand);
-        };
-
         Messenger messenger = this.plugin.getServer().getMessenger();
 
         try {
+            PluginMessageListener listener = (channel, player, bytes) -> {
+                try (DataInputStream in = new DataInputStream(new ByteArrayInputStream(bytes))) {
+                    this.collectBrand(in.readUTF());
+                } catch (IOException ignored) {
+                }
+            };
+
             messenger.registerIncomingPluginChannel(this.plugin, "MC|Brand", listener);
         } catch (IllegalArgumentException ignored) {
         }
 
-        messenger.registerIncomingPluginChannel(this.plugin, "minecraft:brand", listener);
+        messenger.registerIncomingPluginChannel(this.plugin, "minecraft:brand", (channel, player, bytes) -> {
+            ByteArrayDataInput in = ByteStreams.newDataInput(bytes);
+            this.collectBrand(ByteBufUtil.readString(in));
+        });
+    }
+
+    private void collectBrand(String brand) {
+        BukkitMetadataManager manager = (BukkitMetadataManager) ApolloManager.getMetadataManager();
+        manager.getClientBrands().add(brand);
     }
 
 }
