@@ -1,5 +1,6 @@
 plugins {
     id("apollo.shadow-conventions")
+    id("apollo.publish-conventions")
 }
 
 java {
@@ -17,3 +18,5 @@ dependencies {
 
     annotationProcessor(libs.minestom)
 }
+
+publishShadowJar()
