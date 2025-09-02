@@ -31,7 +31,7 @@ import net.kyori.adventure.text.Component;
  * The general Lunar Client command.
  *
  * @param <T> the sender type
- * @since 1.1.9
+ * @since 1.2.0
  */
 public class LunarClientCommand<T> extends AbstractApolloCommand<T> {
 
@@ -39,7 +39,7 @@ public class LunarClientCommand<T> extends AbstractApolloCommand<T> {
      * Returns a new instance of the LunarClientCommand.
      *
      * @param textConsumer the consumer for sending messages to the sender
-     * @since 1.1.9
+     * @since 1.2.0
      */
     protected LunarClientCommand(BiConsumer<T, Component> textConsumer) {
         super(textConsumer);

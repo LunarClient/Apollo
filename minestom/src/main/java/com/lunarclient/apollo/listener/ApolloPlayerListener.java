@@ -47,7 +47,7 @@ import net.minestom.server.event.player.PlayerSpawnEvent;
 /**
  * Handles registration and un-registration of Apollo players.
  *
- * @since 1.1.9
+ * @since 1.2.0
  */
 public final class ApolloPlayerListener implements ApolloListener {
 
@@ -55,7 +55,7 @@ public final class ApolloPlayerListener implements ApolloListener {
      * Constructs the {@link ApolloPlayerListener}.
      *
      * @param node the node
-     * @since 1.1.9
+     * @since 1.2.0
      */
     public ApolloPlayerListener(EventNode<Event> node) {
         EventBus.getBus().register(this);

@@ -36,7 +36,7 @@ import net.minestom.server.entity.Player;
 /**
  * The Minestom implementation of the {@link ApolloCommand}.
  *
- * @since 1.1.9
+ * @since 1.2.0
  */
 public final class MinestomApolloCommand extends ApolloCommand<CommandSender> {
 
@@ -44,7 +44,7 @@ public final class MinestomApolloCommand extends ApolloCommand<CommandSender> {
      * Returns a new instance of this command.
      *
      * @return a new command
-     * @since 1.1.9
+     * @since 1.2.0
      */
     public static Command create() {
         MinestomApolloCommand apolloCommand = new MinestomApolloCommand();

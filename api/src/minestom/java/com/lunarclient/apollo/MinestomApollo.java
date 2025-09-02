@@ -41,7 +41,7 @@ import net.minestom.server.entity.Player;
  * Utility class for converting objects to and from their corresponding Minestom
  * representations with additional helper methods for easier integration.
  *
- * @since 1.1.9
+ * @since 1.2.0
  */
 public final class MinestomApollo {
 
@@ -50,7 +50,7 @@ public final class MinestomApollo {
      *
      * @param player         the player
      * @param playerConsumer the operation to be performed
-     * @since 1.1.9
+     * @since 1.2.0
      */
     public static void runForPlayer(@NonNull Player player, @NonNull Consumer<ApolloPlayer> playerConsumer) {
         runForPlayer(player.getUuid(), playerConsumer);
@@ -61,7 +61,7 @@ public final class MinestomApollo {
      *
      * @param playerUuid     the player
      * @param playerConsumer the operation to be performed
-     * @since 1.1.9
+     * @since 1.2.0
      */
     public static void runForPlayer(@NonNull UUID playerUuid, @NonNull Consumer<ApolloPlayer> playerConsumer) {
         Apollo.getPlayerManager().getPlayer(playerUuid).ifPresent(playerConsumer);
@@ -72,7 +72,7 @@ public final class MinestomApollo {
      *
      * @param players the players
      * @return the recipients object containing the converted ApolloPlayer objects
-     * @since 1.1.9
+     * @since 1.2.0
      */
     public static Recipients getRecipientsFrom(@NonNull Collection<Player> players) {
         ApolloPlayerManager playerManager = Apollo.getPlayerManager();
@@ -90,7 +90,7 @@ public final class MinestomApollo {
      *
      * @param entity the entity
      * @return the converted apollo entity object
-     * @since 1.1.9
+     * @since 1.2.0
      */
     public static ApolloEntity toApolloEntity(@NonNull Entity entity) {
         return new ApolloEntity(entity.getEntityId(), entity.getUuid());

@@ -37,7 +37,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
  * The general Apollo command.
  *
  * @param <T> the sender type
- * @since 1.1.9
+ * @since 1.2.0
  */
 public class ApolloCommand<T> extends AbstractApolloCommand<T> {
 
@@ -45,7 +45,7 @@ public class ApolloCommand<T> extends AbstractApolloCommand<T> {
      * Returns a new instance of the ApolloCommand.
      *
      * @param textConsumer the consumer for sending messages to the sender
-     * @since 1.1.9
+     * @since 1.2.0
      */
     protected ApolloCommand(BiConsumer<T, Component> textConsumer) {
         super(textConsumer);

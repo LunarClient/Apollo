@@ -38,7 +38,7 @@ import net.minestom.server.entity.Player;
 /**
  * The general Lunar Client command.
  *
- * @since 1.1.9
+ * @since 1.2.0
  */
 public final class MinestomLunarClientCommand extends LunarClientCommand<CommandSender> {
 
@@ -46,7 +46,7 @@ public final class MinestomLunarClientCommand extends LunarClientCommand<Command
      * Returns a new instance of this command.
      *
      * @return a new command
-     * @since 1.1.9
+     * @since 1.2.0
      */
     public static Command create() {
         MinestomLunarClientCommand lunarClientCommand = new MinestomLunarClientCommand();

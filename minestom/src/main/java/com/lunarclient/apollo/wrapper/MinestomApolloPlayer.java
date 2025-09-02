@@ -42,7 +42,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The Minestom implementation of {@link ApolloPlayer}.
  *
- * @since 1.1.9
+ * @since 1.2.0
  */
 @Getter
 @RequiredArgsConstructor

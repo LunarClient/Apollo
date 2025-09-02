@@ -48,7 +48,7 @@ public interface ApolloPlatform {
      * Returns the platform type.
      *
      * @return the platform type
-     * @since 1.1.9
+     * @since 1.2.0
      */
     Platform getPlatform();
 
@@ -105,7 +105,7 @@ public interface ApolloPlatform {
     /**
      * Represents the platform type.
      *
-     * @since 1.1.9
+     * @since 1.2.0
      */
     enum Platform {
         BUKKIT,

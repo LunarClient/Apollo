@@ -94,7 +94,7 @@ public final class VersionResponse implements ApiResponse {
          * Returns the latest version of apollo {@link String} Minestom download URL.
          *
          * @return the apollo minestom download url
-         * @since 1.1.9
+         * @since 1.2.0
          */
         String minestom;
 

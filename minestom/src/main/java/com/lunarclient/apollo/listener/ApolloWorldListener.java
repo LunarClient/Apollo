@@ -45,7 +45,7 @@ import net.minestom.server.instance.Instance;
 /**
  * Handles registration and un-registration of Apollo worlds.
  *
- * @since 1.1.9
+ * @since 1.2.0
  */
 public final class ApolloWorldListener implements ApolloListener {
 
@@ -53,7 +53,7 @@ public final class ApolloWorldListener implements ApolloListener {
      * Constructs the {@link ApolloWorldListener}.
      *
      * @param node the node
-     * @since 1.1.9
+     * @since 1.2.0
      */
     public ApolloWorldListener(EventNode<Event> node) {
         EventBus.getBus().register(this);

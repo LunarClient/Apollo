@@ -37,7 +37,7 @@ import net.minestom.server.instance.Instance;
 /**
  * The Bukkit implementation of {@link ApolloWorld}.
  *
- * @since 1.1.9
+ * @since 1.2.0
  */
 @AllArgsConstructor
 public final class MinestomApolloWorld implements ApolloWorld, ForwardingRecipients {

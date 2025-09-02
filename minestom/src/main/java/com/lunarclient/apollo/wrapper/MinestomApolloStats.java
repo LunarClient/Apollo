@@ -41,7 +41,7 @@ import net.minestom.server.MinecraftServer;
 /**
  * The Minestom implementation of {@link ApolloStats}.
  *
- * @since 1.1.9
+ * @since 1.2.0
  */
 public class MinestomApolloStats implements ApolloStats {
 

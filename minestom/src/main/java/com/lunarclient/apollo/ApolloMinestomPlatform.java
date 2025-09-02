@@ -96,7 +96,7 @@ import net.minestom.server.event.EventNode;
 /**
  * The Minestom platform plugin.
  *
- * @since 1.1.9
+ * @since 1.2.0
  */
 public final class ApolloMinestomPlatform implements ApolloPlatform {
 
@@ -111,7 +111,7 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
     /**
      * Constructs the {@link ApolloMinestomPlatform}.
      *
-     * @since 1.1.9
+     * @since 1.2.0
      */
     public ApolloMinestomPlatform() {
         this.options = new OptionsImpl(null);
@@ -122,7 +122,7 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
     /**
      * Initialize Apollo for Minestom.
      *
-     * @since 1.1.9
+     * @since 1.2.0
      */
     public static void init() {
         if (instance != null) {
@@ -209,7 +209,7 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
 
     @Override
     public String getApolloVersion() {
-        return "1.1.9";
+        return "1.2.0";
     }
 
     @Override
