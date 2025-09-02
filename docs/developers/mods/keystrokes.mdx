@@ -47,6 +47,12 @@ public void toggleKeyStrokesExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
+- __`USE_ARROWS`__
+    - Config Key: `use-arrows`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
 - __`KEY_STROKES_MOVEMENT`__
     - Config Key: `key-strokes-movement`
     - Values
@@ -57,13 +63,7 @@ public void toggleKeyStrokesExample(Player viewer, boolean value) {
     - Config Key: `key-strokes-spacebar`
     - Values
         - Type: `Boolean`
-        - Default: `false`
-
-- __`USE_ARROWS`__
-    - Config Key: `use-arrows`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
+        - Default: `true`
 
 - __`TEXT_SHADOW`__
     - Config Key: `text-shadow`
@@ -83,11 +83,49 @@ public void toggleKeyStrokesExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
+- __`ANIMATE`__
+    - Config Key: `animate`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DURATION`__
+    - Config Key: `duration`
+    - Values
+        - Type: `Float`
+        - Default: `0.5F`
+        - Minimum: `0.1F`
+        - Maximum: `1.0F`
+
+- __`ANIMATE_COLOR`__
+    - Config Key: `animate-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ANIMATION_START_COLOR`__
+    - Config Key: `animation-start-color`
+    - Values
+        - Type: `String`
+        - Default: `#C0FFFFFF`
+
+- __`ANIMATION_CENTER_COLOR`__
+    - Config Key: `animation-center-color`
+    - Values
+        - Type: `String`
+        - Default: `#6FFFFFFF`
+
+- __`ANIMATION_END_COLOR`__
+    - Config Key: `animation-end-color`
+    - Values
+        - Type: `String`
+        - Default: `#6FFFFFFF`
+
 - __`BORDER_THICKNESS`__
     - Config Key: `border-thickness`
     - Values
         - Type: `Float`
-        - Default: `0.5F`
+        - Default: `1.0F`
         - Minimum: `0.5F`
         - Maximum: `3.0F`
 
@@ -136,4 +174,12 @@ public void toggleKeyStrokesExample(Player viewer, boolean value) {
         - Default: `75L`
         - Minimum: `0L`
         - Maximum: `500L`
+
+- __`SPACEBAR_THICKNESS`__
+    - Config Key: `spacebar-thickness`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `4.25F`
 

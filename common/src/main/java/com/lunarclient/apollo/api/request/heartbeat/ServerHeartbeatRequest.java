@@ -21,12 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.api.request;
+package com.lunarclient.apollo.api.request.heartbeat;
 
 import com.lunarclient.apollo.api.ApiRequest;
 import com.lunarclient.apollo.api.ApiRequestType;
 import com.lunarclient.apollo.api.ApiServiceType;
 import com.lunarclient.apollo.api.response.ServerHeartbeatResponse;
+import com.lunarclient.apollo.stats.metadata.PlatformMetadata;
 import lombok.Builder;
 import lombok.ToString;
 
@@ -80,6 +81,13 @@ public final class ServerHeartbeatRequest implements ApiRequest<ServerHeartbeatR
      * @since 1.0.0
      */
     private final int totalPlayers;
+
+    /**
+     * The platform specific user metadata.
+     *
+     * @since 1.1.9
+     */
+    private final PlatformMetadata metadata;
 
     @Override
     public ApiServiceType getService() {

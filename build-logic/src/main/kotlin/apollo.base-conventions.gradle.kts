@@ -1,4 +1,6 @@
 import com.diffplug.gradle.spotless.FormatExtension
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.jvm.toolchain.JavaToolchainService
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.util.regex.Pattern
@@ -83,6 +85,11 @@ checkstyle {
 
 tasks {
     javadoc {
+        val javaToolchains = project.extensions.getByType(JavaToolchainService::class.java)
+        javadocTool.set(javaToolchains.javadocToolFor {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        })
+
         val minimalOptions: MinimalJavadocOptions = options
         options.encoding("UTF-8")
 

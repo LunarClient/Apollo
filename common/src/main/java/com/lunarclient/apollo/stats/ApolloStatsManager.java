@@ -82,6 +82,11 @@ public final class ApolloStatsManager {
         .node(CONFIG_PREFIX, "counts").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
+    public static final SimpleOption<Boolean> HEARTBEAT_USER_METADATA = Option.<Boolean>builder()
+        .comment("Set to 'true' to send players user metadata to MCStats, otherwise 'false'.")
+        .node(CONFIG_PREFIX, "user-metadata").type(TypeToken.get(Boolean.class))
+        .defaultValue(true).build();
+
     /**
      * Constructs the {@link ApolloStatsManager}.
      *
@@ -95,7 +100,8 @@ public final class ApolloStatsManager {
             ApolloStatsManager.HARDWARE_INFORMATION,
             ApolloStatsManager.SOFTWARE_INFORMATION,
             ApolloStatsManager.HEARTBEAT_PERFORMANCE,
-            ApolloStatsManager.HEARTBEAT_COUNTS
+            ApolloStatsManager.HEARTBEAT_COUNTS,
+            ApolloStatsManager.HEARTBEAT_USER_METADATA
         );
     }
 

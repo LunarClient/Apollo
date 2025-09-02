@@ -2,6 +2,10 @@ plugins {
     id("apollo.shadow-conventions")
 }
 
+java {
+    javaTarget(17)
+}
+
 dependencies {
     compileOnly(libs.velocity)
 
