@@ -1,0 +1,155 @@
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+# Apollo for Minestom
+
+[Minestom](https://minestom.net/) is a modern, open-source Minecraft server that enables developers to build highly performant and flexible servers from the ground up. It operates as a library, rather than relying on a traditional plugin-based architecture.
+
+Integrating Apollo with your Minestom server is straightforward. Instead of installing a plugin, you'll simply add the `apollo-minestom` artifact as a library dependency to your project and initialize the `ApolloMinestomPlatform` within your server's startup sequence.
+
+## Adding the Repository
+
+First, you need to add the Lunar Client Maven repository to your build configuration.
+
+<Tabs items={['build.gradle.kts', 'build.gradle', 'pom.xml']}>
+  <Tab>
+    ```kotlin filename="build.gradle.kts"
+    repositories {
+        maven {
+            name = "lunarclient"
+            url = uri("https://repo.lunarclient.dev")
+        }
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```groovy filename="build.gradle"
+    repositories {
+        maven {
+            name = 'lunarclient'
+            url = 'https://repo.lunarclient.dev'
+        }
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```xml filename="pom.xml"
+    <repositories>
+        <repository>
+            <id>lunarclient</id>
+            <url>https://repo.lunarclient.dev</url>
+        </repository>
+    </repositories>
+    ```
+  </Tab>
+</Tabs>
+
+## Adding the Dependency
+
+Next, add the `apollo-minestom` dependency to your project.
+
+<Tabs items={['build.gradle.kts', 'build.gradle', 'pom.xml']}>
+  <Tab>
+    ```kotlin filename="build.gradle.kts"
+    dependencies {
+        implementation("com.lunarclient:apollo-minestom:1.1.9")
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```groovy filename="build.gradle"
+    dependencies {
+        implementation 'com.lunarclient:apollo-minestom:1.1.9'
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```xml filename="pom.xml"
+    <dependencies>
+        <dependency>
+            <groupId>com.lunarclient</groupId>
+            <artifactId>apollo-minestom</artifactId>
+            <version>1.1.9</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    ```
+  </Tab>
+</Tabs>
+
+## Initialization
+
+To initialize Apollo, simply call `ApolloMinestomPlatform.init()` in your server's startup code, before you start the server. This will set up all the necessary listeners and modules.
+
+Here is an example of a simple Minestom server with Apollo integrated:
+
+```java filename="ApolloMinestomExample.java"
+package com.lunarclient.apollo.example;
+
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.ApolloMinestomPlatform;
+import com.lunarclient.apollo.common.location.ApolloBlockLocation;
+import com.lunarclient.apollo.event.EventBus;
+import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
+import com.lunarclient.apollo.module.waypoint.Waypoint;
+import com.lunarclient.apollo.module.waypoint.WaypointModule;
+import com.lunarclient.apollo.player.ApolloPlayer;
+import java.awt.Color;
+import net.minestom.server.Auth;
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.Player;
+import net.minestom.server.event.GlobalEventHandler;
+import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
+import net.minestom.server.event.player.PlayerSpawnEvent;
+import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.instance.block.Block;
+
+public final class ApolloMinestomExample {
+
+    public static void main(String[] args) {
+        MinecraftServer server = MinecraftServer.init(new Auth.Online());
+
+        InstanceContainer instance = MinecraftServer.getInstanceManager().createInstanceContainer();
+        instance.setGenerator(unit -> unit.modifier().fillHeight(-1, 0, Block.STONE));
+
+        GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
+        eventHandler.addListener(AsyncPlayerConfigurationEvent.class, event -> event.setSpawningInstance(instance));
+
+        // Initialize Apollo
+        ApolloMinestomPlatform.init();
+
+        // Display a Apollo Waypoint example
+        EventBus.getBus().register(ApolloRegisterPlayerEvent.class, event -> {
+            ApolloPlayer player = event.getPlayer();
+
+            Apollo.getModuleManager().getModule(WaypointModule.class).displayWaypoint(player, Waypoint.builder()
+                .name("KoTH")
+                .location(ApolloBlockLocation.builder()
+                    .world(player.getWorld().get().getName())
+                    .x(500)
+                    .y(100)
+                    .z(500)
+                    .build())
+                .color(Color.ORANGE)
+                .preventRemoval(false)
+                .hidden(false)
+                .build()
+            );
+        });
+
+        server.start("0.0.0.0", 25565);
+    }
+
+    private ApolloMinestomExample() {
+    }
+
+}
+```
+
+## Permissions
+
+Since Minestom does not have a traditional permissions system, Apollo uses Minestom's built-in permission levels. Here are the default permission levels required for various features:
+
+- **`/apollo <reload|update>`**: `level 2`
+- **`/lunarclient <player>`**: `level 2`
+- **Receive Apollo update notifications**: `level 4`

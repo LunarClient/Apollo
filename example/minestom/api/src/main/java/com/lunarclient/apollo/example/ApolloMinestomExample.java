@@ -61,7 +61,7 @@ public final class ApolloMinestomExample {
         // Initialize Apollo
         ApolloMinestomPlatform.init();
 
-        // Display a Apollo Waypoint
+        // Display a Apollo Waypoint example
         EventBus.getBus().register(ApolloRegisterPlayerEvent.class, event -> {
             ApolloPlayer player = event.getPlayer();
 
