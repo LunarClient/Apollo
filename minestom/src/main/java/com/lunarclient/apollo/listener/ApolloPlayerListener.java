@@ -100,7 +100,7 @@ public final class ApolloPlayerListener implements ApolloListener {
     private void onPlayerSpawn(PlayerSpawnEvent event) {
         Player player = event.getPlayer();
 
-        if (ApolloMinestomPlatform.SEND_REGISTER_PACKET) {
+        if (ApolloMinestomPlatform.getInstance().getProperties().isSendRegisterPacket()) {
             player.sendPluginMessage("minecraft:register", ApolloManager.PLUGIN_MESSAGE_CHANNEL);
         }
 

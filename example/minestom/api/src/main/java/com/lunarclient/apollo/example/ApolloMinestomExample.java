@@ -25,6 +25,7 @@ package com.lunarclient.apollo.example;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloMinestomPlatform;
+import com.lunarclient.apollo.ApolloMinestomProperties;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
@@ -59,7 +60,7 @@ public final class ApolloMinestomExample {
         });
 
         // Initialize Apollo
-        ApolloMinestomPlatform.init();
+        ApolloMinestomPlatform.init(ApolloMinestomProperties.DEFAULT_PROPERTIES);
 
         // Display a Apollo Waypoint example
         EventBus.getBus().register(ApolloRegisterPlayerEvent.class, event -> {

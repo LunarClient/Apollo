@@ -87,9 +87,9 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.wrapper.MinestomApolloStats;
-import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandManager;
 import net.minestom.server.event.Event;
@@ -102,36 +102,38 @@ import net.minestom.server.event.EventNode;
  */
 public final class ApolloMinestomPlatform implements ApolloPlatform {
 
-    public static boolean SEND_REGISTER_PACKET = true;
-
-    private static ApolloMinestomPlatform instance;
+    @Getter private static ApolloMinestomPlatform instance;
 
     private final Options options;
     private final Logger logger;
     private final ApolloStats stats;
+    @Getter private final ApolloMinestomProperties properties;
 
     /**
      * Constructs the {@link ApolloMinestomPlatform}.
      *
+     * @param properties the Apollo minestom properties
      * @since 1.2.0
      */
-    public ApolloMinestomPlatform() {
+    public ApolloMinestomPlatform(ApolloMinestomProperties properties) {
         this.options = new OptionsImpl(null);
         this.logger = Logger.getLogger(ApolloMinestomPlatform.class.getName());
         this.stats = new MinestomApolloStats();
+        this.properties = properties;
     }
 
     /**
      * Initialize Apollo for Minestom.
      *
+     * @param properties the Apollo minestom properties
      * @since 1.2.0
      */
-    public static void init() {
+    public static void init(ApolloMinestomProperties properties) {
         if (instance != null) {
             throw new IllegalStateException("ApolloMinestomPlatform is already initialized!");
         }
 
-        instance = new ApolloMinestomPlatform();
+        instance = new ApolloMinestomPlatform(properties);
 
         ApolloManager.bootstrap(instance);
         ApolloManager.setMetadataManager(new MinestomMetadataManager());
@@ -177,8 +179,7 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
             .addModule(WaypointModule.class, new WaypointModuleImpl());
 
         try {
-            // TODO: config path
-            ApolloManager.setConfigPath(new File("").toPath());
+            ApolloManager.setConfigPath(properties.getConfigPath());
             ApolloManager.loadConfiguration();
             ((ApolloModuleManagerImpl) Apollo.getModuleManager()).enableModules();
             ApolloManager.saveConfiguration();

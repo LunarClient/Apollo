@@ -1,4 +1,5 @@
 import { Tab, Tabs } from 'nextra-theme-docs';
+import { Callout } from 'nextra-theme-docs'
 
 # Apollo for Minestom
 
@@ -51,14 +52,14 @@ Next, add the `apollo-minestom` dependency to your project.
   <Tab>
     ```kotlin filename="build.gradle.kts"
     dependencies {
-        implementation("com.lunarclient:apollo-minestom:1.1.9")
+        implementation("com.lunarclient:apollo-minestom:1.2.0")
     }
     ```
   </Tab>
   <Tab>
     ```groovy filename="build.gradle"
     dependencies {
-        implementation 'com.lunarclient:apollo-minestom:1.1.9'
+        implementation 'com.lunarclient:apollo-minestom:1.2.0'
     }
     ```
   </Tab>
@@ -68,7 +69,7 @@ Next, add the `apollo-minestom` dependency to your project.
         <dependency>
             <groupId>com.lunarclient</groupId>
             <artifactId>apollo-minestom</artifactId>
-            <version>1.1.9</version>
+            <version>1.2.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -78,7 +79,7 @@ Next, add the `apollo-minestom` dependency to your project.
 
 ## Initialization
 
-To initialize Apollo, simply call `ApolloMinestomPlatform.init()` in your server's startup code, before you start the server. This will set up all the necessary listeners and modules.
+To initialize Apollo, simply call `ApolloMinestomPlatform.init(ApolloMinestomProperties.DEFAULT_PROPERTIES)` in your server's startup code, before you start the server. This will set up all the necessary listeners and modules.
 
 Here is an example of a simple Minestom server with Apollo integrated:
 
@@ -87,6 +88,7 @@ package com.lunarclient.apollo.example;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloMinestomPlatform;
+import com.lunarclient.apollo.ApolloMinestomProperties;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
@@ -116,7 +118,7 @@ public final class ApolloMinestomExample {
         eventHandler.addListener(AsyncPlayerConfigurationEvent.class, event -> event.setSpawningInstance(instance));
 
         // Initialize Apollo
-        ApolloMinestomPlatform.init();
+        ApolloMinestomPlatform.init(ApolloMinestomProperties.DEFAULT_PROPERTIES);
 
         // Display a Apollo Waypoint example
         EventBus.getBus().register(ApolloRegisterPlayerEvent.class, event -> {
@@ -146,10 +148,49 @@ public final class ApolloMinestomExample {
 }
 ```
 
+## Properties
+
+Apollo exposes several properties to configure its behavior at startup. By default, you can simply call `ApolloMinestomPlatform.init(ApolloMinestomProperties.DEFAULT_PROPERTIES)`. However, there are situations where you may not want to rely on the defaults:
+
+`sendRegisterPacket` (default: `true`)
+
+Unlike Bukkit/Spigot, Minestom does **not** maintain a global registry of plugin channels. This means there is no automatic tracking or registration of channels, so Apollo must explicitly send the `minecraft:register` packet to let the client know about its channel (`lunar:apollo`).
+
+By default, `sendRegisterPacket` is set to `true`, and Apollo will send this packet automatically.
+
+<Callout type="warning" emoji="⚠️">
+  If you disable this, you must ensure your server or another plugin sends the `lunar:apollo` channel registration manually.
+</Callout>
+
+To disable this behavior, set the property to false:
+
+```java
+sendRegisterPacket(false)
+```
+
+`configPath` (default: `./Apollo/`)
+
+By default, Apollo stores its configuration in an Apollo folder at the root of your server directory.
+If you want Apollo’s config files to live elsewhere (e.g., inside a configs/ folder you already manage), override this value.
+
+```java
+configPath(/* Your config path */)
+```
+
+The final initialization call with both properties overridden may look like this:
+
+```java
+ApolloMinestomPlatform.init(ApolloMinestomProperties.builder()
+    .sendRegisterPacket(false)
+    .configPath(/* Your config path here */)
+    .build());
+```
+
+
 ## Permissions
 
 Since Minestom does not have a traditional permissions system, Apollo uses Minestom's built-in permission levels. Here are the default permission levels required for various features:
 
-- **`/apollo <reload|update>`**: `level 2`
-- **`/lunarclient <player>`**: `level 2`
-- **Receive Apollo update notifications**: `level 4`
+- `/apollo <reload|update>`: `2`
+- `/lunarclient <player>`: `2`
+- Receive Apollo update notifications: `4`

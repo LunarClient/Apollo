@@ -13,3 +13,11 @@ dependencies {
 
     implementation(libs.minestom)
 }
+
+tasks {
+    jar {
+        manifest {
+            attributes["Main-Class"] = "com.lunarclient.apollo.example.ApolloMinestomExample"
+        }
+    }
+}
