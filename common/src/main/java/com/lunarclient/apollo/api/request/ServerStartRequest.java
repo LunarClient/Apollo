@@ -133,6 +133,13 @@ public final class ServerStartRequest implements ApiRequest<ServerStartResponse>
      */
     private final List<String> modules;
 
+    /**
+     * The current version of Apollo that is running.
+     *
+     * @since 1.2.0
+     */
+    private final String apolloVersion;
+
     @Override
     public ApiServiceType getService() {
         return ApiServiceType.ANALYTICS;
