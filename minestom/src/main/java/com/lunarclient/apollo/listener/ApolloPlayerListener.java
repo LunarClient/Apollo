@@ -69,8 +69,6 @@ public final class ApolloPlayerListener implements ApolloListener {
         Player player = event.getPlayer();
         String identifier = event.getIdentifier();
 
-        System.out.println(event.getIdentifier());
-
         switch (identifier) {
             case "minecraft:register": {
                 if (this.getChannels(event.getMessageString()).contains(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {

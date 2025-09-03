@@ -25,8 +25,10 @@ package com.lunarclient.apollo;
 
 import com.lunarclient.apollo.command.MinestomApolloCommand;
 import com.lunarclient.apollo.command.MinestomLunarClientCommand;
+import com.lunarclient.apollo.listener.ApolloMetadataListener;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
+import com.lunarclient.apollo.metadata.MinestomMetadataManager;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.module.autotexthotkey.AutoTextHotkeyModule;
 import com.lunarclient.apollo.module.beam.BeamModule;
@@ -132,9 +134,11 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
         instance = new ApolloMinestomPlatform();
 
         ApolloManager.bootstrap(instance);
+        ApolloManager.setMetadataManager(new MinestomMetadataManager());
 
         EventNode<Event> node = EventNode.all("apollo");
 
+        new ApolloMetadataListener(node);
         new ApolloPlayerListener(node);
         new ApolloWorldListener(node);
 
