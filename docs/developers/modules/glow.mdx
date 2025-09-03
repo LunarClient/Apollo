@@ -23,6 +23,10 @@ The glow module allows you to take advantage of the vanilla Minecraft Glow Effec
 
 ## Integration
 
+<Callout type="info">
+  If no color is specified, the glow effect will default to the player's scoreboard team color.
+</Callout>
+
 ### Sample Code
 Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
 
@@ -65,6 +69,7 @@ public void resetGlowEffectsExample(Player viewer) {
 2. `UUID target`
    - The player or living entity you want to display the glow effect on.
 3. `Color glowColor`
+   - If `null` is passed (or if no color is specified), the glow effect will default to the target's scoreboard team color.
    - How you'll dictate the color of the glow effect, see the [colors page](/apollo/developers/utilities/colors) for more.
 
 </Tab>

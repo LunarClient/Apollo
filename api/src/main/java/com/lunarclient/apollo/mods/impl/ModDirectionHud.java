@@ -124,16 +124,6 @@ public final class ModDirectionHud {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> USE_LEGACY_STYLE = SimpleOption.<Boolean>builder()
-        .node("direction-hud", "use-legacy-style").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> SHOW_MARKER = SimpleOption.<Boolean>builder()
         .node("direction-hud", "show-marker").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -146,6 +136,27 @@ public final class ModDirectionHud {
      */
     public static final SimpleOption<Boolean> SHOW_MARKER_VALUE = SimpleOption.<Boolean>builder()
         .node("direction-hud", "show-marker-value").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> USE_LEGACY_STYLE = SimpleOption.<Boolean>builder()
+        .node("direction-hud", "use-legacy-style").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Choose whether to show the Direction HUD when TAB is open.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> SHOW_WITH_TAB = SimpleOption.<Boolean>builder()
+        .comment("Choose whether to show the Direction HUD when TAB is open.")
+        .node("direction-hud", "show-with-tab").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

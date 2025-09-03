@@ -50,17 +50,6 @@ public final class ModRadio {
      *
      * @since 1.1.7
      */
-    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
-        .node("radio", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.7
-     */
     public static final NumberOption<Integer> VOLUME = NumberOption.<Integer>number()
         .node("radio", "volume").type(TypeToken.get(Integer.class))
         .min(0).max(100)
@@ -74,6 +63,17 @@ public final class ModRadio {
      */
     public static final SimpleOption<Boolean> MUTE_RADIO = SimpleOption.<Boolean>builder()
         .node("radio", "mute-radio").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.7
+     */
+    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
+        .node("radio", "scale").type(TypeToken.get(Float.class))
+        .min(0.5F).max(1.5F)
         .notifyClient()
         .build();
 

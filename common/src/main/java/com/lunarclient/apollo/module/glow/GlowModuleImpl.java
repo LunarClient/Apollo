@@ -32,6 +32,7 @@ import com.lunarclient.apollo.recipients.Recipients;
 import java.awt.Color;
 import java.util.UUID;
 import lombok.NonNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Provides the glow module.
@@ -41,12 +42,20 @@ import lombok.NonNull;
 public final class GlowModuleImpl extends GlowModule {
 
     @Override
-    public void overrideGlow(@NonNull Recipients recipients, @NonNull UUID glowingPlayer, @NonNull Color color) {
-        OverrideGlowEffectMessage message = OverrideGlowEffectMessage.newBuilder()
-            .setPlayerUuid(NetworkTypes.toProtobuf(glowingPlayer))
-            .setColor(NetworkTypes.toProtobuf(color))
-            .build();
+    public void overrideGlow(@NonNull Recipients recipients, @NonNull UUID glowingPlayer) {
+        this.overrideGlow(recipients, glowingPlayer, null);
+    }
 
+    @Override
+    public void overrideGlow(@NonNull Recipients recipients, @NonNull UUID glowingPlayer, @Nullable Color color) {
+        OverrideGlowEffectMessage.Builder builder = OverrideGlowEffectMessage.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(glowingPlayer));
+
+        if (color != null) {
+            builder.setColor(NetworkTypes.toProtobuf(color));
+        }
+
+        OverrideGlowEffectMessage message = builder.build();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 

@@ -27,8 +27,9 @@ import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.api.ApolloHttpManager;
-import com.lunarclient.apollo.api.request.ServerHeartbeatRequest;
+import com.lunarclient.apollo.api.request.heartbeat.ServerHeartbeatRequest;
 import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.stats.metadata.ApolloMetadataManager;
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
 import java.util.concurrent.TimeUnit;
@@ -71,8 +72,9 @@ public final class ApolloStatsThread extends Thread {
 
                 boolean performance = options.get(ApolloStatsManager.HEARTBEAT_PERFORMANCE);
                 boolean counts = options.get(ApolloStatsManager.HEARTBEAT_COUNTS);
+                boolean userMetadata = options.get(ApolloStatsManager.HEARTBEAT_USER_METADATA);
 
-                if (!performance && !counts) {
+                if (!performance && !counts && !userMetadata) {
                     break;
                 }
 
@@ -90,6 +92,15 @@ public final class ApolloStatsThread extends Thread {
                 if (counts) {
                     requestBuilder
                         .totalPlayers(stats.getTotalPlayers());
+                }
+
+                if (userMetadata) {
+                    ApolloMetadataManager metadataManager = ApolloManager.getMetadataManager();
+
+                    requestBuilder
+                        .metadata(metadataManager.extract());
+
+                    metadataManager.clear();
                 }
 
                 final ServerHeartbeatRequest finalRequest = request = requestBuilder.build();

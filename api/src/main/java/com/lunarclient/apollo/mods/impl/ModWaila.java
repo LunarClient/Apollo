@@ -59,6 +59,16 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> ALWAYS_SHOW = SimpleOption.<Boolean>builder()
+        .node("waila", "always-show").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> SHOW_ENTITIES = SimpleOption.<Boolean>builder()
@@ -114,6 +124,86 @@ public final class ModWaila {
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("waila", "border-thickness").type(TypeToken.get(Float.class))
         .min(0.5F).max(3.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> SHOW_BLOCK_COORDS = SimpleOption.<Boolean>builder()
+        .node("waila", "show-block-coords").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Color> BLOCK_COORDS_COLOR = SimpleOption.<Color>builder()
+        .node("waila", "block-coords-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> SHOW_CORRECT_TOOL = SimpleOption.<Boolean>builder()
+        .node("waila", "show-correct-tool").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Color> CORRECT_TOOL_COLOR = SimpleOption.<Color>builder()
+        .node("waila", "correct-tool-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> SHOW_BREAK_TIME = SimpleOption.<Boolean>builder()
+        .node("waila", "show-break-time").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Color> BREAK_TIME_COLOR = SimpleOption.<Color>builder()
+        .node("waila", "break-time-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> SHOW_LIGHT_LEVEL = SimpleOption.<Boolean>builder()
+        .node("waila", "show-light-level").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Color> LIGHT_LEVEL_COLOR = SimpleOption.<Color>builder()
+        .node("waila", "light-level-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
