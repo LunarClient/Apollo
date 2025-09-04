@@ -25,12 +25,14 @@ package com.lunarclient.apollo.listener;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.api.response.VersionResponse;
 import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.Listen;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.player.v1.PlayerHandshakeMessage;
+import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.BukkitApolloPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -86,14 +88,19 @@ public final class ApolloPlayerListener implements Listener, ApolloListener {
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
-        String version = ApolloManager.getVersionManager().getLatestVersion();
+        VersionResponse updateAssets = ApolloManager.getVersionManager().getUpdateAssets();
+        if (updateAssets == null) {
+            return;
+        }
 
-        if (version == null) {
+        if (!Apollo.getPlatform().getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
             return;
         }
 
         Player player = event.getPlayer();
-        if (player.isOp()) {
+        String version = updateAssets.getVersion();
+
+        if (version != null && player.isOp()) {
             String message = ChatColor.YELLOW + "[Apollo] A new version of Apollo is available! Latest release: "
                 + ChatColor.GOLD + version
                 + ChatColor.YELLOW + " Please update by running "

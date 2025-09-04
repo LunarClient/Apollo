@@ -56,9 +56,7 @@ public final class ApolloVersionManager {
         .node("send-updater-message").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
-    @Getter
-    private String latestVersion;
-    private VersionResponse.Assets assets;
+    @Getter private VersionResponse updateAssets;
 
     private final AtomicBoolean updated = new AtomicBoolean(false);
 
@@ -79,8 +77,6 @@ public final class ApolloVersionManager {
     public void checkForUpdates() {
         ApolloManager.getHttpManager().request(VersionRequest.builder().build())
             .onSuccess(response -> {
-                this.assets = response.getAssets();
-
                 ApolloPlatform platform = Apollo.getPlatform();
                 String version = response.getVersion();
 
@@ -91,7 +87,7 @@ public final class ApolloVersionManager {
                     return;
                 }
 
-                this.latestVersion = version;
+                this.updateAssets = response;
 
                 if (!platform.getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
                     return;
@@ -124,7 +120,7 @@ public final class ApolloVersionManager {
             return;
         }
 
-        if (this.latestVersion == null) {
+        if (this.updateAssets == null) {
             message.accept(Component.text(
                 "This server is already running the latest version of Apollo.",
                 NamedTextColor.RED)
@@ -132,18 +128,10 @@ public final class ApolloVersionManager {
             return;
         }
 
-        if (this.assets == null) {
+        String downloadUrl = this.getPlatformUrl(platform);
+        if (downloadUrl == null) {
             message.accept(Component.text(
                 "Unable to find assets to update from.",
-                NamedTextColor.RED)
-            );
-            return;
-        }
-
-        String platformUrl = this.getPlatformUrl(platform);
-        if (platformUrl == null) {
-            message.accept(Component.text(
-                "Unable to find platform url.",
                 NamedTextColor.RED)
             );
             return;
@@ -165,14 +153,14 @@ public final class ApolloVersionManager {
         }
 
         // Find name of the new Apollo jar
-        String[] urlArgs = platformUrl.split("/");
+        String[] urlArgs = downloadUrl.split("/");
         String fileName = urlArgs[urlArgs.length - 1];
 
         // Create a path for the downloaded Apollo jar
         Path updatedJarPath = Paths.get(file.getParent() + File.separator + fileName);
 
         DownloadFileRequest request = DownloadFileRequest.builder()
-            .url(platformUrl)
+            .url(downloadUrl)
             .target(updatedJarPath)
             .build();
 
@@ -198,21 +186,23 @@ public final class ApolloVersionManager {
     }
 
     private String getPlatformUrl(ApolloPlatform.Platform platform) {
+        VersionResponse.Assets assets = this.updateAssets.getAssets();
+
         switch (platform) {
             case BUKKIT: {
-                return this.assets.getBukkit();
+                return assets.getBukkit();
             }
 
             case BUNGEE: {
-                return this.assets.getBungee();
+                return assets.getBungee();
             }
 
             case VELOCITY: {
-                return this.assets.getVelocity();
+                return assets.getVelocity();
             }
 
             case FOLIA: {
-                return this.assets.getFolia();
+                return assets.getFolia();
             }
         }
 
