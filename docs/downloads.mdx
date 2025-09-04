@@ -2,7 +2,7 @@ import { faWindows } from "@fortawesome/free-brands-svg-icons/faWindows";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons/faDiscord";
 import { faDownload } from "@fortawesome/free-solid-svg-icons/faDownload";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons/faQuestion";
-import { faBullhorn } from "@fortawesome/free-solid-svg-icons/faBullhorn";
+import { faFileCode } from "@fortawesome/free-solid-svg-icons/faFileCode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Text } from "@moonsworth/text";
 import router from "next/router";
@@ -66,11 +66,11 @@ import styles from "./downloads.module.css";
         </button>
     </div>
     <div className={styles.downloadItem}>
-        <img className={styles.downloadIcon} src="/sponge.png" alt="Sponge" />
-        <span className={styles.downloadTitle}>Sponge</span>
-        <button className={styles.downloadButton}>
-            <FontAwesomeIcon icon={faBullhorn} className={styles.downloadButtonIcon} />
-            <Text>Coming Soon</Text>
+        <img className={styles.downloadIcon} src="/minestom.png" alt="Minestom" />
+        <span className={styles.downloadTitle}>Minestom</span>
+        <button className={styles.downloadButton} onClick={() => router.push("https://lunarclient.dev/apollo/developers/minestom")}>
+            <FontAwesomeIcon icon={faFileCode} className={styles.downloadButtonIcon} />
+            <Text>Learn More</Text>
         </button>
     </div>
     <div className={styles.downloadItem}>
