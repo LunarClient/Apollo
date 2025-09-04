@@ -35,7 +35,7 @@ import lombok.AllArgsConstructor;
 import net.minestom.server.instance.Instance;
 
 /**
- * The Bukkit implementation of {@link ApolloWorld}.
+ * The Minestom implementation of {@link ApolloWorld}.
  *
  * @since 1.2.0
  */
