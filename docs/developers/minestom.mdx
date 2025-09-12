@@ -145,49 +145,84 @@ public final class ApolloMinestomExample {
 }
 ```
 
-## Properties
+## Configuration
 
-Apollo exposes several properties to configure its behavior at startup. By default, you can simply call `ApolloMinestomPlatform.init(ApolloMinestomProperties.DEFAULT_PROPERTIES)`. However, there are situations where you may not want to rely on the defaults:
+You can customize Apollo's behavior by passing a configured `ApolloMinestomProperties` object during initialization. While `ApolloMinestomProperties.DEFAULT_PROPERTIES` is sufficient for most use cases, you can tailor the settings to your server's specific needs.
 
-`sendRegisterPacket` (default: `true`)
+Here’s an overview of the available properties and how to use them.
 
-Unlike Bukkit/Spigot, Minestom does **not** maintain a global registry of plugin channels. This means there is no automatic tracking or registration of channels, so Apollo must explicitly send the `minecraft:register` packet to let the client know about its channel (`lunar:apollo`).
+### Properties
 
-By default, `sendRegisterPacket` is set to `true`, and Apollo will send this packet automatically.
+These properties control the core functionalities of Apollo on the Minestom platform.
+
+#### `sendRegisterPacket`
+- **Default:** `true`
+- **Description:** Controls whether Apollo should send the `minecraft:register` packet for its plugin channel (`lunar:apollo`). Unlike other server platforms, Minestom does not manage a global registry of plugin channels, so this step is necessary for the client to recognize Apollo.
 
 <Callout type="warning" emoji="⚠️">
-  If you disable this, you must ensure your server or another plugin sends the `lunar:apollo` channel registration manually.
+  If you disable this, you are responsible for registering the `lunar:apollo` channel manually. Failure to do so will prevent Apollo from communicating with clients.
 </Callout>
 
-To disable this behavior, set the property to false:
-
 ```java
-sendRegisterPacket(false)
+ApolloMinestomProperties.builder()
+    .sendRegisterPacket(false)
+    .build()
 ```
 
-`configPath` (default: `./Apollo/`)
-
-By default, Apollo stores its configuration in an Apollo folder at the root of your server directory.
-If you want Apollo’s config files to live elsewhere (e.g., inside a configs/ folder you already manage), override this value.
+#### `configPath`
+- **Default:** `./Apollo/`
+- **Description:** Specifies the directory where Apollo's configuration files are stored. By default, it creates an `Apollo` folder in your server's root directory. You can change this to integrate with your existing configuration structure.
 
 ```java
-configPath(/* Your config path */)
+ApolloMinestomProperties.builder()
+    .configPath(Path.of("your/custom/config/path"))
+    .build()
 ```
 
-The final initialization call with both properties overridden may look like this:
+### Commands
+
+Apollo's in-game commands can be fine-tuned using the `commandProperties` builder. This allows you to disable commands or integrate with your own permissions system.
+
+Since Minestom lacks a traditional, unified permissions API, Apollo provides a flexible predicate-based system. By **default**, it relies on Minestom's built-in operator permission levels.
+
+- Execute Commands (`/apollo`, `/lunarclient`): `2`
+- Receive `Apollo Available Update` notifications: `4`
+
+**Disabling Commands**
+```java
+ApolloMinestomPlatform.init(ApolloMinestomProperties.builder()
+    .commandProperties(ApolloMinestomProperties.CommandProperties.builder()
+        .registerApolloCommand(false)
+        .registerLunarClientCommand(false)
+        .build()
+    )
+    .build());
+)
+```
+
+**Custom Permissions**
+```java
+ApolloMinestomPlatform.init(ApolloMinestomProperties.builder()
+    .commandProperties(ApolloMinestomProperties.CommandProperties.builder()
+        .apolloCommandPermission(sender -> sender.hasPermissionLevel(4))
+        .lunarClientCommandPermission(sender -> sender.hasPermissionLevel(1))
+        .build()
+    )
+    .build());
+)
+```
+
+### Complete Example
+
+Here is an example of a complete initialization call with custom properties:
 
 ```java
 ApolloMinestomPlatform.init(ApolloMinestomProperties.builder()
     .sendRegisterPacket(false)
-    .configPath(/* Your config path here */)
+    .configPath(Path.of("server-configs/apollo"))
+    .commandProperties(ApolloMinestomProperties.CommandProperties.builder()
+        .registerLunarClientCommand(false)
+        .apolloCommandPermission(sender -> sender.hasPermissionLevel(4))
+        .build())
     .build());
 ```
-
-
-## Permissions
-
-Since Minestom does not have a traditional permissions system, Apollo uses Minestom's built-in permission levels. Here are the default permission levels required for various features:
-
-- `/apollo <reload|update>`: `2`
-- `/lunarclient <player>`: `2`
-- Receive Apollo update notifications: `4`

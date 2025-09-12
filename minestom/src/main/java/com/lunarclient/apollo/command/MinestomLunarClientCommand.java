@@ -25,6 +25,7 @@ package com.lunarclient.apollo.command;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.command.type.LunarClientCommand;
+import java.util.function.Predicate;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -45,15 +46,16 @@ public final class MinestomLunarClientCommand extends LunarClientCommand<Command
     /**
      * Returns a new instance of this command.
      *
+     * @param permission the permission predicate
      * @return a new command
      * @since 1.2.0
      */
-    public static Command create() {
+    public static Command create(Predicate<CommandSender> permission) {
         MinestomLunarClientCommand lunarClientCommand = new MinestomLunarClientCommand();
 
         Command command = new Command("lunarclient");
         command.setDefaultExecutor((sender, context) -> {
-            if (sender instanceof Player && ((Player) sender).getPermissionLevel() < 2) {
+            if (!permission.test(sender)) {
                 sender.sendMessage(Component.text("You don't have permission to use this command.", NamedTextColor.RED));
                 return;
             }
@@ -64,7 +66,7 @@ public final class MinestomLunarClientCommand extends LunarClientCommand<Command
         ArgumentString argument = ArgumentType.String("player");
 
         command.addSyntax((sender, context) -> {
-            if (sender instanceof Player && ((Player) sender).getPermissionLevel() < 2) {
+            if (!permission.test(sender)) {
                 sender.sendMessage(Component.text("You don't have permission to use this command.", NamedTextColor.RED));
                 return;
             }

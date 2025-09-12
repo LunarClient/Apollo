@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.command;
 
 import com.lunarclient.apollo.command.type.ApolloCommand;
+import java.util.function.Predicate;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -31,7 +32,6 @@ import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.ArgumentWord;
-import net.minestom.server.entity.Player;
 
 /**
  * The Minestom implementation of the {@link ApolloCommand}.
@@ -43,15 +43,16 @@ public final class MinestomApolloCommand extends ApolloCommand<CommandSender> {
     /**
      * Returns a new instance of this command.
      *
+     * @param permission the permission predicate
      * @return a new command
      * @since 1.2.0
      */
-    public static Command create() {
+    public static Command create(Predicate<CommandSender> permission) {
         MinestomApolloCommand apolloCommand = new MinestomApolloCommand();
 
         Command command = new Command("apollo");
         command.setDefaultExecutor((sender, context) -> {
-            if (sender instanceof Player && ((Player) sender).getPermissionLevel() < 2) {
+            if (!permission.test(sender)) {
                 sender.sendMessage(Component.text("You don't have permission to use this command.", NamedTextColor.RED));
                 return;
             }
@@ -63,7 +64,7 @@ public final class MinestomApolloCommand extends ApolloCommand<CommandSender> {
             .from("reload", "update");
 
         command.addSyntax((sender, context) -> {
-            if (sender instanceof Player && ((Player) sender).getPermissionLevel() < 2) {
+            if (!permission.test(sender)) {
                 sender.sendMessage(Component.text("You don't have permission to use this command.", NamedTextColor.RED));
                 return;
             }

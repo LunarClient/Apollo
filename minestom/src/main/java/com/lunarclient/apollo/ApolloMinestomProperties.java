@@ -26,9 +26,12 @@ package com.lunarclient.apollo;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.function.Predicate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import net.minestom.server.command.CommandSender;
+import net.minestom.server.entity.Player;
 
 /**
  * Configuration properties for initializing the Apollo Minestom platform.
@@ -82,6 +85,15 @@ public class ApolloMinestomProperties {
     private final Path configPath = ApolloMinestomProperties.getDefaultConfigPath();
 
     /**
+     * The command properties for Apollo Minestom.
+     *
+     * @return the command properties
+     * @since 1.2.0
+     */
+    @Builder.Default
+    private final CommandProperties commandProperties = CommandProperties.builder().build();
+
+    /**
      * Computes the default configuration path ({@code ./Apollo/}).
      *
      * @return the resolved config path
@@ -97,6 +109,59 @@ public class ApolloMinestomProperties {
         }
 
         return apolloDir;
+    }
+
+    /**
+     * Configuration properties for Apollo commands on Minestom.
+     *
+     * @since 1.2.0
+     */
+    @Getter
+    @Builder
+    @Accessors
+    public static class CommandProperties {
+
+        private static final Predicate<CommandSender> DEFAULT_PERMISSION = sender ->
+            !(sender instanceof Player) || ((Player) sender).getPermissionLevel() >= 2;
+
+        /**
+         * Determines whether Apollo should register the {@code /apollo} command.
+         *
+         * @return true if the command should be registered, false otherwise
+         * @since 1.2.0
+         */
+        @Builder.Default
+        private final boolean registerApolloCommand = true;
+
+        /**
+         * Determines whether Apollo should register the {@code /lunarclient} command.
+         *
+         * @return true if the command should be registered, false otherwise
+         * @since 1.2.0
+         */
+        @Builder.Default
+        private final boolean registerLunarClientCommand = true;
+
+        /**
+         * The predicate to check if a {@link CommandSender} has permission to use
+         * the {@code /apollo} command.
+         *
+         * @return the permission predicate
+         * @since 1.2.0
+         */
+        @Builder.Default
+        private final Predicate<CommandSender> apolloCommandPermission = DEFAULT_PERMISSION;
+
+        /**
+         * The predicate to check if a {@link CommandSender} has permission to use
+         * the {@code /lunarclient} command.
+         *
+         * @return the permission predicate
+         * @since 1.2.0
+         */
+        @Builder.Default
+        private final Predicate<CommandSender> lunarClientCommandPermission = DEFAULT_PERMISSION;
+
     }
 
 }

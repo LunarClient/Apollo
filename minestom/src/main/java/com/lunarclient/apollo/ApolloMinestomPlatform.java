@@ -87,11 +87,14 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.wrapper.MinestomApolloStats;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandManager;
+import net.minestom.server.command.builder.Command;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.EventNode;
 
@@ -187,14 +190,29 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
             instance.getPlatformLogger().log(Level.SEVERE, "Unable to load Apollo configuration and modules!", throwable);
         }
 
-        CommandManager commandManager = MinecraftServer.getCommandManager();
-        commandManager.register(MinestomApolloCommand.create());
-        commandManager.register(MinestomLunarClientCommand.create());
+        ApolloMinestomPlatform.registerCommands(properties.getCommandProperties());
 
         ApolloManager.getStatsManager().enable();
         ApolloManager.getVersionManager().checkForUpdates();
 
         instance.getPlatformLogger().log(Level.INFO, "[Apollo] Successfully initialized! (" + instance.getApolloVersion() + ")");
+    }
+
+    private static void registerCommands(ApolloMinestomProperties.CommandProperties properties) {
+        Set<Command> commands = new HashSet<>();
+
+        if (properties.isRegisterApolloCommand()) {
+            commands.add(MinestomApolloCommand.create(properties.getApolloCommandPermission()));
+        }
+
+        if (properties.isRegisterLunarClientCommand()) {
+            commands.add(MinestomLunarClientCommand.create(properties.getLunarClientCommandPermission()));
+        }
+
+        CommandManager commandManager = MinecraftServer.getCommandManager();
+        for (Command command : commands) {
+            commandManager.register(command);
+        }
     }
 
     @Override
