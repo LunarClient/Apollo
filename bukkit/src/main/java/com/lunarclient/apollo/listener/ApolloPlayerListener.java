@@ -25,6 +25,7 @@ package com.lunarclient.apollo.listener;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.api.response.VersionResponse;
 import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.event.EventBus;
@@ -87,13 +88,27 @@ public final class ApolloPlayerListener implements Listener, ApolloListener {
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
-        if (!ApolloVersionManager.NEEDS_UPDATE) {
+        VersionResponse updateAssets = ApolloManager.getVersionManager().getUpdateAssets();
+        if (updateAssets == null) {
+            return;
+        }
+
+        if (!Apollo.getPlatform().getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
             return;
         }
 
         Player player = event.getPlayer();
-        if (player.isOp()) {
-            player.sendMessage(ChatColor.YELLOW + ApolloVersionManager.UPDATE_MESSAGE);
+        String version = updateAssets.getVersion();
+
+        if (version != null && player.isOp()) {
+            String message = ChatColor.YELLOW + "[Apollo] A new version of Apollo is available! Latest release: "
+                + ChatColor.GOLD + version
+                + ChatColor.YELLOW + " Please update by running "
+                + ChatColor.GOLD + "/apollo update "
+                + ChatColor.YELLOW + "or by downloading the latest build from "
+                + ChatColor.GOLD + "https://lunarclient.dev/apollo/downloads";
+
+            player.sendMessage(message);
         }
     }
 

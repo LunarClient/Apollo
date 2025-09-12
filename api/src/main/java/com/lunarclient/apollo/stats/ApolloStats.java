@@ -68,7 +68,7 @@ public interface ApolloStats {
     List<ApolloPluginDescription> getPlugins();
 
     /**
-     * Gets the servers platform subtype (Bukkit, BungeeCord, Velocity...).
+     * Gets the servers platform subtype (Bukkit, Folia, Minestom, BungeeCord, Velocity...).
      *
      * @return the servers platform subtype
      * @since 1.0.0

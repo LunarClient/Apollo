@@ -1,0 +1,228 @@
+import { Tab, Tabs } from 'nextra-theme-docs';
+import { Callout } from 'nextra-theme-docs'
+
+# Apollo for Minestom
+
+[Minestom](https://minestom.net/) is a modern, open-source Minecraft server that enables developers to build highly performant and flexible servers from the ground up. It operates as a library, rather than relying on a traditional plugin-based architecture.
+
+Integrating Apollo with your Minestom server is straightforward. Instead of installing a plugin, you'll simply add the `apollo-minestom` artifact as a library dependency to your project and initialize the `ApolloMinestomPlatform` within your server's startup sequence.
+
+## Adding the Repository
+
+First, you need to add the Lunar Client Maven repository to your build configuration.
+
+<Tabs items={['build.gradle.kts', 'build.gradle', 'pom.xml']}>
+  <Tab>
+    ```kotlin filename="build.gradle.kts"
+    repositories {
+        maven {
+            name = "lunarclient"
+            url = uri("https://repo.lunarclient.dev")
+        }
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```groovy filename="build.gradle"
+    repositories {
+        maven {
+            name = 'lunarclient'
+            url = 'https://repo.lunarclient.dev'
+        }
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```xml filename="pom.xml"
+    <repositories>
+        <repository>
+            <id>lunarclient</id>
+            <url>https://repo.lunarclient.dev</url>
+        </repository>
+    </repositories>
+    ```
+  </Tab>
+</Tabs>
+
+## Adding the Dependency
+
+Next, add the `apollo-minestom` dependency to your project.
+
+<Tabs items={['build.gradle.kts', 'build.gradle', 'pom.xml']}>
+  <Tab>
+    ```kotlin filename="build.gradle.kts"
+    dependencies {
+        implementation("com.lunarclient:apollo-minestom:1.2.0")
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```groovy filename="build.gradle"
+    dependencies {
+        implementation 'com.lunarclient:apollo-minestom:1.2.0'
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```xml filename="pom.xml"
+    <dependencies>
+        <dependency>
+            <groupId>com.lunarclient</groupId>
+            <artifactId>apollo-minestom</artifactId>
+            <version>1.2.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    ```
+  </Tab>
+</Tabs>
+
+## Initialization
+
+To initialize Apollo, simply call `ApolloMinestomPlatform.init(ApolloMinestomProperties.DEFAULT_PROPERTIES)` in your server's startup code, before you start the server. This will set up all the necessary listeners and modules.
+
+Here is an example of a simple Minestom server with Apollo integrated:
+
+```java filename="ApolloMinestomExample.java"
+package com.lunarclient.apollo.example;
+
+import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.ApolloMinestomPlatform;
+import com.lunarclient.apollo.ApolloMinestomProperties;
+import com.lunarclient.apollo.common.location.ApolloBlockLocation;
+import com.lunarclient.apollo.event.EventBus;
+import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
+import com.lunarclient.apollo.module.waypoint.Waypoint;
+import com.lunarclient.apollo.module.waypoint.WaypointModule;
+import com.lunarclient.apollo.player.ApolloPlayer;
+import java.awt.Color;
+import net.minestom.server.Auth;
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.event.GlobalEventHandler;
+import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
+import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.instance.block.Block;
+
+public final class ApolloMinestomExample {
+
+    public static void main(String[] args) {
+        MinecraftServer server = MinecraftServer.init(new Auth.Online());
+
+        InstanceContainer instance = MinecraftServer.getInstanceManager().createInstanceContainer();
+        instance.setGenerator(unit -> unit.modifier().fillHeight(-1, 0, Block.STONE));
+
+        GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
+        eventHandler.addListener(AsyncPlayerConfigurationEvent.class, event -> event.setSpawningInstance(instance));
+
+        // Initialize Apollo
+        ApolloMinestomPlatform.init(ApolloMinestomProperties.DEFAULT_PROPERTIES);
+
+        // Display a Apollo Waypoint example
+        EventBus.getBus().register(ApolloRegisterPlayerEvent.class, event -> {
+            ApolloPlayer player = event.getPlayer();
+
+            Apollo.getModuleManager().getModule(WaypointModule.class).displayWaypoint(player, Waypoint.builder()
+                .name("KoTH")
+                .location(ApolloBlockLocation.builder()
+                    .world(player.getWorld().get().getName())
+                    .x(500)
+                    .y(100)
+                    .z(500)
+                    .build())
+                .color(Color.ORANGE)
+                .preventRemoval(false)
+                .hidden(false)
+                .build()
+            );
+        });
+
+        server.start("0.0.0.0", 25565);
+    }
+
+    private ApolloMinestomExample() {
+    }
+
+}
+```
+
+## Configuration
+
+You can customize Apollo's behavior by passing a configured `ApolloMinestomProperties` object during initialization. While `ApolloMinestomProperties.DEFAULT_PROPERTIES` is sufficient for most use cases, you can tailor the settings to your server's specific needs.
+
+Here’s an overview of the available properties and how to use them.
+
+### Properties
+
+These properties control the core functionalities of Apollo on the Minestom platform.
+
+#### `sendRegisterPacket`
+- **Default:** `true`
+- **Description:** Controls whether Apollo should send the `minecraft:register` packet for its plugin channel (`lunar:apollo`). Unlike other server platforms, Minestom does not manage a global registry of plugin channels, so this step is necessary for the client to recognize Apollo.
+
+<Callout type="warning" emoji="⚠️">
+  If you disable this, you are responsible for registering the `lunar:apollo` channel manually. Failure to do so will prevent Apollo from communicating with clients.
+</Callout>
+
+```java
+ApolloMinestomProperties.builder()
+    .sendRegisterPacket(false)
+    .build()
+```
+
+#### `configPath`
+- **Default:** `./Apollo/`
+- **Description:** Specifies the directory where Apollo's configuration files are stored. By default, it creates an `Apollo` folder in your server's root directory. You can change this to integrate with your existing configuration structure.
+
+```java
+ApolloMinestomProperties.builder()
+    .configPath(Path.of("your/custom/config/path"))
+    .build()
+```
+
+### Commands
+
+Apollo's in-game commands can be fine-tuned using the `commandProperties` builder. This allows you to disable commands or integrate with your own permissions system.
+
+Since Minestom lacks a traditional, unified permissions API, Apollo provides a flexible predicate-based system. By **default**, it relies on Minestom's built-in operator permission levels.
+
+- Execute Commands (`/apollo`, `/lunarclient`): `2`
+- Receive `Apollo Available Update` notifications: `4`
+
+**Disabling Commands**
+```java
+ApolloMinestomPlatform.init(ApolloMinestomProperties.builder()
+    .commandProperties(ApolloMinestomProperties.CommandProperties.builder()
+        .registerApolloCommand(false)
+        .registerLunarClientCommand(false)
+        .build()
+    )
+    .build());
+)
+```
+
+**Custom Permissions**
+```java
+ApolloMinestomPlatform.init(ApolloMinestomProperties.builder()
+    .commandProperties(ApolloMinestomProperties.CommandProperties.builder()
+        .apolloCommandPermission(sender -> sender.hasPermissionLevel(4))
+        .lunarClientCommandPermission(sender -> sender.hasPermissionLevel(1))
+        .build()
+    )
+    .build());
+)
+```
+
+### Complete Example
+
+Here is an example of a complete initialization call with custom properties:
+
+```java
+ApolloMinestomPlatform.init(ApolloMinestomProperties.builder()
+    .sendRegisterPacket(false)
+    .configPath(Path.of("server-configs/apollo"))
+    .commandProperties(ApolloMinestomProperties.CommandProperties.builder()
+        .registerLunarClientCommand(false)
+        .apolloCommandPermission(sender -> sender.hasPermissionLevel(4))
+        .build())
+    .build());
+```
