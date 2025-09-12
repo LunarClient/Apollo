@@ -41,21 +41,22 @@ public class VelocityMetadata extends PlatformMetadata {
     /**
      * Tracks client brands sent by the players.
      *
-     * <p>A {@link Set} of {@link String} client brands.</p>
+     * <p>Represents a {@link Map} of {@link String} client brand as a key
+     * and {@link Integer} count of how many times that brand has been reported.</p>
      *
      * @since 1.1.9
      */
-    private final Set<String> clientBrands;
+    private final Map<String, Integer> clientBrands;
 
     /**
      * Tracks forge mods sent with the forge handshake.
      *
-     * <p>A {@link Map} of {@link String} mod id
-     * as a key and {@link String} version as value.</p>
+     * <p>A {@link Map} of {@link String} mod info in the format: <code>id:version</code>
+     * as a key and {@link Integer} count of how many times that mod has been reported.</p>
      *
      * @since 1.1.9
      */
-    private final Map<String, String> mods;
+    private final Map<String, Integer> mods;
 
     /**
      * Tracks the server IP and port the player used to connect.

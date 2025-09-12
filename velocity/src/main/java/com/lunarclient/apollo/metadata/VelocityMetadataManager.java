@@ -39,15 +39,15 @@ import lombok.Getter;
 @Getter
 public class VelocityMetadataManager implements ApolloMetadataManager {
 
-    private final Set<String> clientBrands = new HashSet<>();
-    private final Map<String, String> mods = new HashMap<>();
+    private final Map<String, Integer> clientBrands = new HashMap<>();
+    private final Map<String, Integer> mods = new HashMap<>();
     private final Set<String> serverAddress = new HashSet<>();
     private final Map<String, Integer> resourcePackStatuses = new HashMap<>();
 
     @Override
     public PlatformMetadata extract() {
         return VelocityMetadata.builder()
-            .clientBrands(new HashSet<>(this.clientBrands))
+            .clientBrands(new HashMap<>(this.clientBrands))
             .mods(new HashMap<>(this.mods))
             .serverAddress(new HashSet<>(this.serverAddress))
             .resourcePackStatuses(new HashMap<>(this.resourcePackStatuses))

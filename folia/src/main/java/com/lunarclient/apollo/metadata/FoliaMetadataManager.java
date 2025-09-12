@@ -26,9 +26,7 @@ package com.lunarclient.apollo.metadata;
 import com.lunarclient.apollo.stats.metadata.ApolloMetadataManager;
 import com.lunarclient.apollo.stats.metadata.PlatformMetadata;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.Getter;
 
@@ -40,13 +38,13 @@ import lombok.Getter;
 @Getter
 public class FoliaMetadataManager implements ApolloMetadataManager {
 
-    private final Set<String> clientBrands = ConcurrentHashMap.newKeySet();
+    private final Map<String, Integer> clientBrands = new ConcurrentHashMap<>();
     private final Map<String, Integer> resourcePackStatuses = new ConcurrentHashMap<>();
 
     @Override
     public PlatformMetadata extract() {
         return FoliaMetadata.builder()
-            .clientBrands(new HashSet<>(this.clientBrands))
+            .clientBrands(new HashMap<>(this.clientBrands))
             .resourcePackStatuses(new HashMap<>(this.resourcePackStatuses))
             .build();
     }
