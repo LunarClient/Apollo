@@ -23,51 +23,52 @@
  */
 package com.lunarclient.apollo.command;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import lombok.NonNull;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.command.type.ApolloCommand;
+import com.lunarclient.apollo.common.ApolloComponent;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.plugin.Command;
 
 /**
- * Provides common command functions for Bungee.
+ * The general Apollo command.
  *
- * @param <T> the sender type
- * @since 1.0.9
+ * @since 1.0.5
  */
-public abstract class BungeeApolloCommand<T> extends AbstractApolloCommand<T> {
+public final class BungeeApolloCommand extends ApolloCommand<CommandSender> {
 
     /**
-     * Returns a new instance of a Bungee command.
+     * Returns a new instance of this command.
      *
-     * @param textConsumer the consumer for sending messages to the sender
-     * @since 1.0.9
+     * @return a new command
+     * @since 1.0.5
      */
-    public BungeeApolloCommand(BiConsumer<T, Component> textConsumer) {
-        super(textConsumer);
+    public static Command create() {
+        return new Command("apollo", "apollo.command") {
+            private final BungeeApolloCommand command = new BungeeApolloCommand();
+
+            @Override
+            public void execute(CommandSender sender, String[] args) {
+                this.command.execute(sender, args);
+            }
+        };
     }
 
-    /**
-     * Handles a player argument; if the provided player doesn't exist, a not found message
-     * is sent to the sender. Otherwise, the player is passed to the provided player consumer.
-     *
-     * @param sender the command sender
-     * @param argument the argument passed from the command execution
-     * @param playerConsumer a consumer used for processing a desired action if the player is found
-     * @since 1.0.9
-     */
-    protected void handlePlayerArgument(@NonNull T sender, @NonNull String argument, @NonNull Consumer<ProxiedPlayer> playerConsumer) {
-        ProxiedPlayer player = ProxyServer.getInstance().getPlayer(argument);
+    BungeeApolloCommand() {
+        super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
+    }
 
-        if (player == null) {
-            this.textConsumer.accept(sender, Component.text("Player '", NamedTextColor.RED)
-                .append(Component.text(argument, NamedTextColor.RED))
-                .append(Component.text("' not found!", NamedTextColor.RED)));
-            return;
+    void execute(CommandSender sender, String[] args) {
+        if(args.length < 1) {
+            this.getCurrentVersion(sender);
+        } else if(args[0].equalsIgnoreCase("reload")) {
+            this.reloadConfiguration(sender);
+        } else if(args[0].equalsIgnoreCase("update")) {
+            ApolloManager.getVersionManager().forceUpdate(
+                ApolloPlatform.Platform.BUNGEE,
+                message -> this.textConsumer.accept(sender, message)
+            );
         }
-
-        playerConsumer.accept(player);
     }
+
 }

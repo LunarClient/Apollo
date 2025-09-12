@@ -78,7 +78,7 @@ public final class ServerStartRequest implements ApiRequest<ServerStartResponse>
     private final String platformType;
 
     /**
-     * The platform subtype (Bukkit, Folia, BungeeCord, Velocity...).
+     * The platform subtype (Bukkit, Folia, Minestom, BungeeCord, Velocity...).
      *
      * @since 1.0.0
      */
@@ -132,6 +132,13 @@ public final class ServerStartRequest implements ApiRequest<ServerStartResponse>
      * @since 1.0.0
      */
     private final List<String> modules;
+
+    /**
+     * The current version of Apollo that is running.
+     *
+     * @since 1.2.0
+     */
+    private final String apolloVersion;
 
     @Override
     public ApiServiceType getService() {

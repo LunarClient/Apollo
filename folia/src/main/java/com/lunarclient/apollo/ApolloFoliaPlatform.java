@@ -23,8 +23,8 @@
  */
 package com.lunarclient.apollo;
 
-import com.lunarclient.apollo.command.impl.ApolloCommand;
-import com.lunarclient.apollo.command.impl.LunarClientCommand;
+import com.lunarclient.apollo.command.FoliaApolloCommand;
+import com.lunarclient.apollo.command.FoliaLunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloMetadataListener;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.listener.ApolloWorldListener;
@@ -161,8 +161,8 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
             (channel, player, bytes) -> ApolloManager.getNetworkManager().receivePacket(player.getUniqueId(), bytes)
         );
 
-        this.getCommand("apollo").setExecutor(new ApolloCommand());
-        this.getCommand("lunarclient").setExecutor(new LunarClientCommand());
+        this.getCommand("apollo").setExecutor(new FoliaApolloCommand());
+        this.getCommand("lunarclient").setExecutor(new FoliaLunarClientCommand());
 
         ApolloManager.getStatsManager().enable();
         ApolloManager.getVersionManager().checkForUpdates();
@@ -176,6 +176,11 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
     @Override
     public Kind getKind() {
         return Kind.SERVER;
+    }
+
+    @Override
+    public Platform getPlatform() {
+        return Platform.FOLIA;
     }
 
     @Override

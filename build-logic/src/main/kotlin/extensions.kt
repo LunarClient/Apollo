@@ -43,6 +43,11 @@ fun Project.setupPlatforms() {
         tasks.named("javadoc", Javadoc::class) {
             source(sourceSets.map { it.allJava })
             classpath += sourceSets.map { it.compileClasspath }.reduce { first, second -> first + second }
+
+            val javaToolchains = project.extensions.getByType(JavaToolchainService::class.java)
+            javadocTool.set(javaToolchains.javadocToolFor {
+                languageVersion.set(JavaLanguageVersion.of(21))
+            })
         }
     }
 }

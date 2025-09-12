@@ -25,6 +25,7 @@ package com.lunarclient.apollo.listener;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.api.response.VersionResponse;
 import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.event.EventBus;
@@ -33,8 +34,9 @@ import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.player.v1.PlayerHandshakeMessage;
 import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.wrapper.FoliaApolloPlayer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -87,13 +89,27 @@ public final class ApolloPlayerListener implements Listener, ApolloListener {
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
-        if (!ApolloVersionManager.NEEDS_UPDATE) {
+        VersionResponse updateAssets = ApolloManager.getVersionManager().getUpdateAssets();
+        if (updateAssets == null) {
+            return;
+        }
+
+        if (!Apollo.getPlatform().getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
             return;
         }
 
         Player player = event.getPlayer();
-        if (player.isOp()) {
-            player.sendMessage(ChatColor.YELLOW + ApolloVersionManager.UPDATE_MESSAGE);
+        String version = updateAssets.getVersion();
+
+        if (version != null && player.isOp()) {
+            Component message = Component.text("[Apollo] A new version of Apollo is available! Latest release: ", NamedTextColor.YELLOW)
+                .append(Component.text(version, NamedTextColor.GOLD))
+                .append(Component.text(" Please update by running ", NamedTextColor.YELLOW))
+                .append(Component.text("/apollo update ", NamedTextColor.GOLD))
+                .append(Component.text("or by downloading the latest build from ", NamedTextColor.YELLOW))
+                .append(Component.text("https://lunarclient.dev/apollo/downloads", NamedTextColor.GOLD));
+
+            player.sendMessage(message);
         }
     }
 
