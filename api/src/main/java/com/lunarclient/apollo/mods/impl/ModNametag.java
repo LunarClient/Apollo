@@ -80,7 +80,7 @@ public final class ModNametag {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.0
      */
     public static final SimpleOption<Boolean> HIDE_NAMETAGS_IN_F1 = SimpleOption.<Boolean>builder()
         .node("nametag", "hide-nametags-in-f1").type(TypeToken.get(Boolean.class))
@@ -101,7 +101,7 @@ public final class ModNametag {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.0
      */
     public static final SimpleOption<Boolean> REPLACE_OWN_NAMETAG_COLOR = SimpleOption.<Boolean>builder()
         .node("nametag", "replace-own-nametag-color").type(TypeToken.get(Boolean.class))
@@ -111,7 +111,7 @@ public final class ModNametag {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.0
      */
     public static final SimpleOption<Color> OWN_NAMETAG_COLOR = SimpleOption.<Color>builder()
         .node("nametag", "own-nametag-color").type(TypeToken.get(Color.class))

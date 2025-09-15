@@ -189,7 +189,7 @@ public final class ModTab {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.0
      */
     public static final SimpleOption<Boolean> MOVE_SELF_TO_TOP = SimpleOption.<Boolean>builder()
         .node("tab", "move-self-to-top").type(TypeToken.get(Boolean.class))

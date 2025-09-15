@@ -30,14 +30,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * Changes the size of mobs.
  *
- * @since %release_version%
+ * @since 1.2.0
  */
 public final class ModMobSize {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.0
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("mob-size", "enabled").type(TypeToken.get(Boolean.class))
@@ -47,7 +47,7 @@ public final class ModMobSize {
     /**
      * Only change player sizes when playing Hypixel SkyBlock.
      *
-     * @since %release_version%
+     * @since 1.2.0
      */
     public static final SimpleOption<Boolean> PLAYER_SIZE_SKYBLOCK_ONLY = SimpleOption.<Boolean>builder()
         .comment("Only change player sizes when playing Hypixel SkyBlock")
@@ -58,7 +58,7 @@ public final class ModMobSize {
     /**
      * The size of your player.
      *
-     * @since %release_version%
+     * @since 1.2.0
      */
     public static final NumberOption<Float> PLAYER_SIZE = NumberOption.<Float>number()
         .comment("The size of your player")
@@ -70,7 +70,7 @@ public final class ModMobSize {
     /**
      * The size of other players.
      *
-     * @since %release_version%
+     * @since 1.2.0
      */
     public static final NumberOption<Float> OTHER_PLAYER_SIZE = NumberOption.<Float>number()
         .comment("The size of other players")
@@ -82,7 +82,7 @@ public final class ModMobSize {
     /**
      * If the size of NPCs should be changed.
      *
-     * @since %release_version%
+     * @since 1.2.0
      */
     public static final SimpleOption<Boolean> CHANGE_NPC_SIZE = SimpleOption.<Boolean>builder()
         .comment("If the size of NPCs should be changed")

@@ -235,7 +235,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.0
      */
     public static final SimpleOption<Boolean> SKYBLOCK_HIDE_NON_STARRED = SimpleOption.<Boolean>builder()
         .node("skyblock", "skyblock-hide-non-starred").type(TypeToken.get(Boolean.class))
@@ -245,7 +245,7 @@ public final class ModSkyblock {
     /**
      * Shows how long it takes to do each terminal stage in chat (and also Simon Says)!.
      *
-     * @since %release_version%
+     * @since 1.2.0
      */
     public static final SimpleOption<Boolean> SKYBLOCK_TERMINAL_SPLIT_TIMERS = SimpleOption.<Boolean>builder()
         .comment("Shows how long it takes to do each terminal stage in chat (and also Simon Says)!")
