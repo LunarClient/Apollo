@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods.impl;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * A mod that allows you to modify nametags.
@@ -79,11 +80,41 @@ public final class ModNametag {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HIDE_NAMETAGS_IN_F1 = SimpleOption.<Boolean>builder()
+        .node("nametag", "hide-nametags-in-f1").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final NumberOption<Float> NAMETAG_BACKGROUND_OPACITY = NumberOption.<Float>number()
         .node("nametag", "nametag-background-opacity").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> REPLACE_OWN_NAMETAG_COLOR = SimpleOption.<Boolean>builder()
+        .node("nametag", "replace-own-nametag-color").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> OWN_NAMETAG_COLOR = SimpleOption.<Color>builder()
+        .node("nametag", "own-nametag-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

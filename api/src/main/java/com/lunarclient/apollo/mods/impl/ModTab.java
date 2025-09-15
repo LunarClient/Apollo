@@ -189,6 +189,16 @@ public final class ModTab {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> MOVE_SELF_TO_TOP = SimpleOption.<Boolean>builder()
+        .node("tab", "move-self-to-top").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> HIDE_PING = SimpleOption.<Boolean>builder()

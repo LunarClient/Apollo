@@ -73,7 +73,7 @@ public final class ModRadio {
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("radio", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
         .notifyClient()
         .build();
 

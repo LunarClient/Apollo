@@ -28,66 +28,69 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Shows you when and how much items you pick up or drop.
+ * Changes the size of mobs.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
-public final class ModItemTracker {
+public final class ModMobSize {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("item-tracker", "enabled").type(TypeToken.get(Boolean.class))
+        .node("mob-size", "enabled").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Only change player sizes when playing Hypixel SkyBlock.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
-        .node("item-tracker", "scale").type(TypeToken.get(Float.class))
-        .min(0.25F).max(5.0F)
+    public static final SimpleOption<Boolean> PLAYER_SIZE_SKYBLOCK_ONLY = SimpleOption.<Boolean>builder()
+        .comment("Only change player sizes when playing Hypixel SkyBlock")
+        .node("mob-size", "player-size-skyblock-only").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * The size of your player.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
-        .node("item-tracker", "text-shadow").type(TypeToken.get(Boolean.class))
+    public static final NumberOption<Float> PLAYER_SIZE = NumberOption.<Float>number()
+        .comment("The size of your player")
+        .node("mob-size", "player-size").type(TypeToken.get(Float.class))
+        .min(0.5F).max(1.0F)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * The size of other players.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> SKYBLOCK_ONLY = SimpleOption.<Boolean>builder()
-        .node("item-tracker", "skyblock-only").type(TypeToken.get(Boolean.class))
+    public static final NumberOption<Float> OTHER_PLAYER_SIZE = NumberOption.<Float>number()
+        .comment("The size of other players")
+        .node("mob-size", "other-player-size").type(TypeToken.get(Float.class))
+        .min(0.5F).max(1.0F)
         .notifyClient()
         .build();
 
     /**
-     * How long the text should stay on screen (seconds).
+     * If the size of NPCs should be changed.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final NumberOption<Float> POPUP_DURATION_SEC = NumberOption.<Float>number()
-        .comment("How long the text should stay on screen (seconds)")
-        .node("item-tracker", "popup-duration-sec").type(TypeToken.get(Float.class))
-        .min(0.1F).max(30.0F)
+    public static final SimpleOption<Boolean> CHANGE_NPC_SIZE = SimpleOption.<Boolean>builder()
+        .comment("If the size of NPCs should be changed")
+        .node("mob-size", "change-npc-size").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
-    private ModItemTracker() {
+    private ModMobSize() {
     }
 
 }

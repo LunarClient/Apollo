@@ -25,6 +25,7 @@ package com.lunarclient.apollo.mods.impl;
 
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Various enhancements to assist you when playing Hypixel Bedwars.
@@ -55,6 +56,17 @@ public final class ModHypixelBedwars {
         .build();
 
     /**
+     * Recolor the beds in bedwars practice mode.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ENABLE_PRACTICE_COLOR = SimpleOption.<Boolean>builder()
+        .comment("Recolor the beds in bedwars practice mode")
+        .node("hypixel-bedwars", "enable-practice-color").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Replaces normal hearts with hardcore hearts once your bed is lost.
      *
      * @since 1.0.0
@@ -62,6 +74,46 @@ public final class ModHypixelBedwars {
     public static final SimpleOption<Boolean> BW_HARDCORE_HEARTS = SimpleOption.<Boolean>builder()
         .comment("Replaces normal hearts with hardcore hearts once your bed is lost")
         .node("hypixel-bedwars", "bw-hardcore-hearts").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> CUSTOM_TRAP_ALERT = SimpleOption.<Boolean>builder()
+        .node("hypixel-bedwars", "custom-trap-alert").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> MUTE_ALERT_SOUND = SimpleOption.<Boolean>builder()
+        .node("hypixel-bedwars", "mute-alert-sound").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> ALERT_PRIMARY_COLOR = SimpleOption.<Color>builder()
+        .node("hypixel-bedwars", "alert-primary-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> ALERT_SUB_COLOR = SimpleOption.<Color>builder()
+        .node("hypixel-bedwars", "alert-sub-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

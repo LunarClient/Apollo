@@ -29,29 +29,29 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Display your FPS on the HUD.
+ * Allows you to customize Minecraft's audio subtitles.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
-public final class ModFps {
+public final class ModAudioSubtitles {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("fps", "enabled").type(TypeToken.get(Boolean.class))
+        .node("audio-subtitles", "enabled").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
-        .node("fps", "scale").type(TypeToken.get(Float.class))
+        .node("audio-subtitles", "scale").type(TypeToken.get(Float.class))
         .min(0.25F).max(5.0F)
         .notifyClient()
         .build();
@@ -59,104 +59,40 @@ public final class ModFps {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
-        .node("fps", "text-shadow").type(TypeToken.get(Boolean.class))
+        .node("audio-subtitles", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> BRACKETS = SimpleOption.<Boolean>builder()
-        .node("fps", "brackets").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.6
-     */
-    public static final SimpleOption<Color> BRACKET_COLOR = SimpleOption.<Color>builder()
-        .node("fps", "bracket-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
-        .node("fps", "background").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * If this is disabled the background will change size with the text.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> STATIC_BACKGROUND_WIDTH = SimpleOption.<Boolean>builder()
-        .comment("If this is disabled the background will change size with the text.")
-        .node("fps", "static-background-width").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * If this is disabled the background will change size with the text.
-     *
-     * @since 1.1.6
-     */
-    public static final SimpleOption<Boolean> STATIC_BACKGROUND_HEIGHT = SimpleOption.<Boolean>builder()
-        .comment("If this is disabled the background will change size with the text.")
-        .node("fps", "static-background-height").type(TypeToken.get(Boolean.class))
+        .node("audio-subtitles", "background").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Integer> BACKGROUND_WIDTH = NumberOption.<Integer>number()
-        .node("fps", "background-width").type(TypeToken.get(Integer.class))
-        .min(50).max(62)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Integer> BACKGROUND_HEIGHT = NumberOption.<Integer>number()
-        .node("fps", "background-height").type(TypeToken.get(Integer.class))
-        .min(10).max(22)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
-        .node("fps", "border").type(TypeToken.get(Boolean.class))
+        .node("audio-subtitles", "border").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
-        .node("fps", "border-thickness").type(TypeToken.get(Float.class))
+        .node("audio-subtitles", "border-thickness").type(TypeToken.get(Float.class))
         .min(0.5F).max(3.0F)
         .notifyClient()
         .build();
@@ -164,34 +100,34 @@ public final class ModFps {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
-        .node("fps", "border-color").type(TypeToken.get(Color.class))
+        .node("audio-subtitles", "border-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
-        .node("fps", "background-color").type(TypeToken.get(Color.class))
+        .node("audio-subtitles", "background-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
-        .node("fps", "text-color").type(TypeToken.get(Color.class))
+        .node("audio-subtitles", "text-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
-    private ModFps() {
+    private ModAudioSubtitles() {
     }
 
 }

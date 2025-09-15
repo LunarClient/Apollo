@@ -1,15 +1,15 @@
-# Coordinates
+# Audio Subtitles
 
-Displays your coordinates on the HUD.
+Allows you to customize Minecraft's audio subtitles
 
 ## Integration
 
 ### How to toggle the mod
 
 ```java
-public void toggleCoordinatesExample(Player viewer, boolean value) {
+public void toggleAudioSubtitlesExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModCoordinates.ENABLED, value));
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModAudioSubtitles.ENABLED, value));
 }
 ```
 
@@ -19,7 +19,7 @@ public void toggleCoordinatesExample(Player viewer, boolean value) {
     - Config Key: `enabled`
     - Values
         - Type: `Boolean`
-        - Default: `true`
+        - Default: `false`
 
 - __`SCALE`__
     - Config Key: `scale`
@@ -33,13 +33,7 @@ public void toggleCoordinatesExample(Player viewer, boolean value) {
     - Config Key: `text-shadow`
     - Values
         - Type: `Boolean`
-        - Default: `true`
-
-- __`SHOW_WHILE_TYPING`__
-    - Config Key: `show-while-typing`
-    - Values
-        - Type: `Boolean`
-        - Default: `true`
+        - Default: `false`
 
 - __`BACKGROUND`__
     - Config Key: `background`
@@ -61,21 +55,21 @@ public void toggleCoordinatesExample(Player viewer, boolean value) {
         - Minimum: `0.5F`
         - Maximum: `3.0F`
 
-- __`MOVE_CHILDREN_INDIVIDUALLY`__
-    - Config Key: `move-children-individually`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
-- __`BACKGROUND_COLOR`__
-    - Config Key: `background-color`
-    - Values
-        - Type: `String`
-        - Default: `#6F000000`
-
 - __`BORDER_COLOR`__
     - Config Key: `border-color`
     - Values
         - Type: `String`
         - Default: `#9F000000`
+
+- __`BACKGROUND_COLOR`__
+    - Config Key: `background-color`
+    - Values
+        - Type: `String`
+        - Default: `#CC000000`
+
+- __`TEXT_COLOR`__
+    - Config Key: `text-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
 
