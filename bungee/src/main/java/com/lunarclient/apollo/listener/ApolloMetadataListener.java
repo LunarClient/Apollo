@@ -32,6 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.Map;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -129,7 +130,9 @@ public final class ApolloMetadataListener implements Listener {
 
     private void collectBrand(String brand) {
         BungeeMetadataManager manager = (BungeeMetadataManager) ApolloManager.getMetadataManager();
-        manager.getClientBrands().add(brand);
+        Map<String, Integer> brands = manager.getClientBrands();
+
+        brands.put(brand, brands.getOrDefault(brand, 0) + 1);
     }
 
     private void handleFml(byte[] data) {
@@ -142,14 +145,16 @@ public final class ApolloMetadataListener implements Listener {
                 return;
             }
 
-            int count = ByteBufUtil.readVarInt(in);
+            BungeeMetadataManager manager = (BungeeMetadataManager) ApolloManager.getMetadataManager();
+            Map<String, Integer> mods = manager.getMods();
 
+            int count = ByteBufUtil.readVarInt(in);
             for (int i = 0; i < count; i++) {
                 String modId = ByteBufUtil.readString(in);
                 String version = ByteBufUtil.readString(in);
+                String key = modId + ":" + version;
 
-                BungeeMetadataManager manager = (BungeeMetadataManager) ApolloManager.getMetadataManager();
-                manager.getMods().put(modId, version);
+                mods.put(key, mods.getOrDefault(key, 0) + 1);
             }
         } catch (Exception ignored) {
         }

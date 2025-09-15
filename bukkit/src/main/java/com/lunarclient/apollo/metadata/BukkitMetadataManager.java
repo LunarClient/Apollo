@@ -26,9 +26,7 @@ package com.lunarclient.apollo.metadata;
 import com.lunarclient.apollo.stats.metadata.ApolloMetadataManager;
 import com.lunarclient.apollo.stats.metadata.PlatformMetadata;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import lombok.Getter;
 
 /**
@@ -39,13 +37,13 @@ import lombok.Getter;
 @Getter
 public class BukkitMetadataManager implements ApolloMetadataManager {
 
-    private final Set<String> clientBrands = new HashSet<>();
+    private final Map<String, Integer> clientBrands = new HashMap<>();
     private final Map<String, Integer> resourcePackStatuses = new HashMap<>();
 
     @Override
     public PlatformMetadata extract() {
         return BukkitMetadata.builder()
-            .clientBrands(new HashSet<>(this.clientBrands))
+            .clientBrands(new HashMap<>(this.clientBrands))
             .resourcePackStatuses(new HashMap<>(this.resourcePackStatuses))
             .build();
     }

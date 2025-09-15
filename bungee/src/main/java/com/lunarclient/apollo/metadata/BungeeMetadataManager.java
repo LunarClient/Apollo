@@ -39,14 +39,14 @@ import lombok.Getter;
 @Getter
 public class BungeeMetadataManager implements ApolloMetadataManager {
 
-    private final Set<String> clientBrands = new HashSet<>();
-    private final Map<String, String> mods = new HashMap<>();
+    private final Map<String, Integer> clientBrands = new HashMap<>();
+    private final Map<String, Integer> mods = new HashMap<>();
     private final Set<String> serverAddress = new HashSet<>();
 
     @Override
     public PlatformMetadata extract() {
         return BungeeMetadata.builder()
-            .clientBrands(new HashSet<>(this.clientBrands))
+            .clientBrands(new HashMap<>(this.clientBrands))
             .mods(new HashMap<>(this.mods))
             .serverAddress(new HashSet<>(this.serverAddress))
             .build();

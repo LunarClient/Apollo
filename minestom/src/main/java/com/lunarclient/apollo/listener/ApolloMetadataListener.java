@@ -67,8 +67,11 @@ public final class ApolloMetadataListener {
         }
 
         ByteBuffer buffer = ByteBuffer.wrap(event.getMessage());
+        String brand = ByteBufUtil.readString(buffer);
         MinestomMetadataManager manager = (MinestomMetadataManager) ApolloManager.getMetadataManager();
-        manager.getClientBrands().add(ByteBufUtil.readString(buffer));
+        Map<String, Integer> brands = manager.getClientBrands();
+
+        brands.put(brand, brands.getOrDefault(brand, 0) + 1);
     }
 
 }

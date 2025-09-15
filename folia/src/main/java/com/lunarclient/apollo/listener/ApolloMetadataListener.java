@@ -70,7 +70,9 @@ public final class ApolloMetadataListener implements Listener {
             }
 
             FoliaMetadataManager manager = (FoliaMetadataManager) ApolloManager.getMetadataManager();
-            manager.getClientBrands().add(brand);
+            Map<String, Integer> brands = manager.getClientBrands();
+
+            brands.put(brand, brands.getOrDefault(brand, 0) + 1);
         }, 20L * 3);
     }
 
