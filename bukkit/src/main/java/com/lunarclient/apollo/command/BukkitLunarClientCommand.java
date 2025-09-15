@@ -21,56 +21,65 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command.impl;
+package com.lunarclient.apollo.command;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.command.FoliaApolloCommand;
+import com.lunarclient.apollo.command.type.LunarClientCommand;
 import com.lunarclient.apollo.common.ApolloComponent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * The general Lunar Client command.
  *
- * @since 1.1.8
+ * @since 1.0.9
  */
-public final class LunarClientCommand extends FoliaApolloCommand<CommandSender> implements CommandExecutor {
+public final class BukkitLunarClientCommand extends LunarClientCommand<CommandSender> implements CommandExecutor {
 
     /**
      * Returns a new instance of this command.
      *
-     * @since 1.1.8
+     * @since 1.0.9
      */
-    public LunarClientCommand() {
+    public BukkitLunarClientCommand() {
         super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
 
         this.setUsage("/lunarclient <player>");
     }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(args.length != 1) {
-            this.sendCommandUsage(commandSender);
+            this.sendCommandUsage(sender);
             return true;
         }
 
-        this.handlePlayerArgument(commandSender, args[0], player -> {
-            Component message = Component.text("Player ", NamedTextColor.GRAY)
-                .append(Component.text(player.getName(), NamedTextColor.AQUA))
-                .append(Component.text(" is ", NamedTextColor.GRAY));
+        Player player = Bukkit.getPlayer(args[0]);
 
-            if (Apollo.getPlayerManager().hasSupport(player.getUniqueId())) {
-                message = message.append(Component.text("using ", NamedTextColor.GREEN));
-            } else {
-                message = message.append(Component.text("not using ", NamedTextColor.RED));
-            }
+        if (player == null) {
+            this.textConsumer.accept(sender, Component.text("Player '", NamedTextColor.RED)
+                .append(Component.text(args[0], NamedTextColor.RED))
+                .append(Component.text("' not found!", NamedTextColor.RED)));
+            return true;
+        }
 
-            message = message.append(Component.text("Lunar Client!", NamedTextColor.GRAY));
-            this.textConsumer.accept(commandSender, message);
-        });
+        Component message = Component.text("Player ", NamedTextColor.GRAY)
+            .append(Component.text(player.getName(), NamedTextColor.AQUA))
+            .append(Component.text(" is ", NamedTextColor.GRAY));
+
+        if (Apollo.getPlayerManager().hasSupport(player.getUniqueId())) {
+            message = message.append(Component.text("using ", NamedTextColor.GREEN));
+        } else {
+            message = message.append(Component.text("not using ", NamedTextColor.RED));
+        }
+
+        message = message.append(Component.text("Lunar Client!", NamedTextColor.GRAY));
+        this.textConsumer.accept(sender, message);
 
         return true;
     }

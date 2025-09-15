@@ -40,9 +40,11 @@ listOfNotNull(
     "example:bukkit:api",
     "example:bukkit:json",
     "example:bukkit:proto",
+    "example:minestom:api",
     if (loadAllVersions) "bungee" else null,
     if (loadAllVersions) "velocity" else null,
-    if (loadAllVersions) "folia" else null
+    if (loadAllVersions) "folia" else null,
+    if (loadAllVersions) "minestom" else null
 ).forEach {
     include(it)
     findProject(":$it")?.name = "apollo-${it.replace(':', '-')}"

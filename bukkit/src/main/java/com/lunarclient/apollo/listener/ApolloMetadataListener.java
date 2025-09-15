@@ -94,7 +94,9 @@ public final class ApolloMetadataListener implements Listener {
 
     private void collectBrand(String brand) {
         BukkitMetadataManager manager = (BukkitMetadataManager) ApolloManager.getMetadataManager();
-        manager.getClientBrands().add(brand);
+        Map<String, Integer> brands = manager.getClientBrands();
+
+        brands.put(brand, brands.getOrDefault(brand, 0) + 1);
     }
 
 }

@@ -28,6 +28,7 @@ The output jars can be found in the `build/libs` directory relative to each plat
 
 - Bukkit: `bukkit/plugin/build/libs`
 - Folia: `folia/build/libs`
+- Minestom: `minestom/build/libs`
 - BungeeCord: `bungee/build/libs`
 - Velocity: `velocity/build/libs`
 
@@ -42,7 +43,7 @@ The Apollo project is split into several modules.
 
 - **API** - The publicly available interface for developers wishing to create custom integrations with Lunar Client.
 - **Common** - The abstraction used by platform modules to reduce duplicate code and implement the protocol for Lunar Client.
-- **Bukkit, Folia, BungeeCord, Velocity** - Are modules that implement the common module for each respective platform.
+- **Bukkit, Folia, Minestom, BungeeCord, Velocity** - Are modules that implement the common module for each respective platform.
 
 Contributions can be made to Apollo by creating a pull request for improvements or fixes. For new feature ideas please consider making a 
 suggestion by creating an [issue](https://github.com/LunarClient/Apollo/issues) or joining our [discord](https://lunarclient.dev/discord).

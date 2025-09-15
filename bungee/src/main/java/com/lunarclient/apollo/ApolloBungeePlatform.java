@@ -23,8 +23,8 @@
  */
 package com.lunarclient.apollo;
 
-import com.lunarclient.apollo.command.impl.ApolloCommand;
-import com.lunarclient.apollo.command.impl.LunarClientCommand;
+import com.lunarclient.apollo.command.BungeeApolloCommand;
+import com.lunarclient.apollo.command.BungeeLunarClientCommand;
 import com.lunarclient.apollo.listener.ApolloMetadataListener;
 import com.lunarclient.apollo.listener.ApolloPlayerListener;
 import com.lunarclient.apollo.loader.PlatformPlugin;
@@ -151,8 +151,8 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
         PluginManager pluginManager = server.getPluginManager();
         pluginManager.registerListener(this.plugin, new ApolloMetadataListener(this.plugin));
         pluginManager.registerListener(this.plugin, new ApolloPlayerListener());
-        pluginManager.registerCommand(this.plugin, ApolloCommand.create());
-        pluginManager.registerCommand(this.plugin, LunarClientCommand.create());
+        pluginManager.registerCommand(this.plugin, BungeeApolloCommand.create());
+        pluginManager.registerCommand(this.plugin, BungeeLunarClientCommand.create());
 
         ApolloManager.getStatsManager().enable();
         ApolloManager.getVersionManager().checkForUpdates();
@@ -166,6 +166,11 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
     @Override
     public Kind getKind() {
         return Kind.PROXY;
+    }
+
+    @Override
+    public Platform getPlatform() {
+        return Platform.BUNGEE;
     }
 
     @Override

@@ -41,7 +41,7 @@ public class ApolloVersion {
      * Constructs the {@link ApolloVersion} by the
      * provided version string.
      *
-     * <p>Divides the version string by the major, minor & patch version.</p>
+     * <p>Divides the version string by the major, minor and patch version.</p>
      *
      * @param version the version
      * @since 1.0.0
@@ -75,8 +75,14 @@ public class ApolloVersion {
     public boolean isUpdateAvailable(ApolloVersion version) {
         if (version.getMajor() > this.major) {
             return true;
-        } else if (version.getMinor() > this.minor) {
+        } else if (version.getMajor() < this.major) {
+            return false;
+        }
+
+        if (version.getMinor() > this.minor) {
             return true;
+        } else if (version.getMinor() < this.minor) {
+            return false;
         }
 
         return version.getPatch() > this.patch;

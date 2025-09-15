@@ -25,7 +25,6 @@ package com.lunarclient.apollo.metadata;
 
 import com.lunarclient.apollo.stats.metadata.PlatformMetadata;
 import java.util.Map;
-import java.util.Set;
 import lombok.Builder;
 import lombok.ToString;
 
@@ -41,11 +40,12 @@ public class BukkitMetadata extends PlatformMetadata {
     /**
      * Tracks client brands sent by the players.
      *
-     * <p>A {@link Set} of {@link String} client brands.</p>
+     * <p>Represents a {@link Map} of {@link String} client brand as a key
+     * and {@link Integer} count of how many times that brand has been reported.</p>
      *
      * @since 1.1.9
      */
-    private final Set<String> clientBrands;
+    private final Map<String, Integer> clientBrands;
 
     /**
      * Tracks the total number of resource pack status events received.

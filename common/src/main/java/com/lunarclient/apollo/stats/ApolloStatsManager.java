@@ -153,7 +153,8 @@ public final class ApolloStatsManager {
                     .platformType(platform.getKind().name())
                     .platformSubtype(stats.getPlatformSubtype())
                     .platformVersion(stats.getPlatformVersion())
-                    .modules(enabledModules);
+                    .modules(enabledModules)
+                    .apolloVersion(platform.getApolloVersion());
             }
 
             if (softwareInformation) {

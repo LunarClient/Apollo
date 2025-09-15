@@ -21,16 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command.impl;
+package com.lunarclient.apollo.command;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.command.VelocityApolloCommand;
+import com.lunarclient.apollo.ApolloVelocityPlatform;
+import com.lunarclient.apollo.command.type.LunarClientCommand;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.velocitypowered.api.command.BrigadierCommand;
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.proxy.Player;
+import java.util.Optional;
 import lombok.Getter;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -42,7 +45,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
  * @since 1.0.9
  */
 @Getter
-public final class LunarClientCommand extends VelocityApolloCommand<CommandSource> {
+public final class VelocityLunarClientCommand extends LunarClientCommand<CommandSource> {
 
     /**
      * Returns a new instance of this command.
@@ -51,7 +54,7 @@ public final class LunarClientCommand extends VelocityApolloCommand<CommandSourc
      * @since 1.0.9
      */
     public static BrigadierCommand create() {
-        LunarClientCommand command = new LunarClientCommand();
+        VelocityLunarClientCommand command = new VelocityLunarClientCommand();
 
         return new BrigadierCommand(LiteralArgumentBuilder.<CommandSource>literal("lunarclient")
             .executes(source -> {
@@ -71,25 +74,34 @@ public final class LunarClientCommand extends VelocityApolloCommand<CommandSourc
         String argument = context.getArgument("player", String.class);
         CommandSource source = context.getSource();
 
-        this.handlePlayerArgument(source, argument, player -> {
-            Component message = Component.text("Player ", NamedTextColor.GRAY)
-                .append(Component.text(player.getUsername(), NamedTextColor.AQUA))
-                .append(Component.text(" is ", NamedTextColor.GRAY));
+        Optional<Player> playerOpt = ApolloVelocityPlatform.getInstance().getServer().getPlayer(argument);
 
-            if (Apollo.getPlayerManager().hasSupport(player.getUniqueId())) {
-                message = message.append(Component.text("using ", NamedTextColor.GREEN));
-            } else {
-                message = message.append(Component.text("not using ", NamedTextColor.RED));
-            }
+        if (!playerOpt.isPresent()) {
+            this.textConsumer.accept(source, Component.text("Player '", NamedTextColor.RED)
+                .append(Component.text(argument, NamedTextColor.RED))
+                .append(Component.text("' not found!", NamedTextColor.RED)));
+            return Command.SINGLE_SUCCESS;
+        }
 
-            message = message.append(Component.text("Lunar Client!", NamedTextColor.GRAY));
-            this.textConsumer.accept(source, message);
-        });
+        Player player = playerOpt.get();
+
+        Component message = Component.text("Player ", NamedTextColor.GRAY)
+            .append(Component.text(player.getUsername(), NamedTextColor.AQUA))
+            .append(Component.text(" is ", NamedTextColor.GRAY));
+
+        if (Apollo.getPlayerManager().hasSupport(player.getUniqueId())) {
+            message = message.append(Component.text("using ", NamedTextColor.GREEN));
+        } else {
+            message = message.append(Component.text("not using ", NamedTextColor.RED));
+        }
+
+        message = message.append(Component.text("Lunar Client!", NamedTextColor.GRAY));
+        this.textConsumer.accept(source, message);
 
         return Command.SINGLE_SUCCESS;
     };
 
-    LunarClientCommand() {
+    VelocityLunarClientCommand() {
         super(Audience::sendMessage);
 
         this.setUsage("/lunarclient <player>");

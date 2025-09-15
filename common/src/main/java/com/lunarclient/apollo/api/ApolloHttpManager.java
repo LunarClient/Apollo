@@ -46,7 +46,7 @@ import java.util.logging.Logger;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Manages Apollo http requests & responses.
+ * Manages Apollo http requests and responses.
  *
  * @since 1.0.0
  */

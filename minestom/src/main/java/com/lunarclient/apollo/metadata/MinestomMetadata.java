@@ -21,45 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.command.impl;
+package com.lunarclient.apollo.metadata;
 
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.command.BukkitApolloCommand;
-import com.lunarclient.apollo.common.ApolloComponent;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import com.lunarclient.apollo.stats.metadata.PlatformMetadata;
+import java.util.Map;
+import lombok.Builder;
+import lombok.ToString;
 
 /**
- * The general Apollo command.
+ * Represents the minestom metadata implementation.
  *
- * @since 1.0.5
+ * @since 1.2.0
  */
-public final class ApolloCommand extends BukkitApolloCommand<CommandSender> implements CommandExecutor {
+@ToString
+@Builder(toBuilder = true)
+public class MinestomMetadata extends PlatformMetadata {
 
     /**
-     * Returns a new instance of this command.
+     * Tracks client brands sent by the players.
      *
-     * @since 1.0.5
+     * <p>Represents a {@link Map} of {@link String} client brand as a key
+     * and {@link Integer} count of how many times that brand has been reported.</p>
+     *
+     * @since 1.2.0
      */
-    public ApolloCommand() {
-        super((sender, component) -> sender.sendMessage(ApolloComponent.toLegacy(component)));
-    }
+    private final Map<String, Integer> clientBrands;
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(args.length < 1) {
-            this.getCurrentVersion(sender);
-        } else if(args[0].equalsIgnoreCase("reload")) {
-            this.reloadConfiguration(sender);
-        } else if(args[0].equalsIgnoreCase("update")) {
-            ApolloManager.getVersionManager().forceUpdate(
-                "bukkit",
-                message -> this.textConsumer.accept(sender, message)
-            );
-        }
-
-        return true;
-    }
+    /**
+     * Tracks the total number of resource pack status events received.
+     *
+     * <p>Represents a {@link Map} of {@link String} status enum name as a key
+     * and {@link Integer} count of how many times that status has been reported.</p>
+     *
+     * @since 1.2.0
+     */
+    private final Map<String, Integer> resourcePackStatuses;
 
 }

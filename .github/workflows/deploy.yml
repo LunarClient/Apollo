@@ -66,3 +66,4 @@ jobs:
                     bungee/build/libs/apollo-bungee-${{ env.VERSION }}.jar
                     velocity/build/libs/apollo-velocity-${{ env.VERSION }}.jar
                     folia/build/libs/apollo-folia-${{ env.VERSION }}.jar
+                    minestom/build/libs/apollo-minestom-${{ env.VERSION }}.jar

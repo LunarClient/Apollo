@@ -23,52 +23,71 @@
  */
 package com.lunarclient.apollo.command;
 
-import com.lunarclient.apollo.ApolloVelocityPlatform;
-import com.velocitypowered.api.proxy.Player;
-import java.util.Optional;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import lombok.NonNull;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.command.type.ApolloCommand;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.velocitypowered.api.command.BrigadierCommand;
+import com.velocitypowered.api.command.CommandSource;
+import lombok.Getter;
+import net.kyori.adventure.audience.Audience;
 
 /**
- * Provides common command functions for Velocity.
+ * The general Apollo command.
  *
- * @param <T> the sender type
- * @since 1.0.9
+ * @since 1.0.5
  */
-public abstract class VelocityApolloCommand<T> extends AbstractApolloCommand<T> {
+@Getter
+public final class VelocityApolloCommand extends ApolloCommand<CommandSource> {
 
     /**
-     * Returns a new instance of a Velocity command.
+     * Returns a new instance of this command.
      *
-     * @param textConsumer the consumer for sending messages to the sender
-     * @since 1.0.9
+     * @return a new command
+     * @since 1.0.5
      */
-    public VelocityApolloCommand(BiConsumer<T, Component> textConsumer) {
-        super(textConsumer);
+    public static BrigadierCommand create() {
+        VelocityApolloCommand command = new VelocityApolloCommand();
+
+        return new BrigadierCommand(LiteralArgumentBuilder.<CommandSource>literal("apollo")
+            .requires(source -> source.hasPermission("apollo.command"))
+            .executes(command.getBaseCommand())
+            .then(LiteralArgumentBuilder.<CommandSource>literal("reload")
+                .executes(command.getReloadCommand())
+                .build()
+            )
+            .then(LiteralArgumentBuilder.<CommandSource>literal("update")
+                .executes(command.getUpdateCommand())
+                .build()
+            )
+            .build()
+        );
     }
 
-    /**
-     * Handles a player argument; if the provided player doesn't exist, a not found message
-     * is sent to the sender. Otherwise, the player is passed to the provided player consumer.
-     *
-     * @param sender the command sender
-     * @param argument the argument passed from the command execution
-     * @param playerConsumer a consumer used for processing a desired action if the player is found
-     * @since 1.0.9
-     */
-    protected void handlePlayerArgument(@NonNull T sender, @NonNull String argument, @NonNull Consumer<Player> playerConsumer) {
-        Optional<Player> playerOpt = ApolloVelocityPlatform.getInstance().getServer().getPlayer(argument);
+    private final Command<CommandSource> baseCommand = context -> {
+        CommandSource source = context.getSource();
+        this.getCurrentVersion(source);
+        return Command.SINGLE_SUCCESS;
+    };
 
-        if (!playerOpt.isPresent()) {
-            this.textConsumer.accept(sender, Component.text("Player '", NamedTextColor.RED)
-                .append(Component.text(argument, NamedTextColor.RED))
-                .append(Component.text("' not found!", NamedTextColor.RED)));
-            return;
-        }
+    private final Command<CommandSource> reloadCommand = context -> {
+        CommandSource source = context.getSource();
+        this.reloadConfiguration(source);
+        return Command.SINGLE_SUCCESS;
+    };
 
-        playerConsumer.accept(playerOpt.get());
+    private final Command<CommandSource> updateCommand = context -> {
+        ApolloManager.getVersionManager().forceUpdate(
+            ApolloPlatform.Platform.VELOCITY,
+            message -> this.textConsumer.accept(context.getSource(), message)
+        );
+
+        return Command.SINGLE_SUCCESS;
+    };
+
+    VelocityApolloCommand() {
+        super(Audience::sendMessage);
     }
+
 }

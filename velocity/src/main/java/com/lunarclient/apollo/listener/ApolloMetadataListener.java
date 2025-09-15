@@ -74,8 +74,11 @@ public final class ApolloMetadataListener {
      */
     @Subscribe
     public void onPlayerClientBrand(PlayerClientBrandEvent event) {
+        String brand = event.getBrand();
         VelocityMetadataManager manager = (VelocityMetadataManager) ApolloManager.getMetadataManager();
-        manager.getClientBrands().add(event.getBrand());
+        Map<String, Integer> brands = manager.getClientBrands();
+
+        brands.put(brand, brands.getOrDefault(brand, 0) + 1);
     }
 
     /**
@@ -121,14 +124,16 @@ public final class ApolloMetadataListener {
                 return;
             }
 
-            int count = ByteBufUtil.readVarInt(in);
+            VelocityMetadataManager manager = (VelocityMetadataManager) ApolloManager.getMetadataManager();
+            Map<String, Integer> mods = manager.getMods();
 
+            int count = ByteBufUtil.readVarInt(in);
             for (int i = 0; i < count; i++) {
                 String modId = ByteBufUtil.readString(in);
                 String version = ByteBufUtil.readString(in);
+                String key = modId + ":" + version;
 
-                VelocityMetadataManager manager = (VelocityMetadataManager) ApolloManager.getMetadataManager();
-                manager.getMods().put(modId, version);
+                mods.put(key, mods.getOrDefault(key, 0) + 1);
             }
         } catch (Exception ignored) {
         }

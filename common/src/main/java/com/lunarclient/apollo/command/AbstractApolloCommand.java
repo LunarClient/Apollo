@@ -23,11 +23,7 @@
  */
 package com.lunarclient.apollo.command;
 
-import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import java.util.function.BiConsumer;
-import java.util.logging.Level;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -47,47 +43,6 @@ public abstract class AbstractApolloCommand<T> {
     protected final BiConsumer<T, Component> textConsumer;
 
     protected String usage;
-
-    /**
-     * Sends the current version message to the sender.
-     *
-     * @param sender the command sender
-     * @since 1.0.5
-     */
-    protected void getCurrentVersion(@NonNull T sender) {
-        this.textConsumer.accept(sender, Component.text("Apollo is running version ", NamedTextColor.GREEN)
-            .append(Component.text(Apollo.getPlatform().getApolloVersion(), NamedTextColor.WHITE))
-            .append(Component.text(".", NamedTextColor.GREEN))
-        );
-    }
-
-    /**
-     * Reloads the configuration and messages the result to the sender.
-     *
-     * @param sender the command sender
-     * @since 1.0.5
-     */
-    protected void reloadConfiguration(@NonNull T sender) {
-        try {
-            ApolloManager.loadConfiguration();
-            ((ApolloModuleManagerImpl) Apollo.getModuleManager()).reloadModules();
-            ApolloManager.saveConfiguration();
-        } catch (Throwable throwable) {
-            Apollo.getPlatform().getPlatformLogger().log(Level.SEVERE, "Unable to save Apollo configuration!", throwable);
-
-            this.textConsumer.accept(sender, Component.text(
-                "An error occurred attempting to save the configuration!",
-                NamedTextColor.RED
-            ));
-
-            return;
-        }
-
-        this.textConsumer.accept(sender, Component.text(
-            "Reloaded the Apollo configuration!",
-            NamedTextColor.GREEN
-        ));
-    }
 
     /**
      * Sends the command usage to the sender.

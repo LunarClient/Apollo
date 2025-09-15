@@ -39,6 +39,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -54,18 +56,9 @@ public final class ApolloVersionManager {
         .node("send-updater-message").type(TypeToken.get(Boolean.class))
         .defaultValue(true).build();
 
-    public static final String UPDATE_MESSAGE = "[Apollo] You're running an outdated version of Apollo. " +
-        "Use \"/apollo update\" to update to the latest version!";
+    @Getter private VersionResponse updateAssets;
 
-    /**
-     * Returns whether the server needs to update Apollo.
-     *
-     * @since 1.0.0
-     */
-    public static boolean NEEDS_UPDATE;
-
-    private VersionResponse.Assets assets;
-    private AtomicBoolean updated = new AtomicBoolean(false);
+    private final AtomicBoolean updated = new AtomicBoolean(false);
 
     /**
      * Constructs the {@link ApolloVersionManager}.
@@ -84,18 +77,28 @@ public final class ApolloVersionManager {
     public void checkForUpdates() {
         ApolloManager.getHttpManager().request(VersionRequest.builder().build())
             .onSuccess(response -> {
-                this.assets = response.getAssets();
-
                 ApolloPlatform platform = Apollo.getPlatform();
+                String version = response.getVersion();
+
                 ApolloVersion currentVersion = new ApolloVersion(platform.getApolloVersion());
-                ApolloVersion latestVersion = new ApolloVersion(response.getVersion());
+                ApolloVersion latestVersion = new ApolloVersion(version);
 
-                if (currentVersion.isUpdateAvailable(latestVersion)) {
-                    ApolloVersionManager.NEEDS_UPDATE = true;
+                if (!currentVersion.isUpdateAvailable(latestVersion)) {
+                    return;
+                }
 
-                    if (platform.getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
-                        platform.getPlatformLogger().warning(UPDATE_MESSAGE);
-                    }
+                this.updateAssets = response;
+
+                if (!platform.getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
+                    return;
+                }
+
+                Logger logger = platform.getPlatformLogger();
+                logger.warning(String.format("A new version of Apollo is available! Latest release: %s", version));
+
+                if (platform.getPlatform() != ApolloPlatform.Platform.MINESTOM) {
+                    logger.warning("Please update by running \"/apollo update\" or by downloading the " +
+                        "latest build from https://lunarclient.dev/apollo/downloads");
                 }
             })
             .onFailure(Throwable::printStackTrace);
@@ -108,7 +111,7 @@ public final class ApolloVersionManager {
      * @param message the message to send to the command sender
      * @since 1.0.9
      */
-    public void forceUpdate(String platform, Consumer<Component> message) {
+    public void forceUpdate(ApolloPlatform.Platform platform, Consumer<Component> message) {
         if (this.updated.get()) {
             message.accept(Component.text(
                 "Apollo is already updated, please restart your server!",
@@ -117,7 +120,7 @@ public final class ApolloVersionManager {
             return;
         }
 
-        if (!ApolloVersionManager.NEEDS_UPDATE) {
+        if (this.updateAssets == null) {
             message.accept(Component.text(
                 "This server is already running the latest version of Apollo.",
                 NamedTextColor.RED)
@@ -125,18 +128,10 @@ public final class ApolloVersionManager {
             return;
         }
 
-        if (this.assets == null) {
+        String downloadUrl = this.getPlatformUrl(platform);
+        if (downloadUrl == null) {
             message.accept(Component.text(
                 "Unable to find assets to update from.",
-                NamedTextColor.RED)
-            );
-            return;
-        }
-
-        String platformUrl = this.getPlatformUrl(platform);
-        if (platformUrl == null) {
-            message.accept(Component.text(
-                "Unable to find platform url.",
                 NamedTextColor.RED)
             );
             return;
@@ -158,14 +153,14 @@ public final class ApolloVersionManager {
         }
 
         // Find name of the new Apollo jar
-        String[] urlArgs = platformUrl.split("/");
+        String[] urlArgs = downloadUrl.split("/");
         String fileName = urlArgs[urlArgs.length - 1];
 
         // Create a path for the downloaded Apollo jar
         Path updatedJarPath = Paths.get(file.getParent() + File.separator + fileName);
 
         DownloadFileRequest request = DownloadFileRequest.builder()
-            .url(platformUrl)
+            .url(downloadUrl)
             .target(updatedJarPath)
             .build();
 
@@ -190,22 +185,24 @@ public final class ApolloVersionManager {
             });
     }
 
-    private String getPlatformUrl(String platform) {
-        switch (platform.toLowerCase()) {
-            case "bukkit": {
-                return this.assets.getBukkit();
+    private String getPlatformUrl(ApolloPlatform.Platform platform) {
+        VersionResponse.Assets assets = this.updateAssets.getAssets();
+
+        switch (platform) {
+            case BUKKIT: {
+                return assets.getBukkit();
             }
 
-            case "bungee": {
-                return this.assets.getBungee();
+            case BUNGEE: {
+                return assets.getBungee();
             }
 
-            case "velocity": {
-                return this.assets.getVelocity();
+            case VELOCITY: {
+                return assets.getVelocity();
             }
 
-            case "folia": {
-                return this.assets.getFolia();
+            case FOLIA: {
+                return assets.getFolia();
             }
         }
 

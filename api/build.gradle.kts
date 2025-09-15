@@ -9,6 +9,7 @@ setupPlatformDependency("bukkit", "bukkitJar")
 setupPlatformDependency("bungee", "bungeeJar")
 setupPlatformDependency("velocity", "velocityJar", 17)
 setupPlatformDependency("folia", "foliaJar", 21)
+setupPlatformDependency("minestom", "minestomJar", 21)
 
 val main by sourceSets
 
@@ -29,6 +30,9 @@ dependencies {
 
     "folia"(main.output)
     "folia"(libs.folia)
+
+    "minestom"(main.output)
+    "minestom"(libs.minestom)
 }
 
 publishShadowJar()

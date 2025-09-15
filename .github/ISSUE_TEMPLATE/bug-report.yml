@@ -95,6 +95,7 @@ body:
           options:
               - Spigot / Bukkit
               - Folia
+              - Minestom
               - BungeeCord
               - Velocity
               - Other
