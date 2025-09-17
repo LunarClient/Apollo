@@ -35,17 +35,24 @@ listOfNotNull(
     "extra:adventure4",
     "api",
     "common",
-    "bukkit",
     "example:bukkit:common",
     "example:bukkit:api",
     "example:bukkit:json",
     "example:bukkit:proto",
-    "example:minestom:api",
-    if (loadAllVersions) "bungee" else null,
-    if (loadAllVersions) "velocity" else null,
-    if (loadAllVersions) "folia" else null,
-    if (loadAllVersions) "minestom" else null
+    "example:minestom:api"
 ).forEach {
     include(it)
     findProject(":$it")?.name = "apollo-${it.replace(':', '-')}"
+}
+
+
+listOfNotNull(
+    "platform:bukkit",
+    if (loadAllVersions) "platform:bungee" else null,
+    if (loadAllVersions) "platform:velocity" else null,
+    if (loadAllVersions) "platform:folia" else null,
+    if (loadAllVersions) "platform:minestom" else null
+).forEach {
+    include(it)
+    findProject(":$it")?.name = "apollo-${it.split(':').last()}"
 }
