@@ -16,7 +16,7 @@ dependencies {
         exclude("net.kyori", "adventure-bom")
     }
 
-    compileOnly(libs.bukkit)
+    compileOnly(libs.bukkit.api)
     compileOnly(libs.folia)
     implementation(project(":example:bukkit:apollo-example-bukkit-common"))
 }
