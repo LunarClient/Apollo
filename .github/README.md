@@ -1,6 +1,8 @@
 ![](https://i.imgur.com/VdgyD5m.png)
 # Apollo
 [![Discord](https://img.shields.io/discord/1080556677004271666?logo=discord&label=discord)](https://lunarclient.dev/discord)
+[![Latest Release](https://img.shields.io/github/v/release/LunarClient/Apollo.svg)](https://github.com/LunarClient/Apollo/releases)
+[![License](https://img.shields.io/github/license/LunarClient/Apollo.svg)](https://github.com/LunarClient/Apollo/blob/master/license.txt)
 
 Apollo is a powerful tool that allows developers to create custom integrations with Lunar Client.
 
@@ -25,7 +27,7 @@ There are two supported methods:
 - [Lightweight JSON](https://lunarclient.dev/apollo/developers/lightweight/json/getting-started)
 - [Lightweight Protobuf](https://lunarclient.dev/apollo/developers/lightweight/protobuf/getting-started)
 
-Both approaches achieve the same goal, but with different trade-offs in terms of **complexity, flexibility, and performance**.  
+Both approaches achieve the same goal, but with different trade-offs in terms of **complexity and flexibility**.  
 
 Read the [Lightweight introduction](https://lunarclient.dev/apollo/developers/lightweight/introduction) documentation to get started.
 
