@@ -1,3 +1,4 @@
+![](https://i.imgur.com/VdgyD5m.png)
 # Apollo
 [![Discord](https://img.shields.io/discord/1080556677004271666?logo=discord&label=discord)](https://lunarclient.dev/discord)
 
@@ -25,7 +26,8 @@ There are two supported methods:
 - [Lightweight Protobuf](https://lunarclient.dev/apollo/developers/lightweight/protobuf/getting-started)
 
 Both approaches achieve the same goal, but with different trade-offs in terms of **complexity, flexibility, and performance**.  
-You can read the full introduction [here](https://lunarclient.dev/apollo/developers/lightweight/introduction).
+
+Read the [Lightweight introduction](https://lunarclient.dev/apollo/developers/lightweight/introduction) documentation to get started.
 
 ## Examples
 
