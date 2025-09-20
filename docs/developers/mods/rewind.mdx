@@ -1,0 +1,23 @@
+# Rewind
+
+Record your game sessions and rewind them from any perspective.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleRewindExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModRewind.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

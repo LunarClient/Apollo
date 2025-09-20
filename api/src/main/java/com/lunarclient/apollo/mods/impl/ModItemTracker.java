@@ -51,7 +51,7 @@ public final class ModItemTracker {
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("item-tracker", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
         .notifyClient()
         .build();
 

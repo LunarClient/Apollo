@@ -23,39 +23,27 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
-import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Allows servers to display items or abilities that are on cooldown on the HUD.
+ * Record your game sessions and rewind them from any perspective.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
-public final class ModCooldowns {
+public final class ModRewind {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("cooldowns", "enabled").type(TypeToken.get(Boolean.class))
+        .node("rewind", "enabled").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
-        .node("cooldowns", "scale").type(TypeToken.get(Float.class))
-        .min(0.25F).max(5.0F)
-        .notifyClient()
-        .build();
-
-    private ModCooldowns() {
+    private ModRewind() {
     }
 
 }
