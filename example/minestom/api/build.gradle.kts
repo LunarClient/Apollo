@@ -9,7 +9,7 @@ java {
 
 dependencies {
     compileOnly(project(path = ":apollo-api", configuration = "minestom"))
-    implementation(project(path = ":apollo-minestom", configuration = "shadow"))
+    implementation(project(path = ":platform:apollo-minestom", configuration = "shadow"))
 
     implementation(libs.minestom)
 }

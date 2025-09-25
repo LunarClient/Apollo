@@ -8,6 +8,5 @@ java {
 }
 
 dependencies {
-    compileOnly(libs.bukkit)
     compileOnly(libs.bukkit.api)
 }
