@@ -1,0 +1,295 @@
+# Mob Size
+
+Changes the size of mobs.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleMobSizeExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModMobSize.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PLAYER_SIZE_SKYBLOCK_ONLY`__
+    - Only change player sizes when playing Hypixel SkyBlock
+    - Config Key: `player-size-skyblock-only`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PLAYER_SIZE`__
+    - The size of your player
+    - Config Key: `player-size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`OTHER_PLAYER_SIZE`__
+    - The size of other players
+    - Config Key: `other-player-size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`CHANGE_NPC_SIZE`__
+    - If the size of NPCs should be changed
+    - Config Key: `change-npc-size`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BAT_ SIZE`__
+    - Config Key: `bat -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`BLAZE_ SIZE`__
+    - Config Key: `blaze -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`CAVE_ SPIDER_ SIZE`__
+    - Config Key: `cave -spider -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`CHICKEN_ SIZE`__
+    - Config Key: `chicken -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`COW_ SIZE`__
+    - Config Key: `cow -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`CREEPER_ SIZE`__
+    - Config Key: `creeper -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`ENDER_ DRAGON_ SIZE`__
+    - Config Key: `ender -dragon -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`ENDERMAN_ SIZE`__
+    - Config Key: `enderman -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`GHAST_ SIZE`__
+    - Config Key: `ghast -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`GIANT_ SIZE`__
+    - Config Key: `giant -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`HORSE_ SIZE`__
+    - Config Key: `horse -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`IRON_ GOLEM_ SIZE`__
+    - Config Key: `iron -golem -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`MAGMA_ CUBE_ SIZE`__
+    - Config Key: `magma -cube -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`MONSTER_ SIZE`__
+    - Config Key: `monster -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`MOOSHROOM_ SIZE`__
+    - Config Key: `mooshroom -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`OCELOT_ SIZE`__
+    - Config Key: `ocelot -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`PIG_ SIZE`__
+    - Config Key: `pig -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`SHEEP_ SIZE`__
+    - Config Key: `sheep -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`SILVERFISH_ SIZE`__
+    - Config Key: `silverfish -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`SKELETON_ SIZE`__
+    - Config Key: `skeleton -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`SLIME_ SIZE`__
+    - Config Key: `slime -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`SNOW_ MAN_ SIZE`__
+    - Config Key: `snow -man -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`SPIDER_ SIZE`__
+    - Config Key: `spider -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`SQUID_ SIZE`__
+    - Config Key: `squid -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`VILLAGER_ SIZE`__
+    - Config Key: `villager -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`WITCH_ SIZE`__
+    - Config Key: `witch -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`WITHER_ SIZE`__
+    - Config Key: `wither -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`WOLF_ SIZE`__
+    - Config Key: `wolf -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`ZOMBIE_ PIGMAN_ SIZE`__
+    - Config Key: `zombie -pigman -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`ZOMBIE_ SIZE`__
+    - Config Key: `zombie -size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+

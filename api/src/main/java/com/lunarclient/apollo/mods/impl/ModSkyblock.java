@@ -233,6 +233,27 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_NON_STARRED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-non-starred").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows how long it takes to do each terminal stage in chat (and also Simon Says)!.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_TERMINAL_SPLIT_TIMERS = SimpleOption.<Boolean>builder()
+        .comment("Shows how long it takes to do each terminal stage in chat (and also Simon Says)!")
+        .node("skyblock", "skyblock-terminal-split-timers").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.
      *
      * @since 1.0.9
