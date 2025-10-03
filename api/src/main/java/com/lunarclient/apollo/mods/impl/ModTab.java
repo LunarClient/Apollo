@@ -60,56 +60,6 @@ public final class ModTab {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Color> HEADER_COLOR = SimpleOption.<Color>builder()
-        .node("tab", "header-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Color> FOOTER_COLOR = SimpleOption.<Color>builder()
-        .node("tab", "footer-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
-        .node("tab", "background-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> PING_ROW = SimpleOption.<Boolean>builder()
-        .node("tab", "ping-row").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Color> ROWS_COLOR = SimpleOption.<Color>builder()
-        .node("tab", "rows-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> DISABLE_HEADER = SimpleOption.<Boolean>builder()
         .node("tab", "disable-header").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -161,6 +111,56 @@ public final class ModTab {
      *
      * @since 1.0.0
      */
+    public static final SimpleOption<Color> HEADER_COLOR = SimpleOption.<Color>builder()
+        .node("tab", "header-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Color> FOOTER_COLOR = SimpleOption.<Color>builder()
+        .node("tab", "footer-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
+        .node("tab", "background-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> PING_ROW = SimpleOption.<Boolean>builder()
+        .node("tab", "ping-row").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Color> ROWS_COLOR = SimpleOption.<Color>builder()
+        .node("tab", "rows-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
     public static final SimpleOption<Boolean> HIGHLIGHT_OWN_NAME = SimpleOption.<Boolean>builder()
         .node("tab", "highlight-own-name").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -183,6 +183,16 @@ public final class ModTab {
      */
     public static final SimpleOption<Boolean> NAME_SHADOW = SimpleOption.<Boolean>builder()
         .node("tab", "name-shadow").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> MOVE_SELF_TO_TOP = SimpleOption.<Boolean>builder()
+        .node("tab", "move-self-to-top").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

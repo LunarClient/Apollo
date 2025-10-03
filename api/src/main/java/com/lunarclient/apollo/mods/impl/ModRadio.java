@@ -50,30 +50,9 @@ public final class ModRadio {
      *
      * @since 1.1.7
      */
-    public static final NumberOption<Integer> VOLUME = NumberOption.<Integer>number()
-        .node("radio", "volume").type(TypeToken.get(Integer.class))
-        .min(0).max(100)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.7
-     */
-    public static final SimpleOption<Boolean> MUTE_RADIO = SimpleOption.<Boolean>builder()
-        .node("radio", "mute-radio").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.7
-     */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("radio", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
         .notifyClient()
         .build();
 
@@ -169,6 +148,27 @@ public final class ModRadio {
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("radio", "background-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.7
+     */
+    public static final NumberOption<Integer> VOLUME = NumberOption.<Integer>number()
+        .node("radio", "volume").type(TypeToken.get(Integer.class))
+        .min(0).max(100)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.7
+     */
+    public static final SimpleOption<Boolean> MUTE_RADIO = SimpleOption.<Boolean>builder()
+        .node("radio", "mute-radio").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

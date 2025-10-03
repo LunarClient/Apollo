@@ -52,7 +52,7 @@ public final class ModKeystrokes {
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("keystrokes", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
         .notifyClient()
         .build();
 
@@ -117,11 +117,12 @@ public final class ModKeystrokes {
         .build();
 
     /**
-     * No documentation available.
+     * Adds a shadow to text.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
         .node("keystrokes", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();

@@ -68,11 +68,12 @@ public final class ModTntCountdown {
         .build();
 
     /**
-     * No documentation available.
+     * Adds a shadow to text.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
         .node("tnt-countdown", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();

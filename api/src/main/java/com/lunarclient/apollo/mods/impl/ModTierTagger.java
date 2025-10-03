@@ -25,6 +25,7 @@ package com.lunarclient.apollo.mods.impl;
 
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Show player's PvP tier on their Name Tag.
@@ -100,6 +101,106 @@ public final class ModTierTagger {
      */
     public static final SimpleOption<Boolean> SHOW_REGION = SimpleOption.<Boolean>builder()
         .node("tier-tagger", "show-region").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_HT1 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-h-t1").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_LT1 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-l-t1").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_HT2 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-h-t2").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_LT2 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-l-t2").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_HT3 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-h-t3").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_LT3 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-l-t3").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_HT4 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-h-t4").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_LT4 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-l-t4").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_HT5 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-h-t5").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_LT5 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-l-t5").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
