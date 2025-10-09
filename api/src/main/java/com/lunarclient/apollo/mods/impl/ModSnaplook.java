@@ -40,6 +40,7 @@ public final class ModSnaplook {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("snaplook", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -51,6 +52,7 @@ public final class ModSnaplook {
     public static final SimpleOption<Boolean> SMOOTH_CAMERA = SimpleOption.<Boolean>builder()
         .comment("When zoomed in the camera movement will move smoothly (cinematic camera)")
         .node("snaplook", "smooth-camera").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -62,6 +64,7 @@ public final class ModSnaplook {
     public static final SimpleOption<Boolean> SNAPLOOK_TOGGLE_MODE = SimpleOption.<Boolean>builder()
         .comment("This feature uses press and hold by default. Useful if you want to bypass a certain camera orientation.")
         .node("snaplook", "snaplook-toggle-mode").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

@@ -42,6 +42,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("pack-display", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -52,7 +53,8 @@ public final class ModPackDisplay {
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("pack-display", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
@@ -63,6 +65,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> PACK_ICON = SimpleOption.<Boolean>builder()
         .node("pack-display", "pack-icon").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -73,6 +76,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> PACK_DESCRIPTION = SimpleOption.<Boolean>builder()
         .node("pack-display", "pack-description").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -83,6 +87,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> PACK_EXTENSION = SimpleOption.<Boolean>builder()
         .node("pack-display", "pack-extension").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -93,16 +98,19 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> MOVE_TITLE_DOWN = SimpleOption.<Boolean>builder()
         .node("pack-display", "move-title-down").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Adds a shadow to text.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
         .node("pack-display", "text-shadow").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -113,6 +121,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> BRACKETS = SimpleOption.<Boolean>builder()
         .node("pack-display", "brackets").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -123,6 +132,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Color> BRACKET_COLOR = SimpleOption.<Color>builder()
         .node("pack-display", "bracket-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 
@@ -133,6 +143,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("pack-display", "background").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -144,6 +155,7 @@ public final class ModPackDisplay {
     public static final NumberOption<Integer> BACKGROUND_HEIGHT = NumberOption.<Integer>number()
         .node("pack-display", "background-height").type(TypeToken.get(Integer.class))
         .min(12).max(64)
+        .defaultValue(24)
         .notifyClient()
         .build();
 
@@ -154,6 +166,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("pack-display", "border").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -165,6 +178,7 @@ public final class ModPackDisplay {
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("pack-display", "border-thickness").type(TypeToken.get(Float.class))
         .min(0.5F).max(3.0F)
+        .defaultValue(0.5F)
         .notifyClient()
         .build();
 
@@ -175,6 +189,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("pack-display", "border-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 159))
         .notifyClient()
         .build();
 
@@ -185,6 +200,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("pack-display", "background-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 111))
         .notifyClient()
         .build();
 
@@ -195,6 +211,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("pack-display", "text-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 
@@ -205,6 +222,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Color> DESCRIPTION_REPLACEMENT_COLOR = SimpleOption.<Color>builder()
         .node("pack-display", "description-replacement-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 
@@ -215,6 +233,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> KEEP_BOLD = SimpleOption.<Boolean>builder()
         .node("pack-display", "keep-bold").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -225,6 +244,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> KEEP_ITALIC = SimpleOption.<Boolean>builder()
         .node("pack-display", "keep-italic").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -235,6 +255,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> KEEP_UNDERLINE = SimpleOption.<Boolean>builder()
         .node("pack-display", "keep-underline").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -245,6 +266,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> KEEP_STRIKETHROUGH = SimpleOption.<Boolean>builder()
         .node("pack-display", "keep-strikethrough").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -255,6 +277,7 @@ public final class ModPackDisplay {
      */
     public static final SimpleOption<Boolean> KEEP_OBFUSCATED = SimpleOption.<Boolean>builder()
         .node("pack-display", "keep-obfuscated").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 

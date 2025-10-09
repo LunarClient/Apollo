@@ -41,6 +41,7 @@ public final class ModItemPhysics {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("item-physics", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -52,6 +53,7 @@ public final class ModItemPhysics {
     public static final NumberOption<Float> ROTATION_SPEED = NumberOption.<Float>number()
         .node("item-physics", "rotation-speed").type(TypeToken.get(Float.class))
         .min(0.1F).max(4.0F)
+        .defaultValue(0.5F)
         .notifyClient()
         .build();
 

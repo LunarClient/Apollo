@@ -41,6 +41,7 @@ public final class ModHitColor {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("hit-color", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -51,6 +52,7 @@ public final class ModHitColor {
      */
     public static final SimpleOption<Color> HIT_ARMOR_COLOR = SimpleOption.<Color>builder()
         .node("hit-color", "hit-armor-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(153, 0, 0, 102))
         .notifyClient()
         .build();
 
@@ -61,6 +63,7 @@ public final class ModHitColor {
      */
     public static final SimpleOption<Boolean> SHOULD_COLOR_ARMOR = SimpleOption.<Boolean>builder()
         .node("hit-color", "should-color-armor").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 

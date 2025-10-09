@@ -23,74 +23,79 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
+import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * When activated, allows you to change your camera perspective without rotating your player.
+ * Changes the size of mobs.
  *
- * @since 1.0.0
+ * @since 1.2.1
  */
-public final class ModFreelook {
+public final class ModMobSize {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("freelook", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> INVERT_PITCH = SimpleOption.<Boolean>builder()
-        .node("freelook", "invert-pitch").type(TypeToken.get(Boolean.class))
+        .node("mob-size", "enabled").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Only change player sizes when playing Hypixel SkyBlock.
      *
-     * @since 1.0.0
+     * @since 1.2.1
      */
-    public static final SimpleOption<Boolean> INVERT_YAW = SimpleOption.<Boolean>builder()
-        .node("freelook", "invert-yaw").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> PLAYER_SIZE_SKYBLOCK_ONLY = SimpleOption.<Boolean>builder()
+        .comment("Only change player sizes when playing Hypixel SkyBlock")
+        .node("mob-size", "player-size-skyblock-only").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();
 
     /**
-     * Quickly pressing and releasing the key will toggle freelook.
+     * The size of your player.
      *
-     * @since 1.0.0
+     * @since 1.2.1
      */
-    public static final SimpleOption<Boolean> TOGGLE_KEY_FREELOOK = SimpleOption.<Boolean>builder()
-        .comment("Quickly pressing and releasing the key will toggle freelook")
-        .node("freelook", "toggle-key-freelook").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
+    public static final NumberOption<Float> PLAYER_SIZE = NumberOption.<Float>number()
+        .comment("The size of your player")
+        .node("mob-size", "player-size").type(TypeToken.get(Float.class))
+        .min(0.5F).max(1.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
     /**
-     * When zoomed in the camera movement will move smoothly (cinematic camera).
+     * The size of other players.
      *
-     * @since 1.0.0
+     * @since 1.2.1
      */
-    public static final SimpleOption<Boolean> SMOOTH_CAMERA = SimpleOption.<Boolean>builder()
-        .comment("When zoomed in the camera movement will move smoothly (cinematic camera)")
-        .node("freelook", "smooth-camera").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
+    public static final NumberOption<Float> OTHER_PLAYER_SIZE = NumberOption.<Float>number()
+        .comment("The size of other players")
+        .node("mob-size", "other-player-size").type(TypeToken.get(Float.class))
+        .min(0.5F).max(1.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
-    private ModFreelook() {
+    /**
+     * If the size of NPCs should be changed.
+     *
+     * @since 1.2.1
+     */
+    public static final SimpleOption<Boolean> CHANGE_NPC_SIZE = SimpleOption.<Boolean>builder()
+        .comment("If the size of NPCs should be changed")
+        .node("mob-size", "change-npc-size").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    private ModMobSize() {
     }
 
 }

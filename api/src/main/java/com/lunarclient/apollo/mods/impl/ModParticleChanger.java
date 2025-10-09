@@ -42,6 +42,7 @@ public final class ModParticleChanger {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("particle-changer", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -52,6 +53,7 @@ public final class ModParticleChanger {
      */
     public static final SimpleOption<Boolean> ALWAYS_ENCHANT_STRIKES = SimpleOption.<Boolean>builder()
         .node("particle-changer", "always-enchant-strikes").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -62,6 +64,7 @@ public final class ModParticleChanger {
      */
     public static final SimpleOption<Boolean> AFFECT_ENCHANTED_WEAPONS = SimpleOption.<Boolean>builder()
         .node("particle-changer", "affect-enchanted-weapons").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -73,6 +76,7 @@ public final class ModParticleChanger {
     public static final SimpleOption<Boolean> HIDE_FIRST_PERSON_PARTICLES = SimpleOption.<Boolean>builder()
         .comment("Hide your players potion effect particles when you're in first person")
         .node("particle-changer", "hide-first-person-particles").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -83,6 +87,7 @@ public final class ModParticleChanger {
      */
     public static final SimpleOption<Color> COLOR = SimpleOption.<Color>builder()
         .node("particle-changer", "color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 
@@ -94,6 +99,7 @@ public final class ModParticleChanger {
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("particle-changer", "scale").type(TypeToken.get(Float.class))
         .min(0.5F).max(2.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
@@ -105,6 +111,7 @@ public final class ModParticleChanger {
     public static final NumberOption<Integer> PARTICLE_MULTIPLIER = NumberOption.<Integer>number()
         .node("particle-changer", "particle-multiplier").type(TypeToken.get(Integer.class))
         .min(1).max(10)
+        .defaultValue(1)
         .notifyClient()
         .build();
 
@@ -115,6 +122,7 @@ public final class ModParticleChanger {
      */
     public static final SimpleOption<Boolean> HIDE_PARTICLE = SimpleOption.<Boolean>builder()
         .node("particle-changer", "hide-particle").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -125,6 +133,7 @@ public final class ModParticleChanger {
      */
     public static final SimpleOption<Boolean> OVERLAY_COLOR = SimpleOption.<Boolean>builder()
         .node("particle-changer", "overlay-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

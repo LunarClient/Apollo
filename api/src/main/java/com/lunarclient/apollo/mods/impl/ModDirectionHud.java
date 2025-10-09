@@ -42,6 +42,7 @@ public final class ModDirectionHud {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("direction-hud", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -52,7 +53,8 @@ public final class ModDirectionHud {
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("direction-hud", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
@@ -64,16 +66,19 @@ public final class ModDirectionHud {
     public static final NumberOption<Float> WIDTH = NumberOption.<Float>number()
         .node("direction-hud", "width").type(TypeToken.get(Float.class))
         .min(168.0F).max(448.0F)
+        .defaultValue(280.0F)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Adds a shadow to text.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
         .node("direction-hud", "text-shadow").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -85,6 +90,7 @@ public final class ModDirectionHud {
     public static final SimpleOption<Boolean> BOLD_DIRECTIONS = SimpleOption.<Boolean>builder()
         .comment("Show the cardinal directions in BOLD.")
         .node("direction-hud", "bold-directions").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -95,6 +101,7 @@ public final class ModDirectionHud {
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("direction-hud", "background").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -105,6 +112,7 @@ public final class ModDirectionHud {
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("direction-hud", "border").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -116,6 +124,7 @@ public final class ModDirectionHud {
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("direction-hud", "border-thickness").type(TypeToken.get(Float.class))
         .min(0.5F).max(3.0F)
+        .defaultValue(0.5F)
         .notifyClient()
         .build();
 
@@ -126,6 +135,7 @@ public final class ModDirectionHud {
      */
     public static final SimpleOption<Boolean> SHOW_MARKER = SimpleOption.<Boolean>builder()
         .node("direction-hud", "show-marker").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -136,6 +146,7 @@ public final class ModDirectionHud {
      */
     public static final SimpleOption<Boolean> SHOW_MARKER_VALUE = SimpleOption.<Boolean>builder()
         .node("direction-hud", "show-marker-value").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -146,6 +157,7 @@ public final class ModDirectionHud {
      */
     public static final SimpleOption<Boolean> USE_LEGACY_STYLE = SimpleOption.<Boolean>builder()
         .node("direction-hud", "use-legacy-style").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -157,6 +169,7 @@ public final class ModDirectionHud {
     public static final SimpleOption<Boolean> SHOW_WITH_TAB = SimpleOption.<Boolean>builder()
         .comment("Choose whether to show the Direction HUD when TAB is open.")
         .node("direction-hud", "show-with-tab").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -167,6 +180,7 @@ public final class ModDirectionHud {
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("direction-hud", "background-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 111))
         .notifyClient()
         .build();
 
@@ -177,6 +191,7 @@ public final class ModDirectionHud {
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("direction-hud", "border-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 159))
         .notifyClient()
         .build();
 
@@ -187,6 +202,7 @@ public final class ModDirectionHud {
      */
     public static final SimpleOption<Color> MARKER_COLOR = SimpleOption.<Color>builder()
         .node("direction-hud", "marker-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 
@@ -197,6 +213,7 @@ public final class ModDirectionHud {
      */
     public static final SimpleOption<Color> DIRECTION_COLOR = SimpleOption.<Color>builder()
         .node("direction-hud", "direction-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 

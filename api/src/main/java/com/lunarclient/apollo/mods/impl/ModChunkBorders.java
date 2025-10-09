@@ -41,6 +41,7 @@ public final class ModChunkBorders {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("chunk-borders", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -51,6 +52,7 @@ public final class ModChunkBorders {
      */
     public static final SimpleOption<Color> GRID_COLOR = SimpleOption.<Color>builder()
         .node("chunk-borders", "grid-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 0))
         .notifyClient()
         .build();
 
@@ -61,6 +63,7 @@ public final class ModChunkBorders {
      */
     public static final SimpleOption<Color> INNER_CHUNK_CORNER_COLOR = SimpleOption.<Color>builder()
         .node("chunk-borders", "inner-chunk-corner-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 255))
         .notifyClient()
         .build();
 
@@ -71,6 +74,7 @@ public final class ModChunkBorders {
      */
     public static final SimpleOption<Color> OUTER_CHUNK_CORNER_COLOR = SimpleOption.<Color>builder()
         .node("chunk-borders", "outer-chunk-corner-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
         .notifyClient()
         .build();
 

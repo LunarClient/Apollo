@@ -40,6 +40,7 @@ public final class ModNickHider {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("nick-hider", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -50,6 +51,7 @@ public final class ModNickHider {
      */
     public static final SimpleOption<Boolean> HIDE_NAME = SimpleOption.<Boolean>builder()
         .node("nick-hider", "hide-name").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -60,6 +62,7 @@ public final class ModNickHider {
      */
     public static final SimpleOption<Boolean> HIDE_REAL_NAME = SimpleOption.<Boolean>builder()
         .node("nick-hider", "hide-real-name").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -70,6 +73,7 @@ public final class ModNickHider {
      */
     public static final SimpleOption<Boolean> HIDE_OTHERS_NAMES = SimpleOption.<Boolean>builder()
         .node("nick-hider", "hide-others-names").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -80,6 +84,7 @@ public final class ModNickHider {
      */
     public static final SimpleOption<Boolean> HIDE_OWN_SKIN = SimpleOption.<Boolean>builder()
         .node("nick-hider", "hide-own-skin").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -90,6 +95,7 @@ public final class ModNickHider {
      */
     public static final SimpleOption<Boolean> USE_REAL_SKIN = SimpleOption.<Boolean>builder()
         .node("nick-hider", "use-real-skin").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -100,6 +106,7 @@ public final class ModNickHider {
      */
     public static final SimpleOption<Boolean> HIDE_OTHERS_SKIN = SimpleOption.<Boolean>builder()
         .node("nick-hider", "hide-others-skin").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

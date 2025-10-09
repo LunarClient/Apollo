@@ -42,6 +42,7 @@ public final class ModFog {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("fog", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -53,6 +54,7 @@ public final class ModFog {
     public static final NumberOption<Float> WATER_FOG_DENSITY = NumberOption.<Float>number()
         .node("fog", "water-fog-density").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.8F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
@@ -64,6 +66,7 @@ public final class ModFog {
     public static final NumberOption<Float> RENDER_DISTANCE_FOG_DENSITY = NumberOption.<Float>number()
         .node("fog", "render-distance-fog-density").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.95F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
@@ -74,6 +77,7 @@ public final class ModFog {
      */
     public static final SimpleOption<Boolean> RENDER_DISTANCE_FOG_COLOR_TOGGLE = SimpleOption.<Boolean>builder()
         .node("fog", "render-distance-fog-color-toggle").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -84,6 +88,7 @@ public final class ModFog {
      */
     public static final SimpleOption<Color> RENDER_DISTANCE_FOG_COLOR = SimpleOption.<Color>builder()
         .node("fog", "render-distance-fog-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(192, 216, 255, 0))
         .notifyClient()
         .build();
 

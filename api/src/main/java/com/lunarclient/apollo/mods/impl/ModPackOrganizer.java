@@ -40,6 +40,7 @@ public final class ModPackOrganizer {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("pack-organizer", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -50,6 +51,7 @@ public final class ModPackOrganizer {
      */
     public static final SimpleOption<Boolean> SHOW_INCOMPATIBLE = SimpleOption.<Boolean>builder()
         .node("pack-organizer", "show-incompatible").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
