@@ -52,7 +52,7 @@ public final class ModClock {
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("clock", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
         .notifyClient()
         .build();
 
@@ -61,7 +61,28 @@ public final class ModClock {
      *
      * @since 1.0.0
      */
+    public static final SimpleOption<Boolean> MILITARY_TIME = SimpleOption.<Boolean>builder()
+        .node("clock", "military-time").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> SHOW_AM_PM = SimpleOption.<Boolean>builder()
+        .node("clock", "show-am-pm").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Adds a shadow to text.
+     *
+     * @since 1.0.0
+     */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
         .node("clock", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
@@ -188,26 +209,6 @@ public final class ModClock {
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("clock", "text-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> MILITARY_TIME = SimpleOption.<Boolean>builder()
-        .node("clock", "military-time").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.3
-     */
-    public static final SimpleOption<Boolean> SHOW_AM_PM = SimpleOption.<Boolean>builder()
-        .node("clock", "show-am-pm").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

@@ -56,6 +56,50 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * Automatically copies rare drops and pet drops to the clipboard.
+     *
+     * @since 1.0.9
+     */
+    public static final SimpleOption<Boolean> AUTO_COPY_RARE_DROPS = SimpleOption.<Boolean>builder()
+        .comment("Automatically copies rare drops and pet drops to the clipboard.")
+        .node("skyblock", "auto-copy-rare-drops").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Replaces left clicks in menus with a middle click. Hold control to override.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_MIDDLE_CLICK_ITEMS = SimpleOption.<Boolean>builder()
+        .comment("Replaces left clicks in menus with a middle click. Hold control to override.")
+        .node("skyblock", "sky-block-middle-click-items").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows the creation date of the item in the lore.
+     *
+     * @since 1.1.7
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_CREATION_DATE = SimpleOption.<Boolean>builder()
+        .comment("Shows the creation date of the item in the lore.")
+        .node("skyblock", "sky-block-creation-date").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows the item's SkyBlock ID in the lore.
+     *
+     * @since 1.1.7
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_ITEM_ID = SimpleOption.<Boolean>builder()
+        .comment("Shows the item's SkyBlock ID in the lore.")
+        .node("skyblock", "sky-block-item-id").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.0.9
@@ -96,37 +140,6 @@ public final class ModSkyblock {
         .build();
 
     /**
-     * No documentation available.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> HIDE_MIDAS_STAFF = SimpleOption.<Boolean>builder()
-        .node("skyblock", "hide-midas-staff").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> HIDE_FALLING_BLOCKS = SimpleOption.<Boolean>builder()
-        .node("skyblock", "hide-falling-blocks").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * Automatically copies rare drops and pet drops to the clipboard.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> AUTO_COPY_RARE_DROPS = SimpleOption.<Boolean>builder()
-        .comment("Automatically copies rare drops and pet drops to the clipboard.")
-        .node("skyblock", "auto-copy-rare-drops").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
      * Hides the hud previews in the edit hud layout menu if you're not currently on SkyBlock.
      *
      * @since 1.1.1
@@ -149,45 +162,13 @@ public final class ModSkyblock {
         .build();
 
     /**
-     * Replaces left clicks in menus with a middle click. Hold control to override.
+     * Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.
      *
-     * @since 1.1.9
+     * @since 1.0.9
      */
-    public static final SimpleOption<Boolean> SKY_BLOCK_MIDDLE_CLICK_ITEMS = SimpleOption.<Boolean>builder()
-        .comment("Replaces left clicks in menus with a middle click. Hold control to override.")
-        .node("skyblock", "sky-block-middle-click-items").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * Shows the creation date of the item in the lore.
-     *
-     * @since 1.1.7
-     */
-    public static final SimpleOption<Boolean> SKY_BLOCK_CREATION_DATE = SimpleOption.<Boolean>builder()
-        .comment("Shows the creation date of the item in the lore.")
-        .node("skyblock", "sky-block-creation-date").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * Shows the item's SkyBlock ID in the lore.
-     *
-     * @since 1.1.7
-     */
-    public static final SimpleOption<Boolean> SKY_BLOCK_ITEM_ID = SimpleOption.<Boolean>builder()
-        .comment("Shows the item's SkyBlock ID in the lore.")
-        .node("skyblock", "sky-block-item-id").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.8
-     */
-    public static final SimpleOption<Boolean> HIGHLIGHT_END_NODES = SimpleOption.<Boolean>builder()
-        .node("skyblock", "highlight-end-nodes").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> TALLER_CROPS = SimpleOption.<Boolean>builder()
+        .comment("Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.")
+        .node("skyblock", "taller-crops").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -198,48 +179,6 @@ public final class ModSkyblock {
      */
     public static final SimpleOption<Boolean> HIGHLIGHT_GLOWING_MUSHROOMS = SimpleOption.<Boolean>builder()
         .node("skyblock", "highlight-glowing-mushrooms").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> SB_MENU_CLICK_TO_COMMAND = SimpleOption.<Boolean>builder()
-        .node("skyblock", "sb-menu-click-to-command").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * Makes Giant HP more visible by showing their HP at their feet.
-     *
-     * @since 1.1.5
-     */
-    public static final SimpleOption<Boolean> SHOW_GIANT_HPAT_FEET = SimpleOption.<Boolean>builder()
-        .comment("Makes Giant HP more visible by showing their HP at their feet.")
-        .node("skyblock", "show-giant-h-p-at-feet").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_SECRETS_COLLECTED = SimpleOption.<Boolean>builder()
-        .node("skyblock", "skyblock-secrets-collected").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> TALLER_CROPS = SimpleOption.<Boolean>builder()
-        .comment("Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.")
-        .node("skyblock", "taller-crops").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 
@@ -404,6 +343,58 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since 1.1.8
+     */
+    public static final SimpleOption<Boolean> HIGHLIGHT_END_NODES = SimpleOption.<Boolean>builder()
+        .node("skyblock", "highlight-end-nodes").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Makes Giant HP more visible by showing their HP at their feet.
+     *
+     * @since 1.1.5
+     */
+    public static final SimpleOption<Boolean> SHOW_GIANT_HPAT_FEET = SimpleOption.<Boolean>builder()
+        .comment("Makes Giant HP more visible by showing their HP at their feet.")
+        .node("skyblock", "show-giant-h-p-at-feet").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_SECRETS_COLLECTED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-secrets-collected").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_NON_STARRED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-non-starred").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows how long it takes to do each terminal stage in chat (and also Simon Says)!.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_TERMINAL_SPLIT_TIMERS = SimpleOption.<Boolean>builder()
+        .comment("Shows how long it takes to do each terminal stage in chat (and also Simon Says)!")
+        .node("skyblock", "skyblock-terminal-split-timers").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
      * Provides a general line thickness option that applies to most features with box/line rendering.
      *
      * @since 1.1.7
@@ -418,10 +409,41 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
+     * @since 1.0.9
+     */
+    public static final SimpleOption<Boolean> HIDE_MIDAS_STAFF = SimpleOption.<Boolean>builder()
+        .node("skyblock", "hide-midas-staff").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.9
+     */
+    public static final SimpleOption<Boolean> HIDE_FALLING_BLOCKS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "hide-falling-blocks").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SKYBLOCK_USE_TICK_TIMERS = SimpleOption.<Boolean>builder()
         .node("skyblock", "skyblock-use-tick-timers").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Routes menu clicks to /sbmenu command in order to prevent sticky item.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> SB_MENU_CLICK_TO_COMMAND = SimpleOption.<Boolean>builder()
+        .comment("Routes menu clicks to /sbmenu command in order to prevent sticky item.")
+        .node("skyblock", "sb-menu-click-to-command").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

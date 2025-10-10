@@ -52,7 +52,47 @@ public final class ModMemory {
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("memory", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Boolean> COLOR_BASED_ON_USAGE = SimpleOption.<Boolean>builder()
+        .node("memory", "color-based-on-usage").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Color> LOW_MEM_COLOR = SimpleOption.<Color>builder()
+        .node("memory", "low-mem-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Color> MED_MEM_COLOR = SimpleOption.<Color>builder()
+        .node("memory", "med-mem-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.3
+     */
+    public static final SimpleOption<Color> HIGH_MEM_COLOR = SimpleOption.<Color>builder()
+        .node("memory", "high-mem-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 
@@ -61,7 +101,18 @@ public final class ModMemory {
      *
      * @since 1.0.0
      */
+    public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
+        .node("memory", "text-color").type(TypeToken.get(Color.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Adds a shadow to text.
+     *
+     * @since 1.0.0
+     */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
         .node("memory", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
@@ -178,56 +229,6 @@ public final class ModMemory {
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("memory", "background-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
-        .node("memory", "text-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.3
-     */
-    public static final SimpleOption<Boolean> COLOR_BASED_ON_USAGE = SimpleOption.<Boolean>builder()
-        .node("memory", "color-based-on-usage").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.3
-     */
-    public static final SimpleOption<Color> LOW_MEM_COLOR = SimpleOption.<Color>builder()
-        .node("memory", "low-mem-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.3
-     */
-    public static final SimpleOption<Color> MED_MEM_COLOR = SimpleOption.<Color>builder()
-        .node("memory", "med-mem-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.3
-     */
-    public static final SimpleOption<Color> HIGH_MEM_COLOR = SimpleOption.<Color>builder()
-        .node("memory", "high-mem-color").type(TypeToken.get(Color.class))
         .notifyClient()
         .build();
 

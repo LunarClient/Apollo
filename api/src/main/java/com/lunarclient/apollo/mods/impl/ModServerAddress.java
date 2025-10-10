@@ -52,7 +52,7 @@ public final class ModServerAddress {
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("server-address", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
         .notifyClient()
         .build();
 
@@ -61,7 +61,18 @@ public final class ModServerAddress {
      *
      * @since 1.0.0
      */
+    public static final SimpleOption<Boolean> SERVER_ICON = SimpleOption.<Boolean>builder()
+        .node("server-address", "server-icon").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Adds a shadow to text.
+     *
+     * @since 1.0.0
+     */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
         .node("server-address", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
@@ -188,16 +199,6 @@ public final class ModServerAddress {
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("server-address", "text-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> SERVER_ICON = SimpleOption.<Boolean>builder()
-        .node("server-address", "server-icon").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
 

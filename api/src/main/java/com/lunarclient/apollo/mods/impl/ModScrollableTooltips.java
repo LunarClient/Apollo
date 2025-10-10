@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
+import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
@@ -44,11 +45,12 @@ public final class ModScrollableTooltips {
         .build();
 
     /**
-     * No documentation available.
+     * When a tooltip is sufficiently long, overflow off the bottom/right of the screen instead of the top/left.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> START_AT_TOP = SimpleOption.<Boolean>builder()
+        .comment("When a tooltip is sufficiently long, overflow off the bottom/right of the screen instead of the top/left.")
         .node("scrollable-tooltips", "start-at-top").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
@@ -66,8 +68,31 @@ public final class ModScrollableTooltips {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final NumberOption<Float> TOOLTIP_SCALE = NumberOption.<Float>number()
+        .node("scrollable-tooltips", "tooltip-scale").type(TypeToken.get(Float.class))
+        .min(0.25F).max(2.5F)
+        .notifyClient()
+        .build();
+
+    /**
+     * Let the user scroll whenever they want, regardless of whether or not a tooltip is sufficiently large.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> TOOLTIP_FREE_SCROLL = SimpleOption.<Boolean>builder()
+        .comment("Let the user scroll whenever they want, regardless of whether or not a tooltip is sufficiently large.")
+        .node("scrollable-tooltips", "tooltip-free-scroll").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
+    @Deprecated
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .node("scrollable-tooltips", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
@@ -78,6 +103,7 @@ public final class ModScrollableTooltips {
      *
      * @since 1.0.0
      */
+    @Deprecated
     public static final SimpleOption<Boolean> WRAP_TEXT = SimpleOption.<Boolean>builder()
         .node("scrollable-tooltips", "wrap-text").type(TypeToken.get(Boolean.class))
         .notifyClient()

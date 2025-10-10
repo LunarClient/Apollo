@@ -22,18 +22,21 @@ public void toggleWaypointsExample(Player viewer, boolean value) {
         - Default: `true`
 
 - __`ADD_WAYPOINTS_FROM_CHAT`__
+    - Allows you to click coordinates in chat and create a new waypoint from them
     - Config Key: `add-waypoints-from-chat`
     - Values
         - Type: `Boolean`
         - Default: `true`
 
 - __`DEATH_WAYPOINT`__
+    - Automatically create a waypoint when you die
     - Config Key: `death-waypoint`
     - Values
         - Type: `Boolean`
         - Default: `true`
 
 - __`LIMIT_DEATH_WAYPOINTS`__
+    - Limit the amount of waypoints that can be created, removing the oldest one when going over the limit
     - Config Key: `limit-death-waypoints`
     - Values
         - Type: `Boolean`
@@ -49,24 +52,28 @@ public void toggleWaypointsExample(Player viewer, boolean value) {
         - Maximum: `20`
 
 - __`WAYPOINT_BEAMS`__
+    - Enables beams for waypoints in the world
     - Config Key: `waypoint-beams`
     - Values
         - Type: `Boolean`
         - Default: `true`
 
 - __`BOX_BORDER`__
+    - Adds a box around the waypoint label in the world
     - Config Key: `box-border`
     - Values
         - Type: `Boolean`
         - Default: `true`
 
 - __`TEXT_SHADOW`__
+    - Adds a shadow to text
     - Config Key: `text-shadow`
     - Values
         - Type: `Boolean`
         - Default: `false`
 
 - __`BOX_PADDING`__
+    - Increase the size of the labels box
     - Config Key: `box-padding`
     - Values
         - Type: `Float`
@@ -82,6 +89,7 @@ public void toggleWaypointsExample(Player viewer, boolean value) {
         - Default: `false`
 
 - __`LABEL_SCALE`__
+    - Scale the box containing the waypoints name in the world
     - Config Key: `label-scale`
     - Values
         - Type: `Float`
@@ -90,6 +98,7 @@ public void toggleWaypointsExample(Player viewer, boolean value) {
         - Maximum: `2.0F`
 
 - __`ICON_SCALE`__
+    - Scale the box containing the waypoints icon in the world
     - Config Key: `icon-scale`
     - Values
         - Type: `Float`
@@ -97,8 +106,31 @@ public void toggleWaypointsExample(Player viewer, boolean value) {
         - Minimum: `0.1F`
         - Maximum: `3.0F`
 
+- __`HIGHLIGHT_WAYPOINT_BLOCK`__
+    - Show an outline around the block the waypoint is positioned on
+    - Config Key: `highlight-waypoint-block`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIGHLIGHT_WAYPOINT_BLOCK_LINE_WIDTH`__
+    - The width of the outline around the block being highlighted
+    - Config Key: `highlight-waypoint-block-line-width`
+    - Values
+        - Type: `Float`
+        - Default: `4.0F`
+        - Minimum: `1.5F`
+        - Maximum: `7.5F`
+
+- __`WAYPOINT_SHOW_DISTANCE`__
+    - Show the distance of a waypoint in the world
+    - Config Key: `waypoint-show-distance`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
 - __`ONLY_SHOW_WHEN_LOOKING_NEAR`__
-    - Only show each waypoint when looking near then in the world
+    - Waypoints will only be displayed when your camera is facing towards their general direction
     - Config Key: `only-show-when-looking-near`
     - Values
         - Type: `Boolean`

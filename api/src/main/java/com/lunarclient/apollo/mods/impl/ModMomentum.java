@@ -52,16 +52,51 @@ public final class ModMomentum {
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("momentum", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * If enabled then Y velocity is not used in the final speed.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> USE_GROUND_SPEED = SimpleOption.<Boolean>builder()
+        .comment("If enabled then Y velocity is not used in the final speed.")
+        .node("momentum", "use-ground-speed").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * If this is disabled then instant velocity is used.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> USE_AVERAGE_VELOCITY = SimpleOption.<Boolean>builder()
+        .comment("If this is disabled then instant velocity is used")
+        .node("momentum", "use-average-velocity").type(TypeToken.get(Boolean.class))
+        .notifyClient()
+        .build();
+
+    /**
+     * Determines how many times a second velocity is calculated. Lower values will show a smoother velocity.
+     *
+     * @since 1.0.0
+     */
+    public static final NumberOption<Integer> AVERAGING_PERIOD = NumberOption.<Integer>number()
+        .comment("Determines how many times a second velocity is calculated. Lower values will show a smoother velocity")
+        .node("momentum", "averaging-period").type(TypeToken.get(Integer.class))
+        .min(1).max(50)
+        .notifyClient()
+        .build();
+
+    /**
+     * Adds a shadow to text.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
         .node("momentum", "text-shadow").type(TypeToken.get(Boolean.class))
         .notifyClient()
         .build();
@@ -188,40 +223,6 @@ public final class ModMomentum {
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("momentum", "text-color").type(TypeToken.get(Color.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * If enabled then Y velocity is not used in the final speed.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> USE_GROUND_SPEED = SimpleOption.<Boolean>builder()
-        .comment("If enabled then Y velocity is not used in the final speed.")
-        .node("momentum", "use-ground-speed").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * If this is disabled then instant velocity is used.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> USE_AVERAGE_VELOCITY = SimpleOption.<Boolean>builder()
-        .comment("If this is disabled then instant velocity is used")
-        .node("momentum", "use-average-velocity").type(TypeToken.get(Boolean.class))
-        .notifyClient()
-        .build();
-
-    /**
-     * Determines how many times a second velocity is calculated. Lower values will show a smoother velocity.
-     *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Integer> AVERAGING_PERIOD = NumberOption.<Integer>number()
-        .comment("Determines how many times a second velocity is calculated. Lower values will show a smoother velocity")
-        .node("momentum", "averaging-period").type(TypeToken.get(Integer.class))
-        .min(1).max(50)
         .notifyClient()
         .build();
 
