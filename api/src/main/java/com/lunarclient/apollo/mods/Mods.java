@@ -110,8 +110,12 @@ import com.lunarclient.apollo.mods.impl.ModWaypoints;
 import com.lunarclient.apollo.mods.impl.ModWeatherChanger;
 import com.lunarclient.apollo.mods.impl.ModWorldeditCui;
 import com.lunarclient.apollo.mods.impl.ModZoom;
+import com.lunarclient.apollo.option.Option;
+import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Mod container.
@@ -120,100 +124,132 @@ import java.util.List;
  */
 public final class Mods {
 
+    private static final Map<String, Option<?, ?, ?>> OPTIONS = Mods.collectModOptions();
+
     /**
      * List of all current mod classes.
      *
      * @since 1.0.0
      */
     public static final List<Class<?>> ALL_MODS = Arrays.asList(
-            ModReplaymod.class,
-            ModOneSevenVisuals.class,
-            ModFps.class,
-            ModCps.class,
-            ModSba.class,
-            ModToggleSneak.class,
-            ModZoom.class,
-            ModHypixelMod.class,
-            ModHypixelBedwars.class,
-            ModQuickplay.class,
-            ModArmorstatus.class,
-            ModKeystrokes.class,
-            ModCoordinates.class,
-            ModDayCounter.class,
-            ModCrosshair.class,
-            ModPotionEffects.class,
-            ModDirectionHud.class,
-            ModWaypoints.class,
-            ModHitColor.class,
-            ModScoreboard.class,
-            ModTitles.class,
-            ModItemCounter.class,
-            ModPing.class,
-            ModMotionBlur.class,
-            ModPackOrganizer.class,
-            ModChat.class,
-            ModTab.class,
-            ModNametag.class,
-            ModShulkerPreview.class,
-            ModScrollableTooltips.class,
-            ModUhcOverlay.class,
-            ModParticleChanger.class,
-            ModNickHider.class,
-            ModCooldowns.class,
-            ModWorldeditCui.class,
-            ModClock.class,
-            ModStopwatch.class,
-            ModPlaytime.class,
-            ModMemory.class,
-            ModCombo.class,
-            ModReachDisplay.class,
-            ModTimeChanger.class,
-            ModServerAddress.class,
-            ModSaturation.class,
-            ModColorSaturation.class,
-            ModItemPhysics.class,
-            ModTntCountdown.class,
-            ModItemTracker.class,
-            ModShinyPots.class,
-            Mod3dSkins.class,
-            ModGlintColorizer.class,
-            ModMomentum.class,
-            ModBlockOutline.class,
-            ModScreenshot.class,
-            ModFov.class,
-            ModFog.class,
-            ModAutoTextHotkey.class,
-            ModAutoTextActions.class,
-            ModMumbleLink.class,
-            ModTotemCounter.class,
-            Mod2dItems.class,
-            ModBossbar.class,
-            ModFreelook.class,
-            ModPvpInfo.class,
-            ModSnaplook.class,
-            ModTeamView.class,
-            ModPackDisplay.class,
-            ModMenuBlur.class,
-            ModMinimap.class,
-            ModHitbox.class,
-            ModLighting.class,
-            ModWeatherChanger.class,
-            ModChunkBorders.class,
-            ModSoundChanger.class,
-            ModWaila.class,
-            ModNeu.class,
-            ModHurtCam.class,
-            ModTierTagger.class,
-            ModDamageTint.class,
-            ModMobSize.class,
-            ModSkyblock.class,
-            ModHorseStats.class,
-            ModRewind.class,
-            ModAudioSubtitles.class,
-            ModKillSounds.class,
-            ModInventoryMod.class,
-            ModRadio.class
-        );
+        ModReplaymod.class,
+        ModOneSevenVisuals.class,
+        ModFps.class,
+        ModCps.class,
+        ModSba.class,
+        ModToggleSneak.class,
+        ModZoom.class,
+        ModHypixelMod.class,
+        ModHypixelBedwars.class,
+        ModQuickplay.class,
+        ModArmorstatus.class,
+        ModKeystrokes.class,
+        ModCoordinates.class,
+        ModDayCounter.class,
+        ModCrosshair.class,
+        ModPotionEffects.class,
+        ModDirectionHud.class,
+        ModWaypoints.class,
+        ModHitColor.class,
+        ModScoreboard.class,
+        ModTitles.class,
+        ModItemCounter.class,
+        ModPing.class,
+        ModMotionBlur.class,
+        ModPackOrganizer.class,
+        ModChat.class,
+        ModTab.class,
+        ModNametag.class,
+        ModShulkerPreview.class,
+        ModScrollableTooltips.class,
+        ModUhcOverlay.class,
+        ModParticleChanger.class,
+        ModNickHider.class,
+        ModCooldowns.class,
+        ModWorldeditCui.class,
+        ModClock.class,
+        ModStopwatch.class,
+        ModPlaytime.class,
+        ModMemory.class,
+        ModCombo.class,
+        ModReachDisplay.class,
+        ModTimeChanger.class,
+        ModServerAddress.class,
+        ModSaturation.class,
+        ModColorSaturation.class,
+        ModItemPhysics.class,
+        ModTntCountdown.class,
+        ModItemTracker.class,
+        ModShinyPots.class,
+        Mod3dSkins.class,
+        ModGlintColorizer.class,
+        ModMomentum.class,
+        ModBlockOutline.class,
+        ModScreenshot.class,
+        ModFov.class,
+        ModFog.class,
+        ModAutoTextHotkey.class,
+        ModAutoTextActions.class,
+        ModMumbleLink.class,
+        ModTotemCounter.class,
+        Mod2dItems.class,
+        ModBossbar.class,
+        ModFreelook.class,
+        ModPvpInfo.class,
+        ModSnaplook.class,
+        ModTeamView.class,
+        ModPackDisplay.class,
+        ModMenuBlur.class,
+        ModMinimap.class,
+        ModHitbox.class,
+        ModLighting.class,
+        ModWeatherChanger.class,
+        ModChunkBorders.class,
+        ModSoundChanger.class,
+        ModWaila.class,
+        ModNeu.class,
+        ModHurtCam.class,
+        ModTierTagger.class,
+        ModDamageTint.class,
+        ModMobSize.class,
+        ModSkyblock.class,
+        ModHorseStats.class,
+        ModRewind.class,
+        ModAudioSubtitles.class,
+        ModKillSounds.class,
+        ModInventoryMod.class,
+        ModRadio.class
+    );
+
+    /**
+     * Returns a new map containing all mod options.
+     *
+     * @return a linked hash map of mod option keys to options
+     * @since 1.2.1
+     */
+    public static Map<String, Option<?, ?, ?>> getOptions() {
+        return new LinkedHashMap<>(OPTIONS);
+    }
+
+    private static Map<String, Option<?, ?, ?>> collectModOptions() {
+        Map<String, Option<?, ?, ?>> options = new LinkedHashMap<>();
+
+        for (Class<?> mod : Mods.ALL_MODS) {
+            Field[] fields = mod.getDeclaredFields();
+
+            for (Field field : fields) {
+                try {
+                    field.setAccessible(true);
+                    Option<?, ?, ?> option = (Option<?, ?, ?>) field.get(Option.class);
+                    options.put(option.getKey(), option);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return options;
+    }
 
     private Mods() {
     }

@@ -32,6 +32,7 @@ import com.lunarclient.apollo.client.mod.LunarClientMod;
 import com.lunarclient.apollo.client.version.LunarClientVersion;
 import com.lunarclient.apollo.client.version.MinecraftVersion;
 import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.mods.ModStatus;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.roundtrip.ApolloRequest;
 import com.lunarclient.apollo.roundtrip.ApolloResponse;
@@ -53,6 +54,7 @@ public abstract class AbstractApolloPlayer implements ApolloPlayer {
     private LunarClientVersion lunarClientVersion;
     private List<LunarClientMod> installedMods;
     private TebexEmbeddedCheckoutSupport tebexEmbeddedCheckoutSupport;
+    private ModStatus modStatus;
 
     @Override
     public Optional<ApolloWorld> getWorld() {

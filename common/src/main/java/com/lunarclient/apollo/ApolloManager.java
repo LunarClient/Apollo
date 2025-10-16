@@ -26,6 +26,7 @@ package com.lunarclient.apollo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lunarclient.apollo.api.ApolloHttpManager;
+import com.lunarclient.apollo.mods.ApolloModsManager;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.network.ApolloNetworkManager;
 import com.lunarclient.apollo.option.ConfigOptions;
@@ -76,6 +77,7 @@ public final class ApolloManager {
     @Getter private static ApolloNetworkManager networkManager;
     @Getter private static ApolloVersionManager versionManager;
     @Getter private static ApolloStatsManager statsManager;
+    @Getter private static ApolloModsManager modsManager;
     @Getter @Setter private static ApolloMetadataManager metadataManager;
 
     @Getter private static Path configPath;
@@ -106,6 +108,7 @@ public final class ApolloManager {
             ApolloManager.networkManager = new ApolloNetworkManager();
             ApolloManager.versionManager = new ApolloVersionManager();
             ApolloManager.statsManager = new ApolloStatsManager();
+            ApolloManager.modsManager = new ApolloModsManager();
 
             new CommonSerializers();
 

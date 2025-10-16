@@ -21,36 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.modsetting;
+package com.lunarclient.apollo.mods;
 
-import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.mods.Mods;
-import com.lunarclient.apollo.module.ApolloModule;
-import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.util.ConfigTarget;
-import java.util.Arrays;
-import java.util.Collection;
+import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.option.Option;
+import java.util.UUID;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
- * Represents the mod settings module.
+ * Default implementation of {@link ModStatus} used to retrieve the current status of a mod option.
  *
- * @since 1.0.0
+ * @since 1.2.1
  */
-@ModuleDefinition(id = "mod_setting", name = "Mod Setting", configTarget = ConfigTarget.MOD_SETTINGS)
-public final class ModSettingModule extends ApolloModule {
+@RequiredArgsConstructor
+public class ModStatusImpl implements ModStatus {
 
-    ModSettingModule() {
-        this.registerOptions(Mods.getOptions().values());
-    }
+    private final UUID playerUuid;
 
     @Override
-    public Collection<ApolloPlatform.Kind> getSupportedPlatforms() {
-        return Arrays.asList(ApolloPlatform.Kind.SERVER, ApolloPlatform.Kind.PROXY);
-    }
-
-    @Override
-    public boolean isClientNotify() {
-        return true;
+    public <T, C extends Option<T, ?, ?>> T get(@NonNull C option) {
+        return ApolloManager.getModsManager().getPlayerOptions().get(this.playerUuid, option);
     }
 
 }

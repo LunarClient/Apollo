@@ -21,36 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.modsetting;
+package com.lunarclient.apollo.event.mods;
 
-import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.mods.Mods;
-import com.lunarclient.apollo.module.ApolloModule;
-import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.util.ConfigTarget;
-import java.util.Arrays;
-import java.util.Collection;
+import com.lunarclient.apollo.event.Event;
+import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.player.ApolloPlayer;
+import lombok.Value;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents the mod settings module.
+ * Represents an event that is fired when an option is updated.
  *
- * @since 1.0.0
+ * @since 1.2.1
  */
-@ModuleDefinition(id = "mod_setting", name = "Mod Setting", configTarget = ConfigTarget.MOD_SETTINGS)
-public final class ModSettingModule extends ApolloModule {
+@Value
+public final class ApolloUpdateModOptionEvent implements Event {
 
-    ModSettingModule() {
-        this.registerOptions(Mods.getOptions().values());
-    }
+    // TODO: not needed?
+    /**
+     * The {@link Options} container that the option is in.
+     *
+     * @return the options container
+     * @since 1.2.1
+     */
+    Options container;
 
-    @Override
-    public Collection<ApolloPlatform.Kind> getSupportedPlatforms() {
-        return Arrays.asList(ApolloPlatform.Kind.SERVER, ApolloPlatform.Kind.PROXY);
-    }
+    /**
+     * The {@link ApolloPlayer} that the option was updated for.
+     *
+     * @return the player
+     * @since 1.2.1
+     */
+    ApolloPlayer player;
 
-    @Override
-    public boolean isClientNotify() {
-        return true;
-    }
+    /**
+     * The {@link Option} that was updated.
+     *
+     * @return the option
+     * @since 1.2.1
+     */
+    Option<?, ?, ?> option;
+
+    /**
+     * The new value of the option.
+     *
+     * @return the new value
+     * @since 1.2.1
+     */
+    @Nullable Object value;
 
 }

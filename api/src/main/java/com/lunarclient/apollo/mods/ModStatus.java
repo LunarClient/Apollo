@@ -21,36 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.modsetting;
+package com.lunarclient.apollo.mods;
 
-import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.mods.Mods;
-import com.lunarclient.apollo.module.ApolloModule;
-import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.util.ConfigTarget;
-import java.util.Arrays;
-import java.util.Collection;
+import com.lunarclient.apollo.option.Option;
+import lombok.NonNull;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Represents the mod settings module.
+ * Represents the current values for Lunar Client mod options.
  *
- * @since 1.0.0
+ * @since 1.2.1
  */
-@ModuleDefinition(id = "mod_setting", name = "Mod Setting", configTarget = ConfigTarget.MOD_SETTINGS)
-public final class ModSettingModule extends ApolloModule {
+@ApiStatus.NonExtendable
+public interface ModStatus {
 
-    ModSettingModule() {
-        this.registerOptions(Mods.getOptions().values());
-    }
-
-    @Override
-    public Collection<ApolloPlatform.Kind> getSupportedPlatforms() {
-        return Arrays.asList(ApolloPlatform.Kind.SERVER, ApolloPlatform.Kind.PROXY);
-    }
-
-    @Override
-    public boolean isClientNotify() {
-        return true;
-    }
+    /**
+     * Gets the value of the specified {@link Option}.
+     *
+     * @param option the option
+     * @param <T>    the value type
+     * @param <C>    the option type
+     * @return the value of the option
+     * @since 1.2.1
+     */
+    public <T, C extends Option<T, ?, ?>> T get(@NonNull C option);
 
 }
