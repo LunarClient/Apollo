@@ -79,6 +79,17 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
     }
 
     /**
+     * Returns a new {@link EnumOption.EnumOptionBuilder}.
+     *
+     * @param <T> the value type
+     * @return a new enum option builder
+     * @since 1.2.1
+     */
+    public static <T extends Enum<T>> EnumOption.EnumOptionBuilder<T> enumerator() {
+        return new EnumOption.EnumOptionBuilder<>();
+    }
+
+    /**
      * Returns the option path.
      *
      * @return the path string array
