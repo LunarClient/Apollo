@@ -51,6 +51,7 @@ import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
+import com.lunarclient.apollo.module.modsettings.ModSettingsModuleImpl;
 import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
 import com.lunarclient.apollo.module.nickhider.NickHiderModule;
@@ -129,7 +130,7 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
             .addModule(GlowModule.class, new GlowModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
             .addModule(LimbModule.class, new LimbModuleImpl())
-            .addModule(ModSettingModule.class)
+            .addModule(ModSettingModule.class, new ModSettingsModuleImpl())
             .addModule(NametagModule.class, new NametagModuleImpl())
             .addModule(NickHiderModule.class, new NickHiderModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())

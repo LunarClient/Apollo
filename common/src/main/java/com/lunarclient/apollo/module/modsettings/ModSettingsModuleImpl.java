@@ -21,33 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.modsetting;
+package com.lunarclient.apollo.module.modsettings;
 
-import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.module.ApolloModule;
-import com.lunarclient.apollo.module.ModuleDefinition;
-import com.lunarclient.apollo.util.ConfigTarget;
-import java.util.Arrays;
-import java.util.Collection;
-import org.jetbrains.annotations.ApiStatus;
+import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 
 /**
- * Represents the mod settings module.
+ * Provides the mod settings module.
  *
- * @since 1.0.0
+ * @since 1.2.1
  */
-@ApiStatus.NonExtendable
-@ModuleDefinition(id = "mod_setting", name = "Mod Setting", configTarget = ConfigTarget.MOD_SETTINGS)
-public abstract class ModSettingModule extends ApolloModule {
+public final class ModSettingsModuleImpl extends ModSettingModule {
 
-    @Override
-    public Collection<ApolloPlatform.Kind> getSupportedPlatforms() {
-        return Arrays.asList(ApolloPlatform.Kind.SERVER, ApolloPlatform.Kind.PROXY);
-    }
-
-    @Override
-    public boolean isClientNotify() {
-        return true;
+    /**
+     * Creates a new instance of {@link ModSettingsModuleImpl}.
+     *
+     * @since 1.2.1
+     */
+    public ModSettingsModuleImpl() {
+        super();
+        this.registerOptions(ApolloManager.getModsManager().getContainer().getModSettingsOptions());
     }
 
 }

@@ -110,12 +110,8 @@ import com.lunarclient.apollo.mods.impl.ModWaypoints;
 import com.lunarclient.apollo.mods.impl.ModWeatherChanger;
 import com.lunarclient.apollo.mods.impl.ModWorldeditCui;
 import com.lunarclient.apollo.mods.impl.ModZoom;
-import com.lunarclient.apollo.option.Option;
-import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Mod container.
@@ -123,8 +119,6 @@ import java.util.Map;
  * @since 1.0.0
  */
 public final class Mods {
-
-    private static final Map<String, Option<?, ?, ?>> OPTIONS = Mods.collectModOptions();
 
     /**
      * List of all current mod classes.
@@ -220,36 +214,6 @@ public final class Mods {
         ModInventoryMod.class,
         ModRadio.class
     );
-
-    /**
-     * Returns a new map containing all mod options.
-     *
-     * @return a linked hash map of mod option keys to options
-     * @since 1.2.1
-     */
-    public static Map<String, Option<?, ?, ?>> getOptions() {
-        return new LinkedHashMap<>(OPTIONS);
-    }
-
-    private static Map<String, Option<?, ?, ?>> collectModOptions() {
-        Map<String, Option<?, ?, ?>> options = new LinkedHashMap<>();
-
-        for (Class<?> mod : Mods.ALL_MODS) {
-            Field[] fields = mod.getDeclaredFields();
-
-            for (Field field : fields) {
-                try {
-                    field.setAccessible(true);
-                    Option<?, ?, ?> option = (Option<?, ?, ?>) field.get(Option.class);
-                    options.put(option.getKey(), option);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return options;
-    }
 
     private Mods() {
     }

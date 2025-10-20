@@ -29,19 +29,25 @@ import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.Listen;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
-import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.option.StatusOptionsImpl;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Manages Apollo mods for players.
  *
  * @since 1.2.1
  */
+@Getter
 public final class ApolloModsManager implements ApolloListener {
 
-    @Getter private final Options playerOptions;
+    private final Container container;
+    private final Options playerOptions;
 
     /**
      * Constructs the {@link ApolloModsManager}.
@@ -51,16 +57,78 @@ public final class ApolloModsManager implements ApolloListener {
     public ApolloModsManager() {
         EventBus.getBus().register(this);
 
+        this.container = ApolloModsManager.loadModOptions();
         this.playerOptions = new StatusOptionsImpl();
 
-        for (Option<?, ?, ?> option : Mods.getOptions().values()) {
+        for (Option<?, ?, ?> option : this.container.getModStatusOptions().values()) {
             this.playerOptions.set(option, option.getDefaultValue());
         }
+    }
 
-        OptionsImpl impl = ((OptionsImpl) this.playerOptions);
-        for (Map.Entry<Option<?, ?, ?>, Object> entry : impl.getOptions().entrySet()) {
-            System.out.println(entry.getKey().getKey() + ": " + entry.getValue());
+    /**
+     * Load all options from auto-generated mod classes into a {@link Container} object.
+     *
+     * @return the container
+     * @since 1.2.1
+     */
+    public static Container loadModOptions() {
+        Map<String, Option<?, ?, ?>> modStatusOptions = new LinkedHashMap<>();
+        List<Option<?, ?, ?>> modSettingsOptions = new ArrayList<>();
+
+        try {
+            Field defaultValueField = Option.class.getDeclaredField("defaultValue");
+            defaultValueField.setAccessible(true);
+
+            for (Class<?> mod : Mods.ALL_MODS) {
+                Field[] fields = mod.getDeclaredFields();
+
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    Option<?, ?, ?> option = (Option<?, ?, ?>) field.get(null);
+
+                    if (option == null) {
+                        continue;
+                    }
+
+                    modStatusOptions.put(option.getKey(), option);
+
+                    Option<?, ?, ?> copy = option.clone();
+                    defaultValueField.set(copy, null);
+                    modSettingsOptions.add(copy);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        return new Container(modStatusOptions, modSettingsOptions);
+    }
+
+    /**
+     * Holds the loaded options.
+     *
+     * @since 1.2.1
+     */
+    @Getter
+    @RequiredArgsConstructor
+    public static class Container {
+
+        /**
+         * Returns all registered mod options with default values.
+         *
+         * @return the map of option key to option
+         * @since 1.2.1
+         */
+        private final Map<String, Option<?, ?, ?>> modStatusOptions;
+
+        /**
+         * Returns all registered mod options with default values removed.
+         *
+         * @return the list of options without default values
+         * @since 1.2.1
+         */
+        private final List<Option<?, ?, ?>> modSettingsOptions;
+
     }
 
     @Listen
