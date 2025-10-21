@@ -9,6 +9,8 @@ folia-supported: true
 commands:
     apollodebug:
         description: "Apollo Debug!"
+    modstatus:
+        description: "Mod Status Command!"
     autotexthotkey:
         description: "Auto Text Hotkey!"
     beam:

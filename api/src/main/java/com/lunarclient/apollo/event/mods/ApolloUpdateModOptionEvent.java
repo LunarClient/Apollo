@@ -25,7 +25,6 @@ package com.lunarclient.apollo.event.mods;
 
 import com.lunarclient.apollo.event.Event;
 import com.lunarclient.apollo.option.Option;
-import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import lombok.Value;
 import org.jetbrains.annotations.Nullable;
@@ -37,15 +36,6 @@ import org.jetbrains.annotations.Nullable;
  */
 @Value
 public final class ApolloUpdateModOptionEvent implements Event {
-
-    // TODO: not needed?
-    /**
-     * The {@link Options} container that the option is in.
-     *
-     * @return the options container
-     * @since 1.2.1
-     */
-    Options container;
 
     /**
      * The {@link ApolloPlayer} that the option was updated for.

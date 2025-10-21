@@ -33,6 +33,8 @@ import com.lunarclient.apollo.mods.ModStatus;
 import com.lunarclient.apollo.mods.impl.ModFreelook;
 import com.lunarclient.apollo.mods.impl.ModMinimap;
 import com.lunarclient.apollo.mods.impl.ModWaypoints;
+import java.util.Objects;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -48,7 +50,9 @@ public class ApolloModStatusExample implements ApolloListener, Listener {
 
     @Listen
     private void onApolloUpdateModOption(ApolloUpdateModOptionEvent event) {
-        System.out.println(event.getOption().getKey() + " was updated to " + event.getValue());
+        event.getPlayer().sendMessage(Component.text(event.getOption().getKey())
+            .append(Component.text(" was updated to "))
+            .append(Component.text(Objects.toString(event.getValue()))));
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -58,10 +62,17 @@ public class ApolloModStatusExample implements ApolloListener, Listener {
         Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
             ModStatus status = apolloPlayer.getModStatus();
 
-            System.out.println("Waypoints Enabled: " + status.get(ModWaypoints.ENABLED));
-            System.out.println("Freelook Invert Yaw: " + status.get(ModFreelook.INVERT_YAW));
-            System.out.println("Freelook Invert Pitch: " + status.get(ModFreelook.INVERT_PITCH));
-            System.out.println("Minimap scale: " + status.get(ModMinimap.SCALE));
+            apolloPlayer.sendMessage(Component.text("Waypoints Enabled: ")
+                .append(Component.text(status.get(ModWaypoints.ENABLED))));
+
+            apolloPlayer.sendMessage(Component.text("Freelook Invert Yaw: ")
+                .append(Component.text(status.get(ModFreelook.INVERT_YAW))));
+
+            apolloPlayer.sendMessage(Component.text("Freelook Invert Pitch: ")
+                .append(Component.text(status.get(ModFreelook.INVERT_PITCH))));
+
+            apolloPlayer.sendMessage(Component.text("Minimap Scale: ")
+                .append(Component.text(status.get(ModMinimap.SCALE))));
         });
     }
 

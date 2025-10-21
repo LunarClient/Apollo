@@ -30,6 +30,7 @@ import com.lunarclient.apollo.example.api.debug.command.ApolloDebugCommand;
 import com.lunarclient.apollo.example.api.debug.impl.SpamPacketDebug;
 import com.lunarclient.apollo.example.api.listener.ApolloPlayerApiListener;
 import com.lunarclient.apollo.example.api.mods.ApolloModStatusExample;
+import com.lunarclient.apollo.example.api.mods.ModStatusCommand;
 import com.lunarclient.apollo.example.api.module.AutoTextHotkeyApiExample;
 import com.lunarclient.apollo.example.api.module.BeamApiExample;
 import com.lunarclient.apollo.example.api.module.BorderApiExample;
@@ -74,6 +75,7 @@ public class ApolloApiExamplePlatform extends ApolloExamplePlugin {
     @Override
     public void registerCommands() {
         this.getCommand("apollodebug").setExecutor(new ApolloDebugCommand());
+        this.getCommand("modstatus").setExecutor(new ModStatusCommand());
     }
 
     @Override

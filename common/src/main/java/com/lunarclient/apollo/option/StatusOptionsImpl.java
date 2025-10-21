@@ -23,12 +23,13 @@
  */
 package com.lunarclient.apollo.option;
 
-import com.lunarclient.apollo.event.EventBus;
-import com.lunarclient.apollo.event.mods.ApolloUpdateModOptionEvent;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
+import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,13 +40,24 @@ import org.jetbrains.annotations.Nullable;
  */
 public class StatusOptionsImpl extends OptionsImpl {
 
+    @Getter
+    private final Map<String, Option<?, ?, ?>> optionsByKey = new HashMap<>();
+
     /**
      * Constructs a new {@link StatusOptionsImpl}.
      *
+     * @param options the mod options with default values
      * @since 1.2.1
      */
-    public StatusOptionsImpl() {
+    public StatusOptionsImpl(Map<String, Option<?, ?, ?>> options) {
         super(null);
+
+        for (Map.Entry<String, Option<?, ?, ?>> entry : options.entrySet()) {
+            Option<?, ?, ?> option = entry.getValue();
+
+            this.set(option, option.getDefaultValue());
+            this.optionsByKey.put(entry.getKey(), option);
+        }
     }
 
     @Override
@@ -69,13 +81,6 @@ public class StatusOptionsImpl extends OptionsImpl {
 
     @Override
     protected boolean postEvent(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {
-        EventBus.EventResult<ApolloUpdateModOptionEvent> eventResult = EventBus.getBus()
-            .post(new ApolloUpdateModOptionEvent(this, player, option, value));
-
-        for (Throwable throwable : eventResult.getThrowing()) {
-            throwable.printStackTrace();
-        }
-
         return false;
     }
 

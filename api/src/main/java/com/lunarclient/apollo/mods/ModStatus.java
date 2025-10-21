@@ -44,6 +44,6 @@ public interface ModStatus {
      * @return the value of the option
      * @since 1.2.1
      */
-    public <T, C extends Option<T, ?, ?>> T get(@NonNull C option);
+    <T, C extends Option<T, ?, ?>> T get(@NonNull C option);
 
 }
