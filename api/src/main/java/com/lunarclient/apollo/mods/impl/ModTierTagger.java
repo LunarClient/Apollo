@@ -114,7 +114,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_HT1 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-h-t1").type(TypeToken.get(Color.class))
@@ -125,7 +125,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_LT1 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-l-t1").type(TypeToken.get(Color.class))
@@ -136,7 +136,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_HT2 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-h-t2").type(TypeToken.get(Color.class))
@@ -147,7 +147,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_LT2 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-l-t2").type(TypeToken.get(Color.class))
@@ -158,7 +158,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_HT3 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-h-t3").type(TypeToken.get(Color.class))
@@ -169,7 +169,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_LT3 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-l-t3").type(TypeToken.get(Color.class))
@@ -180,7 +180,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_HT4 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-h-t4").type(TypeToken.get(Color.class))
@@ -191,7 +191,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_LT4 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-l-t4").type(TypeToken.get(Color.class))
@@ -202,7 +202,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_HT5 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-h-t5").type(TypeToken.get(Color.class))
@@ -213,7 +213,7 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_LT5 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-l-t5").type(TypeToken.get(Color.class))

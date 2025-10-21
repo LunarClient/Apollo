@@ -71,7 +71,7 @@ public final class ModScrollableTooltips {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final NumberOption<Float> TOOLTIP_SCALE = NumberOption.<Float>number()
         .node("scrollable-tooltips", "tooltip-scale").type(TypeToken.get(Float.class))
@@ -83,7 +83,7 @@ public final class ModScrollableTooltips {
     /**
      * Let the user scroll whenever they want, regardless of whether or not a tooltip is sufficiently large.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> TOOLTIP_FREE_SCROLL = SimpleOption.<Boolean>builder()
         .comment("Let the user scroll whenever they want, regardless of whether or not a tooltip is sufficiently large.")

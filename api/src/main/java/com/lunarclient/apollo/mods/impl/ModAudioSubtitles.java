@@ -31,14 +31,14 @@ import java.awt.Color;
 /**
  * Allows you to customize Minecraft's audio subtitles, if enabled.
  *
- * @since %release_version%
+ * @since 1.2.1
  */
 public final class ModAudioSubtitles {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("audio-subtitles", "enabled").type(TypeToken.get(Boolean.class))
@@ -49,7 +49,7 @@ public final class ModAudioSubtitles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("audio-subtitles", "scale").type(TypeToken.get(Float.class))
@@ -61,7 +61,7 @@ public final class ModAudioSubtitles {
     /**
      * Adds a shadow to text.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .comment("Adds a shadow to text")
@@ -73,7 +73,7 @@ public final class ModAudioSubtitles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("audio-subtitles", "background").type(TypeToken.get(Boolean.class))
@@ -84,7 +84,7 @@ public final class ModAudioSubtitles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("audio-subtitles", "border").type(TypeToken.get(Boolean.class))
@@ -95,7 +95,7 @@ public final class ModAudioSubtitles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("audio-subtitles", "border-thickness").type(TypeToken.get(Float.class))
@@ -107,7 +107,7 @@ public final class ModAudioSubtitles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("audio-subtitles", "border-color").type(TypeToken.get(Color.class))
@@ -118,7 +118,7 @@ public final class ModAudioSubtitles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("audio-subtitles", "background-color").type(TypeToken.get(Color.class))
@@ -129,7 +129,7 @@ public final class ModAudioSubtitles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("audio-subtitles", "text-color").type(TypeToken.get(Color.class))

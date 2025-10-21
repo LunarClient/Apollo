@@ -60,7 +60,7 @@ public final class ModHypixelBedwars {
     /**
      * Recolor the beds in bedwars practice mode.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> ENABLE_PRACTICE_COLOR = SimpleOption.<Boolean>builder()
         .comment("Recolor the beds in bedwars practice mode")
@@ -84,7 +84,7 @@ public final class ModHypixelBedwars {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> CUSTOM_TRAP_ALERT = SimpleOption.<Boolean>builder()
         .node("hypixel-bedwars", "custom-trap-alert").type(TypeToken.get(Boolean.class))
@@ -95,7 +95,7 @@ public final class ModHypixelBedwars {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> MUTE_ALERT_SOUND = SimpleOption.<Boolean>builder()
         .node("hypixel-bedwars", "mute-alert-sound").type(TypeToken.get(Boolean.class))
@@ -106,7 +106,7 @@ public final class ModHypixelBedwars {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> ALERT_PRIMARY_COLOR = SimpleOption.<Color>builder()
         .node("hypixel-bedwars", "alert-primary-color").type(TypeToken.get(Color.class))
@@ -117,7 +117,7 @@ public final class ModHypixelBedwars {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> ALERT_SUB_COLOR = SimpleOption.<Color>builder()
         .node("hypixel-bedwars", "alert-sub-color").type(TypeToken.get(Color.class))

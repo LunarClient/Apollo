@@ -109,7 +109,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> SKYBLOCK_BOW_REEQUIP = SimpleOption.<Boolean>builder()
         .node("skyblock", "skyblock-bow-reequip").type(TypeToken.get(Boolean.class))
@@ -176,7 +176,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> SKYBLOCK_SUBJECT_COLOR = SimpleOption.<Color>builder()
         .node("skyblock", "skyblock-subject-color").type(TypeToken.get(Color.class))
@@ -187,7 +187,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> SKYBLOCK_SEPARATOR_COLOR = SimpleOption.<Color>builder()
         .node("skyblock", "skyblock-separator-color").type(TypeToken.get(Color.class))
@@ -198,7 +198,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> SKYBLOCK_VALUE_COLOR = SimpleOption.<Color>builder()
         .node("skyblock", "skyblock-value-color").type(TypeToken.get(Color.class))
@@ -442,7 +442,7 @@ public final class ModSkyblock {
     /**
      * Makes Professor's Guardians HP more visible.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> SHOW_PROFESSOR_GUARDIAN_HP = SimpleOption.<Boolean>builder()
         .comment("Makes Professor's Guardians HP more visible.")
@@ -454,7 +454,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> SKYBLOCK_DUNGEON_QUALITY = SimpleOption.<Boolean>builder()
         .node("skyblock", "skyblock-dungeon-quality").type(TypeToken.get(Boolean.class))
@@ -476,7 +476,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> SKYBLOCK_HIDE_NON_STARRED = SimpleOption.<Boolean>builder()
         .node("skyblock", "skyblock-hide-non-starred").type(TypeToken.get(Boolean.class))
@@ -487,7 +487,7 @@ public final class ModSkyblock {
     /**
      * Shows how long it takes to do each terminal stage in chat (and also Simon Says)!.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> SKYBLOCK_TERMINAL_SPLIT_TIMERS = SimpleOption.<Boolean>builder()
         .comment("Shows how long it takes to do each terminal stage in chat (and also Simon Says)!")

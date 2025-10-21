@@ -73,7 +73,7 @@ public final class ModFog {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final NumberOption<Float> ATMOSPHERIC_FOG_DENSITY = NumberOption.<Float>number()
         .node("fog", "atmospheric-fog-density").type(TypeToken.get(Float.class))
@@ -85,7 +85,7 @@ public final class ModFog {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final NumberOption<Float> DIMENSION_FOG_DENSITY = NumberOption.<Float>number()
         .node("fog", "dimension-fog-density").type(TypeToken.get(Float.class))
@@ -119,7 +119,7 @@ public final class ModFog {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> ATMOSPHERIC_FOG_COLOR_TOGGLE = SimpleOption.<Boolean>builder()
         .node("fog", "atmospheric-fog-color-toggle").type(TypeToken.get(Boolean.class))
@@ -130,7 +130,7 @@ public final class ModFog {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> ATMOSPHERIC_FOG_COLOR = SimpleOption.<Color>builder()
         .node("fog", "atmospheric-fog-color").type(TypeToken.get(Color.class))
@@ -141,7 +141,7 @@ public final class ModFog {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> DIMENSION_FOG_COLOR_TOGGLE = SimpleOption.<Boolean>builder()
         .node("fog", "dimension-fog-color-toggle").type(TypeToken.get(Boolean.class))
@@ -152,7 +152,7 @@ public final class ModFog {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> DIMENSION_FOG_COLOR = SimpleOption.<Color>builder()
         .node("fog", "dimension-fog-color").type(TypeToken.get(Color.class))

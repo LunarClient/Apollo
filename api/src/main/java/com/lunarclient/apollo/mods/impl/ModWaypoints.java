@@ -184,7 +184,7 @@ public final class ModWaypoints {
     /**
      * Show an outline around the block the waypoint is positioned on.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> HIGHLIGHT_WAYPOINT_BLOCK = SimpleOption.<Boolean>builder()
         .comment("Show an outline around the block the waypoint is positioned on")
@@ -196,7 +196,7 @@ public final class ModWaypoints {
     /**
      * The width of the outline around the block being highlighted.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final NumberOption<Float> HIGHLIGHT_WAYPOINT_BLOCK_LINE_WIDTH = NumberOption.<Float>number()
         .comment("The width of the outline around the block being highlighted")
@@ -209,7 +209,7 @@ public final class ModWaypoints {
     /**
      * Show the distance of a waypoint in the world.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> WAYPOINT_SHOW_DISTANCE = SimpleOption.<Boolean>builder()
         .comment("Show the distance of a waypoint in the world")

@@ -29,14 +29,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * Record your game sessions and rewind them from any perspective.
  *
- * @since %release_version%
+ * @since 1.2.1
  */
 public final class ModRewind {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("rewind", "enabled").type(TypeToken.get(Boolean.class))
