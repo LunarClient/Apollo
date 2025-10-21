@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.WeakHashMap;
 import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
@@ -67,10 +66,10 @@ public class StatusOptionsImpl extends OptionsImpl {
 
         Object currentValue;
         if (Objects.equals(value, globalValue)) {
-            currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new WeakHashMap<>()))
+            currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>()))
                 .remove(option);
         } else {
-            currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new WeakHashMap<>()))
+            currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>()))
                 .put(option, value);
         }
 

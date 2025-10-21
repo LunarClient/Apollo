@@ -38,7 +38,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.WeakHashMap;
 import java.util.function.BiFunction;
 import lombok.Getter;
 import lombok.NonNull;
@@ -55,7 +54,7 @@ public class OptionsImpl implements Options {
     private final Map<Option<?, ?, ?>, Object> options = Collections.synchronizedMap(new HashMap<>());
 
     @Getter
-    protected final Map<UUID, Map<Option<?, ?, ?>, Object>> playerOptions = Collections.synchronizedMap(new WeakHashMap<>());
+    protected final Map<UUID, Map<Option<?, ?, ?>, Object>> playerOptions = Collections.synchronizedMap(new HashMap<>());
 
     private final ApolloModule module;
 
@@ -138,10 +137,10 @@ public class OptionsImpl implements Options {
 
         Object currentValue;
         if (Objects.equals(value, globalValue)) {
-            currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new WeakHashMap<>()))
+            currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>()))
                 .remove(option);
         } else {
-            currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new WeakHashMap<>()))
+            currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>()))
                 .put(option, value);
         }
 
@@ -169,7 +168,7 @@ public class OptionsImpl implements Options {
             return;
         }
 
-        Object currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new WeakHashMap<>()))
+        Object currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>()))
             .put(option, value);
 
         if (!Objects.equals(currentValue, value)) {
@@ -194,7 +193,7 @@ public class OptionsImpl implements Options {
             return;
         }
 
-        if (this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new WeakHashMap<>())).remove(option, compare)) {
+        if (this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>())).remove(option, compare)) {
             this.postPacket(option, player, option.getDefaultValue());
         }
     }
@@ -223,7 +222,7 @@ public class OptionsImpl implements Options {
     @Override
     @SuppressWarnings("unchecked")
     public <T> void replace(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @NonNull BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
-        this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new WeakHashMap<>()))
+        this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>()))
             .replaceAll((k, v) -> {
                 T value = remappingFunction.apply(option, (T) v);
                 if (value == null) {
