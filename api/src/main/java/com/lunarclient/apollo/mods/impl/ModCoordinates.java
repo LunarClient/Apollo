@@ -42,6 +42,7 @@ public final class ModCoordinates {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("coordinates", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -52,17 +53,20 @@ public final class ModCoordinates {
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("coordinates", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Adds a shadow to text.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
         .node("coordinates", "text-shadow").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -73,6 +77,7 @@ public final class ModCoordinates {
      */
     public static final SimpleOption<Boolean> SHOW_WHILE_TYPING = SimpleOption.<Boolean>builder()
         .node("coordinates", "show-while-typing").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -83,6 +88,7 @@ public final class ModCoordinates {
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("coordinates", "background").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -93,6 +99,7 @@ public final class ModCoordinates {
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("coordinates", "border").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -104,6 +111,7 @@ public final class ModCoordinates {
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("coordinates", "border-thickness").type(TypeToken.get(Float.class))
         .min(0.5F).max(3.0F)
+        .defaultValue(0.5F)
         .notifyClient()
         .build();
 
@@ -114,6 +122,7 @@ public final class ModCoordinates {
      */
     public static final SimpleOption<Boolean> MOVE_CHILDREN_INDIVIDUALLY = SimpleOption.<Boolean>builder()
         .node("coordinates", "move-children-individually").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -124,6 +133,7 @@ public final class ModCoordinates {
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("coordinates", "background-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 111))
         .notifyClient()
         .build();
 
@@ -134,6 +144,7 @@ public final class ModCoordinates {
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("coordinates", "border-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 159))
         .notifyClient()
         .build();
 

@@ -42,6 +42,7 @@ public final class ModDamageTint {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("damage-tint", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -52,6 +53,7 @@ public final class ModDamageTint {
      */
     public static final SimpleOption<Color> VIGNETTE_COLOR = SimpleOption.<Color>builder()
         .node("damage-tint", "vignette-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
         .notifyClient()
         .build();
 
@@ -64,6 +66,7 @@ public final class ModDamageTint {
         .comment("Intensity of the tint.")
         .node("damage-tint", "vignette-intensity").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
@@ -76,6 +79,7 @@ public final class ModDamageTint {
         .comment("Show the tint when you have less than this amount of health as a percentage.")
         .node("damage-tint", "show-vignette-below").type(TypeToken.get(Integer.class))
         .min(0).max(100)
+        .defaultValue(100)
         .notifyClient()
         .build();
 
@@ -87,6 +91,7 @@ public final class ModDamageTint {
     public static final SimpleOption<Boolean> HEARTBEAT_AUDIO = SimpleOption.<Boolean>builder()
         .comment("Plays a heartbeat, becoming faster the lower your health.")
         .node("damage-tint", "heartbeat-audio").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

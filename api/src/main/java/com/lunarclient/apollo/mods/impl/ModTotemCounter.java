@@ -41,6 +41,7 @@ public final class ModTotemCounter {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("totem-counter", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -51,6 +52,7 @@ public final class ModTotemCounter {
      */
     public static final SimpleOption<Boolean> SHOW_FOR_SELF = SimpleOption.<Boolean>builder()
         .node("totem-counter", "show-for-self").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -61,6 +63,7 @@ public final class ModTotemCounter {
      */
     public static final SimpleOption<Boolean> SHOW_TAB_LIST = SimpleOption.<Boolean>builder()
         .node("totem-counter", "show-tab-list").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -71,6 +74,7 @@ public final class ModTotemCounter {
      */
     public static final SimpleOption<Boolean> FLIP = SimpleOption.<Boolean>builder()
         .node("totem-counter", "flip").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -81,6 +85,7 @@ public final class ModTotemCounter {
      */
     public static final SimpleOption<Boolean> COUNT_COLOR = SimpleOption.<Boolean>builder()
         .node("totem-counter", "count-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -91,6 +96,7 @@ public final class ModTotemCounter {
      */
     public static final SimpleOption<Boolean> SHOW_NAMETAG = SimpleOption.<Boolean>builder()
         .node("totem-counter", "show-nametag").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -101,6 +107,7 @@ public final class ModTotemCounter {
      */
     public static final SimpleOption<Boolean> SHOW_PREFIX = SimpleOption.<Boolean>builder()
         .node("totem-counter", "show-prefix").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -111,6 +118,7 @@ public final class ModTotemCounter {
      */
     public static final SimpleOption<Boolean> SEPARATE_NAMETAG = SimpleOption.<Boolean>builder()
         .node("totem-counter", "separate-nametag").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -121,6 +129,7 @@ public final class ModTotemCounter {
      */
     public static final SimpleOption<Boolean> RENDER_FIRST = SimpleOption.<Boolean>builder()
         .node("totem-counter", "render-first").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -131,6 +140,7 @@ public final class ModTotemCounter {
      */
     public static final SimpleOption<Color> PREFIX_COLOR = SimpleOption.<Color>builder()
         .node("totem-counter", "prefix-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 85))
         .notifyClient()
         .build();
 

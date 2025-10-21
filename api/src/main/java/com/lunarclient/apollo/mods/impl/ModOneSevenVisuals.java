@@ -40,6 +40,7 @@ public final class ModOneSevenVisuals {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("one-seven-visuals", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -51,6 +52,7 @@ public final class ModOneSevenVisuals {
     public static final SimpleOption<Boolean> ALWAYS_SWING = SimpleOption.<Boolean>builder()
         .comment("Provides better visual feedback when attacking while keeping vanilla behavior")
         .node("one-seven-visuals", "always-swing").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 

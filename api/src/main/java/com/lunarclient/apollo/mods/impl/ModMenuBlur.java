@@ -42,6 +42,7 @@ public final class ModMenuBlur {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("menu-blur", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -53,6 +54,7 @@ public final class ModMenuBlur {
     public static final NumberOption<Integer> BLUR_STRENGTH = NumberOption.<Integer>number()
         .node("menu-blur", "blur-strength").type(TypeToken.get(Integer.class))
         .min(0).max(20)
+        .defaultValue(4)
         .notifyClient()
         .build();
 
@@ -63,6 +65,7 @@ public final class ModMenuBlur {
      */
     public static final SimpleOption<Boolean> BLUR_LUNAR_TOGGLE = SimpleOption.<Boolean>builder()
         .node("menu-blur", "blur-lunar-toggle").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -73,6 +76,7 @@ public final class ModMenuBlur {
      */
     public static final SimpleOption<Color> BLUR_LUNAR_BACKGROUND = SimpleOption.<Color>builder()
         .node("menu-blur", "blur-lunar-background").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 0))
         .notifyClient()
         .build();
 
@@ -83,6 +87,7 @@ public final class ModMenuBlur {
      */
     public static final SimpleOption<Boolean> BLUR_INVENTORY_TOGGLE = SimpleOption.<Boolean>builder()
         .node("menu-blur", "blur-inventory-toggle").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -93,6 +98,7 @@ public final class ModMenuBlur {
      */
     public static final SimpleOption<Color> BLUR_INVENTORY_BACKGROUND = SimpleOption.<Color>builder()
         .node("menu-blur", "blur-inventory-background").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 111))
         .notifyClient()
         .build();
 
@@ -103,6 +109,7 @@ public final class ModMenuBlur {
      */
     public static final SimpleOption<Boolean> BLUR_PAUSE_TOGGLE = SimpleOption.<Boolean>builder()
         .node("menu-blur", "blur-pause-toggle").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -113,6 +120,7 @@ public final class ModMenuBlur {
      */
     public static final SimpleOption<Color> BLUR_PAUSE_BACKGROUND = SimpleOption.<Color>builder()
         .node("menu-blur", "blur-pause-background").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 111))
         .notifyClient()
         .build();
 

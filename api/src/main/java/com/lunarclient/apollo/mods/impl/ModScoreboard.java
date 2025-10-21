@@ -42,6 +42,7 @@ public final class ModScoreboard {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("scoreboard", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -52,7 +53,8 @@ public final class ModScoreboard {
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("scoreboard", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
@@ -63,6 +65,7 @@ public final class ModScoreboard {
      */
     public static final SimpleOption<Boolean> NUMBERS = SimpleOption.<Boolean>builder()
         .node("scoreboard", "numbers").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -73,16 +76,19 @@ public final class ModScoreboard {
      */
     public static final SimpleOption<Boolean> HIDE_SCOREBOARD = SimpleOption.<Boolean>builder()
         .node("scoreboard", "hide-scoreboard").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Adds a shadow to text.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
         .node("scoreboard", "text-shadow").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -94,6 +100,7 @@ public final class ModScoreboard {
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("scoreboard", "border-thickness").type(TypeToken.get(Float.class))
         .min(0.5F).max(3.0F)
+        .defaultValue(0.5F)
         .notifyClient()
         .build();
 
@@ -104,6 +111,7 @@ public final class ModScoreboard {
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("scoreboard", "border").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -114,6 +122,7 @@ public final class ModScoreboard {
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("scoreboard", "background-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 80))
         .notifyClient()
         .build();
 
@@ -124,6 +133,7 @@ public final class ModScoreboard {
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("scoreboard", "border-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 159))
         .notifyClient()
         .build();
 
