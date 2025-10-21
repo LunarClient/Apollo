@@ -41,6 +41,7 @@ public final class ModInventoryMod {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("inventory-mod", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -52,6 +53,7 @@ public final class ModInventoryMod {
     public static final SimpleOption<Boolean> DONT_RESET_CURSOR = SimpleOption.<Boolean>builder()
         .comment("Useful for navigating inventory menus on servers.")
         .node("inventory-mod", "dont-reset-cursor").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -63,6 +65,7 @@ public final class ModInventoryMod {
     public static final NumberOption<Float> RESET_CURSOR_TIMEOUT = NumberOption.<Float>number()
         .node("inventory-mod", "reset-cursor-timeout").type(TypeToken.get(Float.class))
         .min(0.1F).max(5.0F)
+        .defaultValue(0.3F)
         .notifyClient()
         .build();
 

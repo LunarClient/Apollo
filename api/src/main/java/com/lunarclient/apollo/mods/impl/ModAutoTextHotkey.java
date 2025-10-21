@@ -40,6 +40,7 @@ public final class ModAutoTextHotkey {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("auto-text-hotkey", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -51,6 +52,7 @@ public final class ModAutoTextHotkey {
     public static final SimpleOption<Boolean> NOTIFY_ON_BLOCKED_INPUT = SimpleOption.<Boolean>builder()
         .comment("Displays a notification when an input is blocked by the server")
         .node("auto-text-hotkey", "notify-on-blocked-input").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 

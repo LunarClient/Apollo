@@ -42,6 +42,7 @@ public final class ModBossbar {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("bossbar", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -53,6 +54,7 @@ public final class ModBossbar {
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("bossbar", "scale").type(TypeToken.get(Float.class))
         .min(0.5F).max(1.5F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
@@ -63,6 +65,7 @@ public final class ModBossbar {
      */
     public static final SimpleOption<Boolean> RENDER_BAR = SimpleOption.<Boolean>builder()
         .node("bossbar", "render-bar").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -73,6 +76,7 @@ public final class ModBossbar {
      */
     public static final SimpleOption<Boolean> RENDER_BOSS_TEXT = SimpleOption.<Boolean>builder()
         .node("bossbar", "render-boss-text").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -83,6 +87,7 @@ public final class ModBossbar {
      */
     public static final SimpleOption<Boolean> CUSTOM_BOSS_BAR = SimpleOption.<Boolean>builder()
         .node("bossbar", "custom-boss-bar").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -93,6 +98,7 @@ public final class ModBossbar {
      */
     public static final SimpleOption<Color> BAR_COLOR = SimpleOption.<Color>builder()
         .node("bossbar", "bar-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(242, 73, 242))
         .notifyClient()
         .build();
 
@@ -103,6 +109,7 @@ public final class ModBossbar {
      */
     public static final SimpleOption<Boolean> USE_MINECRAFT_GUISCALE = SimpleOption.<Boolean>builder()
         .node("bossbar", "use-minecraft-g-u-i-scale").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 

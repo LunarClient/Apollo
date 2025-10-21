@@ -41,6 +41,7 @@ public final class ModLighting {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("lighting", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -51,6 +52,7 @@ public final class ModLighting {
      */
     public static final SimpleOption<Boolean> FULL_BRIGHT = SimpleOption.<Boolean>builder()
         .node("lighting", "full-bright").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -62,6 +64,7 @@ public final class ModLighting {
     public static final NumberOption<Float> BRIGHTNESS_BOOST = NumberOption.<Float>number()
         .node("lighting", "brightness-boost").type(TypeToken.get(Float.class))
         .min(1.0F).max(10.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 

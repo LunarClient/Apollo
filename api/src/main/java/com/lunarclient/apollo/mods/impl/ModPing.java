@@ -42,6 +42,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("ping", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -54,6 +55,7 @@ public final class ModPing {
         .comment("Faster updates may impact performance")
         .node("ping", "update-interval-sec").type(TypeToken.get(Integer.class))
         .min(1).max(120)
+        .defaultValue(20)
         .notifyClient()
         .build();
 
@@ -66,6 +68,7 @@ public final class ModPing {
         .comment("How many updates to average together (one update happens per the 'update interval' setting)")
         .node("ping", "average-samples").type(TypeToken.get(Integer.class))
         .min(2).max(20)
+        .defaultValue(3)
         .notifyClient()
         .build();
 
@@ -76,6 +79,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Boolean> PING_SPIKE_DETECTION = SimpleOption.<Boolean>builder()
         .node("ping", "ping-spike-detection").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -87,6 +91,7 @@ public final class ModPing {
     public static final NumberOption<Integer> MEDIUM_SPIKE_THRESHOLD = NumberOption.<Integer>number()
         .node("ping", "medium-spike-threshold").type(TypeToken.get(Integer.class))
         .min(1).max(200)
+        .defaultValue(20)
         .notifyClient()
         .build();
 
@@ -97,6 +102,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Color> MEDIUM_SPIKE_COLOR = SimpleOption.<Color>builder()
         .node("ping", "medium-spike-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 145, 0))
         .notifyClient()
         .build();
 
@@ -108,6 +114,7 @@ public final class ModPing {
     public static final NumberOption<Integer> LARGE_SPIKE_THRESHOLD = NumberOption.<Integer>number()
         .node("ping", "large-spike-threshold").type(TypeToken.get(Integer.class))
         .min(1).max(200)
+        .defaultValue(50)
         .notifyClient()
         .build();
 
@@ -118,6 +125,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Color> LARGE_SPIKE_COLOR = SimpleOption.<Color>builder()
         .node("ping", "large-spike-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
         .notifyClient()
         .build();
 
@@ -128,6 +136,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Boolean> PING_SHOW_MS = SimpleOption.<Boolean>builder()
         .node("ping", "ping-show-ms").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -138,6 +147,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Boolean> SHOW_PING_PREFIX = SimpleOption.<Boolean>builder()
         .node("ping", "show-ping-prefix").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -148,6 +158,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Color> PING_PREFIX_COLOR = SimpleOption.<Color>builder()
         .node("ping", "ping-prefix-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 
@@ -158,6 +169,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Boolean> DYNAMIC_PING_COLOR = SimpleOption.<Boolean>builder()
         .node("ping", "dynamic-ping-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -168,6 +180,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Color> PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("ping", "ping-number-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 85))
         .notifyClient()
         .build();
 
@@ -178,6 +191,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Color> LOW_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("ping", "low-ping-number-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(85, 255, 85))
         .notifyClient()
         .build();
 
@@ -188,6 +202,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Color> MEDIUM_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("ping", "medium-ping-number-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 85))
         .notifyClient()
         .build();
 
@@ -198,6 +213,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Color> HIGH_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("ping", "high-ping-number-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 85, 85))
         .notifyClient()
         .build();
 
@@ -208,6 +224,7 @@ public final class ModPing {
      */
     public static final SimpleOption<Color> EXTREME_PING_NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("ping", "extreme-ping-number-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(170, 0, 0))
         .notifyClient()
         .build();
 

@@ -29,19 +29,19 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Displays how often you have hit another player within a certain amount of time on the HUD.
+ * Allows you to customize Minecraft's audio subtitles, if enabled.
  *
- * @since 1.0.0
+ * @since 1.2.1
  */
-public final class ModCombo {
+public final class ModAudioSubtitles {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("combo", "enabled").type(TypeToken.get(Boolean.class))
+        .node("audio-subtitles", "enabled").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();
@@ -49,10 +49,10 @@ public final class ModCombo {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.2.1
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
-        .node("combo", "scale").type(TypeToken.get(Float.class))
+        .node("audio-subtitles", "scale").type(TypeToken.get(Float.class))
         .min(0.25F).max(5.0F)
         .defaultValue(1.0F)
         .notifyClient()
@@ -61,103 +61,11 @@ public final class ModCombo {
     /**
      * Adds a shadow to text.
      *
-     * @since 1.0.0
+     * @since 1.2.1
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .comment("Adds a shadow to text")
-        .node("combo", "text-shadow").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> BRACKETS = SimpleOption.<Boolean>builder()
-        .node("combo", "brackets").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.6
-     */
-    public static final SimpleOption<Color> BRACKET_COLOR = SimpleOption.<Color>builder()
-        .node("combo", "bracket-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(255, 255, 255))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
-        .node("combo", "background").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * If this is disabled the background will change size with the text.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> STATIC_BACKGROUND_WIDTH = SimpleOption.<Boolean>builder()
-        .comment("If this is disabled the background will change size with the text.")
-        .node("combo", "static-background-width").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * If this is disabled the background will change size with the text.
-     *
-     * @since 1.1.6
-     */
-    public static final SimpleOption<Boolean> STATIC_BACKGROUND_HEIGHT = SimpleOption.<Boolean>builder()
-        .comment("If this is disabled the background will change size with the text.")
-        .node("combo", "static-background-height").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Integer> BACKGROUND_WIDTH = NumberOption.<Integer>number()
-        .node("combo", "background-width").type(TypeToken.get(Integer.class))
-        .min(46).max(62)
-        .defaultValue(56)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Integer> BACKGROUND_HEIGHT = NumberOption.<Integer>number()
-        .node("combo", "background-height").type(TypeToken.get(Integer.class))
-        .min(10).max(22)
-        .defaultValue(18)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
-        .node("combo", "border").type(TypeToken.get(Boolean.class))
+        .node("audio-subtitles", "text-shadow").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();
@@ -165,10 +73,32 @@ public final class ModCombo {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.2.1
+     */
+    public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
+        .node("audio-subtitles", "background").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.1
+     */
+    public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
+        .node("audio-subtitles", "border").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.1
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
-        .node("combo", "border-thickness").type(TypeToken.get(Float.class))
+        .node("audio-subtitles", "border-thickness").type(TypeToken.get(Float.class))
         .min(0.5F).max(3.0F)
         .defaultValue(0.5F)
         .notifyClient()
@@ -177,10 +107,10 @@ public final class ModCombo {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
-        .node("combo", "border-color").type(TypeToken.get(Color.class))
+        .node("audio-subtitles", "border-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(0, 0, 0, 159))
         .notifyClient()
         .build();
@@ -188,26 +118,26 @@ public final class ModCombo {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
-        .node("combo", "background-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(0, 0, 0, 111))
+        .node("audio-subtitles", "background-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 204))
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.2.1
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
-        .node("combo", "text-color").type(TypeToken.get(Color.class))
+        .node("audio-subtitles", "text-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 
-    private ModCombo() {
+    private ModAudioSubtitles() {
     }
 
 }

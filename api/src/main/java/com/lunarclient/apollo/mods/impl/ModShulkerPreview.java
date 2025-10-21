@@ -40,6 +40,7 @@ public final class ModShulkerPreview {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("shulker-preview", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -50,6 +51,7 @@ public final class ModShulkerPreview {
      */
     public static final SimpleOption<Boolean> ALWAYS_PREVIEW = SimpleOption.<Boolean>builder()
         .node("shulker-preview", "always-preview").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -60,6 +62,7 @@ public final class ModShulkerPreview {
      */
     public static final SimpleOption<Boolean> COLORED_SHULKER_PREVIEW = SimpleOption.<Boolean>builder()
         .node("shulker-preview", "colored-shulker-preview").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 

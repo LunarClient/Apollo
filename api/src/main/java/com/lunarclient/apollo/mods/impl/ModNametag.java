@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods.impl;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * A mod that allows you to modify nametags.
@@ -41,6 +42,7 @@ public final class ModNametag {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("nametag", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -51,6 +53,7 @@ public final class ModNametag {
      */
     public static final SimpleOption<Boolean> NAMETAG_SHADOW = SimpleOption.<Boolean>builder()
         .node("nametag", "nametag-shadow").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -62,6 +65,7 @@ public final class ModNametag {
     public static final SimpleOption<Boolean> NAMETAG = SimpleOption.<Boolean>builder()
         .comment("An option to see your own nametag in third person")
         .node("nametag", "nametag").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -73,6 +77,18 @@ public final class ModNametag {
     public static final SimpleOption<Boolean> TOGGLE_NAMETAGS = SimpleOption.<Boolean>builder()
         .comment("Determines if we should send the message when nametags are toggled.")
         .node("nametag", "toggle-nametags").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.1
+     */
+    public static final SimpleOption<Boolean> HIDE_NAMETAGS_IN_F1 = SimpleOption.<Boolean>builder()
+        .node("nametag", "hide-nametags-in-f1").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -84,6 +100,29 @@ public final class ModNametag {
     public static final NumberOption<Float> NAMETAG_BACKGROUND_OPACITY = NumberOption.<Float>number()
         .node("nametag", "nametag-background-opacity").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.0F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.1
+     */
+    public static final SimpleOption<Boolean> REPLACE_OWN_NAMETAG_COLOR = SimpleOption.<Boolean>builder()
+        .node("nametag", "replace-own-nametag-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.1
+     */
+    public static final SimpleOption<Color> OWN_NAMETAG_COLOR = SimpleOption.<Color>builder()
+        .node("nametag", "own-nametag-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 

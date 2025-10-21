@@ -42,6 +42,7 @@ public final class ModWeatherChanger {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("weather-changer", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -53,6 +54,7 @@ public final class ModWeatherChanger {
     public static final NumberOption<Float> RAIN_STRENGTH = NumberOption.<Float>number()
         .node("weather-changer", "rain-strength").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
@@ -64,6 +66,7 @@ public final class ModWeatherChanger {
     public static final SimpleOption<Color> RAIN_COLOR = SimpleOption.<Color>builder()
         .comment("Augment the rain/snow color")
         .node("weather-changer", "rain-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 
