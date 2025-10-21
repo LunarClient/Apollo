@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.player;
 
+import com.google.protobuf.Value;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.client.mod.LunarClientMod;
@@ -34,11 +35,8 @@ import com.lunarclient.apollo.event.player.ApolloPlayerHandshakeEvent;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
 import com.lunarclient.apollo.mods.ModStatusImpl;
-import com.lunarclient.apollo.mods.impl.ModFreelook;
-import com.lunarclient.apollo.mods.impl.ModWaypoints;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.network.NetworkOptions;
-import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.player.v1.PlayerHandshakeMessage;
 import java.util.Collection;
 import java.util.Collections;
@@ -162,11 +160,10 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
         apolloPlayer.setInstalledMods(mods);
         apolloPlayer.setTebexEmbeddedCheckoutSupport(checkoutSupportType);
 
-        // TODO: receive data from client
-        // mock
-        Options options = ApolloManager.getModsManager().getPlayerOptions();
-        options.set(apolloPlayer, ModWaypoints.ENABLED, false);
-        options.set(apolloPlayer, ModFreelook.INVERT_YAW, true);
+        Map<String, Value> modStatus = message.getModStatusMap();
+        if (!modStatus.isEmpty()) {
+            ApolloManager.getModsManager().updateOptions(apolloPlayer, modStatus, false);
+        }
 
         apolloPlayer.setModStatus(new ModStatusImpl(player.getUniqueId()));
     }

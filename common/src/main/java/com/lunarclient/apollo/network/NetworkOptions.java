@@ -142,8 +142,11 @@ public final class NetworkOptions {
                 String string = (String) current;
                 return valueBuilder.setStringValue(string).build();
             } else if (current instanceof Color) {
-                Color currentColor = (Color) current;
-                return valueBuilder.setStringValue(Integer.toHexString(currentColor.getRGB())).build();
+                Color color = (Color) current;
+                return valueBuilder.setStringValue(Integer.toHexString(color.getRGB())).build();
+            } else if (current instanceof Integer) {
+                int color = (int) current;
+                return valueBuilder.setStringValue(Integer.toHexString(color)).build();
             } else {
                 throw new RuntimeException("Unable to wrap Color value of type '" + clazz.getSimpleName() + "'!");
 

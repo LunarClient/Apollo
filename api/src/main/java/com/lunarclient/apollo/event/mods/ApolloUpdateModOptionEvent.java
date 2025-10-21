@@ -35,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 1.2.1
  */
 @Value
-public final class ApolloUpdateModOptionEvent implements Event {
+public class ApolloUpdateModOptionEvent implements Event {
 
     /**
      * The {@link ApolloPlayer} that the option was updated for.

@@ -168,16 +168,34 @@ public final class ApolloModsManager implements ApolloListener {
                 continue;
             }
 
-            for (Map.Entry<String, Value> entry : setting.getPropertiesMap().entrySet()) {
-                Option<?, ?, ?> option = this.playerOptions.getOptionsByKey().get(entry.getKey());
+            this.updateOptions(player, setting.getPropertiesMap(), false);
+        }
+    }
 
-                Object unwrappedValue = NetworkOptions.unwrapValue(
-                    entry.getValue(),
-                    option.getTypeToken().getType()
-                );
+    /**
+     * Updates the {@link Option}s for a specific {@link ApolloPlayer} using the properties
+     * received from the client.
+     *
+     * @param player     the apollo player
+     * @param properties a map of option keys and values
+     * @param callEvent  whether to call the update mod option event
+     * @since 1.2.1
+     */
+    public void updateOptions(ApolloPlayer player, Map<String, Value> properties, boolean callEvent) {
+        System.out.println("Update options: " + properties.size());
 
-                this.playerOptions.set(player, option, unwrappedValue);
+        for (Map.Entry<String, Value> entry : properties.entrySet()) {
+            Option<?, ?, ?> option = this.playerOptions.getOptionsByKey().get(entry.getKey());
 
+            Object unwrappedValue = NetworkOptions.unwrapValue(
+                entry.getValue(),
+                option.getTypeToken().getType()
+            );
+
+            this.playerOptions.set(player, option, unwrappedValue);
+            System.out.println("Set: " + option.getKey() + "=" + unwrappedValue);
+
+            if (callEvent) {
                 EventBus.EventResult<ApolloUpdateModOptionEvent> eventResult = EventBus.getBus()
                     .post(new ApolloUpdateModOptionEvent(player, option, unwrappedValue));
 
