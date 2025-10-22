@@ -147,7 +147,7 @@ public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
 
     /**
      * Returns the {@link ModStatus} interface used for retrieving
-     * the current value of a mod options.
+     * the current value of mod options.
      *
      * @return the mod status interface
      * @since 1.2.1

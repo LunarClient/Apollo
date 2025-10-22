@@ -30,7 +30,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Default implementation of {@link ModStatus} used to retrieve the current status of a mod option.
+ * Default implementation of {@link ModStatus} used for retrieving the current status of a mod option.
  *
  * @since 1.2.1
  */

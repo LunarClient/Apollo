@@ -30,12 +30,13 @@ import com.lunarclient.apollo.event.Listen;
 import com.lunarclient.apollo.event.mods.ApolloUpdateModOptionEvent;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.mods.ModStatus;
-import com.lunarclient.apollo.mods.impl.ModFreelook;
+import com.lunarclient.apollo.mods.impl.ModFov;
 import com.lunarclient.apollo.mods.impl.ModMinimap;
 import com.lunarclient.apollo.mods.impl.ModWaypoints;
 import java.util.Objects;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -55,24 +56,38 @@ public class ApolloModStatusExample implements ApolloListener, Listener {
             .append(Component.text(Objects.toString(event.getValue()))));
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     private void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
 
+        if (event.getBlock().getType() != Material.DIAMOND_BLOCK) {
+            return;
+        }
+
+        this.printOptionStatusExample(player);
+    }
+
+    private void printOptionStatusExample(Player player) {
         Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
             ModStatus status = apolloPlayer.getModStatus();
 
+            if (status == null) {
+                // Handshake not received yet
+                return;
+            }
+
+            boolean waypointsEnabled = status.get(ModWaypoints.ENABLED);
+            float minimapScale = status.get(ModMinimap.SCALE);
+            int fovDefaultFov = status.get(ModFov.DEFAULT_FOV);
+
             apolloPlayer.sendMessage(Component.text("Waypoints Enabled: ")
-                .append(Component.text(status.get(ModWaypoints.ENABLED))));
-
-            apolloPlayer.sendMessage(Component.text("Freelook Invert Yaw: ")
-                .append(Component.text(status.get(ModFreelook.INVERT_YAW))));
-
-            apolloPlayer.sendMessage(Component.text("Freelook Invert Pitch: ")
-                .append(Component.text(status.get(ModFreelook.INVERT_PITCH))));
+                .append(Component.text(waypointsEnabled)));
 
             apolloPlayer.sendMessage(Component.text("Minimap Scale: ")
-                .append(Component.text(status.get(ModMinimap.SCALE))));
+                .append(Component.text(minimapScale)));
+
+            apolloPlayer.sendMessage(Component.text("Fov Default Fov: ")
+                .append(Component.text(fovDefaultFov)));
         });
     }
 

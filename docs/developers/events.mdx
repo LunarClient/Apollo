@@ -161,7 +161,7 @@ _Called when the Apollo player sends an Apollo packet to Lunar Client._
 
 ### ApolloUpdateOptionEvent
 
-_Called when an option is updated._
+_Called when an Apollo option is updated._
 
 | Field                    | Description                                                                      |
 | ------------------------ | -------------------------------------------------------------------------------- |
@@ -171,6 +171,21 @@ _Called when an option is updated._
 | `Object value`           | The new value of the option.                                                     |
 
 <Callout type="info">This event is cancellable.</Callout>
+
+</details>
+
+<details>
+<summary>ApolloUpdateModOptionEvent</summary>
+
+### ApolloUpdateModOptionEvent
+
+_Called when a Lunar Client Mod option is updated._
+
+| Field                    | Description                                   |
+| ------------------------ | --------------------------------------------- |
+| `ApolloPlayer player`    | The Apollo player the option was updated for. |
+| `Option<?, ?, ?> option` | The option that was updated.                  |
+| `Object value`           | The new value of the option.                  |
 
 </details>
 

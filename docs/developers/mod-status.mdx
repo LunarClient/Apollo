@@ -1,0 +1,68 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Mod Status
+
+The Mod Status API allows you to get the current values for a player's Lunar Client mod options.
+
+<Callout type="info">
+  This API heavily integrates with our [Options API](/developers/options).
+  You can find all available mods and their options under the mods section.
+</Callout>
+
+## Integration
+
+### Retrieve the current value for options
+
+```java
+private void printOptionStatusExample(Player player) {
+    Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
+        ModStatus status = apolloPlayer.getModStatus();
+
+        if (status == null) {
+            // Handshake not received yet
+            return;
+        }
+
+        boolean waypointsEnabled = status.get(ModWaypoints.ENABLED);
+        float minimapScale = status.get(ModMinimap.SCALE);
+        int fovDefaultFov = status.get(ModFov.DEFAULT_FOV);
+
+        apolloPlayer.sendMessage(Component.text("Waypoints Enabled: ")
+            .append(Component.text(waypointsEnabled)));
+
+        apolloPlayer.sendMessage(Component.text("Minimap Scale: ")
+            .append(Component.text(minimapScale)));
+
+        apolloPlayer.sendMessage(Component.text("Fov Default Fov: ")
+            .append(Component.text(fovDefaultFov)));
+    });
+}
+```
+
+### Listening for Updates
+
+Apollo provides an event, `[ApolloUpdateModOptionEvent](/developers/events)`, that is fired whenever a Lunar Client Mod Option is updated.
+
+```java
+import com.lunarclient.apollo.event.ApolloListener;
+import com.lunarclient.apollo.event.EventBus;
+import com.lunarclient.apollo.event.Listen;
+import com.lunarclient.apollo.event.mods.ApolloUpdateModOptionEvent;
+import java.util.Objects;
+import net.kyori.adventure.text.Component;
+
+public class ApolloModStatusExample implements ApolloListener {
+
+    public ApolloModStatusExample() {
+        EventBus.getBus().register(this);
+    }
+
+    @Listen
+    private void onApolloUpdateModOption(ApolloUpdateModOptionEvent event) {
+        event.getPlayer().sendMessage(Component.text(event.getOption().getKey())
+            .append(Component.text(" was updated to "))
+            .append(Component.text(Objects.toString(event.getValue()))));
+    }
+
+}
+```
