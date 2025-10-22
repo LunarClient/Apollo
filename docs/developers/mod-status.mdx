@@ -5,7 +5,7 @@ import { Callout } from 'nextra-theme-docs'
 The Mod Status API allows you to get the current values for a player's Lunar Client mod options.
 
 <Callout type="info">
-  This API heavily integrates with our [Options API](/developers/options).
+  This API heavily integrates with our [Options API](/apollo/developers/options).
   You can find all available mods and their options under the mods section.
 </Callout>
 
@@ -41,7 +41,7 @@ private void printOptionStatusExample(Player player) {
 
 ### Listening for Updates
 
-Apollo provides an event, `[ApolloUpdateModOptionEvent](/developers/events)`, that is fired whenever a Lunar Client Mod Option is updated.
+Apollo provides an event, [ApolloUpdateModOptionEvent](/apollo/developers/events), that is fired whenever a Lunar Client Mod Option is updated.
 
 ```java
 import com.lunarclient.apollo.event.ApolloListener;
