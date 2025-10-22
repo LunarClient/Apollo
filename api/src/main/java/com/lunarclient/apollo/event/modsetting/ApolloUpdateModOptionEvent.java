@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.event.mods;
+package com.lunarclient.apollo.event.modsetting;
 
 import com.lunarclient.apollo.event.Event;
 import com.lunarclient.apollo.option.Option;

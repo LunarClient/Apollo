@@ -25,6 +25,7 @@ package com.lunarclient.apollo.example.api.mods;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Map;
@@ -37,6 +38,8 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class ModStatusCommand implements CommandExecutor {
+
+    private final ModSettingModule modSettingModule = Apollo.getModuleManager().getModule(ModSettingModule.class);
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -72,7 +75,7 @@ public class ModStatusCommand implements CommandExecutor {
                 return true;
             }
 
-            Object value = apolloPlayerOpt.get().getModStatus().get(option);
+            Object value = this.modSettingModule.getStatus(apolloPlayerOpt.get(), option);
             sender.sendMessage("Current value for \"" + option.getKey() + "\" is \"" + value + "\"");
             return true;
         }

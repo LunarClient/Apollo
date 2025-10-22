@@ -27,13 +27,16 @@ import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.Listen;
-import com.lunarclient.apollo.event.mods.ApolloUpdateModOptionEvent;
+import com.lunarclient.apollo.event.modsetting.ApolloUpdateModOptionEvent;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.mods.ModStatus;
 import com.lunarclient.apollo.mods.impl.ModFov;
 import com.lunarclient.apollo.mods.impl.ModMinimap;
 import com.lunarclient.apollo.mods.impl.ModWaypoints;
+import com.lunarclient.apollo.module.modsetting.ModSettingModule;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Objects;
+import java.util.Optional;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -41,8 +44,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ApolloModStatusExample implements ApolloListener, Listener {
+
+    private final ModSettingModule modSettingModule = Apollo.getModuleManager().getModule(ModSettingModule.class);
 
     public ApolloModStatusExample(ApolloExamplePlugin plugin) {
         EventBus.getBus().register(this);
@@ -68,17 +74,11 @@ public class ApolloModStatusExample implements ApolloListener, Listener {
     }
 
     private void printOptionStatusExample(Player player) {
-        Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
-            ModStatus status = apolloPlayer.getModStatus();
-
-            if (status == null) {
-                // Handshake not received yet
-                return;
-            }
-
-            boolean waypointsEnabled = status.get(ModWaypoints.ENABLED);
-            float minimapScale = status.get(ModMinimap.SCALE);
-            int fovDefaultFov = status.get(ModFov.DEFAULT_FOV);
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            boolean waypointsEnabled = this.modSettingModule.getStatus(apolloPlayer, ModWaypoints.ENABLED);
+            float minimapScale = this.modSettingModule.getStatus(apolloPlayer, ModMinimap.SCALE);
+            int fovDefaultFov = this.modSettingModule.getStatus(apolloPlayer, ModFov.DEFAULT_FOV);
 
             apolloPlayer.sendMessage(Component.text("Waypoints Enabled: ")
                 .append(Component.text(waypointsEnabled)));
@@ -88,6 +88,46 @@ public class ApolloModStatusExample implements ApolloListener, Listener {
 
             apolloPlayer.sendMessage(Component.text("Fov Default Fov: ")
                 .append(Component.text(fovDefaultFov)));
+        });
+    }
+
+    @EventHandler
+    private void onPlayerChat(AsyncPlayerChatEvent event) {
+        Player player = event.getPlayer();
+        String message = event.getMessage();
+
+        Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(apolloPlayer -> {
+            Options options = this.modSettingModule.getOptions();
+
+            switch (message.toLowerCase()) {
+                case "1": {
+                    options.set(ModWaypoints.ENABLED, false);
+                    options.set(ModWaypoints.DEATH_WAYPOINT, false);
+                    player.sendMessage("=1");
+                    break;
+                }
+
+                case "2": {
+                    options.set(ModWaypoints.ENABLED, null);
+                    options.set(ModWaypoints.DEATH_WAYPOINT, null);
+                    player.sendMessage("=2");
+                    break;
+                }
+
+                case "3": {
+                    options.set(apolloPlayer, ModWaypoints.ENABLED, false);
+                    options.set(apolloPlayer, ModWaypoints.DEATH_WAYPOINT, false);
+                    player.sendMessage("=3");
+                    break;
+                }
+
+                case "4": {
+                    options.set(apolloPlayer, ModWaypoints.ENABLED, null);
+                    options.set(apolloPlayer, ModWaypoints.DEATH_WAYPOINT, null);
+                    player.sendMessage("=4");
+                    break;
+                }
+            }
         });
     }
 

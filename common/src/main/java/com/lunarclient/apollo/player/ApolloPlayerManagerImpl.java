@@ -25,7 +25,6 @@ package com.lunarclient.apollo.player;
 
 import com.google.protobuf.Value;
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.client.mod.LunarClientMod;
 import com.lunarclient.apollo.client.mod.LunarClientModType;
 import com.lunarclient.apollo.client.version.LunarClientVersion;
@@ -34,7 +33,8 @@ import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.player.ApolloPlayerHandshakeEvent;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
-import com.lunarclient.apollo.mods.ModStatusImpl;
+import com.lunarclient.apollo.module.modsetting.ModSettingModule;
+import com.lunarclient.apollo.module.modsettings.ModSettingsModuleImpl;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.player.v1.PlayerHandshakeMessage;
@@ -162,10 +162,12 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
 
         Map<String, Value> modStatus = message.getModStatusMap();
         if (!modStatus.isEmpty()) {
-            ApolloManager.getModsManager().updateOptions(apolloPlayer, modStatus, false);
-        }
+            ModSettingsModuleImpl modSettingModule = (ModSettingsModuleImpl) Apollo.getModuleManager().getModule(ModSettingModule.class);
 
-        apolloPlayer.setModStatus(new ModStatusImpl(player.getUniqueId()));
+            if (modSettingModule.isEnabled()) {
+                modSettingModule.updateOptions(apolloPlayer, modStatus, false);
+            }
+        }
     }
 
 }
