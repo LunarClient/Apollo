@@ -98,7 +98,7 @@ public final class ModSettingsModuleImpl extends ModSettingModule {
                 continue;
             }
 
-            this.updateOptions(player, setting.getPropertiesMap(), false);
+            this.updateOptions(player, setting.getPropertiesMap(), true);
         }
     }
 
@@ -113,7 +113,6 @@ public final class ModSettingsModuleImpl extends ModSettingModule {
      */
     public void updateOptions(ApolloPlayer player, Map<String, Value> properties, boolean callEvent) {
         StatusOptionsImpl statusOptions = ApolloManager.getModsManager().getPlayerOptions();
-        System.out.println("Update options: " + properties.size());
 
         for (Map.Entry<String, Value> entry : properties.entrySet()) {
             Option<?, ?, ?> option = statusOptions.getRegistry().get(entry.getKey());
@@ -124,7 +123,6 @@ public final class ModSettingsModuleImpl extends ModSettingModule {
             );
 
             statusOptions.set(player, option, unwrappedValue);
-            System.out.println("Set: " + option.getKey() + "=" + unwrappedValue);
 
             if (callEvent) {
                 EventBus.EventResult<ApolloUpdateModOptionEvent> eventResult = EventBus.getBus()
