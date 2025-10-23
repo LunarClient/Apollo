@@ -89,6 +89,7 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.wrapper.BukkitApolloStats;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
@@ -108,7 +109,7 @@ public final class ApolloBukkitPlatform implements PlatformPlugin, ApolloPlatfor
 
     @Getter private static ApolloBukkitPlatform instance;
 
-    @Getter private final Options options = new OptionsImpl(null);
+    @Getter private final Options options = new OptionsImpl(null, new ArrayList<>());
     @Getter private final JavaPlugin plugin;
 
     @Getter private BukkitAudiences audiences;

@@ -24,7 +24,7 @@
 package com.lunarclient.apollo.option;
 
 import io.leangen.geantyref.TypeToken;
-import java.util.List;
+import java.util.Collection;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 
 /**
@@ -43,7 +43,7 @@ public final class ConfigOptions {
      * @param optionKeys the option keys
      * @since 1.0.0
      */
-    public static void loadOptions(Options options, CommentedConfigurationNode node, List<Option<?, ?, ?>> optionKeys) {
+    public static void loadOptions(Options options, CommentedConfigurationNode node, Collection<Option<?, ?, ?>> optionKeys) {
         for (Option<?, ?, ?> option : optionKeys) {
             CommentedConfigurationNode optionNode = node.node((Object[]) option.getPath());
             if (optionNode.virtual()) {
@@ -68,7 +68,7 @@ public final class ConfigOptions {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static void saveOptions(Options options, CommentedConfigurationNode node, List<Option<?, ?, ?>> optionKeys) {
+    public static void saveOptions(Options options, CommentedConfigurationNode node, Collection<Option<?, ?, ?>> optionKeys) {
         for (Option<?, ?, ?> option : optionKeys) {
             CommentedConfigurationNode optionNode = node.node((Object[]) option.getPath());
 

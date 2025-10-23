@@ -24,11 +24,10 @@
 package com.lunarclient.apollo.option;
 
 import com.lunarclient.apollo.player.ApolloPlayer;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
-import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,38 +38,29 @@ import org.jetbrains.annotations.Nullable;
  */
 public class StatusOptionsImpl extends OptionsImpl {
 
-    @Getter
-    private final Map<String, Option<?, ?, ?>> optionsByKey = new HashMap<>();
-
     /**
      * Constructs a new {@link StatusOptionsImpl}.
      *
      * @param options the mod options with default values
      * @since 1.2.1
      */
-    public StatusOptionsImpl(Map<String, Option<?, ?, ?>> options) {
-        super(null);
-
-        for (Map.Entry<String, Option<?, ?, ?>> entry : options.entrySet()) {
-            Option<?, ?, ?> option = entry.getValue();
-
-            this.set(option, option.getDefaultValue());
-            this.optionsByKey.put(entry.getKey(), option);
-        }
+    public StatusOptionsImpl(Collection<Option<?, ?, ?>> options) {
+        super(null, options);
     }
 
     @Override
     public <T> void set(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @Nullable T value) {
+        option = this.registry.get(option.getKey());
         Object globalValue = this.get(option);
         Object nextValue = value == null ? globalValue : value;
 
         Object currentValue;
         if (Objects.equals(value, globalValue)) {
             currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>()))
-                .remove(option);
+                .remove(option.getKey());
         } else {
             currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>()))
-                .put(option, value);
+                .put(option.getKey(), value);
         }
 
         if (!Objects.equals(currentValue, value)) {

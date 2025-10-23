@@ -51,65 +51,65 @@ import org.jetbrains.annotations.Nullable;
 public class OptionsImpl implements Options {
 
     @Getter
-    private final Map<Option<?, ?, ?>, Object> options = Collections.synchronizedMap(new HashMap<>());
+    protected final Map<String, Option<?, ?, ?>> registry = new HashMap<>();
+
+    private final Map<String, Object> options = Collections.synchronizedMap(new HashMap<>());
 
     @Getter
-    protected final Map<UUID, Map<Option<?, ?, ?>, Object>> playerOptions = Collections.synchronizedMap(new HashMap<>());
+    protected final Map<UUID, Map<String, Object>> playerOptions = Collections.synchronizedMap(new HashMap<>());
 
     private final ApolloModule module;
 
     /**
      * Constructs a new {@link OptionsImpl}.
      *
-     * @param module the apollo module
+     * @param module  the apollo module
+     * @param options the options for this container
      * @since 1.0.0
      */
-    public OptionsImpl(@Nullable ApolloModule module) {
+    public OptionsImpl(@Nullable ApolloModule module, Collection<Option<?, ?, ?>> options) {
         this.module = module;
+
+        for (Option<?, ?, ?> option : options) {
+            this.registry.put(option.getKey(), option);
+        }
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T, C extends Option<T, ?, ?>> T get(@NonNull C option) {
-        Object value = this.options.get(option);
+        option = (C) this.registry.get(option.getKey());
+        Object value = this.options.get(option.getKey());
         return value == null ? option.getDefaultValue() : (T) value;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T, C extends Option<T, ?, ?>> @Nullable T get(@NonNull ApolloPlayer player, @NonNull C option) {
-        return this.get(player.getUniqueId(), option);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T, C extends Option<T, ?, ?>> @Nullable T get(@NonNull UUID playerUuid, @NonNull C option) {
-        Object value = this.playerOptions.getOrDefault(playerUuid, Collections.emptyMap()).get(option);
+        option = (C) this.registry.get(option.getKey());
+        Object value = this.playerOptions.getOrDefault(player.getUniqueId(), Collections.emptyMap()).get(option.getKey());
         return value == null ? this.get(option) : (T) value;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(@NonNull C option) {
-        Object value = this.options.get(option);
+        option = (C) this.registry.get(option.getKey());
+        Object value = this.options.get(option.getKey());
         return value == null ? Optional.empty() : Optional.of((T) value);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(@NonNull ApolloPlayer player, @NonNull C option) {
-        return this.getDirect(player.getUniqueId(), option);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(@NonNull UUID playerUuid, @NonNull C option) {
-        Object value = this.playerOptions.getOrDefault(playerUuid, Collections.emptyMap()).get(option);
+        option = (C) this.registry.get(option.getKey());
+        Object value = this.playerOptions.getOrDefault(player.getUniqueId(), Collections.emptyMap()).get(option.getKey());
         return value == null ? this.getDirect(option) : Optional.of((T) value);
     }
 
     @Override
     public <T> void set(@NonNull Option<?, ?, ?> option, @Nullable T value) {
+        option = this.registry.get(option.getKey());
         Object nextValue = value == null ? option.getDefaultValue() : value;
         if (this.postEvent(option, null, nextValue)) {
             return;
@@ -117,9 +117,9 @@ public class OptionsImpl implements Options {
 
         Object currentValue;
         if (Objects.equals(nextValue, option.getDefaultValue())) {
-            currentValue = this.options.remove(option);
+            currentValue = this.options.remove(option.getKey());
         } else {
-            currentValue = this.options.put(option, value);
+            currentValue = this.options.put(option.getKey(), value);
         }
 
         if (!Objects.equals(currentValue, value)) {
@@ -129,6 +129,7 @@ public class OptionsImpl implements Options {
 
     @Override
     public <T> void set(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @Nullable T value) {
+        option = this.registry.get(option.getKey());
         Object globalValue = this.get(option);
         Object nextValue = value == null ? globalValue : value;
         if (this.postEvent(option, player, nextValue)) {
@@ -138,10 +139,10 @@ public class OptionsImpl implements Options {
         Object currentValue;
         if (Objects.equals(value, globalValue)) {
             currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>()))
-                .remove(option);
+                .remove(option.getKey());
         } else {
             currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>()))
-                .put(option, value);
+                .put(option.getKey(), value);
         }
 
         if (!Objects.equals(currentValue, value)) {
@@ -151,11 +152,12 @@ public class OptionsImpl implements Options {
 
     @Override
     public <T> void add(@NonNull Option<?, ?, ?> option, @NonNull T value) {
+        option = this.registry.get(option.getKey());
         if (this.postEvent(option, null, value)) {
             return;
         }
 
-        Object currentValue = this.options.put(option, value);
+        Object currentValue = this.options.put(option.getKey(), value);
 
         if (!Objects.equals(currentValue, value)) {
             this.postPacket(option, null, value);
@@ -164,12 +166,13 @@ public class OptionsImpl implements Options {
 
     @Override
     public <T> void add(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @NonNull T value) {
+        option = this.registry.get(option.getKey());
         if (this.postEvent(option, player, value)) {
             return;
         }
 
         Object currentValue = this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>()))
-            .put(option, value);
+            .put(option.getKey(), value);
 
         if (!Objects.equals(currentValue, value)) {
             this.postPacket(option, player, value);
@@ -178,22 +181,24 @@ public class OptionsImpl implements Options {
 
     @Override
     public <T> void remove(@NonNull Option<?, ?, ?> option, @Nullable T compare) {
+        option = this.registry.get(option.getKey());
         if (this.postEvent(option, null, option.getDefaultValue())) {
             return;
         }
 
-        if (this.options.remove(option, compare)) {
+        if (this.options.remove(option.getKey(), compare)) {
             this.postPacket(option, null, option.getDefaultValue());
         }
     }
 
     @Override
     public <T> void remove(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @Nullable T compare) {
+        option = this.registry.get(option.getKey());
         if (this.postEvent(option, player, this.get(option))) {
             return;
         }
 
-        if (this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>())).remove(option, compare)) {
+        if (this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>())).remove(option.getKey(), compare)) {
             this.postPacket(option, player, option.getDefaultValue());
         }
     }
@@ -201,18 +206,19 @@ public class OptionsImpl implements Options {
     @Override
     @SuppressWarnings("unchecked")
     public <T> void replace(@NonNull Option<?, ?, ?> option, @NonNull BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
+        Option<?, ?, ?> targetOption = this.registry.get(option.getKey());
         this.options.replaceAll((k, v) -> {
-            T value = remappingFunction.apply(option, (T) v);
+            T value = remappingFunction.apply(targetOption, (T) v);
             if (value == null) {
-                value = (T) option.getDefaultValue();
+                value = (T) targetOption.getDefaultValue();
             }
 
-            if (this.postEvent(option, null, value)) {
+            if (this.postEvent(targetOption, null, value)) {
                 return null;
             }
 
             if (!Objects.equals(v, value)) {
-                this.postPacket(option, null, value);
+                this.postPacket(targetOption, null, value);
             }
 
             return value;
@@ -222,19 +228,20 @@ public class OptionsImpl implements Options {
     @Override
     @SuppressWarnings("unchecked")
     public <T> void replace(@NonNull ApolloPlayer player, @NonNull Option<?, ?, ?> option, @NonNull BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
+        Option<?, ?, ?> targetOption = this.registry.get(option.getKey());
         this.playerOptions.computeIfAbsent(player.getUniqueId(), k -> Collections.synchronizedMap(new HashMap<>()))
             .replaceAll((k, v) -> {
-                T value = remappingFunction.apply(option, (T) v);
+                T value = remappingFunction.apply(targetOption, (T) v);
                 if (value == null) {
-                    value = (T) option.getDefaultValue();
+                    value = (T) targetOption.getDefaultValue();
                 }
 
-                if (this.postEvent(option, player, value)) {
+                if (this.postEvent(targetOption, player, value)) {
                     return null;
                 }
 
                 if (!Objects.equals(v, value)) {
-                    this.postPacket(option, player, value);
+                    this.postPacket(targetOption, player, value);
                 }
 
                 return value;
@@ -242,8 +249,13 @@ public class OptionsImpl implements Options {
     }
 
     @Override
+    public <T, C extends Option<T, ?, ?>> void register(C option) {
+        this.registry.put(option.getKey(), option);
+    }
+
+    @Override
     public @NonNull Iterator<Option<?, ?, ?>> iterator() {
-        return this.options.keySet().iterator();
+        return this.registry.values().iterator();
     }
 
     protected boolean postEvent(Option<?, ?, ?> option, @Nullable ApolloPlayer player, @Nullable Object value) {

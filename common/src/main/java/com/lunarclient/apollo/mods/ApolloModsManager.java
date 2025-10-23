@@ -51,7 +51,7 @@ public final class ApolloModsManager {
      */
     public ApolloModsManager() {
         this.container = ApolloModsManager.loadModOptions();
-        this.playerOptions = new StatusOptionsImpl(this.container.getModStatusOptions());
+        this.playerOptions = new StatusOptionsImpl(this.container.getModStatusOptions().values());
     }
 
     /**

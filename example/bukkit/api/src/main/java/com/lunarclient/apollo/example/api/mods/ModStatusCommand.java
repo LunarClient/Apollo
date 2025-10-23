@@ -68,7 +68,7 @@ public class ModStatusCommand implements CommandExecutor {
         }
 
         if (args.length == 2) {
-            Option<?, ?, ?> option = ApolloManager.getModsManager().getPlayerOptions().getOptionsByKey().get(args[1]);
+            Option<?, ?, ?> option = ApolloManager.getModsManager().getPlayerOptions().getRegistry().get(args[1]);
 
             if (option == null) {
                 sender.sendMessage("Option not found!");
@@ -86,14 +86,18 @@ public class ModStatusCommand implements CommandExecutor {
     }
 
     private void sendCurrent(CommandSender sender, ApolloPlayer target) {
-        Map<Option<?, ?, ?>, Object> playerOptions = ApolloManager.getModsManager().getPlayerOptions().getPlayerOptions().get(target.getUniqueId());
+        Map<String, Object> playerOptions = ApolloManager.getModsManager().getPlayerOptions().getPlayerOptions().get(target.getUniqueId());
 
         sender.sendMessage("-------------------------------------");
         sender.sendMessage("Target: " + target.getName());
         sender.sendMessage("");
 
-        for (Map.Entry<Option<?, ?, ?>, Object> entry : playerOptions.entrySet()) {
-            sender.sendMessage(" - " + entry.getKey().getKey() + "=" + entry.getValue());
+        if (playerOptions != null && !playerOptions.isEmpty()) {
+            for (Map.Entry<String, Object> entry : playerOptions.entrySet()) {
+                sender.sendMessage(" - " + entry.getKey() + "=" + entry.getValue());
+            }
+        } else {
+            sender.sendMessage("No options found!");
         }
 
         sender.sendMessage("-------------------------------------");

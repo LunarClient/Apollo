@@ -26,8 +26,8 @@ package com.lunarclient.apollo.option;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.BiFunction;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -49,22 +49,12 @@ final class EmptyOptions implements Options {
     }
 
     @Override
-    public <T, C extends Option<T, ?, ?>> @Nullable T get(UUID playerUuid, C option) {
-        return option.getDefaultValue();
-    }
-
-    @Override
     public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(C option) {
         return Optional.empty();
     }
 
     @Override
     public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(ApolloPlayer player, C option) {
-        return Optional.empty();
-    }
-
-    @Override
-    public <T, C extends Option<T, ?, ?>> Optional<T> getDirect(UUID playerUuid, C option) {
         return Optional.empty();
     }
 
@@ -106,6 +96,16 @@ final class EmptyOptions implements Options {
     @Override
     public <T> void replace(ApolloPlayer player, Option<?, ?, ?> option, BiFunction<Option<?, ?, ?>, T, T> remappingFunction) {
 
+    }
+
+    @Override
+    public <T, C extends Option<T, ?, ?>> void register(C option) {
+
+    }
+
+    @Override
+    public Map<String, Option<?, ?, ?>> getRegistry() {
+        return Collections.emptyMap();
     }
 
     @Override

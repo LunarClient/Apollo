@@ -85,6 +85,7 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.wrapper.FoliaApolloStats;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
@@ -101,7 +102,7 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
 
     @Getter private static ApolloFoliaPlatform instance;
 
-    @Getter private final Options options = new OptionsImpl(null);
+    @Getter private final Options options = new OptionsImpl(null, new ArrayList<>());
 
     private ApolloStats stats;
 

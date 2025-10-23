@@ -88,6 +88,7 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.wrapper.MinestomApolloStats;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -120,7 +121,7 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
      * @since 1.2.0
      */
     public ApolloMinestomPlatform(ApolloMinestomProperties properties) {
-        this.options = new OptionsImpl(null);
+        this.options = new OptionsImpl(null, new ArrayList<>());
         this.logger = Logger.getLogger(ApolloMinestomPlatform.class.getName());
         this.stats = new MinestomApolloStats();
         this.properties = properties;

@@ -63,7 +63,7 @@ public final class ModSettingsModuleImpl extends ModSettingModule {
 
     @Override
     public <T, C extends Option<T, ?, ?>> T getStatus(@NotNull ApolloPlayer player, @NonNull C option) {
-        return ApolloManager.getModsManager().getPlayerOptions().get(player.getUniqueId(), option);
+        return ApolloManager.getModsManager().getPlayerOptions().get(player, option);
     }
 
     private void onReceivePacket(ApolloReceivePacketEvent event) {
@@ -116,7 +116,7 @@ public final class ModSettingsModuleImpl extends ModSettingModule {
         System.out.println("Update options: " + properties.size());
 
         for (Map.Entry<String, Value> entry : properties.entrySet()) {
-            Option<?, ?, ?> option = statusOptions.getOptionsByKey().get(entry.getKey());
+            Option<?, ?, ?> option = statusOptions.getRegistry().get(entry.getKey());
 
             Object unwrappedValue = NetworkOptions.unwrapValue(
                 entry.getValue(),

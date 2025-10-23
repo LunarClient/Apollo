@@ -24,8 +24,8 @@
 package com.lunarclient.apollo.option;
 
 import com.lunarclient.apollo.player.ApolloPlayer;
+import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.BiFunction;
 import org.jetbrains.annotations.Nullable;
 
@@ -72,19 +72,6 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
     <T, C extends Option<T, ?, ?>> @Nullable T get(ApolloPlayer player, C option);
 
     /**
-     * Returns the {@code T} value stored for the provided {@link UUID}
-     * and {@link Option} if it exists, or the default value if it exists.
-     *
-     * @param playerUuid the player uuid
-     * @param option     the option
-     * @param <T>        the value type
-     * @param <C>        the option type
-     * @return the value or default if present
-     * @since 1.2.1
-     */
-    <T, C extends Option<T, ?, ?>> @Nullable T get(UUID playerUuid, C option);
-
-    /**
      * Returns an {@link Optional} of the {@code T} value stored for the
      * provided {@link Option} if it exists, otherwise returns
      * {@link Optional#empty()}.
@@ -110,20 +97,6 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * @since 1.0.0
      */
     <T, C extends Option<T, ?, ?>> Optional<T> getDirect(ApolloPlayer player, C option);
-
-    /**
-     * Returns an {@link Optional} of the {@code T} value stored for the
-     * provided {@link UUID} and {@link Option} if it exists,
-     * otherwise returns {@link Optional#empty()}.
-     *
-     * @param playerUuid the player uuid
-     * @param option     the option
-     * @param <T>        the value type
-     * @param <C>        the option type
-     * @return the optional stored value
-     * @since 1.2.1
-     */
-    <T, C extends Option<T, ?, ?>> Optional<T> getDirect(UUID playerUuid, C option);
 
     /**
      * Sets the provided {@code T} value for the provided {@link Option}.
@@ -215,5 +188,23 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * @since 1.0.0
      */
     <T> void replace(ApolloPlayer player, Option<?, ?, ?> option, BiFunction<Option<?, ?, ?>, T, T> remappingFunction);
+
+    /**
+     * Registers the provided {@code C} option for the {@link Options} implementation.
+     *
+     * @param option the option
+     * @param <T>    the value type
+     * @param <C>    the option type
+     * @since 1.2.1
+     */
+    <T, C extends Option<T, ?, ?>> void register(C option);
+
+    /**
+     * Returns the internal registry containing all registered {@link Option} instances, mapped by their keys.
+     *
+     * @return the map of option keys to their corresponding {@link Option} instances
+     * @since 1.2.1
+     */
+    Map<String, Option<?, ?, ?>> getRegistry();
 
 }
