@@ -49,7 +49,7 @@ import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
-import com.lunarclient.apollo.module.modsettings.ModSettingsModuleImpl;
+import com.lunarclient.apollo.module.modsettings.ModSettingModuleImpl;
 import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
 import com.lunarclient.apollo.module.notification.NotificationModule;
@@ -189,7 +189,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
             .addModule(EntityModule.class, new EntityModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
             .addModule(LimbModule.class, new LimbModuleImpl())
-            .addModule(ModSettingModule.class, new ModSettingsModuleImpl())
+            .addModule(ModSettingModule.class, new ModSettingModuleImpl())
             .addModule(NametagModule.class, new NametagModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())
             .addModule(RichPresenceModule.class, new RichPresenceModuleImpl())

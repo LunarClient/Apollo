@@ -48,14 +48,14 @@ import org.jetbrains.annotations.NotNull;
  *
  * @since 1.2.1
  */
-public final class ModSettingsModuleImpl extends ModSettingModule {
+public final class ModSettingModuleImpl extends ModSettingModule {
 
     /**
-     * Creates a new instance of {@link ModSettingsModuleImpl}.
+     * Creates a new instance of {@link ModSettingModuleImpl}.
      *
      * @since 1.2.1
      */
-    public ModSettingsModuleImpl() {
+    public ModSettingModuleImpl() {
         super();
         this.registerOptions(ApolloManager.getModsManager().getContainer().getModSettingsOptions());
         this.handle(ApolloReceivePacketEvent.class, this::onReceivePacket);

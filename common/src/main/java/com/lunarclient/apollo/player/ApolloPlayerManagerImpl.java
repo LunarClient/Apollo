@@ -34,7 +34,7 @@ import com.lunarclient.apollo.event.player.ApolloPlayerHandshakeEvent;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
-import com.lunarclient.apollo.module.modsettings.ModSettingsModuleImpl;
+import com.lunarclient.apollo.module.modsettings.ModSettingModuleImpl;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.player.v1.PlayerHandshakeMessage;
@@ -147,13 +147,6 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
             checkoutSupportType = TebexEmbeddedCheckoutSupport.UNSUPPORTED;
         }
 
-        EventBus.EventResult<ApolloPlayerHandshakeEvent> result = EventBus.getBus()
-            .post(new ApolloPlayerHandshakeEvent(player, minecraftVersion, lunarClientVersion, mods, checkoutSupportType));
-
-        for (Throwable throwable : result.getThrowing()) {
-            throwable.printStackTrace();
-        }
-
         AbstractApolloPlayer apolloPlayer = ((AbstractApolloPlayer) player);
         apolloPlayer.setMinecraftVersion(minecraftVersion);
         apolloPlayer.setLunarClientVersion(lunarClientVersion);
@@ -162,11 +155,18 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
 
         Map<String, Value> modStatus = message.getModStatusMap();
         if (!modStatus.isEmpty()) {
-            ModSettingsModuleImpl modSettingModule = (ModSettingsModuleImpl) Apollo.getModuleManager().getModule(ModSettingModule.class);
+            ModSettingModuleImpl modSettingModule = (ModSettingModuleImpl) Apollo.getModuleManager().getModule(ModSettingModule.class);
 
             if (modSettingModule.isEnabled()) {
                 modSettingModule.updateOptions(apolloPlayer, modStatus, false);
             }
+        }
+
+        EventBus.EventResult<ApolloPlayerHandshakeEvent> result = EventBus.getBus()
+            .post(new ApolloPlayerHandshakeEvent(player, minecraftVersion, lunarClientVersion, mods, checkoutSupportType));
+
+        for (Throwable throwable : result.getThrowing()) {
+            throwable.printStackTrace();
         }
     }
 
