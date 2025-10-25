@@ -53,7 +53,7 @@ public class OptionsImpl implements Options {
     @Getter
     protected final Map<String, Option<?, ?, ?>> registry = new HashMap<>();
 
-    private final Map<String, Object> options = Collections.synchronizedMap(new HashMap<>());
+    protected final Map<String, Object> options = Collections.synchronizedMap(new HashMap<>());
 
     @Getter
     protected final Map<UUID, Map<String, Object>> playerOptions = Collections.synchronizedMap(new HashMap<>());
