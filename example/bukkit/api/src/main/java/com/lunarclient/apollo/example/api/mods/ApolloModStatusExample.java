@@ -76,8 +76,13 @@ public class ApolloModStatusExample implements ApolloListener, Listener {
     private void printOptionStatusExample(Player player) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            // https://lunarclient.dev/apollo/developers/mods/waypoints#available-options
             boolean waypointsEnabled = this.modSettingModule.getStatus(apolloPlayer, ModWaypoints.ENABLED);
+
+            // https://lunarclient.dev/apollo/developers/mods/minimap#available-options
             float minimapScale = this.modSettingModule.getStatus(apolloPlayer, ModMinimap.SCALE);
+
+            // https://lunarclient.dev/apollo/developers/mods/fov#available-options
             int fovDefaultFov = this.modSettingModule.getStatus(apolloPlayer, ModFov.DEFAULT_FOV);
 
             apolloPlayer.sendMessage(Component.text("Waypoints Enabled: ")
