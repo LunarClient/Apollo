@@ -24,37 +24,37 @@
 package com.lunarclient.apollo.example.api.module;
 
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.example.module.impl.TebexExample;
-import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
-import com.lunarclient.apollo.module.tebex.TebexModule;
+import com.lunarclient.apollo.example.module.impl.PayNowExample;
+import com.lunarclient.apollo.module.paynow.PayNowEmbeddedCheckoutSupport;
+import com.lunarclient.apollo.module.paynow.PayNowModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Optional;
 import org.bukkit.entity.Player;
 
-public class TebexApiExample extends TebexExample {
+public class PayNowApiExample extends PayNowExample {
 
-    private final TebexModule tebexModule = Apollo.getModuleManager().getModule(TebexModule.class);
+    private final PayNowModule payNowModule = Apollo.getModuleManager().getModule(PayNowModule.class);
 
     @Override
-    public void displayTebexEmbeddedCheckoutExample(Player viewer, String basketIdent, String locale) {
+    public void displayPayNowEmbeddedCheckoutExample(Player viewer, String checkoutToken) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         if (!apolloPlayerOpt.isPresent()) {
-            viewer.sendMessage("Complete your purchase at https://pay.tebex.io/" + basketIdent);
+            viewer.sendMessage("Complete your purchase at " + checkoutToken); // TODO
             return;
         }
 
         ApolloPlayer apolloPlayer = apolloPlayerOpt.get();
-        TebexEmbeddedCheckoutSupport embeddedCheckoutSupport = apolloPlayer.getTebexEmbeddedCheckoutSupport();
+        PayNowEmbeddedCheckoutSupport embeddedCheckoutSupport = apolloPlayer.getPayNowEmbeddedCheckoutSupport();
 
-        if (embeddedCheckoutSupport == TebexEmbeddedCheckoutSupport.UNSUPPORTED) {
-            viewer.sendMessage("Complete your purchase at https://pay.tebex.io/" + basketIdent);
+        if (embeddedCheckoutSupport == PayNowEmbeddedCheckoutSupport.UNSUPPORTED) {
+            viewer.sendMessage("Complete your purchase at " + checkoutToken); // TODO
             return;
         }
 
-        this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayer, basketIdent, locale);
+        this.payNowModule.displayPayNowEmbeddedCheckout(apolloPlayer, checkoutToken);
 
-        if (embeddedCheckoutSupport == TebexEmbeddedCheckoutSupport.OVERLAY) {
+        if (embeddedCheckoutSupport == PayNowEmbeddedCheckoutSupport.OVERLAY) {
             viewer.sendMessage("Opening checkout as game overlay!");
         } else {
             viewer.sendMessage("Opening checkout in an external window!");

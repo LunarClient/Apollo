@@ -21,34 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.tebex;
+package com.lunarclient.apollo.example.module.impl;
 
-/**
- * Represents the tebex embedded checkout support type.
- *
- * @since 1.1.6
- */
-public enum TebexEmbeddedCheckoutSupport {
+import com.lunarclient.apollo.example.module.ApolloModuleExample;
+import org.bukkit.entity.Player;
 
-    /**
-     * External checkout is supported as a game overlay.
-     *
-     * @since 1.1.6
-     */
-    OVERLAY,
+public abstract class PayNowExample extends ApolloModuleExample {
 
-    /**
-     * Embedded checkout is supported in an external window.
-     *
-     * @since 1.1.6
-     */
-    WINDOW,
-
-    /**
-     * The checkout is not supported.
-     *
-     * @since 1.1.6
-     */
-    UNSUPPORTED
+    public abstract void displayPayNowEmbeddedCheckoutExample(Player viewer, String checkoutToken);
 
 }

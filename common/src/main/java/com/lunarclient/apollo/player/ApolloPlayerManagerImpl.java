@@ -33,6 +33,7 @@ import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.player.ApolloPlayerHandshakeEvent;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
+import com.lunarclient.apollo.module.paynow.PayNowEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.module.modsettings.ModSettingModuleImpl;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
@@ -140,18 +141,27 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
                 .build()
         ).collect(Collectors.toList());
 
-        TebexEmbeddedCheckoutSupport checkoutSupportType;
+        int embeddedCheckoutSupport = message.getEmbeddedCheckoutSupportValue();
+        TebexEmbeddedCheckoutSupport tebexEmbeddedCheckoutSupport;
         try {
-            checkoutSupportType = TebexEmbeddedCheckoutSupport.values()[message.getEmbeddedCheckoutSupportValue() - 1];
+            tebexEmbeddedCheckoutSupport = TebexEmbeddedCheckoutSupport.values()[embeddedCheckoutSupport - 1];
         } catch (ArrayIndexOutOfBoundsException e) {
-            checkoutSupportType = TebexEmbeddedCheckoutSupport.UNSUPPORTED;
+            tebexEmbeddedCheckoutSupport = TebexEmbeddedCheckoutSupport.UNSUPPORTED;
+        }
+
+        PayNowEmbeddedCheckoutSupport payNowEmbeddedCheckoutSupport;
+        try {
+            payNowEmbeddedCheckoutSupport = PayNowEmbeddedCheckoutSupport.values()[embeddedCheckoutSupport - 1];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            payNowEmbeddedCheckoutSupport = PayNowEmbeddedCheckoutSupport.UNSUPPORTED;
         }
 
         AbstractApolloPlayer apolloPlayer = ((AbstractApolloPlayer) player);
         apolloPlayer.setMinecraftVersion(minecraftVersion);
         apolloPlayer.setLunarClientVersion(lunarClientVersion);
         apolloPlayer.setInstalledMods(mods);
-        apolloPlayer.setTebexEmbeddedCheckoutSupport(checkoutSupportType);
+        apolloPlayer.setTebexEmbeddedCheckoutSupport(tebexEmbeddedCheckoutSupport);
+        apolloPlayer.setPayNowEmbeddedCheckoutSupport(payNowEmbeddedCheckoutSupport);
 
         Map<String, Value> modStatus = message.getModStatusMap();
         if (!modStatus.isEmpty()) {
@@ -162,8 +172,12 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
             }
         }
 
-        EventBus.EventResult<ApolloPlayerHandshakeEvent> result = EventBus.getBus()
-            .post(new ApolloPlayerHandshakeEvent(player, minecraftVersion, lunarClientVersion, mods, checkoutSupportType));
+        ApolloPlayerHandshakeEvent event = new ApolloPlayerHandshakeEvent(
+            player, minecraftVersion, lunarClientVersion, mods,
+            tebexEmbeddedCheckoutSupport, payNowEmbeddedCheckoutSupport
+        );
+
+        EventBus.EventResult<ApolloPlayerHandshakeEvent> result = EventBus.getBus().post(event);
 
         for (Throwable throwable : result.getThrowing()) {
             throwable.printStackTrace();

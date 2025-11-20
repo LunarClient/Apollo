@@ -54,6 +54,8 @@ import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
 import com.lunarclient.apollo.module.notification.NotificationModule;
 import com.lunarclient.apollo.module.notification.NotificationModuleImpl;
+import com.lunarclient.apollo.module.paynow.PayNowModule;
+import com.lunarclient.apollo.module.paynow.PayNowModuleImpl;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModule;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModuleImpl;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
@@ -192,6 +194,7 @@ public final class ApolloVelocityPlatform implements ApolloPlatform {
             .addModule(ModSettingModule.class, new ModSettingModuleImpl())
             .addModule(NametagModule.class, new NametagModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())
+            .addModule(PayNowModule.class, new PayNowModuleImpl())
             .addModule(RichPresenceModule.class, new RichPresenceModuleImpl())
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())

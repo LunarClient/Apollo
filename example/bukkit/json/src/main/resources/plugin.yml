@@ -41,6 +41,8 @@ commands:
         description: "Nick Hider!"
     notification:
         description: "Notifications!"
+    paynow:
+        description: "Pay Now!"
     richpresence:
         description: "Rich Presence!"
     saturation:

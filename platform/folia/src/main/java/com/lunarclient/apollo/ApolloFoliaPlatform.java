@@ -60,6 +60,8 @@ import com.lunarclient.apollo.module.notification.NotificationModule;
 import com.lunarclient.apollo.module.notification.NotificationModuleImpl;
 import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentImpl;
 import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentModule;
+import com.lunarclient.apollo.module.paynow.PayNowModule;
+import com.lunarclient.apollo.module.paynow.PayNowModuleImpl;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModule;
 import com.lunarclient.apollo.module.richpresence.RichPresenceModuleImpl;
 import com.lunarclient.apollo.module.serverrule.ServerRuleModule;
@@ -136,6 +138,7 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
             .addModule(NickHiderModule.class, new NickHiderModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())
             .addModule(PacketEnrichmentModule.class, new PacketEnrichmentImpl())
+            .addModule(PayNowModule.class, new PayNowModuleImpl())
             .addModule(RichPresenceModule.class, new RichPresenceModuleImpl())
             .addModule(ServerRuleModule.class)
             .addModule(StaffModModule.class, new StaffModModuleImpl())

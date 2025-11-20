@@ -21,34 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.tebex;
+package com.lunarclient.apollo.example.json.module;
 
-/**
- * Represents the tebex embedded checkout support type.
- *
- * @since 1.1.6
- */
-public enum TebexEmbeddedCheckoutSupport {
+import com.google.gson.JsonObject;
+import com.lunarclient.apollo.example.json.util.JsonPacketUtil;
+import com.lunarclient.apollo.example.module.impl.PayNowExample;
+import org.bukkit.entity.Player;
 
-    /**
-     * External checkout is supported as a game overlay.
-     *
-     * @since 1.1.6
-     */
-    OVERLAY,
+public class PayNowJsonExample extends PayNowExample {
 
-    /**
-     * Embedded checkout is supported in an external window.
-     *
-     * @since 1.1.6
-     */
-    WINDOW,
+    @Override
+    public void displayPayNowEmbeddedCheckoutExample(Player viewer, String checkoutToken) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.paynow.v1.OpenPayNowEmbeddedCheckoutMessage");
+        message.addProperty("checkout_token", checkoutToken);
 
-    /**
-     * The checkout is not supported.
-     *
-     * @since 1.1.6
-     */
-    UNSUPPORTED
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
 
 }
