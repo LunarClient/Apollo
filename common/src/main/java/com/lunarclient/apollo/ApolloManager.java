@@ -26,10 +26,12 @@ package com.lunarclient.apollo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lunarclient.apollo.api.ApolloHttpManager;
+import com.lunarclient.apollo.mods.ApolloModsManager;
 import com.lunarclient.apollo.module.ApolloModuleManagerImpl;
 import com.lunarclient.apollo.network.ApolloNetworkManager;
 import com.lunarclient.apollo.option.ConfigOptions;
 import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.config.CommonSerializers;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.roundtrip.ApolloRoundtripManager;
@@ -39,9 +41,7 @@ import com.lunarclient.apollo.util.ConfigTarget;
 import com.lunarclient.apollo.version.ApolloVersionManager;
 import com.lunarclient.apollo.world.ApolloWorldManagerImpl;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Collection;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -67,8 +67,6 @@ public final class ApolloManager {
      */
     public static final Gson GSON = new GsonBuilder().create();
 
-    private static final List<Option<?, ?, ?>> optionKeys = new LinkedList<>();
-
     private static ApolloPlatform platform;
 
     @Getter private static ApolloRoundtripManager roundtripManager;
@@ -76,6 +74,7 @@ public final class ApolloManager {
     @Getter private static ApolloNetworkManager networkManager;
     @Getter private static ApolloVersionManager versionManager;
     @Getter private static ApolloStatsManager statsManager;
+    @Getter private static ApolloModsManager modsManager;
     @Getter @Setter private static ApolloMetadataManager metadataManager;
 
     @Getter private static Path configPath;
@@ -106,6 +105,7 @@ public final class ApolloManager {
             ApolloManager.networkManager = new ApolloNetworkManager();
             ApolloManager.versionManager = new ApolloVersionManager();
             ApolloManager.statsManager = new ApolloStatsManager();
+            ApolloManager.modsManager = new ApolloModsManager();
 
             new CommonSerializers();
 
@@ -124,7 +124,10 @@ public final class ApolloManager {
      * @since 1.0.0
      */
     public static void registerOptions(Option<?, ?, ?>... options) {
-        ApolloManager.optionKeys.addAll(Arrays.asList(options));
+        Options platformOptions = Apollo.getPlatform().getOptions();
+        for (Option<?, ?, ?> option : options) {
+            platformOptions.register(option);
+        }
     }
 
     /**
@@ -147,8 +150,9 @@ public final class ApolloManager {
             config.reset();
         }
 
+        Collection<Option<?, ?, ?>> platformOptions = Apollo.getPlatform().getOptions().getRegistry().values();
         ApolloConfig generalSettings = ApolloConfig.compute(ApolloManager.configPath, ConfigTarget.GENERAL_SETTINGS);
-        ConfigOptions.loadOptions(ApolloManager.platform.getOptions(), generalSettings.node(), ApolloManager.optionKeys);
+        ConfigOptions.loadOptions(ApolloManager.platform.getOptions(), generalSettings.node(), platformOptions);
     }
 
     /**
@@ -157,8 +161,9 @@ public final class ApolloManager {
      * @since 1.0.0
      */
     public static void saveConfiguration() throws Throwable {
+        Collection<Option<?, ?, ?>> platformOptions = Apollo.getPlatform().getOptions().getRegistry().values();
         ApolloConfig generalSettings = ApolloConfig.compute(ApolloManager.configPath, ConfigTarget.GENERAL_SETTINGS);
-        ConfigOptions.saveOptions(ApolloManager.platform.getOptions(), generalSettings.node(), ApolloManager.optionKeys);
+        ConfigOptions.saveOptions(ApolloManager.platform.getOptions(), generalSettings.node(), platformOptions);
 
         ((ApolloModuleManagerImpl) Apollo.getModuleManager()).saveConfiguration();
 

@@ -21,49 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.modsetting;
+package com.lunarclient.apollo.event.modsetting;
 
-import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.module.ApolloModule;
-import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.event.Event;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import com.lunarclient.apollo.util.ConfigTarget;
-import java.util.Arrays;
-import java.util.Collection;
-import lombok.NonNull;
-import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
+import lombok.Value;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents the mod settings module.
+ * Represents an event that is fired when an option is updated.
  *
- * @since 1.0.0
+ * @since 1.2.1
  */
-@ApiStatus.NonExtendable
-@ModuleDefinition(id = "mod_setting", name = "Mod Setting", configTarget = ConfigTarget.MOD_SETTINGS)
-public abstract class ModSettingModule extends ApolloModule {
-
-    @Override
-    public Collection<ApolloPlatform.Kind> getSupportedPlatforms() {
-        return Arrays.asList(ApolloPlatform.Kind.SERVER, ApolloPlatform.Kind.PROXY);
-    }
-
-    @Override
-    public boolean isClientNotify() {
-        return true;
-    }
+@Value
+public class ApolloUpdateModOptionEvent implements Event {
 
     /**
-     * Gets the value of the specified {@link Option} for the {@link ApolloPlayer}.
+     * The {@link ApolloPlayer} that the option was updated for.
      *
-     * @param player the apollo player
-     * @param option the option
-     * @param <T>    the value type
-     * @param <C>    the option type
-     * @return the value of the option
+     * @return the player
      * @since 1.2.1
      */
-    public abstract <T, C extends Option<T, ?, ?>> T getStatus(@NotNull ApolloPlayer player, @NonNull C option);
+    ApolloPlayer player;
+
+    /**
+     * The {@link Option} that was updated.
+     *
+     * @return the option
+     * @since 1.2.1
+     */
+    Option<?, ?, ?> option;
+
+    /**
+     * The new value of the option.
+     *
+     * @return the new value
+     * @since 1.2.1
+     */
+    @Nullable Object value;
 
 }

@@ -59,27 +59,31 @@ public final class CommonSerializers implements Serializer {
                 stringValue = stringValue.substring(1);
             }
 
-            if (stringValue.length() != 8) {
-                throw new NumberFormatException("Invalid color string length: " + stringValue);
+            if (stringValue.length() == 6) {
+                return new Color(Integer.parseInt(stringValue, 16));
             }
 
-            long rgba = Long.parseLong(stringValue, 16);
-            int alpha = (int) ((rgba >> 24) & 0xFF);
-            int red = (int) ((rgba >> 16) & 0xFF);
-            int green = (int) ((rgba >> 8) & 0xFF);
-            int blue = (int) (rgba & 0xFF);
+            if (stringValue.length() == 8) {
+                long rgba = Long.parseLong(stringValue, 16);
+                int alpha = (int) ((rgba >> 24) & 0xFF);
+                int red = (int) ((rgba >> 16) & 0xFF);
+                int green = (int) ((rgba >> 8) & 0xFF);
+                int blue = (int) (rgba & 0xFF);
 
-            return new Color(red, green, blue, alpha);
+                return new Color(red, green, blue, alpha);
+            }
+
+            throw new NumberFormatException("Invalid color string length: " + stringValue);
         }
 
         @Override
         public void serialize(Type type, @Nullable Color color, ConfigurationNode node) throws SerializationException {
             if (color == null) {
-                node.set("#FFFFFF");
+                node.set(null);
                 return;
             }
 
-            node.set(String.format("#%06X", (0xFFFFFF & color.getRGB())));
+            node.set(String.format("#%08X", color.getRGB()));
         }
     }
 

@@ -77,9 +77,9 @@ public final class ApolloModuleManagerImpl implements ApolloModuleManager {
     public void enableModules() throws Throwable {
         for (ApolloModule module : this.modules.values()) {
             // Load configuration options for the module.
-            module.setOptions(new OptionsImpl(module));
-
             List<Option<?, ?, ?>> options = module.getOptionKeys();
+            module.setOptions(new OptionsImpl(module, options));
+
             this.loadConfiguration(module, options);
 
             // Enable the module if it is able to.

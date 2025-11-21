@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.api.debug.payload;
+package com.lunarclient.apollo.example.api.debug.impl;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.event.ApolloListener;
@@ -43,12 +43,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitTask;
 
-public class PayloadListener implements Listener, ApolloListener {
+public class PayloadTest implements Listener, ApolloListener {
 
     private final Set<UUID> handshakeUuids;
     private final Map<UUID, BukkitTask> tasks;
 
-    public PayloadListener() {
+    public PayloadTest() {
         this.handshakeUuids = new HashSet<>();
         this.tasks = new HashMap<>();
 

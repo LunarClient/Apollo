@@ -51,6 +51,7 @@ import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
+import com.lunarclient.apollo.module.modsettings.ModSettingModuleImpl;
 import com.lunarclient.apollo.module.nametag.NametagModule;
 import com.lunarclient.apollo.module.nametag.NametagModuleImpl;
 import com.lunarclient.apollo.module.nickhider.NickHiderModule;
@@ -84,6 +85,7 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.wrapper.FoliaApolloStats;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
@@ -100,7 +102,7 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
 
     @Getter private static ApolloFoliaPlatform instance;
 
-    @Getter private final Options options = new OptionsImpl(null);
+    @Getter private final Options options = new OptionsImpl(null, new ArrayList<>());
 
     private ApolloStats stats;
 
@@ -129,7 +131,7 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
             .addModule(GlowModule.class, new GlowModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
             .addModule(LimbModule.class, new LimbModuleImpl())
-            .addModule(ModSettingModule.class)
+            .addModule(ModSettingModule.class, new ModSettingModuleImpl())
             .addModule(NametagModule.class, new NametagModuleImpl())
             .addModule(NickHiderModule.class, new NickHiderModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())

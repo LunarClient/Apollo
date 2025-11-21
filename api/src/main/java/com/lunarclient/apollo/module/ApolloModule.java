@@ -120,7 +120,17 @@ public abstract class ApolloModule implements ApolloListener {
      * @since 1.0.0
      */
     protected void registerOptions(Option<?, ?, ?>... options) {
-        this.optionKeys.addAll(Arrays.asList(options));
+        this.registerOptions(Arrays.asList(options));
+    }
+
+    /**
+     * Registers {@link Option}s for this module.
+     *
+     * @param options the option keys
+     * @since 1.2.1
+     */
+    protected void registerOptions(Collection<Option<?, ?, ?>> options) {
+        this.optionKeys.addAll(options);
     }
 
     /**

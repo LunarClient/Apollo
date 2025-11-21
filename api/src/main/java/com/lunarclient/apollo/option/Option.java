@@ -43,7 +43,7 @@ import static java.util.Objects.requireNonNull;
 @Getter
 @EqualsAndHashCode
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Option<V, M, I>> {
+public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Option<V, M, I>> implements Cloneable {
 
     /**
      * Returns a new {@link SimpleOption.SimpleOptionBuilder}.
@@ -147,6 +147,16 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
      */
     public String getKey() {
         return String.join(".", this.getPath());
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Option<V, M, I> clone() {
+        try {
+            return (Option<V, M, I>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e);
+        }
     }
 
 }
