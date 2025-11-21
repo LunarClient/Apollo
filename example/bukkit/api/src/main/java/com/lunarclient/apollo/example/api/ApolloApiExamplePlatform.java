@@ -29,7 +29,6 @@ import com.lunarclient.apollo.example.api.debug.DebugManager;
 import com.lunarclient.apollo.example.api.debug.command.ApolloDebugCommand;
 import com.lunarclient.apollo.example.api.debug.impl.SpamPacketDebug;
 import com.lunarclient.apollo.example.api.listener.ApolloPlayerApiListener;
-import com.lunarclient.apollo.example.api.mods.ApolloModStatusExample;
 import com.lunarclient.apollo.example.api.mods.ModStatusCommand;
 import com.lunarclient.apollo.example.api.module.AutoTextHotkeyApiExample;
 import com.lunarclient.apollo.example.api.module.BeamApiExample;
@@ -114,7 +113,6 @@ public class ApolloApiExamplePlatform extends ApolloExamplePlugin {
 
         new DebugManager();
         new ApolloPlayerApiListener(this);
-        new ApolloModStatusExample(this);
     }
 
     @Override
