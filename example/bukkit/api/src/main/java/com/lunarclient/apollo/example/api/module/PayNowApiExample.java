@@ -40,7 +40,7 @@ public class PayNowApiExample extends PayNowExample {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         if (!apolloPlayerOpt.isPresent()) {
-            viewer.sendMessage("Complete your purchase at " + checkoutToken); // TODO
+            viewer.sendMessage("Complete your purchase at https://checkout.paynow.gg/?t=" + checkoutToken);
             return;
         }
 
@@ -48,7 +48,7 @@ public class PayNowApiExample extends PayNowExample {
         PayNowEmbeddedCheckoutSupport embeddedCheckoutSupport = apolloPlayer.getPayNowEmbeddedCheckoutSupport();
 
         if (embeddedCheckoutSupport == PayNowEmbeddedCheckoutSupport.UNSUPPORTED) {
-            viewer.sendMessage("Complete your purchase at " + checkoutToken); // TODO
+            viewer.sendMessage("Complete your purchase at https://checkout.paynow.gg/?t=" + checkoutToken);
             return;
         }
 
