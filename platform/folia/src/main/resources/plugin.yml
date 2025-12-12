@@ -1,6 +1,6 @@
 name: Apollo-Folia
 main: com.lunarclient.apollo.ApolloFoliaPlatform
-version: 1.2.0
+version: 1.2.1
 author: Moonsworth
 api-version: 1.13
 folia-supported: true
