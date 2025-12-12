@@ -27,6 +27,7 @@ import com.lunarclient.apollo.client.mod.LunarClientMod;
 import com.lunarclient.apollo.client.version.LunarClientVersion;
 import com.lunarclient.apollo.client.version.MinecraftVersion;
 import com.lunarclient.apollo.event.Event;
+import com.lunarclient.apollo.module.paynow.PayNowEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.List;
@@ -79,5 +80,13 @@ public class ApolloPlayerHandshakeEvent implements Event {
      * @since 1.1.6
      */
     TebexEmbeddedCheckoutSupport tebexEmbeddedCheckoutSupport;
+
+    /**
+     * The {@link PayNowEmbeddedCheckoutSupport} type.
+     *
+     * @return the Pay Now checkout support type
+     * @since 1.2.1
+     */
+    PayNowEmbeddedCheckoutSupport payNowEmbeddedCheckoutSupport;
 
 }

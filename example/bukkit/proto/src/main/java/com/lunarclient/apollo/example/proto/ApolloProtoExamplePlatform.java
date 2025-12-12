@@ -41,6 +41,7 @@ import com.lunarclient.apollo.example.proto.module.ModSettingsProtoExample;
 import com.lunarclient.apollo.example.proto.module.NametagProtoExample;
 import com.lunarclient.apollo.example.proto.module.NickHiderProtoExample;
 import com.lunarclient.apollo.example.proto.module.NotificationProtoExample;
+import com.lunarclient.apollo.example.proto.module.PayNowProtoExample;
 import com.lunarclient.apollo.example.proto.module.RichPresenceProtoExample;
 import com.lunarclient.apollo.example.proto.module.ServerRuleProtoExample;
 import com.lunarclient.apollo.example.proto.module.StaffModProtoExample;
@@ -82,6 +83,7 @@ public class ApolloProtoExamplePlatform extends ApolloExamplePlugin {
         this.setNametagExample(new NametagProtoExample());
         this.setNickHiderExample(new NickHiderProtoExample());
         this.setNotificationExample(new NotificationProtoExample());
+        this.setPayNowExample(new PayNowProtoExample());
         this.setRichPresenceExample(new RichPresenceProtoExample());
         this.setServerRuleExample(new ServerRuleProtoExample());
         this.setStaffModExample(new StaffModProtoExample());

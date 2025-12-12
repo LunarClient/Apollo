@@ -21,34 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.tebex;
+package com.lunarclient.apollo.module.paynow;
+
+import com.lunarclient.apollo.paynow.v1.OpenPayNowEmbeddedCheckoutMessage;
+import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
+import lombok.NonNull;
 
 /**
- * Represents the tebex embedded checkout support type.
+ * Provides the paynow module.
  *
- * @since 1.1.6
+ * @since 1.2.1
  */
-public enum TebexEmbeddedCheckoutSupport {
+public final class PayNowModuleImpl extends PayNowModule {
 
-    /**
-     * External checkout is supported as a game overlay.
-     *
-     * @since 1.1.6
-     */
-    OVERLAY,
+    @Override
+    public void displayPayNowEmbeddedCheckout(@NonNull Recipients recipients, @NonNull String checkoutToken) {
+        OpenPayNowEmbeddedCheckoutMessage message = OpenPayNowEmbeddedCheckoutMessage.newBuilder()
+            .setCheckoutToken(checkoutToken)
+            .build();
 
-    /**
-     * Embedded checkout is supported in an external window.
-     *
-     * @since 1.1.6
-     */
-    WINDOW,
-
-    /**
-     * The checkout is not supported.
-     *
-     * @since 1.1.6
-     */
-    UNSUPPORTED
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
 
 }

@@ -27,6 +27,7 @@ import com.lunarclient.apollo.client.mod.LunarClientMod;
 import com.lunarclient.apollo.client.version.LunarClientVersion;
 import com.lunarclient.apollo.client.version.MinecraftVersion;
 import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.module.paynow.PayNowEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
@@ -143,5 +144,13 @@ public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
      * @since 1.1.6
      */
     @Nullable TebexEmbeddedCheckoutSupport getTebexEmbeddedCheckoutSupport();
+
+    /**
+     * Returns the {@link PayNowEmbeddedCheckoutSupport} type.
+     *
+     * @return the Pay Now checkout support type
+     * @since 1.2.1
+     */
+    @Nullable PayNowEmbeddedCheckoutSupport getPayNowEmbeddedCheckoutSupport();
 
 }
