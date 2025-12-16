@@ -18,7 +18,7 @@ import styles from "./downloads.module.css";
 
 <div className={styles.downloadGrid}>
     <div className={styles.downloadItem}>
-        <img className={styles.downloadIcon} src="/bukkit.png" alt="Bukkit" />
+        <img className={styles.downloadIcon} src="platforms/bukkit.png" alt="Bukkit" />
         <span className={styles.downloadTitle}>Bukkit</span>
         <button className={styles.downloadButton} onClick={() => 
             fetch("https://api.lunarclientprod.com/apollo/updates")
@@ -30,7 +30,7 @@ import styles from "./downloads.module.css";
         </button>
     </div>
     <div className={styles.downloadItem}>
-        <img className={styles.downloadIcon} src="/folia.png" alt="Folia" />
+        <img className={styles.downloadIcon} src="platforms/folia.png" alt="Folia" />
         <span className={styles.downloadTitle}>Folia</span>
         <button className={styles.downloadButton} onClick={() => 
             fetch("https://api.lunarclientprod.com/apollo/updates")
@@ -42,7 +42,7 @@ import styles from "./downloads.module.css";
         </button>
     </div>
     <div className={styles.downloadItem}>
-        <img className={styles.downloadIcon} src="/bungee.png" alt="Bungee" />
+        <img className={styles.downloadIcon} src="platforms/bungee.png" alt="Bungee" />
         <span className={styles.downloadTitle}>Bungee</span>
         <button className={styles.downloadButton} onClick={() => 
             fetch("https://api.lunarclientprod.com/apollo/updates")
@@ -54,7 +54,7 @@ import styles from "./downloads.module.css";
         </button>
     </div>
     <div className={styles.downloadItem}>
-        <img className={styles.downloadIcon} src="/velocity.png" alt="Velocity" />
+        <img className={styles.downloadIcon} src="platforms/velocity.png" alt="Velocity" />
         <span className={styles.downloadTitle}>Velocity</span>
         <button className={styles.downloadButton} onClick={() => 
             fetch("https://api.lunarclientprod.com/apollo/updates")
@@ -66,7 +66,7 @@ import styles from "./downloads.module.css";
         </button>
     </div>
     <div className={styles.downloadItem}>
-        <img className={styles.downloadIcon} src="/minestom.png" alt="Minestom" />
+        <img className={styles.downloadIcon} src="platform/minestom.png" alt="Minestom" />
         <span className={styles.downloadTitle}>Minestom</span>
         <button className={styles.downloadButton} onClick={() => router.push("https://lunarclient.dev/apollo/developers/minestom")}>
             <FontAwesomeIcon icon={faFileCode} className={styles.downloadButtonIcon} />
