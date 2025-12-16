@@ -24,26 +24,25 @@
 package com.lunarclient.apollo.module.modsetting;
 
 import com.lunarclient.apollo.ApolloPlatform;
-import com.lunarclient.apollo.mods.Mods;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.Option;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.util.ConfigTarget;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collection;
+import lombok.NonNull;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents the mod settings module.
  *
  * @since 1.0.0
  */
+@ApiStatus.NonExtendable
 @ModuleDefinition(id = "mod_setting", name = "Mod Setting", configTarget = ConfigTarget.MOD_SETTINGS)
-public final class ModSettingModule extends ApolloModule {
-
-    ModSettingModule() {
-        this.registerModOptions();
-    }
+public abstract class ModSettingModule extends ApolloModule {
 
     @Override
     public Collection<ApolloPlatform.Kind> getSupportedPlatforms() {
@@ -55,20 +54,16 @@ public final class ModSettingModule extends ApolloModule {
         return true;
     }
 
-    private void registerModOptions() {
-        for (Class<?> mod : Mods.ALL_MODS) {
-            Field[] fields = mod.getDeclaredFields();
-
-            for (Field field : fields) {
-                try {
-                    field.setAccessible(true);
-                    Option<?, ?, ?> option = (Option<?, ?, ?>) field.get(Option.class);
-                    this.registerOptions(option);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+    /**
+     * Gets the value of the specified {@link Option} for the {@link ApolloPlayer}.
+     *
+     * @param player the apollo player
+     * @param option the option
+     * @param <T>    the value type
+     * @param <C>    the option type
+     * @return the value of the option
+     * @since 1.2.1
+     */
+    public abstract <T, C extends Option<T, ?, ?>> T getStatus(@NotNull ApolloPlayer player, @NonNull C option);
 
 }

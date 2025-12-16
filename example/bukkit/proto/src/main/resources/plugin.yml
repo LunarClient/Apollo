@@ -1,6 +1,6 @@
 name: Apollo-Proto-Example
 main: com.lunarclient.apollo.example.proto.ApolloProtoExamplePlatform
-version: 1.2.0
+version: 1.2.1
 author: Moonsworth
 softdepend: [ Apollo-Bukkit ]
 api-version: 1.13
@@ -41,6 +41,8 @@ commands:
         description: "Nick Hider!"
     notification:
         description: "Notifications!"
+    paynow:
+        description: "Pay Now!"
     richpresence:
         description: "Rich Presence!"
     saturation:

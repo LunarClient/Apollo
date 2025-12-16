@@ -42,6 +42,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("armorstatus", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -52,7 +53,8 @@ public final class ModArmorstatus {
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("armorstatus", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(1.5F)
+        .min(0.25F).max(5.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
@@ -63,6 +65,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Boolean> MOVE_ARMOR_INDIVIDUALLY = SimpleOption.<Boolean>builder()
         .node("armorstatus", "move-armor-individually").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -73,6 +76,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Boolean> HIDE_UNBREAKABLE_DURABILITY = SimpleOption.<Boolean>builder()
         .node("armorstatus", "hide-unbreakable-durability").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -83,6 +87,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Boolean> ITEM_NAME = SimpleOption.<Boolean>builder()
         .node("armorstatus", "item-name").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -93,6 +98,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Boolean> ITEM_COUNT = SimpleOption.<Boolean>builder()
         .node("armorstatus", "item-count").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -103,16 +109,19 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Boolean> SHOW_WHILE_TYPING = SimpleOption.<Boolean>builder()
         .node("armorstatus", "show-while-typing").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Adds a shadow to text.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
         .node("armorstatus", "text-shadow").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -123,6 +132,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Boolean> DAMAGE_OVERLAY = SimpleOption.<Boolean>builder()
         .node("armorstatus", "damage-overlay").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -133,6 +143,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Boolean> ITEM_DAMAGE = SimpleOption.<Boolean>builder()
         .node("armorstatus", "item-damage").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -143,6 +154,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Boolean> ARMOR_DAMAGE = SimpleOption.<Boolean>builder()
         .node("armorstatus", "armor-damage").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -153,6 +165,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Boolean> MAX_DAMAGE = SimpleOption.<Boolean>builder()
         .node("armorstatus", "max-damage").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -163,6 +176,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Boolean> STATIC_DAMAGE_COLORS = SimpleOption.<Boolean>builder()
         .node("armorstatus", "static-damage-colors").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -173,6 +187,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Color> NAME_TEXT_COLOR = SimpleOption.<Color>builder()
         .node("armorstatus", "name-text-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 
@@ -183,6 +198,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Color> HIGHEST_COLOR = SimpleOption.<Color>builder()
         .node("armorstatus", "highest-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 
@@ -193,6 +209,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Color> HIGH_COLOR = SimpleOption.<Color>builder()
         .node("armorstatus", "high-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(85, 255, 85))
         .notifyClient()
         .build();
 
@@ -203,6 +220,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Color> MEDIUM_COLOR = SimpleOption.<Color>builder()
         .node("armorstatus", "medium-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 85))
         .notifyClient()
         .build();
 
@@ -213,6 +231,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Color> MEDIUM_LOW_COLOR = SimpleOption.<Color>builder()
         .node("armorstatus", "medium-low-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 170, 0))
         .notifyClient()
         .build();
 
@@ -223,6 +242,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Color> LOW_COLOR = SimpleOption.<Color>builder()
         .node("armorstatus", "low-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 85, 85))
         .notifyClient()
         .build();
 
@@ -233,6 +253,7 @@ public final class ModArmorstatus {
      */
     public static final SimpleOption<Color> LOWEST_COLOR = SimpleOption.<Color>builder()
         .node("armorstatus", "lowest-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(170, 0, 0))
         .notifyClient()
         .build();
 

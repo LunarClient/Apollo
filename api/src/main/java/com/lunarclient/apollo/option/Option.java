@@ -43,7 +43,7 @@ import static java.util.Objects.requireNonNull;
 @Getter
 @EqualsAndHashCode
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Option<V, M, I>> {
+public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Option<V, M, I>> implements Cloneable {
 
     /**
      * Returns a new {@link SimpleOption.SimpleOptionBuilder}.
@@ -76,6 +76,17 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
      */
     public static <T> ListOption.ListOptionBuilder<T> list() {
         return new ListOption.ListOptionBuilder<>();
+    }
+
+    /**
+     * Returns a new {@link EnumOption.EnumOptionBuilder}.
+     *
+     * @param <T> the value type
+     * @return a new enum option builder
+     * @since 1.2.1
+     */
+    public static <T extends Enum<T>> EnumOption.EnumOptionBuilder<T> enumerator() {
+        return new EnumOption.EnumOptionBuilder<>();
     }
 
     /**
@@ -136,6 +147,16 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
      */
     public String getKey() {
         return String.join(".", this.getPath());
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Option<V, M, I> clone() {
+        try {
+            return (Option<V, M, I>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e);
+        }
     }
 
 }

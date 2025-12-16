@@ -1,4 +1,4 @@
-# NameTags
+# Nametags
 
 A mod that allows you to modify nametags.
 
@@ -7,7 +7,7 @@ A mod that allows you to modify nametags.
 ### How to toggle the mod
 
 ```java
-public void toggleNameTagsExample(Player viewer, boolean value) {
+public void toggleNametagsExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModNametag.ENABLED, value));
 }
@@ -41,6 +41,12 @@ public void toggleNameTagsExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `true`
 
+- __`HIDE_NAMETAGS_IN_F1`__
+    - Config Key: `hide-nametags-in-f1`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
 - __`NAMETAG_BACKGROUND_OPACITY`__
     - Config Key: `nametag-background-opacity`
     - Values
@@ -48,4 +54,16 @@ public void toggleNameTagsExample(Player viewer, boolean value) {
         - Default: `1.0F`
         - Minimum: `0.0F`
         - Maximum: `1.0F`
+
+- __`REPLACE_OWN_NAMETAG_COLOR`__
+    - Config Key: `replace-own-nametag-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`OWN_NAMETAG_COLOR`__
+    - Config Key: `own-nametag-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
 

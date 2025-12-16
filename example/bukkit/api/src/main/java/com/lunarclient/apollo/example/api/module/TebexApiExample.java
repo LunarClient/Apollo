@@ -52,7 +52,7 @@ public class TebexApiExample extends TebexExample {
             return;
         }
 
-        this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayerOpt.get(), basketIdent, locale);
+        this.tebexModule.displayTebexEmbeddedCheckout(apolloPlayer, basketIdent, locale);
 
         if (embeddedCheckoutSupport == TebexEmbeddedCheckoutSupport.OVERLAY) {
             viewer.sendMessage("Opening checkout as game overlay!");

@@ -1,0 +1,55 @@
+# Mob Size
+
+Changes the size of mobs.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleMobSizeExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModMobSize.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PLAYER_SIZE_SKYBLOCK_ONLY`__
+    - Only change player sizes when playing Hypixel SkyBlock
+    - Config Key: `player-size-skyblock-only`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PLAYER_SIZE`__
+    - The size of your player
+    - Config Key: `player-size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`OTHER_PLAYER_SIZE`__
+    - The size of other players
+    - Config Key: `other-player-size`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`CHANGE_NPC_SIZE`__
+    - If the size of NPCs should be changed
+    - Config Key: `change-npc-size`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

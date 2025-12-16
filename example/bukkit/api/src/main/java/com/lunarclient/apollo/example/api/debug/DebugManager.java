@@ -24,7 +24,8 @@
 package com.lunarclient.apollo.example.api.debug;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.api.debug.payload.PayloadListener;
+import com.lunarclient.apollo.example.api.debug.impl.ModSettingsTest;
+import com.lunarclient.apollo.example.api.debug.impl.PayloadTest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -45,7 +46,8 @@ public class DebugManager implements Listener {
 
         this.players = new HashMap<>();
 
-        new PayloadListener();
+        new ModSettingsTest();
+        new PayloadTest();
 
         Bukkit.getPluginManager().registerEvents(this, ApolloExamplePlugin.getInstance());
     }

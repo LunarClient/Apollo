@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.option;
 
 import com.lunarclient.apollo.player.ApolloPlayer;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import org.jetbrains.annotations.Nullable;
@@ -187,5 +188,23 @@ public interface Options extends Iterable<Option<?, ?, ?>> {
      * @since 1.0.0
      */
     <T> void replace(ApolloPlayer player, Option<?, ?, ?> option, BiFunction<Option<?, ?, ?>, T, T> remappingFunction);
+
+    /**
+     * Registers the provided {@code C} option for the {@link Options} implementation.
+     *
+     * @param option the option
+     * @param <T>    the value type
+     * @param <C>    the option type
+     * @since 1.2.1
+     */
+    <T, C extends Option<T, ?, ?>> void register(C option);
+
+    /**
+     * Returns the internal registry containing all registered {@link Option} instances, mapped by their keys.
+     *
+     * @return the map of option keys to their corresponding {@link Option} instances
+     * @since 1.2.1
+     */
+    Map<String, Option<?, ?, ?>> getRegistry();
 
 }

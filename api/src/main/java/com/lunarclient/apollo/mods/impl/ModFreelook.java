@@ -40,6 +40,7 @@ public final class ModFreelook {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("freelook", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -50,6 +51,7 @@ public final class ModFreelook {
      */
     public static final SimpleOption<Boolean> INVERT_PITCH = SimpleOption.<Boolean>builder()
         .node("freelook", "invert-pitch").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -60,6 +62,7 @@ public final class ModFreelook {
      */
     public static final SimpleOption<Boolean> INVERT_YAW = SimpleOption.<Boolean>builder()
         .node("freelook", "invert-yaw").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -71,6 +74,7 @@ public final class ModFreelook {
     public static final SimpleOption<Boolean> TOGGLE_KEY_FREELOOK = SimpleOption.<Boolean>builder()
         .comment("Quickly pressing and releasing the key will toggle freelook")
         .node("freelook", "toggle-key-freelook").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -82,6 +86,7 @@ public final class ModFreelook {
     public static final SimpleOption<Boolean> SMOOTH_CAMERA = SimpleOption.<Boolean>builder()
         .comment("When zoomed in the camera movement will move smoothly (cinematic camera)")
         .node("freelook", "smooth-camera").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 

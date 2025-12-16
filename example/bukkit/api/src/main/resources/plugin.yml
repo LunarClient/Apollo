@@ -1,6 +1,6 @@
 name: Apollo-API-Example
 main: com.lunarclient.apollo.example.api.ApolloApiExamplePlatform
-version: 1.2.0
+version: 1.2.1
 author: Moonsworth
 softdepend: [ Apollo-Bukkit, Apollo-Folia ]
 api-version: 1.13
@@ -9,6 +9,8 @@ folia-supported: true
 commands:
     apollodebug:
         description: "Apollo Debug!"
+    modstatus:
+        description: "Mod Status Command!"
     autotexthotkey:
         description: "Auto Text Hotkey!"
     beam:
@@ -43,6 +45,8 @@ commands:
         description: "Nick Hider!"
     notification:
         description: "Notifications!"
+    paynow:
+        description: "Pay Now!"
     richpresence:
         description: "Rich Presence!"
     saturation:

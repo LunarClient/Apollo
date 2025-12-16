@@ -24,7 +24,7 @@
 package com.lunarclient.apollo.module.tebex;
 
 /**
- * Represents an embedded checkout support type.
+ * Represents the tebex embedded checkout support type.
  *
  * @since 1.1.6
  */

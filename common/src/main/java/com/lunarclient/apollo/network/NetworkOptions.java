@@ -23,6 +23,8 @@
  */
 package com.lunarclient.apollo.network;
 
+import com.google.protobuf.ListValue;
+import com.google.protobuf.NullValue;
 import com.google.protobuf.Value;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
@@ -30,9 +32,16 @@ import com.lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessag
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
-import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import io.leangen.geantyref.GenericTypeReflector;
+import java.awt.Color;
+import java.lang.reflect.AnnotatedParameterizedType;
+import java.lang.reflect.AnnotatedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -95,6 +104,99 @@ public final class NetworkOptions {
         }
     }
 
+    /**
+     * Wraps the provided value into a protobuf {@link Value}.
+     *
+     * @param valueBuilder the value builder
+     * @param type         the value type
+     * @param current      the current value
+     * @return the wrapped value
+     * @since 1.0.0
+     */
+    public static Value wrapValue(Value.Builder valueBuilder, Type type, @Nullable Object current) {
+        if (current == null) {
+            return valueBuilder.setNullValue(NullValue.NULL_VALUE).build();
+        }
+
+        Type boxed = GenericTypeReflector.box(type);
+        Class<?> clazz = GenericTypeReflector.erase(boxed);
+
+        if (clazz.isEnum()) {
+            return valueBuilder.setStringValue(((Enum<?>) current).name()).build();
+        } else if (Number.class.isAssignableFrom(clazz)) {
+            return valueBuilder.setNumberValue(((Number) current).doubleValue()).build();
+        } else if (String.class.isAssignableFrom(clazz)) {
+            return valueBuilder.setStringValue((String) current).build();
+        } else if (Boolean.class.isAssignableFrom(clazz)) {
+            return valueBuilder.setBoolValue((Boolean) current).build();
+        } else if (List.class.isAssignableFrom(clazz)) {
+            AnnotatedType elementType = NetworkOptions.elementType(boxed);
+            ListValue.Builder listBuilder = ListValue.newBuilder();
+            for (Object object : (List<?>) current) {
+                listBuilder.addValues(NetworkOptions.wrapValue(Value.newBuilder(), elementType.getType(), object));
+            }
+
+            return valueBuilder.setListValue(listBuilder.build()).build();
+        } else if (Color.class.isAssignableFrom(clazz)) {
+            if (current instanceof String) {
+                String string = (String) current;
+                return valueBuilder.setStringValue(string).build();
+            } else if (current instanceof Color) {
+                Color color = (Color) current;
+                return valueBuilder.setStringValue(Integer.toHexString(color.getRGB())).build();
+            } else if (current instanceof Integer) {
+                int color = (int) current;
+                return valueBuilder.setStringValue(Integer.toHexString(color)).build();
+            } else {
+                throw new RuntimeException("Unable to wrap Color value of type '" + clazz.getSimpleName() + "'!");
+
+            }
+        }
+
+        throw new RuntimeException("Unable to wrap value of type '" + clazz.getSimpleName() + "'!");
+    }
+
+    /**
+     * Unwraps the provided protobuf {@link Value} into the appropriate object.
+     *
+     * @param wrapper the wrapped value
+     * @param type    the wrapped type
+     * @return the unwrapped value
+     * @since 1.0.0
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static @Nullable Object unwrapValue(Value wrapper, Type type) {
+        if (wrapper.hasNullValue()) {
+            return null;
+        }
+
+        Type boxed = GenericTypeReflector.box(type);
+        Class<?> clazz = GenericTypeReflector.erase(boxed);
+
+        if (clazz.isEnum() && wrapper.hasStringValue()) {
+            return Enum.valueOf((Class<? extends Enum>) clazz, wrapper.getStringValue());
+        } else if (Number.class.isAssignableFrom(clazz) && wrapper.hasNumberValue()) {
+            return wrapper.getNumberValue();
+        } else if (String.class.isAssignableFrom(clazz) && wrapper.hasStringValue()) {
+            return wrapper.getStringValue();
+        } else if (Boolean.class.isAssignableFrom(clazz) && wrapper.hasBoolValue()) {
+            return wrapper.getBoolValue();
+        } else if (List.class.isAssignableFrom(clazz) && wrapper.hasListValue()) {
+            AnnotatedType elementType = NetworkOptions.elementType(boxed);
+            ListValue listValue = wrapper.getListValue();
+            List<Object> list = new ArrayList<>(listValue.getValuesCount());
+            for (int i = 0; i < listValue.getValuesCount(); i++) {
+                list.add(NetworkOptions.unwrapValue(listValue.getValues(i), elementType.getType()));
+            }
+
+            return Collections.unmodifiableList(list);
+        } else if (Color.class.isAssignableFrom(clazz) && wrapper.hasStringValue()) {
+            return wrapper.getStringValue();
+        }
+
+        throw new RuntimeException("Unable to unwrap value of type '" + clazz.getSimpleName() + "'!");
+    }
+
     private static ConfigurableSettings.Builder moduleWithOptions(ApolloModule module, boolean onlyPresent) {
         ConfigurableSettings.Builder builder = NetworkOptions.module(module);
         Options options = module.getOptions();
@@ -110,11 +212,20 @@ public final class NetworkOptions {
                 continue;
             }
 
-            Value wrapper = ((OptionsImpl) options).wrapValue(valueBuilder, option.getTypeToken().getType(), value);
+            Value wrapper = NetworkOptions.wrapValue(valueBuilder, option.getTypeToken().getType(), value);
             builder.putProperties(option.getKey(), wrapper);
         }
 
         return builder;
+    }
+
+    private static AnnotatedType elementType(Type type) {
+        AnnotatedType elementType = GenericTypeReflector.annotate(type);
+        if(!(elementType instanceof AnnotatedParameterizedType)) {
+            throw new RuntimeException("Raw types for lists are not supported!");
+        }
+
+        return ((AnnotatedParameterizedType) elementType).getAnnotatedActualTypeArguments()[0];
     }
 
     private static ConfigurableSettings.Builder module(@Nullable ApolloModule module) {
