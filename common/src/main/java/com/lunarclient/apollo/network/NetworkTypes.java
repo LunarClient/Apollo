@@ -37,6 +37,14 @@ import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Uuid;
 import com.lunarclient.apollo.module.packetenrichment.PlayerInfo;
+import com.lunarclient.apollo.module.packetenrichment.raytrace.BlockHitResult;
+import com.lunarclient.apollo.module.packetenrichment.raytrace.Direction;
+import com.lunarclient.apollo.module.packetenrichment.raytrace.EntityHitResult;
+import com.lunarclient.apollo.module.packetenrichment.raytrace.MissResult;
+import com.lunarclient.apollo.module.packetenrichment.raytrace.RayTraceResult;
+import com.lunarclient.apollo.packetenrichment.v1.BlockHit;
+import com.lunarclient.apollo.packetenrichment.v1.EntityHit;
+import com.lunarclient.apollo.packetenrichment.v1.Miss;
 import java.awt.Color;
 import java.time.Duration;
 import java.util.UUID;
@@ -224,6 +232,72 @@ public final class NetworkTypes {
             .forwardSpeed(message.getForwardSpeed())
             .strafeSpeed(message.getStrafeSpeed())
             .build();
+    }
+
+    /**
+     * Converts a {@link RayTraceResult} object to a
+     * {@link com.lunarclient.apollo.packetenrichment.v1.RayTraceResult} proto message.
+     *
+     * @param object the ray trace result
+     * @return the proto ray trace result message
+     * @since 1.2.2
+     */
+    public static com.lunarclient.apollo.packetenrichment.v1.RayTraceResult toProtobuf(RayTraceResult object) {
+        com.lunarclient.apollo.packetenrichment.v1.RayTraceResult.Builder builder = com.lunarclient.apollo.packetenrichment.v1.RayTraceResult.newBuilder();
+
+        if (object instanceof BlockHitResult) {
+            BlockHitResult result = (BlockHitResult) object;
+
+            BlockHit blockHit = BlockHit.newBuilder()
+                    .setHitLocation(NetworkTypes.toProtobuf(result.getHitLocation()))
+                    .setBlockLocation(NetworkTypes.toProtobuf(result.getBlockLocation()))
+                    .setDirection(com.lunarclient.apollo.packetenrichment.v1.Direction.forNumber(result.getDirection().ordinal() + 1))
+                    .build();
+
+            builder.setBlock(blockHit);
+        } else if (object instanceof EntityHitResult) {
+            EntityHitResult result = (EntityHitResult) object;
+
+            EntityHit entityHit = EntityHit.newBuilder()
+                    .setHitLocation(NetworkTypes.toProtobuf(result.getHitLocation()))
+                    .setEntityId(NetworkTypes.toProtobuf(result.getEntityId()))
+                    .build();
+
+            builder.setEntity(entityHit);
+        } else {
+            builder.setMiss(Miss.getDefaultInstance());
+        }
+
+        return builder.build();
+    }
+
+    /**
+     * Converts a {@link com.lunarclient.apollo.packetenrichment.v1.RayTraceResult}
+     * proto message to a {@link RayTraceResult} object.
+     *
+     * @param message the ray trace result message
+     * @return the apollo ray trace result object
+     * @since 1.2.2
+     */
+    public static RayTraceResult fromProtobuf(com.lunarclient.apollo.packetenrichment.v1.RayTraceResult message) {
+        if (message.hasBlock()) {
+            BlockHit blockHitMessage = message.getBlock();
+
+            return BlockHitResult.builder()
+                .hitLocation(NetworkTypes.fromProtobuf(blockHitMessage.getHitLocation()))
+                .blockLocation(NetworkTypes.fromProtobuf(blockHitMessage.getBlockLocation()))
+                .direction(Direction.values()[blockHitMessage.getDirectionValue() - 1])
+                .build();
+        } else if (message.hasEntity()) {
+            EntityHit entityHitMessage = message.getEntity();
+
+            return EntityHitResult.builder()
+                .hitLocation(NetworkTypes.fromProtobuf(entityHitMessage.getHitLocation()))
+                .entityId(NetworkTypes.fromProtobuf(entityHitMessage.getEntityId()))
+                .build();
+        }
+
+        return new MissResult();
     }
 
     /**

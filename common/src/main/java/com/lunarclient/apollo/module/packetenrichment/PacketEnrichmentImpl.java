@@ -28,11 +28,13 @@ import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatCloseEvent;
 import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatOpenEvent;
 import com.lunarclient.apollo.event.packetenrichment.melee.ApolloPlayerAttackEvent;
+import com.lunarclient.apollo.event.packetenrichment.world.ApolloPlayerUseItemBucketEvent;
 import com.lunarclient.apollo.event.packetenrichment.world.ApolloPlayerUseItemEvent;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerAttackMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerChatCloseMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerChatOpenMessage;
+import com.lunarclient.apollo.packetenrichment.v1.PlayerUseItemBucketMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerUseItemMessage;
 
 /**
@@ -104,6 +106,21 @@ public final class PacketEnrichmentImpl extends PacketEnrichmentModule {
             );
 
             EventBus.EventResult<ApolloPlayerUseItemEvent> result = EventBus.getBus().post(playerUseItemEvent);
+
+            for (Throwable throwable : result.getThrowing()) {
+                throwable.printStackTrace();
+            }
+        });
+
+        event.unpack(PlayerUseItemBucketMessage.class).ifPresent(packet -> {
+            ApolloPlayerUseItemBucketEvent playerUseItemBucketEvent = new ApolloPlayerUseItemBucketEvent(
+                event.getPlayer(),
+                NetworkTypes.fromProtobuf(packet.getPacketInfo().getInstantiationTime()),
+                NetworkTypes.fromProtobuf(packet.getPlayerInfo()),
+                NetworkTypes.fromProtobuf(packet.getRayTraceResult())
+            );
+
+            EventBus.EventResult<ApolloPlayerUseItemBucketEvent> result = EventBus.getBus().post(playerUseItemBucketEvent);
 
             for (Throwable throwable : result.getThrowing()) {
                 throwable.printStackTrace();

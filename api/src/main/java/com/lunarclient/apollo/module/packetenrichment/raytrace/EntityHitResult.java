@@ -21,52 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.event.packetenrichment.world;
+package com.lunarclient.apollo.module.packetenrichment.raytrace;
 
-import com.lunarclient.apollo.event.Event;
-import com.lunarclient.apollo.module.packetenrichment.PlayerInfo;
-import com.lunarclient.apollo.player.ApolloPlayer;
-import lombok.Value;
+import com.lunarclient.apollo.common.ApolloEntity;
+import com.lunarclient.apollo.common.location.ApolloLocation;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
- * Represents an event that is fired when a player uses an item (1.16.1+).
+ * Represents the entity hit ray trace result.
  *
- * @since 1.0.7
+ * @since 1.2.2
  */
-@Value
-public class ApolloPlayerUseItemEvent implements Event {
+@Getter
+@Builder
+public class EntityHitResult extends RayTraceResult {
 
     /**
-     * The player that sent the packet.
+     * The exact hit {@link ApolloLocation} of the ray on the entity.
      *
-     * @return the player
-     * @since 1.1.9
+     * @return the hit location
+     * @since 1.2.2
      */
-    ApolloPlayer player;
+    ApolloLocation hitLocation;
 
     /**
-     * The {@code long} representing the unix timestamp
-     * when the packet was created.
+     * The {@link ApolloEntity} that was hit.
      *
-     * @return the unix timestamp
-     * @since 1.0.7
+     * @return the entity ID
+     * @since 1.2.2
      */
-    long instantiationTimeMs;
-
-    /**
-     * The player's {@link PlayerInfo} information.
-     *
-     * @return the player info
-     * @since 1.0.7
-     */
-    PlayerInfo playerInfo;
-
-    /**
-     * Whether {@code boolean} the used item is in the main hand.
-     *
-     * @return the main hand
-     * @since 1.0.7
-     */
-    boolean mainHand;
+    ApolloEntity entityId;
 
 }
