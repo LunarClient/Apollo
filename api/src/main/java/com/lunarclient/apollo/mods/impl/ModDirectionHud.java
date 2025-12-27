@@ -129,6 +129,18 @@ public final class ModDirectionHud {
         .build();
 
     /**
+     * Choose whether to show the Direction HUD when TAB is open.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> SHOW_WITH_TAB = SimpleOption.<Boolean>builder()
+        .comment("Choose whether to show the Direction HUD when TAB is open.")
+        .node("direction-hud", "show-with-tab").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.0.0
@@ -153,23 +165,34 @@ public final class ModDirectionHud {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> USE_LEGACY_STYLE = SimpleOption.<Boolean>builder()
-        .node("direction-hud", "use-legacy-style").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
+    public static final SimpleOption<Boolean> SHOW_WAYPOINTS = SimpleOption.<Boolean>builder()
+        .node("direction-hud", "show-waypoints").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
     /**
-     * Choose whether to show the Direction HUD when TAB is open.
+     * No documentation available.
      *
-     * @since 1.1.9
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> SHOW_WITH_TAB = SimpleOption.<Boolean>builder()
-        .comment("Choose whether to show the Direction HUD when TAB is open.")
-        .node("direction-hud", "show-with-tab").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
+    public static final SimpleOption<Boolean> SHOW_TEAMMATES = SimpleOption.<Boolean>builder()
+        .node("direction-hud", "show-teammates").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Show markers from the Markers Mod.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_EXTERNAL_MARKERS = SimpleOption.<Boolean>builder()
+        .comment("Show markers from the Markers Mod.")
+        .node("direction-hud", "show-external-markers").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -214,6 +237,18 @@ public final class ModDirectionHud {
     public static final SimpleOption<Color> DIRECTION_COLOR = SimpleOption.<Color>builder()
         .node("direction-hud", "direction-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> USE_LEGACY_STYLE = SimpleOption.<Boolean>builder()
+        .node("direction-hud", "use-legacy-style").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

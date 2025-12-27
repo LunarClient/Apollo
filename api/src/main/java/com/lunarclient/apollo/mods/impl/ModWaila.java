@@ -92,6 +92,17 @@ public final class ModWaila {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_SPRAYS = SimpleOption.<Boolean>builder()
+        .node("waila", "show-sprays").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
      * Adds a shadow to text.
      *
      * @since 1.0.0
