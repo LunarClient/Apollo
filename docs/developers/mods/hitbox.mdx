@@ -21,6 +21,27 @@ public void toggleHitboxExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
+- __`MAX_DISTANCE_TOGGLE`__
+    - Config Key: `max-distance-toggle`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`MAX_DISTANCE`__
+    - Maximum distance away from the entity to show hitboxes at
+    - Config Key: `max-distance`
+    - Values
+        - Type: `Integer`
+        - Default: `64`
+        - Minimum: `1`
+        - Maximum: `128`
+
+- __`HITBOX_PLAYER_SHOW`__
+    - Config Key: `hitbox-player-show`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
 - __`HITBOX_PLAYER_LINE_WIDTH`__
     - Config Key: `hitbox-player-line-width`
     - Values
@@ -41,8 +62,8 @@ public void toggleHitboxExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
-- __`HITBOX_PLAYER_SHOW`__
-    - Config Key: `hitbox-player-show`
+- __`HITBOX_ITEM_SHOW`__
+    - Config Key: `hitbox-item-show`
     - Values
         - Type: `Boolean`
         - Default: `true`
@@ -67,60 +88,8 @@ public void toggleHitboxExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
-- __`HITBOX_ITEM_SHOW`__
-    - Config Key: `hitbox-item-show`
-    - Values
-        - Type: `Boolean`
-        - Default: `true`
-
-- __`HITBOX_PROJECTILE_LINE_WIDTH`__
-    - Config Key: `hitbox-projectile-line-width`
-    - Values
-        - Type: `Float`
-        - Default: `1.0F`
-        - Minimum: `1.0F`
-        - Maximum: `5.0F`
-
-- __`HITBOX_PROJECTILE_LINE_COLOR`__
-    - Config Key: `hitbox-projectile-line-color`
-    - Values
-        - Type: `String`
-        - Default: `#FFFFFFFF`
-
-- __`HITBOX_PROJECTILE_LOOK_VECTOR`__
-    - Config Key: `hitbox-projectile-look-vector`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
-- __`HITBOX_PROJECTILE_SHOW`__
-    - Config Key: `hitbox-projectile-show`
-    - Values
-        - Type: `Boolean`
-        - Default: `true`
-
-- __`HITBOX_MOB_LINE_WIDTH`__
-    - Config Key: `hitbox-mob-line-width`
-    - Values
-        - Type: `Float`
-        - Default: `1.0F`
-        - Minimum: `1.0F`
-        - Maximum: `5.0F`
-
-- __`HITBOX_MOB_LINE_COLOR`__
-    - Config Key: `hitbox-mob-line-color`
-    - Values
-        - Type: `String`
-        - Default: `#FFFFFFFF`
-
-- __`HITBOX_MOB_LOOK_VECTOR`__
-    - Config Key: `hitbox-mob-look-vector`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
-- __`HITBOX_MOB_SHOW`__
-    - Config Key: `hitbox-mob-show`
+- __`HITBOX_EXP_ORB_SHOW`__
+    - Config Key: `hitbox-exp-orb-show`
     - Values
         - Type: `Boolean`
         - Default: `true`
@@ -145,9 +114,263 @@ public void toggleHitboxExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
-- __`HITBOX_EXP_ORB_SHOW`__
-    - Config Key: `hitbox-exp-orb-show`
+- __`HITBOX_ITEM_FRAME_SHOW`__
+    - Config Key: `hitbox-item-frame-show`
     - Values
         - Type: `Boolean`
         - Default: `true`
+
+- __`HITBOX_ITEM_FRAME_LINE_WIDTH`__
+    - Config Key: `hitbox-item-frame-line-width`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`HITBOX_ITEM_FRAME_LINE_COLOR`__
+    - Config Key: `hitbox-item-frame-line-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`HITBOX_ITEM_FRAME_LOOK_VECTOR`__
+    - Config Key: `hitbox-item-frame-look-vector`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HITBOX_FIREWORK_SHOW`__
+    - Config Key: `hitbox-firework-show`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HITBOX_FIREWORK_LINE_WIDTH`__
+    - Config Key: `hitbox-firework-line-width`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`HITBOX_FIREWORK_LINE_COLOR`__
+    - Config Key: `hitbox-firework-line-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`HITBOX_FIREWORK_LOOK_VECTOR`__
+    - Config Key: `hitbox-firework-look-vector`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HITBOX_WITHER_SKULL_SHOW`__
+    - Config Key: `hitbox-wither-skull-show`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HITBOX_WITHER_SKULL_LINE_WIDTH`__
+    - Config Key: `hitbox-wither-skull-line-width`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`HITBOX_WITHER_SKULL_LINE_COLOR`__
+    - Config Key: `hitbox-wither-skull-line-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`HITBOX_WITHER_SKULL_LOOK_VECTOR`__
+    - Config Key: `hitbox-wither-skull-look-vector`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HITBOX_SNOWBALL_SHOW`__
+    - Config Key: `hitbox-snowball-show`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HITBOX_SNOWBALL_LINE_WIDTH`__
+    - Config Key: `hitbox-snowball-line-width`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`HITBOX_SNOWBALL_LINE_COLOR`__
+    - Config Key: `hitbox-snowball-line-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`HITBOX_SNOWBALL_LOOK_VECTOR`__
+    - Config Key: `hitbox-snowball-look-vector`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HITBOX_FIREBALL_SHOW`__
+    - Config Key: `hitbox-fireball-show`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HITBOX_FIREBALL_LINE_WIDTH`__
+    - Config Key: `hitbox-fireball-line-width`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`HITBOX_FIREBALL_LINE_COLOR`__
+    - Config Key: `hitbox-fireball-line-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`HITBOX_FIREBALL_LOOK_VECTOR`__
+    - Config Key: `hitbox-fireball-look-vector`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HITBOX_ARROW_SHOW`__
+    - Config Key: `hitbox-arrow-show`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HITBOX_ARROW_LINE_WIDTH`__
+    - Config Key: `hitbox-arrow-line-width`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`HITBOX_ARROW_LINE_COLOR`__
+    - Config Key: `hitbox-arrow-line-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`HITBOX_ARROW_LOOK_VECTOR`__
+    - Config Key: `hitbox-arrow-look-vector`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HITBOX_PROJECTILE_SHOW`__
+    - Config Key: `hitbox-projectile-show`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HITBOX_PROJECTILE_LINE_WIDTH`__
+    - Config Key: `hitbox-projectile-line-width`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`HITBOX_PROJECTILE_LINE_COLOR`__
+    - Config Key: `hitbox-projectile-line-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`HITBOX_PROJECTILE_LOOK_VECTOR`__
+    - Config Key: `hitbox-projectile-look-vector`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HITBOX_MONSTER_SHOW`__
+    - Config Key: `hitbox-monster-show`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HITBOX_MONSTER_LINE_WIDTH`__
+    - Config Key: `hitbox-monster-line-width`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`HITBOX_MONSTER_LINE_COLOR`__
+    - Config Key: `hitbox-monster-line-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`HITBOX_MONSTER_LOOK_VECTOR`__
+    - Config Key: `hitbox-monster-look-vector`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HITBOX_PASSIVE_SHOW`__
+    - Config Key: `hitbox-passive-show`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HITBOX_PASSIVE_LINE_WIDTH`__
+    - Config Key: `hitbox-passive-line-width`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`HITBOX_PASSIVE_LINE_COLOR`__
+    - Config Key: `hitbox-passive-line-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`HITBOX_PASSIVE_LOOK_VECTOR`__
+    - Config Key: `hitbox-passive-look-vector`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HITBOX_OTHER_SHOW`__
+    - Config Key: `hitbox-other-show`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HITBOX_OTHER_LINE_WIDTH`__
+    - Config Key: `hitbox-other-line-width`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `1.0F`
+        - Maximum: `5.0F`
+
+- __`HITBOX_OTHER_LINE_COLOR`__
+    - Config Key: `hitbox-other-line-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`HITBOX_OTHER_LOOK_VECTOR`__
+    - Config Key: `hitbox-other-look-vector`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
 

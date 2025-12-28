@@ -22,7 +22,7 @@ public void toggleFOVChangerExample(Player viewer, boolean value) {
         - Default: `false`
 
 - __`STATIC_FOV`__
-    - Determines if your FOV changes as you move.
+    - Turning this on will prevent your FOV from ever being changed by movement, flying, effects, bow, etc.
     - Config Key: `static-f-o-v`
     - Values
         - Type: `Boolean`
@@ -35,6 +35,19 @@ public void toggleFOVChangerExample(Player viewer, boolean value) {
         - Default: `70`
         - Minimum: `30`
         - Maximum: `110`
+
+- __`SMOOTH_FOV`__
+    - Smooth transition for the custom dynamic fov values. This does not affect the vanilla FOVs, only custom FOV values.
+    - Config Key: `smooth-fov`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DYNAMIC_BOW`__
+    - Config Key: `dynamic-bow`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
 
 - __`AIMING_MODIFIER`__
     - Config Key: `aiming-modifier`
@@ -59,6 +72,12 @@ public void toggleFOVChangerExample(Player viewer, boolean value) {
         - Default: `10.0F`
         - Minimum: `-200.0F`
         - Maximum: `200.0F`
+
+- __`DYNAMIC_EFFECTS`__
+    - Config Key: `dynamic-effects`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
 
 - __`SPEED_FOV`__
     - Config Key: `speed-f-o-v`
@@ -108,6 +127,12 @@ public void toggleFOVChangerExample(Player viewer, boolean value) {
         - Minimum: `-200.0F`
         - Maximum: `200.0F`
 
+- __`DYNAMIC_SPRINT`__
+    - Config Key: `dynamic-sprint`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
 - __`SPRINTING_FOV`__
     - Config Key: `sprinting-f-o-v`
     - Values
@@ -139,6 +164,12 @@ public void toggleFOVChangerExample(Player viewer, boolean value) {
         - Default: `10.0F`
         - Minimum: `-200.0F`
         - Maximum: `200.0F`
+
+- __`DYNAMIC_FLYING`__
+    - Config Key: `dynamic-flying`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
 
 - __`FLYING_FOV`__
     - Config Key: `flying-fov`
