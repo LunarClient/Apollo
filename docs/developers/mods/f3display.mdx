@@ -1,0 +1,77 @@
+# F3 Display
+
+Allows you to move and customize the F3 Debug Screen.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleF3DisplayExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModF3Display.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ENTER_ANIMATION_DURATION`__
+    - Config Key: `enter-animation-duration`
+    - Values
+        - Type: `Double`
+        - Default: `0.25D`
+        - Minimum: `0.0D`
+        - Maximum: `1.0D`
+
+- __`EXIT_ANIMATION_DURATION`__
+    - Config Key: `exit-animation-duration`
+    - Values
+        - Type: `Double`
+        - Default: `0.05D`
+        - Minimum: `0.0D`
+        - Maximum: `1.0D`
+
+- __`ONLY_MOVERS_IN_F3`__
+    - Hides the hud previews in the edit hud layout menu if you don't have F3 toggled.
+    - Config Key: `only-movers-in-f3`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TEXT_SHADOW`__
+    - Adds a shadow to text
+    - Config Key: `text-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BACKGROUND`__
+    - Config Key: `background`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BACKGROUND_COLOR`__
+    - Config Key: `background-color`
+    - Values
+        - Type: `String`
+        - Default: `#55000000`
+
+- __`LABEL_COLOR`__
+    - Config Key: `label-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`VALUE_COLOR`__
+    - Config Key: `value-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+

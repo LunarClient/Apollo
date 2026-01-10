@@ -43,6 +43,7 @@ import com.lunarclient.apollo.mods.impl.ModCrosshair;
 import com.lunarclient.apollo.mods.impl.ModDamageTint;
 import com.lunarclient.apollo.mods.impl.ModDayCounter;
 import com.lunarclient.apollo.mods.impl.ModDirectionHud;
+import com.lunarclient.apollo.mods.impl.ModF3Display;
 import com.lunarclient.apollo.mods.impl.ModFog;
 import com.lunarclient.apollo.mods.impl.ModFov;
 import com.lunarclient.apollo.mods.impl.ModFps;
@@ -61,6 +62,7 @@ import com.lunarclient.apollo.mods.impl.ModItemTracker;
 import com.lunarclient.apollo.mods.impl.ModKeystrokes;
 import com.lunarclient.apollo.mods.impl.ModKillSounds;
 import com.lunarclient.apollo.mods.impl.ModLighting;
+import com.lunarclient.apollo.mods.impl.ModMarkers;
 import com.lunarclient.apollo.mods.impl.ModMemory;
 import com.lunarclient.apollo.mods.impl.ModMenuBlur;
 import com.lunarclient.apollo.mods.impl.ModMinimap;
@@ -90,6 +92,7 @@ import com.lunarclient.apollo.mods.impl.ModScoreboard;
 import com.lunarclient.apollo.mods.impl.ModScreenshot;
 import com.lunarclient.apollo.mods.impl.ModScrollableTooltips;
 import com.lunarclient.apollo.mods.impl.ModServerAddress;
+import com.lunarclient.apollo.mods.impl.ModShields;
 import com.lunarclient.apollo.mods.impl.ModShinyPots;
 import com.lunarclient.apollo.mods.impl.ModShulkerPreview;
 import com.lunarclient.apollo.mods.impl.ModSkyblock;
@@ -190,6 +193,7 @@ public final class Mods {
             ModBossbar.class,
             ModFreelook.class,
             ModPvpInfo.class,
+            ModMarkers.class,
             ModSnaplook.class,
             ModTeamView.class,
             ModPackDisplay.class,
@@ -210,8 +214,10 @@ public final class Mods {
             ModHorseStats.class,
             ModRewind.class,
             ModAudioSubtitles.class,
+            ModShields.class,
             ModKillSounds.class,
             ModInventoryMod.class,
+            ModF3Display.class,
             ModRadio.class
         );
 
