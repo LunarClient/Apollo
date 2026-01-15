@@ -1,4 +1,4 @@
-# Inventory Mod
+# Inventory
 
 A collection of quality of life tweaks for the inventory.
 
@@ -7,7 +7,7 @@ A collection of quality of life tweaks for the inventory.
 ### How to toggle the mod
 
 ```java
-public void toggleInventoryModExample(Player viewer, boolean value) {
+public void toggleInventoryExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModInventoryMod.ENABLED, value));
 }

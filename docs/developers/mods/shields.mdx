@@ -1,0 +1,75 @@
+# Shields
+
+Some QoL features for Minecraft shields
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleShieldsExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModShields.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ENABLE_SHIELD_COLORS`__
+    - Config Key: `enable-shield-colors`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHIELD_ACTIVE_COLOR`__
+    - Config Key: `shield-active-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF00FF00`
+
+- __`SHIELD_INACTIVE_COLOR`__
+    - Config Key: `shield-inactive-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF0000`
+
+- __`ANIMATE_COLOR_TRANSITION`__
+    - Config Key: `animate-color-transition`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHIELD_INACTIVE_SOUND`__
+    - Always play a sound whenever a player's shield goes inactive.
+    - Config Key: `shield-inactive-sound`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHIELD_USE_SOUND`__
+    - Always play a sound whenever a player's shield is damaged by any source.
+    - Config Key: `shield-use-sound`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`IGNORE_5TICKS`__
+    - Ignore the 5 tick deactivation period when a shield is hit with any item other than the axe.
+    - Config Key: `ignore5-ticks`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BETTER_BLOCKING`__
+    - Fix the bug where shields don't show as blocking sometimes, even though the player is blocking.
+    - Config Key: `better-blocking`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

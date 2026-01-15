@@ -1,0 +1,29 @@
+# Mods Enabled Debug
+
+Debugs the Enabled Mods
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleModsEnabledDebugExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModModsEnabledDebugMod.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_MODS_WITHOUT_FEATURE_DYNAMIC`__
+    - Config Key: `show-mods-without-feature-dynamic`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
