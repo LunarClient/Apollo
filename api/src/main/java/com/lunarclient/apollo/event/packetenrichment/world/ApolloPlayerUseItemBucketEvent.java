@@ -63,7 +63,7 @@ public class ApolloPlayerUseItemBucketEvent implements Event {
     PlayerInfo playerInfo;
 
     /**
-     * The player's {@link RayTraceResult}.
+     * The result of the client's {@link RayTraceResult} for this bucket interaction.
      *
      * @return the ray trace result
      * @since 1.2.2

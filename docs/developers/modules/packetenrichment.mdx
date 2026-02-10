@@ -7,6 +7,8 @@ import { Tab, Tabs } from 'nextra-theme-docs'
 
 The packet enrichment module provides servers with additional information about already existing packets and/or adds additional packets to provide servers with extra information about a player.
 
+We have an open-source reference [plugin](https://github.com/LunarClient/apollo-bucket-desync-fix) that leverages the `PLAYER_USE_ITEM_BUCKET_PACKET` to eliminate water and lava bucket desync on 1.7 and 1.8.
+
 <Callout type="info">
   This module is disabled by default, if you wish to use this module you will need to enable it in `config.yml`.
 </Callout>
@@ -27,6 +29,7 @@ The following events are related to the packet enrichment module, you can find m
 * `ApolloPlayerChatOpenEvent`
 * `ApolloPlayerAttackEvent`
 * `ApolloPlayerUseItemEvent`
+* `ApolloPlayerUseItemBucketEvent`
 
 </Tab>
 
@@ -38,3 +41,69 @@ Visit [Apollo Serverbound packets](/apollo/developers/lightweight/protobuf/serve
 
 </Tabs>
 
+## Available options
+
+- __`PLAYER_ATTACK_PACKET`__
+  - Controls whether the client sends an additional player attack packet to the server.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_ATTACK_EVENT`__
+  - Controls whether Apollo fires `ApolloPlayerAttackEvent` when the packet is received.
+  - Disable this and handle the packet yourself if you require asynchronous or off-thread processing.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_CHAT_OPEN_PACKET`__
+  - Controls whether the client sends an additional player chat open packet to the server.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_CHAT_OPEN_EVENT`__
+  - Controls whether Apollo fires `ApolloPlayerChatOpenEvent` when the packet is received.
+  - Disable this and handle the packet yourself if you require asynchronous or off-thread processing.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_CHAT_CLOSE_PACKET`__
+  - Controls whether the client sends an additional player chat close packet to the server.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_CHAT_CLOSE_EVENT`__
+  - Controls whether Apollo fires `ApolloPlayerChatCloseEvent` when the packet is received.
+  - Disable this and handle the packet yourself if you require asynchronous or off-thread processing.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_USE_ITEM_PACKET`__
+  - Controls whether the client sends an additional player use item packet to the server.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_USE_ITEM_EVENT`__
+  - Controls whether Apollo fires `ApolloPlayerUseItemEvent` when the packet is received.
+  - Disable this and handle the packet yourself if you require asynchronous or off-thread processing.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_USE_ITEM_BUCKET_PACKET`__
+  - Controls whether the client sends an additional player use item bucket packet to the server.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_USE_ITEM_BUCKET_EVENT`__
+  - Controls whether Apollo fires `ApolloPlayerUseItemBucketEvent` when the packet is received.
+  - Disable this and handle the packet yourself if you require asynchronous or off-thread processing.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`

@@ -252,6 +252,22 @@ _Called when the player uses an item (1.16.1+)._
 
 </details>
 
+<details>
+<summary>ApolloPlayerUseItemBucketEvent</summary>
+
+### ApolloPlayerUseItemBucketEvent
+
+_Called when the player uses a bucket (1.7 and 1.8)._
+
+| Field                           | Description                                         |
+| ------------------------------- | --------------------------------------------------- |
+| `ApolloPlayer player`           | The Apollo player that sent the packet.             |
+| `long instantiationTimeMs`      | The unix timestamp when the packet was created.     |
+| `PlayerInfo playerInfo`         | The player's general information.                   |
+| `RayTraceResult rayTraceResult` | The client ray trace result for the interaction.    |
+
+</details>
+
 ## Integration
 
 ### Sample Code (Method 1)
