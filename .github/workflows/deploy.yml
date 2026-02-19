@@ -41,7 +41,7 @@ jobs:
                 fi
 
         -   name: Gradle Publish
-            if: "${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/version/') || github.ref == 'refs/heads/feature/bucket-desync' }}"
+            if: "${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/version/') }}"
             run: ./gradlew publish
 
         -   name: Gradle Release
