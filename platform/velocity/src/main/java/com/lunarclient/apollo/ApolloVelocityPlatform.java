@@ -105,7 +105,7 @@ import lombok.Getter;
 @Plugin(
     id = "apollo",
     name = "Apollo-Velocity",
-    version = "1.2.1",
+    version = "1.2.2",
     url = "https://moonsworth.com",
     description = "Implementation of Apollo for Velocity",
     authors = {"Moonsworth"}
