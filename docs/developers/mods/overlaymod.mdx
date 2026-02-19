@@ -1,0 +1,368 @@
+# Overlay
+
+Configure various texture overlays, tweaks, and modifiers
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleOverlayExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModOverlayMod.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`MINIMAL_VIEW_BOBBING`__
+    - When View Bobbing is enabled, only bob your hand (requires View Bobbing to be enabled).
+    - Config Key: `minimal-view-bobbing`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`FIRE_HEIGHT`__
+    - Config Key: `fire-height`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `2.0F`
+
+- __`SHIELD_HEIGHT`__
+    - Config Key: `shield-height`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `2.0F`
+
+- __`TOTEM_SCALE`__
+    - Config Key: `totem-scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.25F`
+        - Maximum: `1.5F`
+
+- __`HELD_ITEM_SCALE`__
+    - Config Key: `held-item-scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.25F`
+        - Maximum: `1.5F`
+
+- __`PUMPKIN_OVERLAY`__
+    - Config Key: `pumpkin-overlay`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `1.0F`
+
+- __`SPYGLASS_OVERLAY`__
+    - Config Key: `spyglass-overlay`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `1.0F`
+
+- __`FROST_OVERLAY`__
+    - Config Key: `frost-overlay`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `1.0F`
+
+- __`HIDE_FOLIAGE`__
+    - Hides grass and double grass blocks
+    - Config Key: `hide-foliage`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ENTITY_SHADOW`__
+    - Render shadows for entities
+    - Config Key: `entity-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`GROUND_ARROWS`__
+    - Choose whether or not to hide arrows that are stuck in the ground
+    - Config Key: `ground-arrows`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`STUCK_ARROWS`__
+    - Choose whether or not to hide arrows that are stuck in players
+    - Config Key: `stuck-arrows`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_SKULLS`__
+    - Config Key: `hide-skulls`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CLEAR_GLASS`__
+    - Config Key: `clear-glass`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CLEAR_GLASS_TRANSPARENCY`__
+    - Config Key: `clear-glass-transparency`
+    - Values
+        - Type: `Float`
+        - Default: `0.0F`
+        - Minimum: `0.0F`
+        - Maximum: `1.0F`
+
+- __`CLEAR_COLORED_GLASS`__
+    - Config Key: `clear-colored-glass`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CLEAR_GLASS_OUTLINE`__
+    - Config Key: `clear-glass-outline`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CLEAR_GLASS_OUTLINE_THICKNESS`__
+    - Config Key: `clear-glass-outline-thickness`
+    - Values
+        - Type: `Integer`
+        - Default: `1`
+        - Minimum: `1`
+        - Maximum: `3`
+
+- __`CLEAR_GLASS_OUTLINE_TRANSPARENCY`__
+    - Config Key: `clear-glass-outline-transparency`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `1.0F`
+
+- __`ORE_OUTLINES`__
+    - Config Key: `ore-outlines`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SMART_OUTLINE_COLORS`__
+    - Use a heuristic to calculate the ore outline color from the actual ore texture, to make it match better. Turning this option off will use predefined vanilla ore outline colors.
+    - Config Key: `smart-outline-colors`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHINY_ORE_OUTLINES`__
+    - Apply some noise to the ore outlines to make them appear shiny
+    - Config Key: `shiny-ore-outlines`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`ORE_OUTLINE_THICKNESS`__
+    - Config Key: `ore-outline-thickness`
+    - Values
+        - Type: `Integer`
+        - Default: `1`
+        - Minimum: `1`
+        - Maximum: `3`
+
+- __`DIAMOND_ORE_OUTLINE`__
+    - Config Key: `diamond-ore-outline`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`GOLD_ORE_OUTLINE`__
+    - Config Key: `gold-ore-outline`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`IRON_ORE_OUTLINE`__
+    - Config Key: `iron-ore-outline`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`LAPIS_ORE_OUTLINE`__
+    - Config Key: `lapis-ore-outline`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`REDSTONE_ORE_OUTLINE`__
+    - Config Key: `redstone-ore-outline`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`EMERALD_ORE_OUTLINE`__
+    - Config Key: `emerald-ore-outline`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`COAL_ORE_OUTLINE`__
+    - Config Key: `coal-ore-outline`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`NETHER_QUARTZ_ORE_OUTLINE`__
+    - Config Key: `nether-quartz-ore-outline`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BARRIER_OUTLINES`__
+    - Config Key: `barrier-outlines`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BARRIER_OUTLINE_THICKNESS`__
+    - Config Key: `barrier-outline-thickness`
+    - Values
+        - Type: `Integer`
+        - Default: `1`
+        - Minimum: `1`
+        - Maximum: `3`
+
+- __`BARRIER_OUTLINE_COLOR`__
+    - Config Key: `barrier-outline-color`
+    - Values
+        - Type: `String`
+        - Default: `#BFFF0000`
+
+- __`COLORED_STRING`__
+    - Make strings/tripwires more visible by changing their color
+    - Config Key: `colored-string`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BOLD_STRING`__
+    - Fill in the transparent spots on the string texture
+    - Config Key: `bold-string`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`STRING_COLOR`__
+    - Config Key: `string-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF0000`
+
+- __`OVERRIDE_XP_ORB_COLOR`__
+    - Config Key: `override-xp-orb-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`XP_ORB_COLOR`__
+    - Config Key: `xp-orb-color`
+    - Values
+        - Type: `String`
+        - Default: `#80FFFFFF`
+
+- __`CUSTOM_FISHING_LINE`__
+    - Config Key: `custom-fishing-line`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`FISHING_LINE_THICKNESS`__
+    - Config Key: `fishing-line-thickness`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `3.0F`
+
+- __`FISHING_LINE_COLOR`__
+    - Config Key: `fishing-line-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF000000`
+
+- __`HEADLESS_HORSES`__
+    - Improve visibility when riding a horse
+    - Config Key: `headless-horses`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DISABLE_DEATH_ANIMATION`__
+    - Config Key: `disable-death-animation`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DISABLE_DAMAGE_OVERLAY`__
+    - Config Key: `disable-damage-overlay`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DISABLE_FIRE_OVERLAY`__
+    - Disable the rendering of the fire overlay when a mob or player is on fire.
+    - Config Key: `disable-fire-overlay`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_HELMET`__
+    - Config Key: `hide-helmet`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_CHEST`__
+    - Does not work on elytra.
+    - Config Key: `hide-chest`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_LEGGINGS`__
+    - Config Key: `hide-leggings`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_BOOTS`__
+    - Config Key: `hide-boots`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SELF_ONLY`__
+    - Disabling this allows you to hide armor slots for all entities.
+    - Config Key: `self-only`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

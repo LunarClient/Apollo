@@ -1,0 +1,170 @@
+# Markers
+
+Allows you and your team to mark things in the world, like in various FPS games.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleMarkersExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModMarkers.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`DING_VOLUME_SELF`__
+    - Config Key: `ding-volume-self`
+    - Values
+        - Type: `Float`
+        - Default: `0.5F`
+        - Minimum: `0.0F`
+        - Maximum: `1.0F`
+
+- __`DING_VOLUME_OTHERS`__
+    - Config Key: `ding-volume-others`
+    - Values
+        - Type: `Float`
+        - Default: `0.5F`
+        - Minimum: `0.0F`
+        - Maximum: `1.0F`
+
+- __`MIDDLE_CLICK_REMOVE`__
+    - Hit the middle mouse button while hovering over your marker to delete it.
+    - Config Key: `middle-click-remove`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`CHAT_NOTIFY`__
+    - Config Key: `chat-notify`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`LUNAR_NOTIFY`__
+    - Config Key: `lunar-notify`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TEAM_MEMBERS`__
+    - Try to detect your current team, and see and broadcast markers from and to members of your team.
+    - Config Key: `team-members`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SCOREBOARD_TEAMS`__
+    - Classic team detection which uses Minecraft's scoreboard teams.
+    - Config Key: `scoreboard-teams`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`APOLLO_TEAMS`__
+    - On supported servers, use our Apollo plugin for team detection.
+    - Config Key: `apollo-teams`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`COLOR_TEAMS`__
+    - Config Key: `color-teams`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HYPIXEL_PARTY`__
+    - See and broadcast markers from and to members of your Hypixel party.
+    - Config Key: `hypixel-party`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`LUNAR_FRIENDS`__
+    - See and broadcast markers from and to people on your Lunar friends list.
+    - Config Key: `lunar-friends`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SCALE`__
+    - Config Key: `scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `2.0F`
+
+- __`VISIBLE_DURATION`__
+    - Config Key: `visible-duration`
+    - Values
+        - Type: `Integer`
+        - Default: `20`
+        - Minimum: `5`
+        - Maximum: `120`
+
+- __`ANIMATE_MARKER`__
+    - Config Key: `animate-marker`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`COMPACT_MODE`__
+    - Config Key: `compact-mode`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TEXT_SHADOW`__
+    - Adds a shadow to text
+    - Config Key: `text-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BACKGROUND`__
+    - Config Key: `background`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BACKGROUND_COLOR`__
+    - Config Key: `background-color`
+    - Values
+        - Type: `String`
+        - Default: `#40000000`
+
+- __`MARKER_COLOR`__
+    - Config Key: `marker-color`
+    - Values
+        - Type: `String`
+        - Default: `#BEAEE1FC`
+
+- __`DANGER_MARKER_COLOR`__
+    - Config Key: `danger-marker-color`
+    - Values
+        - Type: `String`
+        - Default: `#BEFF4200`
+
+- __`INFO_MARKER_COLOR`__
+    - Config Key: `info-marker-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF349EEB`
+
+- __`INTEREST_MARKER_COLOR`__
+    - Config Key: `interest-marker-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFAA00`
+

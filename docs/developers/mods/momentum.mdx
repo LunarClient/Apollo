@@ -1,4 +1,4 @@
-# Momentum Mod
+# Momentum
 
 Shows your current velocity
 
@@ -7,7 +7,7 @@ Shows your current velocity
 ### How to toggle the mod
 
 ```java
-public void toggleMomentumModExample(Player viewer, boolean value) {
+public void toggleMomentumExample(Player viewer, boolean value) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModMomentum.ENABLED, value));
 }
