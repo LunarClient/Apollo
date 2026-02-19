@@ -49,7 +49,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> MAX_DISTANCE_TOGGLE = SimpleOption.<Boolean>builder()
         .node("hitbox", "max-distance-toggle").type(TypeToken.get(Boolean.class))
@@ -60,7 +60,7 @@ public final class ModHitbox {
     /**
      * Maximum distance away from the entity to show hitboxes at.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Integer> MAX_DISTANCE = NumberOption.<Integer>number()
         .comment("Maximum distance away from the entity to show hitboxes at")
@@ -208,7 +208,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_ITEM_FRAME_SHOW = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-item-frame-show").type(TypeToken.get(Boolean.class))
@@ -219,7 +219,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> HITBOX_ITEM_FRAME_LINE_WIDTH = NumberOption.<Float>number()
         .node("hitbox", "hitbox-item-frame-line-width").type(TypeToken.get(Float.class))
@@ -231,7 +231,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> HITBOX_ITEM_FRAME_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-item-frame-line-color").type(TypeToken.get(Color.class))
@@ -242,7 +242,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_ITEM_FRAME_LOOK_VECTOR = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-item-frame-look-vector").type(TypeToken.get(Boolean.class))
@@ -253,7 +253,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_FIREWORK_SHOW = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-firework-show").type(TypeToken.get(Boolean.class))
@@ -264,7 +264,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> HITBOX_FIREWORK_LINE_WIDTH = NumberOption.<Float>number()
         .node("hitbox", "hitbox-firework-line-width").type(TypeToken.get(Float.class))
@@ -276,7 +276,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> HITBOX_FIREWORK_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-firework-line-color").type(TypeToken.get(Color.class))
@@ -287,7 +287,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_FIREWORK_LOOK_VECTOR = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-firework-look-vector").type(TypeToken.get(Boolean.class))
@@ -298,7 +298,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_WITHER_SKULL_SHOW = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-wither-skull-show").type(TypeToken.get(Boolean.class))
@@ -309,7 +309,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> HITBOX_WITHER_SKULL_LINE_WIDTH = NumberOption.<Float>number()
         .node("hitbox", "hitbox-wither-skull-line-width").type(TypeToken.get(Float.class))
@@ -321,7 +321,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> HITBOX_WITHER_SKULL_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-wither-skull-line-color").type(TypeToken.get(Color.class))
@@ -332,7 +332,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_WITHER_SKULL_LOOK_VECTOR = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-wither-skull-look-vector").type(TypeToken.get(Boolean.class))
@@ -343,7 +343,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_SNOWBALL_SHOW = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-snowball-show").type(TypeToken.get(Boolean.class))
@@ -354,7 +354,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> HITBOX_SNOWBALL_LINE_WIDTH = NumberOption.<Float>number()
         .node("hitbox", "hitbox-snowball-line-width").type(TypeToken.get(Float.class))
@@ -366,7 +366,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> HITBOX_SNOWBALL_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-snowball-line-color").type(TypeToken.get(Color.class))
@@ -377,7 +377,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_SNOWBALL_LOOK_VECTOR = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-snowball-look-vector").type(TypeToken.get(Boolean.class))
@@ -388,7 +388,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_FIREBALL_SHOW = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-fireball-show").type(TypeToken.get(Boolean.class))
@@ -399,7 +399,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> HITBOX_FIREBALL_LINE_WIDTH = NumberOption.<Float>number()
         .node("hitbox", "hitbox-fireball-line-width").type(TypeToken.get(Float.class))
@@ -411,7 +411,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> HITBOX_FIREBALL_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-fireball-line-color").type(TypeToken.get(Color.class))
@@ -422,7 +422,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_FIREBALL_LOOK_VECTOR = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-fireball-look-vector").type(TypeToken.get(Boolean.class))
@@ -433,7 +433,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_ARROW_SHOW = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-arrow-show").type(TypeToken.get(Boolean.class))
@@ -444,7 +444,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> HITBOX_ARROW_LINE_WIDTH = NumberOption.<Float>number()
         .node("hitbox", "hitbox-arrow-line-width").type(TypeToken.get(Float.class))
@@ -456,7 +456,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> HITBOX_ARROW_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-arrow-line-color").type(TypeToken.get(Color.class))
@@ -467,7 +467,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_ARROW_LOOK_VECTOR = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-arrow-look-vector").type(TypeToken.get(Boolean.class))
@@ -523,7 +523,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_MONSTER_SHOW = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-monster-show").type(TypeToken.get(Boolean.class))
@@ -534,7 +534,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> HITBOX_MONSTER_LINE_WIDTH = NumberOption.<Float>number()
         .node("hitbox", "hitbox-monster-line-width").type(TypeToken.get(Float.class))
@@ -546,7 +546,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> HITBOX_MONSTER_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-monster-line-color").type(TypeToken.get(Color.class))
@@ -557,7 +557,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_MONSTER_LOOK_VECTOR = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-monster-look-vector").type(TypeToken.get(Boolean.class))
@@ -568,7 +568,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_PASSIVE_SHOW = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-passive-show").type(TypeToken.get(Boolean.class))
@@ -579,7 +579,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> HITBOX_PASSIVE_LINE_WIDTH = NumberOption.<Float>number()
         .node("hitbox", "hitbox-passive-line-width").type(TypeToken.get(Float.class))
@@ -591,7 +591,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> HITBOX_PASSIVE_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-passive-line-color").type(TypeToken.get(Color.class))
@@ -602,7 +602,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_PASSIVE_LOOK_VECTOR = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-passive-look-vector").type(TypeToken.get(Boolean.class))
@@ -613,7 +613,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_OTHER_SHOW = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-other-show").type(TypeToken.get(Boolean.class))
@@ -624,7 +624,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> HITBOX_OTHER_LINE_WIDTH = NumberOption.<Float>number()
         .node("hitbox", "hitbox-other-line-width").type(TypeToken.get(Float.class))
@@ -636,7 +636,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> HITBOX_OTHER_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-other-line-color").type(TypeToken.get(Color.class))
@@ -647,7 +647,7 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_OTHER_LOOK_VECTOR = SimpleOption.<Boolean>builder()
         .node("hitbox", "hitbox-other-look-vector").type(TypeToken.get(Boolean.class))

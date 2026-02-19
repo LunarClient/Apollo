@@ -80,7 +80,7 @@ public final class ModNickHider {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> CUSTOM_SUFFIX = SimpleOption.<Boolean>builder()
         .node("nick-hider", "custom-suffix").type(TypeToken.get(Boolean.class))
@@ -91,7 +91,7 @@ public final class ModNickHider {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HIDE_LOBBY_ID = SimpleOption.<Boolean>builder()
         .node("nick-hider", "hide-lobby-i-d").type(TypeToken.get(Boolean.class))

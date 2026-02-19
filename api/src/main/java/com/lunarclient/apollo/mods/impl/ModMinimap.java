@@ -108,7 +108,7 @@ public final class ModMinimap {
     /**
      * With this enabled, the info text is scaled down to the width of the minimap.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> FIT_TEXT_TO_WIDTH = SimpleOption.<Boolean>builder()
         .comment("With this enabled, the info text is scaled down to the width of the minimap")
@@ -256,7 +256,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SHOW_BIOME = SimpleOption.<Boolean>builder()
         .node("minimap", "show-biome").type(TypeToken.get(Boolean.class))
@@ -267,7 +267,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> PRESET_BIOME_COLOR = SimpleOption.<Boolean>builder()
         .node("minimap", "preset-biome-color").type(TypeToken.get(Boolean.class))
@@ -278,7 +278,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SHOW_CLOCK = SimpleOption.<Boolean>builder()
         .node("minimap", "show-clock").type(TypeToken.get(Boolean.class))
@@ -289,7 +289,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SHOW_AM_PM = SimpleOption.<Boolean>builder()
         .node("minimap", "show-am-pm").type(TypeToken.get(Boolean.class))
@@ -300,7 +300,7 @@ public final class ModMinimap {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> MILITARY_TIME = SimpleOption.<Boolean>builder()
         .node("minimap", "military-time").type(TypeToken.get(Boolean.class))

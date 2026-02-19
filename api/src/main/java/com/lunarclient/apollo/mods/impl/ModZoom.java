@@ -96,7 +96,7 @@ public final class ModZoom {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> ZOOM_SCROLL_SPEED = NumberOption.<Float>number()
         .node("zoom", "zoom-scroll-speed").type(TypeToken.get(Float.class))

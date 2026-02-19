@@ -61,7 +61,7 @@ public final class ModItemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> CHILD_SCALE = NumberOption.<Float>number()
         .node("item-counter", "child-scale").type(TypeToken.get(Float.class))
@@ -73,7 +73,7 @@ public final class ModItemCounter {
     /**
      * Grouped mode takes the existing item counters and groups them together into a single box.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> ITEM_COUNTER_GROUPED = SimpleOption.<Boolean>builder()
         .comment("Grouped mode takes the existing item counters and groups them together into a single box")
@@ -85,7 +85,7 @@ public final class ModItemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("item-counter", "background").type(TypeToken.get(Boolean.class))
@@ -96,7 +96,7 @@ public final class ModItemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("item-counter", "border").type(TypeToken.get(Boolean.class))
@@ -107,7 +107,7 @@ public final class ModItemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("item-counter", "background-color").type(TypeToken.get(Color.class))
@@ -118,7 +118,7 @@ public final class ModItemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("item-counter", "border-color").type(TypeToken.get(Color.class))
@@ -129,7 +129,7 @@ public final class ModItemCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("item-counter", "border-thickness").type(TypeToken.get(Float.class))

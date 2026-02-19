@@ -30,14 +30,14 @@ import java.awt.Color;
 /**
  * Some QoL features for Minecraft shields.
  *
- * @since %release_version%
+ * @since 1.2.2
  */
 public final class ModShields {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("shields", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModShields {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> ENABLE_SHIELD_COLORS = SimpleOption.<Boolean>builder()
         .node("shields", "enable-shield-colors").type(TypeToken.get(Boolean.class))
@@ -59,7 +59,7 @@ public final class ModShields {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> SHIELD_ACTIVE_COLOR = SimpleOption.<Color>builder()
         .node("shields", "shield-active-color").type(TypeToken.get(Color.class))
@@ -70,7 +70,7 @@ public final class ModShields {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> SHIELD_INACTIVE_COLOR = SimpleOption.<Color>builder()
         .node("shields", "shield-inactive-color").type(TypeToken.get(Color.class))
@@ -81,7 +81,7 @@ public final class ModShields {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> ANIMATE_COLOR_TRANSITION = SimpleOption.<Boolean>builder()
         .node("shields", "animate-color-transition").type(TypeToken.get(Boolean.class))
@@ -92,7 +92,7 @@ public final class ModShields {
     /**
      * Always play a sound whenever a player's shield goes inactive.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SHIELD_INACTIVE_SOUND = SimpleOption.<Boolean>builder()
         .comment("Always play a sound whenever a player's shield goes inactive.")
@@ -104,7 +104,7 @@ public final class ModShields {
     /**
      * Always play a sound whenever a player's shield is damaged by any source.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SHIELD_USE_SOUND = SimpleOption.<Boolean>builder()
         .comment("Always play a sound whenever a player's shield is damaged by any source.")
@@ -116,7 +116,7 @@ public final class ModShields {
     /**
      * Ignore the 5 tick deactivation period when a shield is hit with any item other than the axe.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> IGNORE_5TICKS = SimpleOption.<Boolean>builder()
         .comment("Ignore the 5 tick deactivation period when a shield is hit with any item other than the axe.")
@@ -128,7 +128,7 @@ public final class ModShields {
     /**
      * Fix the bug where shields don't show as blocking sometimes, even though the player is blocking.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> BETTER_BLOCKING = SimpleOption.<Boolean>builder()
         .comment("Fix the bug where shields don't show as blocking sometimes, even though the player is blocking.")

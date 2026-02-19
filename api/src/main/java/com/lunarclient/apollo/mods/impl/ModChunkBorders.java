@@ -49,7 +49,7 @@ public final class ModChunkBorders {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> GRID = SimpleOption.<Boolean>builder()
         .node("chunk-borders", "grid").type(TypeToken.get(Boolean.class))
@@ -60,7 +60,7 @@ public final class ModChunkBorders {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> GRID_SIZE = NumberOption.<Float>number()
         .node("chunk-borders", "grid-size").type(TypeToken.get(Float.class))
@@ -72,7 +72,7 @@ public final class ModChunkBorders {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> GRID_LINE_THICKNESS = NumberOption.<Float>number()
         .node("chunk-borders", "grid-line-thickness").type(TypeToken.get(Float.class))
@@ -95,7 +95,7 @@ public final class ModChunkBorders {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> INNER_CORNERS = SimpleOption.<Boolean>builder()
         .node("chunk-borders", "inner-corners").type(TypeToken.get(Boolean.class))
@@ -106,7 +106,7 @@ public final class ModChunkBorders {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> INNER_CORNER_THICKNESS = NumberOption.<Float>number()
         .node("chunk-borders", "inner-corner-thickness").type(TypeToken.get(Float.class))
@@ -129,7 +129,7 @@ public final class ModChunkBorders {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> OUTER_CORNERS = SimpleOption.<Boolean>builder()
         .node("chunk-borders", "outer-corners").type(TypeToken.get(Boolean.class))
@@ -140,7 +140,7 @@ public final class ModChunkBorders {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> OUTER_CORNER_THICKNESS = NumberOption.<Float>number()
         .node("chunk-borders", "outer-corner-thickness").type(TypeToken.get(Float.class))

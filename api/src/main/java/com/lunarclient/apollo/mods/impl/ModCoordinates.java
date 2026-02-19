@@ -118,7 +118,7 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> DECIMAL_COORDINATES = SimpleOption.<Boolean>builder()
         .node("coordinates", "decimal-coordinates").type(TypeToken.get(Boolean.class))

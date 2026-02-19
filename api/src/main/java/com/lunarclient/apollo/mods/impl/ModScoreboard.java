@@ -129,7 +129,7 @@ public final class ModScoreboard {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> HEADER_COLOR = SimpleOption.<Color>builder()
         .node("scoreboard", "header-color").type(TypeToken.get(Color.class))

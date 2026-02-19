@@ -72,7 +72,7 @@ public final class ModFov {
     /**
      * Smooth transition for the custom dynamic fov values. This does not affect the vanilla FOVs, only custom FOV values.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SMOOTH_FOV = SimpleOption.<Boolean>builder()
         .comment("Smooth transition for the custom dynamic fov values. This does not affect the vanilla FOVs, only custom FOV values.")
@@ -84,7 +84,7 @@ public final class ModFov {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> DYNAMIC_BOW = SimpleOption.<Boolean>builder()
         .node("fov", "dynamic-bow").type(TypeToken.get(Boolean.class))
@@ -131,7 +131,7 @@ public final class ModFov {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> DYNAMIC_EFFECTS = SimpleOption.<Boolean>builder()
         .node("fov", "dynamic-effects").type(TypeToken.get(Boolean.class))
@@ -214,7 +214,7 @@ public final class ModFov {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> DYNAMIC_SPRINT = SimpleOption.<Boolean>builder()
         .node("fov", "dynamic-sprint").type(TypeToken.get(Boolean.class))
@@ -273,7 +273,7 @@ public final class ModFov {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> DYNAMIC_FLYING = SimpleOption.<Boolean>builder()
         .node("fov", "dynamic-flying").type(TypeToken.get(Boolean.class))

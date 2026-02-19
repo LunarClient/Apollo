@@ -221,7 +221,7 @@ public final class ModChat {
     /**
      * Allows you to simply right click a chat message to copy it, no keybind.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> COPY_CHAT_RIGHT_CLICK = SimpleOption.<Boolean>builder()
         .comment("Allows you to simply right click a chat message to copy it, no keybind")

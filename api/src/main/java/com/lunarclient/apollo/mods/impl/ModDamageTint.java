@@ -98,7 +98,7 @@ public final class ModDamageTint {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> HEARTBEAT_AUDIO_VOLUME = NumberOption.<Float>number()
         .node("damage-tint", "heartbeat-audio-volume").type(TypeToken.get(Float.class))

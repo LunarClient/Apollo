@@ -49,7 +49,7 @@ public final class ModParticleChanger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SHOW_BLOOD_PARTICLES = SimpleOption.<Boolean>builder()
         .node("particle-changer", "show-blood-particles").type(TypeToken.get(Boolean.class))
@@ -60,7 +60,7 @@ public final class ModParticleChanger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Integer> BLOOD_MULTIPLIER = NumberOption.<Integer>number()
         .node("particle-changer", "blood-multiplier").type(TypeToken.get(Integer.class))
@@ -72,7 +72,7 @@ public final class ModParticleChanger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> PLAYER_BLOOD_PARTICLES = SimpleOption.<Boolean>builder()
         .node("particle-changer", "player-blood-particles").type(TypeToken.get(Boolean.class))
@@ -83,7 +83,7 @@ public final class ModParticleChanger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> ENTITY_BLOOD_PARTICLES = SimpleOption.<Boolean>builder()
         .node("particle-changer", "entity-blood-particles").type(TypeToken.get(Boolean.class))
@@ -94,7 +94,7 @@ public final class ModParticleChanger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> PLAY_BLOOD_SOUND = SimpleOption.<Boolean>builder()
         .node("particle-changer", "play-blood-sound").type(TypeToken.get(Boolean.class))
@@ -139,7 +139,7 @@ public final class ModParticleChanger {
     /**
      * Simple toggle for clean game rendering. This may cause issues with certain server mechanics being more challenging to see!.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HIDE_ALL_PARTICLES = SimpleOption.<Boolean>builder()
         .comment("Simple toggle for clean game rendering. This may cause issues with certain server mechanics being more challenging to see!")

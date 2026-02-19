@@ -61,7 +61,7 @@ public final class ModFps {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> REVERSE_ORDER = SimpleOption.<Boolean>builder()
         .node("fps", "reverse-order").type(TypeToken.get(Boolean.class))

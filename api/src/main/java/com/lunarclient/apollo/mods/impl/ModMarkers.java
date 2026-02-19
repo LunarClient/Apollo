@@ -31,14 +31,14 @@ import java.awt.Color;
 /**
  * Allows you and your team to mark things in the world, like in various FPS games.
  *
- * @since %release_version%
+ * @since 1.2.2
  */
 public final class ModMarkers {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("markers", "enabled").type(TypeToken.get(Boolean.class))
@@ -49,7 +49,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> DING_VOLUME_SELF = NumberOption.<Float>number()
         .node("markers", "ding-volume-self").type(TypeToken.get(Float.class))
@@ -61,7 +61,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> DING_VOLUME_OTHERS = NumberOption.<Float>number()
         .node("markers", "ding-volume-others").type(TypeToken.get(Float.class))
@@ -73,7 +73,7 @@ public final class ModMarkers {
     /**
      * Hit the middle mouse button while hovering over your marker to delete it.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> MIDDLE_CLICK_REMOVE = SimpleOption.<Boolean>builder()
         .comment("Hit the middle mouse button while hovering over your marker to delete it.")
@@ -85,7 +85,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> CHAT_NOTIFY = SimpleOption.<Boolean>builder()
         .node("markers", "chat-notify").type(TypeToken.get(Boolean.class))
@@ -96,7 +96,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> LUNAR_NOTIFY = SimpleOption.<Boolean>builder()
         .node("markers", "lunar-notify").type(TypeToken.get(Boolean.class))
@@ -107,7 +107,7 @@ public final class ModMarkers {
     /**
      * Try to detect your current team, and see and broadcast markers from and to members of your team.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> TEAM_MEMBERS = SimpleOption.<Boolean>builder()
         .comment("Try to detect your current team, and see and broadcast markers from and to members of your team.")
@@ -119,7 +119,7 @@ public final class ModMarkers {
     /**
      * Classic team detection which uses Minecraft's scoreboard teams.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SCOREBOARD_TEAMS = SimpleOption.<Boolean>builder()
         .comment("Classic team detection which uses Minecraft's scoreboard teams.")
@@ -131,7 +131,7 @@ public final class ModMarkers {
     /**
      * On supported servers, use our Apollo plugin for team detection.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> APOLLO_TEAMS = SimpleOption.<Boolean>builder()
         .comment("On supported servers, use our Apollo plugin for team detection.")
@@ -143,7 +143,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> COLOR_TEAMS = SimpleOption.<Boolean>builder()
         .node("markers", "color-teams").type(TypeToken.get(Boolean.class))
@@ -154,7 +154,7 @@ public final class ModMarkers {
     /**
      * See and broadcast markers from and to members of your Hypixel party.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HYPIXEL_PARTY = SimpleOption.<Boolean>builder()
         .comment("See and broadcast markers from and to members of your Hypixel party.")
@@ -166,7 +166,7 @@ public final class ModMarkers {
     /**
      * See and broadcast markers from and to people on your Lunar friends list.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> LUNAR_FRIENDS = SimpleOption.<Boolean>builder()
         .comment("See and broadcast markers from and to people on your Lunar friends list.")
@@ -178,7 +178,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("markers", "scale").type(TypeToken.get(Float.class))
@@ -190,7 +190,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Integer> VISIBLE_DURATION = NumberOption.<Integer>number()
         .node("markers", "visible-duration").type(TypeToken.get(Integer.class))
@@ -202,7 +202,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> ANIMATE_MARKER = SimpleOption.<Boolean>builder()
         .node("markers", "animate-marker").type(TypeToken.get(Boolean.class))
@@ -213,7 +213,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> COMPACT_MODE = SimpleOption.<Boolean>builder()
         .node("markers", "compact-mode").type(TypeToken.get(Boolean.class))
@@ -224,7 +224,7 @@ public final class ModMarkers {
     /**
      * Adds a shadow to text.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .comment("Adds a shadow to text")
@@ -236,7 +236,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("markers", "background").type(TypeToken.get(Boolean.class))
@@ -247,7 +247,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("markers", "background-color").type(TypeToken.get(Color.class))
@@ -258,7 +258,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> MARKER_COLOR = SimpleOption.<Color>builder()
         .node("markers", "marker-color").type(TypeToken.get(Color.class))
@@ -269,7 +269,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> DANGER_MARKER_COLOR = SimpleOption.<Color>builder()
         .node("markers", "danger-marker-color").type(TypeToken.get(Color.class))
@@ -280,7 +280,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> INFO_MARKER_COLOR = SimpleOption.<Color>builder()
         .node("markers", "info-marker-color").type(TypeToken.get(Color.class))
@@ -291,7 +291,7 @@ public final class ModMarkers {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> INTEREST_MARKER_COLOR = SimpleOption.<Color>builder()
         .node("markers", "interest-marker-color").type(TypeToken.get(Color.class))

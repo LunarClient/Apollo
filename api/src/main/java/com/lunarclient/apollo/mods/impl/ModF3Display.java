@@ -31,14 +31,14 @@ import java.awt.Color;
 /**
  * Allows you to move and customize the F3 Debug Screen.
  *
- * @since %release_version%
+ * @since 1.2.2
  */
 public final class ModF3Display {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("f3-display", "enabled").type(TypeToken.get(Boolean.class))
@@ -49,7 +49,7 @@ public final class ModF3Display {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Double> ENTER_ANIMATION_DURATION = NumberOption.<Double>number()
         .node("f3-display", "enter-animation-duration").type(TypeToken.get(Double.class))
@@ -61,7 +61,7 @@ public final class ModF3Display {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final NumberOption<Double> EXIT_ANIMATION_DURATION = NumberOption.<Double>number()
         .node("f3-display", "exit-animation-duration").type(TypeToken.get(Double.class))
@@ -73,7 +73,7 @@ public final class ModF3Display {
     /**
      * Hides the hud previews in the edit hud layout menu if you don't have F3 toggled.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> ONLY_MOVERS_IN_F3 = SimpleOption.<Boolean>builder()
         .comment("Hides the hud previews in the edit hud layout menu if you don't have F3 toggled.")
@@ -85,7 +85,7 @@ public final class ModF3Display {
     /**
      * Adds a shadow to text.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .comment("Adds a shadow to text")
@@ -97,7 +97,7 @@ public final class ModF3Display {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("f3-display", "background").type(TypeToken.get(Boolean.class))
@@ -108,7 +108,7 @@ public final class ModF3Display {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("f3-display", "background-color").type(TypeToken.get(Color.class))
@@ -119,7 +119,7 @@ public final class ModF3Display {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> LABEL_COLOR = SimpleOption.<Color>builder()
         .node("f3-display", "label-color").type(TypeToken.get(Color.class))
@@ -130,7 +130,7 @@ public final class ModF3Display {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Color> VALUE_COLOR = SimpleOption.<Color>builder()
         .node("f3-display", "value-color").type(TypeToken.get(Color.class))

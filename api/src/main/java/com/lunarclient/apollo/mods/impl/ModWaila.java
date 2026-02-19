@@ -94,7 +94,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SHOW_SPRAYS = SimpleOption.<Boolean>builder()
         .node("waila", "show-sprays").type(TypeToken.get(Boolean.class))
@@ -105,7 +105,7 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SHOW_COMPANIONS = SimpleOption.<Boolean>builder()
         .node("waila", "show-companions").type(TypeToken.get(Boolean.class))

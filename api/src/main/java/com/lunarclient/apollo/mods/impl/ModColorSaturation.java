@@ -96,7 +96,7 @@ public final class ModColorSaturation {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> GRAYSCALE = SimpleOption.<Boolean>builder()
         .node("color-saturation", "grayscale").type(TypeToken.get(Boolean.class))

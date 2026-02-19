@@ -165,7 +165,7 @@ public final class ModDirectionHud {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SHOW_WAYPOINTS = SimpleOption.<Boolean>builder()
         .node("direction-hud", "show-waypoints").type(TypeToken.get(Boolean.class))
@@ -176,7 +176,7 @@ public final class ModDirectionHud {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SHOW_TEAMMATES = SimpleOption.<Boolean>builder()
         .node("direction-hud", "show-teammates").type(TypeToken.get(Boolean.class))
@@ -187,7 +187,7 @@ public final class ModDirectionHud {
     /**
      * Show markers from the Markers Mod.
      *
-     * @since %release_version%
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> SHOW_EXTERNAL_MARKERS = SimpleOption.<Boolean>builder()
         .comment("Show markers from the Markers Mod.")
