@@ -49,6 +49,62 @@ public final class ModParticleChanger {
     /**
      * No documentation available.
      *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> SHOW_BLOOD_PARTICLES = SimpleOption.<Boolean>builder()
+        .node("particle-changer", "show-blood-particles").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final NumberOption<Integer> BLOOD_MULTIPLIER = NumberOption.<Integer>number()
+        .node("particle-changer", "blood-multiplier").type(TypeToken.get(Integer.class))
+        .min(1).max(10)
+        .defaultValue(1)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> PLAYER_BLOOD_PARTICLES = SimpleOption.<Boolean>builder()
+        .node("particle-changer", "player-blood-particles").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> ENTITY_BLOOD_PARTICLES = SimpleOption.<Boolean>builder()
+        .node("particle-changer", "entity-blood-particles").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> PLAY_BLOOD_SOUND = SimpleOption.<Boolean>builder()
+        .node("particle-changer", "play-blood-sound").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> ALWAYS_ENCHANT_STRIKES = SimpleOption.<Boolean>builder()
@@ -76,6 +132,18 @@ public final class ModParticleChanger {
     public static final SimpleOption<Boolean> HIDE_FIRST_PERSON_PARTICLES = SimpleOption.<Boolean>builder()
         .comment("Hide your players potion effect particles when you're in first person")
         .node("particle-changer", "hide-first-person-particles").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Simple toggle for clean game rendering. This may cause issues with certain server mechanics being more challenging to see!.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> HIDE_ALL_PARTICLES = SimpleOption.<Boolean>builder()
+        .comment("Simple toggle for clean game rendering. This may cause issues with certain server mechanics being more challenging to see!")
+        .node("particle-changer", "hide-all-particles").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();

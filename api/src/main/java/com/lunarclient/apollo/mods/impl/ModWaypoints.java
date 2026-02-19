@@ -58,6 +58,18 @@ public final class ModWaypoints {
         .build();
 
     /**
+     * Ask for confirmation before deleting a waypoint through the UI.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> CONFIRM_DELETE = SimpleOption.<Boolean>builder()
+        .comment("Ask for confirmation before deleting a waypoint through the UI")
+        .node("waypoints", "confirm-delete").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
      * Automatically create a waypoint when you die.
      *
      * @since 1.0.0

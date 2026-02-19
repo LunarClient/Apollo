@@ -94,6 +94,18 @@ public final class ModZoom {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final NumberOption<Float> ZOOM_SCROLL_SPEED = NumberOption.<Float>number()
+        .node("zoom", "zoom-scroll-speed").type(TypeToken.get(Float.class))
+        .min(0.25F).max(5.0F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
      * Change the initial zoom depth.
      *
      * @since 1.0.0

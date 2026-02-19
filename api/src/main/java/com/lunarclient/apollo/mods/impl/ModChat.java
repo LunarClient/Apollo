@@ -219,6 +219,18 @@ public final class ModChat {
         .build();
 
     /**
+     * Allows you to simply right click a chat message to copy it, no keybind.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> COPY_CHAT_RIGHT_CLICK = SimpleOption.<Boolean>builder()
+        .comment("Allows you to simply right click a chat message to copy it, no keybind")
+        .node("chat", "copy-chat-right-click").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
      * Displays a preview of an image when hovering over it.If a single message has more than one image, press CTRL to cycle through them.
      *
      * @since 1.1.3

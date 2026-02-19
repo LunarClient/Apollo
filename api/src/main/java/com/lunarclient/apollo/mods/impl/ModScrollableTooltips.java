@@ -93,6 +93,18 @@ public final class ModScrollableTooltips {
         .build();
 
     /**
+     * Instead of moving the tooltip vertically, hide lines when scrolling.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> LINE_SHIFT_MODE = SimpleOption.<Boolean>builder()
+        .comment("Instead of moving the tooltip vertically, hide lines when scrolling.")
+        .node("scrollable-tooltips", "line-shift-mode").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.0.0

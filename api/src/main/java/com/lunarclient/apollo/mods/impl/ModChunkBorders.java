@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
+import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
@@ -48,6 +49,41 @@ public final class ModChunkBorders {
     /**
      * No documentation available.
      *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> GRID = SimpleOption.<Boolean>builder()
+        .node("chunk-borders", "grid").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final NumberOption<Float> GRID_SIZE = NumberOption.<Float>number()
+        .node("chunk-borders", "grid-size").type(TypeToken.get(Float.class))
+        .min(1.0F).max(5.0F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final NumberOption<Float> GRID_LINE_THICKNESS = NumberOption.<Float>number()
+        .node("chunk-borders", "grid-line-thickness").type(TypeToken.get(Float.class))
+        .min(1.0F).max(5.0F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Color> GRID_COLOR = SimpleOption.<Color>builder()
@@ -59,11 +95,57 @@ public final class ModChunkBorders {
     /**
      * No documentation available.
      *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> INNER_CORNERS = SimpleOption.<Boolean>builder()
+        .node("chunk-borders", "inner-corners").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final NumberOption<Float> INNER_CORNER_THICKNESS = NumberOption.<Float>number()
+        .node("chunk-borders", "inner-corner-thickness").type(TypeToken.get(Float.class))
+        .min(1.0F).max(5.0F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Color> INNER_CHUNK_CORNER_COLOR = SimpleOption.<Color>builder()
         .node("chunk-borders", "inner-chunk-corner-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(0, 0, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> OUTER_CORNERS = SimpleOption.<Boolean>builder()
+        .node("chunk-borders", "outer-corners").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final NumberOption<Float> OUTER_CORNER_THICKNESS = NumberOption.<Float>number()
+        .node("chunk-borders", "outer-corner-thickness").type(TypeToken.get(Float.class))
+        .min(1.0F).max(5.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 

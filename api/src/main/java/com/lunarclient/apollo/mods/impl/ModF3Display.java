@@ -29,100 +29,20 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Allows you to hide, move, or customize the Minecraft scoreboard.
+ * Allows you to move and customize the F3 Debug Screen.
  *
- * @since 1.0.0
+ * @since 1.2.2
  */
-public final class ModScoreboard {
+public final class ModF3Display {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.2.2
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("scoreboard", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
-        .node("scoreboard", "scale").type(TypeToken.get(Float.class))
-        .min(0.25F).max(5.0F)
-        .defaultValue(1.0F)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> NUMBERS = SimpleOption.<Boolean>builder()
-        .node("scoreboard", "numbers").type(TypeToken.get(Boolean.class))
+        .node("f3-display", "enabled").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.5
-     */
-    public static final SimpleOption<Boolean> HIDE_SCOREBOARD = SimpleOption.<Boolean>builder()
-        .node("scoreboard", "hide-scoreboard").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Adds a shadow to text.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
-        .comment("Adds a shadow to text")
-        .node("scoreboard", "text-shadow").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
-        .node("scoreboard", "border-thickness").type(TypeToken.get(Float.class))
-        .min(0.5F).max(3.0F)
-        .defaultValue(0.5F)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
-        .node("scoreboard", "border").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
-        .node("scoreboard", "background-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(0, 0, 0, 80))
         .notifyClient()
         .build();
 
@@ -131,24 +51,94 @@ public final class ModScoreboard {
      *
      * @since 1.2.2
      */
-    public static final SimpleOption<Color> HEADER_COLOR = SimpleOption.<Color>builder()
-        .node("scoreboard", "header-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(0, 0, 0, 80))
+    public static final NumberOption<Double> ENTER_ANIMATION_DURATION = NumberOption.<Double>number()
+        .node("f3-display", "enter-animation-duration").type(TypeToken.get(Double.class))
+        .min(0.0D).max(1.0D)
+        .defaultValue(0.25D)
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.2.2
      */
-    public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
-        .node("scoreboard", "border-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(0, 0, 0, 159))
+    public static final NumberOption<Double> EXIT_ANIMATION_DURATION = NumberOption.<Double>number()
+        .node("f3-display", "exit-animation-duration").type(TypeToken.get(Double.class))
+        .min(0.0D).max(1.0D)
+        .defaultValue(0.05D)
         .notifyClient()
         .build();
 
-    private ModScoreboard() {
+    /**
+     * Hides the hud previews in the edit hud layout menu if you don't have F3 toggled.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> ONLY_MOVERS_IN_F3 = SimpleOption.<Boolean>builder()
+        .comment("Hides the hud previews in the edit hud layout menu if you don't have F3 toggled.")
+        .node("f3-display", "only-movers-in-f3").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Adds a shadow to text.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
+        .node("f3-display", "text-shadow").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
+        .node("f3-display", "background").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
+        .node("f3-display", "background-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 85))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Color> LABEL_COLOR = SimpleOption.<Color>builder()
+        .node("f3-display", "label-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Color> VALUE_COLOR = SimpleOption.<Color>builder()
+        .node("f3-display", "value-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    private ModF3Display() {
     }
 
 }

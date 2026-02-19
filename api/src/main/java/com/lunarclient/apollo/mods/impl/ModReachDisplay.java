@@ -59,6 +59,50 @@ public final class ModReachDisplay {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> REVERSE_ORDER = SimpleOption.<Boolean>builder()
+        .node("reach-display", "reverse-order").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> HIDE_ZERO = SimpleOption.<Boolean>builder()
+        .node("reach-display", "hide-zero").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> HIGHLIGHT_ATTACKABLE_PLAYERS = SimpleOption.<Boolean>builder()
+        .node("reach-display", "highlight-attackable-players").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Color> HIGHLIGHT_COLOR = SimpleOption.<Color>builder()
+        .node("reach-display", "highlight-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0, 77))
+        .notifyClient()
+        .build();
+
+    /**
      * Adds a shadow to text.
      *
      * @since 1.0.0
