@@ -25,22 +25,23 @@ package com.lunarclient.apollo.event.packetenrichment.world;
 
 import com.lunarclient.apollo.event.Event;
 import com.lunarclient.apollo.module.packetenrichment.PlayerInfo;
+import com.lunarclient.apollo.module.packetenrichment.raytrace.RayTraceResult;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import lombok.Value;
 
 /**
- * Represents an event that is fired when a player uses an item (1.16.1+).
+ * Represents an event that is fired when a player uses a bucket (1.7 and 1.8).
  *
- * @since 1.0.7
+ * @since 1.2.2
  */
 @Value
-public class ApolloPlayerUseItemEvent implements Event {
+public class ApolloPlayerUseItemBucketEvent implements Event {
 
     /**
      * The player that sent the packet.
      *
      * @return the player
-     * @since 1.1.9
+     * @since 1.2.2
      */
     ApolloPlayer player;
 
@@ -49,7 +50,7 @@ public class ApolloPlayerUseItemEvent implements Event {
      * when the packet was created.
      *
      * @return the unix timestamp
-     * @since 1.0.7
+     * @since 1.2.2
      */
     long instantiationTimeMs;
 
@@ -57,16 +58,16 @@ public class ApolloPlayerUseItemEvent implements Event {
      * The player's {@link PlayerInfo} information.
      *
      * @return the player info
-     * @since 1.0.7
+     * @since 1.2.2
      */
     PlayerInfo playerInfo;
 
     /**
-     * Whether {@code boolean} the used item is in the main hand.
+     * The result of the client's {@link RayTraceResult} for this bucket interaction.
      *
-     * @return the main hand
-     * @since 1.0.7
+     * @return the ray trace result
+     * @since 1.2.2
      */
-    boolean mainHand;
+    RayTraceResult rayTraceResult;
 
 }

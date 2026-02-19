@@ -21,52 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.event.packetenrichment.world;
-
-import com.lunarclient.apollo.event.Event;
-import com.lunarclient.apollo.module.packetenrichment.PlayerInfo;
-import com.lunarclient.apollo.player.ApolloPlayer;
-import lombok.Value;
+package com.lunarclient.apollo.module.packetenrichment.raytrace;
 
 /**
- * Represents an event that is fired when a player uses an item (1.16.1+).
+ * Represents a direction in which a block was hit.
  *
- * @since 1.0.7
+ * @since 1.2.2
  */
-@Value
-public class ApolloPlayerUseItemEvent implements Event {
-
-    /**
-     * The player that sent the packet.
-     *
-     * @return the player
-     * @since 1.1.9
-     */
-    ApolloPlayer player;
-
-    /**
-     * The {@code long} representing the unix timestamp
-     * when the packet was created.
-     *
-     * @return the unix timestamp
-     * @since 1.0.7
-     */
-    long instantiationTimeMs;
-
-    /**
-     * The player's {@link PlayerInfo} information.
-     *
-     * @return the player info
-     * @since 1.0.7
-     */
-    PlayerInfo playerInfo;
-
-    /**
-     * Whether {@code boolean} the used item is in the main hand.
-     *
-     * @return the main hand
-     * @since 1.0.7
-     */
-    boolean mainHand;
-
+public enum Direction {
+    DOWN,
+    UP,
+    NORTH,
+    SOUTH,
+    WEST,
+    EAST
 }
