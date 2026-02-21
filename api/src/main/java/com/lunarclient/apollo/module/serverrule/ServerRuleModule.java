@@ -165,6 +165,16 @@ public final class ServerRuleModule extends ApolloModule {
         .node("max-chat-length").type(TypeToken.get(Integer.class))
         .defaultValue(256).min(1).max(256).notifyClient().build();
 
+    /**
+     * Whether to enable crystal optimizer.
+     *
+     * @since 1.2.3
+     */
+    public static final SimpleOption<Boolean> CRYSTAL_OPTIMIZER = Option.<Boolean>builder()
+        .comment("Set to 'true' to enable the crystal optimizer, otherwise 'false'.")
+        .node("crystal-optimizer").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
     ServerRuleModule() {
         this.registerOptions(
             ServerRuleModule.COMPETITIVE_GAME,
@@ -178,7 +188,8 @@ public final class ServerRuleModule extends ApolloModule {
             ServerRuleModule.OVERRIDE_NAMETAG_RENDER_DISTANCE,
             ServerRuleModule.NAMETAG_RENDER_DISTANCE,
             ServerRuleModule.OVERRIDE_MAX_CHAT_LENGTH,
-            ServerRuleModule.MAX_CHAT_LENGTH
+            ServerRuleModule.MAX_CHAT_LENGTH,
+            ServerRuleModule.CRYSTAL_OPTIMIZER
         );
     }
 
