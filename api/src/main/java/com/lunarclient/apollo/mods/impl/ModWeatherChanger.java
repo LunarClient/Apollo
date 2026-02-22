@@ -70,6 +70,64 @@ public final class ModWeatherChanger {
         .notifyClient()
         .build();
 
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> THUNDER_STORM = SimpleOption.<Boolean>builder()
+        .node("weather-changer", "thunder-storm").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> PLAY_THUNDER_SOUND = SimpleOption.<Boolean>builder()
+        .node("weather-changer", "play-thunder-sound").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Float> LIGHTNING_FREQ = NumberOption.<Float>number()
+        .node("weather-changer", "lightning-freq").type(TypeToken.get(Float.class))
+        .min(1.0F).max(20.0F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Float> LIGHTNING_RADIUS_XZ = NumberOption.<Float>number()
+        .node("weather-changer", "lightning-radius-x-z").type(TypeToken.get(Float.class))
+        .min(8.0F).max(512.0F)
+        .defaultValue(128.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Float> LIGHTNING_OFFSET_Y = NumberOption.<Float>number()
+        .node("weather-changer", "lightning-offset-y").type(TypeToken.get(Float.class))
+        .min(-64.0F).max(64.0F)
+        .defaultValue(0.0F)
+        .notifyClient()
+        .build();
+
     private ModWeatherChanger() {
     }
 

@@ -106,6 +106,18 @@ public final class ModMinimap {
         .build();
 
     /**
+     * With this enabled, the info text is scaled down to the width of the minimap.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> FIT_TEXT_TO_WIDTH = SimpleOption.<Boolean>builder()
+        .comment("With this enabled, the info text is scaled down to the width of the minimap")
+        .node("minimap", "fit-text-to-width").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.0.0
@@ -238,6 +250,61 @@ public final class ModMinimap {
     public static final SimpleOption<Boolean> SHOW_COORDINATES = SimpleOption.<Boolean>builder()
         .node("minimap", "show-coordinates").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_BIOME = SimpleOption.<Boolean>builder()
+        .node("minimap", "show-biome").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> PRESET_BIOME_COLOR = SimpleOption.<Boolean>builder()
+        .node("minimap", "preset-biome-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_CLOCK = SimpleOption.<Boolean>builder()
+        .node("minimap", "show-clock").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_AM_PM = SimpleOption.<Boolean>builder()
+        .node("minimap", "show-am-pm").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> MILITARY_TIME = SimpleOption.<Boolean>builder()
+        .node("minimap", "military-time").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

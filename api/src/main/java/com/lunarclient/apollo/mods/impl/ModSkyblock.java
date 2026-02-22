@@ -107,6 +107,76 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * Adds tab completion to the /warp command.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_AUTOCOMPLETE_WARPS = SimpleOption.<Boolean>builder()
+        .comment("Adds tab completion to the /warp command.")
+        .node("skyblock", "skyblock-autocomplete-warps").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Hides ex-coop members in the collection menu.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_EX_COOPS = SimpleOption.<Boolean>builder()
+        .comment("Hides ex-coop members in the collection menu.")
+        .node("skyblock", "skyblock-hide-ex-coops").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_MAGIC_SOUP_MESSAGES = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-magic-soup-messages").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Hides other players near important NPCs.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_PLAYERS_NEAR_NPCS = SimpleOption.<Boolean>builder()
+        .comment("Hides other players near important NPCs.")
+        .node("skyblock", "skyblock-hide-players-near-n-p-cs").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_OTHERS_GIFTS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-others-gifts").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Hides spambots that send malicious websites in chat.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_ADBLOCK = SimpleOption.<Boolean>builder()
+        .comment("Hides spambots that send malicious websites in chat.")
+        .node("skyblock", "skyblock-adblock").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.2.1
@@ -207,6 +277,17 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_RANDOM_BOSSBARS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-random-bossbars").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
      * Provides QOL for the Diana mayor that helps the user quickly locate burrows.
      *
      * @since 1.1.5
@@ -215,6 +296,116 @@ public final class ModSkyblock {
         .comment("Provides QOL for the Diana mayor that helps the user quickly locate burrows.")
         .node("skyblock", "griffin-burrow-estimates").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> BURROW_ESTIMATE_COLOR = SimpleOption.<Color>builder()
+        .node("skyblock", "burrow-estimate-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> BURROW_ESTIMATE_LINE = SimpleOption.<Boolean>builder()
+        .node("skyblock", "burrow-estimate-line").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> BURROW_ESTIMATE_BEAM = SimpleOption.<Boolean>builder()
+        .node("skyblock", "burrow-estimate-beam").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> BURROW_ESTIMATES_PRIORITIZE_PLAYER_WAYPOINTS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "burrow-estimates-prioritize-player-waypoints").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> BURROW_WARP_TO_NEAREST_ALERT = SimpleOption.<Boolean>builder()
+        .node("skyblock", "burrow-warp-to-nearest-alert").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> BURROW_MOB_COLOR = SimpleOption.<Color>builder()
+        .node("skyblock", "burrow-mob-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> BURROW_TREASURE_COLOR = SimpleOption.<Color>builder()
+        .node("skyblock", "burrow-treasure-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> BURROW_START_COLOR = SimpleOption.<Color>builder()
+        .node("skyblock", "burrow-start-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> BURROW_UNKNOWN_COLOR = SimpleOption.<Color>builder()
+        .node("skyblock", "burrow-unknown-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> BURROW_BEAM = SimpleOption.<Boolean>builder()
+        .node("skyblock", "burrow-beam").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -493,6 +684,149 @@ public final class ModSkyblock {
         .comment("Shows how long it takes to do each terminal stage in chat (and also Simon Says)!")
         .node("skyblock", "skyblock-terminal-split-timers").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ENABLE_DUNGEON_ROUTES = SimpleOption.<Boolean>builder()
+        .node("skyblock", "enable-dungeon-routes").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> DEFAULT_SECRET_ROUTES_ENABLED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "default-secret-routes-enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SECRET_ROUTES_NAMES_AT_START = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-names-at-start").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> SECRET_ROUTES_NAME_COLOR = SimpleOption.<Color>builder()
+        .node("skyblock", "secret-routes-name-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_HELP_TEXT = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-help-text").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SECRET_ROUTES_ALLOW_PEARLING = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-allow-pearling").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_SUPERBOOM = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-superboom").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_BLOCK = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-block").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_LEVER = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-lever").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_ETHERWARP = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-etherwarp").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_SECRET = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-secret").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_MISC = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-misc").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_PEARLS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-pearls").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

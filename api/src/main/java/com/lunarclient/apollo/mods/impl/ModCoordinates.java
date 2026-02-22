@@ -118,6 +118,17 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> DECIMAL_COORDINATES = SimpleOption.<Boolean>builder()
+        .node("coordinates", "decimal-coordinates").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> MOVE_CHILDREN_INDIVIDUALLY = SimpleOption.<Boolean>builder()

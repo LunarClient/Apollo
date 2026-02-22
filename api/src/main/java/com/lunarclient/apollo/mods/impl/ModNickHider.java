@@ -80,6 +80,28 @@ public final class ModNickHider {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> CUSTOM_SUFFIX = SimpleOption.<Boolean>builder()
+        .node("nick-hider", "custom-suffix").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HIDE_LOBBY_ID = SimpleOption.<Boolean>builder()
+        .node("nick-hider", "hide-lobby-i-d").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> HIDE_OWN_SKIN = SimpleOption.<Boolean>builder()

@@ -95,6 +95,18 @@ public final class ModDamageTint {
         .notifyClient()
         .build();
 
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Float> HEARTBEAT_AUDIO_VOLUME = NumberOption.<Float>number()
+        .node("damage-tint", "heartbeat-audio-volume").type(TypeToken.get(Float.class))
+        .min(0.0F).max(1.0F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
     private ModDamageTint() {
     }
 
