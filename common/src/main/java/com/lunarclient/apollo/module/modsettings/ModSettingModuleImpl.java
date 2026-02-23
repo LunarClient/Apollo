@@ -117,6 +117,11 @@ public final class ModSettingModuleImpl extends ModSettingModule {
         for (Map.Entry<String, Value> entry : properties.entrySet()) {
             Option<?, ?, ?> option = statusOptions.getRegistry().get(entry.getKey());
 
+            // Option exists on the client but doesn't exist in the API yet.
+            if (option == null) {
+                continue;
+            }
+
             Object unwrappedValue = NetworkOptions.unwrapValue(
                 entry.getValue(),
                 option.getTypeToken().getType()
