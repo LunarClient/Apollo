@@ -29,7 +29,7 @@ import com.lunarclient.apollo.player.ApolloPlayer;
 import lombok.Value;
 
 /**
- * Represents an event that is when a player uses an item (1.16.1+).
+ * Represents an event that is fired when a player uses an item (1.16.1+).
  *
  * @since 1.0.7
  */

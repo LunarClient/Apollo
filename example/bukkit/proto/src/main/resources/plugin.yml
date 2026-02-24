@@ -1,6 +1,6 @@
 name: Apollo-Proto-Example
 main: com.lunarclient.apollo.example.proto.ApolloProtoExamplePlatform
-version: 1.2.1
+version: 1.2.2
 author: Moonsworth
 softdepend: [ Apollo-Bukkit ]
 api-version: 1.13

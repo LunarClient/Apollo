@@ -1,0 +1,144 @@
+/*
+ * This file is part of Apollo, licensed under the MIT License.
+ *
+ * Copyright (c) 2023 Moonsworth
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+package com.lunarclient.apollo.mods.impl;
+
+import com.lunarclient.apollo.option.NumberOption;
+import com.lunarclient.apollo.option.SimpleOption;
+import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
+
+/**
+ * Allows you to move and customize the F3 Debug Screen.
+ *
+ * @since 1.2.2
+ */
+public final class ModF3Display {
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
+        .node("f3-display", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final NumberOption<Double> ENTER_ANIMATION_DURATION = NumberOption.<Double>number()
+        .node("f3-display", "enter-animation-duration").type(TypeToken.get(Double.class))
+        .min(0.0D).max(1.0D)
+        .defaultValue(0.25D)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final NumberOption<Double> EXIT_ANIMATION_DURATION = NumberOption.<Double>number()
+        .node("f3-display", "exit-animation-duration").type(TypeToken.get(Double.class))
+        .min(0.0D).max(1.0D)
+        .defaultValue(0.05D)
+        .notifyClient()
+        .build();
+
+    /**
+     * Hides the hud previews in the edit hud layout menu if you don't have F3 toggled.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> ONLY_MOVERS_IN_F3 = SimpleOption.<Boolean>builder()
+        .comment("Hides the hud previews in the edit hud layout menu if you don't have F3 toggled.")
+        .node("f3-display", "only-movers-in-f3").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Adds a shadow to text.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
+        .comment("Adds a shadow to text")
+        .node("f3-display", "text-shadow").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
+        .node("f3-display", "background").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
+        .node("f3-display", "background-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 85))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Color> LABEL_COLOR = SimpleOption.<Color>builder()
+        .node("f3-display", "label-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Color> VALUE_COLOR = SimpleOption.<Color>builder()
+        .node("f3-display", "value-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    private ModF3Display() {
+    }
+
+}

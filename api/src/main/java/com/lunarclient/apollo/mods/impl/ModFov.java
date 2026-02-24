@@ -46,12 +46,12 @@ public final class ModFov {
         .build();
 
     /**
-     * Determines if your FOV changes as you move.
+     * Turning this on will prevent your FOV from ever being changed by movement, flying, effects, bow, etc.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> STATIC_FOV = SimpleOption.<Boolean>builder()
-        .comment("Determines if your FOV changes as you move.")
+        .comment("Turning this on will prevent your FOV from ever being changed by movement, flying, effects, bow, etc.")
         .node("fov", "static-f-o-v").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
@@ -66,6 +66,29 @@ public final class ModFov {
         .node("fov", "default-fov").type(TypeToken.get(Integer.class))
         .min(30).max(110)
         .defaultValue(70)
+        .notifyClient()
+        .build();
+
+    /**
+     * Smooth transition for the custom dynamic fov values. This does not affect the vanilla FOVs, only custom FOV values.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> SMOOTH_FOV = SimpleOption.<Boolean>builder()
+        .comment("Smooth transition for the custom dynamic fov values. This does not affect the vanilla FOVs, only custom FOV values.")
+        .node("fov", "smooth-fov").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> DYNAMIC_BOW = SimpleOption.<Boolean>builder()
+        .node("fov", "dynamic-bow").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -102,6 +125,17 @@ public final class ModFov {
         .node("fov", "aiming-max").type(TypeToken.get(Float.class))
         .min(-200.0F).max(200.0F)
         .defaultValue(10.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> DYNAMIC_EFFECTS = SimpleOption.<Boolean>builder()
+        .node("fov", "dynamic-effects").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -180,6 +214,17 @@ public final class ModFov {
     /**
      * No documentation available.
      *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> DYNAMIC_SPRINT = SimpleOption.<Boolean>builder()
+        .node("fov", "dynamic-sprint").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final NumberOption<Integer> SPRINTING_FOV = NumberOption.<Integer>number()
@@ -222,6 +267,17 @@ public final class ModFov {
         .node("fov", "sprint-max").type(TypeToken.get(Float.class))
         .min(-200.0F).max(200.0F)
         .defaultValue(10.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> DYNAMIC_FLYING = SimpleOption.<Boolean>builder()
+        .node("fov", "dynamic-flying").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
