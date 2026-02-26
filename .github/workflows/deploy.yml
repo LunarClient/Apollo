@@ -17,8 +17,8 @@ jobs:
         -   name: Configure Google Cloud credentials
             uses: google-github-actions/auth@v3
             with:
-              workload_identity_provider: 'projects/824216268633/locations/global/workloadIdentityPools/github-actions/providers/github-actions-oidc'
-              service_account: 'github-actions@mw-lunarclient-maven-repo.iam.gserviceaccount.com'
+                workload_identity_provider: 'projects/824216268633/locations/global/workloadIdentityPools/github-actions/providers/github-actions-oidc'
+                service_account: 'github-actions@mw-lunarclient-maven-repo.iam.gserviceaccount.com'
 
         -   name: Setup Java
             uses: actions/setup-java@v3
