@@ -15,9 +15,8 @@ jobs:
             uses: actions/checkout@v3
 
         -   name: Configure Google Cloud credentials
-            uses: google-github-actions/auth@v1
+            uses: Moonsworth/Actions/google-cloud-auth@master
             with:
-                workload_identity_provider: 'projects/266324743316/locations/global/workloadIdentityPools/github/providers/github-oidc'
                 service_account: 'github-actions@mw-lunarclient-maven-repo.iam.gserviceaccount.com'
 
         -   name: Setup Java
