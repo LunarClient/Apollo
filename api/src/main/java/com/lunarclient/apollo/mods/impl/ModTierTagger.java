@@ -94,9 +94,9 @@ public final class ModTierTagger {
      *
      * @since 1.1.9
      */
-    public static final SimpleOption<Boolean> SHOW_RETIRED = SimpleOption.<Boolean>builder()
-        .node("tier-tagger", "show-retired").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
+    public static final SimpleOption<Boolean> SHOW_REGION = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "show-region").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -105,9 +105,9 @@ public final class ModTierTagger {
      *
      * @since 1.1.9
      */
-    public static final SimpleOption<Boolean> SHOW_REGION = SimpleOption.<Boolean>builder()
-        .node("tier-tagger", "show-region").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
+    public static final SimpleOption<Boolean> SHOW_RETIRED = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "show-retired").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
