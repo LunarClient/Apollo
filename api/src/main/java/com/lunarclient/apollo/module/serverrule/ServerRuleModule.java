@@ -168,7 +168,7 @@ public final class ServerRuleModule extends ApolloModule {
     /**
      * Whether to enable crystal optimizer.
      *
-     * @since 1.2.3
+     * @since 1.2.4
      */
     public static final SimpleOption<Boolean> CRYSTAL_OPTIMIZER = Option.<Boolean>builder()
         .comment("Set to 'true' to enable the crystal optimizer, otherwise 'false'.")
