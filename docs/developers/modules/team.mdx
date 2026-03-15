@@ -45,9 +45,7 @@ private void onPlayerQuit(PlayerQuitEvent event) {
     Player player = event.getPlayer();
 
     this.getByPlayerUuid(player.getUniqueId()).ifPresent(team -> {
-        if (team.getMembers().size() == 1) {
-            this.deleteTeam(team.getTeamId());
-        }
+        team.removeMember(player);
     });
 }
 
@@ -89,20 +87,20 @@ private void runFoliaTeamUpdateTask() {
 public class Team {
 
     private final UUID teamId;
-    private final Set<Player> members;
+    private final Map<UUID, Player> members;
 
     public Team() {
         this.teamId = UUID.randomUUID();
-        this.members = Sets.newHashSet();
+        this.members = new HashMap<>();
     }
 
     public void addMember(Player player) {
-        this.members.add(player);
+        this.members.put(player.getUniqueId(), player);
         TeamApiExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
     }
 
     public void removeMember(Player player) {
-        this.members.remove(player);
+        this.members.remove(player.getUniqueId());
         TeamApiExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
 
         Apollo.getPlayerManager().getPlayer(player.getUniqueId())
@@ -130,11 +128,12 @@ public class Team {
 
     // The refresh method used for updating members locations
     public void refresh() {
-        List<TeamMember> teammates = this.members.stream().filter(Player::isOnline)
+        List<TeamMember> teammates = this.members.values()
+            .stream().filter(Player::isOnline)
             .map(this::createTeamMember)
             .collect(Collectors.toList());
 
-        this.members.forEach(member -> Apollo.getPlayerManager().getPlayer(member.getUniqueId())
+        this.members.values().forEach(member -> Apollo.getPlayerManager().getPlayer(member.getUniqueId())
             .ifPresent(apolloPlayer -> TeamApiExample.this.teamModule.updateTeamMembers(apolloPlayer, teammates)));
     }
 
@@ -142,8 +141,8 @@ public class Team {
         return this.teamId;
     }
 
-    public Set<Player> getMembers() {
-        return this.members;
+    public Collection<Player> getMembers() {
+        return this.members.values();
     }
 
     @Override
@@ -256,9 +255,7 @@ private void onPlayerQuit(PlayerQuitEvent event) {
     Player player = event.getPlayer();
 
     this.getByPlayerUuid(player.getUniqueId()).ifPresent(team -> {
-        if (team.getMembers().size() == 1) {
-            this.deleteTeam(team.getTeamId());
-        }
+        team.removeMember(player);
     });
 }
 
@@ -300,20 +297,20 @@ private void runFoliaTeamUpdateTask() {
 public class Team {
 
     private final UUID teamId;
-    private final Set<Player> members;
+    private final Map<UUID, Player> members;
 
     public Team() {
         this.teamId = UUID.randomUUID();
-        this.members = Sets.newHashSet();
+        this.members = new HashMap<>();
     }
 
     public void addMember(Player player) {
-        this.members.add(player);
+        this.members.put(player.getUniqueId(), player);
         TeamProtoExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
     }
 
     public void removeMember(Player player) {
-        this.members.remove(player);
+        this.members.remove(player.getUniqueId());
         TeamProtoExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
 
         ResetTeamMembersMessage message = ResetTeamMembersMessage.getDefaultInstance();
@@ -336,7 +333,7 @@ public class Team {
 
     // The refresh method used for updating members locations
     public void refresh() {
-        List<TeamMember> teammates = this.members.stream().filter(Player::isOnline)
+        List<TeamMember> teammates = this.members.values().stream().filter(Player::isOnline)
             .map(this::createTeamMember)
             .collect(Collectors.toList());
 
@@ -344,15 +341,15 @@ public class Team {
             .addAllMembers(teammates)
             .build();
 
-        this.members.forEach(member -> ProtobufPacketUtil.sendPacket(member, message));
+        this.members.values().forEach(member -> ProtobufPacketUtil.sendPacket(member, message));
     }
 
     public UUID getTeamId() {
         return this.teamId;
     }
 
-    public Set<Player> getMembers() {
-        return this.members;
+    public Collection<Player> getMembers() {
+        return this.members.values();
     }
 
     @Override
@@ -399,9 +396,7 @@ private void onPlayerQuit(PlayerQuitEvent event) {
     Player player = event.getPlayer();
 
     this.getByPlayerUuid(player.getUniqueId()).ifPresent(team -> {
-        if (team.getMembers().size() == 1) {
-            this.deleteTeam(team.getTeamId());
-        }
+        team.removeMember(player);
     });
 }
 
@@ -443,20 +438,20 @@ private void runFoliaTeamUpdateTask() {
 public class Team {
 
     private final UUID teamId;
-    private final Set<Player> members;
+    private final Map<UUID, Player> members;
 
     public Team() {
         this.teamId = UUID.randomUUID();
-        this.members = Sets.newHashSet();
+        this.members = new HashMap<>();
     }
 
     public void addMember(Player player) {
-        this.members.add(player);
+        this.members.put(player.getUniqueId(), player);
         TeamJsonExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
     }
 
     public void removeMember(Player player) {
-        this.members.remove(player);
+        this.members.remove(player.getUniqueId());
         TeamJsonExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
 
         JsonObject message = new JsonObject();
@@ -482,7 +477,8 @@ public class Team {
 
     // The refresh method used for updating members locations
     public void refresh() {
-        JsonArray teammates = this.members.stream().filter(Player::isOnline)
+        JsonArray teammates = this.members.values()
+            .stream().filter(Player::isOnline)
             .map(this::createTeamMember)
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
@@ -490,15 +486,15 @@ public class Team {
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.team.v1.UpdateTeamMembersMessage");
         message.add("members", teammates);
 
-        this.members.forEach(member -> JsonPacketUtil.sendPacket(member, message));
+        this.members.values().forEach(member -> JsonPacketUtil.sendPacket(member, message));
     }
 
     public UUID getTeamId() {
         return this.teamId;
     }
 
-    public Set<Player> getMembers() {
-        return this.members;
+    public Collection<Player> getMembers() {
+        return this.members.values();
     }
 
     @Override

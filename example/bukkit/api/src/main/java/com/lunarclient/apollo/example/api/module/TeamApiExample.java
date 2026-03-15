@@ -24,7 +24,6 @@
 package com.lunarclient.apollo.example.api.module;
 
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
@@ -33,10 +32,11 @@ import com.lunarclient.apollo.example.util.ServerUtil;
 import com.lunarclient.apollo.module.team.TeamMember;
 import com.lunarclient.apollo.module.team.TeamModule;
 import java.awt.Color;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -71,9 +71,7 @@ public class TeamApiExample extends TeamExample implements Listener {
         Player player = event.getPlayer();
 
         this.getByPlayerUuid(player.getUniqueId()).ifPresent(team -> {
-            if (team.getMembers().size() == 1) {
-                this.deleteTeam(team.getTeamId());
-            }
+            team.removeMember(player);
         });
     }
 
@@ -115,20 +113,20 @@ public class TeamApiExample extends TeamExample implements Listener {
     public class Team {
 
         private final UUID teamId;
-        private final Set<Player> members;
+        private final Map<UUID, Player> members;
 
         public Team() {
             this.teamId = UUID.randomUUID();
-            this.members = Sets.newHashSet();
+            this.members = new HashMap<>();
         }
 
         public void addMember(Player player) {
-            this.members.add(player);
+            this.members.put(player.getUniqueId(), player);
             TeamApiExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
         }
 
         public void removeMember(Player player) {
-            this.members.remove(player);
+            this.members.remove(player.getUniqueId());
             TeamApiExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
 
             Apollo.getPlayerManager().getPlayer(player.getUniqueId())
@@ -156,11 +154,12 @@ public class TeamApiExample extends TeamExample implements Listener {
 
         // The refresh method used for updating members locations
         public void refresh() {
-            List<TeamMember> teammates = this.members.stream().filter(Player::isOnline)
+            List<TeamMember> teammates = this.members.values()
+                .stream().filter(Player::isOnline)
                 .map(this::createTeamMember)
                 .collect(Collectors.toList());
 
-            this.members.forEach(member -> Apollo.getPlayerManager().getPlayer(member.getUniqueId())
+            this.members.values().forEach(member -> Apollo.getPlayerManager().getPlayer(member.getUniqueId())
                 .ifPresent(apolloPlayer -> TeamApiExample.this.teamModule.updateTeamMembers(apolloPlayer, teammates)));
         }
 
@@ -168,8 +167,8 @@ public class TeamApiExample extends TeamExample implements Listener {
             return this.teamId;
         }
 
-        public Set<Player> getMembers() {
-            return this.members;
+        public Collection<Player> getMembers() {
+            return this.members.values();
         }
 
         @Override

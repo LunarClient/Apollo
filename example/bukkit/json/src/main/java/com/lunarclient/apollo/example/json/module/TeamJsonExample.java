@@ -24,7 +24,6 @@
 package com.lunarclient.apollo.example.json.module;
 
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
@@ -34,9 +33,10 @@ import com.lunarclient.apollo.example.json.util.JsonUtil;
 import com.lunarclient.apollo.example.module.impl.TeamExample;
 import com.lunarclient.apollo.example.util.ServerUtil;
 import java.awt.Color;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import net.kyori.adventure.text.Component;
@@ -67,9 +67,7 @@ public class TeamJsonExample extends TeamExample implements Listener {
         Player player = event.getPlayer();
 
         this.getByPlayerUuid(player.getUniqueId()).ifPresent(team -> {
-            if (team.getMembers().size() == 1) {
-                this.deleteTeam(team.getTeamId());
-            }
+            team.removeMember(player);
         });
     }
 
@@ -111,20 +109,20 @@ public class TeamJsonExample extends TeamExample implements Listener {
     public class Team {
 
         private final UUID teamId;
-        private final Set<Player> members;
+        private final Map<UUID, Player> members;
 
         public Team() {
             this.teamId = UUID.randomUUID();
-            this.members = Sets.newHashSet();
+            this.members = new HashMap<>();
         }
 
         public void addMember(Player player) {
-            this.members.add(player);
+            this.members.put(player.getUniqueId(), player);
             TeamJsonExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
         }
 
         public void removeMember(Player player) {
-            this.members.remove(player);
+            this.members.remove(player.getUniqueId());
             TeamJsonExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
 
             JsonObject message = new JsonObject();
@@ -150,7 +148,8 @@ public class TeamJsonExample extends TeamExample implements Listener {
 
         // The refresh method used for updating members locations
         public void refresh() {
-            JsonArray teammates = this.members.stream().filter(Player::isOnline)
+            JsonArray teammates = this.members.values()
+                .stream().filter(Player::isOnline)
                 .map(this::createTeamMember)
                 .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
@@ -158,15 +157,15 @@ public class TeamJsonExample extends TeamExample implements Listener {
             message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.team.v1.UpdateTeamMembersMessage");
             message.add("members", teammates);
 
-            this.members.forEach(member -> JsonPacketUtil.sendPacket(member, message));
+            this.members.values().forEach(member -> JsonPacketUtil.sendPacket(member, message));
         }
 
         public UUID getTeamId() {
             return this.teamId;
         }
 
-        public Set<Player> getMembers() {
-            return this.members;
+        public Collection<Player> getMembers() {
+            return this.members.values();
         }
 
         @Override
