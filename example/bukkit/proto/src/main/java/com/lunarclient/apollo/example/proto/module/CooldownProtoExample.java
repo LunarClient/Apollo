@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.example.proto.module;
 
+import com.lunarclient.apollo.common.v1.Icon;
 import com.lunarclient.apollo.cooldown.v1.CooldownStyle;
 import com.lunarclient.apollo.cooldown.v1.DisplayCooldownMessage;
 import com.lunarclient.apollo.cooldown.v1.RemoveCooldownMessage;
@@ -41,7 +42,9 @@ public class CooldownProtoExample extends CooldownExample {
         DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
             .setName("enderpearl-cooldown")
             .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
-            .setIcon(ProtobufUtil.createItemStackIconProto("ENDER_PEARL", 0, 0))
+            .setIcon(Icon.newBuilder()
+                .setItemStack(ProtobufUtil.createItemStackIconProto("ENDER_PEARL", 0, 0))
+                .build())
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);
@@ -69,7 +72,9 @@ public class CooldownProtoExample extends CooldownExample {
         DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
             .setName("lunar-cooldown")
             .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
-            .setIcon(ProtobufUtil.createSimpleResourceLocationIconProto("lunar:logo/logo-64x64.png", 24))
+            .setIcon(Icon.newBuilder()
+                .setSimpleResourceLocation(ProtobufUtil.createSimpleResourceLocationIconProto("lunar:logo/logo-64x64.png", 24))
+                .build())
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);

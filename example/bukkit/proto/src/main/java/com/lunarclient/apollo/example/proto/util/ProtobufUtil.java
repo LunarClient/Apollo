@@ -28,8 +28,8 @@ import com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon;
 import com.lunarclient.apollo.common.v1.BlockLocation;
 import com.lunarclient.apollo.common.v1.Cuboid2D;
 import com.lunarclient.apollo.common.v1.EntityId;
-import com.lunarclient.apollo.common.v1.Icon;
 import com.lunarclient.apollo.common.v1.ItemStackIcon;
+import com.lunarclient.apollo.common.v1.ResourceLocationIcon;
 import com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.common.v1.Uuid;
 import java.awt.Color;
@@ -114,7 +114,7 @@ public final class ProtobufUtil {
         return location;
     }
 
-    public static Icon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData) {
+    public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData) {
         ItemStackIcon.Builder iconBuilder = ItemStackIcon.newBuilder()
             .setItemId(itemId)
             .setCustomModelData(customModelData);
@@ -123,21 +123,25 @@ public final class ProtobufUtil {
             iconBuilder.setItemName(itemName);
         }
 
-        return Icon.newBuilder().setItemStack(iconBuilder.build()).build();
+        return iconBuilder.build();
     }
 
-    public static Icon createSimpleResourceLocationIconProto(String resourceLocation, int size) {
-        SimpleResourceLocationIcon icon = SimpleResourceLocationIcon.newBuilder()
+    public static ResourceLocationIcon createResourceLocationIconProto(String resourceLocation) {
+        return ResourceLocationIcon.newBuilder()
+            .setResourceLocation(resourceLocation)
+            .build();
+    }
+
+    public static SimpleResourceLocationIcon createSimpleResourceLocationIconProto(String resourceLocation, int size) {
+        return SimpleResourceLocationIcon.newBuilder()
             .setResourceLocation(resourceLocation)
             .setSize(size)
             .build();
-
-        return Icon.newBuilder().setSimpleResourceLocation(icon).build();
     }
 
-    public static Icon createAdvancedResourceLocationIconProto(String resourceLocation, float width, float height,
+    public static AdvancedResourceLocationIcon createAdvancedResourceLocationIconProto(String resourceLocation, float width, float height,
                                                                float minU, float maxU, float minV, float maxV) {
-        AdvancedResourceLocationIcon icon = AdvancedResourceLocationIcon.newBuilder()
+        return AdvancedResourceLocationIcon.newBuilder()
             .setResourceLocation(resourceLocation)
             .setWidth(width)
             .setHeight(height)
@@ -146,8 +150,6 @@ public final class ProtobufUtil {
             .setMinV(minV)
             .setMaxV(maxV)
             .build();
-
-        return Icon.newBuilder().setAdvancedResourceLocation(icon).build();
     }
 
     private ProtobufUtil() {
