@@ -51,7 +51,7 @@ public class NotificationJsonExample extends NotificationExample {
         ));
 
         message.addProperty("display_time", JsonUtil.createDurationObject(Duration.ofSeconds(5)));
-        message.addProperty("resource_location", "icons/golden_apple.png");
+        message.addProperty("resource_location", "textures/items/apple_golden.png");
 
         JsonPacketUtil.sendPacket(viewer, message);
     }
