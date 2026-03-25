@@ -61,6 +61,40 @@ public static ItemStackIcon itemStackNameIconExample() {
 }
 ```
 
+## `ResourceLocationIcon` Builder
+
+If you're using a custom resource pack and want to create an icon, you can use the `ResourceLocationIcon` builder.
+
+<Callout type="info">
+  The supplied resource location should point to a texture in the resource pack, or the path to an `svg` file in the resource pack.
+</Callout>
+
+```java
+public class ResourceLocationIcon extends Icon {
+
+    /**
+     * Returns the icon {@link String} resource location.
+     *
+     * <p>Represents a path to an icon that will appear for the player.</p>
+     *
+     * @return the icon resource location
+     * @since 1.2.4
+     */
+    String resourceLocation;
+
+}
+```
+
+### Sample Code
+
+```java
+public static ResourceLocationIcon resourceLocationExample() {
+    return ResourceLocationIcon.builder()
+        .resourceLocation("minecraft:textures/item/apple.png") // Resource path location
+        .build();
+}
+```
+
 ## `SimpleResourceLocation` Builder
 
 If you're using a custom resource pack and want to create an icon, you can use the `SimpleResourceLocation` builder.
