@@ -51,7 +51,7 @@ public class NotificationApiExample extends NotificationExample {
                     .append(Component.newline())
                     .append(Component.text("Good luck!", NamedTextColor.GOLD))
                 )
-                .resourceLocation("icons/golden_apple.png") // This field is optional
+                .resourceLocation("textures/items/apple_golden.png") // This field is optional
                 .displayTime(Duration.ofSeconds(5))
                 .build());
         });

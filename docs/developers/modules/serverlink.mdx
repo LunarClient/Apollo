@@ -4,7 +4,14 @@ import { Tab, Tabs } from 'nextra-theme-docs'
 
 ## Overview
 
-TODO
+The server link module provides enhancements and additional support to the vanilla Minecraft server link feature. Display your important URLs directly to your users.
+
+- Adds improvements to the existing server link features
+  - Ability to set a custom image title resource for the server links menu
+  - Ability to use chat colors and formats for button names
+- Backported legacy version support for all versions below 1.21
+
+![Server Link Module Example](/modules/serverlink/overview.png#center)
 
 ## Integration
 
@@ -89,64 +96,32 @@ public void resetServerLinksExample(Player viewer) {
 }
 ```
 
-### `Hologram` Options
+### `ServerLink` Options
 
-`.id(String)` should include a unique identifier for the hologram.
-
-```java
-.id("welcome-hologram")
-```
-
-`.location(ApolloLocation)` is using the `ApolloLocation` builder to create the location. See the [locations page](/apollo/developers/utilities/locations) for more.
+`.id(String)` sets a unique identifier for the server link.
 
 ```java
-.location(ApolloLocation.builder()
-    .world("world")
-    .x(5)
-    .y(100)
-    .z(0)
-    .build()
-)
+.id("website")
 ```
 
-`.lines(Component)` should be a string, or an Adventure `Component`. See the [chat components](https://docs.advntr.dev/text.html) page for more.
+`.displayName(String)` is the public-facing name of the server link. It should contain a string or an Adventure `Component`. See the [chat components](https://docs.advntr.dev/text.html) page for more.
 
 ```java
-.lines(List.of(
-    Component.text()
-        .content("Welcome to my server!")
-        .color(NamedTextColor.RED)
-        .decorate(TextDecoration.BOLD, TextDecoration.UNDERLINED)
-        .build(),
-    Component.text()
-        .content("Type /help to get started!")
-        .build()
-))
+.displayName(Component.text("Website", NamedTextColor.LIGHT_PURPLE))
 ```
 
-`.showThroughWalls(Boolean)` if the player is able to see the hologram through walls.
+`.url(String)` should be a string that specifies the destination URL that will be opened from the server link.
 
 ```java
-.showThroughWalls(true)
+.url("https://www.lunarclient.com/")
 ```
 
-`.showShadow(Boolean)` if the player is able to see the hologram shadow.
-
-```java
-.showShadow(false)
-```
-
-`.showBackground(Boolean)` if the player is able to see the hologram background.
-
-```java
-.showBackground(true)
-```
 
 </Tab>
 
 <Tab>
 
-### Override the Server Link Menu resource
+**Override the Server Link Menu resource**
 
 ```java
 public void overrideServerLinkResourceExample(Player viewer) {
@@ -158,7 +133,7 @@ public void overrideServerLinkResourceExample(Player viewer) {
 }
 ```
 
-### Reset the Server Link Menu resource
+**Reset the Server Link Menu resource**
 
 ```java
 public void resetServerLinkResourceExample(Player viewer) {
@@ -167,7 +142,7 @@ public void resetServerLinkResourceExample(Player viewer) {
 }
 ```
 
-### Add Server Link
+**Add Server Link**
 
 ```java
 public void addServerLinkExample(Player viewer) {
@@ -200,7 +175,7 @@ public void addServerLinkExample(Player viewer) {
 }
 ```
 
-### Remove Server Link
+**Remove Server Link**
 
 ```java
 public void removeServerLinkExample(Player viewer) {
@@ -214,7 +189,7 @@ public void removeServerLinkExample(Player viewer) {
 }
 ```
 
-### Resetting all Server Links
+**Resetting all Server Links**
 
 ```java
 public void resetServerLinksExample(Player viewer) {
@@ -227,7 +202,7 @@ public void resetServerLinksExample(Player viewer) {
 
 <Tab>
 
-### Override the Server Link Menu resource
+**Override the Server Link Menu resource**
 
 ```java
 public void overrideServerLinkResourceExample(Player viewer) {
@@ -239,7 +214,7 @@ public void overrideServerLinkResourceExample(Player viewer) {
 }
 ```
 
-### Reset the Server Link Menu resource
+**Reset the Server Link Menu resource**
 
 ```java
 public void resetServerLinkResourceExample(Player viewer) {
@@ -250,7 +225,7 @@ public void resetServerLinkResourceExample(Player viewer) {
 }
 ```
 
-### Add Server Link
+**Add Server Link**
 
 ```java
 public void addServerLinkExample(Player viewer) {
@@ -276,7 +251,7 @@ private JsonObject createServerLinkObject(String id, Component displayName, Stri
 }
 ```
 
-### Remove Server Link
+**Remove Server Link**
 
 ```java
 public void removeServerLinkExample(Player viewer) {
@@ -291,7 +266,7 @@ public void removeServerLinkExample(Player viewer) {
 }
 ```
 
-### Resetting all Server Links
+**Resetting all Server Links**
 
 ```java
 public void resetServerLinksExample(Player viewer) {
