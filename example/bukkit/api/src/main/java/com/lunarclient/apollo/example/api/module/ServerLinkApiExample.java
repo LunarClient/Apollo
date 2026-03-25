@@ -63,7 +63,7 @@ public class ServerLinkApiExample extends ServerLinkExample {
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.serverLinkModule.addServerLink(apolloPlayer, Lists.newArrayList(
                 ServerLink.builder()
-                    .url("website")
+                    .id("website")
                     .displayName(Component.text("Website", NamedTextColor.LIGHT_PURPLE))
                     .url("https://www.lunarclient.com/")
                     .build(),
