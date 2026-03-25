@@ -49,6 +49,8 @@ commands:
         description: "Pay Now!"
     richpresence:
         description: "Rich Presence!"
+    serverlink:
+        description: "Server Links!"
     saturation:
         description: "Saturation!"
     serverrule:
