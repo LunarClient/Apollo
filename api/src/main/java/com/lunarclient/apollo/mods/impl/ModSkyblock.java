@@ -468,7 +468,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.4
      */
     public static final SimpleOption<Boolean> SKY_BLOCK_METAL_DETECTOR_LINE = SimpleOption.<Boolean>builder()
         .node("skyblock", "sky-block-metal-detector-line").type(TypeToken.get(Boolean.class))
