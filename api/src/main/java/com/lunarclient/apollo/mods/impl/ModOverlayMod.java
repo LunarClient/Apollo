@@ -42,7 +42,7 @@ public final class ModOverlayMod {
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("overlay-mod", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
+        .defaultValue(false)
         .notifyClient()
         .build();
 
