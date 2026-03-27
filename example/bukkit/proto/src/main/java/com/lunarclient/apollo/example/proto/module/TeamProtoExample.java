@@ -24,7 +24,6 @@
 package com.lunarclient.apollo.example.proto.module;
 
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.module.impl.TeamExample;
 import com.lunarclient.apollo.example.proto.util.AdventureUtil;
@@ -35,10 +34,11 @@ import com.lunarclient.apollo.team.v1.ResetTeamMembersMessage;
 import com.lunarclient.apollo.team.v1.TeamMember;
 import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
 import java.awt.Color;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -70,9 +70,7 @@ public class TeamProtoExample extends TeamExample implements Listener {
         Player player = event.getPlayer();
 
         this.getByPlayerUuid(player.getUniqueId()).ifPresent(team -> {
-            if (team.getMembers().size() == 1) {
-                this.deleteTeam(team.getTeamId());
-            }
+            team.removeMember(player);
         });
     }
 
@@ -114,20 +112,20 @@ public class TeamProtoExample extends TeamExample implements Listener {
     public class Team {
 
         private final UUID teamId;
-        private final Set<Player> members;
+        private final Map<UUID, Player> members;
 
         public Team() {
             this.teamId = UUID.randomUUID();
-            this.members = Sets.newHashSet();
+            this.members = new HashMap<>();
         }
 
         public void addMember(Player player) {
-            this.members.add(player);
+            this.members.put(player.getUniqueId(), player);
             TeamProtoExample.this.teamsByPlayerUuid.put(player.getUniqueId(), this);
         }
 
         public void removeMember(Player player) {
-            this.members.remove(player);
+            this.members.remove(player.getUniqueId());
             TeamProtoExample.this.teamsByPlayerUuid.remove(player.getUniqueId());
 
             ResetTeamMembersMessage message = ResetTeamMembersMessage.getDefaultInstance();
@@ -150,7 +148,7 @@ public class TeamProtoExample extends TeamExample implements Listener {
 
         // The refresh method used for updating members locations
         public void refresh() {
-            List<TeamMember> teammates = this.members.stream().filter(Player::isOnline)
+            List<TeamMember> teammates = this.members.values().stream().filter(Player::isOnline)
                 .map(this::createTeamMember)
                 .collect(Collectors.toList());
 
@@ -158,15 +156,15 @@ public class TeamProtoExample extends TeamExample implements Listener {
                 .addAllMembers(teammates)
                 .build();
 
-            this.members.forEach(member -> ProtobufPacketUtil.sendPacket(member, message));
+            this.members.values().forEach(member -> ProtobufPacketUtil.sendPacket(member, message));
         }
 
         public UUID getTeamId() {
             return this.teamId;
         }
 
-        public Set<Player> getMembers() {
-            return this.members;
+        public Collection<Player> getMembers() {
+            return this.members.values();
         }
 
         @Override

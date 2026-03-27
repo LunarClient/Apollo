@@ -37,6 +37,7 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.ExecutorService;
@@ -134,13 +135,21 @@ public final class ApolloHttpManager {
                             responseType.getTypeName(), response
                         )));
                     }
-                } catch (IOException e) {
-                    ApolloHttpManager.handleError("Failed to parse request!", e, request);
+                } catch (IOException exception) {
+                    if (exception instanceof UnknownHostException) {
+                        return;
+                    }
+
+                    ApolloHttpManager.handleError("Failed to parse request!", exception, request);
                 } finally {
                     connection.disconnect();
                 }
-            } catch (Throwable t) {
-                ApolloHttpManager.handleError("Failed to open connection!", t, request);
+            } catch (Throwable throwable) {
+                if (throwable instanceof UnknownHostException) {
+                    return;
+                }
+
+                ApolloHttpManager.handleError("Failed to open connection!", throwable, request);
             }
         });
 

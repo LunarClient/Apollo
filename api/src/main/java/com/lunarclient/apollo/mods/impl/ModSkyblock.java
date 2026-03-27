@@ -448,8 +448,8 @@ public final class ModSkyblock {
      *
      * @since 1.1.6
      */
-    public static final SimpleOption<Boolean> SKY_BLOCK_METAL_DETECTOR = SimpleOption.<Boolean>builder()
-        .node("skyblock", "sky-block-metal-detector").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> SKY_BLOCK_FINISHED_COMMISSIONS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-finished-commissions").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();
@@ -459,8 +459,19 @@ public final class ModSkyblock {
      *
      * @since 1.1.6
      */
-    public static final SimpleOption<Boolean> SKY_BLOCK_FINISHED_COMMISSIONS = SimpleOption.<Boolean>builder()
-        .node("skyblock", "sky-block-finished-commissions").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> SKY_BLOCK_METAL_DETECTOR = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-metal-detector").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.4
+     */
+    public static final SimpleOption<Boolean> SKY_BLOCK_METAL_DETECTOR_LINE = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-metal-detector-line").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();

@@ -58,7 +58,7 @@ public final class PacketEnrichmentImpl extends PacketEnrichmentModule {
     private void onReceivePacket(ApolloReceivePacketEvent event) {
         Options options = this.getOptions();
 
-        if (options.get(PacketEnrichmentModule.PLAYER_CHAT_OPEN_EVENT)) {
+        if (options.get(PacketEnrichmentModule.PLAYER_ATTACK_EVENT)) {
             event.unpack(PlayerAttackMessage.class).ifPresent(packet -> {
                 ApolloPlayerAttackEvent playerAttackEvent = new ApolloPlayerAttackEvent(
                     event.getPlayer(),

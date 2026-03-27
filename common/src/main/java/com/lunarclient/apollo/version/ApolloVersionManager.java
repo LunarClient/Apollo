@@ -75,9 +75,14 @@ public final class ApolloVersionManager {
      * @since 1.0.0
      */
     public void checkForUpdates() {
+        ApolloPlatform platform = Apollo.getPlatform();
+
+        if (!platform.getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
+            return;
+        }
+
         ApolloManager.getHttpManager().request(VersionRequest.builder().build())
             .onSuccess(response -> {
-                ApolloPlatform platform = Apollo.getPlatform();
                 String version = response.getVersion();
 
                 ApolloVersion currentVersion = new ApolloVersion(platform.getApolloVersion());
@@ -88,10 +93,6 @@ public final class ApolloVersionManager {
                 }
 
                 this.updateAssets = response;
-
-                if (!platform.getOptions().get(ApolloVersionManager.SEND_UPDATE_MESSAGE)) {
-                    return;
-                }
 
                 Logger logger = platform.getPlatformLogger();
                 logger.warning(String.format("A new version of Apollo is available! Latest release: %s", version));
