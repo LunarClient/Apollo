@@ -188,6 +188,18 @@ public final class ModSkyblock {
         .build();
 
     /**
+     * Fixes being unable to use the "Pick Block" keybind on items when it is bound to a mouse button.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> MIDDLE_CLICK_ARMOR_FIX = SimpleOption.<Boolean>builder()
+        .comment("Fixes being unable to use the "Pick Block" keybind on items when it is bound to a mouse button.")
+        .node("skyblock", "middle-click-armor-fix").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.0.9
@@ -896,6 +908,29 @@ public final class ModSkyblock {
         .comment("Routes menu clicks to /sbmenu command in order to prevent sticky item.")
         .node("skyblock", "sb-menu-click-to-command").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> CUSTOM_CHIME_VOLUME_ENABLED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "custom-chime-volume-enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Float> CUSTOM_CHIME_VOLUME = NumberOption.<Float>number()
+        .node("skyblock", "custom-chime-volume").type(TypeToken.get(Float.class))
+        .min(0.0F).max(1.0F)
+        .defaultValue(5.0F)
         .notifyClient()
         .build();
 

@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods.impl;
 import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Allows servers to display items or abilities that are on cooldown on the HUD.
@@ -54,6 +55,50 @@ public final class ModCooldowns {
         .node("cooldowns", "scale").type(TypeToken.get(Float.class))
         .min(0.25F).max(5.0F)
         .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COOLDOWN_CIRCLE_START_COLOR = SimpleOption.<Color>builder()
+        .node("cooldowns", "cooldown-circle-start-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(89, 89, 89, 153))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COOLDOWN_CIRCLE_END_COLOR = SimpleOption.<Color>builder()
+        .node("cooldowns", "cooldown-circle-end-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(229, 229, 229))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COOLDOWN_EDGE_COLOR = SimpleOption.<Color>builder()
+        .node("cooldowns", "cooldown-edge-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(64, 64, 64))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
+        .node("cooldowns", "text-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 
