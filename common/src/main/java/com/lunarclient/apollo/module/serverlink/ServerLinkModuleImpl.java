@@ -41,7 +41,7 @@ import lombok.NonNull;
 /**
  * Provides the server link module.
  *
- * @since 1.2.4
+ * @since 1.2.5
  */
 public final class ServerLinkModuleImpl extends ServerLinkModule {
 

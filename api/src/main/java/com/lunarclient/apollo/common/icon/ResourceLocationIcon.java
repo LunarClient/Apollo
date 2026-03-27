@@ -29,7 +29,7 @@ import lombok.Getter;
 /**
  * Represents a resource location icon.
  *
- * @since 1.2.4
+ * @since 1.2.5
  */
 @Getter
 @Builder
@@ -41,7 +41,7 @@ public final class ResourceLocationIcon extends Icon {
      * <p>Represents a path to an icon that will appear for the player.</p>
      *
      * @return the icon resource location
-     * @since 1.2.4
+     * @since 1.2.5
      */
     String resourceLocation;
 
