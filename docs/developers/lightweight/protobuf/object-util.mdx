@@ -88,7 +88,7 @@ public static Location toBukkitLocation(com.lunarclient.apollo.common.v1.PlayerL
 Icon-related methods
 
 ```java
-public static Icon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData) {
+public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData) {
     ItemStackIcon.Builder iconBuilder = ItemStackIcon.newBuilder()
         .setItemId(itemId)
         .setCustomModelData(customModelData);
@@ -97,21 +97,25 @@ public static Icon createItemStackIconProto(@Nullable String itemName, int itemI
         iconBuilder.setItemName(itemName);
     }
 
-    return Icon.newBuilder().setItemStack(iconBuilder.build()).build();
+    return iconBuilder.build();
 }
 
-public static Icon createSimpleResourceLocationIconProto(String resourceLocation, int size) {
-    SimpleResourceLocationIcon icon = SimpleResourceLocationIcon.newBuilder()
+public static ResourceLocationIcon createResourceLocationIconProto(String resourceLocation) {
+    return ResourceLocationIcon.newBuilder()
+        .setResourceLocation(resourceLocation)
+        .build();
+}
+
+public static SimpleResourceLocationIcon createSimpleResourceLocationIconProto(String resourceLocation, int size) {
+    return SimpleResourceLocationIcon.newBuilder()
         .setResourceLocation(resourceLocation)
         .setSize(size)
         .build();
-
-    return Icon.newBuilder().setSimpleResourceLocation(icon).build();
 }
 
-public static Icon createAdvancedResourceLocationIconProto(String resourceLocation, float width, float height,
+public static AdvancedResourceLocationIcon createAdvancedResourceLocationIconProto(String resourceLocation, float width, float height,
                                                            float minU, float maxU, float minV, float maxV) {
-    AdvancedResourceLocationIcon icon = AdvancedResourceLocationIcon.newBuilder()
+    return AdvancedResourceLocationIcon.newBuilder()
         .setResourceLocation(resourceLocation)
         .setWidth(width)
         .setHeight(height)
@@ -120,7 +124,5 @@ public static Icon createAdvancedResourceLocationIconProto(String resourceLocati
         .setMinV(minV)
         .setMaxV(maxV)
         .build();
-
-    return Icon.newBuilder().setAdvancedResourceLocation(icon).build();
 }
 ```

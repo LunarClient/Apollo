@@ -120,6 +120,16 @@ public final class JsonUtil {
         return iconObject;
     }
 
+    public static JsonObject createResourceLocationIconObject(@NotNull String resourceLocation) {
+        JsonObject resourceIconObject = new JsonObject();
+        resourceIconObject.addProperty("resource_location", resourceLocation);
+
+        JsonObject iconObject = new JsonObject();
+        iconObject.add("resource_location", resourceIconObject);
+
+        return iconObject;
+    }
+
     public static JsonObject createSimpleResourceLocationIconObject(@NotNull String resourceLocation, int size) {
         JsonObject simpleIconObject = new JsonObject();
         simpleIconObject.addProperty("resource_location", resourceLocation);

@@ -43,6 +43,7 @@ import com.lunarclient.apollo.example.json.module.NickHiderJsonExample;
 import com.lunarclient.apollo.example.json.module.NotificationJsonExample;
 import com.lunarclient.apollo.example.json.module.PayNowJsonExample;
 import com.lunarclient.apollo.example.json.module.RichPresenceJsonExample;
+import com.lunarclient.apollo.example.json.module.ServerLinkJsonExample;
 import com.lunarclient.apollo.example.json.module.ServerRuleJsonExample;
 import com.lunarclient.apollo.example.json.module.StaffModJsonExample;
 import com.lunarclient.apollo.example.json.module.StopwatchJsonExample;
@@ -85,6 +86,7 @@ public class ApolloJsonExamplePlatform extends ApolloExamplePlugin {
         this.setNotificationExample(new NotificationJsonExample());
         this.setPayNowExample(new PayNowJsonExample());
         this.setRichPresenceExample(new RichPresenceJsonExample());
+        this.setServerLinkExample(new ServerLinkJsonExample());
         this.setServerRuleExample(new ServerRuleJsonExample());
         this.setStaffModExample(new StaffModJsonExample());
         this.setStopwatchExample(new StopwatchJsonExample());
