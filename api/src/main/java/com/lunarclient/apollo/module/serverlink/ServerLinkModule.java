@@ -36,7 +36,7 @@ import org.jetbrains.annotations.ApiStatus;
  * <p>This module provides support for the Server Links feature introduced in
  * Minecraft 1.21.0, with compatibility extending down to version 1.7.</p>
  *
- * @since 1.2.4
+ * @since 1.2.5
  */
 @ApiStatus.NonExtendable
 @ModuleDefinition(id = "server_link", name = "Server Link")
@@ -60,7 +60,7 @@ public abstract class ServerLinkModule extends ApolloModule {
      *
      * @param recipients the recipients that are receiving the packet
      * @param icon       the resource location icon
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public abstract void overrideServerLinkResource(Recipients recipients, ResourceLocationIcon icon);
 
@@ -70,7 +70,7 @@ public abstract class ServerLinkModule extends ApolloModule {
      * <p>Reverts back to displaying the default menu title.</p>
      *
      * @param recipients the recipients that are receiving the packet
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public abstract void resetServerLinkResource(Recipients recipients);
 
@@ -79,7 +79,7 @@ public abstract class ServerLinkModule extends ApolloModule {
      *
      * @param recipients the recipients that are receiving the packet
      * @param serverLink the server link
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public abstract void addServerLink(Recipients recipients, ServerLink serverLink);
 
@@ -88,7 +88,7 @@ public abstract class ServerLinkModule extends ApolloModule {
      *
      * @param recipients  the recipients that are receiving the packet
      * @param serverLinks the server links
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public abstract void addServerLink(Recipients recipients, List<ServerLink> serverLinks);
 
@@ -97,7 +97,7 @@ public abstract class ServerLinkModule extends ApolloModule {
      *
      * @param recipients   the recipients that are receiving the packet
      * @param serverLinkId the server link id
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public abstract void removeServerLink(Recipients recipients, String serverLinkId);
 
@@ -106,7 +106,7 @@ public abstract class ServerLinkModule extends ApolloModule {
      *
      * @param recipients the recipients that are receiving the packet
      * @param serverLink the server link
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public abstract void removeServerLink(Recipients recipients, ServerLink serverLink);
 
@@ -115,7 +115,7 @@ public abstract class ServerLinkModule extends ApolloModule {
      *
      * @param recipients    the recipients that are receiving the packet
      * @param serverLinkIds the server link ids
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public abstract void removeServerLink(Recipients recipients, List<String> serverLinkIds);
 
@@ -123,7 +123,7 @@ public abstract class ServerLinkModule extends ApolloModule {
      * Resets all {@link ServerLink}s for the {@link Recipients}.
      *
      * @param recipients the recipients that are receiving the packet
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public abstract void resetServerLinks(Recipients recipients);
 

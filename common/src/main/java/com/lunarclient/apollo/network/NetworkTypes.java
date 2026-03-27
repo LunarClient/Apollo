@@ -527,7 +527,7 @@ public final class NetworkTypes {
      *
      * @param icon the item stack icon
      * @return the proto item stack icon message
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public static com.lunarclient.apollo.common.v1.ItemStackIcon toProtobuf(ItemStackIcon icon) {
         com.lunarclient.apollo.common.v1.ItemStackIcon.Builder builder = com.lunarclient.apollo.common.v1.ItemStackIcon.newBuilder()
@@ -547,7 +547,7 @@ public final class NetworkTypes {
      *
      * @param icon the item stack icon message
      * @return the item stack icon
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public static ItemStackIcon fromProtobuf(com.lunarclient.apollo.common.v1.ItemStackIcon icon) {
         return ItemStackIcon.builder()
@@ -563,7 +563,7 @@ public final class NetworkTypes {
      *
      * @param icon the resource location icon
      * @return the proto resource location icon message
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public static com.lunarclient.apollo.common.v1.ResourceLocationIcon toProtobuf(ResourceLocationIcon icon) {
         return com.lunarclient.apollo.common.v1.ResourceLocationIcon.newBuilder()
@@ -577,7 +577,7 @@ public final class NetworkTypes {
      *
      * @param icon the resource location icon message
      * @return the resource location icon
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public static ResourceLocationIcon fromProtobuf(com.lunarclient.apollo.common.v1.ResourceLocationIcon icon) {
         return ResourceLocationIcon.builder()
@@ -591,7 +591,7 @@ public final class NetworkTypes {
      *
      * @param icon the simple resource location icon
      * @return the proto simple resource location icon message
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public static com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon toProtobuf(SimpleResourceLocationIcon icon) {
         return com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon.newBuilder()
@@ -606,7 +606,7 @@ public final class NetworkTypes {
      *
      * @param icon the simple resource location icon message
      * @return the simple resource location icon
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public static SimpleResourceLocationIcon fromProtobuf(com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon icon) {
         return SimpleResourceLocationIcon.builder()
@@ -621,7 +621,7 @@ public final class NetworkTypes {
      *
      * @param icon the advanced resource location icon
      * @return the proto advanced resource location icon message
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public static com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon toProtobuf(AdvancedResourceLocationIcon icon) {
         return com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon.newBuilder()
@@ -641,7 +641,7 @@ public final class NetworkTypes {
      *
      * @param icon the advanced resource location icon message
      * @return the advanced resource location icon
-     * @since 1.2.4
+     * @since 1.2.5
      */
     public static AdvancedResourceLocationIcon fromProtobuf(com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon icon) {
         return AdvancedResourceLocationIcon.builder()
