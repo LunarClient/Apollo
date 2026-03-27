@@ -30,7 +30,7 @@ import net.kyori.adventure.text.Component;
 /**
  * Represents a link entry displayed in the Server Links menu.
  *
- * @since 1.2.4
+ * @since 1.2.5
  */
 @Getter
 @Builder
@@ -40,7 +40,7 @@ public final class ServerLink {
      * Returns the server link {@link String} id.
      *
      * @return the server link id
-     * @since 1.2.4
+     * @since 1.2.5
      */
     String id;
 
@@ -48,7 +48,7 @@ public final class ServerLink {
      * Returns the server link {@link Component} display name.
      *
      * @return the server link display name
-     * @since 1.2.4
+     * @since 1.2.5
      */
     Component displayName;
 
@@ -56,7 +56,7 @@ public final class ServerLink {
      * Returns the server link {@link String} url.
      *
      * @return the server link url
-     * @since 1.2.4
+     * @since 1.2.5
      */
     String url;
 
