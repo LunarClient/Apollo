@@ -7,12 +7,16 @@ These utilities facilitate the creation of Apollo objects, commonly used across 
 ## Integration
 
 ```java
-public static UUID toJavaUuid(Uuid message) {
-    return new UUID(message.getHigh64(), message.getLow64());
+public static UUID toJavaUuid(JsonObject obj) {
+    long high = Long.parseUnsignedLong(obj.get("high64").getAsString());
+    long low = Long.parseUnsignedLong(obj.get("low64").getAsString());
+    return new UUID(high, low);
 }
 
-public static long toJavaTimestamp(Timestamp message) {
-    return message.getSeconds() * 1000 + message.getNanos() / 1000000;
+public static long toJavaTimestamp(JsonObject timestampObject) {
+    JsonObject packetInfo = timestampObject.getAsJsonObject("packet_info");
+    String iso = packetInfo.get("instantiation_time").getAsString();
+    return Instant.parse(iso).toEpochMilli();
 }
 
 public static Uuid createUuidProto(UUID object) {
@@ -73,14 +77,19 @@ public static BlockLocation createBlockLocationProto(Location location) {
         .build();
 }
 
-public static Location toBukkitLocation(com.lunarclient.apollo.common.v1.Location message) {
-    return new Location(Bukkit.getWorld(message.getWorld()), message.getX(), message.getY(), message.getZ());
+public static Location toBukkitLocation(JsonObject message) {
+    return new Location(
+        Bukkit.getWorld(message.get("world").getAsString()),
+        message.get("x").getAsDouble(),
+        message.get("y").getAsDouble(),
+        message.get("z").getAsDouble()
+    );
 }
 
-public static Location toBukkitLocation(com.lunarclient.apollo.common.v1.PlayerLocation message) {
-    Location location = ProtobufUtil.toBukkitLocation(message.getLocation());
-    location.setYaw(message.getYaw());
-    location.setPitch(message.getPitch());
+public static Location toBukkitPlayerLocation(JsonObject message) {
+    Location location = JsonUtil.toBukkitLocation(message.getAsJsonObject("location"));
+    location.setYaw(message.get("yaw").getAsFloat());
+    location.setPitch(message.get("pitch").getAsFloat());
     return location;
 }
 ```

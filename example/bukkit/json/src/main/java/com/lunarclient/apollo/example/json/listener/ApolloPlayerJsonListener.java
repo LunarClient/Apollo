@@ -49,7 +49,8 @@ public class ApolloPlayerJsonListener implements Listener {
 
         Messenger messenger = Bukkit.getServer().getMessenger();
         messenger.registerIncomingPluginChannel(plugin, "lunar:apollo", (s, player, bytes) -> { });
-        messenger.registerIncomingPluginChannel(plugin, "apollo:json", (s, player, bytes) -> { });
+        messenger.registerIncomingPluginChannel(plugin, "apollo:json", new ApolloRoundtripJsonListener(plugin));
+        messenger.registerIncomingPluginChannel(plugin, "apollo:json", new ApolloPacketReceiveJsonListener(plugin));
         messenger.registerOutgoingPluginChannel(plugin, "apollo:json");
 
         Bukkit.getPluginManager().registerEvents(this, plugin);

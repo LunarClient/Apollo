@@ -16,7 +16,7 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
     }
 
     @Override
-    public void onPluginMessageReceived(String s, Player player, byte[] bytes) {
+    public void onPluginMessageReceived(@NonNull String channel, @NonNull Player player, byte[] bytes) {
         try {
             Any any = Any.parseFrom(bytes);
 
@@ -33,6 +33,8 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
                 this.onPlayerChatClose(any.unpack(PlayerChatCloseMessage.class));
             } else if (any.is(PlayerUseItemMessage.class)) {
                 this.onPlayerUseItem(any.unpack(PlayerUseItemMessage.class));
+            } else if (any.is(PlayerUseItemBucketMessage.class)) {
+                this.onPlayerUseItemBucket(any.unpack(PlayerUseItemBucketMessage.class));
             }
         } catch (InvalidProtocolBufferException e) {
             throw new RuntimeException(e);
@@ -40,6 +42,7 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
     }
 
     private void onPlayerHandshake(PlayerHandshakeMessage message) {
+        EmbeddedCheckoutSupport checkoutSupport = message.getEmbeddedCheckoutSupport();
         MinecraftVersion minecraftVersion = message.getMinecraftVersion();
 
         LunarClientVersion lunarClientVersion = message.getLunarClientVersion();
@@ -89,9 +92,32 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
         boolean mainHand = message.getMainHand();
     }
 
+    private void onPlayerUseItemBucket(PlayerUseItemBucketMessage message) {
+        long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
+
+        PlayerInfo playerInfo = message.getPlayerInfo();
+        this.onPlayerInfo(playerInfo);
+
+        RayTraceResult rayTraceResult = message.getRayTraceResult();
+
+        if (rayTraceResult.hasBlock()) {
+            BlockHit blockHit = rayTraceResult.getBlock();
+
+            Location hitLocation = blockHit.getHitLocation();
+            BlockLocation blockLocation = blockHit.getBlockLocation();
+            Direction direction = blockHit.getDirection();
+        } else if (rayTraceResult.hasEntity()) {
+            EntityHit entityHit = rayTraceResult.getEntity();
+            Location hitLocation = entityHit.getHitLocation();
+            EntityId entityId = entityHit.getEntityId();
+        } else {
+            // Miss
+        }
+    }
+
     private void onPlayerInfo(PlayerInfo info) {
         UUID uuid = ProtobufUtil.toJavaUuid(info.getPlayerUuid());
-        Location location = ProtobufUtil.toBukkitLocation(info.getLocation());
+        org.bukkit.Location location = ProtobufUtil.toBukkitLocation(info.getLocation());
         boolean sneaking = info.getSneaking();
         boolean sprinting = info.getSprinting();
         boolean jumping = info.getJumping();

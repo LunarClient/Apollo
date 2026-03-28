@@ -21,15 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.proto.listener;
+package com.lunarclient.apollo.example.json.listener;
 
-import com.google.protobuf.Any;
-import com.google.protobuf.GeneratedMessageV3;
-import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
-import com.lunarclient.apollo.transfer.v1.PingResponse;
-import com.lunarclient.apollo.transfer.v1.TransferResponse;
+import com.lunarclient.apollo.example.json.util.JsonPacketUtil;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -44,48 +42,56 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jspecify.annotations.NonNull;
 
-public class ApolloRoundtripProtoListener implements PluginMessageListener {
+public class ApolloRoundtripJsonListener implements PluginMessageListener {
+
+    private static final String TYPE_PREFIX = "type.googleapis.com/";
+    private static final JsonParser JSON_PARSER = new JsonParser();
 
     @Getter
-    private static ApolloRoundtripProtoListener instance;
+    private static ApolloRoundtripJsonListener instance;
 
-    private final Map<UUID, Map<UUID, CompletableFuture<GeneratedMessageV3>>> roundTripPacketFutures = new ConcurrentHashMap<>();
+    private final Map<UUID, Map<UUID, CompletableFuture<JsonObject>>> roundTripPacketFutures = new ConcurrentHashMap<>();
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
-    public ApolloRoundtripProtoListener(ApolloExamplePlugin plugin) {
+    public ApolloRoundtripJsonListener(ApolloExamplePlugin plugin) {
         instance = this;
     }
 
     @Override
     public void onPluginMessageReceived(@NonNull String channel, @NonNull Player player, byte[] bytes) {
+        JsonObject payload;
         try {
-            Any any = Any.parseFrom(bytes);
+            payload = JSON_PARSER.parse(new String(bytes, StandardCharsets.UTF_8)).getAsJsonObject();
+        } catch (Exception e) {
+            return;
+        }
 
-            if (any.is(PingResponse.class)) {
-                PingResponse message = any.unpack(PingResponse.class);
-                UUID requestId = UUID.fromString(message.getRequestId().toStringUtf8());
-                this.handleResponse(player, requestId, message);
-            } else if (any.is(TransferResponse.class)) {
-                TransferResponse message = any.unpack(TransferResponse.class);
-                UUID requestId = UUID.fromString(message.getRequestId().toStringUtf8());
-                this.handleResponse(player, requestId, message);
-            }
+        if (!payload.has("@type")) {
+            return;
+        }
 
-        } catch (InvalidProtocolBufferException e) {
-            throw new RuntimeException(e);
+        String type = payload.get("@type").getAsString();
+        if (type.startsWith(TYPE_PREFIX)) {
+            type = type.substring(TYPE_PREFIX.length());
+        }
+
+        if ("lunarclient.apollo.transfer.v1.PingResponse".equals(type)
+                || "lunarclient.apollo.transfer.v1.TransferResponse".equals(type)) {
+            UUID requestId = UUID.fromString(payload.get("request_id").getAsString().replace("+", "-"));
+            this.handleResponse(player, requestId, payload);
         }
     }
 
-    public <T extends GeneratedMessageV3> CompletableFuture<T> sendRequest(Player player, UUID requestId,
-                                                                           GeneratedMessageV3 request,
-                                                                           Class<T> responseType) {
-        ProtobufPacketUtil.sendPacket(player, request);
+    public CompletableFuture<JsonObject> sendRequest(Player player, UUID requestId, JsonObject request, String requestType) {
+        request.addProperty("@type", TYPE_PREFIX + requestType);
+        request.addProperty("request_id", requestId.toString());
+        JsonPacketUtil.sendPacket(player, request);
 
-        CompletableFuture<T> future = new CompletableFuture<>();
+        CompletableFuture<JsonObject> future = new CompletableFuture<>();
 
         this.roundTripPacketFutures
             .computeIfAbsent(player.getUniqueId(), k -> new ConcurrentHashMap<>())
-            .put(requestId, (CompletableFuture<GeneratedMessageV3>) future);
+            .put(requestId, future);
 
         ScheduledFuture<?> timeoutTask = this.executorService.schedule(() ->
                 future.completeExceptionally(new TimeoutException("Response timed out")),
@@ -96,13 +102,13 @@ public class ApolloRoundtripProtoListener implements PluginMessageListener {
         return future;
     }
 
-    private <T extends GeneratedMessageV3> void handleResponse(Player player, UUID requestId, T message) {
-        Map<UUID, CompletableFuture<GeneratedMessageV3>> futures = this.roundTripPacketFutures.get(player.getUniqueId());
+    private void handleResponse(Player player, UUID requestId, JsonObject message) {
+        Map<UUID, CompletableFuture<JsonObject>> futures = this.roundTripPacketFutures.get(player.getUniqueId());
         if (futures == null) {
             return;
         }
 
-        CompletableFuture<GeneratedMessageV3> future = futures.remove(requestId);
+        CompletableFuture<JsonObject> future = futures.remove(requestId);
         if (future != null) {
             future.complete(message);
         }

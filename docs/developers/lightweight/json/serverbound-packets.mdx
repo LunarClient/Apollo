@@ -1,0 +1,144 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Serverbound Packets
+
+## Overview
+
+Players using Lunar Client may send packets to the server for specific Apollo modules, such as the `PacketEnrichment Module` and/or when the player is joining the server. This example demonstrates how to handle packets sent from the client that are related to Apollo while using JSON messages.
+
+Additionally, the `Transfer Module` expects a response packet from the client after the server sends a request. For an example of how to handle roundtrip packets, visit [Packet Roundtrip Example](/apollo/developers/lightweight/json/roundtrip-packets)
+
+<Callout type="info">
+    Note that this method uses a different plugin channel for
+    sending and receiving packets, which is `apollo:json`.
+</Callout>
+
+## Integration
+
+```java
+public class ApolloPacketReceiveJsonListener implements PluginMessageListener {
+
+    private static final String TYPE_PREFIX = "type.googleapis.com/";
+    private static final JsonParser JSON_PARSER = new JsonParser();
+
+    public ApolloPacketReceiveJsonListener(ApolloExamplePlugin plugin) {
+        Bukkit.getServer().getMessenger().registerIncomingPluginChannel(plugin, "apollo:json", this);
+    }
+
+    @Override
+    public void onPluginMessageReceived(@NonNull String channel, @NonNull Player player, byte[] bytes) {
+        JsonObject payload;
+        try {
+            payload = JSON_PARSER.parse(new String(bytes, StandardCharsets.UTF_8)).getAsJsonObject();
+        } catch (Exception e) {
+            return;
+        }
+
+        if (!payload.has("@type")) {
+            return;
+        }
+
+        String type = payload.get("@type").getAsString();
+        if (type.startsWith(TYPE_PREFIX)) {
+            type = type.substring(TYPE_PREFIX.length());
+        }
+
+        if ("lunarclient.apollo.player.v1.PlayerHandshakeMessage".equals(type)) {
+            this.onPlayerHandshake(payload);
+        }
+
+        // Packet Enrichment Module
+        if ("lunarclient.apollo.packetenrichment.v1.PlayerAttackMessage".equals(type)) {
+            this.onPlayerAttack(payload);
+        } else if ("lunarclient.apollo.packetenrichment.v1.PlayerChatOpenMessage".equals(type)) {
+            this.onPlayerChatOpen(payload);
+        } else if ("lunarclient.apollo.packetenrichment.v1.PlayerChatCloseMessage".equals(type)) {
+            this.onPlayerChatClose(payload);
+        } else if ("lunarclient.apollo.packetenrichment.v1.PlayerUseItemMessage".equals(type)) {
+            this.onPlayerUseItem(payload);
+        } else if ("lunarclient.apollo.packetenrichment.v1.PlayerUseItemBucketMessage".equals(type)) {
+            this.onPlayerUseItemBucket(payload);
+        }
+    }
+
+    private void onPlayerHandshake(JsonObject message) {
+        String checkoutSupport = message.get("embedded_checkout_support").getAsString();
+
+        JsonObject minecraftVersion = message.getAsJsonObject("minecraft_version");
+        String version = minecraftVersion.get("enum").getAsString();
+
+        JsonObject lunarClientVersion = message.getAsJsonObject("lunar_client_version");
+        String gitBranch = lunarClientVersion.get("git_branch").getAsString();
+        String gitCommit = lunarClientVersion.get("git_commit").getAsString();
+        String semVer = lunarClientVersion.get("semver").getAsString();
+
+        for (JsonElement element : message.getAsJsonArray("installed_mods")) {
+            JsonObject mod = element.getAsJsonObject();
+
+            String modId = mod.get("id").getAsString();
+            String displayName = mod.get("name").getAsString();
+            String modVersion = mod.get("version").getAsString();
+            String modType = mod.get("type").getAsString();
+        }
+    }
+
+    private void onPlayerAttack(JsonObject message) {
+        long instantiationTimeMs = JsonUtil.toJavaTimestamp(message);
+
+        JsonObject targetInfo = message.getAsJsonObject("target_info");
+        JsonObject attackerInfo = message.getAsJsonObject("attacker_info");
+
+        this.onPlayerInfo(targetInfo);
+        this.onPlayerInfo(attackerInfo);
+    }
+
+    private void onPlayerChatOpen(JsonObject message) {
+        long instantiationTimeMs = JsonUtil.toJavaTimestamp(message);
+        this.onPlayerInfo(message.getAsJsonObject("player_info"));
+    }
+
+    private void onPlayerChatClose(JsonObject message) {
+        long instantiationTimeMs = JsonUtil.toJavaTimestamp(message);
+        this.onPlayerInfo(message.getAsJsonObject("player_info"));
+    }
+
+    private void onPlayerUseItem(JsonObject message) {
+        long instantiationTimeMs = JsonUtil.toJavaTimestamp(message);
+        this.onPlayerInfo(message.getAsJsonObject("player_info"));
+
+        boolean mainHand = message.get("main_hand").getAsBoolean();
+    }
+
+    private void onPlayerUseItemBucket(JsonObject message) {
+        long instantiationTimeMs = JsonUtil.toJavaTimestamp(message);
+        this.onPlayerInfo(message.getAsJsonObject("player_info"));
+
+        JsonObject rayTraceResult = message.getAsJsonObject("ray_trace_result");
+
+        if (rayTraceResult.has("block")) {
+            JsonObject blockHit = rayTraceResult.getAsJsonObject("block");
+
+            JsonObject hitLocation = blockHit.getAsJsonObject("hit_location");
+            JsonObject blockLocation = blockHit.getAsJsonObject("block_location");
+            String directionStr = blockHit.get("direction").getAsString();
+        } else if (rayTraceResult.has("entity")) {
+            JsonObject entityHit = rayTraceResult.getAsJsonObject("entity");
+
+            JsonObject hitLocation = entityHit.getAsJsonObject("hit_location");
+            String entityId = entityHit.get("entity_id").getAsString();
+        } else {
+            // MISS
+        }
+    }
+
+    private void onPlayerInfo(JsonObject info) {
+        UUID uuid = JsonUtil.toJavaUuid(info.getAsJsonObject("player_uuid"));
+        Location location = JsonUtil.toBukkitPlayerLocation(info.getAsJsonObject("location"));
+        boolean sneaking = info.get("sneaking").getAsBoolean();
+        boolean sprinting = info.get("sprinting").getAsBoolean();
+        boolean jumping = info.get("jumping").getAsBoolean();
+        float forwardSpeed = info.get("forward_speed").getAsFloat();
+        float strafeSpeed = info.get("strafe_speed").getAsFloat();
+    }
+}
+```
