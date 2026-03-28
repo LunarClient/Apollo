@@ -41,9 +41,9 @@ import org.bukkit.entity.Player;
 
 public final class ProtobufPacketUtil {
 
-    private static final List<String> APOLLO_MODULES = Arrays.asList("limb", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
-        "entity", "glow", "hologram", "mod_setting", "nametag", "nick_hider", "notification", "packet_enrichment", "rich_presence",
-        "server_rule", "staff_mod", "stopwatch", "team", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
+    private static final List<String> APOLLO_MODULES = Arrays.asList("auto_text_hotkey", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
+        "entity", "glint", "glow", "hologram", "inventory", "limb", "mod_setting", "nametag", "nick_hider", "notification", "pay_now", "packet_enrichment",
+        "rich_presence", "saturation", "server_rule", "staff_mod", "stopwatch", "team", "tebex", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
     );
 
     // Module Id -> Option key -> Value
@@ -53,6 +53,11 @@ public final class ProtobufPacketUtil {
         // Module Options that the client needs to notified about, these properties are sent with the enable module packet
         // While using the Apollo plugin this would be equivalent to modifying the config.yml
         CONFIG_MODULE_PROPERTIES.put("combat", "disable-miss-penalty", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-attack.send-packet", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-chat-open.send-packet", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-chat-close.send-packet", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-use-item.send-packet", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-use-item-bucket.send-packet", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-game", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("server_rule", "competitive-commands", Value.newBuilder().setListValue(
             ListValue.newBuilder().addAllValues(Arrays.asList(
