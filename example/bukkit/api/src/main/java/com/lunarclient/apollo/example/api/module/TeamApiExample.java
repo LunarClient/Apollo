@@ -23,7 +23,6 @@
  */
 package com.lunarclient.apollo.example.api.module;
 
-import com.google.common.collect.Maps;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
@@ -31,15 +30,16 @@ import com.lunarclient.apollo.example.module.impl.TeamExample;
 import com.lunarclient.apollo.example.util.ServerUtil;
 import com.lunarclient.apollo.module.team.TeamMember;
 import com.lunarclient.apollo.module.team.TeamModule;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -53,8 +53,8 @@ public class TeamApiExample extends TeamExample implements Listener {
 
     private final TeamModule teamModule = Apollo.getModuleManager().getModule(TeamModule.class);
 
-    private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
-    private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
+    private final Map<UUID, Team> teamsByTeamId = new ConcurrentHashMap<>();
+    private final Map<UUID, Team> teamsByPlayerUuid = new ConcurrentHashMap<>();
 
     public TeamApiExample() {
         if (ServerUtil.isFolia()) {
@@ -117,7 +117,7 @@ public class TeamApiExample extends TeamExample implements Listener {
 
         public Team() {
             this.teamId = UUID.randomUUID();
-            this.members = new HashMap<>();
+            this.members = new ConcurrentHashMap<>();
         }
 
         public void addMember(Player player) {
@@ -133,34 +133,78 @@ public class TeamApiExample extends TeamExample implements Listener {
                 .ifPresent(TeamApiExample.this.teamModule::resetTeamMembers);
         }
 
-        private TeamMember createTeamMember(Player member) {
-            Location location = member.getLocation();
+        private TeamMember createTeamMember(Player player, boolean withinPlayerTrackingRange) {
+            TeamMember.TeamMemberBuilder builder = TeamMember.builder()
+                .playerUuid(player.getUniqueId())
+                .markerColor(Color.WHITE);
 
-            return TeamMember.builder()
-                .playerUuid(member.getUniqueId())
-                .displayName(Component.text()
-                    .content(member.getName())
-                    .color(NamedTextColor.WHITE)
-                    .build())
-                .markerColor(Color.WHITE)
-                .location(ApolloLocation.builder()
+            if (!withinPlayerTrackingRange) {
+                Location location = player.getLocation();
+
+                builder.location(ApolloLocation.builder()
                     .world(location.getWorld().getName())
                     .x(location.getX())
                     .y(location.getY())
                     .z(location.getZ())
-                    .build())
-                .build();
+                    .build());
+
+                builder.displayName(Component.text()
+                    .content(player.getName())
+                    .color(NamedTextColor.WHITE)
+                    .build());
+            }
+
+            return builder.build();
         }
 
-        // The refresh method used for updating members locations
         public void refresh() {
-            List<TeamMember> teammates = this.members.values()
-                .stream().filter(Player::isOnline)
-                .map(this::createTeamMember)
-                .collect(Collectors.toList());
+            for (Player viewer : this.members.values()) {
+                Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+                if (!apolloPlayerOpt.isPresent()) {
+                    continue;
+                }
 
-            this.members.values().forEach(member -> Apollo.getPlayerManager().getPlayer(member.getUniqueId())
-                .ifPresent(apolloPlayer -> TeamApiExample.this.teamModule.updateTeamMembers(apolloPlayer, teammates)));
+                List<TeamMember> teammates = new ArrayList<>();
+
+                for (Player member : this.members.values()) {
+                    if (viewer == member) {
+                        continue;
+                    }
+
+                    if (!viewer.canSee(member)) {
+                        continue;
+                    }
+
+                    if (!viewer.getWorld().getName().equals(member.getWorld().getName())) {
+                        continue;
+                    }
+
+                    boolean withinPlayerTrackingRange = this.isWithinPlayerTrackingRange(viewer, member);
+                    teammates.add(this.createTeamMember(member, withinPlayerTrackingRange));
+                }
+
+                apolloPlayerOpt.ifPresent(apolloPlayer -> {
+                    TeamApiExample.this.teamModule.updateTeamMembers(apolloPlayer, teammates);
+                });
+            }
+        }
+
+        /**
+         * <p>This uses a simple distance check based on Paper/Spigot defaults
+         * (96 blocks for players). Ideally, this could be checked directly through
+         * the server's internal entity tracker for exact tracking behavior, but that
+         * is not exposed in the Bukkit API.</p>
+         *
+         * @param viewer the viewer
+         * @param member the member
+         * @return whether within player tracking range
+         */
+        private boolean isWithinPlayerTrackingRange(Player viewer, Player member) {
+            double maxDistance = 96;
+            double dx = viewer.getLocation().getX() - member.getLocation().getX();
+            double dz = viewer.getLocation().getZ() - member.getLocation().getZ();
+
+            return (dx * dx + dz * dz) <= (maxDistance * maxDistance);
         }
 
         public UUID getTeamId() {

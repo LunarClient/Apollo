@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.example.proto.module;
 
-import com.google.common.collect.Maps;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.module.impl.TeamExample;
+import com.lunarclient.apollo.example.proto.listener.ApolloPlayerProtoListener;
 import com.lunarclient.apollo.example.proto.util.AdventureUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
@@ -34,14 +34,14 @@ import com.lunarclient.apollo.team.v1.ResetTeamMembersMessage;
 import com.lunarclient.apollo.team.v1.TeamMember;
 import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -52,8 +52,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class TeamProtoExample extends TeamExample implements Listener {
 
-    private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
-    private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
+    private final Map<UUID, Team> teamsByTeamId = new ConcurrentHashMap<>();
+    private final Map<UUID, Team> teamsByPlayerUuid = new ConcurrentHashMap<>();
 
     public TeamProtoExample() {
         if (ServerUtil.isFolia()) {
@@ -116,7 +116,7 @@ public class TeamProtoExample extends TeamExample implements Listener {
 
         public Team() {
             this.teamId = UUID.randomUUID();
-            this.members = new HashMap<>();
+            this.members = new ConcurrentHashMap<>();
         }
 
         public void addMember(Player player) {
@@ -132,31 +132,75 @@ public class TeamProtoExample extends TeamExample implements Listener {
             ProtobufPacketUtil.sendPacket(player, message);
         }
 
-        private TeamMember createTeamMember(Player member) {
-            return TeamMember.newBuilder()
-                .setPlayerUuid(ProtobufUtil.createUuidProto(member.getUniqueId()))
-                .setAdventureJsonPlayerName(AdventureUtil.toJson(
+        private TeamMember createTeamMember(Player player, boolean withinPlayerTrackingRange) {
+            TeamMember.Builder builder = TeamMember.newBuilder()
+                .setPlayerUuid(ProtobufUtil.createUuidProto(player.getUniqueId()))
+                .setMarkerColor(ProtobufUtil.createColorProto(Color.WHITE));
+
+            if (!withinPlayerTrackingRange) {
+                builder.setLocation(ProtobufUtil.createLocationProto(player.getLocation()));
+
+                builder.setAdventureJsonPlayerName(AdventureUtil.toJson(
                     Component.text()
-                        .content(member.getName())
+                        .content(player.getName())
                         .color(NamedTextColor.WHITE)
                         .build()
-                ))
-                .setMarkerColor(ProtobufUtil.createColorProto(Color.WHITE))
-                .setLocation(ProtobufUtil.createLocationProto(member.getLocation()))
-                .build();
+                ));
+            }
+
+            return builder.build();
         }
 
         // The refresh method used for updating members locations
         public void refresh() {
-            List<TeamMember> teammates = this.members.values().stream().filter(Player::isOnline)
-                .map(this::createTeamMember)
-                .collect(Collectors.toList());
+            for (Player viewer : this.members.values()) {
+                if (!ApolloPlayerProtoListener.isPlayerRunningApollo(viewer)) {
+                    continue;
+                }
 
-            UpdateTeamMembersMessage message = UpdateTeamMembersMessage.newBuilder()
-                .addAllMembers(teammates)
-                .build();
+                List<TeamMember> teammates = new ArrayList<>();
 
-            this.members.values().forEach(member -> ProtobufPacketUtil.sendPacket(member, message));
+                for (Player member : this.members.values()) {
+                    if (viewer == member) {
+                        continue;
+                    }
+
+                    if (!viewer.canSee(member)) {
+                        continue;
+                    }
+
+                    if (!viewer.getWorld().getName().equals(member.getWorld().getName())) {
+                        continue;
+                    }
+
+                    boolean withinPlayerTrackingRange = this.isWithinPlayerTrackingRange(viewer, member);
+                    teammates.add(this.createTeamMember(member, withinPlayerTrackingRange));
+                }
+
+                UpdateTeamMembersMessage message = UpdateTeamMembersMessage.newBuilder()
+                    .addAllMembers(teammates)
+                    .build();
+
+                ProtobufPacketUtil.sendPacket(viewer, message);
+            }
+        }
+
+        /**
+         * <p>This uses a simple distance check based on Paper/Spigot defaults
+         * (96 blocks for players). Ideally, this could be checked directly through
+         * the server's internal entity tracker for exact tracking behavior, but that
+         * is not exposed in the Bukkit API.</p>
+         *
+         * @param viewer the viewer
+         * @param member the member
+         * @return whether within player tracking range
+         */
+        private boolean isWithinPlayerTrackingRange(Player viewer, Player member) {
+            double maxDistance = 96;
+            double dx = viewer.getLocation().getX() - member.getLocation().getX();
+            double dz = viewer.getLocation().getZ() - member.getLocation().getZ();
+
+            return (dx * dx + dz * dz) <= (maxDistance * maxDistance);
         }
 
         public UUID getTeamId() {
