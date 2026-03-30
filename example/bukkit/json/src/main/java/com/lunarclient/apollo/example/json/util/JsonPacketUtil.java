@@ -49,7 +49,7 @@ public final class JsonPacketUtil {
     private static final Table<String, String, Object> CONFIG_MODULE_PROPERTIES = HashBasedTable.create();
 
     static {
-        // Module Options that the client needs to notified about, these properties are sent with the enable module packet
+        // Module Options the client needs to be notified about. These properties are sent with the enable module packet.
         // While using the Apollo plugin this would be equivalent to modifying the config.yml
         CONFIG_MODULE_PROPERTIES.put("combat", "disable-miss-penalty", false);
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-attack.send-packet", false);
