@@ -26,14 +26,28 @@ package com.lunarclient.apollo.example.json.util;
 import com.google.gson.JsonObject;
 import java.awt.Color;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public final class JsonUtil {
+
+    public static UUID toJavaUuid(JsonObject obj) {
+        long high = Long.parseUnsignedLong(obj.get("high64").getAsString());
+        long low = Long.parseUnsignedLong(obj.get("low64").getAsString());
+        return new UUID(high, low);
+    }
+
+    public static long toJavaTimestamp(JsonObject timestampObject) {
+        JsonObject packetInfo = timestampObject.getAsJsonObject("packet_info");
+        String iso = packetInfo.get("instantiation_time").getAsString();
+        return Instant.parse(iso).toEpochMilli();
+    }
 
     public static JsonObject createEnableModuleObjectWithType(@NotNull String module, Map<String, Object> properties) {
         JsonObject enableModuleObject = JsonPacketUtil.createEnableModuleObject(module, properties);
@@ -103,6 +117,22 @@ public final class JsonUtil {
         locationObject.addProperty("y", location.getBlockY());
         locationObject.addProperty("z", location.getBlockZ());
         return locationObject;
+    }
+
+    public static Location toBukkitLocation(JsonObject message) {
+        return new Location(
+            Bukkit.getWorld(message.get("world").getAsString()),
+            message.get("x").getAsDouble(),
+            message.get("y").getAsDouble(),
+            message.get("z").getAsDouble()
+        );
+    }
+
+    public static Location toBukkitPlayerLocation(JsonObject message) {
+        Location location = JsonUtil.toBukkitLocation(message.getAsJsonObject("location"));
+        location.setYaw(message.get("yaw").getAsFloat());
+        location.setPitch(message.get("pitch").getAsFloat());
+        return location;
     }
 
     public static JsonObject createItemStackIconObject(@Nullable String itemName, int itemId, int customModelData) {
