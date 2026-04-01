@@ -29,6 +29,7 @@ import com.lunarclient.apollo.cooldown.v1.ResetCooldownsMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
+import java.awt.Color;
 import lombok.NonNull;
 
 /**
@@ -40,12 +41,17 @@ public final class CooldownModuleImpl extends CooldownModule {
 
     @Override
     public void displayCooldown(@NonNull Recipients recipients, @NonNull Cooldown cooldown) {
-        DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
+        DisplayCooldownMessage.Builder builder = DisplayCooldownMessage.newBuilder()
             .setName(cooldown.getName())
             .setDuration(NetworkTypes.toProtobuf(cooldown.getDuration()))
-            .setIcon(NetworkTypes.toProtobuf(cooldown.getIcon()))
-            .build();
+            .setIcon(NetworkTypes.toProtobuf(cooldown.getIcon()));
 
+        CooldownStyle style = cooldown.getStyle();
+        if (style != null) {
+            builder.setStyle(this.toProtobuf(style));
+        }
+
+        DisplayCooldownMessage message = builder.build();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
@@ -67,6 +73,32 @@ public final class CooldownModuleImpl extends CooldownModule {
     public void resetCooldowns(@NonNull Recipients recipients) {
         ResetCooldownsMessage message = ResetCooldownsMessage.getDefaultInstance();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    private com.lunarclient.apollo.cooldown.v1.CooldownStyle toProtobuf(CooldownStyle style) {
+        com.lunarclient.apollo.cooldown.v1.CooldownStyle.Builder builder = com.lunarclient.apollo.cooldown.v1.CooldownStyle.newBuilder();
+
+        Color circleStartColor = style.getCircleStartColor();
+        if (circleStartColor != null) {
+            builder.setCircleStartColor(NetworkTypes.toProtobuf(circleStartColor));
+        }
+
+        Color circleEndColor = style.getCircleEndColor();
+        if (circleEndColor != null) {
+            builder.setCircleEndColor(NetworkTypes.toProtobuf(circleEndColor));
+        }
+
+        Color circleEdgeColor = style.getCircleEdgeColor();
+        if (circleEdgeColor != null) {
+            builder.setCircleEdgeColor(NetworkTypes.toProtobuf(circleEdgeColor));
+        }
+
+        Color textColor = style.getTextColor();
+        if (textColor != null) {
+            builder.setTextColor(NetworkTypes.toProtobuf(textColor));
+        }
+
+        return builder.build();
     }
 
 }

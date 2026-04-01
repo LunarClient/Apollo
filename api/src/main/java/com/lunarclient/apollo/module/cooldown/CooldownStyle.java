@@ -23,56 +23,50 @@
  */
 package com.lunarclient.apollo.module.cooldown;
 
-import com.lunarclient.apollo.common.icon.Icon;
-import java.time.Duration;
+import java.awt.Color;
 import lombok.Builder;
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents a cooldown which can be shown on the client.
+ * Represents the {@link Cooldown} style, allowing customization of the circle start, end, edge & text color.
  *
- * @since 1.0.0
+ * @since 1.2.5
  */
 @Getter
 @Builder
-public final class Cooldown {
+public final class CooldownStyle {
 
     /**
-     * Returns the cooldown {@link String} name.
+     * Returns the cooldown circle start {@link Color}.
      *
-     * @return the cooldown name
-     * @since 1.0.0
-     */
-    String name;
-
-    /**
-     * Returns the cooldown {@link Duration}.
-     *
-     * @return the cooldown duration
-     * @since 1.0.0
-     */
-    Duration duration;
-
-    /**
-     * Returns the cooldown {@link Icon}.
-     *
-     * <p>Can be any of the icons found in {@link com.lunarclient.apollo.common.icon} package,
-     * for the most common use case, use {@link com.lunarclient.apollo.common.icon.ItemStackIcon}.</p>
-     *
-     * @return the cooldown icon
-     * @since 1.0.0
-     */
-    Icon icon;
-
-    /**
-     * Returns the cooldown {@link CooldownStyle}.
-     *
-     * <p>If {@code null}, the style defaults to the user's local Cooldown Mod settings.</p>
-     *
-     * @return the cooldown style
+     * @return the circle start color
      * @since 1.2.5
      */
-    @Nullable CooldownStyle style;
+    @Nullable Color circleStartColor;
+
+    /**
+     * Returns the cooldown circle end {@link Color}.
+     *
+     * @return the circle end color
+     * @since 1.2.5
+     */
+    @Nullable Color circleEndColor;
+
+    /**
+     * Returns the cooldown circle edge {@link Color}.
+     *
+     * @return the circle edge color
+     * @since 1.2.5
+     */
+    @Nullable Color circleEdgeColor;
+
+    /**
+     * Returns the cooldown text {@link Color}.
+     *
+     * @return the text color
+     * @since 1.2.5
+     */
+    @Nullable Color textColor;
 
 }
