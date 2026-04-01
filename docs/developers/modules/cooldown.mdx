@@ -45,6 +45,31 @@ public void displayCooldownItemExample(Player viewer) {
 }
 ```
 
+### Displaying a Cooldown with a custom style
+
+```java
+public void displayCooldownWithStyleExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.cooldownModule.displayCooldown(apolloPlayer, Cooldown.builder()
+            .name("book-cooldown")
+            .duration(Duration.ofSeconds(30))
+            .icon(ItemStackIcon.builder()
+                .itemName("BOOK")
+                .build())
+            .style(CooldownStyle.builder()
+                .circleStartColor(ApolloColors.RED)
+                .circleEndColor(ApolloColors.GREEN)
+                .circleEdgeColor(ApolloColors.DARK_GRAY)
+                .textColor(ApolloColors.LIGHT_PURPLE)
+                .build())
+            .build()
+        );
+    });
+}
+```
+
 ### Displaying a Cooldown with a resource
 
 ```java
@@ -56,8 +81,8 @@ public void displayCooldownResourceExample(Player viewer) {
             .name("lunar-cooldown")
             .duration(Duration.ofSeconds(15))
             .icon(SimpleResourceLocationIcon.builder()
-                .resourceLocation("lunar:logo/logo-200x182.svg")
-                .size(12)
+                .resourceLocation("lunar:logo/logo-64x64.png")
+                .size(24)
                 .build()
             )
             .build()
@@ -74,6 +99,7 @@ public void removeCooldownExample(Player viewer) {
 
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
         this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown");
+        this.cooldownModule.removeCooldown(apolloPlayer, "book-cooldown");
         this.cooldownModule.removeCooldown(apolloPlayer, "lunar-cooldown");
     });
 }
@@ -107,8 +133,42 @@ public void resetCooldownsExample(Player viewer) {
 
 `.icon(SimpleResourceLocationIcon)` is how you display a custom texture icon. Read the [icons utilities page](/apollo/developers/utilities/icons) to learn more about icons.
 ```java
-.icon(SimpleResourceLocationIcon.builder().resourceLocation("lunar:logo/logo-200x182.svg").size(12).build())
+.icon(SimpleResourceLocationIcon.builder().resourceLocation("lunar:logo/logo-64x64.png").size(24).build())
 ```
+
+`.style(CooldownStyle)` is how you customize the visual appearance of the cooldown circle and text. See the `CooldownStyle` section below for more.
+```java
+.style(CooldownStyle.builder()
+    .circleStartColor(ApolloColors.RED)
+    .circleEndColor(ApolloColors.GREEN)
+    .circleEdgeColor(ApolloColors.DARK_GRAY)
+    .textColor(ApolloColors.LIGHT_PURPLE)
+    .build())
+```
+
+### `CooldownStyle` Options
+
+`.circleStartColor(java.awt.Color)` is the color displayed at the start of the cooldown circle animation. See the [colors page](/apollo/developers/utilities/colors) for more.
+```java
+.circleStartColor(ApolloColors.RED)
+```
+
+`.circleEndColor(java.awt.Color)` is the color displayed at the end of the cooldown circle animation. See the [colors page](/apollo/developers/utilities/colors) for more.
+```java
+.circleEndColor(ApolloColors.GREEN)
+```
+
+`.circleEdgeColor(java.awt.Color)` is the color of the circle's edge/border. See the [colors page](/apollo/developers/utilities/colors) for more.
+```java
+.circleEdgeColor(ApolloColors.DARK_GRAY)
+```
+
+`.textColor(java.awt.Color)` is the color of the cooldown timer text rendered in the center of the circle. See the [colors page](/apollo/developers/utilities/colors) for more.
+```java
+.textColor(ApolloColors.LIGHT_PURPLE)
+```
+
+All `CooldownStyle` fields are optional; any field left unset will fall back to the client's default value.
 
 </Tab>
 
@@ -128,6 +188,26 @@ public void displayCooldownItemExample(Player viewer) {
 }
 ```
 
+**Displaying a Cooldown with a custom style**
+
+```java
+public void displayCooldownWithStyleExample(Player viewer) {
+    DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
+        .setName("book-cooldown")
+        .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(30)))
+        .setIcon(ProtobufUtil.createItemStackIconProto("BOOK", 0, 0))
+        .setStyle(CooldownStyle.newBuilder()
+            .setCircleStartColor(ProtobufUtil.createColorProto(new Color(255, 85, 85))) // ApolloColors.RED
+            .setCircleEndColor(ProtobufUtil.createColorProto(new Color(85, 255, 85))) // ApolloColors.GREEN
+            .setCircleEdgeColor(ProtobufUtil.createColorProto(new Color(85, 85, 85))) // ApolloColors.DAR_GRAY
+            .setTextColor(ProtobufUtil.createColorProto(new Color(255, 85, 255))) // ApolloColors.LIGHT_PURPLE
+            .build())
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
 **Displaying a Cooldown with a resource**
 
 ```java
@@ -135,7 +215,7 @@ public void displayCooldownResourceExample(Player viewer) {
     DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
         .setName("lunar-cooldown")
         .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
-        .setIcon(ProtobufUtil.createSimpleResourceLocationIconProto("lunar:logo/logo-200x182.svg", 12))
+        .setIcon(ProtobufUtil.createSimpleResourceLocationIconProto("lunar:logo/logo-64x64.png", 24))
         .build();
 
     ProtobufPacketUtil.sendPacket(viewer, message);
@@ -181,6 +261,27 @@ public void displayCooldownItemExample(Player viewer) {
 }
 ```
 
+**Displaying a Cooldown with a custom style**
+
+```java
+public void displayCooldownWithStyleExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
+    message.addProperty("name", "book-cooldown");
+    message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(30)));
+    message.add("icon", JsonUtil.createItemStackIconObject("BOOK", 0, 0));
+
+    JsonObject style = new JsonObject();
+    style.add("circle_start_color", JsonUtil.createColorObject(new Color(255, 85, 85))); // ApolloColors.RED
+    style.add("circle_end_color", JsonUtil.createColorObject(new Color(85, 255, 85))); // ApolloColors.GREEN
+    style.add("circle_edge_color", JsonUtil.createColorObject(new Color(85, 85, 85))); // ApolloColors.DAR_GRAY
+    style.add("text_color", JsonUtil.createColorObject(new Color(255, 85, 255))); // ApolloColors.LIGHT_PURPLE
+    message.add("style", style);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
 **Displaying a Cooldown with a resource**
 
 ```java
@@ -189,7 +290,7 @@ public void displayCooldownResourceExample(Player viewer) {
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
     message.addProperty("name", "lunar-cooldown");
     message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
-    message.add("icon", JsonUtil.createSimpleResourceLocationIconObject("lunar:logo/logo-200x182.svg", 12));
+    message.add("icon", JsonUtil.createSimpleResourceLocationIconObject("lunar:logo/logo-64x64.png", 24));
 
     JsonPacketUtil.sendPacket(viewer, message);
 }
