@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,23 +25,31 @@ package com.lunarclient.apollo.example.proto.listener;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.lunarclient.apollo.common.v1.BlockLocation;
+import com.lunarclient.apollo.common.v1.EntityId;
+import com.lunarclient.apollo.common.v1.Location;
 import com.lunarclient.apollo.common.v1.LunarClientVersion;
 import com.lunarclient.apollo.common.v1.MinecraftVersion;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
+import com.lunarclient.apollo.packetenrichment.v1.BlockHit;
+import com.lunarclient.apollo.packetenrichment.v1.Direction;
+import com.lunarclient.apollo.packetenrichment.v1.EntityHit;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerAttackMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerChatCloseMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerChatOpenMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerInfo;
+import com.lunarclient.apollo.packetenrichment.v1.PlayerUseItemBucketMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerUseItemMessage;
+import com.lunarclient.apollo.packetenrichment.v1.RayTraceResult;
 import com.lunarclient.apollo.player.v1.EmbeddedCheckoutSupport;
 import com.lunarclient.apollo.player.v1.ModMessage;
 import com.lunarclient.apollo.player.v1.PlayerHandshakeMessage;
 import java.util.List;
 import java.util.UUID;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.jspecify.annotations.NonNull;
 
 public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
 
@@ -50,7 +58,7 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
     }
 
     @Override
-    public void onPluginMessageReceived(String s, Player player, byte[] bytes) {
+    public void onPluginMessageReceived(@NonNull String channel, @NonNull Player player, byte[] bytes) {
         try {
             Any any = Any.parseFrom(bytes);
 
@@ -67,6 +75,8 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
                 this.onPlayerChatClose(any.unpack(PlayerChatCloseMessage.class));
             } else if (any.is(PlayerUseItemMessage.class)) {
                 this.onPlayerUseItem(any.unpack(PlayerUseItemMessage.class));
+            } else if (any.is(PlayerUseItemBucketMessage.class)) {
+                this.onPlayerUseItemBucket(any.unpack(PlayerUseItemBucketMessage.class));
             }
         } catch (InvalidProtocolBufferException e) {
             throw new RuntimeException(e);
@@ -74,10 +84,10 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
     }
 
     private void onPlayerHandshake(PlayerHandshakeMessage message) {
+        EmbeddedCheckoutSupport checkoutSupport = message.getEmbeddedCheckoutSupport();
         MinecraftVersion minecraftVersion = message.getMinecraftVersion();
 
         LunarClientVersion lunarClientVersion = message.getLunarClientVersion();
-        EmbeddedCheckoutSupport checkoutSupport = message.getEmbeddedCheckoutSupport();
         String gitBranch = lunarClientVersion.getGitBranch();
         String gitCommit = lunarClientVersion.getGitCommit();
         String semVer = lunarClientVersion.getSemver();
@@ -124,9 +134,32 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
         boolean mainHand = message.getMainHand();
     }
 
+    private void onPlayerUseItemBucket(PlayerUseItemBucketMessage message) {
+        long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
+
+        PlayerInfo playerInfo = message.getPlayerInfo();
+        this.onPlayerInfo(playerInfo);
+
+        RayTraceResult rayTraceResult = message.getRayTraceResult();
+
+        if (rayTraceResult.hasBlock()) {
+            BlockHit blockHit = rayTraceResult.getBlock();
+
+            Location hitLocation = blockHit.getHitLocation();
+            BlockLocation blockLocation = blockHit.getBlockLocation();
+            Direction direction = blockHit.getDirection();
+        } else if (rayTraceResult.hasEntity()) {
+            EntityHit entityHit = rayTraceResult.getEntity();
+            Location hitLocation = entityHit.getHitLocation();
+            EntityId entityId = entityHit.getEntityId();
+        } else {
+            // Miss
+        }
+    }
+
     private void onPlayerInfo(PlayerInfo info) {
         UUID uuid = ProtobufUtil.toJavaUuid(info.getPlayerUuid());
-        Location location = ProtobufUtil.toBukkitLocation(info.getLocation());
+        org.bukkit.Location location = ProtobufUtil.toBukkitLocation(info.getLocation());
         boolean sneaking = info.getSneaking();
         boolean sprinting = info.getSprinting();
         boolean jumping = info.getJumping();

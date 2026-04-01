@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,8 @@ public class ApolloPlayerJsonListener implements Listener {
 
         Messenger messenger = Bukkit.getServer().getMessenger();
         messenger.registerIncomingPluginChannel(plugin, "lunar:apollo", (s, player, bytes) -> { });
-        messenger.registerIncomingPluginChannel(plugin, "apollo:json", (s, player, bytes) -> { });
+        messenger.registerIncomingPluginChannel(plugin, "apollo:json", new ApolloRoundtripJsonListener(plugin));
+        messenger.registerIncomingPluginChannel(plugin, "apollo:json", new ApolloPacketReceiveJsonListener(plugin));
         messenger.registerOutgoingPluginChannel(plugin, "apollo:json");
 
         Bukkit.getPluginManager().registerEvents(this, plugin);

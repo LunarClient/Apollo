@@ -21,7 +21,7 @@ public class ApolloRoundtripProtoListener implements PluginMessageListener {
     }
 
     @Override
-    public void onPluginMessageReceived(String s, Player player, byte[] bytes) {
+    public void onPluginMessageReceived(@NonNull String channel, @NonNull Player player, byte[] bytes) {
         try {
             Any any = Any.parseFrom(bytes);
 

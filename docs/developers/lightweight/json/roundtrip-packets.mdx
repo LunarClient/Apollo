@@ -1,0 +1,90 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Roundtrip Packets
+
+## Overview
+
+This example demonstrates how to handle roundtrip packets between the server and the Lunar Client using JSON messages. These packets are sent from the server, expecting a corresponding response from the client. The example utilizes a map to track the requests and their corresponding responses.
+
+<Callout type="info">
+    Note that this method uses a different plugin channel for
+    sending and receiving packets, which is `apollo:json`.
+</Callout>
+
+## Integration
+
+```java
+public class ApolloRoundtripJsonListener implements PluginMessageListener {
+
+    private static final String TYPE_PREFIX = "type.googleapis.com/";
+    private static final JsonParser JSON_PARSER = new JsonParser();
+
+    @Getter
+    private static ApolloRoundtripJsonListener instance;
+
+    private final Map<UUID, Map<UUID, CompletableFuture<JsonObject>>> roundTripPacketFutures = new ConcurrentHashMap<>();
+    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+
+    public ApolloRoundtripJsonListener(ApolloExamplePlugin plugin) {
+        instance = this;
+        Bukkit.getServer().getMessenger().registerIncomingPluginChannel(plugin, "apollo:json", this);
+    }
+
+    @Override
+    public void onPluginMessageReceived(@NonNull String channel, @NonNull Player player, byte[] bytes) {
+        JsonObject payload;
+        try {
+            payload = JSON_PARSER.parse(new String(bytes, StandardCharsets.UTF_8)).getAsJsonObject();
+        } catch (Exception e) {
+            return;
+        }
+
+        if (!payload.has("@type")) {
+            return;
+        }
+
+        String type = payload.get("@type").getAsString();
+        if (type.startsWith(TYPE_PREFIX)) {
+            type = type.substring(TYPE_PREFIX.length());
+        }
+
+        if ("lunarclient.apollo.transfer.v1.PingResponse".equals(type)
+                || "lunarclient.apollo.transfer.v1.TransferResponse".equals(type)) {
+            UUID requestId = UUID.fromString(payload.get("request_id").getAsString().replace("+", "-"));
+            this.handleResponse(player, requestId, payload);
+        }
+    }
+
+    public CompletableFuture<JsonObject> sendRequest(Player player, UUID requestId, JsonObject request, String requestType) {
+        request.addProperty("@type", TYPE_PREFIX + requestType);
+        request.addProperty("request_id", requestId.toString());
+        JsonPacketUtil.sendPacket(player, request);
+
+        CompletableFuture<JsonObject> future = new CompletableFuture<>();
+
+        this.roundTripPacketFutures
+            .computeIfAbsent(player.getUniqueId(), k -> new ConcurrentHashMap<>())
+            .put(requestId, future);
+
+        ScheduledFuture<?> timeoutTask = this.executorService.schedule(() ->
+                future.completeExceptionally(new TimeoutException("Response timed out")),
+            10, TimeUnit.SECONDS
+        );
+
+        future.whenComplete((result, throwable) -> timeoutTask.cancel(false));
+        return future;
+    }
+
+    private void handleResponse(Player player, UUID requestId, JsonObject message) {
+        Map<UUID, CompletableFuture<JsonObject>> futures = this.roundTripPacketFutures.get(player.getUniqueId());
+        if (futures == null) {
+            return;
+        }
+
+        CompletableFuture<JsonObject> future = futures.remove(requestId);
+        if (future != null) {
+            future.complete(message);
+        }
+    }
+}
+```

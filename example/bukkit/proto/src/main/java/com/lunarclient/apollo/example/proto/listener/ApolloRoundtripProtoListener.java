@@ -1,7 +1,7 @@
 /*
  * This file is part of Apollo, licensed under the MIT License.
  *
- * Copyright (c) 2023 Moonsworth
+ * Copyright (c) 2026 Moonsworth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,7 @@ import java.util.concurrent.TimeoutException;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.jspecify.annotations.NonNull;
 
 public class ApolloRoundtripProtoListener implements PluginMessageListener {
 
@@ -56,7 +57,7 @@ public class ApolloRoundtripProtoListener implements PluginMessageListener {
     }
 
     @Override
-    public void onPluginMessageReceived(String s, Player player, byte[] bytes) {
+    public void onPluginMessageReceived(@NonNull String channel, @NonNull Player player, byte[] bytes) {
         try {
             Any any = Any.parseFrom(bytes);
 
