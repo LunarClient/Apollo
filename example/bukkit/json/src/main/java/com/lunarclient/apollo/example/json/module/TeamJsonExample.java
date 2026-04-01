@@ -23,10 +23,10 @@
  */
 package com.lunarclient.apollo.example.json.module;
 
-import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.json.listener.ApolloPlayerJsonListener;
 import com.lunarclient.apollo.example.json.util.AdventureUtil;
 import com.lunarclient.apollo.example.json.util.JsonPacketUtil;
 import com.lunarclient.apollo.example.json.util.JsonUtil;
@@ -34,10 +34,10 @@ import com.lunarclient.apollo.example.module.impl.TeamExample;
 import com.lunarclient.apollo.example.util.ServerUtil;
 import java.awt.Color;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -49,8 +49,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class TeamJsonExample extends TeamExample implements Listener {
 
-    private final Map<UUID, Team> teamsByTeamId = Maps.newHashMap();
-    private final Map<UUID, Team> teamsByPlayerUuid = Maps.newHashMap();
+    private final Map<UUID, Team> teamsByTeamId = new ConcurrentHashMap<>();
+    private final Map<UUID, Team> teamsByPlayerUuid = new ConcurrentHashMap<>();
 
     public TeamJsonExample() {
         if (ServerUtil.isFolia()) {
@@ -113,7 +113,7 @@ public class TeamJsonExample extends TeamExample implements Listener {
 
         public Team() {
             this.teamId = UUID.randomUUID();
-            this.members = new HashMap<>();
+            this.members = new ConcurrentHashMap<>();
         }
 
         public void addMember(Player player) {
@@ -131,33 +131,75 @@ public class TeamJsonExample extends TeamExample implements Listener {
             JsonPacketUtil.sendPacket(player, message);
         }
 
-        private JsonObject createTeamMember(Player member) {
+        private JsonObject createTeamMember(Player player, boolean withinPlayerTrackingRange) {
             JsonObject message = new JsonObject();
-            message.add("player_uuid", JsonUtil.createUuidObject(member.getUniqueId()));
-            message.addProperty("adventure_json_player_name", AdventureUtil.toJson(
-                Component.text()
-                    .content(member.getName())
-                    .color(NamedTextColor.WHITE)
-                    .build()
-            ));
+            message.add("player_uuid", JsonUtil.createUuidObject(player.getUniqueId()));
             message.add("marker_color", JsonUtil.createColorObject(Color.WHITE));
-            message.add("location", JsonUtil.createLocationObject(member.getLocation()));
+
+            if (!withinPlayerTrackingRange) {
+                message.add("location", JsonUtil.createLocationObject(player.getLocation()));
+
+                message.addProperty("adventure_json_player_name", AdventureUtil.toJson(
+                    Component.text()
+                        .content(player.getName())
+                        .color(NamedTextColor.WHITE)
+                        .build()
+                ));
+            }
 
             return message;
         }
 
         // The refresh method used for updating members locations
         public void refresh() {
-            JsonArray teammates = this.members.values()
-                .stream().filter(Player::isOnline)
-                .map(this::createTeamMember)
-                .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+            for (Player viewer : this.members.values()) {
+                if (!ApolloPlayerJsonListener.isPlayerRunningApollo(viewer)) {
+                    continue;
+                }
 
-            JsonObject message = new JsonObject();
-            message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.team.v1.UpdateTeamMembersMessage");
-            message.add("members", teammates);
+                JsonArray teammates = new JsonArray();
 
-            this.members.values().forEach(member -> JsonPacketUtil.sendPacket(member, message));
+                for (Player member : this.members.values()) {
+                    if (viewer == member) {
+                        continue;
+                    }
+
+                    if (!viewer.canSee(member)) {
+                        continue;
+                    }
+
+                    if (!viewer.getWorld().getName().equals(member.getWorld().getName())) {
+                        continue;
+                    }
+
+                    boolean withinPlayerTrackingRange = this.isWithinPlayerTrackingRange(viewer, member);
+                    teammates.add(this.createTeamMember(member, withinPlayerTrackingRange));
+                }
+
+                JsonObject message = new JsonObject();
+                message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.team.v1.UpdateTeamMembersMessage");
+                message.add("members", teammates);
+
+                JsonPacketUtil.sendPacket(viewer, message);
+            }
+        }
+
+        /**
+         * <p>This uses a simple distance check based on Paper/Spigot defaults
+         * (96 blocks for players). Ideally, this could be checked directly through
+         * the server's internal entity tracker for exact tracking behavior, but that
+         * is not exposed in the Bukkit API.</p>
+         *
+         * @param viewer the viewer
+         * @param member the member
+         * @return whether within player tracking range
+         */
+        private boolean isWithinPlayerTrackingRange(Player viewer, Player member) {
+            double maxDistance = 96;
+            double dx = viewer.getLocation().getX() - member.getLocation().getX();
+            double dz = viewer.getLocation().getZ() - member.getLocation().getZ();
+
+            return (dx * dx + dz * dz) <= (maxDistance * maxDistance);
         }
 
         public UUID getTeamId() {

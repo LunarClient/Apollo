@@ -16,7 +16,7 @@ This example demonstrates how to detect whether a player is using Lunar Client b
 ```java
 public class ApolloPlayerJsonListener implements Listener {
 
-    private final Set<UUID> playersRunningApollo = new HashSet<>();
+    private static final Set<UUID> PLAYERS_RUNNING_APOLLO = new HashSet<>();
 
     public ApolloPlayerJsonListener(ApolloExamplePlugin plugin) {
         Messenger messenger = Bukkit.getServer().getMessenger();
@@ -27,8 +27,8 @@ public class ApolloPlayerJsonListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    private boolean isPlayerRunningApollo(Player player) {
-        return this.playersRunningApollo.contains(player.getUniqueId());
+    public static boolean isPlayerRunningApollo(Player player) {
+        return PLAYERS_RUNNING_APOLLO.contains(player.getUniqueId());
     }
 
     @EventHandler
@@ -43,7 +43,7 @@ public class ApolloPlayerJsonListener implements Listener {
         // Sending the player's world name to the client is required for some modules
         JsonPacketUtil.sendPacket(player, this.createUpdatePlayerWorldMessage(player));
 
-        this.playersRunningApollo.add(player.getUniqueId());
+        PLAYERS_RUNNING_APOLLO.add(player.getUniqueId());
         player.sendMessage("You are using LunarClient!");
     }
 
