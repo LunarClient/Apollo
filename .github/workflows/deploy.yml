@@ -41,7 +41,7 @@ jobs:
                 fi
 
         -   name: Gradle Publish
-            if: "${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/version/') }}"
+            if: "${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/feature/server-links' || startsWith(github.ref, 'refs/heads/version/') }}"
             run: ./gradlew publish
 
         -   name: Gradle Release
