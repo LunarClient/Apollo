@@ -41,7 +41,7 @@ public void displayNotificationExample(Player viewer) {
                 .append(Component.newline())
                 .append(Component.text("Good luck!", NamedTextColor.GOLD))
             )
-            .resourceLocation("icons/golden_apple.png") // This field is optional
+            .resourceLocation("textures/items/apple_golden.png") // This field is optional
             .displayTime(Duration.ofSeconds(5))
             .build());
     });
@@ -78,7 +78,7 @@ public void resetNotificationsExample(Player viewer) {
 `.resourceLocation(String)` is the resource location of the shown icon.
 
 ```java
-.resourceLocation("icons/golden_apple.png")
+.resourceLocation("textures/items/apple_golden.png")
 ```
 
 `.displayTime(java.time.Duration)` is the duration you want to keep the notification on screen. See the [java.time.Duration Javadocs](https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html) for more.
@@ -125,7 +125,7 @@ public void displayNotificationExample(Player viewer) {
                 .append(Component.text("Good luck!", NamedTextColor.GOLD))
             )
         )
-        .setResourceLocation("icons/golden_apple.png") // This field is optional
+        .setResourceLocation("textures/items/apple_golden.png") // This field is optional
         .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofSeconds(5)))
         .build();
 
@@ -164,7 +164,7 @@ public void displayNotificationExample(Player viewer) {
     ));
 
     message.addProperty("display_time", JsonUtil.createDurationObject(Duration.ofSeconds(5)));
-    message.addProperty("resource_location", "icons/golden_apple.png");
+    message.addProperty("resource_location", "textures/items/apple_golden.png");
 
     JsonPacketUtil.sendPacket(viewer, message);
 }

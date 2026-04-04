@@ -1,0 +1,282 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+# Server Link Module
+
+## Overview
+
+The server link module provides enhancements and additional support to the vanilla Minecraft server link feature. Which allows you to display important links to players in a dedicated UI.
+
+- Adds improvements to the existing server link features
+  - Ability to set a custom image title resource for the server links menu
+  - Ability to use chat colors and formats for button names
+- Backported legacy version support for all versions below 1.21
+
+![Server Link Module Example](/modules/serverlink/overview.png#center)
+
+## Integration
+
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+### Override the Server Link Menu resource
+
+```java
+public void overrideServerLinkResourceExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.serverLinkModule.overrideServerLinkResource(apolloPlayer, ResourceLocationIcon.builder()
+            .resourceLocation("lunar:logo/logo-100x100.png")
+            .build());
+    });
+}
+```
+
+### Reset the Server Link Menu resource
+
+```java
+public void resetServerLinkResourceExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.serverLinkModule::resetServerLinkResource);
+}
+```
+
+### Add Server Link
+
+```java
+public void addServerLinkExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.serverLinkModule.addServerLink(apolloPlayer, Lists.newArrayList(
+            ServerLink.builder()
+                .id("website")
+                .displayName(Component.text("Website", NamedTextColor.LIGHT_PURPLE))
+                .url("https://www.lunarclient.com/")
+                .build(),
+            ServerLink.builder()
+                .id("support")
+                .displayName(Component.text("Support", NamedTextColor.AQUA))
+                .url("https://support.lunarclient.com/")
+                .build(),
+            ServerLink.builder()
+                .id("status")
+                .displayName(Component.text("Status", NamedTextColor.RED))
+                .url("https://status.lunarclient.com/")
+                .build()
+        ));
+    });
+}
+```
+
+### Remove Server Link
+
+```java
+public void removeServerLinkExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.serverLinkModule.removeServerLink(apolloPlayer, Lists.newArrayList(
+            "website", "support", "status"
+        ));
+    });
+}
+```
+
+### Resetting all Server Links
+
+```java
+public void resetServerLinksExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.serverLinkModule::resetServerLinks);
+}
+```
+
+### `ServerLink` Options
+
+`.id(String)` sets a unique identifier for the server link.
+
+```java
+.id("website")
+```
+
+`.displayName(Component)` is the public-facing name of the server link. It should contain an Adventure `Component`. See the [chat components](https://docs.advntr.dev/text.html) page for more.
+
+```java
+.displayName(Component.text("Website", NamedTextColor.LIGHT_PURPLE))
+```
+
+`.url(String)` should be a string that specifies the destination URL that will be opened from the server link.
+
+```java
+.url("https://www.lunarclient.com/")
+```
+
+
+</Tab>
+
+<Tab>
+
+**Override the Server Link Menu resource**
+
+```java
+public void overrideServerLinkResourceExample(Player viewer) {
+    OverrideServerLinkResourceMessage message = OverrideServerLinkResourceMessage.newBuilder()
+        .setIcon(ProtobufUtil.createResourceLocationIconProto("lunar:logo/logo-100x100.png"))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Reset the Server Link Menu resource**
+
+```java
+public void resetServerLinkResourceExample(Player viewer) {
+    ResetServerLinkResourceMessage message = ResetServerLinkResourceMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Add Server Link**
+
+```java
+public void addServerLinkExample(Player viewer) {
+    List<ServerLink> serverLinks = Lists.newArrayList(
+        ServerLink.newBuilder()
+            .setId("website")
+            .setDisplayNameAdventureJsonLines(AdventureUtil.toJson(
+                Component.text("Website", NamedTextColor.LIGHT_PURPLE)))
+            .setUrl("https://www.lunarclient.com/")
+            .build(),
+        ServerLink.newBuilder()
+            .setId("support")
+            .setDisplayNameAdventureJsonLines(AdventureUtil.toJson(
+                Component.text("Support", NamedTextColor.AQUA)))
+            .setUrl("https://support.lunarclient.com/")
+            .build(),
+        ServerLink.newBuilder()
+            .setId("status")
+            .setDisplayNameAdventureJsonLines(AdventureUtil.toJson(
+                Component.text("Status", NamedTextColor.RED)))
+            .setUrl("https://status.lunarclient.com/")
+            .build()
+    );
+
+    AddServerLinkMessage message = AddServerLinkMessage.newBuilder()
+        .addAllServerLinks(serverLinks)
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Remove Server Link**
+
+```java
+public void removeServerLinkExample(Player viewer) {
+    List<String> serverLinkIds = Lists.newArrayList("website", "support", "status");
+
+    RemoveServerLinkMessage message = RemoveServerLinkMessage.newBuilder()
+        .addAllServerLinkIds(serverLinkIds)
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Server Links**
+
+```java
+public void resetServerLinksExample(Player viewer) {
+    ResetServerLinksMessage message = ResetServerLinksMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+<Tab>
+
+**Override the Server Link Menu resource**
+
+```java
+public void overrideServerLinkResourceExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.serverlink.v1.OverrideServerLinkResourceMessage");
+    message.add("icon", JsonUtil.createResourceLocationIconObject("lunar:logo/logo-100x100.png"));
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Reset the Server Link Menu resource**
+
+```java
+public void resetServerLinkResourceExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.serverlink.v1.ResetServerLinkResourceMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Add Server Link**
+
+```java
+public void addServerLinkExample(Player viewer) {
+    JsonArray serverLinks = Lists.newArrayList(
+        this.createServerLinkObject("website", Component.text("Website", NamedTextColor.LIGHT_PURPLE), "https://www.lunarclient.com/"),
+        this.createServerLinkObject("support", Component.text("Support", NamedTextColor.AQUA), "https://support.lunarclient.com/"),
+        this.createServerLinkObject("status", Component.text("Status", NamedTextColor.RED), "https://status.lunarclient.com/")
+    ).stream().collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.serverlink.v1.AddServerLinkMessage");
+    message.add("server_links", serverLinks);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+
+private JsonObject createServerLinkObject(String id, Component displayName, String url) {
+    JsonObject serverLinkObject = new JsonObject();
+    serverLinkObject.addProperty("id", id);
+    serverLinkObject.addProperty("display_name_adventure_json_lines", AdventureUtil.toJson(displayName));
+    serverLinkObject.addProperty("url", url);
+    return serverLinkObject;
+}
+```
+
+**Remove Server Link**
+
+```java
+public void removeServerLinkExample(Player viewer) {
+    JsonArray serverLinkIds = Lists.newArrayList("website", "support", "status")
+        .stream().collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.serverlink.v1.RemoveServerLinkMessage");
+    message.add("server_link_ids", serverLinkIds);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Server Links**
+
+```java
+public void resetServerLinksExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.serverlink.v1.ResetServerLinksMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>
