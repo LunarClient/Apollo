@@ -186,17 +186,16 @@ public class TeamProtoExample extends TeamExample implements Listener {
         }
 
         /**
-         * <p>This uses a simple distance check based on Paper/Spigot defaults
-         * (96 blocks for players). Ideally, this could be checked directly through
-         * the server's internal entity tracker for exact tracking behavior, but that
-         * is not exposed in the Bukkit API.</p>
+         * <p>Check if player is within 48 blocks. Ideally, this could be checked directly
+         * through the server's internal entity tracker for exact tracking behavior,
+         * but that is not exposed in the Bukkit API.</p>
          *
          * @param viewer the viewer
          * @param member the member
          * @return whether within player tracking range
          */
         private boolean isWithinPlayerTrackingRange(Player viewer, Player member) {
-            double maxDistance = 96;
+            double maxDistance = 48;
             double dx = viewer.getLocation().getX() - member.getLocation().getX();
             double dz = viewer.getLocation().getZ() - member.getLocation().getZ();
 
