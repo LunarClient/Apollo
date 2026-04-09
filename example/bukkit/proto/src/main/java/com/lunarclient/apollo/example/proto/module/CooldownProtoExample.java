@@ -55,7 +55,9 @@ public class CooldownProtoExample extends CooldownExample {
         DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
             .setName("book-cooldown")
             .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(30)))
-            .setIcon(ProtobufUtil.createItemStackIconProto("BOOK", 0, 0))
+            .setIcon(Icon.newBuilder()
+                .setItemStack(ProtobufUtil.createItemStackIconProto("BOOK", 0, 0))
+                .build())
             .setStyle(CooldownStyle.newBuilder()
                 .setCircleStartColor(ProtobufUtil.createColorProto(new Color(255, 85, 85))) // ApolloColors.RED
                 .setCircleEndColor(ProtobufUtil.createColorProto(new Color(85, 255, 85))) // ApolloColors.GREEN
