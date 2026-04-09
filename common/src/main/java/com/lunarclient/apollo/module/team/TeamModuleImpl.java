@@ -24,14 +24,17 @@
 package com.lunarclient.apollo.module.team;
 
 import com.lunarclient.apollo.common.ApolloComponent;
+import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.team.v1.ResetTeamMembersMessage;
 import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
+import java.awt.Color;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.NonNull;
+import net.kyori.adventure.text.Component;
 
 /**
  * Provides the teams module.
@@ -43,13 +46,7 @@ public final class TeamModuleImpl extends TeamModule {
     @Override
     public void updateTeamMembers(@NonNull Recipients recipients, @NonNull List<TeamMember> teamMembers) {
         List<com.lunarclient.apollo.team.v1.TeamMember> teamMembersProto = teamMembers.stream()
-            .map(teamMember -> com.lunarclient.apollo.team.v1.TeamMember.newBuilder()
-                .setPlayerUuid(NetworkTypes.toProtobuf(teamMember.getPlayerUuid()))
-                .setAdventureJsonPlayerName(ApolloComponent.toJson(teamMember.getDisplayName()))
-                .setLocation(NetworkTypes.toProtobuf(teamMember.getLocation()))
-                .setMarkerColor(NetworkTypes.toProtobuf(teamMember.getMarkerColor()))
-                .build()
-            )
+            .map(this::toProtobuf)
             .collect(Collectors.toList());
 
         UpdateTeamMembersMessage message = UpdateTeamMembersMessage.newBuilder()
@@ -63,6 +60,28 @@ public final class TeamModuleImpl extends TeamModule {
     public void resetTeamMembers(@NonNull Recipients recipients) {
         ResetTeamMembersMessage message = ResetTeamMembersMessage.getDefaultInstance();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    private com.lunarclient.apollo.team.v1.TeamMember toProtobuf(TeamMember member) {
+        com.lunarclient.apollo.team.v1.TeamMember.Builder builder = com.lunarclient.apollo.team.v1.TeamMember.newBuilder()
+            .setPlayerUuid(NetworkTypes.toProtobuf(member.getPlayerUuid()));
+
+        Component displayName = member.getDisplayName();
+        if (displayName != null) {
+            builder.setAdventureJsonPlayerName(ApolloComponent.toJson(displayName));
+        }
+
+        Color markerColor = member.getMarkerColor();
+        if (markerColor != null) {
+            builder.setMarkerColor(NetworkTypes.toProtobuf(markerColor));
+        }
+
+        ApolloLocation location = member.getLocation();
+        if (location != null) {
+            builder.setLocation(NetworkTypes.toProtobuf(location));
+        }
+
+        return builder.build();
     }
 
 }
