@@ -23,12 +23,14 @@
  */
 package com.lunarclient.apollo.example.proto.module;
 
+import com.lunarclient.apollo.cooldown.v1.CooldownStyle;
 import com.lunarclient.apollo.cooldown.v1.DisplayCooldownMessage;
 import com.lunarclient.apollo.cooldown.v1.RemoveCooldownMessage;
 import com.lunarclient.apollo.cooldown.v1.ResetCooldownsMessage;
 import com.lunarclient.apollo.example.module.impl.CooldownExample;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
+import java.awt.Color;
 import java.time.Duration;
 import org.bukkit.entity.Player;
 
@@ -46,11 +48,28 @@ public class CooldownProtoExample extends CooldownExample {
     }
 
     @Override
+    public void displayCooldownWithStyleExample(Player viewer) {
+        DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
+            .setName("book-cooldown")
+            .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(30)))
+            .setIcon(ProtobufUtil.createItemStackIconProto("BOOK", 0, 0))
+            .setStyle(CooldownStyle.newBuilder()
+                .setCircleStartColor(ProtobufUtil.createColorProto(new Color(255, 85, 85))) // ApolloColors.RED
+                .setCircleEndColor(ProtobufUtil.createColorProto(new Color(85, 255, 85))) // ApolloColors.GREEN
+                .setCircleEdgeColor(ProtobufUtil.createColorProto(new Color(85, 85, 85))) // ApolloColors.DAR_GRAY
+                .setTextColor(ProtobufUtil.createColorProto(new Color(255, 85, 255))) // ApolloColors.LIGHT_PURPLE
+                .build())
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
     public void displayCooldownResourceExample(Player viewer) {
         DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
             .setName("lunar-cooldown")
             .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
-            .setIcon(ProtobufUtil.createSimpleResourceLocationIconProto("lunar:logo/logo-200x182.svg", 12))
+            .setIcon(ProtobufUtil.createSimpleResourceLocationIconProto("lunar:logo/logo-64x64.png", 24))
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);

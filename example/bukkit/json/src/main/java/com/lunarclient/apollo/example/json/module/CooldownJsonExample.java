@@ -27,6 +27,7 @@ import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.json.util.JsonPacketUtil;
 import com.lunarclient.apollo.example.json.util.JsonUtil;
 import com.lunarclient.apollo.example.module.impl.CooldownExample;
+import java.awt.Color;
 import java.time.Duration;
 import org.bukkit.entity.Player;
 
@@ -44,12 +45,30 @@ public class CooldownJsonExample extends CooldownExample {
     }
 
     @Override
+    public void displayCooldownWithStyleExample(Player viewer) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
+        message.addProperty("name", "book-cooldown");
+        message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(30)));
+        message.add("icon", JsonUtil.createItemStackIconObject("BOOK", 0, 0));
+
+        JsonObject style = new JsonObject();
+        style.add("circle_start_color", JsonUtil.createColorObject(new Color(255, 85, 85))); // ApolloColors.RED
+        style.add("circle_end_color", JsonUtil.createColorObject(new Color(85, 255, 85))); // ApolloColors.GREEN
+        style.add("circle_edge_color", JsonUtil.createColorObject(new Color(85, 85, 85))); // ApolloColors.DAR_GRAY
+        style.add("text_color", JsonUtil.createColorObject(new Color(255, 85, 255))); // ApolloColors.LIGHT_PURPLE
+        message.add("style", style);
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
     public void displayCooldownResourceExample(Player viewer) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
         message.addProperty("name", "lunar-cooldown");
         message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
-        message.add("icon", JsonUtil.createSimpleResourceLocationIconObject("lunar:logo/logo-200x182.svg", 12));
+        message.add("icon", JsonUtil.createSimpleResourceLocationIconObject("lunar:logo/logo-64x64.png", 24));
 
         JsonPacketUtil.sendPacket(viewer, message);
     }
