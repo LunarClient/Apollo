@@ -43,6 +43,7 @@ import com.lunarclient.apollo.example.proto.module.NickHiderProtoExample;
 import com.lunarclient.apollo.example.proto.module.NotificationProtoExample;
 import com.lunarclient.apollo.example.proto.module.PayNowProtoExample;
 import com.lunarclient.apollo.example.proto.module.RichPresenceProtoExample;
+import com.lunarclient.apollo.example.proto.module.ServerLinkProtoExample;
 import com.lunarclient.apollo.example.proto.module.ServerRuleProtoExample;
 import com.lunarclient.apollo.example.proto.module.StaffModProtoExample;
 import com.lunarclient.apollo.example.proto.module.StopwatchProtoExample;
@@ -85,6 +86,7 @@ public class ApolloProtoExamplePlatform extends ApolloExamplePlugin {
         this.setNotificationExample(new NotificationProtoExample());
         this.setPayNowExample(new PayNowProtoExample());
         this.setRichPresenceExample(new RichPresenceProtoExample());
+        this.setServerLinkExample(new ServerLinkProtoExample());
         this.setServerRuleExample(new ServerRuleProtoExample());
         this.setStaffModExample(new StaffModProtoExample());
         this.setStopwatchExample(new StopwatchProtoExample());

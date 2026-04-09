@@ -30,6 +30,7 @@ import com.lunarclient.apollo.common.cuboid.Cuboid3D;
 import com.lunarclient.apollo.common.icon.AdvancedResourceLocationIcon;
 import com.lunarclient.apollo.common.icon.Icon;
 import com.lunarclient.apollo.common.icon.ItemStackIcon;
+import com.lunarclient.apollo.common.icon.ResourceLocationIcon;
 import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
@@ -484,37 +485,15 @@ public final class NetworkTypes {
         com.lunarclient.apollo.common.v1.Icon.Builder builder = com.lunarclient.apollo.common.v1.Icon.newBuilder();
 
         if (icon instanceof ItemStackIcon) {
-            ItemStackIcon item = (ItemStackIcon) icon;
-            String itemName = item.getItemName();
-
-            com.lunarclient.apollo.common.v1.ItemStackIcon.Builder itemBuilder = com.lunarclient.apollo.common.v1.ItemStackIcon.newBuilder()
-                .setItemId(item.getItemId())
-                .setCustomModelData(item.getCustomModelData());
-
-            if (itemName != null) {
-                itemBuilder.setItemName(itemName);
-            }
-
-            builder.setItemStack(itemBuilder.build());
+            builder.setItemStack(NetworkTypes.toProtobuf((ItemStackIcon) icon));
+        } else if (icon instanceof ResourceLocationIcon) {
+            builder.setResourceLocation(NetworkTypes.toProtobuf((ResourceLocationIcon) icon));
         } else if (icon instanceof SimpleResourceLocationIcon) {
-            SimpleResourceLocationIcon simple = (SimpleResourceLocationIcon) icon;
-
-            builder.setSimpleResourceLocation(com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon.newBuilder()
-                .setResourceLocation(simple.getResourceLocation())
-                .setSize(checkPositive(simple.getSize(), "SimpleResourceLocationIcon#size"))
-                .build());
+            builder.setSimpleResourceLocation(NetworkTypes.toProtobuf((SimpleResourceLocationIcon) icon));
         } else if (icon instanceof AdvancedResourceLocationIcon) {
-            AdvancedResourceLocationIcon advanced = (AdvancedResourceLocationIcon) icon;
-
-            builder.setAdvancedResourceLocation(com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon.newBuilder()
-                .setResourceLocation(advanced.getResourceLocation())
-                .setWidth(checkPositive(advanced.getWidth(), "AdvancedResourceLocationIcon#width"))
-                .setHeight(checkPositive(advanced.getHeight(), "AdvancedResourceLocationIcon#height"))
-                .setMinU(checkRange(advanced.getMinU(), 0, 1, "AdvancedResourceLocationIcon#minU"))
-                .setMaxU(checkRange(advanced.getMaxU(), 0, 1, "AdvancedResourceLocationIcon#maxU"))
-                .setMinV(checkRange(advanced.getMinV(), 0, 1, "AdvancedResourceLocationIcon#minV"))
-                .setMaxV(checkRange(advanced.getMaxV(), 0, 1, "AdvancedResourceLocationIcon#maxV"))
-                .build());
+            builder.setAdvancedResourceLocation(NetworkTypes.toProtobuf((AdvancedResourceLocationIcon) icon));
+        } else {
+            throw new IllegalArgumentException("Unknown icon type: " + icon.getClass().getName());
         }
 
         return builder.build();
@@ -530,35 +509,150 @@ public final class NetworkTypes {
      */
     public static Icon fromProtobuf(com.lunarclient.apollo.common.v1.Icon icon) {
         if (icon.hasItemStack()) {
-            com.lunarclient.apollo.common.v1.ItemStackIcon item = icon.getItemStack();
-
-            return ItemStackIcon.builder()
-                .itemName(item.getItemName())
-                .itemId(item.getItemId())
-                .customModelData(item.getCustomModelData())
-                .build();
+            return NetworkTypes.fromProtobuf(icon.getItemStack());
+        } else if (icon.hasResourceLocation()) {
+            return NetworkTypes.fromProtobuf(icon.getResourceLocation());
         } else if (icon.hasSimpleResourceLocation()) {
-            com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon simple = icon.getSimpleResourceLocation();
-
-            return SimpleResourceLocationIcon.builder()
-                .resourceLocation(simple.getResourceLocation())
-                .size(simple.getSize())
-                .build();
+            return NetworkTypes.fromProtobuf(icon.getSimpleResourceLocation());
         } else if (icon.hasAdvancedResourceLocation()) {
-            com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon advanced = icon.getAdvancedResourceLocation();
-
-            return AdvancedResourceLocationIcon.builder()
-                .resourceLocation(advanced.getResourceLocation())
-                .width(advanced.getWidth())
-                .height(advanced.getHeight())
-                .minU(advanced.getMinU())
-                .maxU(advanced.getMaxU())
-                .minV(advanced.getMinV())
-                .maxV(advanced.getMaxV())
-                .build();
+            return NetworkTypes.fromProtobuf(icon.getAdvancedResourceLocation());
         }
 
-        return null;
+        throw new IllegalArgumentException("Unknown icon proto type");
+    }
+
+    /**
+     * Converts an {@link ItemStackIcon} to a
+     * {@link com.lunarclient.apollo.common.v1.ItemStackIcon} proto message.
+     *
+     * @param icon the item stack icon
+     * @return the proto item stack icon message
+     * @since 1.2.5
+     */
+    public static com.lunarclient.apollo.common.v1.ItemStackIcon toProtobuf(ItemStackIcon icon) {
+        com.lunarclient.apollo.common.v1.ItemStackIcon.Builder builder = com.lunarclient.apollo.common.v1.ItemStackIcon.newBuilder()
+            .setItemId(icon.getItemId())
+            .setCustomModelData(icon.getCustomModelData());
+
+        if (icon.getItemName() != null) {
+            builder.setItemName(icon.getItemName());
+        }
+
+        return builder.build();
+    }
+
+    /**
+     * Converts a {@link com.lunarclient.apollo.common.v1.ItemStackIcon}
+     * proto message to an {@link ItemStackIcon}.
+     *
+     * @param icon the item stack icon message
+     * @return the item stack icon
+     * @since 1.2.5
+     */
+    public static ItemStackIcon fromProtobuf(com.lunarclient.apollo.common.v1.ItemStackIcon icon) {
+        return ItemStackIcon.builder()
+            .itemName(icon.getItemName())
+            .itemId(icon.getItemId())
+            .customModelData(icon.getCustomModelData())
+            .build();
+    }
+
+    /**
+     * Converts a {@link ResourceLocationIcon} to a
+     * {@link com.lunarclient.apollo.common.v1.ResourceLocationIcon} proto message.
+     *
+     * @param icon the resource location icon
+     * @return the proto resource location icon message
+     * @since 1.2.5
+     */
+    public static com.lunarclient.apollo.common.v1.ResourceLocationIcon toProtobuf(ResourceLocationIcon icon) {
+        return com.lunarclient.apollo.common.v1.ResourceLocationIcon.newBuilder()
+            .setResourceLocation(icon.getResourceLocation())
+            .build();
+    }
+
+    /**
+     * Converts a {@link com.lunarclient.apollo.common.v1.ResourceLocationIcon}
+     * proto message to a {@link ResourceLocationIcon}.
+     *
+     * @param icon the resource location icon message
+     * @return the resource location icon
+     * @since 1.2.5
+     */
+    public static ResourceLocationIcon fromProtobuf(com.lunarclient.apollo.common.v1.ResourceLocationIcon icon) {
+        return ResourceLocationIcon.builder()
+            .resourceLocation(icon.getResourceLocation())
+            .build();
+    }
+
+    /**
+     * Converts a {@link SimpleResourceLocationIcon} to a
+     * {@link com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon} proto message.
+     *
+     * @param icon the simple resource location icon
+     * @return the proto simple resource location icon message
+     * @since 1.2.5
+     */
+    public static com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon toProtobuf(SimpleResourceLocationIcon icon) {
+        return com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon.newBuilder()
+            .setResourceLocation(icon.getResourceLocation())
+            .setSize(checkPositive(icon.getSize(), "SimpleResourceLocationIcon#size"))
+            .build();
+    }
+
+    /**
+     * Converts a {@link com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon}
+     * proto message to a {@link SimpleResourceLocationIcon}.
+     *
+     * @param icon the simple resource location icon message
+     * @return the simple resource location icon
+     * @since 1.2.5
+     */
+    public static SimpleResourceLocationIcon fromProtobuf(com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon icon) {
+        return SimpleResourceLocationIcon.builder()
+            .resourceLocation(icon.getResourceLocation())
+            .size(icon.getSize())
+            .build();
+    }
+
+    /**
+     * Converts an {@link AdvancedResourceLocationIcon} to an
+     * {@link com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon} proto message.
+     *
+     * @param icon the advanced resource location icon
+     * @return the proto advanced resource location icon message
+     * @since 1.2.5
+     */
+    public static com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon toProtobuf(AdvancedResourceLocationIcon icon) {
+        return com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon.newBuilder()
+            .setResourceLocation(icon.getResourceLocation())
+            .setWidth(checkPositive(icon.getWidth(), "AdvancedResourceLocationIcon#width"))
+            .setHeight(checkPositive(icon.getHeight(), "AdvancedResourceLocationIcon#height"))
+            .setMinU(checkRange(icon.getMinU(), 0, 1, "AdvancedResourceLocationIcon#minU"))
+            .setMaxU(checkRange(icon.getMaxU(), 0, 1, "AdvancedResourceLocationIcon#maxU"))
+            .setMinV(checkRange(icon.getMinV(), 0, 1, "AdvancedResourceLocationIcon#minV"))
+            .setMaxV(checkRange(icon.getMaxV(), 0, 1, "AdvancedResourceLocationIcon#maxV"))
+            .build();
+    }
+
+    /**
+     * Converts an {@link com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon}
+     * proto message to an {@link AdvancedResourceLocationIcon}.
+     *
+     * @param icon the advanced resource location icon message
+     * @return the advanced resource location icon
+     * @since 1.2.5
+     */
+    public static AdvancedResourceLocationIcon fromProtobuf(com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon icon) {
+        return AdvancedResourceLocationIcon.builder()
+            .resourceLocation(icon.getResourceLocation())
+            .width(icon.getWidth())
+            .height(icon.getHeight())
+            .minU(icon.getMinU())
+            .maxU(icon.getMaxU())
+            .minV(icon.getMinV())
+            .maxV(icon.getMaxV())
+            .build();
     }
 
     private NetworkTypes() {
