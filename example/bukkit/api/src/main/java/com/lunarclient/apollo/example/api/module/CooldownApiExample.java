@@ -24,11 +24,13 @@
 package com.lunarclient.apollo.example.api.module;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.common.ApolloColors;
 import com.lunarclient.apollo.common.icon.ItemStackIcon;
 import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.example.module.impl.CooldownExample;
 import com.lunarclient.apollo.module.cooldown.Cooldown;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
+import com.lunarclient.apollo.module.cooldown.CooldownStyle;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.time.Duration;
 import java.util.Optional;
@@ -56,6 +58,28 @@ public class CooldownApiExample extends CooldownExample {
     }
 
     @Override
+    public void displayCooldownWithStyleExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            this.cooldownModule.displayCooldown(apolloPlayer, Cooldown.builder()
+                .name("book-cooldown")
+                .duration(Duration.ofSeconds(30))
+                .icon(ItemStackIcon.builder()
+                    .itemName("BOOK")
+                    .build())
+                .style(CooldownStyle.builder()
+                    .circleStartColor(ApolloColors.RED)
+                    .circleEndColor(ApolloColors.GREEN)
+                    .circleEdgeColor(ApolloColors.DARK_GRAY)
+                    .textColor(ApolloColors.LIGHT_PURPLE)
+                    .build())
+                .build()
+            );
+        });
+    }
+
+    @Override
     public void displayCooldownResourceExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
@@ -64,8 +88,8 @@ public class CooldownApiExample extends CooldownExample {
                 .name("lunar-cooldown")
                 .duration(Duration.ofSeconds(15))
                 .icon(SimpleResourceLocationIcon.builder()
-                    .resourceLocation("lunar:logo/logo-200x182.svg")
-                    .size(12)
+                    .resourceLocation("lunar:logo/logo-64x64.png")
+                    .size(24)
                     .build()
                 )
                 .build()
@@ -79,6 +103,7 @@ public class CooldownApiExample extends CooldownExample {
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown");
+            this.cooldownModule.removeCooldown(apolloPlayer, "book-cooldown");
             this.cooldownModule.removeCooldown(apolloPlayer, "lunar-cooldown");
         });
     }

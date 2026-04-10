@@ -29,6 +29,8 @@ import com.lunarclient.apollo.event.Listen;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.api.module.TeamApiExample;
+import com.lunarclient.apollo.example.module.impl.CooldownExample;
+import com.lunarclient.apollo.example.module.impl.ServerLinkExample;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import org.bukkit.entity.Player;
 
@@ -58,9 +60,17 @@ public class ApolloPlayerApiListener implements ApolloListener {
 
         this.example.getBeamExample().displayBeamExample(player);
         this.example.getBorderExample().displayBorderExample(player);
-        this.example.getCooldownExample().displayCooldownItemExample(player);
         this.example.getNametagExample().overrideNametagExample(player);
         this.example.getWaypointExample().displayWaypointExample(player);
+
+        CooldownExample cooldownExample = this.example.getCooldownExample();
+        cooldownExample.displayCooldownItemExample(player);
+        cooldownExample.displayCooldownWithStyleExample(player);
+        cooldownExample.displayCooldownResourceExample(player);
+
+        ServerLinkExample serverLinkExample = this.example.getServerLinkExample();
+        serverLinkExample.overrideServerLinkResourceExample(player);
+        serverLinkExample.addServerLinkExample(player);
     }
 
 }

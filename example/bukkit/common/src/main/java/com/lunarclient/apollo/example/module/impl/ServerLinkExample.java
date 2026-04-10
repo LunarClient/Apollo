@@ -26,16 +26,16 @@ package com.lunarclient.apollo.example.module.impl;
 import com.lunarclient.apollo.example.module.ApolloModuleExample;
 import org.bukkit.entity.Player;
 
-public abstract class CooldownExample extends ApolloModuleExample {
+public abstract class ServerLinkExample extends ApolloModuleExample {
 
-    public abstract void displayCooldownItemExample(Player viewer);
+    public abstract void overrideServerLinkResourceExample(Player viewer);
 
-    public abstract void displayCooldownWithStyleExample(Player viewer);
+    public abstract void resetServerLinkResourceExample(Player viewer);
 
-    public abstract void displayCooldownResourceExample(Player viewer);
+    public abstract void addServerLinkExample(Player viewer);
 
-    public abstract void removeCooldownExample(Player viewer);
+    public abstract void removeServerLinkExample(Player viewer);
 
-    public abstract void resetCooldownsExample(Player viewer);
+    public abstract void resetServerLinksExample(Player viewer);
 
 }

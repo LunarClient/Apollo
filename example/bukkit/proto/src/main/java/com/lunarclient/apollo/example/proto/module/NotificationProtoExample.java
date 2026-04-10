@@ -50,7 +50,7 @@ public class NotificationProtoExample extends NotificationExample {
                     .append(Component.text("Good luck!", NamedTextColor.GOLD))
                 )
             )
-            .setResourceLocation("icons/golden_apple.png") // This field is optional
+            .setResourceLocation("textures/items/apple_golden.png") // This field is optional
             .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofSeconds(5)))
             .build();
 

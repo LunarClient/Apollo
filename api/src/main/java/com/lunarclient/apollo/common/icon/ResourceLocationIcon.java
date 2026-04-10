@@ -21,58 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.cooldown;
+package com.lunarclient.apollo.common.icon;
 
-import com.lunarclient.apollo.common.icon.Icon;
-import java.time.Duration;
 import lombok.Builder;
 import lombok.Getter;
-import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents a cooldown which can be shown on the client.
+ * Represents a resource location icon.
  *
- * @since 1.0.0
+ * @since 1.2.5
  */
 @Getter
 @Builder
-public final class Cooldown {
+public final class ResourceLocationIcon extends Icon {
 
     /**
-     * Returns the cooldown {@link String} name.
+     * Returns the icon {@link String} resource location.
      *
-     * @return the cooldown name
-     * @since 1.0.0
-     */
-    String name;
-
-    /**
-     * Returns the cooldown {@link Duration}.
+     * <p>Represents a path to an icon that will appear for the player.</p>
      *
-     * @return the cooldown duration
-     * @since 1.0.0
-     */
-    Duration duration;
-
-    /**
-     * Returns the cooldown {@link Icon}.
-     *
-     * <p>Can be any of the icons found in {@link com.lunarclient.apollo.common.icon} package,
-     * for the most common use case, use {@link com.lunarclient.apollo.common.icon.ItemStackIcon}.</p>
-     *
-     * @return the cooldown icon
-     * @since 1.0.0
-     */
-    Icon icon;
-
-    /**
-     * Returns the cooldown {@link CooldownStyle}.
-     *
-     * <p>If {@code null}, the style defaults to the user's local Cooldown Mod settings.</p>
-     *
-     * @return the cooldown style
+     * @return the icon resource location
      * @since 1.2.5
      */
-    @Nullable CooldownStyle style;
+    String resourceLocation;
 
 }

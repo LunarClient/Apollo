@@ -24,14 +24,14 @@
 package com.lunarclient.apollo.example.command;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
-import com.lunarclient.apollo.example.module.impl.CooldownExample;
+import com.lunarclient.apollo.example.module.impl.ServerLinkExample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class CooldownCommand implements CommandExecutor {
+public class ServerLinkCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -43,45 +43,45 @@ public class CooldownCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /cooldown <displayItem|displayWithStyle|displayResource|remove|reset>");
+            player.sendMessage("Usage: /serverlink <overrideResource|resetResource|addServerLink|removeServerLink|resetServerLinks>");
             return true;
         }
 
-        CooldownExample cooldownExample = ApolloExamplePlugin.getInstance().getCooldownExample();
+        ServerLinkExample serverLinkExample = ApolloExamplePlugin.getInstance().getServerLinkExample();
 
         switch (args[0].toLowerCase()) {
-            case "displayitem": {
-                cooldownExample.displayCooldownItemExample(player);
-                player.sendMessage("Displaying cooldown item....");
+            case "overrideresource": {
+                serverLinkExample.overrideServerLinkResourceExample(player);
+                player.sendMessage("Overriding server link resource...");
                 break;
             }
 
-            case "displaywithstyle": {
-                cooldownExample.displayCooldownWithStyleExample(player);
-                player.sendMessage("Displaying cooldown with style....");
+            case "resetresource": {
+                serverLinkExample.resetServerLinkResourceExample(player);
+                player.sendMessage("Resetting server link resource...");
                 break;
             }
 
-            case "displayresource": {
-                cooldownExample.displayCooldownResourceExample(player);
-                player.sendMessage("Displaying cooldown resource....");
+            case "addserverlink": {
+                serverLinkExample.addServerLinkExample(player);
+                player.sendMessage("Adding server link...");
                 break;
             }
 
-            case "remove": {
-                cooldownExample.removeCooldownExample(player);
-                player.sendMessage("Removing cooldown....");
+            case "removeserverlink": {
+                serverLinkExample.removeServerLinkExample(player);
+                player.sendMessage("Removing server link...");
                 break;
             }
 
-            case "reset": {
-                cooldownExample.resetCooldownsExample(player);
-                player.sendMessage("Resetting cooldowns...");
+            case "resetserverlinks": {
+                serverLinkExample.resetServerLinksExample(player);
+                player.sendMessage("Resetting server links...");
                 break;
             }
 
             default: {
-                player.sendMessage("Usage: /cooldown <displayItem|displayWithStyle|displayResource|remove|reset>");
+                player.sendMessage("Usage: /serverlink <overrideResource|resetResource|addServerLink|removeServerLink|resetServerLinks>");
                 break;
             }
         }
