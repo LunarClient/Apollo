@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.module.modsetting;
 
 import com.lunarclient.apollo.ApolloPlatform;
+import com.lunarclient.apollo.async.Future;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.Option;
@@ -65,5 +66,14 @@ public abstract class ModSettingModule extends ApolloModule {
      * @since 1.2.1
      */
     public abstract <T, C extends Option<T, ?, ?>> T getStatus(@NotNull ApolloPlayer player, @NonNull C option);
+
+    /**
+     * Sends the {@link InstalledModsRequest} to the {@link ApolloPlayer}.
+     *
+     * @param player the player
+     * @return future to be listened to for errors/success
+     * @since 1.2.5
+     */
+    public abstract Future<InstalledModsResponse> requestInstalledMods(ApolloPlayer player);
 
 }

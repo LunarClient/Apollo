@@ -44,6 +44,7 @@ public class ModSettingsCommand implements CommandExecutor {
 
         if (args.length != 1) {
             player.sendMessage("Usage: /modsettings <disable|reset|broadcast>");
+            player.sendMessage("Usage: /modsettings <requestInstalledMods>");
             return true;
         }
 
@@ -68,8 +69,15 @@ public class ModSettingsCommand implements CommandExecutor {
                 break;
             }
 
+            case "requestinstalledmods": {
+                modSettingsExample.requestInstalledModsExample(player);
+                player.sendMessage("Requesting installed mods.....");
+                break;
+            }
+
             default: {
                 player.sendMessage("Usage: /modsettings <disable|reset|broadcast>");
+                player.sendMessage("Usage: /modsettings <requestInstalledMods>");
                 break;
             }
         }

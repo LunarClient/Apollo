@@ -23,13 +23,20 @@
  */
 package com.lunarclient.apollo.example.proto.module;
 
+import com.google.protobuf.ByteString;
 import com.google.protobuf.NullValue;
 import com.google.protobuf.Value;
 import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.example.module.impl.ModSettingsExample;
+import com.lunarclient.apollo.example.proto.listener.ApolloRoundtripProtoListener;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
+import com.lunarclient.apollo.modsetting.v1.InstalledModsRequest;
+import com.lunarclient.apollo.modsetting.v1.Mod;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import org.bukkit.entity.Player;
 
 public class ModSettingsProtoExample extends ModSettingsExample {
@@ -60,6 +67,27 @@ public class ModSettingsProtoExample extends ModSettingsExample {
 
         ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("mod_setting", properties);
         ProtobufPacketUtil.broadcastPacket(settings);
+    }
+
+    @Override
+    public void requestInstalledModsExample(Player viewer) {
+        UUID requestId = UUID.randomUUID();
+
+        InstalledModsRequest request = InstalledModsRequest.newBuilder()
+            .setRequestId(ByteString.copyFromUtf8(requestId.toString()))
+            .build();
+
+        ApolloRoundtripProtoListener.getInstance().sendPaginatedRequest(viewer, requestId, request)
+            .thenAccept(mods -> {
+                List<String> modIds = mods.stream()
+                    .map(Mod::getId)
+                    .collect(Collectors.toList());
+
+                viewer.sendMessage("Found " + modIds.size() + " mods: " + modIds);
+            }).exceptionally(throwable -> {
+                viewer.sendMessage("Failed to receive a response in time.");
+                return null;
+            });
     }
 
 }

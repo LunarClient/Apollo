@@ -27,6 +27,7 @@ import com.lunarclient.apollo.client.mod.LunarClientMod;
 import com.lunarclient.apollo.client.version.LunarClientVersion;
 import com.lunarclient.apollo.client.version.MinecraftVersion;
 import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.module.paynow.PayNowEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.option.Option;
@@ -133,9 +134,10 @@ public interface ApolloPlayer extends Recipients, ForwardingAudience.Single {
      * Returns a {@link List} of {@link LunarClientMod} the player has installed.
      *
      * @return the installed mods
+     * @deprecated for removal since 1.2.5, use {@link ModSettingModule#requestInstalledMods(ApolloPlayer)} instead.
      * @since 1.1.6
      */
-    @Nullable List<LunarClientMod> getInstalledMods();
+    @Deprecated @Nullable List<LunarClientMod> getInstalledMods();
 
     /**
      * Returns the {@link TebexEmbeddedCheckoutSupport} type.

@@ -52,7 +52,7 @@ public abstract class AbstractApolloPlayer implements ApolloPlayer {
 
     private MinecraftVersion minecraftVersion;
     private LunarClientVersion lunarClientVersion;
-    private List<LunarClientMod> installedMods;
+    @Deprecated private List<LunarClientMod> installedMods;
     private TebexEmbeddedCheckoutSupport tebexEmbeddedCheckoutSupport;
     private PayNowEmbeddedCheckoutSupport payNowEmbeddedCheckoutSupport;
 

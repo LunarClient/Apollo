@@ -28,8 +28,12 @@ import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
+import com.lunarclient.apollo.modsetting.v1.InstalledModsResponse;
+import com.lunarclient.apollo.modsetting.v1.Mod;
 import com.lunarclient.apollo.transfer.v1.PingResponse;
 import com.lunarclient.apollo.transfer.v1.TransferResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -50,6 +54,8 @@ public class ApolloRoundtripProtoListener implements PluginMessageListener {
     private static ApolloRoundtripProtoListener instance;
 
     private final Map<UUID, Map<UUID, CompletableFuture<GeneratedMessageV3>>> roundTripPacketFutures = new ConcurrentHashMap<>();
+    private final Map<UUID, CompletableFuture<List<Mod>>> paginatedFutures = new ConcurrentHashMap<>();
+    private final Map<UUID, List<Mod>> paginatedAccumulator = new ConcurrentHashMap<>();
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
     public ApolloRoundtripProtoListener(ApolloExamplePlugin plugin) {
@@ -69,6 +75,10 @@ public class ApolloRoundtripProtoListener implements PluginMessageListener {
                 TransferResponse message = any.unpack(TransferResponse.class);
                 UUID requestId = UUID.fromString(message.getRequestId().toStringUtf8());
                 this.handleResponse(player, requestId, message);
+            } else if (any.is(InstalledModsResponse.class)) {
+                InstalledModsResponse message = any.unpack(InstalledModsResponse.class);
+                UUID requestId = UUID.fromString(message.getRequestId().toStringUtf8());
+                this.handlePagedResponse(requestId, message);
             }
 
         } catch (InvalidProtocolBufferException e) {
@@ -94,6 +104,41 @@ public class ApolloRoundtripProtoListener implements PluginMessageListener {
 
         future.whenComplete((result, throwable) -> timeoutTask.cancel(false));
         return future;
+    }
+
+    public CompletableFuture<List<Mod>> sendPaginatedRequest(Player player, UUID requestId, GeneratedMessageV3 request) {
+        ProtobufPacketUtil.sendPacket(player, request);
+
+        CompletableFuture<List<Mod>> future = new CompletableFuture<>();
+        this.paginatedFutures.put(requestId, future);
+
+        ScheduledFuture<?> timeoutTask = this.executorService.schedule(() ->
+                future.completeExceptionally(new TimeoutException("Response timed out")),
+            10, TimeUnit.SECONDS
+        );
+
+        future.whenComplete((result, throwable) -> {
+            timeoutTask.cancel(false);
+            this.paginatedAccumulator.remove(requestId);
+        });
+
+        return future;
+    }
+
+    private void handlePagedResponse(UUID requestId, InstalledModsResponse response) {
+        List<Mod> accumulated = this.paginatedAccumulator.computeIfAbsent(requestId, k -> new ArrayList<>());
+
+        response.getModGroupsList().forEach(group ->
+            accumulated.addAll(group.getModsList())
+        );
+
+        if (response.getPage() == response.getTotalPages() - 1) {
+            this.paginatedAccumulator.remove(requestId);
+            CompletableFuture<List<Mod>> future = this.paginatedFutures.remove(requestId);
+            if (future != null) {
+                future.complete(accumulated);
+            }
+        }
     }
 
     private <T extends GeneratedMessageV3> void handleResponse(Player player, UUID requestId, T message) {

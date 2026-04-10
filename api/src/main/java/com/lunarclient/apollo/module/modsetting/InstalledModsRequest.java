@@ -21,51 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.client.mod;
+package com.lunarclient.apollo.module.modsetting;
 
+import com.lunarclient.apollo.roundtrip.ApolloRequest;
 import lombok.Builder;
-import lombok.Getter;
-import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents a Lunar Client external mod.
+ * Represents the installed mods request.
  *
- * @since 1.0.6
+ * @since 1.2.5
  */
-@Getter
 @Builder
-public final class LunarClientMod {
-
-    /**
-     * Returns the mod {@link String} id (e.g. 'sodium').
-     *
-     * @return the mod id
-     * @since 1.0.6
-     */
-    String id;
-
-    /**
-     * Returns the mod {@link String} display name (e.g. 'Sodium').
-     *
-     * @return the mod display name
-     * @since 1.0.6
-     */
-    @Nullable String displayName;
-
-    /**
-     * Returns the mod {@link String} version (e.g. '1.2.21').
-     *
-     * @return the mod display name
-     * @since 1.0.6
-     */
-    @Nullable String version;
-
-    /**
-     * Returns the mod {@link LunarClientModType} type.
-     *
-     * @return the mod type
-     * @since 1.0.6
-     */
-    LunarClientModType type;
+public final class InstalledModsRequest extends ApolloRequest<InstalledModsResponse> {
 
 }

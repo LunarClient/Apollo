@@ -25,8 +25,6 @@ package com.lunarclient.apollo.player;
 
 import com.google.protobuf.Value;
 import com.lunarclient.apollo.Apollo;
-import com.lunarclient.apollo.client.mod.LunarClientMod;
-import com.lunarclient.apollo.client.mod.LunarClientModType;
 import com.lunarclient.apollo.client.version.LunarClientVersion;
 import com.lunarclient.apollo.client.version.MinecraftVersion;
 import com.lunarclient.apollo.event.EventBus;
@@ -39,14 +37,13 @@ import com.lunarclient.apollo.module.paynow.PayNowEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.player.v1.PlayerHandshakeMessage;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -131,16 +128,6 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
             .semVer(message.getLunarClientVersion().getSemver())
             .build();
 
-        LunarClientModType[] modTypes = LunarClientModType.values();
-        List<LunarClientMod> mods = message.getInstalledModsList().stream().map(mod ->
-            LunarClientMod.builder()
-                .id(mod.getId())
-                .displayName(mod.getName())
-                .version(mod.getVersion())
-                .type(modTypes[mod.getTypeValue() - 1])
-                .build()
-        ).collect(Collectors.toList());
-
         int embeddedCheckoutSupport = message.getEmbeddedCheckoutSupportValue();
         TebexEmbeddedCheckoutSupport tebexEmbeddedCheckoutSupport;
         try {
@@ -159,7 +146,6 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
         AbstractApolloPlayer apolloPlayer = ((AbstractApolloPlayer) player);
         apolloPlayer.setMinecraftVersion(minecraftVersion);
         apolloPlayer.setLunarClientVersion(lunarClientVersion);
-        apolloPlayer.setInstalledMods(mods);
         apolloPlayer.setTebexEmbeddedCheckoutSupport(tebexEmbeddedCheckoutSupport);
         apolloPlayer.setPayNowEmbeddedCheckoutSupport(payNowEmbeddedCheckoutSupport);
 
@@ -173,7 +159,7 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
         }
 
         ApolloPlayerHandshakeEvent event = new ApolloPlayerHandshakeEvent(
-            player, minecraftVersion, lunarClientVersion, mods,
+            player, minecraftVersion, lunarClientVersion, new ArrayList<>(),
             tebexEmbeddedCheckoutSupport, payNowEmbeddedCheckoutSupport
         );
 

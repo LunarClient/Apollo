@@ -24,11 +24,15 @@
 package com.lunarclient.apollo.example.json.module;
 
 import com.google.gson.JsonObject;
+import com.lunarclient.apollo.example.json.listener.ApolloRoundtripJsonListener;
 import com.lunarclient.apollo.example.json.util.JsonPacketUtil;
 import com.lunarclient.apollo.example.json.util.JsonUtil;
 import com.lunarclient.apollo.example.module.impl.ModSettingsExample;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import org.bukkit.entity.Player;
 
 public class ModSettingsJsonExample extends ModSettingsExample {
@@ -59,6 +63,24 @@ public class ModSettingsJsonExample extends ModSettingsExample {
 
         JsonObject message = JsonUtil.createEnableModuleObjectWithType("mod_setting", properties);
         JsonPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void requestInstalledModsExample(Player viewer) {
+        UUID requestId = UUID.randomUUID();
+
+        ApolloRoundtripJsonListener.getInstance()
+            .sendPaginatedRequest(viewer, requestId, new JsonObject(), "lunarclient.apollo.modsetting.v1.InstalledModsRequest")
+            .thenAccept(mods -> {
+                List<String> modIds = mods.stream()
+                    .map(mod -> mod.get("id").getAsString())
+                    .collect(Collectors.toList());
+
+                viewer.sendMessage("Found " + modIds.size() + " mods: " + modIds);
+            }).exceptionally(throwable -> {
+                viewer.sendMessage("Failed to receive a response in time.");
+                return null;
+            });
     }
 
 }

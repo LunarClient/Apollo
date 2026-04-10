@@ -24,6 +24,8 @@
 package com.lunarclient.apollo.roundtrip;
 
 import com.lunarclient.apollo.async.future.UncertainFuture;
+import com.lunarclient.apollo.roundtrip.pagination.ApolloPaginatedResponse;
+import com.lunarclient.apollo.roundtrip.pagination.ApolloPaginationManager;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -53,6 +55,13 @@ public final class ApolloRoundtripManager {
     private final ScheduledThreadPoolExecutor timeoutExecutor;
 
     /**
+     * The manager for paginated responses.
+     *
+     * @since 1.2.5
+     */
+    private final ApolloPaginationManager paginationManager;
+
+    /**
      * Constructs the {@link ApolloRoundtripManager}.
      *
      * @since 1.0.0
@@ -60,15 +69,31 @@ public final class ApolloRoundtripManager {
     public ApolloRoundtripManager() {
         this.listeners = new ConcurrentHashMap<>();
         this.timeoutExecutor = new ScheduledThreadPoolExecutor(1);
+        this.paginationManager = new ApolloPaginationManager(this);
     }
 
     /**
      * Handles the given {@link ApolloResponse}.
      *
      * @param response the response
-     * @since 1.0.0
+     * @since 1.2.5
      */
     public void handleResponse(ApolloResponse response) {
+        if (response instanceof ApolloPaginatedResponse<?>) {
+            this.paginationManager.handlePage((ApolloPaginatedResponse<?>) response);
+            return;
+        }
+
+        this.completeFuture(response);
+    }
+
+    /**
+     * Completes the {@link UncertainFuture} for a given {@link ApolloResponse}.
+     *
+     * @param response the response
+     * @since 1.2.5
+     */
+    public void completeFuture(ApolloResponse response) {
         UncertainFuture<ApolloResponse> future = this.listeners.remove(response.getPacketId());
 
         if (future != null) {
@@ -91,6 +116,7 @@ public final class ApolloRoundtripManager {
         this.timeoutExecutor.schedule(() -> {
             try {
                 UncertainFuture<ApolloResponse> listener = this.listeners.remove(packetId);
+                this.paginationManager.handleTimeout(packetId);
 
                 if (listener != null) {
                     Throwable error = new Throwable("Timeout exceeded!");

@@ -24,22 +24,32 @@
 package com.lunarclient.apollo.module.modsettings;
 
 import com.google.protobuf.Any;
+import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Value;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.async.Future;
+import com.lunarclient.apollo.client.mod.LunarClientMod;
+import com.lunarclient.apollo.client.mod.LunarClientModType;
 import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessage;
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.modsetting.ApolloUpdateModOptionEvent;
+import com.lunarclient.apollo.modsetting.v1.Mod;
+import com.lunarclient.apollo.module.modsetting.InstalledModsRequest;
+import com.lunarclient.apollo.module.modsetting.InstalledModsResponse;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.StatusOptionsImpl;
+import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,6 +59,8 @@ import org.jetbrains.annotations.NotNull;
  * @since 1.2.1
  */
 public final class ModSettingModuleImpl extends ModSettingModule {
+
+    private static final LunarClientModType[] MOD_TYPES = LunarClientModType.values();
 
     /**
      * Creates a new instance of {@link ModSettingModuleImpl}.
@@ -66,13 +78,49 @@ public final class ModSettingModuleImpl extends ModSettingModule {
         return ApolloManager.getModsManager().getPlayerOptions().get(player, option);
     }
 
+    @Override
+    public Future<InstalledModsResponse> requestInstalledMods(@NotNull ApolloPlayer player) {
+        InstalledModsRequest request = InstalledModsRequest.builder().build();
+
+        com.lunarclient.apollo.modsetting.v1.InstalledModsRequest requestProto = com.lunarclient.apollo.modsetting.v1.InstalledModsRequest.newBuilder()
+            .setRequestId(ByteString.copyFromUtf8(request.getRequestId().toString()))
+            .build();
+
+        return ((AbstractApolloPlayer) player).sendRoundTripPacket(request, requestProto);
+    }
+
     private void onReceivePacket(ApolloReceivePacketEvent event) {
         ApolloPlayer player = event.getPlayer();
-        Any packet = event.getPacket();
+        Any any = event.getPacket();
 
-        if(packet.is(OverrideConfigurableSettingsMessage.class) || packet.is(ConfigurableSettings.class)) {
-            this.handleConfiguration(player, packet);
+        if (any.is(OverrideConfigurableSettingsMessage.class) || any.is(ConfigurableSettings.class)) {
+            this.handleConfiguration(player, any);
         }
+
+        event.unpack(com.lunarclient.apollo.modsetting.v1.InstalledModsResponse.class).ifPresent(packet -> {
+            List<LunarClientMod> mods = packet.getModGroupsList().stream()
+                .flatMap(group -> group.getModsList().stream()
+                    .map(mod -> this.fromProtobuf(MOD_TYPES[group.getTypeValue() - 1], mod)))
+                .collect(Collectors.toList());
+
+            InstalledModsResponse response = InstalledModsResponse.builder()
+                .packetId(UUID.fromString(packet.getRequestId().toStringUtf8()))
+                .page(packet.getPage())
+                .totalPages(packet.getTotalPages())
+                .elements(mods)
+                .build();
+
+            ApolloManager.getRoundtripManager().handleResponse(response);
+        });
+    }
+
+    private LunarClientMod fromProtobuf(LunarClientModType type, Mod mod) {
+        return LunarClientMod.builder()
+            .id(mod.getId())
+            .displayName(mod.getId())
+            .version(mod.getVersion())
+            .type(type)
+            .build();
     }
 
     private void handleConfiguration(ApolloPlayer player, Any any) {
