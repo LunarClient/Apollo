@@ -24,11 +24,14 @@
 package com.lunarclient.apollo.example.api.module;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.client.mod.LunarClientMod;
 import com.lunarclient.apollo.example.module.impl.ModSettingsExample;
 import com.lunarclient.apollo.mods.impl.ModLighting;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.bukkit.entity.Player;
 
 public class ModSettingsApiExample extends ModSettingsExample {
@@ -51,6 +54,29 @@ public class ModSettingsApiExample extends ModSettingsExample {
     @Override
     public void broadcastDisableLightingModExample() {
         this.modSettingModule.getOptions().set(ModLighting.ENABLED, false);
+    }
+
+    @Override
+    public void requestInstalledModsExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        if (!apolloPlayerOpt.isPresent()) {
+            viewer.sendMessage("Join with Lunar Client to test this feature!");
+            return;
+        }
+
+        this.modSettingModule.requestInstalledMods(apolloPlayerOpt.get())
+            .onSuccess(response -> {
+                List<String> modIds = response.getElements()
+                    .stream().map(LunarClientMod::getId)
+                    .collect(Collectors.toList());
+
+                viewer.sendMessage("Found " + modIds.size() + " mods: " + modIds);
+            })
+            .onFailure(exception -> {
+                viewer.sendMessage("Internal error! Check console!");
+                exception.printStackTrace();
+            });
     }
 
 }

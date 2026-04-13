@@ -21,51 +21,66 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.client.mod;
+package com.lunarclient.apollo.roundtrip.pagination;
 
-import lombok.Builder;
+import com.lunarclient.apollo.roundtrip.ApolloResponse;
+import java.util.List;
+import java.util.UUID;
+import lombok.AccessLevel;
 import lombok.Getter;
-import org.jetbrains.annotations.Nullable;
+import lombok.experimental.SuperBuilder;
 
 /**
- * Represents a Lunar Client external mod.
+ * Represents a Paginated Apollo Response.
  *
- * @since 1.0.6
+ * @param <T> the type of the elements in the paginated payload
+ * @since 1.2.5
  */
 @Getter
-@Builder
-public final class LunarClientMod {
+@SuperBuilder
+public abstract class ApolloPaginatedResponse<T> extends ApolloResponse {
 
     /**
-     * Returns the mod {@link String} id (e.g. 'sodium').
+     * The current page number.
      *
-     * @return the mod id
-     * @since 1.0.6
+     * @since 1.2.5
      */
-    String id;
+    @Getter(AccessLevel.PROTECTED)
+    int page;
 
     /**
-     * Returns the mod {@link String} display name (e.g. 'Sodium').
+     * The total number of pages expected.
      *
-     * @return the mod display name
-     * @since 1.0.6
+     * @since 1.2.5
      */
-    @Nullable String displayName;
+    @Getter(AccessLevel.PROTECTED)
+    int totalPages;
 
     /**
-     * Returns the mod {@link String} version (e.g. '1.2.21').
+     * The elements contained in this specific page.
      *
-     * @return the mod display name
-     * @since 1.0.6
+     * @since 1.2.5
      */
-    @Nullable String version;
+    List<T> elements;
 
     /**
-     * Returns the mod {@link LunarClientModType} type.
+     * Checks if this is the final page in the sequence.
      *
-     * @return the mod type
-     * @since 1.0.6
+     * @return true if it is the last page
+     * @since 1.2.5
      */
-    LunarClientModType type;
+    public boolean isLastPage() {
+        return this.page == this.totalPages - 1;
+    }
+
+    /**
+     * Creates a finalized response containing all paginated elements.
+     *
+     * @param packetId the response packet id
+     * @param elements the complete list of elements across all pages
+     * @return a new combined response
+     * @since 1.2.5
+     */
+    public abstract ApolloPaginatedResponse<T> combine(UUID packetId, List<T> elements);
 
 }

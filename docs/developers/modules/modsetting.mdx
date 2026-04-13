@@ -118,6 +118,32 @@ public void broadcastDisableLightingModExample(Player viewer) {
 }
 ```
 
+**Request Installed Mods**
+
+```java
+public void requestInstalledModsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    if (!apolloPlayerOpt.isPresent()) {
+        viewer.sendMessage("Join with Lunar Client to test this feature!");
+        return;
+    }
+
+    this.modSettingModule.requestInstalledMods(apolloPlayerOpt.get())
+        .onSuccess(response -> {
+            List<String> modIds = response.getElements()
+                .stream().map(LunarClientMod::getId)
+                .collect(Collectors.toList());
+
+            viewer.sendMessage("Found " + modIds.size() + " mods: " + modIds);
+        })
+        .onFailure(exception -> {
+            viewer.sendMessage("Internal error! Check console!");
+            exception.printStackTrace();
+        });
+}
+```
+
 </Tab>
 
 <Tab>
@@ -159,6 +185,30 @@ public void broadcastDisableLightingModExample() {
 }
 ```
 
+**Request Installed Mods**
+
+```java
+public void requestInstalledModsExample(Player viewer) {
+    UUID requestId = UUID.randomUUID();
+
+    InstalledModsRequest request = InstalledModsRequest.newBuilder()
+        .setRequestId(ByteString.copyFromUtf8(requestId.toString()))
+        .build();
+
+    ApolloRoundtripProtoListener.getInstance().sendPaginatedRequest(viewer, requestId, request)
+        .thenAccept(mods -> {
+            List<String> modIds = mods.stream()
+                .map(Mod::getId)
+                .collect(Collectors.toList());
+
+            viewer.sendMessage("Found " + modIds.size() + " mods: " + modIds);
+        }).exceptionally(throwable -> {
+            viewer.sendMessage("Failed to receive a response in time.");
+            return null;
+        });
+}
+```
+
 </Tab>
 
 <Tab>
@@ -197,6 +247,27 @@ public void broadcastDisableLightingModExample() {
 
     JsonObject message = JsonUtil.createEnableModuleObjectWithType("mod_setting", properties);
     JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Request Installed Mods**
+
+```java
+public void requestInstalledModsExample(Player viewer) {
+    UUID requestId = UUID.randomUUID();
+
+    ApolloRoundtripJsonListener.getInstance()
+        .sendPaginatedRequest(viewer, requestId, new JsonObject(), "lunarclient.apollo.modsetting.v1.InstalledModsRequest")
+        .thenAccept(mods -> {
+            List<String> modIds = mods.stream()
+                .map(mod -> mod.get("id").getAsString())
+                .collect(Collectors.toList());
+
+            viewer.sendMessage("Found " + modIds.size() + " mods: " + modIds);
+        }).exceptionally(throwable -> {
+            viewer.sendMessage("Failed to receive a response in time.");
+            return null;
+        });
 }
 ```
 

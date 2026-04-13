@@ -23,11 +23,15 @@
  */
 package com.lunarclient.apollo.example.json.listener;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.json.util.JsonPacketUtil;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -51,6 +55,8 @@ public class ApolloRoundtripJsonListener implements PluginMessageListener {
     private static ApolloRoundtripJsonListener instance;
 
     private final Map<UUID, Map<UUID, CompletableFuture<JsonObject>>> roundTripPacketFutures = new ConcurrentHashMap<>();
+    private final Map<UUID, CompletableFuture<List<JsonObject>>> paginatedFutures = new ConcurrentHashMap<>();
+    private final Map<UUID, List<JsonObject>> paginatedAccumulator = new ConcurrentHashMap<>();
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
     public ApolloRoundtripJsonListener(ApolloExamplePlugin plugin) {
@@ -79,6 +85,9 @@ public class ApolloRoundtripJsonListener implements PluginMessageListener {
                 || "lunarclient.apollo.transfer.v1.TransferResponse".equals(type)) {
             UUID requestId = UUID.fromString(payload.get("request_id").getAsString().replace("+", "-"));
             this.handleResponse(player, requestId, payload);
+        } else if ("lunarclient.apollo.modsetting.v1.InstalledModsResponse".equals(type)) {
+            UUID requestId = UUID.fromString(payload.get("request_id").getAsString().replace("+", "-"));
+            this.parseModGroups(requestId, payload);
         }
     }
 
@@ -100,6 +109,64 @@ public class ApolloRoundtripJsonListener implements PluginMessageListener {
 
         future.whenComplete((result, throwable) -> timeoutTask.cancel(false));
         return future;
+    }
+
+    public CompletableFuture<List<JsonObject>> sendPaginatedRequest(Player player, UUID requestId, JsonObject request, String requestType) {
+        request.addProperty("@type", TYPE_PREFIX + requestType);
+        request.addProperty("request_id", requestId.toString());
+        JsonPacketUtil.sendPacket(player, request);
+
+        CompletableFuture<List<JsonObject>> future = new CompletableFuture<>();
+        this.paginatedFutures.put(requestId, future);
+
+        ScheduledFuture<?> timeoutTask = this.executorService.schedule(() ->
+                future.completeExceptionally(new TimeoutException("Response timed out")),
+            10, TimeUnit.SECONDS
+        );
+
+        future.whenComplete((result, throwable) -> {
+            timeoutTask.cancel(false);
+            this.paginatedAccumulator.remove(requestId);
+        });
+
+        return future;
+    }
+
+    private void parseModGroups(UUID requestId, JsonObject response) {
+        List<JsonObject> accumulated = this.paginatedAccumulator.computeIfAbsent(requestId, k -> new ArrayList<>());
+
+        JsonArray modGroups = response.getAsJsonArray("mod_groups");
+        if (modGroups != null) {
+            for (JsonElement groupElement : modGroups) {
+                JsonObject group = groupElement.getAsJsonObject();
+                String modType = group.get("type").getAsString();
+                JsonArray groupMods = group.getAsJsonArray("mods");
+
+                if (groupMods != null) {
+                    for (JsonElement modElement : groupMods) {
+                        JsonObject mod = modElement.getAsJsonObject();
+                        mod.addProperty("type", modType);
+                        accumulated.add(mod);
+                    }
+                }
+            }
+        }
+
+        this.handlePage(requestId, accumulated, response);
+    }
+
+    private void handlePage(UUID requestId, List<JsonObject> accumulated, JsonObject response) {
+        int page = response.has("page") ? response.get("page").getAsInt() : 0;
+        int totalPages = response.has("total_pages") ? response.get("total_pages").getAsInt() : 1;
+
+        if (page == totalPages - 1) {
+            this.paginatedAccumulator.remove(requestId);
+
+            CompletableFuture<List<JsonObject>> future = this.paginatedFutures.remove(requestId);
+            if (future != null) {
+                future.complete(accumulated);
+            }
+        }
     }
 
     private void handleResponse(Player player, UUID requestId, JsonObject message) {

@@ -21,51 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.client.mod;
+package com.lunarclient.apollo.module.modsetting;
 
-import lombok.Builder;
+import com.lunarclient.apollo.client.mod.LunarClientMod;
+import com.lunarclient.apollo.roundtrip.pagination.ApolloPaginatedResponse;
+import java.util.List;
+import java.util.UUID;
 import lombok.Getter;
-import org.jetbrains.annotations.Nullable;
+import lombok.experimental.SuperBuilder;
 
 /**
- * Represents a Lunar Client external mod.
+ * Represents the installed mods response.
  *
- * @since 1.0.6
+ * @since 1.2.5
  */
 @Getter
-@Builder
-public final class LunarClientMod {
+@SuperBuilder
+public final class InstalledModsResponse extends ApolloPaginatedResponse<LunarClientMod> {
 
-    /**
-     * Returns the mod {@link String} id (e.g. 'sodium').
-     *
-     * @return the mod id
-     * @since 1.0.6
-     */
-    String id;
-
-    /**
-     * Returns the mod {@link String} display name (e.g. 'Sodium').
-     *
-     * @return the mod display name
-     * @since 1.0.6
-     */
-    @Nullable String displayName;
-
-    /**
-     * Returns the mod {@link String} version (e.g. '1.2.21').
-     *
-     * @return the mod display name
-     * @since 1.0.6
-     */
-    @Nullable String version;
-
-    /**
-     * Returns the mod {@link LunarClientModType} type.
-     *
-     * @return the mod type
-     * @since 1.0.6
-     */
-    LunarClientModType type;
+    @Override
+    public ApolloPaginatedResponse<LunarClientMod> combine(UUID packetId, List<LunarClientMod> elements) {
+        return InstalledModsResponse.builder()
+            .packetId(packetId)
+            .elements(elements)
+            .build();
+    }
 
 }
