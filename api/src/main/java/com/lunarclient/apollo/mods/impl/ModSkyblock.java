@@ -179,7 +179,7 @@ public final class ModSkyblock {
     /**
      * Fixes being unable to use the "Pick Block" keybind on items when it is bound to a mouse button.
      *
-     * @since %release_version%
+     * @since 1.2.5
      */
     public static final SimpleOption<Boolean> MIDDLE_CLICK_ARMOR_FIX = SimpleOption.<Boolean>builder()
         .comment("Fixes being unable to use the \"Pick Block\" keybind on items when it is bound to a mouse button.")
@@ -880,7 +880,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.5
      */
     public static final SimpleOption<Boolean> CUSTOM_CHIME_VOLUME_ENABLED = SimpleOption.<Boolean>builder()
         .node("skyblock", "custom-chime-volume-enabled").type(TypeToken.get(Boolean.class))
@@ -891,7 +891,7 @@ public final class ModSkyblock {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.5
      */
     public static final NumberOption<Float> CUSTOM_CHIME_VOLUME = NumberOption.<Float>number()
         .node("skyblock", "custom-chime-volume").type(TypeToken.get(Float.class))

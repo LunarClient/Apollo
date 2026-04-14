@@ -84,7 +84,7 @@ public final class ModHypixelBedwars {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.5
      */
     public static final SimpleOption<Boolean> BW_HIDE_FOOD_BAR = SimpleOption.<Boolean>builder()
         .node("hypixel-bedwars", "bw-hide-food-bar").type(TypeToken.get(Boolean.class))
@@ -95,7 +95,7 @@ public final class ModHypixelBedwars {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.5
      */
     public static final SimpleOption<Boolean> BW_HIDE_ARMOR_BAR = SimpleOption.<Boolean>builder()
         .node("hypixel-bedwars", "bw-hide-armor-bar").type(TypeToken.get(Boolean.class))

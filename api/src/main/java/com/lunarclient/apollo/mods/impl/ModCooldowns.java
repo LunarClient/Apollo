@@ -61,7 +61,7 @@ public final class ModCooldowns {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.5
      */
     public static final SimpleOption<Color> COOLDOWN_CIRCLE_START_COLOR = SimpleOption.<Color>builder()
         .node("cooldowns", "cooldown-circle-start-color").type(TypeToken.get(Color.class))
@@ -72,7 +72,7 @@ public final class ModCooldowns {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.5
      */
     public static final SimpleOption<Color> COOLDOWN_CIRCLE_END_COLOR = SimpleOption.<Color>builder()
         .node("cooldowns", "cooldown-circle-end-color").type(TypeToken.get(Color.class))
@@ -83,7 +83,7 @@ public final class ModCooldowns {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.5
      */
     public static final SimpleOption<Color> COOLDOWN_EDGE_COLOR = SimpleOption.<Color>builder()
         .node("cooldowns", "cooldown-edge-color").type(TypeToken.get(Color.class))
@@ -94,7 +94,7 @@ public final class ModCooldowns {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.5
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("cooldowns", "text-color").type(TypeToken.get(Color.class))

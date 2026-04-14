@@ -48,7 +48,7 @@ public final class ModOneSevenVisuals {
     /**
      * 1.7: Right-clicking while breaking blocks will stop the block break.
      *
-     * @since %release_version%
+     * @since 1.2.5
      */
     public static final SimpleOption<Boolean> USE_ITEM_WHILE_DIGGING = SimpleOption.<Boolean>builder()
         .comment("1.7: Right-clicking while breaking blocks will stop the block break")

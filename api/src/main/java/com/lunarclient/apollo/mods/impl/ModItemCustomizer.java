@@ -29,14 +29,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * Allows you to customize the rendering/animation of held and dropped items.
  *
- * @since %release_version%
+ * @since 1.2.5
  */
 public final class ModItemCustomizer {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.5
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("item-customizer", "enabled").type(TypeToken.get(Boolean.class))
