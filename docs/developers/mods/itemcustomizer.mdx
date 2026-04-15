@@ -1,0 +1,23 @@
+# Item Customizer
+
+Allows you to customize the rendering/animation of held and dropped items.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleItemCustomizerExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModItemCustomizer.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

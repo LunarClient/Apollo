@@ -173,11 +173,12 @@ public final class ModChat {
         .build();
 
     /**
-     * No documentation available.
+     * Prevents your chat history from being cleared when disconnecting from or switching between servers.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> NO_CLOSE_MY_CHAT = SimpleOption.<Boolean>builder()
+        .comment("Prevents your chat history from being cleared when disconnecting from or switching between servers.")
         .node("chat", "no-close-my-chat").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()

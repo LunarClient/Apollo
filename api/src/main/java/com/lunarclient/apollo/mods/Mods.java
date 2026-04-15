@@ -57,6 +57,7 @@ import com.lunarclient.apollo.mods.impl.ModHypixelBedwars;
 import com.lunarclient.apollo.mods.impl.ModHypixelMod;
 import com.lunarclient.apollo.mods.impl.ModInventoryMod;
 import com.lunarclient.apollo.mods.impl.ModItemCounter;
+import com.lunarclient.apollo.mods.impl.ModItemCustomizer;
 import com.lunarclient.apollo.mods.impl.ModItemPhysics;
 import com.lunarclient.apollo.mods.impl.ModItemTracker;
 import com.lunarclient.apollo.mods.impl.ModKeystrokes;
@@ -160,7 +161,6 @@ public final class Mods {
             ModNametag.class,
             ModShulkerPreview.class,
             ModScrollableTooltips.class,
-            ModUhcOverlay.class,
             ModParticleChanger.class,
             ModNickHider.class,
             ModCooldowns.class,
@@ -212,6 +212,7 @@ public final class Mods {
             ModDamageTint.class,
             ModMobSize.class,
             ModSkyblock.class,
+            ModItemCustomizer.class,
             ModHorseStats.class,
             ModOverlayMod.class,
             ModRewind.class,
@@ -220,7 +221,8 @@ public final class Mods {
             ModKillSounds.class,
             ModInventoryMod.class,
             ModF3Display.class,
-            ModRadio.class
+            ModRadio.class,
+            ModUhcOverlay.class
         );
 
     private Mods() {

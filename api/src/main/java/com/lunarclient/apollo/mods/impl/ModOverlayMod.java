@@ -87,30 +87,6 @@ public final class ModOverlayMod {
      *
      * @since 1.2.2
      */
-    public static final NumberOption<Float> TOTEM_SCALE = NumberOption.<Float>number()
-        .node("overlay-mod", "totem-scale").type(TypeToken.get(Float.class))
-        .min(0.25F).max(1.5F)
-        .defaultValue(1.0F)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final NumberOption<Float> HELD_ITEM_SCALE = NumberOption.<Float>number()
-        .node("overlay-mod", "held-item-scale").type(TypeToken.get(Float.class))
-        .min(0.25F).max(1.5F)
-        .defaultValue(1.0F)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
     public static final NumberOption<Float> PUMPKIN_OVERLAY = NumberOption.<Float>number()
         .node("overlay-mod", "pumpkin-overlay").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.0F)
@@ -630,6 +606,32 @@ public final class ModOverlayMod {
         .comment("Disabling this allows you to hide armor slots for all entities.")
         .node("overlay-mod", "self-only").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final NumberOption<Float> TOTEM_SCALE = NumberOption.<Float>number()
+        .node("overlay-mod", "totem-scale").type(TypeToken.get(Float.class))
+        .min(0.25F).max(1.5F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final NumberOption<Float> HELD_ITEM_SCALE = NumberOption.<Float>number()
+        .node("overlay-mod", "held-item-scale").type(TypeToken.get(Float.class))
+        .min(0.25F).max(1.5F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 

@@ -177,12 +177,13 @@ public final class ModSkyblock {
         .build();
 
     /**
-     * No documentation available.
+     * Fixes being unable to use the "Pick Block" keybind on items when it is bound to a mouse button.
      *
-     * @since 1.2.1
+     * @since 1.2.5
      */
-    public static final SimpleOption<Boolean> SKYBLOCK_BOW_REEQUIP = SimpleOption.<Boolean>builder()
-        .node("skyblock", "skyblock-bow-reequip").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> MIDDLE_CLICK_ARMOR_FIX = SimpleOption.<Boolean>builder()
+        .comment("Fixes being unable to use the \"Pick Block\" keybind on items when it is bound to a mouse button.")
+        .node("skyblock", "middle-click-armor-fix").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();
@@ -273,17 +274,6 @@ public final class ModSkyblock {
     public static final SimpleOption<Color> SKYBLOCK_VALUE_COLOR = SimpleOption.<Color>builder()
         .node("skyblock", "skyblock-value-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(170, 170, 170))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_RANDOM_BOSSBARS = SimpleOption.<Boolean>builder()
-        .node("skyblock", "skyblock-hide-random-bossbars").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -406,18 +396,6 @@ public final class ModSkyblock {
     public static final SimpleOption<Boolean> BURROW_BEAM = SimpleOption.<Boolean>builder()
         .node("skyblock", "burrow-beam").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> TALLER_CROPS = SimpleOption.<Boolean>builder()
-        .comment("Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.")
-        .node("skyblock", "taller-crops").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -896,6 +874,66 @@ public final class ModSkyblock {
         .comment("Routes menu clicks to /sbmenu command in order to prevent sticky item.")
         .node("skyblock", "sb-menu-click-to-command").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.5
+     */
+    public static final SimpleOption<Boolean> CUSTOM_CHIME_VOLUME_ENABLED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "custom-chime-volume-enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.5
+     */
+    public static final NumberOption<Float> CUSTOM_CHIME_VOLUME = NumberOption.<Float>number()
+        .node("skyblock", "custom-chime-volume").type(TypeToken.get(Float.class))
+        .min(0.0F).max(1.0F)
+        .defaultValue(5.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.1
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_BOW_REEQUIP = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-bow-reequip").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_RANDOM_BOSSBARS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-random-bossbars").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> TALLER_CROPS = SimpleOption.<Boolean>builder()
+        .comment("Changes crop hitboxes with their 1.12+ variant. Only enabled on Hypixel or singleplayer.")
+        .node("skyblock", "taller-crops").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

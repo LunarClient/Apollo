@@ -27,49 +27,24 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Revert certain visuals and animations to how they behaved on 1.7.
- * Note: the settings of this mod are unique on 1.8, and don't carry over to later versions, and vice versa.
+ * Allows you to customize the rendering/animation of held and dropped items.
  *
- * @since 1.0.0
+ * @since 1.2.5
  */
-public final class ModOneSevenVisuals {
+public final class ModItemCustomizer {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("one-seven-visuals", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * 1.7: Right-clicking while breaking blocks will stop the block break.
-     *
      * @since 1.2.5
      */
-    public static final SimpleOption<Boolean> USE_ITEM_WHILE_DIGGING = SimpleOption.<Boolean>builder()
-        .comment("1.7: Right-clicking while breaking blocks will stop the block break")
-        .node("one-seven-visuals", "use-item-while-digging").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
+    public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
+        .node("item-customizer", "enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
-    /**
-     * Provides better visual feedback when attacking while keeping vanilla behavior.
-     *
-     * @since 1.1.8
-     */
-    public static final SimpleOption<Boolean> ALWAYS_SWING = SimpleOption.<Boolean>builder()
-        .comment("Provides better visual feedback when attacking while keeping vanilla behavior")
-        .node("one-seven-visuals", "always-swing").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    private ModOneSevenVisuals() {
+    private ModItemCustomizer() {
     }
 
 }
