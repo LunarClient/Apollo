@@ -1,4 +1,5 @@
 import { Tab, Tabs } from 'nextra-theme-docs'
+import { Callout } from 'nextra-theme-docs'
 
 # Stopwatch Module
 
@@ -26,30 +27,417 @@ Explore each integration by cycling through each tab, to find the best fit for y
 
 <Tab>
 
-### Start Stopwatch
+### Adding a Stopwatch
+
+```java
+public void addStopwatchExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.stopwatchModule.addStopwatch(apolloPlayer, Stopwatch.builder()
+            .id("parkour-stopwatch")
+            .name("Parkour")
+            .resetOnStart(true)
+            .preventModification(true)
+            .customFormat("mm:ss")
+            .textColor(ApolloColors.DARK_AQUA)
+            .hudPosition(HudPosition.builder()
+                .x(-30)
+                .y(30)
+                .build()
+            )
+            .build());
+    });
+}
+```
+
+### Removing a Stopwatch
+
+```java
+public void removeStopwatchExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.stopwatchModule.removeStopwatch(apolloPlayer, "parkour-stopwatch"));
+}
+```
+
+### Starting a Stopwatch
 
 ```java
 public void startStopwatchExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.stopwatchModule::startStopwatch);
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.stopwatchModule.startStopwatch(apolloPlayer, "parkour-stopwatch"));
 }
 ```
 
-### Stop Stopwatch
+### Stopping a Stopwatch
 
 ```java
 public void stopStopwatchExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.stopwatchModule::stopStopwatch);
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.stopwatchModule.stopStopwatch(apolloPlayer, "parkour-stopwatch"));
 }
 ```
 
-### Reset Stopwatch
+### Resetting a Stopwatch
 
 ```java
 public void resetStopwatchExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(this.stopwatchModule::resetStopwatch);
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.stopwatchModule.resetStopwatch(apolloPlayer, "parkour-stopwatch"));
+}
+```
+
+### Resetting all Stopwatches
+
+```java
+public void resetStopwatchesExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.stopwatchModule::resetStopwatches);
+}
+```
+
+### Adding a Timer
+
+```java
+public void addTimerExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.stopwatchModule.addTimer(apolloPlayer, Timer.builder()
+            .id("game-timer")
+            .name("Countdown")
+            .duration(Duration.ofSeconds(45))
+            .loop(false)
+            .preventModification(true)
+            .customFormat("mm:ss")
+            .titleText(Component.text("Time's up!", NamedTextColor.RED))
+            .ingameNotification(true)
+            .textColor(ApolloColors.LIGHT_PURPLE)
+            .hudPosition(HudPosition.builder()
+                .x(-10)
+                .y(30)
+                .build()
+            )
+            .build());
+    });
+}
+```
+
+### Removing a Timer
+
+```java
+public void removeTimerExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.stopwatchModule.removeTimer(apolloPlayer, "game-timer"));
+}
+```
+
+### Starting a Timer
+
+```java
+public void startTimerExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.stopwatchModule.startTimer(apolloPlayer, "game-timer"));
+}
+```
+
+### Stopping a Timer
+
+```java
+public void stopTimerExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.stopwatchModule.stopTimer(apolloPlayer, "game-timer"));
+}
+```
+
+### Resetting a Timer
+
+```java
+public void resetTimerExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.stopwatchModule.resetTimer(apolloPlayer, "game-timer"));
+}
+```
+
+### Resetting all Timers
+
+```java
+public void resetTimersExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.stopwatchModule::resetTimers);
+}
+```
+
+#### `Stopwatch` Options
+
+`.id(String)` is the unique server-assigned id for the stopwatch.
+
+```java
+.id("parkour-stopwatch")
+```
+
+`.name(String)` is the HUD display name.
+
+```java
+.name("Parkour")
+```
+
+`.resetOnStart(boolean)` determines whether to reset elapsed time on each start.
+
+```java
+.resetOnStart(true)
+```
+
+`.preventModification(boolean)` prevents the user from modifying the options for this stopwatch on the client side.
+
+```java
+.preventModification(true)
+```
+
+`.customFormat(String)` is a format string (e.g. `"mm:ss"`). Uses the default display format if not provided.
+
+```java
+.customFormat("mm:ss")
+```
+
+`.textColor(java.awt.Color)` is the text color. Defaults to white if not provided. See the [colors page](/apollo/developers/utilities/colors) for more.
+
+```java
+.textColor(ApolloColors.DARK_AQUA)
+```
+
+`.hudPosition(HudPosition)` is the HUD position on the client screen. If not provided, the stopwatch is auto-stacked.
+
+```java
+.hudPosition(HudPosition.builder().x(-30).y(30).build())
+```
+
+#### `Timer` Options
+
+`.id(String)` is the unique server-assigned id for the timer.
+
+```java
+.id("game-timer")
+```
+
+`.name(String)` is the HUD display name.
+
+```java
+.name("Countdown")
+```
+
+`.duration(java.time.Duration)` is the countdown duration.
+
+```java
+.duration(Duration.ofSeconds(45))
+```
+
+`.loop(boolean)` determines whether the timer restarts automatically when finished.
+
+```java
+.loop(false)
+```
+
+`.preventModification(boolean)` prevents the user from modifying the options for this timer on the client side.
+
+```java
+.preventModification(true)
+```
+
+`.customFormat(String)` is a format string. Uses the default display format if not provided.
+
+```java
+.customFormat("mm:ss")
+```
+
+`.titleText(Component)` is the on-screen title shown when the timer finishes. Set to `null` or omit to skip. See the [chat components](https://docs.advntr.dev/text.html) page for more.
+
+```java
+.titleText(Component.text("Time's up!", NamedTextColor.RED))
+```
+
+`.ingameNotification(boolean)` determines whether to show an in-game popup when the timer finishes.
+
+```java
+.ingameNotification(true)
+```
+
+`.textColor(java.awt.Color)` is the text color. Defaults to white if not provided. See the [colors page](/apollo/developers/utilities/colors) for more.
+
+```java
+.textColor(ApolloColors.LIGHT_PURPLE)
+```
+
+`.hudPosition(HudPosition)` is the HUD position on the client screen. If not provided, the timer is auto-stacked.
+
+```java
+.hudPosition(HudPosition.builder().x(-10).y(30).build())
+```
+
+</Tab>
+
+<Tab>
+
+### Adding a Stopwatch
+
+```java
+public void addStopwatchExample(Player viewer) {
+    AddStopwatchMessage message = AddStopwatchMessage.newBuilder()
+        .setId("parkour-stopwatch")
+        .setName("Parkour")
+        .setResetOnStart(true)
+        .setPreventModification(true)
+        .setDisplayFormat("mm:ss")
+        .setTextColor(ProtobufUtil.createColorProto(new Color(0, 170, 170)))
+        .setHudPosition(HudPosition.newBuilder()
+            .setX(-30)
+            .setY(30)
+            .build()
+        )
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Removing a Stopwatch
+
+```java
+public void removeStopwatchExample(Player viewer) {
+    RemoveStopwatchMessage message = RemoveStopwatchMessage.newBuilder()
+        .setId("parkour-stopwatch")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Starting a Stopwatch
+
+```java
+public void startStopwatchExample(Player viewer) {
+    StartStopwatchMessage message = StartStopwatchMessage.newBuilder()
+        .setId("parkour-stopwatch")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Stopping a Stopwatch
+
+```java
+public void stopStopwatchExample(Player viewer) {
+    StopStopwatchMessage message = StopStopwatchMessage.newBuilder()
+        .setId("parkour-stopwatch")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting a Stopwatch
+
+```java
+public void resetStopwatchExample(Player viewer) {
+    ResetStopwatchMessage message = ResetStopwatchMessage.newBuilder()
+        .setId("parkour-stopwatch")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting all Stopwatches
+
+```java
+public void resetStopwatchesExample(Player viewer) {
+    ResetStopwatchesMessage message = ResetStopwatchesMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Adding a Timer
+
+```java
+public void addTimerExample(Player viewer) {
+    AddTimerMessage message = AddTimerMessage.newBuilder()
+        .setId("game-timer")
+        .setName("Countdown")
+        .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(45)))
+        .setLoop(false)
+        .setPreventModification(true)
+        .setDisplayFormat("mm:ss")
+        .setTitleTextAdventureJsonLines(AdventureUtil.toJson(
+            Component.text("Time's up!", NamedTextColor.RED)
+        ))
+        .setInGameNotification(true)
+        .setTextColor(ProtobufUtil.createColorProto(new Color(255, 85, 255)))
+        .setHudPosition(HudPosition.newBuilder()
+            .setX(-10)
+            .setY(30)
+            .build()
+        )
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Removing a Timer
+
+```java
+public void removeTimerExample(Player viewer) {
+    RemoveTimerMessage message = RemoveTimerMessage.newBuilder()
+        .setId("game-timer")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Starting a Timer
+
+```java
+public void startTimerExample(Player viewer) {
+    StartTimerMessage message = StartTimerMessage.newBuilder()
+        .setId("game-timer")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Stopping a Timer
+
+```java
+public void stopTimerExample(Player viewer) {
+    StopTimerMessage message = StopTimerMessage.newBuilder()
+        .setId("game-timer")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting a Timer
+
+```java
+public void resetTimerExample(Player viewer) {
+    ResetTimerMessage message = ResetTimerMessage.newBuilder()
+        .setId("game-timer")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting all Timers
+
+```java
+public void resetTimersExample(Player viewer) {
+    ResetTimersMessage message = ResetTimersMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
 
@@ -57,65 +445,168 @@ public void resetStopwatchExample(Player viewer) {
 
 <Tab>
 
-**Start Stopwatch**
+### Adding a Stopwatch
 
 ```java
-public void startStopwatchExample(Player viewer) {
-    StartStopwatchMessage message = StartStopwatchMessage.getDefaultInstance();
-    ProtobufPacketUtil.sendPacket(viewer, message);
+public void addStopwatchExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.AddStopwatchMessage");
+    message.addProperty("id", "parkour-stopwatch");
+    message.addProperty("name", "Parkour");
+    message.addProperty("reset_on_start", true);
+    message.addProperty("prevent_modification", true);
+    message.addProperty("display_format", "mm:ss");
+    message.add("text_color", JsonUtil.createColorObject(new Color(0, 170, 170)));
+
+    JsonObject stopwatchPosition = new JsonObject();
+    stopwatchPosition.addProperty("x", -30);
+    stopwatchPosition.addProperty("y", 30);
+    message.add("hud_position", stopwatchPosition);
+
+    JsonPacketUtil.sendPacket(viewer, message);
 }
 ```
 
-**Stop Stopwatch**
+### Removing a Stopwatch
 
 ```java
-public void stopStopwatchExample(Player viewer) {
-    StopStopwatchMessage message = StopStopwatchMessage.getDefaultInstance();
-    ProtobufPacketUtil.sendPacket(viewer, message);
+public void removeStopwatchExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.RemoveStopwatchMessage");
+    message.addProperty("id", "parkour-stopwatch");
+
+    JsonPacketUtil.sendPacket(viewer, message);
 }
 ```
 
-**Reset Stopwatch**
-
-```java
-public void resetStopwatchExample(Player viewer) {
-    ResetStopwatchMessage message = ResetStopwatchMessage.getDefaultInstance();
-    ProtobufPacketUtil.sendPacket(viewer, message);
-}
-```
-
-</Tab>
-
-<Tab>
-
-**Start Stopwatch**
+### Starting a Stopwatch
 
 ```java
 public void startStopwatchExample(Player viewer) {
     JsonObject message = new JsonObject();
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.StartStopwatchMessage");
+    message.addProperty("id", "parkour-stopwatch");
 
     JsonPacketUtil.sendPacket(viewer, message);
 }
 ```
 
-**Stop Stopwatch**
+### Stopping a Stopwatch
 
 ```java
 public void stopStopwatchExample(Player viewer) {
     JsonObject message = new JsonObject();
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.StopStopwatchMessage");
+    message.addProperty("id", "parkour-stopwatch");
 
     JsonPacketUtil.sendPacket(viewer, message);
 }
 ```
 
-**Reset Stopwatch**
+### Resetting a Stopwatch
 
 ```java
 public void resetStopwatchExample(Player viewer) {
     JsonObject message = new JsonObject();
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.ResetStopwatchMessage");
+    message.addProperty("id", "parkour-stopwatch");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting all Stopwatches
+
+```java
+public void resetStopwatchesExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.ResetStopwatchesMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Adding a Timer
+
+```java
+public void addTimerExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.AddTimerMessage");
+    message.addProperty("id", "game-timer");
+    message.addProperty("name", "Countdown");
+    message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(45)));
+    message.addProperty("loop", false);
+    message.addProperty("prevent_modification", true);
+    message.addProperty("display_format", "mm:ss");
+    message.addProperty("title_text_adventure_json_lines", AdventureUtil.toJson(
+        Component.text("Time's up!", NamedTextColor.RED)
+    ));
+    message.addProperty("in_game_notification", true);
+    message.add("text_color", JsonUtil.createColorObject(new Color(255, 85, 255)));
+
+    JsonObject timerPosition = new JsonObject();
+    timerPosition.addProperty("x", -10);
+    timerPosition.addProperty("y", 30);
+    message.add("hud_position", timerPosition);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Removing a Timer
+
+```java
+public void removeTimerExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.RemoveTimerMessage");
+    message.addProperty("id", "game-timer");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Starting a Timer
+
+```java
+public void startTimerExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.StartTimerMessage");
+    message.addProperty("id", "game-timer");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Stopping a Timer
+
+```java
+public void stopTimerExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.StopTimerMessage");
+    message.addProperty("id", "game-timer");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting a Timer
+
+```java
+public void resetTimerExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.ResetTimerMessage");
+    message.addProperty("id", "game-timer");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting all Timers
+
+```java
+public void resetTimersExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.stopwatch.v1.ResetTimersMessage");
 
     JsonPacketUtil.sendPacket(viewer, message);
 }

@@ -35,6 +35,7 @@ import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
+import com.lunarclient.apollo.common.location.HudPosition;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Uuid;
 import com.lunarclient.apollo.module.packetenrichment.PlayerInfo;
@@ -139,6 +140,36 @@ public final class NetworkTypes {
      */
     public static Color fromProtobuf(com.lunarclient.apollo.common.v1.Color message) {
         return new Color(message.getColor());
+    }
+
+    /**
+     * Converts a {@link HudPosition} object to a
+     * {@link com.lunarclient.apollo.hud.v1.HudPosition} proto message.
+     *
+     * @param object the hud position
+     * @return the proto hud position message
+     * @since 1.2.6
+     */
+    public static com.lunarclient.apollo.hud.v1.HudPosition toProtobuf(HudPosition object) {
+        return com.lunarclient.apollo.hud.v1.HudPosition.newBuilder()
+            .setX((int) object.getX())
+            .setY((int) object.getY())
+            .build();
+    }
+
+    /**
+     * Converts a {@link com.lunarclient.apollo.hud.v1.HudPosition}
+     * proto message to a {@link HudPosition} object.
+     *
+     * @param message the hud position message
+     * @return the hud position object
+     * @since 1.2.6
+     */
+    public static HudPosition fromProtobuf(com.lunarclient.apollo.hud.v1.HudPosition message) {
+        return HudPosition.builder()
+            .x(message.getX())
+            .y(message.getY())
+            .build();
     }
 
     /**

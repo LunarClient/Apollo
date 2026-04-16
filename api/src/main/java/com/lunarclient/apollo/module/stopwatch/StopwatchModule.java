@@ -46,27 +46,140 @@ public abstract class StopwatchModule extends ApolloModule {
     }
 
     /**
+     * Adds a {@link Stopwatch} to the HUD for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param stopwatch  the stopwatch to add
+     * @since 1.2.6
+     */
+    public abstract void addStopwatch(Recipients recipients, Stopwatch stopwatch);
+
+    /**
+     * Removes the {@link Stopwatch} with the given id for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param id         the stopwatch id
+     * @since 1.2.6
+     */
+    public abstract void removeStopwatch(Recipients recipients, String id);
+
+    /**
+     * Starts the {@link Stopwatch} with the given id for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param id         the stopwatch id
+     * @since 1.2.6
+     */
+    public abstract void startStopwatch(Recipients recipients, String id);
+
+    /**
+     * Stops the {@link Stopwatch} with the given id for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param id         the stopwatch id
+     * @since 1.2.6
+     */
+    public abstract void stopStopwatch(Recipients recipients, String id);
+
+    /**
+     * Resets the {@link Stopwatch} with the given id for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param id         the stopwatch id
+     * @since 1.2.6
+     */
+    public abstract void resetStopwatch(Recipients recipients, String id);
+
+    /**
+     * Resets all {@link Stopwatch}es for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @since 1.2.6
+     */
+    public abstract void resetStopwatches(Recipients recipients);
+
+    /**
+     * Adds a {@link Timer} to the HUD for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param timer      the timer to add
+     * @since 1.2.6
+     */
+    public abstract void addTimer(Recipients recipients, Timer timer);
+
+    /**
+     * Removes the {@link Timer} with the given id for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param id         the timer id
+     * @since 1.2.6
+     */
+    public abstract void removeTimer(Recipients recipients, String id);
+
+    /**
+     * Starts the {@link Timer} with the given id for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param id         the timer id
+     * @since 1.2.6
+     */
+    public abstract void startTimer(Recipients recipients, String id);
+
+    /**
+     * Stops the {@link Timer} with the given id for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param id         the timer id
+     * @since 1.2.6
+     */
+    public abstract void stopTimer(Recipients recipients, String id);
+
+    /**
+     * Resets the {@link Timer} with the given id for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param id         the timer id
+     * @since 1.2.6
+     */
+    public abstract void resetTimer(Recipients recipients, String id);
+
+    /**
+     * Resets all {@link Timer}s for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @since 1.2.6
+     */
+    public abstract void resetTimers(Recipients recipients);
+
+    /**
      * Starts the stopwatch for the {@link Recipients}.
      *
      * @param recipients the recipients that are receiving the packet
+     * @deprecated for removal since 1.2.6, use {@link #addStopwatch(Recipients, Stopwatch)}
+     *     and {@link #startStopwatch(Recipients, String)} instead.
      * @since 1.0.0
      */
+    @Deprecated
     public abstract void startStopwatch(Recipients recipients);
 
     /**
      * Stops the stopwatch for the {@link Recipients}.
      *
      * @param recipients the recipients that are receiving the packet
+     * @deprecated for removal since 1.2.6, use {@link #stopStopwatch(Recipients, String)} instead.
      * @since 1.0.0
      */
+    @Deprecated
     public abstract void stopStopwatch(Recipients recipients);
 
     /**
      * Resets the stopwatch for the {@link Recipients}.
      *
      * @param recipients the recipients that are receiving the packet
+     * @deprecated for removal since 1.2.6, use {@link #resetStopwatch(Recipients, String)} instead.
      * @since 1.0.0
      */
+    @Deprecated
     public abstract void resetStopwatch(Recipients recipients);
 
 }
