@@ -75,7 +75,8 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             .setId(stopwatch.getId())
             .setName(stopwatch.getName())
             .setResetOnStart(stopwatch.isResetOnStart())
-            .setPreventModification(stopwatch.isPreventModification());
+            .setPreventModification(stopwatch.isPreventModification())
+            .setHideWhenStopped(stopwatch.isHideWhenStopped());
 
         String customFormat = stopwatch.getCustomFormat();
         if (customFormat != null) {
@@ -146,6 +147,7 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             .setDuration(NetworkTypes.toProtobuf(timer.getDuration()))
             .setLoop(timer.isLoop())
             .setPreventModification(timer.isPreventModification())
+            .setHideWhenStopped(timer.isHideWhenStopped())
             .setInGameNotification(timer.isIngameNotification());
 
         String customFormat = timer.getCustomFormat();
@@ -158,7 +160,7 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             builder.setTitleTextAdventureJsonLines(ApolloComponent.toJson(titleText));
         }
 
-        java.awt.Color textColor = timer.getTextColor();
+        Color textColor = timer.getTextColor();
         if (textColor != null) {
             builder.setTextColor(NetworkTypes.toProtobuf(textColor));
         }

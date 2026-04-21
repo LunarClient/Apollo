@@ -39,6 +39,7 @@ public void addStopwatchExample(Player viewer) {
             .name("Parkour")
             .resetOnStart(true)
             .preventModification(true)
+            .hideWhenStopped(false)
             .customFormat("mm:ss")
             .textColor(ApolloColors.DARK_AQUA)
             .hudPosition(HudPosition.builder()
@@ -109,6 +110,7 @@ public void addTimerExample(Player viewer) {
             .duration(Duration.ofSeconds(45))
             .loop(false)
             .preventModification(true)
+            .hideWhenStopped(false)
             .customFormat("mm:ss")
             .titleText(Component.text("Time's up!", NamedTextColor.RED))
             .ingameNotification(true)
@@ -194,6 +196,12 @@ public void resetTimersExample(Player viewer) {
 .preventModification(true)
 ```
 
+`.hideWhenStopped(boolean)` determines whether the stopwatch is hidden from the HUD when stopped.
+
+```java
+.hideWhenStopped(false)
+```
+
 `.customFormat(String)` is a format string (e.g. `"mm:ss"`). Uses the default display format if not provided.
 
 ```java
@@ -244,6 +252,12 @@ public void resetTimersExample(Player viewer) {
 .preventModification(true)
 ```
 
+`.hideWhenStopped(boolean)` determines whether the timer is hidden from the HUD when stopped.
+
+```java
+.hideWhenStopped(false)
+```
+
 `.customFormat(String)` is a format string. Uses the default display format if not provided.
 
 ```java
@@ -287,6 +301,7 @@ public void addStopwatchExample(Player viewer) {
         .setName("Parkour")
         .setResetOnStart(true)
         .setPreventModification(true)
+        .setHideWhenStopped(false)
         .setDisplayFormat("mm:ss")
         .setTextColor(ProtobufUtil.createColorProto(new Color(0, 170, 170)))
         .setHudPosition(HudPosition.newBuilder()
@@ -367,6 +382,7 @@ public void addTimerExample(Player viewer) {
         .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(45)))
         .setLoop(false)
         .setPreventModification(true)
+        .setHideWhenStopped(false)
         .setDisplayFormat("mm:ss")
         .setTitleTextAdventureJsonLines(AdventureUtil.toJson(
             Component.text("Time's up!", NamedTextColor.RED)
@@ -455,6 +471,7 @@ public void addStopwatchExample(Player viewer) {
     message.addProperty("name", "Parkour");
     message.addProperty("reset_on_start", true);
     message.addProperty("prevent_modification", true);
+    message.addProperty("hide_when_stopped", false);
     message.addProperty("display_format", "mm:ss");
     message.add("text_color", JsonUtil.createColorObject(new Color(0, 170, 170)));
 
@@ -537,6 +554,7 @@ public void addTimerExample(Player viewer) {
     message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(45)));
     message.addProperty("loop", false);
     message.addProperty("prevent_modification", true);
+    message.addProperty("hide_when_stopped", false);
     message.addProperty("display_format", "mm:ss");
     message.addProperty("title_text_adventure_json_lines", AdventureUtil.toJson(
         Component.text("Time's up!", NamedTextColor.RED)

@@ -152,8 +152,8 @@ public final class NetworkTypes {
      */
     public static com.lunarclient.apollo.hud.v1.HudPosition toProtobuf(HudPosition object) {
         return com.lunarclient.apollo.hud.v1.HudPosition.newBuilder()
-            .setX((int) object.getX())
-            .setY((int) object.getY())
+            .setX(object.getX())
+            .setY(object.getY())
             .build();
     }
 

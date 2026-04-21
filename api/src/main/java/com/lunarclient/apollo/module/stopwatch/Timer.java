@@ -86,6 +86,16 @@ public final class Timer {
     boolean preventModification;
 
     /**
+     * Returns the timer {@code boolean} hide when stopped.
+     *
+     * <p>If {@code true}, the timer is hidden from the HUD when stopped.</p>
+     *
+     * @return whether to hide when stopped
+     * @since 1.2.6
+     */
+    boolean hideWhenStopped;
+
+    /**
      * Returns the timer {@link String} custom format.
      *
      * <p>A format string (e.g. {@code "mm:ss"}), or {@code null}

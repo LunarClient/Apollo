@@ -44,6 +44,7 @@ public class StopwatchJsonExample extends StopwatchExample {
         message.addProperty("name", "Parkour");
         message.addProperty("reset_on_start", true);
         message.addProperty("prevent_modification", true);
+        message.addProperty("hide_when_stopped", false);
         message.addProperty("display_format", "mm:ss");
         message.add("text_color", JsonUtil.createColorObject(new Color(0, 170, 170)));
 
@@ -108,6 +109,7 @@ public class StopwatchJsonExample extends StopwatchExample {
         message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(45)));
         message.addProperty("loop", false);
         message.addProperty("prevent_modification", true);
+        message.addProperty("hide_when_stopped", false);
         message.addProperty("display_format", "mm:ss");
         message.addProperty("title_text_adventure_json_lines", AdventureUtil.toJson(
             Component.text("Time's up!", NamedTextColor.RED)

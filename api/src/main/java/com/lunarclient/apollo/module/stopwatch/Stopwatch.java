@@ -76,6 +76,16 @@ public final class Stopwatch {
     boolean preventModification;
 
     /**
+     * Returns the stopwatch {@code boolean} hide when stopped.
+     *
+     * <p>If {@code true}, the stopwatch is hidden from the HUD when stopped.</p>
+     *
+     * @return whether to hide when stopped
+     * @since 1.2.6
+     */
+    boolean hideWhenStopped;
+
+    /**
      * Returns the stopwatch {@link String} custom format.
      *
      * <p>A format string (e.g. {@code "mm:ss"}), or {@code null}

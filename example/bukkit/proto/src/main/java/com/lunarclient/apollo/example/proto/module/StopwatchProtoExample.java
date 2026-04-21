@@ -55,6 +55,7 @@ public class StopwatchProtoExample extends StopwatchExample {
             .setName("Parkour")
             .setResetOnStart(true)
             .setPreventModification(true)
+            .setHideWhenStopped(false)
             .setDisplayFormat("mm:ss")
             .setTextColor(ProtobufUtil.createColorProto(new Color(0, 170, 170)))
             .setHudPosition(HudPosition.newBuilder()
@@ -117,6 +118,7 @@ public class StopwatchProtoExample extends StopwatchExample {
             .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(45)))
             .setLoop(false)
             .setPreventModification(true)
+            .setHideWhenStopped(false)
             .setDisplayFormat("mm:ss")
             .setTitleTextAdventureJsonLines(AdventureUtil.toJson(
                 Component.text("Time's up!", NamedTextColor.RED)
