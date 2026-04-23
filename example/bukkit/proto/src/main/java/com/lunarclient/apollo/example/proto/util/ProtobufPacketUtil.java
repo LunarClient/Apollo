@@ -42,7 +42,7 @@ import org.bukkit.entity.Player;
 public final class ProtobufPacketUtil {
 
     private static final List<String> APOLLO_MODULES = Arrays.asList("auto_text_hotkey", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
-        "entity", "glint", "glow", "hologram", "inventory", "limb", "mod_setting", "nametag", "nick_hider", "notification", "pay_now", "packet_enrichment",
+        "cosmetic", "entity", "glint", "glow", "hologram", "inventory", "limb", "mod_setting", "nametag", "nick_hider", "notification", "pay_now", "packet_enrichment",
         "rich_presence", "saturation", "server_rule", "staff_mod", "stopwatch", "team", "tebex", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
     );
 

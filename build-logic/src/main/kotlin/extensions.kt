@@ -147,7 +147,7 @@ fun Project.setupDynamicLoader() {
             archiveClassifier.set("all")
         }
 
-        val shadowJarLoader by tasks.creating(ShadowJar::class) {
+        val shadowJarLoader by tasks.registering(ShadowJar::class) {
             archiveClassifier.set("")
             configurations = listOf(loaderImplementationConfig.get())
 

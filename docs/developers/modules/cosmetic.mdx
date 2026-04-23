@@ -1,0 +1,132 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+# Cosmetic Module
+
+## Overview
+
+## Integration
+
+### Sample Code
+Explore each integration by cycling through each tab to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+**Equip cosmetics on an NPC**
+
+```java
+public void equipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer> cosmeticIds) {
+    this.cosmeticModule.equipNpcCosmetics(Recipients.ofEveryone(), new ApolloEntity(entityId, npcUuid), cosmeticIds);
+}
+```
+
+**Unequip cosmetics from an NPC**
+
+```java
+public void unequipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer> cosmeticIds) {
+    this.cosmeticModule.unequipNpcCosmetics(Recipients.ofEveryone(), new ApolloEntity(entityId, npcUuid), cosmeticIds);
+}
+```
+
+**Reset all cosmetics on an NPC**
+
+```java
+public void resetNpcCosmeticsExample(int entityId, UUID npcUuid) {
+    this.cosmeticModule.resetNpcCosmetics(Recipients.ofEveryone(), new ApolloEntity(entityId, npcUuid));
+}
+```
+
+</Tab>
+
+<Tab>
+
+**Equip cosmetics on an NPC**
+
+```java
+public void equipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer> cosmeticIds) {
+    EquipNpcCosmeticsMessage message = EquipNpcCosmeticsMessage.newBuilder()
+        .setEntityId(ProtobufUtil.createEntityIdProto(entityId, npcUuid))
+        .addAllCosmeticIds(cosmeticIds)
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+**Unequip cosmetics from an NPC**
+
+```java
+public void unequipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer> cosmeticIds) {
+    UnequipNpcCosmeticsMessage message = UnequipNpcCosmeticsMessage.newBuilder()
+        .setEntityId(ProtobufUtil.createEntityIdProto(entityId, npcUuid))
+        .addAllCosmeticIds(cosmeticIds)
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+**Reset all cosmetics on an NPC**
+
+```java
+public void resetNpcCosmeticsExample(int entityId, UUID npcUuid) {
+    ResetNpcCosmeticsMessage message = ResetNpcCosmeticsMessage.newBuilder()
+        .setEntityId(ProtobufUtil.createEntityIdProto(entityId, npcUuid))
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+</Tab>
+
+<Tab>
+
+**Equip cosmetics on an NPC**
+
+```java
+public void equipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer> cosmeticIds) {
+    JsonArray cosmeticIdsArray = new JsonArray();
+    cosmeticIds.forEach(cosmeticIdsArray::add);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.EquipNpcCosmeticsMessage");
+    message.add("entity_id", JsonUtil.createEntityIdObject(entityId, npcUuid));
+    message.add("cosmetic_ids", cosmeticIdsArray);
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Unequip cosmetics from an NPC**
+
+```java
+public void unequipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer> cosmeticIds) {
+    JsonArray cosmeticIdsArray = new JsonArray();
+    cosmeticIds.forEach(cosmeticIdsArray::add);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.UnequipNpcCosmeticsMessage");
+    message.add("entity_id", JsonUtil.createEntityIdObject(entityId, npcUuid));
+    message.add("cosmetic_ids", cosmeticIdsArray);
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Reset all cosmetics on an NPC**
+
+```java
+public void resetNpcCosmeticsExample(int entityId, UUID npcUuid) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.ResetNpcCosmeticsMessage");
+    message.add("entity_id", JsonUtil.createEntityIdObject(entityId, npcUuid));
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+</Tab>
+
+</Tabs>

@@ -35,6 +35,7 @@ listOfNotNull(
     "extra:adventure4",
     "api",
     "common",
+    "example:bukkit:nms",
     "example:bukkit:common",
     "example:bukkit:api",
     "example:bukkit:json",

@@ -33,6 +33,7 @@ import com.lunarclient.apollo.example.json.module.ChatJsonExample;
 import com.lunarclient.apollo.example.json.module.ColoredFireJsonExample;
 import com.lunarclient.apollo.example.json.module.CombatJsonExample;
 import com.lunarclient.apollo.example.json.module.CooldownJsonExample;
+import com.lunarclient.apollo.example.json.module.CosmeticJsonExample;
 import com.lunarclient.apollo.example.json.module.EntityJsonExample;
 import com.lunarclient.apollo.example.json.module.GlowJsonExample;
 import com.lunarclient.apollo.example.json.module.HologramJsonExample;
@@ -73,6 +74,7 @@ public class ApolloJsonExamplePlatform extends ApolloExamplePlugin {
         this.setBeamExample(new BeamJsonExample());
         this.setBorderExample(new BorderJsonExample());
         this.setChatExample(new ChatJsonExample());
+        this.setCosmeticExample(new CosmeticJsonExample());
         this.setColoredFireExample(new ColoredFireJsonExample());
         this.setCombatExample(new CombatJsonExample());
         this.setCooldownExample(new CooldownJsonExample());

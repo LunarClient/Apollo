@@ -7,6 +7,8 @@ api-version: 1.13
 folia-supported: true
 
 commands:
+    npc:
+        description: "NPCs!"
     apollodebug:
         description: "Apollo Debug!"
     modstatus:
@@ -25,6 +27,8 @@ commands:
         description: "Combat!"
     cooldown:
         description: "Cooldowns!"
+    cosmetic:
+        description: "Cosmetics!"
     entity:
         description: "Entity!"
     glint:

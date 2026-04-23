@@ -15,3 +15,9 @@ dependencies {
     compileOnly(libs.folia)
     implementation(project(":example:bukkit:apollo-example-bukkit-common"))
 }
+
+tasks.shadowJar {
+    manifest {
+        attributes["paperweight-mappings-namespace"] = "mojang+yarn"
+    }
+}
