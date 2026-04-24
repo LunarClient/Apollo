@@ -7,6 +7,12 @@ You will see these options appear throughout Apollo and while reading the docume
 
 We recommend you use and understand these general features.
 
+### Sending Apollo data after a player joins
+
+Do **not** rely on the **`PlayerJoinEvent`** as the moment to send Apollo module packets to a player. At join time the client has often **not** completed the Apollo registration handshake yet, so your packets can be dropped or have no effect.
+
+Listen for **[ApolloRegisterPlayerEvent](/apollo/developers/events#apollo-register-player-event)** instead. It fires once Lunar Client has registered with the server after the client completes the registration flow Apollo expects. That is the right place to apply initial module state, waypoints, and similar setup.
+
 ### Player
 
 #### Checking if player is running Lunar Client
