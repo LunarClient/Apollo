@@ -21,52 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.cooldown;
+package com.lunarclient.apollo.module.cosmetic.options;
 
-import java.awt.Color;
+import com.lunarclient.apollo.module.cosmetic.Cosmetic;
 import lombok.Builder;
 import lombok.Getter;
-import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents the {@link Cooldown} style, allowing customization of the circle start, end, edge and text color.
+ * Represents body cosmetic display settings for use with {@link Cosmetic}.
  *
- * @since 1.2.5
+ * @since 1.2.6
  */
 @Getter
 @Builder
-public final class CooldownStyle {
+public final class BodyOptions extends CosmeticOptions {
 
     /**
-     * Returns the cooldown circle start {@link Color}.
+     * Returns whether the body cosmetic should render on top of an equipped chestplate when present.
      *
-     * @return the circle start color
-     * @since 1.2.5
+     * @return {@code true} to draw over the chestplate, {@code false} otherwise
+     * @since 1.2.6
      */
-    @Nullable Color circleStartColor;
+    @Builder.Default
+    boolean showOverChestplate = true;
 
     /**
-     * Returns the cooldown circle end {@link Color}.
+     * Returns whether the body cosmetic should render on top of equipped leggings when present.
      *
-     * @return the circle end color
-     * @since 1.2.5
+     * @return {@code true} to draw over the leggings, {@code false} otherwise
+     * @since 1.2.6
      */
-    @Nullable Color circleEndColor;
+    @Builder.Default
+    boolean showOverLeggings = true;
 
     /**
-     * Returns the cooldown circle edge {@link Color}.
+     * Returns whether the body cosmetic should render on top of equipped boots when present.
      *
-     * @return the circle edge color
-     * @since 1.2.5
+     * @return {@code true} to draw over the boots, {@code false} otherwise
+     * @since 1.2.6
      */
-    @Nullable Color circleEdgeColor;
-
-    /**
-     * Returns the cooldown text {@link Color}.
-     *
-     * @return the text color
-     * @since 1.2.5
-     */
-    @Nullable Color textColor;
+    @Builder.Default
+    boolean showOverBoots = true;
 
 }

@@ -43,7 +43,9 @@ listOfNotNull(
     "example:minestom:api"
 ).forEach {
     include(it)
-    findProject(":$it")?.name = "apollo-${it.replace(':', '-')}"
+    findProject(":$it")?.let { proj ->
+        proj.name = "apollo-${it.replace(':', '-')}"
+    }
 }
 
 
@@ -55,5 +57,7 @@ listOfNotNull(
     if (loadAllVersions) "platform:minestom" else null
 ).forEach {
     include(it)
-    findProject(":$it")?.name = "apollo-${it.split(':').last()}"
+    findProject(":$it")?.let { proj ->
+        proj.name = "apollo-${it.split(':').last()}"
+    }
 }

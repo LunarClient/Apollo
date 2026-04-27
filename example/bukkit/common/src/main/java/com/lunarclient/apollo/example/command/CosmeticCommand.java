@@ -48,12 +48,22 @@ public class CosmeticCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (args.length < 2) {
+        if (args.length < 1) {
             this.sendUsage(player);
             return true;
         }
 
         CosmeticExample example = ApolloExamplePlugin.getInstance().getCosmeticExample();
+
+        if ("spray".equalsIgnoreCase(args[0])) {
+            return this.handleSpray(player, example, args);
+        }
+
+        if (args.length < 2) {
+            this.sendUsage(player);
+            return true;
+        }
+
         String npcName = args[1];
         boolean uuidParam = npcName.contains("-");
 
@@ -63,7 +73,6 @@ public class CosmeticCommand implements CommandExecutor {
             return true;
         }
 
-        int entityId = 0;
         UUID uuid;
         if (uuidParam) {
             uuid = UUID.fromString(npcName);
@@ -74,26 +83,72 @@ public class CosmeticCommand implements CommandExecutor {
         switch (args[0].toLowerCase()) {
             case "equip": {
                 List<Integer> cosmeticIds = this.parseCosmeticIds(args);
-                example.equipNpcCosmeticsExample(entityId, uuid, cosmeticIds);
+                example.equipNpcCosmeticsInternal(player, uuid, cosmeticIds);
                 player.sendMessage(ChatColor.GREEN + "Equipped cosmetics " + cosmeticIds + " on NPC " + npcName);
                 break;
             }
 
             case "unequip": {
                 List<Integer> cosmeticIds = this.parseCosmeticIds(args);
-                example.unequipNpcCosmeticsExample(entityId, uuid, cosmeticIds);
+                example.unequipNpcCosmeticsInternal(player, uuid, cosmeticIds);
                 player.sendMessage(ChatColor.GREEN + "Unequipped cosmetics " + cosmeticIds + " from NPC " + npcName);
                 break;
             }
 
             case "reset": {
-                example.resetNpcCosmeticsExample(entityId, uuid);
+                example.resetNpcCosmeticsExample(player, uuid);
                 player.sendMessage(ChatColor.GREEN + "Reset all cosmetics on NPC " + npcName);
                 break;
             }
 
             default: {
                 this.sendUsage(player);
+                break;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean handleSpray(Player player, CosmeticExample example, String[] args) {
+        if (args.length < 2) {
+            this.sendSprayUsage(player);
+            return true;
+        }
+
+        switch (args[1].toLowerCase()) {
+            case "display": {
+                if (args.length < 3) {
+                    this.sendSprayUsage(player);
+                    return true;
+                }
+
+                int sprayId = Integer.parseInt(args[2]);
+                example.displaySprayExample(player, sprayId);
+                player.sendMessage(ChatColor.GREEN + "Displayed spray " + sprayId + " at your target block");
+                break;
+            }
+
+            case "remove": {
+                if (args.length < 3) {
+                    this.sendSprayUsage(player);
+                    return true;
+                }
+
+                int sprayId = Integer.parseInt(args[2]);
+                example.removeSprayExample(sprayId);
+                player.sendMessage(ChatColor.GREEN + "Removed all sprays with id " + sprayId);
+                break;
+            }
+
+            case "reset": {
+                example.resetSpraysExample();
+                player.sendMessage(ChatColor.GREEN + "Reset all server sprays");
+                break;
+            }
+
+            default: {
+                this.sendSprayUsage(player);
                 break;
             }
         }
@@ -113,9 +168,17 @@ public class CosmeticCommand implements CommandExecutor {
     }
 
     private void sendUsage(Player player) {
-        player.sendMessage("Usage: /cosmetic equip <npc_name> [cosmeticIds]");
-        player.sendMessage("Usage: /cosmetic unequip <npc_name> [cosmeticIds]");
-        player.sendMessage("Usage: /cosmetic reset <npc_name>");
+        player.sendMessage("Usage:");
+        player.sendMessage(" - /cosmetic equip <npc_name> [cosmeticIds]");
+        player.sendMessage(" - /cosmetic unequip <npc_name> [cosmeticIds]");
+        player.sendMessage(" - /cosmetic reset <npc_name>");
+        this.sendSprayUsage(player);
+    }
+
+    private void sendSprayUsage(Player player) {
+        player.sendMessage(" - /cosmetic spray display <sprayId>");
+        player.sendMessage(" - /cosmetic spray remove <sprayId>");
+        player.sendMessage(" - /cosmetic spray reset");
     }
 
 }

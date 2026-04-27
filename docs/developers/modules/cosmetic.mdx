@@ -1,39 +1,116 @@
-import { Tab, Tabs } from 'nextra-theme-docs'
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
 
 # Cosmetic Module
 
 ## Overview
 
+<Callout type="warning" emoji="⚠️">
+  NPC UUIDs **must** have their least significant bits set to `0` (i.e. `new UUID(msb, 0L)`).
+  Lunar Client rejects cosmetic packets for UUIDs that do not follow this format.
+</Callout>
+
 ## Integration
 
 ### Sample Code
-Explore each integration by cycling through each tab to find the best fit for your requirements and needs.
 
 <Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
-
 <Tab>
 
 **Equip cosmetics on an NPC**
 
 ```java
-public void equipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer> cosmeticIds) {
-    this.cosmeticModule.equipNpcCosmetics(Recipients.ofEveryone(), new ApolloEntity(entityId, npcUuid), cosmeticIds);
+public void equipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
+    List<Cosmetic> cosmetics = Lists.newArrayList(
+        Cosmetic.builder()
+            .id(434)
+            .build(),
+        Cosmetic.builder()
+            .id(3654)
+            .build(),
+        Cosmetic.builder()
+            .id(5095)
+            .options(PetOptions.builder()
+                .flipShoulder(true)
+                .build())
+            .build(),
+        Cosmetic.builder()
+            .id(3)
+            .options(CloakOptions.builder()
+                .useClothPhysics(true)
+                .build())
+            .build(),
+        Cosmetic.builder()
+            .id(3977)
+            .build()
+    );
+
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.cosmeticModule.equipNpcCosmetics(apolloPlayer, npcUuid, cosmetics));
 }
 ```
 
 **Unequip cosmetics from an NPC**
 
 ```java
-public void unequipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer> cosmeticIds) {
-    this.cosmeticModule.unequipNpcCosmetics(Recipients.ofEveryone(), new ApolloEntity(entityId, npcUuid), cosmeticIds);
+public void unequipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        List<Integer> cosmeticIds = Lists.newArrayList(434, 3654, 5095, 3, 3977);
+        this.cosmeticModule.unequipNpcCosmetics(apolloPlayer, npcUuid, cosmeticIds);
+    });
 }
 ```
 
-**Reset all cosmetics on an NPC**
+**Reset NPC cosmetics**
 
 ```java
-public void resetNpcCosmeticsExample(int entityId, UUID npcUuid) {
-    this.cosmeticModule.resetNpcCosmetics(Recipients.ofEveryone(), new ApolloEntity(entityId, npcUuid));
+public void resetNpcCosmeticsExample(UUID npcUuid) {
+    this.cosmeticModule.resetNpcCosmetics(Recipients.ofEveryone(), npcUuid);
+}
+```
+
+**Display spray**
+
+```java
+public void displaySprayExample(Player viewer, int sprayId) {
+    Block block = viewer.getTargetBlockExact(10);
+    Material material = block.getType();
+    if (material.isAir() || !material.isSolid()) {
+        return;
+    }
+
+    ApolloBlockLocation location = ApolloBlockLocation.builder()
+        .world(block.getWorld().getName())
+        .x(block.getX())
+        .y(block.getY())
+        .z(block.getZ())
+        .build();
+
+    Spray spray = Spray.builder()
+        .sprayId(sprayId)
+        .location(location)
+        .facing(Direction.UP)
+        .rotation(0f)
+        .duration(Duration.ofSeconds(60))
+        .build();
+
+    this.cosmeticModule.displaySpray(Recipients.ofEveryone(), spray);
+}
+```
+
+**Remove sprays**
+
+```java
+public void removeSprayExample(int sprayId) {
+    this.cosmeticModule.removeSpray(Recipients.ofEveryone(), sprayId);
+}
+```
+
+**Reset sprays**
+
+```java
+public void resetSpraysExample() {
+    this.cosmeticModule.resetSprays(Recipients.ofEveryone());
 }
 ```
 
@@ -44,22 +121,48 @@ public void resetNpcCosmeticsExample(int entityId, UUID npcUuid) {
 **Equip cosmetics on an NPC**
 
 ```java
-public void equipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer> cosmeticIds) {
+public void equipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
+    List<Cosmetic> cosmetics = Lists.newArrayList(
+        Cosmetic.newBuilder()
+            .setId(434)
+            .build(),
+        Cosmetic.newBuilder()
+            .setId(3654)
+            .build(),
+        Cosmetic.newBuilder()
+            .setId(5095)
+            .setPetOptions(PetOptions.newBuilder()
+                .setFlipShoulder(true)
+                .build())
+            .build(),
+        Cosmetic.newBuilder()
+            .setId(3)
+            .setCloakOptions(CloakOptions.newBuilder()
+                .setUseClothPhysics(true)
+                .build())
+            .build(),
+        Cosmetic.newBuilder()
+            .setId(3977)
+            .build()
+    );
+
     EquipNpcCosmeticsMessage message = EquipNpcCosmeticsMessage.newBuilder()
-        .setEntityId(ProtobufUtil.createEntityIdProto(entityId, npcUuid))
-        .addAllCosmeticIds(cosmeticIds)
+        .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
+        .addAllCosmetics(cosmetics)
         .build();
 
-    ProtobufPacketUtil.broadcastPacket(message);
+    ProtobufPacketUtil.sendPacket(viewer, message);
 }
 ```
 
 **Unequip cosmetics from an NPC**
 
 ```java
-public void unequipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer> cosmeticIds) {
+public void unequipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
+    List<Integer> cosmeticIds = Lists.newArrayList(434, 3654, 5095, 3, 3977);
+
     UnequipNpcCosmeticsMessage message = UnequipNpcCosmeticsMessage.newBuilder()
-        .setEntityId(ProtobufUtil.createEntityIdProto(entityId, npcUuid))
+        .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
         .addAllCosmeticIds(cosmeticIds)
         .build();
 
@@ -67,61 +170,184 @@ public void unequipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer>
 }
 ```
 
-**Reset all cosmetics on an NPC**
+**Reset NPC cosmetics**
 
 ```java
-public void resetNpcCosmeticsExample(int entityId, UUID npcUuid) {
+public void resetNpcCosmeticsExample(Player viewer, UUID npcUuid) {
     ResetNpcCosmeticsMessage message = ResetNpcCosmeticsMessage.newBuilder()
-        .setEntityId(ProtobufUtil.createEntityIdProto(entityId, npcUuid))
+        .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
         .build();
 
     ProtobufPacketUtil.broadcastPacket(message);
 }
 ```
 
-</Tab>
+**Display spray**
 
+```java
+public void displaySprayExample(Player viewer, int sprayId) {
+    Block block = viewer.getTargetBlockExact(10);
+    Material material = block.getType();
+    if (material.isAir() || !material.isSolid()) {
+        return;
+    }
+
+    DisplaySprayMessage message = DisplaySprayMessage.newBuilder()
+        .setSprayId(sprayId)
+        .setLocation(ProtobufUtil.createBlockLocationProto(block.getLocation()))
+        .setFacing(Direction.DIRECTION_UP)
+        .setRotation(0f)
+        .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(60)))
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+**Remove sprays**
+
+```java
+public void removeSprayExample(int sprayId) {
+    RemoveSprayMessage message = RemoveSprayMessage.newBuilder()
+        .setSprayId(sprayId)
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+**Reset sprays**
+
+```java
+public void resetSpraysExample() {
+    ProtobufPacketUtil.broadcastPacket(ResetSpraysMessage.getDefaultInstance());
+}
+```
+
+</Tab>
 <Tab>
 
 **Equip cosmetics on an NPC**
 
 ```java
-public void equipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer> cosmeticIds) {
-    JsonArray cosmeticIdsArray = new JsonArray();
-    cosmeticIds.forEach(cosmeticIdsArray::add);
+public void equipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
+    JsonArray cosmeticsArray = new JsonArray();
+
+    JsonObject first = new JsonObject();
+    first.addProperty("id", 434);
+    cosmeticsArray.add(first);
+
+    JsonObject second = new JsonObject();
+    second.addProperty("id", 3654);
+    cosmeticsArray.add(second);
+
+    JsonObject third = new JsonObject();
+    third.addProperty("id", 5095);
+    JsonObject petOptions = new JsonObject();
+    petOptions.addProperty("flip_shoulder", true);
+    third.add("pet_options", petOptions);
+    cosmeticsArray.add(third);
+
+    JsonObject fourth = new JsonObject();
+    fourth.addProperty("id", 3);
+    JsonObject cloakOptions = new JsonObject();
+    cloakOptions.addProperty("use_cloth_physics", true);
+    fourth.add("cloak_options", cloakOptions);
+    cosmeticsArray.add(fourth);
+
+    JsonObject fifth = new JsonObject();
+    fifth.addProperty("id", 3977);
+    cosmeticsArray.add(fifth);
 
     JsonObject message = new JsonObject();
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.EquipNpcCosmeticsMessage");
-    message.add("entity_id", JsonUtil.createEntityIdObject(entityId, npcUuid));
-    message.add("cosmetic_ids", cosmeticIdsArray);
+    message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
+    message.add("cosmetics", cosmeticsArray);
 
-    JsonPacketUtil.broadcastPacket(message);
+    JsonPacketUtil.sendPacket(viewer, message);
 }
 ```
 
 **Unequip cosmetics from an NPC**
 
 ```java
-public void unequipNpcCosmeticsExample(int entityId, UUID npcUuid, List<Integer> cosmeticIds) {
+public void unequipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
+    List<Integer> cosmeticIds = Lists.newArrayList(434, 3654, 5095, 3, 3977);
+
     JsonArray cosmeticIdsArray = new JsonArray();
     cosmeticIds.forEach(cosmeticIdsArray::add);
 
     JsonObject message = new JsonObject();
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.UnequipNpcCosmeticsMessage");
-    message.add("entity_id", JsonUtil.createEntityIdObject(entityId, npcUuid));
+    message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
     message.add("cosmetic_ids", cosmeticIdsArray);
 
     JsonPacketUtil.broadcastPacket(message);
 }
 ```
 
-**Reset all cosmetics on an NPC**
+**Reset NPC cosmetics**
 
 ```java
-public void resetNpcCosmeticsExample(int entityId, UUID npcUuid) {
+    public void displaySprayExample(Player viewer, int sprayId) {
+               Block block = viewer.getTargetBlockExact(10);
+               Material material = block.getType();
+               if (material.isAir() || !material.isSolid()) {
+                   return;
+               }
+
+               JsonObject message = new JsonObject();
+               message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.DisplaySprayMessage");
+               message.addProperty("spray_id", sprayId);
+               message.add("location", JsonUtil.createBlockLocationObject(block.getLocation()));
+               message.addProperty("facing", "UP");
+               message.addProperty("rotation", 0f);
+               message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(60)));
+
+               JsonPacketUtil.broadcastPacket(message);
+           }
+```
+
+**Display spray**
+
+```java
+public void displaySprayExample(Player viewer, int sprayId) {
+    Block block = viewer.getTargetBlockExact(10);
+    Material material = block.getType();
+    if (material.isAir() || !material.isSolid()) {
+        return;
+    }
+
     JsonObject message = new JsonObject();
-    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.ResetNpcCosmeticsMessage");
-    message.add("entity_id", JsonUtil.createEntityIdObject(entityId, npcUuid));
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.DisplaySprayMessage");
+    message.addProperty("spray_id", sprayId);
+    message.add("location", JsonUtil.createBlockLocationObject(block.getLocation()));
+    message.addProperty("facing", "UP");
+    message.addProperty("rotation", 0f);
+    message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(60)));
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Remove sprays**
+
+```java
+public void removeSprayExample(int sprayId) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.RemoveSprayMessage");
+    message.addProperty("spray_id", sprayId);
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Reset sprays**
+
+```java
+public void resetSpraysExample() {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.ResetSpraysMessage");
 
     JsonPacketUtil.broadcastPacket(message);
 }

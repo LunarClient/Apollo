@@ -21,52 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.cooldown;
+package com.lunarclient.apollo.module.cosmetic.options;
 
-import java.awt.Color;
-import lombok.Builder;
-import lombok.Getter;
-import org.jetbrains.annotations.Nullable;
+import com.lunarclient.apollo.module.cosmetic.Cosmetic;
 
 /**
- * Represents the {@link Cooldown} style, allowing customization of the circle start, end, edge and text color.
+ * The abstract base class for cosmetic display options used with {@link Cosmetic}.
  *
- * @since 1.2.5
+ * <p>Concrete types are {@link HatOptions}, {@link CloakOptions}, {@link PetOptions}, and {@link BodyOptions}.</p>
+ *
+ * @since 1.2.6
  */
-@Getter
-@Builder
-public final class CooldownStyle {
-
-    /**
-     * Returns the cooldown circle start {@link Color}.
-     *
-     * @return the circle start color
-     * @since 1.2.5
-     */
-    @Nullable Color circleStartColor;
-
-    /**
-     * Returns the cooldown circle end {@link Color}.
-     *
-     * @return the circle end color
-     * @since 1.2.5
-     */
-    @Nullable Color circleEndColor;
-
-    /**
-     * Returns the cooldown circle edge {@link Color}.
-     *
-     * @return the circle edge color
-     * @since 1.2.5
-     */
-    @Nullable Color circleEdgeColor;
-
-    /**
-     * Returns the cooldown text {@link Color}.
-     *
-     * @return the text color
-     * @since 1.2.5
-     */
-    @Nullable Color textColor;
+public abstract class CosmeticOptions {
 
 }

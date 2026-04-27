@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
@@ -51,15 +50,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 
-public final class NpcManager {
-
-    private static final int ALL_SKIN_LAYERS = 0x7F;
+public final class NpcManager implements Listener {
 
     private static final ClientInformation NPC_CLIENT_INFO = new ClientInformation(
-        "en_us", 2, ChatVisiblity.HIDDEN, false, ALL_SKIN_LAYERS,
+        "en_us", 2, ChatVisiblity.HIDDEN, false, 0x7F,
         HumanoidArm.RIGHT, false, false, ParticleStatus.ALL
     );
 
@@ -68,47 +70,9 @@ public final class NpcManager {
 
     public NpcManager(JavaPlugin plugin) {
         this.plugin = plugin;
-    }
 
-    public @Nullable PlayerNpc spawnNpc(String name, Location location) {
-        World world = location.getWorld();
-        if (world == null) {
-            return null;
-        }
-
-        MinecraftServer server = MinecraftServer.getServer();
-        ServerLevel level = ((CraftWorld) world).getHandle();
-
-        GameProfile profile = new GameProfile(UUID.randomUUID(), name);
-        ServerPlayer npc = new ServerPlayer(server, level, profile, NPC_CLIENT_INFO);
-
-        npc.setPos(location.getX(), location.getY(), location.getZ());
-        npc.setYRot(location.getYaw());
-        npc.setXRot(location.getPitch());
-
-        ClientboundPlayerInfoUpdatePacket.Entry entry = new ClientboundPlayerInfoUpdatePacket.Entry(
-            npc.getUUID(), profile, true, 0, GameType.CREATIVE, null, true, 0, null);
-
-        this.broadcastPacket(new ClientboundPlayerInfoUpdatePacket(
-            EnumSet.of(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER), entry));
-
-        this.broadcastPacket(new ClientboundAddEntityPacket(
-            npc.getId(), npc.getUUID(),
-            location.getX(), location.getY(), location.getZ(),
-            location.getPitch(), location.getYaw(),
-            npc.getType(), 0, Vec3.ZERO, location.getYaw()));
-
-        this.broadcastPacket(new ClientboundSetEntityDataPacket(
-            npc.getId(), npc.getEntityData().getNonDefaultValues()));
-
-        Bukkit.getScheduler().runTaskLater(this.plugin, () -> {
-            this.broadcastPacket(new ClientboundPlayerInfoRemovePacket(List.of(npc.getUUID())));
-        }, 5L);
-
-        PlayerNpc playerNpc = new PlayerNpc(npc.getUUID(), name, location.clone(), npc);
-        this.npcs.put(playerNpc.getUuid(), playerNpc);
-
-        return playerNpc;
+        Bukkit.getPluginManager().registerEvents(this, plugin);
+        Bukkit.getScheduler().runTask(plugin, this::spawnDefaultNpcs);
     }
 
     public void removeNpc(UUID uuid) {
@@ -117,12 +81,12 @@ public final class NpcManager {
             return;
         }
 
-        this.despawnNpc(npc);
+        this.despawnNpcs(npc);
     }
 
     public void removeAll() {
         for (PlayerNpc npc : new ArrayList<>(this.npcs.values())) {
-            this.despawnNpc(npc);
+            this.despawnNpcs(npc);
         }
 
         this.npcs.clear();
@@ -138,14 +102,84 @@ public final class NpcManager {
         return new ArrayList<>(this.npcs.values());
     }
 
-    private void despawnNpc(PlayerNpc npc) {
-        this.broadcastPacket(new ClientboundRemoveEntitiesPacket(npc.getEntityId()));
-        this.broadcastPacket(new ClientboundPlayerInfoRemovePacket(List.of(npc.getUuid())));
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        ServerPlayer viewer = ((CraftPlayer) event.getPlayer()).getHandle();
+        for (PlayerNpc npc : this.npcs.values()) {
+            this.showNpc(viewer, npc);
+        }
     }
 
-    private void broadcastPacket(Packet<?> packet) {
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        ServerPlayer viewer = ((CraftPlayer) event.getPlayer()).getHandle();
+        for (PlayerNpc npc : this.npcs.values()) {
+            this.hideNpc(viewer, npc);
+        }
+    }
+
+    private void spawnDefaultNpcs() {
+        this.spawnNpc("Apollo", new Location(Bukkit.getWorld("world"), 20.5, 65, 5.5, 90f, 0f));
+    }
+
+    public @Nullable PlayerNpc spawnNpc(String name, Location location) {
+        World world = location.getWorld();
+        if (world == null) {
+            return null;
+        }
+
+        MinecraftServer server = MinecraftServer.getServer();
+        ServerLevel level = ((CraftWorld) world).getHandle();
+
+        UUID npcUuid = new UUID(UUID.randomUUID().getMostSignificantBits(), 0L);
+        GameProfile profile = new GameProfile(npcUuid, name);
+        ServerPlayer npc = new ServerPlayer(server, level, profile, NpcManager.NPC_CLIENT_INFO);
+
+        npc.setPos(location.getX(), location.getY(), location.getZ());
+        npc.setYRot(location.getYaw());
+        npc.setXRot(location.getPitch());
+
+        PlayerNpc playerNpc = new PlayerNpc(npc.getUUID(), name, location.clone(), npc);
+        this.npcs.put(playerNpc.getUuid(), playerNpc);
+
+        for (ServerPlayer viewer : server.getPlayerList().getPlayers()) {
+            this.showNpc(viewer, playerNpc);
+        }
+
+        return playerNpc;
+    }
+
+    private void showNpc(ServerPlayer viewer, PlayerNpc npc) {
+        ServerPlayer entity = npc.getHandle();
+        Location location = npc.getLocation();
+        GameProfile profile = entity.getGameProfile();
+
+        ClientboundPlayerInfoUpdatePacket.Entry entry = new ClientboundPlayerInfoUpdatePacket.Entry(
+            entity.getUUID(), profile, true, 0, GameType.CREATIVE, null, true, 0, null);
+
+        viewer.connection.send(new ClientboundPlayerInfoUpdatePacket(
+            EnumSet.of(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER), entry));
+        viewer.connection.send(new ClientboundAddEntityPacket(
+            entity.getId(), entity.getUUID(),
+            location.getX(), location.getY(), location.getZ(),
+            location.getPitch(), location.getYaw(),
+            entity.getType(), 0, Vec3.ZERO, location.getYaw()));
+        viewer.connection.send(new ClientboundSetEntityDataPacket(
+            entity.getId(), entity.getEntityData().getNonDefaultValues()));
+
+        Bukkit.getScheduler().runTaskLater(this.plugin, () -> {
+            viewer.connection.send(new ClientboundPlayerInfoRemovePacket(List.of(entity.getUUID())));
+        }, 5L);
+    }
+
+    private void hideNpc(ServerPlayer viewer, PlayerNpc npc) {
+        viewer.connection.send(new ClientboundRemoveEntitiesPacket(npc.getEntityId()));
+        viewer.connection.send(new ClientboundPlayerInfoRemovePacket(List.of(npc.getUuid())));
+    }
+
+    private void despawnNpcs(PlayerNpc npc) {
         for (ServerPlayer player : MinecraftServer.getServer().getPlayerList().getPlayers()) {
-            player.connection.send(packet);
+            this.hideNpc(player, npc);
         }
     }
 

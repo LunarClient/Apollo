@@ -21,52 +21,65 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.cooldown;
+package com.lunarclient.apollo.module.cosmetic;
 
-import java.awt.Color;
+import com.lunarclient.apollo.common.location.ApolloBlockLocation;
+import com.lunarclient.apollo.module.packetenrichment.raytrace.Direction;
+import java.time.Duration;
 import lombok.Builder;
 import lombok.Getter;
-import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents the {@link Cooldown} style, allowing customization of the circle start, end, edge and text color.
+ * Represents a spray.
  *
- * @since 1.2.5
+ * @since 1.2.6
  */
 @Getter
 @Builder
-public final class CooldownStyle {
+public final class Spray {
 
     /**
-     * Returns the cooldown circle start {@link Color}.
+     * Returns the Lunar Client spray cosmetic id.
      *
-     * @return the circle start color
-     * @since 1.2.5
+     * @return the spray cosmetic id
+     * @since 1.2.6
      */
-    @Nullable Color circleStartColor;
+    int sprayId;
 
     /**
-     * Returns the cooldown circle end {@link Color}.
+     * Returns the {@link ApolloBlockLocation} of the block the spray is placed on.
      *
-     * @return the circle end color
-     * @since 1.2.5
+     * @return the block location
+     * @since 1.2.6
      */
-    @Nullable Color circleEndColor;
+    ApolloBlockLocation location;
 
     /**
-     * Returns the cooldown circle edge {@link Color}.
+     * Returns the {@link Direction} indicating which side the spray faces.
      *
-     * @return the circle edge color
-     * @since 1.2.5
+     * @return the facing direction
+     * @since 1.2.6
      */
-    @Nullable Color circleEdgeColor;
+    Direction facing;
 
     /**
-     * Returns the cooldown text {@link Color}.
+     * Returns the spray rotation in degrees on the client.
      *
-     * @return the text color
-     * @since 1.2.5
+     * @return the rotation in degrees
+     * @since 1.2.6
      */
-    @Nullable Color textColor;
+    @Builder.Default
+    float rotation = 0f;
+
+    /**
+     * Returns the {@link Duration} for how long the spray remains visible on the client.
+     *
+     * <p>Maximum duration is 600 seconds (10 minutes).</p>
+     *
+     * @return the display duration
+     * @since 1.2.6
+     */
+    @Builder.Default
+    Duration duration = Duration.ofSeconds(30);
 
 }

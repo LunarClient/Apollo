@@ -23,15 +23,21 @@
  */
 package com.lunarclient.apollo.module.cosmetic;
 
-import com.lunarclient.apollo.common.ApolloEntity;
+import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.module.cosmetic.options.BodyOptions;
+import com.lunarclient.apollo.module.cosmetic.options.CloakOptions;
+import com.lunarclient.apollo.module.cosmetic.options.CosmeticOptions;
+import com.lunarclient.apollo.module.cosmetic.options.HatOptions;
+import com.lunarclient.apollo.module.cosmetic.options.PetOptions;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.util.List;
+import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Represents the cosmetic module, responsible for applying cosmetics onto player NPCs.
+ * Represents the cosmetic module.
  *
  * @since 1.2.6
  */
@@ -42,30 +48,67 @@ public abstract class CosmeticModule extends ApolloModule {
     /**
      * Equips the provided cosmetics on an NPC for the given {@link Recipients}.
      *
-     * @param recipients  the recipients that are receiving the packet
-     * @param entity      the {@link ApolloEntity} of the NPC to equip the cosmetics on
-     * @param cosmeticIds the list of cosmetic ids to equip
+     * @param recipients the recipients that are receiving the packet
+     * @param npcUuid    the {@link UUID} of the NPC to equip the cosmetics on
+     * @param cosmetics  the cosmetics to equip, including optional {@link CosmeticOptions} per entry
+     *                   ({@link HatOptions}, {@link CloakOptions}, {@link PetOptions}, or {@link BodyOptions})
      * @since 1.2.6
      */
-    public abstract void equipNpcCosmetics(Recipients recipients, ApolloEntity entity, List<Integer> cosmeticIds);
+    public abstract void equipNpcCosmetics(Recipients recipients, UUID npcUuid, List<Cosmetic> cosmetics);
 
     /**
      * Unequips the provided cosmetics from an NPC for the given {@link Recipients}.
      *
      * @param recipients  the recipients that are receiving the packet
-     * @param entity      the {@link ApolloEntity} of the NPC to unequip the cosmetics from
+     * @param npcUuid     the {@link UUID} of the NPC to unequip the cosmetics from
      * @param cosmeticIds the list of cosmetic ids to unequip
      * @since 1.2.6
      */
-    public abstract void unequipNpcCosmetics(Recipients recipients, ApolloEntity entity, List<Integer> cosmeticIds);
+    public abstract void unequipNpcCosmetics(Recipients recipients, UUID npcUuid, List<Integer> cosmeticIds);
 
     /**
      * Resets all cosmetics on an NPC for the given {@link Recipients}.
      *
      * @param recipients the recipients that are receiving the packet
-     * @param entity     the {@link ApolloEntity} of the NPC to reset the cosmetics on
+     * @param npcUuid    the {@link UUID} of the NPC to reset the cosmetics on
      * @since 1.2.6
      */
-    public abstract void resetNpcCosmetics(Recipients recipients, ApolloEntity entity);
+    public abstract void resetNpcCosmetics(Recipients recipients, UUID npcUuid);
+
+    /**
+     * Displays a spray for the given {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param spray      the spray to display (durations under one second are raised to one second before sending)
+     * @since 1.2.6
+     */
+    public abstract void displaySpray(Recipients recipients, Spray spray);
+
+    /**
+     * Removes every instance of a spray id for the given {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param sprayId    the spray cosmetic id
+     * @since 1.2.6
+     */
+    public abstract void removeSpray(Recipients recipients, int sprayId);
+
+    /**
+     * Removes every instance of a spray id at a specific block for the given {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param sprayId    the spray cosmetic id
+     * @param location   the block location of the spray to remove
+     * @since 1.2.6
+     */
+    public abstract void removeSpray(Recipients recipients, int sprayId, ApolloBlockLocation location);
+
+    /**
+     * Resets all server sprays for the given {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @since 1.2.6
+     */
+    public abstract void resetSprays(Recipients recipients);
 
 }

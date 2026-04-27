@@ -23,15 +23,26 @@
  */
 package com.lunarclient.apollo.module.cosmetic;
 
-import com.lunarclient.apollo.common.ApolloEntity;
+import com.lunarclient.apollo.common.location.ApolloBlockLocation;
+import com.lunarclient.apollo.cosmetic.v1.DisplaySprayMessage;
 import com.lunarclient.apollo.cosmetic.v1.EquipNpcCosmeticsMessage;
+import com.lunarclient.apollo.cosmetic.v1.RemoveSprayMessage;
 import com.lunarclient.apollo.cosmetic.v1.ResetNpcCosmeticsMessage;
+import com.lunarclient.apollo.cosmetic.v1.ResetSpraysMessage;
 import com.lunarclient.apollo.cosmetic.v1.UnequipNpcCosmeticsMessage;
+import com.lunarclient.apollo.module.cosmetic.options.BodyOptions;
+import com.lunarclient.apollo.module.cosmetic.options.CloakOptions;
+import com.lunarclient.apollo.module.cosmetic.options.CosmeticOptions;
+import com.lunarclient.apollo.module.cosmetic.options.HatOptions;
+import com.lunarclient.apollo.module.cosmetic.options.PetOptions;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.NonNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Provides the cosmetic module.
@@ -41,19 +52,23 @@ import lombok.NonNull;
 public final class CosmeticModuleImpl extends CosmeticModule {
 
     @Override
-    public void equipNpcCosmetics(@NonNull Recipients recipients, @NonNull ApolloEntity entity, @NonNull List<Integer> cosmeticIds) {
+    public void equipNpcCosmetics(@NonNull Recipients recipients, @NonNull UUID npcUuid, @NonNull List<Cosmetic> cosmetics) {
+        List<com.lunarclient.apollo.cosmetic.v1.Cosmetic> cosmeticsProto = cosmetics.stream()
+            .map(this::toProtobuf)
+            .collect(Collectors.toList());
+
         EquipNpcCosmeticsMessage message = EquipNpcCosmeticsMessage.newBuilder()
-            .setEntityId(NetworkTypes.toProtobuf(entity))
-            .addAllCosmeticIds(cosmeticIds)
+            .setNpcUuid(NetworkTypes.toProtobuf(npcUuid))
+            .addAllCosmetics(cosmeticsProto)
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
     @Override
-    public void unequipNpcCosmetics(@NonNull Recipients recipients, @NonNull ApolloEntity entity, @NonNull List<Integer> cosmeticIds) {
+    public void unequipNpcCosmetics(@NonNull Recipients recipients, @NonNull UUID npcUuid, @NonNull List<Integer> cosmeticIds) {
         UnequipNpcCosmeticsMessage message = UnequipNpcCosmeticsMessage.newBuilder()
-            .setEntityId(NetworkTypes.toProtobuf(entity))
+            .setNpcUuid(NetworkTypes.toProtobuf(npcUuid))
             .addAllCosmeticIds(cosmeticIds)
             .build();
 
@@ -61,12 +76,87 @@ public final class CosmeticModuleImpl extends CosmeticModule {
     }
 
     @Override
-    public void resetNpcCosmetics(@NonNull Recipients recipients, @NonNull ApolloEntity entity) {
+    public void resetNpcCosmetics(@NonNull Recipients recipients, @NonNull UUID npcUuid) {
         ResetNpcCosmeticsMessage message = ResetNpcCosmeticsMessage.newBuilder()
-            .setEntityId(NetworkTypes.toProtobuf(entity))
+            .setNpcUuid(NetworkTypes.toProtobuf(npcUuid))
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void displaySpray(@NonNull Recipients recipients, @NonNull Spray spray) {
+        DisplaySprayMessage message = DisplaySprayMessage.newBuilder()
+            .setSprayId(spray.getSprayId())
+            .setLocation(NetworkTypes.toProtobuf(spray.getLocation()))
+            .setFacing(NetworkTypes.toProtobuf(spray.getFacing()))
+            .setRotation(spray.getRotation())
+            .setDuration(NetworkTypes.toProtobuf(spray.getDuration()))
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void removeSpray(@NonNull Recipients recipients, int sprayId) {
+        RemoveSprayMessage message = RemoveSprayMessage.newBuilder()
+            .setSprayId(sprayId)
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void removeSpray(@NonNull Recipients recipients, int sprayId, @Nullable ApolloBlockLocation location) {
+        RemoveSprayMessage.Builder builder = RemoveSprayMessage.newBuilder()
+            .setSprayId(sprayId);
+
+        if (location != null) {
+            builder.setLocation(NetworkTypes.toProtobuf(location));
+        }
+
+        RemoveSprayMessage message = builder.build();
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void resetSprays(@NonNull Recipients recipients) {
+        ResetSpraysMessage message = ResetSpraysMessage.getDefaultInstance();
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    private com.lunarclient.apollo.cosmetic.v1.Cosmetic toProtobuf(Cosmetic cosmetic) {
+        com.lunarclient.apollo.cosmetic.v1.Cosmetic.Builder builder = com.lunarclient.apollo.cosmetic.v1.Cosmetic.newBuilder()
+            .setId(cosmetic.getId());
+
+        CosmeticOptions options = cosmetic.getOptions();
+        if (options instanceof HatOptions) {
+            HatOptions hatOptions = (HatOptions) options;
+            builder.setHatOptions(com.lunarclient.apollo.cosmetic.v1.HatOptions.newBuilder()
+                .setShowOverHelmet(hatOptions.isShowOverHelmet())
+                .setShowOverSkinLayer(hatOptions.isShowOverSkinLayer())
+                .setHeightOffset(hatOptions.getHeightOffset())
+                .build());
+        } else if (options instanceof CloakOptions) {
+            CloakOptions cloakOptions = (CloakOptions) options;
+            builder.setCloakOptions(com.lunarclient.apollo.cosmetic.v1.CloakOptions.newBuilder()
+                .setUseClothPhysics(cloakOptions.isUseClothPhysics())
+                .build());
+        } else if (options instanceof PetOptions) {
+            PetOptions petOptions = (PetOptions) options;
+            builder.setPetOptions(com.lunarclient.apollo.cosmetic.v1.PetOptions.newBuilder()
+                .setFlipShoulder(petOptions.isFlipShoulder())
+                .build());
+        } else if (options instanceof BodyOptions) {
+            BodyOptions bodyOptions = (BodyOptions) options;
+            builder.setBodyOptions(com.lunarclient.apollo.cosmetic.v1.BodyOptions.newBuilder()
+                .setShowOverChestplate(bodyOptions.isShowOverChestplate())
+                .setShowOverLeggings(bodyOptions.isShowOverLeggings())
+                .setShowOverBoots(bodyOptions.isShowOverBoots())
+                .build());
+        }
+
+        return builder.build();
     }
 
 }

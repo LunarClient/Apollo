@@ -21,52 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.cooldown;
+package com.lunarclient.apollo.module.cosmetic;
 
-import java.awt.Color;
+import com.lunarclient.apollo.module.cosmetic.options.BodyOptions;
+import com.lunarclient.apollo.module.cosmetic.options.CloakOptions;
+import com.lunarclient.apollo.module.cosmetic.options.CosmeticOptions;
+import com.lunarclient.apollo.module.cosmetic.options.HatOptions;
+import com.lunarclient.apollo.module.cosmetic.options.PetOptions;
 import lombok.Builder;
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents the {@link Cooldown} style, allowing customization of the circle start, end, edge and text color.
+ * Represents a single cosmetic with optional per-type display settings.
  *
- * @since 1.2.5
+ * @since 1.2.6
  */
 @Getter
 @Builder
-public final class CooldownStyle {
+public final class Cosmetic {
 
     /**
-     * Returns the cooldown circle start {@link Color}.
+     * Returns the Lunar Client cosmetic id for this entry.
      *
-     * @return the circle start color
-     * @since 1.2.5
+     * @return the cosmetic id
+     * @since 1.2.6
      */
-    @Nullable Color circleStartColor;
+    int id;
 
     /**
-     * Returns the cooldown circle end {@link Color}.
+     * Returns optional cosmetic display options for this cosmetic id.
      *
-     * @return the circle end color
-     * @since 1.2.5
-     */
-    @Nullable Color circleEndColor;
-
-    /**
-     * Returns the cooldown circle edge {@link Color}.
+     * <p>Expected concrete types are {@link HatOptions}, {@link CloakOptions}, {@link PetOptions}, or
+     * {@link BodyOptions}.</p>
      *
-     * @return the circle edge color
-     * @since 1.2.5
+     * @return cosmetic options, or {@code null}
+     * @since 1.2.6
      */
-    @Nullable Color circleEdgeColor;
-
-    /**
-     * Returns the cooldown text {@link Color}.
-     *
-     * @return the text color
-     * @since 1.2.5
-     */
-    @Nullable Color textColor;
+    @Nullable CosmeticOptions options;
 
 }
