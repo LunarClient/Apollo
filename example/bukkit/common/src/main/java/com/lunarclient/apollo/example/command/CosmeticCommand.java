@@ -123,7 +123,14 @@ public class CosmeticCommand implements CommandExecutor {
                     return true;
                 }
 
-                int sprayId = Integer.parseInt(args[2]);
+                int sprayId;
+                try {
+                    sprayId = Integer.parseInt(args[2]);
+                } catch (NumberFormatException e) {
+                    player.sendMessage("Spray id must be an integer.");
+                    return true;
+                }
+
                 example.displaySprayExample(player, sprayId);
                 player.sendMessage(ChatColor.GREEN + "Displayed spray " + sprayId + " at your target block");
                 break;
@@ -135,7 +142,14 @@ public class CosmeticCommand implements CommandExecutor {
                     return true;
                 }
 
-                int sprayId = Integer.parseInt(args[2]);
+                int sprayId;
+                try {
+                    sprayId = Integer.parseInt(args[2]);
+                } catch (NumberFormatException e) {
+                    player.sendMessage("Spray id must be an integer.");
+                    return true;
+                }
+
                 example.removeSprayExample(sprayId);
                 player.sendMessage(ChatColor.GREEN + "Removed all sprays with id " + sprayId);
                 break;

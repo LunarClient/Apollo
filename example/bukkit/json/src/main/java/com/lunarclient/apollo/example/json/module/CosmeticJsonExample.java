@@ -133,6 +133,10 @@ public class CosmeticJsonExample extends CosmeticExample {
     @Override
     public void displaySprayExample(Player viewer, int sprayId) {
         Block block = viewer.getTargetBlockExact(10);
+        if (block == null) {
+            return;
+        }
+
         Material material = block.getType();
         if (material.isAir() || !material.isSolid()) {
             return;

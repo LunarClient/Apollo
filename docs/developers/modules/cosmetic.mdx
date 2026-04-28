@@ -74,6 +74,10 @@ public void resetNpcCosmeticsExample(UUID npcUuid) {
 ```java
 public void displaySprayExample(Player viewer, int sprayId) {
     Block block = viewer.getTargetBlockExact(10);
+    if (block == null) {
+        return;
+    }
+
     Material material = block.getType();
     if (material.isAir() || !material.isSolid()) {
         return;
@@ -187,6 +191,10 @@ public void resetNpcCosmeticsExample(Player viewer, UUID npcUuid) {
 ```java
 public void displaySprayExample(Player viewer, int sprayId) {
     Block block = viewer.getTargetBlockExact(10);
+    if (block == null) {
+        return;
+    }
+
     Material material = block.getType();
     if (material.isAir() || !material.isSolid()) {
         return;
@@ -289,23 +297,23 @@ public void unequipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
 **Reset NPC cosmetics**
 
 ```java
-    public void displaySprayExample(Player viewer, int sprayId) {
-               Block block = viewer.getTargetBlockExact(10);
-               Material material = block.getType();
-               if (material.isAir() || !material.isSolid()) {
-                   return;
-               }
+public void displaySprayExample(Player viewer, int sprayId) {
+   Block block = viewer.getTargetBlockExact(10);
+   Material material = block.getType();
+   if (material.isAir() || !material.isSolid()) {
+       return;
+   }
 
-               JsonObject message = new JsonObject();
-               message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.DisplaySprayMessage");
-               message.addProperty("spray_id", sprayId);
-               message.add("location", JsonUtil.createBlockLocationObject(block.getLocation()));
-               message.addProperty("facing", "UP");
-               message.addProperty("rotation", 0f);
-               message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(60)));
+   JsonObject message = new JsonObject();
+   message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.DisplaySprayMessage");
+   message.addProperty("spray_id", sprayId);
+   message.add("location", JsonUtil.createBlockLocationObject(block.getLocation()));
+   message.addProperty("facing", "UP");
+   message.addProperty("rotation", 0f);
+   message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(60)));
 
-               JsonPacketUtil.broadcastPacket(message);
-           }
+   JsonPacketUtil.broadcastPacket(message);
+}
 ```
 
 **Display spray**
@@ -313,6 +321,10 @@ public void unequipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
 ```java
 public void displaySprayExample(Player viewer, int sprayId) {
     Block block = viewer.getTargetBlockExact(10);
+    if (block == null) {
+        return;
+    }
+
     Material material = block.getType();
     if (material.isAir() || !material.isSolid()) {
         return;
