@@ -165,7 +165,7 @@ public class ModSettingsTest implements Listener, ApolloListener {
     }
 
     private void changeOption(ApolloPlayer player, Option<?, ?, ?> option, Object value) {
-        this.modSettingModule.getOptions().set(option, value);
+        this.modSettingModule.getOptions().set(player, option, value);
 
         this.changes.computeIfAbsent(player.getUniqueId(), k -> new ArrayList<>())
             .add(new OptionChange(option.getKey(), value));
