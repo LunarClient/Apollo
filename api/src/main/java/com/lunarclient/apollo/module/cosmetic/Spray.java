@@ -32,6 +32,10 @@ import lombok.Getter;
 /**
  * Represents a spray.
  *
+ * <p>Sprays are client-local and validated against loaded chunks;
+ * they're removed when their backing chunk unloads and won't reappear
+ * unless the server resends the spray packet.</p>
+ *
  * @since 1.2.6
  */
 @Getter

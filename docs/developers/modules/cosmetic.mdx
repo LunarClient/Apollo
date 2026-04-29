@@ -13,6 +13,8 @@ import { Callout, Tab, Tabs } from 'nextra-theme-docs'
 
 ### Sample Code
 
+Explore each integration by cycling through each tab to find the best fit for your requirements and needs.
+
 <Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
 <Tab>
 
@@ -102,6 +104,10 @@ public void displaySprayExample(Player viewer, int sprayId) {
 }
 ```
 
+<Callout type="info">
+  **Sprays** are client-local and validated against loaded chunks. When the backing chunk unloads, sprays are removed and **do not** come back until the server sends a display spray packet again.
+</Callout>
+
 **Remove sprays**
 
 ```java
@@ -116,6 +122,89 @@ public void removeSprayExample(int sprayId) {
 public void resetSpraysExample() {
     this.cosmeticModule.resetSprays(Recipients.ofEveryone());
 }
+```
+
+### `Cosmetic` Options
+
+`.id(int)` is the Lunar Client cosmetic id for this entry.
+
+```java
+.id(434)
+```
+
+`.options(CosmeticOptions)` is optional. Pass one concrete subtype such as `HatOptions`, `CloakOptions`, `PetOptions`, or `BodyOptions` (omit or pass `null` for id-only cosmetics).
+
+**`HatOptions`**
+
+```java
+.options(HatOptions.builder()
+    .showOverHelmet(true)
+    .showOverSkinLayer(true)
+    .heightOffset(0.05f)
+    .build())
+```
+
+**`CloakOptions`**
+
+```java
+.options(CloakOptions.builder()
+    .useClothPhysics(true)
+    .build())
+```
+
+**`PetOptions`**
+
+```java
+.options(PetOptions.builder()
+    .flipShoulder(true)
+    .build())
+```
+
+**`BodyOptions`**
+
+```java
+.options(BodyOptions.builder()
+    .showOverChestplate(true)
+    .showOverLeggings(true)
+    .showOverBoots(true)
+    .build())
+```
+
+### `Spray` Options
+
+`.sprayId(int)` is the Lunar Client spray cosmetic id.
+
+```java
+.sprayId(sprayId)
+```
+
+`.location(ApolloBlockLocation)` is the block the spray is placed on. See the [locations page](/apollo/developers/utilities/locations) for more.
+
+```java
+.location(ApolloBlockLocation.builder()
+    .world(block.getWorld().getName())
+    .x(block.getX())
+    .y(block.getY())
+    .z(block.getZ())
+    .build())
+```
+
+`.facing(Direction)` selects which face of the block the spray uses.
+
+```java
+.facing(Direction.UP)
+```
+
+`.rotation(float)` is rotation in degrees on the client (default `0f`).
+
+```java
+.rotation(0f)
+```
+
+`.duration(java.time.Duration)` is how long the spray stays visible. See the [java.time.Duration Javadocs](https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html) for more.
+
+```java
+.duration(Duration.ofSeconds(60))
 ```
 
 </Tab>
@@ -212,6 +301,10 @@ public void displaySprayExample(Player viewer, int sprayId) {
 }
 ```
 
+<Callout type="info">
+  **Sprays** are client-local and validated against loaded chunks. When the backing chunk unloads, sprays are removed and **do not** come back until the server sends a display spray packet again.
+</Callout>
+
 **Remove sprays**
 
 ```java
@@ -297,22 +390,12 @@ public void unequipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
 **Reset NPC cosmetics**
 
 ```java
-public void displaySprayExample(Player viewer, int sprayId) {
-   Block block = viewer.getTargetBlockExact(10);
-   Material material = block.getType();
-   if (material.isAir() || !material.isSolid()) {
-       return;
-   }
+public void resetNpcCosmeticsExample(Player viewer, UUID npcUuid) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.ResetNpcCosmeticsMessage");
+    message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
 
-   JsonObject message = new JsonObject();
-   message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.DisplaySprayMessage");
-   message.addProperty("spray_id", sprayId);
-   message.add("location", JsonUtil.createBlockLocationObject(block.getLocation()));
-   message.addProperty("facing", "UP");
-   message.addProperty("rotation", 0f);
-   message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(60)));
-
-   JsonPacketUtil.broadcastPacket(message);
+    JsonPacketUtil.broadcastPacket(message);
 }
 ```
 
@@ -341,6 +424,10 @@ public void displaySprayExample(Player viewer, int sprayId) {
     JsonPacketUtil.broadcastPacket(message);
 }
 ```
+
+<Callout type="info">
+  **Sprays** are client-local and validated against loaded chunks. When the backing chunk unloads, sprays are removed and **do not** come back until the server sends a display spray packet again.
+</Callout>
 
 **Remove sprays**
 
