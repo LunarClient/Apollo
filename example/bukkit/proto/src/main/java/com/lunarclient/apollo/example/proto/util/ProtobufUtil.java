@@ -135,12 +135,16 @@ public final class ProtobufUtil {
         return iconBuilder.build();
     }
 
-    public static Profile createProfileProto(UUID id, String texture, String signature) {
-        return Profile.newBuilder()
-            .setId(ProtobufUtil.createUuidProto(id))
+    public static Profile createProfileProto(@Nullable UUID id, String texture, String signature) {
+        Profile.Builder builder = Profile.newBuilder()
             .setTexture(texture)
-            .setSignature(signature)
-            .build();
+            .setSignature(signature);
+
+        if (id != null) {
+            builder.setId(ProtobufUtil.createUuidProto(id));
+        }
+
+        return builder.build();
     }
 
     public static ResourceLocationIcon createResourceLocationIconProto(String resourceLocation) {

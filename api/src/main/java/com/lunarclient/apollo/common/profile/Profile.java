@@ -26,6 +26,7 @@ package com.lunarclient.apollo.common.profile;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a profile attached to the {@link com.lunarclient.apollo.common.icon.ItemStackIcon}.
@@ -42,7 +43,7 @@ public final class Profile {
      * @return the profile id
      * @since 1.2.6
      */
-    UUID id;
+    @Nullable UUID id;
 
     /**
      * Returns the profile {@link String} texture.

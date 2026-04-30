@@ -158,9 +158,11 @@ public final class JsonUtil {
         return iconObject;
     }
 
-    public static JsonObject createProfileObject(@NotNull UUID id, @NotNull String texture, @NotNull String signature) {
+    public static JsonObject createProfileObject(@Nullable UUID id, @NotNull String texture, @NotNull String signature) {
         JsonObject profileObject = new JsonObject();
-        profileObject.add("id", JsonUtil.createUuidObject(id));
+        if (id != null) {
+            profileObject.add("id", JsonUtil.createUuidObject(id));
+        }
         profileObject.addProperty("texture", texture);
         profileObject.addProperty("signature", signature);
         return profileObject;

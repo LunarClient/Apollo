@@ -576,11 +576,15 @@ public final class NetworkTypes {
      * @since 1.2.6
      */
     public static com.lunarclient.apollo.common.v1.Profile toProtobuf(Profile object) {
-        return com.lunarclient.apollo.common.v1.Profile.newBuilder()
-            .setId(NetworkTypes.toProtobuf(object.getId()))
+        com.lunarclient.apollo.common.v1.Profile.Builder builder = com.lunarclient.apollo.common.v1.Profile.newBuilder()
             .setTexture(object.getTexture())
-            .setSignature(object.getSignature())
-            .build();
+            .setSignature(object.getSignature());
+
+        if (object.getId() != null) {
+            builder.setId(NetworkTypes.toProtobuf(object.getId()));
+        }
+
+        return builder.build();
     }
 
     /**
@@ -592,11 +596,15 @@ public final class NetworkTypes {
      * @since 1.2.6
      */
     public static Profile fromProtobuf(com.lunarclient.apollo.common.v1.Profile message) {
-        return Profile.builder()
-            .id(NetworkTypes.fromProtobuf(message.getId()))
+        Profile.ProfileBuilder builder = Profile.builder()
             .texture(message.getTexture())
-            .signature(message.getSignature())
-            .build();
+            .signature(message.getSignature());
+
+        if (message.hasId()) {
+            builder.id(NetworkTypes.fromProtobuf(message.getId()));
+        }
+
+        return builder.build();
     }
 
     /**
