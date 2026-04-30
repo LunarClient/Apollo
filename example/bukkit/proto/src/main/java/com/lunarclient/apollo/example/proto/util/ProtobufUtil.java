@@ -29,6 +29,7 @@ import com.lunarclient.apollo.common.v1.BlockLocation;
 import com.lunarclient.apollo.common.v1.Cuboid2D;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.ItemStackIcon;
+import com.lunarclient.apollo.common.v1.Profile;
 import com.lunarclient.apollo.common.v1.ResourceLocationIcon;
 import com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.common.v1.Uuid;
@@ -115,6 +116,10 @@ public final class ProtobufUtil {
     }
 
     public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData) {
+        return ProtobufUtil.createItemStackIconProto(itemName, itemId, customModelData, null);
+    }
+
+    public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData, @Nullable Profile profile) {
         ItemStackIcon.Builder iconBuilder = ItemStackIcon.newBuilder()
             .setItemId(itemId)
             .setCustomModelData(customModelData);
@@ -123,7 +128,19 @@ public final class ProtobufUtil {
             iconBuilder.setItemName(itemName);
         }
 
+        if (profile != null) {
+            iconBuilder.setProfile(profile);
+        }
+
         return iconBuilder.build();
+    }
+
+    public static Profile createProfileProto(UUID id, String texture, String signature) {
+        return Profile.newBuilder()
+            .setId(ProtobufUtil.createUuidProto(id))
+            .setTexture(texture)
+            .setSignature(signature)
+            .build();
     }
 
     public static ResourceLocationIcon createResourceLocationIconProto(String resourceLocation) {

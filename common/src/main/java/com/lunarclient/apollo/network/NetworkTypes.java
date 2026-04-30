@@ -35,6 +35,7 @@ import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
+import com.lunarclient.apollo.common.profile.Profile;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Uuid;
 import com.lunarclient.apollo.module.packetenrichment.PlayerInfo;
@@ -538,6 +539,10 @@ public final class NetworkTypes {
             builder.setItemName(icon.getItemName());
         }
 
+        if (icon.getProfile() != null) {
+            builder.setProfile(NetworkTypes.toProtobuf(icon.getProfile()));
+        }
+
         return builder.build();
     }
 
@@ -550,10 +555,47 @@ public final class NetworkTypes {
      * @since 1.2.5
      */
     public static ItemStackIcon fromProtobuf(com.lunarclient.apollo.common.v1.ItemStackIcon icon) {
-        return ItemStackIcon.builder()
+        ItemStackIcon.ItemStackIconBuilder builder = ItemStackIcon.builder()
             .itemName(icon.getItemName())
             .itemId(icon.getItemId())
-            .customModelData(icon.getCustomModelData())
+            .customModelData(icon.getCustomModelData());
+
+        if (icon.hasProfile()) {
+            builder.profile(NetworkTypes.fromProtobuf(icon.getProfile()));
+        }
+
+        return builder.build();
+    }
+
+    /**
+     * Converts a {@link Profile} object to a
+     * {@link com.lunarclient.apollo.common.v1.Profile} proto message.
+     *
+     * @param object the profile
+     * @return the proto profile message
+     * @since 1.2.6
+     */
+    public static com.lunarclient.apollo.common.v1.Profile toProtobuf(Profile object) {
+        return com.lunarclient.apollo.common.v1.Profile.newBuilder()
+            .setId(NetworkTypes.toProtobuf(object.getId()))
+            .setTexture(object.getTexture())
+            .setSignature(object.getSignature())
+            .build();
+    }
+
+    /**
+     * Converts a {@link com.lunarclient.apollo.common.v1.Profile}
+     * proto message to a {@link Profile} object.
+     *
+     * @param message the profile message
+     * @return the profile object
+     * @since 1.2.6
+     */
+    public static Profile fromProtobuf(com.lunarclient.apollo.common.v1.Profile message) {
+        return Profile.builder()
+            .id(NetworkTypes.fromProtobuf(message.getId()))
+            .texture(message.getTexture())
+            .signature(message.getSignature())
             .build();
     }
 
