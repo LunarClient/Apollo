@@ -4,9 +4,18 @@ import { Callout, Tab, Tabs } from 'nextra-theme-docs'
 
 ## Overview
 
-<Callout type="warning" emoji="⚠️">
-  NPC UUIDs **must** have their least significant bits set to `0` (i.e. `new UUID(msb, 0L)`).
-  Lunar Client rejects cosmetic packets for UUIDs that do not follow this format.
+The cosmetic module allows you to interactive and utilize all the various cosmetic types found in Lunar Client.
+
+- Add wearable cosmetics to NPC entities
+  - Grants the ability to put any cosmetic on an NPC
+  - Uniquely customize various cosmetic options
+- Add sprays to any location
+  - Grants the ability to put any spray on a block
+  - Customize the rotation, direction options, and duration
+
+<Callout type="important">
+  The cosmetic module is a **private module** and not publicly available.
+  To use this module, you must be granted access by the Lunar Client team. [Learn More](/apollo/developers/private-modules)
 </Callout>
 
 ## Integration
@@ -14,6 +23,11 @@ import { Callout, Tab, Tabs } from 'nextra-theme-docs'
 ### Sample Code
 
 Explore each integration by cycling through each tab to find the best fit for your requirements and needs.
+
+<Callout type="warning" emoji="⚠️">
+  NPC UUIDs **must** have their least significant bits set to `0` (i.e. `new UUID(msb, 0L)`).
+  Lunar Client rejects cosmetic packets for UUIDs that do not follow this format.
+</Callout>
 
 <Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
 <Tab>
