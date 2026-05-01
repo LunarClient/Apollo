@@ -33,13 +33,13 @@ private final ModSettingModule modSettingModule = Apollo.getModuleManager().getM
 private void printOptionStatusExample(Player player) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
-        // https://lunarclient.dev/apollo/developers/mod-settings/waypoints#available-options
+        // https://lunarclient.dev/apollo/developers/mods/waypoints#available-options
         boolean waypointsEnabled = this.modSettingModule.getStatus(apolloPlayer, ModWaypoints.ENABLED);
 
-        // https://lunarclient.dev/apollo/developers/mod-settings/minimap#available-options
+        // https://lunarclient.dev/apollo/developers/mods/minimap#available-options
         float minimapScale = this.modSettingModule.getStatus(apolloPlayer, ModMinimap.SCALE);
 
-        // https://lunarclient.dev/apollo/developers/mod-settings/fov#available-options
+        // https://lunarclient.dev/apollo/developers/mods/fov#available-options
         int fovDefaultFov = this.modSettingModule.getStatus(apolloPlayer, ModFov.DEFAULT_FOV);
 
         apolloPlayer.sendMessage(Component.text("Waypoints Enabled: ")
@@ -88,7 +88,7 @@ The **Setting Interception API** allows you to **override** the value of any mod
 Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
 
 <Callout type="info">
-**Sample code tabs:** [General (API examples)](/apollo/developers/general) · [Lightweight Protobuf](/apollo/developers/lightweight/protobuf/getting-started) · [Lightweight JSON](/apollo/developers/lightweight/json/getting-started)
+**Sample code tabs:** [General (API examples)](/apollo/developers/general) · [Lightweight Protobuf](/apollo/developers/lightweight/protobuf) · [Lightweight JSON](/apollo/developers/lightweight/json)
 </Callout>
 
 <Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
