@@ -36,7 +36,7 @@ spotless {
     fun FormatExtension.applyCommon() {
         trimTrailingWhitespace()
         endWithNewline()
-        indentWithSpaces(4)
+        leadingTabsToSpaces(4)
         targetExclude("**/build/generated/source/proto/**/*.*")
         targetExclude("**/org/spongepowered/configurate/yaml/**/*.*")
     }
