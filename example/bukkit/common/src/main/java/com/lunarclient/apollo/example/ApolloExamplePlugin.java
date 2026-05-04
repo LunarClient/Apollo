@@ -30,6 +30,7 @@ import com.lunarclient.apollo.example.command.ChatCommand;
 import com.lunarclient.apollo.example.command.ColoredFireCommand;
 import com.lunarclient.apollo.example.command.CombatCommand;
 import com.lunarclient.apollo.example.command.CooldownCommand;
+import com.lunarclient.apollo.example.command.CosmeticCommand;
 import com.lunarclient.apollo.example.command.EntityCommand;
 import com.lunarclient.apollo.example.command.GlintCommand;
 import com.lunarclient.apollo.example.command.GlowCommand;
@@ -40,6 +41,7 @@ import com.lunarclient.apollo.example.command.ModSettingsCommand;
 import com.lunarclient.apollo.example.command.NametagCommand;
 import com.lunarclient.apollo.example.command.NickHiderCommand;
 import com.lunarclient.apollo.example.command.NotificationCommand;
+import com.lunarclient.apollo.example.command.NpcCommand;
 import com.lunarclient.apollo.example.command.PayNowCommand;
 import com.lunarclient.apollo.example.command.RichPresenceCommand;
 import com.lunarclient.apollo.example.command.SaturationCommand;
@@ -61,6 +63,7 @@ import com.lunarclient.apollo.example.module.impl.ChatExample;
 import com.lunarclient.apollo.example.module.impl.ColoredFireExample;
 import com.lunarclient.apollo.example.module.impl.CombatExample;
 import com.lunarclient.apollo.example.module.impl.CooldownExample;
+import com.lunarclient.apollo.example.module.impl.CosmeticExample;
 import com.lunarclient.apollo.example.module.impl.EntityExample;
 import com.lunarclient.apollo.example.module.impl.GlintExample;
 import com.lunarclient.apollo.example.module.impl.GlowExample;
@@ -85,6 +88,7 @@ import com.lunarclient.apollo.example.module.impl.TntCountdownExample;
 import com.lunarclient.apollo.example.module.impl.TransferExample;
 import com.lunarclient.apollo.example.module.impl.VignetteExample;
 import com.lunarclient.apollo.example.module.impl.WaypointExample;
+import com.lunarclient.apollo.example.nms.NpcManager;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -95,10 +99,13 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
     @Getter
     private static ApolloExamplePlugin instance;
 
+    private NpcManager npcManager;
+
     private AutoTextHotkeyExample autoTextHotkeyExample;
     private BeamExample beamExample;
     private BorderExample borderExample;
     private ChatExample chatExample;
+    private CosmeticExample cosmeticExample;
     private ColoredFireExample coloredFireExample;
     private CombatExample combatExample;
     private CooldownExample cooldownExample;
@@ -131,6 +138,8 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        this.npcManager = new NpcManager(this);
+
         this.registerCommonCommands();
         this.registerCommonModulesExamples();
 
@@ -142,10 +151,14 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        if (this.npcManager != null) {
+            this.npcManager.removeAll();
+        }
     }
 
     private void registerCommonCommands() {
+        this.getCommand("npc").setExecutor(new NpcCommand());
+
         this.getCommand("autotexthotkey").setExecutor(new AutoTextHotkeyCommand());
         this.getCommand("beam").setExecutor(new BeamCommand());
         this.getCommand("border").setExecutor(new BorderCommand());
@@ -153,6 +166,7 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("coloredfire").setExecutor(new ColoredFireCommand());
         this.getCommand("combat").setExecutor(new CombatCommand());
         this.getCommand("cooldown").setExecutor(new CooldownCommand());
+        this.getCommand("cosmetic").setExecutor(new CosmeticCommand());
         this.getCommand("entity").setExecutor(new EntityCommand());
         this.getCommand("glint").setExecutor(new GlintCommand());
         this.getCommand("glow").setExecutor(new GlowCommand());

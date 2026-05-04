@@ -33,6 +33,7 @@ import com.lunarclient.apollo.example.proto.module.ChatProtoExample;
 import com.lunarclient.apollo.example.proto.module.ColoredFireProtoExample;
 import com.lunarclient.apollo.example.proto.module.CombatProtoExample;
 import com.lunarclient.apollo.example.proto.module.CooldownProtoExample;
+import com.lunarclient.apollo.example.proto.module.CosmeticProtoExample;
 import com.lunarclient.apollo.example.proto.module.EntityProtoExample;
 import com.lunarclient.apollo.example.proto.module.GlowProtoExample;
 import com.lunarclient.apollo.example.proto.module.HologramProtoExample;
@@ -73,6 +74,7 @@ public class ApolloProtoExamplePlatform extends ApolloExamplePlugin {
         this.setBeamExample(new BeamProtoExample());
         this.setBorderExample(new BorderProtoExample());
         this.setChatExample(new ChatProtoExample());
+        this.setCosmeticExample(new CosmeticProtoExample());
         this.setColoredFireExample(new ColoredFireProtoExample());
         this.setCombatExample(new CombatProtoExample());
         this.setCooldownExample(new CooldownProtoExample());

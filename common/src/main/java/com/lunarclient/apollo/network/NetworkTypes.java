@@ -284,7 +284,7 @@ public final class NetworkTypes {
             BlockHit blockHit = BlockHit.newBuilder()
                     .setHitLocation(NetworkTypes.toProtobuf(result.getHitLocation()))
                     .setBlockLocation(NetworkTypes.toProtobuf(result.getBlockLocation()))
-                    .setDirection(com.lunarclient.apollo.packetenrichment.v1.Direction.forNumber(result.getDirection().ordinal() + 1))
+                    .setDirection(NetworkTypes.toProtobuf(result.getDirection()))
                     .build();
 
             builder.setBlock(blockHit);
@@ -331,6 +331,17 @@ public final class NetworkTypes {
         }
 
         return new MissResult();
+    }
+
+    /**
+     * Converts a {@link Direction} enum to a {@link com.lunarclient.apollo.packetenrichment.v1.Direction} proto message.
+     *
+     * @param direction the apollo direction
+     * @return the proto direction enum message
+     * @since 1.2.6
+     */
+    public static com.lunarclient.apollo.packetenrichment.v1.Direction toProtobuf(Direction direction) {
+        return com.lunarclient.apollo.packetenrichment.v1.Direction.forNumber(direction.ordinal() + 1);
     }
 
     /**

@@ -95,9 +95,13 @@ public final class JsonUtil {
     }
 
     public static JsonObject createEntityIdObject(@NotNull Entity entity) {
+        return JsonUtil.createEntityIdObject(entity.getEntityId(), entity.getUniqueId());
+    }
+
+    public static JsonObject createEntityIdObject(int entityId, @NotNull UUID uuid) {
         JsonObject entityIdObject = new JsonObject();
-        entityIdObject.addProperty("entity_id", entity.getEntityId());
-        entityIdObject.add("entity_uuid", JsonUtil.createUuidObject(entity.getUniqueId()));
+        entityIdObject.addProperty("entity_id", entityId);
+        entityIdObject.add("entity_uuid", JsonUtil.createUuidObject(uuid));
         return entityIdObject;
     }
 

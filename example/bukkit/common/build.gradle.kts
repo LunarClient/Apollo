@@ -9,4 +9,6 @@ java {
 
 dependencies {
     compileOnly(libs.bukkit.api)
+
+    api(project(":example:bukkit:apollo-example-bukkit-nms"))
 }

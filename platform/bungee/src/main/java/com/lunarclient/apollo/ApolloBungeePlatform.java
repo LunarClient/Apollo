@@ -42,6 +42,8 @@ import com.lunarclient.apollo.module.coloredfire.ColoredFireModuleImpl;
 import com.lunarclient.apollo.module.combat.CombatModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
 import com.lunarclient.apollo.module.cooldown.CooldownModuleImpl;
+import com.lunarclient.apollo.module.cosmetic.CosmeticModule;
+import com.lunarclient.apollo.module.cosmetic.CosmeticModuleImpl;
 import com.lunarclient.apollo.module.entity.EntityModule;
 import com.lunarclient.apollo.module.entity.EntityModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
@@ -122,6 +124,7 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(BeamModule.class, new BeamModuleImpl())
             .addModule(BorderModule.class, new BorderModuleImpl())
             .addModule(ChatModule.class, new ChatModuleImpl())
+            .addModule(CosmeticModule.class, new CosmeticModuleImpl())
             .addModule(ColoredFireModule.class, new ColoredFireModuleImpl())
             .addModule(CombatModule.class)
             .addModule(CooldownModule.class, new CooldownModuleImpl())

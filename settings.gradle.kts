@@ -35,6 +35,7 @@ listOfNotNull(
     "extra:adventure4",
     "api",
     "common",
+    "example:bukkit:nms",
     "example:bukkit:common",
     "example:bukkit:api",
     "example:bukkit:json",
@@ -42,7 +43,9 @@ listOfNotNull(
     "example:minestom:api"
 ).forEach {
     include(it)
-    findProject(":$it")?.name = "apollo-${it.replace(':', '-')}"
+    findProject(":$it")?.let { proj ->
+        proj.name = "apollo-${it.replace(':', '-')}"
+    }
 }
 
 
@@ -54,5 +57,7 @@ listOfNotNull(
     if (loadAllVersions) "platform:minestom" else null
 ).forEach {
     include(it)
-    findProject(":$it")?.name = "apollo-${it.split(':').last()}"
+    findProject(":$it")?.let { proj ->
+        proj.name = "apollo-${it.split(':').last()}"
+    }
 }

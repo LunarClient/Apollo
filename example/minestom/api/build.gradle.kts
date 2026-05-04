@@ -20,4 +20,8 @@ tasks {
             attributes["Main-Class"] = "com.lunarclient.apollo.example.ApolloMinestomExample"
         }
     }
+
+    shadowJar {
+        relocators.empty()
+    }
 }

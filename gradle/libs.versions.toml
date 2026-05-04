@@ -13,10 +13,11 @@ jetbrains = "24.0.1"
 lombok = "1.18.38"
 protobuf = "0.1.6"
 gson = "2.10.1"
-shadow = "8.1.1"
-spotless = "6.13.0"
+shadow = "9.4.1"
+spotless = "8.4.0"
 velocity = "3.3.0-SNAPSHOT"
 folia = "1.20.1-R0.1-SNAPSHOT"
+paper = "26.1.1.build.+"
 asm = "9.7.1"
 minestom = "2025.08.18-1.21.8"
 
@@ -48,6 +49,9 @@ bukkit = { module = "org.spigotmc:spigot", version.ref = "bukkit" }
 # folia
 folia = { module = "dev.folia:folia-api", version.ref = "folia" }
 
+# paper
+paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
+
 # bungee
 bungee = { module = "net.md-5:bungeecord-api", version.ref = "bungee" }
 
@@ -60,7 +64,7 @@ minestom = { module = "net.minestom:minestom", version.ref = "minestom" }
 # build
 artifactregistry = { module = "gradle.plugin.com.google.cloud.artifactregistry:artifactregistry-gradle-plugin", version.ref = "artifactregistry" }
 spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
-shadow = { module = "com.github.johnrengelman:shadow", version.ref = "shadow" }
+shadow = { module = "com.gradleup.shadow:shadow-gradle-plugin", version.ref = "shadow" }
 idea = { module = "gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext", version.ref = "idea" }
 asm = { module = "org.ow2.asm:asm", version.ref = "asm" }
 
