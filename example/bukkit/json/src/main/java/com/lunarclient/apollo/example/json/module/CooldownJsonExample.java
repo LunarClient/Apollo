@@ -29,6 +29,7 @@ import com.lunarclient.apollo.example.json.util.JsonUtil;
 import com.lunarclient.apollo.example.module.impl.CooldownExample;
 import java.awt.Color;
 import java.time.Duration;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 
 public class CooldownJsonExample extends CooldownExample {
@@ -58,6 +59,24 @@ public class CooldownJsonExample extends CooldownExample {
         style.add("circle_edge_color", JsonUtil.createColorObject(new Color(85, 85, 85))); // ApolloColors.DAR_GRAY
         style.add("text_color", JsonUtil.createColorObject(new Color(255, 85, 255))); // ApolloColors.LIGHT_PURPLE
         message.add("style", style);
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void displayCooldownWithPlayerTextureExample(Player viewer) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
+        message.addProperty("name", "player-head-cooldown");
+        message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
+        message.add("icon", JsonUtil.createItemStackIconObject(
+            "PLAYER_HEAD", 0, 0,
+            JsonUtil.createProfileObject(
+                UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd"),
+                "e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ4MjUwNWJjZjNiYTU5YzJiZTdlMmQzNmY0ZTJiZGE4MzZmMmZkMTk0YjYyMTJhMmExYzRiNGEyYTQ3MWUifX19",
+                ""
+            )
+        ));
 
         JsonPacketUtil.sendPacket(viewer, message);
     }

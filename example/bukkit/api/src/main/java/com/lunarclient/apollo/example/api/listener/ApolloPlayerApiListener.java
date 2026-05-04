@@ -66,6 +66,7 @@ public class ApolloPlayerApiListener implements ApolloListener {
         CooldownExample cooldownExample = this.example.getCooldownExample();
         cooldownExample.displayCooldownItemExample(player);
         cooldownExample.displayCooldownWithStyleExample(player);
+        cooldownExample.displayCooldownWithPlayerTextureExample(player);
         cooldownExample.displayCooldownResourceExample(player);
 
         ServerLinkExample serverLinkExample = this.example.getServerLinkExample();

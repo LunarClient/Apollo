@@ -1,5 +1,4 @@
-import { Tab, Tabs } from 'nextra-theme-docs'
-import { Callout } from 'nextra-theme-docs'
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
 
 # Waypoint Module
 
@@ -28,6 +27,10 @@ Explore each integration by cycling through each tab, to find the best fit for y
 <Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
 
 <Tab>
+
+<Callout type="info">
+**Apollo API examples.** See [General](/apollo/developers/general) for common patterns and helpers.
+</Callout>
 
 ### Displaying a Waypoint
 
@@ -144,6 +147,10 @@ Custom colors can be created from any RGB values using `new Color(int red, int g
 
 <Tab>
 
+<Callout type="info">
+**Lightweight Protobuf examples.** See [Lightweight Protobuf](/apollo/developers/lightweight/protobuf) for setup.
+</Callout>
+
 <Callout type="warning">
     Make sure the server is sending the world name to the client as show in the [Player Detection](/apollo/developers/lightweight/protobuf/player-detection) example.
 </Callout>
@@ -188,6 +195,10 @@ public void resetWaypointsExample(Player viewer) {
 </Tab>
 
 <Tab>
+
+<Callout type="info">
+**Lightweight JSON examples.** See [Lightweight JSON](/apollo/developers/lightweight/json) for setup.
+</Callout>
 
 <Callout type="warning">
     Make sure the server is sending the world name to the client as show in the [Player Detection](/apollo/developers/lightweight/json/player-detection) example.

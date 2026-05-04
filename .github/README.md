@@ -24,12 +24,12 @@ Our **Lightweight integration** allows you to use Apollo features **without runn
 This is useful for developers who want Apollo functionality but prefer a more minimal approach.
 
 There are two supported methods:
-- [Lightweight JSON](https://lunarclient.dev/apollo/developers/lightweight/json/getting-started)
-- [Lightweight Protobuf](https://lunarclient.dev/apollo/developers/lightweight/protobuf/getting-started)
+- [Lightweight JSON](https://lunarclient.dev/apollo/developers/lightweight/json)
+- [Lightweight Protobuf](https://lunarclient.dev/apollo/developers/lightweight/protobuf)
 
 Both approaches achieve the same goal, but with different trade-offs in terms of **complexity and flexibility**.  
 
-Read the [Lightweight introduction](https://lunarclient.dev/apollo/developers/lightweight/introduction) documentation to get started.
+Read the [Lightweight introduction](https://lunarclient.dev/apollo/developers/lightweight) documentation to get started.
 
 ## Examples
 

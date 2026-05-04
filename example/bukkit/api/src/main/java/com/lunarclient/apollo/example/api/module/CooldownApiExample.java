@@ -27,6 +27,7 @@ import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.common.ApolloColors;
 import com.lunarclient.apollo.common.icon.ItemStackIcon;
 import com.lunarclient.apollo.common.icon.SimpleResourceLocationIcon;
+import com.lunarclient.apollo.common.profile.Profile;
 import com.lunarclient.apollo.example.module.impl.CooldownExample;
 import com.lunarclient.apollo.module.cooldown.Cooldown;
 import com.lunarclient.apollo.module.cooldown.CooldownModule;
@@ -34,6 +35,7 @@ import com.lunarclient.apollo.module.cooldown.CooldownStyle;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.time.Duration;
 import java.util.Optional;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 
 public class CooldownApiExample extends CooldownExample {
@@ -80,6 +82,28 @@ public class CooldownApiExample extends CooldownExample {
     }
 
     @Override
+    public void displayCooldownWithPlayerTextureExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            this.cooldownModule.displayCooldown(apolloPlayer, Cooldown.builder()
+                .name("player-head-cooldown")
+                .duration(Duration.ofSeconds(15))
+                .icon(ItemStackIcon.builder()
+                    .itemName("PLAYER_HEAD") // use "skull" for legacy with customModelData set to 3
+                    .profile(Profile.builder()
+                        .id(UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd"))
+                        .texture("e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ4MjUwNWJjZjNiYTU5YzJiZTdlMmQzNmY0ZTJiZGE4MzZmMmZkMTk0YjYyMTJhMmExYzRiNGEyYTQ3MWUifX19")
+                        .signature("")
+                        .build())
+                    .build()
+                )
+                .build()
+            );
+        });
+    }
+
+    @Override
     public void displayCooldownResourceExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
@@ -104,6 +128,7 @@ public class CooldownApiExample extends CooldownExample {
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown");
             this.cooldownModule.removeCooldown(apolloPlayer, "book-cooldown");
+            this.cooldownModule.removeCooldown(apolloPlayer, "player-head-cooldown");
             this.cooldownModule.removeCooldown(apolloPlayer, "lunar-cooldown");
         });
     }
