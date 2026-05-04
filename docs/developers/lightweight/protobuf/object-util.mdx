@@ -98,6 +98,10 @@ Icon-related methods
 
 ```java
 public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData) {
+    return ProtobufUtil.createItemStackIconProto(itemName, itemId, customModelData, null);
+}
+
+public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData, @Nullable Profile profile) {
     ItemStackIcon.Builder iconBuilder = ItemStackIcon.newBuilder()
         .setItemId(itemId)
         .setCustomModelData(customModelData);
@@ -106,7 +110,23 @@ public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, 
         iconBuilder.setItemName(itemName);
     }
 
+    if (profile != null) {
+        iconBuilder.setProfile(profile);
+    }
+
     return iconBuilder.build();
+}
+
+public static Profile createProfileProto(@Nullable UUID id, String texture, String signature) {
+    Profile.Builder builder = Profile.newBuilder()
+        .setTexture(texture)
+        .setSignature(signature);
+
+    if (id != null) {
+        builder.setId(ProtobufUtil.createUuidProto(id));
+    }
+
+    return builder.build();
 }
 
 public static ResourceLocationIcon createResourceLocationIconProto(String resourceLocation) {

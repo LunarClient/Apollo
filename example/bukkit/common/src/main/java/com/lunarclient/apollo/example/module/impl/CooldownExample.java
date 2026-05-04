@@ -32,6 +32,8 @@ public abstract class CooldownExample extends ApolloModuleExample {
 
     public abstract void displayCooldownWithStyleExample(Player viewer);
 
+    public abstract void displayCooldownWithPlayerTextureExample(Player viewer);
+
     public abstract void displayCooldownResourceExample(Player viewer);
 
     public abstract void removeCooldownExample(Player viewer);

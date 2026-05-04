@@ -136,6 +136,10 @@ public final class JsonUtil {
     }
 
     public static JsonObject createItemStackIconObject(@Nullable String itemName, int itemId, int customModelData) {
+        return JsonUtil.createItemStackIconObject(itemName, itemId, customModelData, null);
+    }
+
+    public static JsonObject createItemStackIconObject(@Nullable String itemName, int itemId, int customModelData, @Nullable JsonObject profile) {
         JsonObject itemIconObject = new JsonObject();
         if (itemName != null) {
             itemIconObject.addProperty("item_name", itemName);
@@ -145,9 +149,23 @@ public final class JsonUtil {
 
         itemIconObject.addProperty("custom_model_data", customModelData);
 
+        if (profile != null) {
+            itemIconObject.add("profile", profile);
+        }
+
         JsonObject iconObject = new JsonObject();
         iconObject.add("item_stack", itemIconObject);
         return iconObject;
+    }
+
+    public static JsonObject createProfileObject(@Nullable UUID id, @NotNull String texture, @NotNull String signature) {
+        JsonObject profileObject = new JsonObject();
+        if (id != null) {
+            profileObject.add("id", JsonUtil.createUuidObject(id));
+        }
+        profileObject.addProperty("texture", texture);
+        profileObject.addProperty("signature", signature);
+        return profileObject;
     }
 
     public static JsonObject createResourceLocationIconObject(@NotNull String resourceLocation) {
