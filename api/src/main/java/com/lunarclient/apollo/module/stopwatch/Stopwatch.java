@@ -86,15 +86,15 @@ public final class Stopwatch {
     boolean hideWhenStopped;
 
     /**
-     * Returns the stopwatch {@link String} custom format.
+     * Returns the stopwatch {@link String} display format.
      *
      * <p>A format string (e.g. {@code "mm:ss"}), or {@code null}
      * for the default display format.</p>
      *
-     * @return the custom format string
+     * @return the display format string
      * @since 1.2.6
      */
-    @Nullable String customFormat;
+    @Nullable String displayFormat;
 
     /**
      * Returns the stopwatch {@link Color} text color.

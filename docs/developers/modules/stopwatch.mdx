@@ -48,7 +48,7 @@ public void addStopwatchExample(Player viewer) {
             .resetOnStart(true)
             .preventModification(true)
             .hideWhenStopped(false)
-            .customFormat("mm:ss")
+            .displayFormat("mm:ss")
             .textColor(ApolloColors.DARK_AQUA)
             .hudPosition(HudPosition.builder()
                 .x(-30)
@@ -119,9 +119,9 @@ public void addTimerExample(Player viewer) {
             .loop(false)
             .preventModification(true)
             .hideWhenStopped(false)
-            .customFormat("mm:ss")
+            .displayFormat("mm:ss")
             .titleText(Component.text("Time's up!", NamedTextColor.RED))
-            .ingameNotification(true)
+            .inGameNotification(true)
             .textColor(ApolloColors.LIGHT_PURPLE)
             .hudPosition(HudPosition.builder()
                 .x(-10)
@@ -210,10 +210,10 @@ public void resetTimersExample(Player viewer) {
 .hideWhenStopped(false)
 ```
 
-`.customFormat(String)` is a format string (e.g. `"mm:ss"`). Uses the default display format if not provided.
+`.displayFormat(String)` is a format string (e.g. `"mm:ss"`). Uses the default display format if not provided.
 
 ```java
-.customFormat("mm:ss")
+.displayFormat("mm:ss")
 ```
 
 `.textColor(java.awt.Color)` is the text color. Defaults to white if not provided. See the [colors page](/apollo/developers/utilities/colors) for more.
@@ -266,10 +266,10 @@ public void resetTimersExample(Player viewer) {
 .hideWhenStopped(false)
 ```
 
-`.customFormat(String)` is a format string. Uses the default display format if not provided.
+`.displayFormat(String)` is a format string. Uses the default display format if not provided.
 
 ```java
-.customFormat("mm:ss")
+.displayFormat("mm:ss")
 ```
 
 `.titleText(Component)` is the on-screen title shown when the timer finishes. Set to `null` or omit to skip. See the [chat components](https://docs.advntr.dev/text.html) page for more.
@@ -278,10 +278,10 @@ public void resetTimersExample(Player viewer) {
 .titleText(Component.text("Time's up!", NamedTextColor.RED))
 ```
 
-`.ingameNotification(boolean)` determines whether to show an in-game popup when the timer finishes.
+`.inGameNotification(boolean)` determines whether to show an in-game popup when the timer finishes.
 
 ```java
-.ingameNotification(true)
+.inGameNotification(true)
 ```
 
 `.textColor(java.awt.Color)` is the text color. Defaults to white if not provided. See the [colors page](/apollo/developers/utilities/colors) for more.

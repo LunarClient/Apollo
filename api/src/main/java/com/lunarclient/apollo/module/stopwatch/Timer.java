@@ -96,15 +96,15 @@ public final class Timer {
     boolean hideWhenStopped;
 
     /**
-     * Returns the timer {@link String} custom format.
+     * Returns the timer {@link String} display format.
      *
      * <p>A format string (e.g. {@code "mm:ss"}), or {@code null}
      * for the default display format.</p>
      *
-     * @return the custom format string
+     * @return the display format string
      * @since 1.2.6
      */
-    @Nullable String customFormat;
+    @Nullable String displayFormat;
 
     /**
      * Returns the timer {@link Component} title text.
@@ -125,7 +125,7 @@ public final class Timer {
      * @return whether an in-game notification is shown
      * @since 1.2.6
      */
-    boolean ingameNotification;
+    boolean inGameNotification;
 
     /**
      * Returns the timer {@link Color} text color.

@@ -78,9 +78,9 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             .setPreventModification(stopwatch.isPreventModification())
             .setHideWhenStopped(stopwatch.isHideWhenStopped());
 
-        String customFormat = stopwatch.getCustomFormat();
-        if (customFormat != null) {
-            builder.setDisplayFormat(customFormat);
+        String displayFormat = stopwatch.getDisplayFormat();
+        if (displayFormat != null) {
+            builder.setDisplayFormat(displayFormat);
         }
 
         Color textColor = stopwatch.getTextColor();
@@ -148,11 +148,11 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             .setLoop(timer.isLoop())
             .setPreventModification(timer.isPreventModification())
             .setHideWhenStopped(timer.isHideWhenStopped())
-            .setInGameNotification(timer.isIngameNotification());
+            .setInGameNotification(timer.isInGameNotification());
 
-        String customFormat = timer.getCustomFormat();
-        if (customFormat != null) {
-            builder.setDisplayFormat(customFormat);
+        String displayFormat = timer.getDisplayFormat();
+        if (displayFormat != null) {
+            builder.setDisplayFormat(displayFormat);
         }
 
         Component titleText = timer.getTitleText();
