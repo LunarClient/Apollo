@@ -21,52 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.common.icon;
+package com.lunarclient.apollo.common.profile;
 
-import com.lunarclient.apollo.common.profile.Profile;
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents an item stack icon.
+ * Represents a profile attached to the {@link com.lunarclient.apollo.common.icon.ItemStackIcon}.
  *
- * @since 1.0.0
+ * @since 1.2.6
  */
 @Getter
 @Builder
-public final class ItemStackIcon extends Icon {
+public final class Profile {
 
     /**
-     * Returns the icon {@link String} item name.
+     * Returns the profile {@link UUID} id.
      *
-     * @return the icon item name
-     * @since 1.0.0
-     */
-    String itemName;
-
-    /**
-     * Returns the icon {@link Integer} item id.
-     *
-     * @return the icon item id
-     * @since 1.0.0
-     */
-    int itemId;
-
-    /**
-     * Returns the icon {@link Integer} custom model data.
-     *
-     * @return the icon custom model data
-     * @since 1.0.7
-     */
-    int customModelData;
-
-    /**
-     * Returns the icon {@link Profile}.
-     *
-     * @return the icon profile
+     * @return the profile id
      * @since 1.2.6
      */
-    @Nullable Profile profile;
+    @Nullable UUID id;
+
+    /**
+     * Returns the profile {@link String} texture.
+     *
+     * @return the profile texture
+     * @since 1.2.6
+     */
+    String texture;
+
+    /**
+     * Returns the profile {@link String} signature.
+     *
+     * @return the profile signature
+     * @since 1.2.6
+     */
+    String signature;
 
 }

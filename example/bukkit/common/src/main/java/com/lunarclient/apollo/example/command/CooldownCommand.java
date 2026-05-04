@@ -43,7 +43,7 @@ public class CooldownCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /cooldown <displayItem|displayWithStyle|displayResource|remove|reset>");
+            player.sendMessage("Usage: /cooldown <displayItem|displayWithStyle|displayWithPlayerTexture|displayResource|remove|reset>");
             return true;
         }
 
@@ -59,6 +59,12 @@ public class CooldownCommand implements CommandExecutor {
             case "displaywithstyle": {
                 cooldownExample.displayCooldownWithStyleExample(player);
                 player.sendMessage("Displaying cooldown with style....");
+                break;
+            }
+
+            case "displaywithplayertexture": {
+                cooldownExample.displayCooldownWithPlayerTextureExample(player);
+                player.sendMessage("Displaying cooldown with player texture....");
                 break;
             }
 
@@ -81,7 +87,7 @@ public class CooldownCommand implements CommandExecutor {
             }
 
             default: {
-                player.sendMessage("Usage: /cooldown <displayItem|displayWithStyle|displayResource|remove|reset>");
+                player.sendMessage("Usage: /cooldown <displayItem|displayWithStyle|displayWithPlayerTexture|displayResource|remove|reset>");
                 break;
             }
         }

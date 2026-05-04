@@ -1,4 +1,4 @@
-import { Tab, Tabs } from 'nextra-theme-docs'
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
 
 # Cooldown Module
 
@@ -24,6 +24,10 @@ Explore each integration by cycling through each tab, to find the best fit for y
 <Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
 
 <Tab>
+
+<Callout type="info">
+**Apollo API examples.** See [General](/apollo/developers/general) for common patterns and helpers.
+</Callout>
 
 ### Displaying a Cooldown with an item
 
@@ -70,6 +74,31 @@ public void displayCooldownWithStyleExample(Player viewer) {
 }
 ```
 
+### Displaying a Cooldown with a player texture
+
+```java
+public void displayCooldownWithPlayerTextureExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.cooldownModule.displayCooldown(apolloPlayer, Cooldown.builder()
+            .name("player-head-cooldown")
+            .duration(Duration.ofSeconds(15))
+            .icon(ItemStackIcon.builder()
+                .itemName("PLAYER_HEAD") // use "skull" for legacy with customModelData set to 3
+                .profile(Profile.builder()
+                    .id(UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd"))
+                    .texture("e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ4MjUwNWJjZjNiYTU5YzJiZTdlMmQzNmY0ZTJiZGE4MzZmMmZkMTk0YjYyMTJhMmExYzRiNGEyYTQ3MWUifX19")
+                    .signature("")
+                    .build())
+                .build()
+            )
+            .build()
+        );
+    });
+}
+```
+
 ### Displaying a Cooldown with a resource
 
 ```java
@@ -100,6 +129,7 @@ public void removeCooldownExample(Player viewer) {
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
         this.cooldownModule.removeCooldown(apolloPlayer, "enderpearl-cooldown");
         this.cooldownModule.removeCooldown(apolloPlayer, "book-cooldown");
+        this.cooldownModule.removeCooldown(apolloPlayer, "player-head-cooldown");
         this.cooldownModule.removeCooldown(apolloPlayer, "lunar-cooldown");
     });
 }
@@ -174,6 +204,10 @@ All `CooldownStyle` fields are optional; any field left unset will fall back to 
 
 <Tab>
 
+<Callout type="info">
+**Lightweight Protobuf examples.** See [Lightweight Protobuf](/apollo/developers/lightweight/protobuf) for setup.
+</Callout>
+
 **Displaying a Cooldown with an item**
 
 ```java
@@ -205,6 +239,29 @@ public void displayCooldownWithStyleExample(Player viewer) {
             .setCircleEndColor(ProtobufUtil.createColorProto(new Color(85, 255, 85))) // ApolloColors.GREEN
             .setCircleEdgeColor(ProtobufUtil.createColorProto(new Color(85, 85, 85))) // ApolloColors.DAR_GRAY
             .setTextColor(ProtobufUtil.createColorProto(new Color(255, 85, 255))) // ApolloColors.LIGHT_PURPLE
+            .build())
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Displaying a Cooldown with a player texture**
+
+```java
+public void displayCooldownWithPlayerTextureExample(Player viewer) {
+    DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
+        .setName("player-head-cooldown")
+        .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
+        .setIcon(Icon.newBuilder()
+            .setItemStack(ProtobufUtil.createItemStackIconProto(
+                "PLAYER_HEAD", 0, 0,
+                ProtobufUtil.createProfileProto(
+                    UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd"),
+                    "e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ4MjUwNWJjZjNiYTU5YzJiZTdlMmQzNmY0ZTJiZGE4MzZmMmZkMTk0YjYyMTJhMmExYzRiNGEyYTQ3MWUifX19",
+                    ""
+                )
+            ))
             .build())
         .build();
 
@@ -253,6 +310,10 @@ public void resetCooldownsExample(Player viewer) {
 
 <Tab>
 
+<Callout type="info">
+**Lightweight JSON examples.** See [Lightweight JSON](/apollo/developers/lightweight/json) for setup.
+</Callout>
+
 **Displaying a Cooldown with an item**
 
 ```java
@@ -283,6 +344,27 @@ public void displayCooldownWithStyleExample(Player viewer) {
     style.add("circle_edge_color", JsonUtil.createColorObject(new Color(85, 85, 85))); // ApolloColors.DAR_GRAY
     style.add("text_color", JsonUtil.createColorObject(new Color(255, 85, 255))); // ApolloColors.LIGHT_PURPLE
     message.add("style", style);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Displaying a Cooldown with a player texture**
+
+```java
+public void displayCooldownWithPlayerTextureExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
+    message.addProperty("name", "player-head-cooldown");
+    message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
+    message.add("icon", JsonUtil.createItemStackIconObject(
+        "PLAYER_HEAD", 0, 0,
+        JsonUtil.createProfileObject(
+            UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd"),
+            "e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ4MjUwNWJjZjNiYTU5YzJiZTdlMmQzNmY0ZTJiZGE4MzZmMmZkMTk0YjYyMTJhMmExYzRiNGEyYTQ3MWUifX19",
+            ""
+        )
+    ));
 
     JsonPacketUtil.sendPacket(viewer, message);
 }

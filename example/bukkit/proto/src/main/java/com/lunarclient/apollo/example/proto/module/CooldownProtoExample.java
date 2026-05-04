@@ -33,6 +33,7 @@ import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
 import java.awt.Color;
 import java.time.Duration;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 
 public class CooldownProtoExample extends CooldownExample {
@@ -63,6 +64,26 @@ public class CooldownProtoExample extends CooldownExample {
                 .setCircleEndColor(ProtobufUtil.createColorProto(new Color(85, 255, 85))) // ApolloColors.GREEN
                 .setCircleEdgeColor(ProtobufUtil.createColorProto(new Color(85, 85, 85))) // ApolloColors.DAR_GRAY
                 .setTextColor(ProtobufUtil.createColorProto(new Color(255, 85, 255))) // ApolloColors.LIGHT_PURPLE
+                .build())
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void displayCooldownWithPlayerTextureExample(Player viewer) {
+        DisplayCooldownMessage message = DisplayCooldownMessage.newBuilder()
+            .setName("player-head-cooldown")
+            .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
+            .setIcon(Icon.newBuilder()
+                .setItemStack(ProtobufUtil.createItemStackIconProto(
+                    "PLAYER_HEAD", 0, 0,
+                    ProtobufUtil.createProfileProto(
+                        UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd"),
+                        "e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ4MjUwNWJjZjNiYTU5YzJiZTdlMmQzNmY0ZTJiZGE4MzZmMmZkMTk0YjYyMTJhMmExYzRiNGEyYTQ3MWUifX19",
+                        ""
+                    )
+                ))
                 .build())
             .build();
 

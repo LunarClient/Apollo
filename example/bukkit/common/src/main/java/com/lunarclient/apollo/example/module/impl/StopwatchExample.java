@@ -28,10 +28,28 @@ import org.bukkit.entity.Player;
 
 public abstract class StopwatchExample extends ApolloModuleExample {
 
+    public abstract void addStopwatchExample(Player viewer);
+
+    public abstract void removeStopwatchExample(Player viewer);
+
     public abstract void startStopwatchExample(Player viewer);
 
     public abstract void stopStopwatchExample(Player viewer);
 
     public abstract void resetStopwatchExample(Player viewer);
+
+    public abstract void resetStopwatchesExample(Player viewer);
+
+    public abstract void addTimerExample(Player viewer);
+
+    public abstract void removeTimerExample(Player viewer);
+
+    public abstract void startTimerExample(Player viewer);
+
+    public abstract void stopTimerExample(Player viewer);
+
+    public abstract void resetTimerExample(Player viewer);
+
+    public abstract void resetTimersExample(Player viewer);
 
 }

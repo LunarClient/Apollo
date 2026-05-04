@@ -21,52 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.common.icon;
+package com.lunarclient.apollo.common.location;
 
-import com.lunarclient.apollo.common.profile.Profile;
 import lombok.Builder;
 import lombok.Getter;
-import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents an item stack icon.
+ * Represents a HUD element position on the client screen.
  *
- * @since 1.0.0
+ * @since 1.2.6
  */
 @Getter
 @Builder
-public final class ItemStackIcon extends Icon {
+public final class HudPosition {
 
     /**
-     * Returns the icon {@link String} item name.
+     * Returns the {@code float} X coordinate for this HUD position.
      *
-     * @return the icon item name
-     * @since 1.0.0
-     */
-    String itemName;
-
-    /**
-     * Returns the icon {@link Integer} item id.
-     *
-     * @return the icon item id
-     * @since 1.0.0
-     */
-    int itemId;
-
-    /**
-     * Returns the icon {@link Integer} custom model data.
-     *
-     * @return the icon custom model data
-     * @since 1.0.7
-     */
-    int customModelData;
-
-    /**
-     * Returns the icon {@link Profile}.
-     *
-     * @return the icon profile
+     * @return the x coordinate
      * @since 1.2.6
      */
-    @Nullable Profile profile;
+    float x;
+
+    /**
+     * Returns the {@code float} Y coordinate for this HUD position.
+     *
+     * @return the y coordinate
+     * @since 1.2.6
+     */
+    float y;
 
 }
