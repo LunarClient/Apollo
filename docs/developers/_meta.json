@@ -4,10 +4,9 @@
     "events": "Events",
     "options": "Options",
     "modules": "Modules",
-    "mods": "Mods",
+    "private-modules": "Private Modules",
+    "mods": "Mod Options",
     "utilities": "Utilities",
-    "platform-utilities": "Platform Utilities",
-    "adventure": "Adventure",
     "minestom": "Minestom",
     "lightweight": "Lightweight"
 }
