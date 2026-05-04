@@ -29,7 +29,7 @@ import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents the {@link Cooldown} style, allowing customization of the circle start, end, edge & text color.
+ * Represents the {@link Cooldown} style, allowing customization of the circle start, end, edge and text color.
  *
  * @since 1.2.5
  */

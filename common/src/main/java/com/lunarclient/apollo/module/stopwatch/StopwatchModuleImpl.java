@@ -23,12 +23,26 @@
  */
 package com.lunarclient.apollo.module.stopwatch;
 
+import com.lunarclient.apollo.common.ApolloComponent;
+import com.lunarclient.apollo.common.location.HudPosition;
+import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
+import com.lunarclient.apollo.stopwatch.v1.AddStopwatchMessage;
+import com.lunarclient.apollo.stopwatch.v1.AddTimerMessage;
+import com.lunarclient.apollo.stopwatch.v1.RemoveStopwatchMessage;
+import com.lunarclient.apollo.stopwatch.v1.RemoveTimerMessage;
 import com.lunarclient.apollo.stopwatch.v1.ResetStopwatchMessage;
+import com.lunarclient.apollo.stopwatch.v1.ResetStopwatchesMessage;
+import com.lunarclient.apollo.stopwatch.v1.ResetTimerMessage;
+import com.lunarclient.apollo.stopwatch.v1.ResetTimersMessage;
 import com.lunarclient.apollo.stopwatch.v1.StartStopwatchMessage;
+import com.lunarclient.apollo.stopwatch.v1.StartTimerMessage;
 import com.lunarclient.apollo.stopwatch.v1.StopStopwatchMessage;
+import com.lunarclient.apollo.stopwatch.v1.StopTimerMessage;
+import java.awt.Color;
 import lombok.NonNull;
+import net.kyori.adventure.text.Component;
 
 /**
  * Provides the stopwatch module.
@@ -52,6 +66,153 @@ public final class StopwatchModuleImpl extends StopwatchModule {
     @Override
     public void resetStopwatch(@NonNull Recipients recipients) {
         ResetStopwatchMessage message = ResetStopwatchMessage.getDefaultInstance();
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void addStopwatch(@NonNull Recipients recipients, @NonNull Stopwatch stopwatch) {
+        AddStopwatchMessage.Builder builder = AddStopwatchMessage.newBuilder()
+            .setId(stopwatch.getId())
+            .setName(stopwatch.getName())
+            .setResetOnStart(stopwatch.isResetOnStart())
+            .setPreventModification(stopwatch.isPreventModification())
+            .setHideWhenStopped(stopwatch.isHideWhenStopped());
+
+        String displayFormat = stopwatch.getDisplayFormat();
+        if (displayFormat != null) {
+            builder.setDisplayFormat(displayFormat);
+        }
+
+        Color textColor = stopwatch.getTextColor();
+        if (textColor != null) {
+            builder.setTextColor(NetworkTypes.toProtobuf(textColor));
+        }
+
+        HudPosition hudPosition = stopwatch.getHudPosition();
+        if (hudPosition != null) {
+            builder.setHudPosition(NetworkTypes.toProtobuf(hudPosition));
+        }
+
+        AddStopwatchMessage message = builder.build();
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void removeStopwatch(@NonNull Recipients recipients, @NonNull String id) {
+        RemoveStopwatchMessage message = RemoveStopwatchMessage.newBuilder()
+            .setId(id)
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void startStopwatch(@NonNull Recipients recipients, @NonNull String id) {
+        StartStopwatchMessage message = StartStopwatchMessage.newBuilder()
+            .setId(id)
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void stopStopwatch(@NonNull Recipients recipients, @NonNull String id) {
+        StopStopwatchMessage message = StopStopwatchMessage.newBuilder()
+            .setId(id)
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void resetStopwatch(@NonNull Recipients recipients, @NonNull String id) {
+        ResetStopwatchMessage message = ResetStopwatchMessage.newBuilder()
+            .setId(id)
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void resetStopwatches(@NonNull Recipients recipients) {
+        ResetStopwatchesMessage message = ResetStopwatchesMessage.getDefaultInstance();
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void addTimer(@NonNull Recipients recipients, @NonNull Timer timer) {
+        AddTimerMessage.Builder builder = AddTimerMessage.newBuilder()
+            .setId(timer.getId())
+            .setName(timer.getName())
+            .setDuration(NetworkTypes.toProtobuf(timer.getDuration()))
+            .setLoop(timer.isLoop())
+            .setPreventModification(timer.isPreventModification())
+            .setHideWhenStopped(timer.isHideWhenStopped())
+            .setInGameNotification(timer.isInGameNotification());
+
+        String displayFormat = timer.getDisplayFormat();
+        if (displayFormat != null) {
+            builder.setDisplayFormat(displayFormat);
+        }
+
+        Component titleText = timer.getTitleText();
+        if (titleText != null) {
+            builder.setTitleTextAdventureJsonLines(ApolloComponent.toJson(titleText));
+        }
+
+        Color textColor = timer.getTextColor();
+        if (textColor != null) {
+            builder.setTextColor(NetworkTypes.toProtobuf(textColor));
+        }
+
+        HudPosition hudPosition = timer.getHudPosition();
+        if (hudPosition != null) {
+            builder.setHudPosition(NetworkTypes.toProtobuf(hudPosition));
+        }
+
+        AddTimerMessage message = builder.build();
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void removeTimer(@NonNull Recipients recipients, @NonNull String id) {
+        RemoveTimerMessage message = RemoveTimerMessage.newBuilder()
+            .setId(id)
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void startTimer(@NonNull Recipients recipients, @NonNull String id) {
+        StartTimerMessage message = StartTimerMessage.newBuilder()
+            .setId(id)
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void stopTimer(@NonNull Recipients recipients, @NonNull String id) {
+        StopTimerMessage message = StopTimerMessage.newBuilder()
+            .setId(id)
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void resetTimer(@NonNull Recipients recipients, @NonNull String id) {
+        ResetTimerMessage message = ResetTimerMessage.newBuilder()
+            .setId(id)
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void resetTimers(@NonNull Recipients recipients) {
+        ResetTimersMessage message = ResetTimersMessage.getDefaultInstance();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 

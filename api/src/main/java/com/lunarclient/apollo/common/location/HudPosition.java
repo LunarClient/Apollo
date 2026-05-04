@@ -21,35 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.module.impl;
+package com.lunarclient.apollo.common.location;
 
-import com.lunarclient.apollo.example.module.ApolloModuleExample;
-import org.bukkit.entity.Player;
+import lombok.Builder;
+import lombok.Getter;
 
-public abstract class StopwatchExample extends ApolloModuleExample {
+/**
+ * Represents a HUD element position on the client screen.
+ *
+ * @since 1.2.6
+ */
+@Getter
+@Builder
+public final class HudPosition {
 
-    public abstract void addStopwatchExample(Player viewer);
+    /**
+     * Returns the {@code float} X coordinate for this HUD position.
+     *
+     * @return the x coordinate
+     * @since 1.2.6
+     */
+    float x;
 
-    public abstract void removeStopwatchExample(Player viewer);
-
-    public abstract void startStopwatchExample(Player viewer);
-
-    public abstract void stopStopwatchExample(Player viewer);
-
-    public abstract void resetStopwatchExample(Player viewer);
-
-    public abstract void resetStopwatchesExample(Player viewer);
-
-    public abstract void addTimerExample(Player viewer);
-
-    public abstract void removeTimerExample(Player viewer);
-
-    public abstract void startTimerExample(Player viewer);
-
-    public abstract void stopTimerExample(Player viewer);
-
-    public abstract void resetTimerExample(Player viewer);
-
-    public abstract void resetTimersExample(Player viewer);
+    /**
+     * Returns the {@code float} Y coordinate for this HUD position.
+     *
+     * @return the y coordinate
+     * @since 1.2.6
+     */
+    float y;
 
 }
