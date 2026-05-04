@@ -44,6 +44,8 @@ import java.util.stream.Collectors;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 
+import static com.lunarclient.apollo.util.Ranges.checkStrictlyPositive;
+
 /**
  * Provides the cosmetic module.
  *
@@ -67,9 +69,13 @@ public final class CosmeticModuleImpl extends CosmeticModule {
 
     @Override
     public void unequipNpcCosmetics(@NonNull Recipients recipients, @NonNull UUID npcUuid, @NonNull List<Integer> cosmeticIds) {
+        List<Integer> validatedIds = cosmeticIds.stream()
+            .map(id -> checkStrictlyPositive(id, "Cosmetic#id"))
+            .collect(Collectors.toList());
+
         UnequipNpcCosmeticsMessage message = UnequipNpcCosmeticsMessage.newBuilder()
             .setNpcUuid(NetworkTypes.toProtobuf(npcUuid))
-            .addAllCosmeticIds(cosmeticIds)
+            .addAllCosmeticIds(validatedIds)
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
@@ -87,7 +93,7 @@ public final class CosmeticModuleImpl extends CosmeticModule {
     @Override
     public void displaySpray(@NonNull Recipients recipients, @NonNull Spray spray) {
         DisplaySprayMessage message = DisplaySprayMessage.newBuilder()
-            .setSprayId(spray.getSprayId())
+            .setSprayId(checkStrictlyPositive(spray.getSprayId(), "Spray#sprayId"))
             .setLocation(NetworkTypes.toProtobuf(spray.getLocation()))
             .setFacing(NetworkTypes.toProtobuf(spray.getFacing()))
             .setRotation(spray.getRotation())
@@ -100,7 +106,7 @@ public final class CosmeticModuleImpl extends CosmeticModule {
     @Override
     public void removeSpray(@NonNull Recipients recipients, int sprayId) {
         RemoveSprayMessage message = RemoveSprayMessage.newBuilder()
-            .setSprayId(sprayId)
+            .setSprayId(checkStrictlyPositive(sprayId, "Spray#sprayId"))
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
@@ -109,7 +115,7 @@ public final class CosmeticModuleImpl extends CosmeticModule {
     @Override
     public void removeSpray(@NonNull Recipients recipients, int sprayId, @Nullable ApolloBlockLocation location) {
         RemoveSprayMessage.Builder builder = RemoveSprayMessage.newBuilder()
-            .setSprayId(sprayId);
+            .setSprayId(checkStrictlyPositive(sprayId, "Spray#sprayId"));
 
         if (location != null) {
             builder.setLocation(NetworkTypes.toProtobuf(location));
@@ -127,9 +133,13 @@ public final class CosmeticModuleImpl extends CosmeticModule {
 
     private com.lunarclient.apollo.cosmetic.v1.Cosmetic toProtobuf(Cosmetic cosmetic) {
         com.lunarclient.apollo.cosmetic.v1.Cosmetic.Builder builder = com.lunarclient.apollo.cosmetic.v1.Cosmetic.newBuilder()
-            .setId(cosmetic.getId());
+            .setId(checkStrictlyPositive(cosmetic.getId(), "Cosmetic#id"));
 
         CosmeticOptions options = cosmetic.getOptions();
+        if (options == null) {
+            return builder.build();
+        }
+
         if (options instanceof HatOptions) {
             HatOptions hatOptions = (HatOptions) options;
             builder.setHatOptions(com.lunarclient.apollo.cosmetic.v1.HatOptions.newBuilder()

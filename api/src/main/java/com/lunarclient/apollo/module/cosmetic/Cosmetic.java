@@ -31,6 +31,7 @@ import com.lunarclient.apollo.module.cosmetic.options.PetOptions;
 import lombok.Builder;
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents a single cosmetic with optional per-type display settings.
@@ -44,10 +45,12 @@ public final class Cosmetic {
     /**
      * Returns the Lunar Client cosmetic id for this entry.
      *
+     * <p>The value must be greater than 0.</p>
+     *
      * @return the cosmetic id
      * @since 1.2.6
      */
-    int id;
+    @Range(from = 1, to = Integer.MAX_VALUE) int id;
 
     /**
      * Returns optional cosmetic display options for this cosmetic id.

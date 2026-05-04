@@ -35,6 +35,8 @@ import com.lunarclient.apollo.recipients.Recipients;
 import java.util.List;
 import java.util.UUID;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents the cosmetic module.
@@ -87,21 +89,26 @@ public abstract class CosmeticModule extends ApolloModule {
     /**
      * Removes every instance of a spray id for the given {@link Recipients}.
      *
+     * <p>The spray id must be greater than 0.</p>
+     *
      * @param recipients the recipients that are receiving the packet
      * @param sprayId    the spray cosmetic id
      * @since 1.2.6
      */
-    public abstract void removeSpray(Recipients recipients, int sprayId);
+    public abstract void removeSpray(Recipients recipients, @Range(from = 1, to = Integer.MAX_VALUE) int sprayId);
 
     /**
      * Removes every instance of a spray id at a specific block for the given {@link Recipients}.
      *
+     * <p>The spray id must be greater than 0. If {@code location} is {@code null}, every
+     * instance of the spray id is removed regardless of position.</p>
+     *
      * @param recipients the recipients that are receiving the packet
      * @param sprayId    the spray cosmetic id
-     * @param location   the block location of the spray to remove
+     * @param location   the block location of the spray to remove, or {@code null} to remove all
      * @since 1.2.6
      */
-    public abstract void removeSpray(Recipients recipients, int sprayId, ApolloBlockLocation location);
+    public abstract void removeSpray(Recipients recipients, @Range(from = 1, to = Integer.MAX_VALUE) int sprayId, @Nullable ApolloBlockLocation location);
 
     /**
      * Resets all server sprays for the given {@link Recipients}.

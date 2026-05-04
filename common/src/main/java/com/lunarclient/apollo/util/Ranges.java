@@ -63,6 +63,21 @@ public final class Ranges {
     }
 
     /**
+     * Returns the value if it is strictly positive (greater than 0),
+     * otherwise throws an {@link IllegalArgumentException}.
+     *
+     * @param value the value to check
+     * @param name the name of the value
+     * @return the value
+     * @throws IllegalArgumentException if the value is not strictly positive
+     * @since 1.2.6
+     */
+    public static int checkStrictlyPositive(int value, String name) {
+        if(value <= 0) throw new IllegalArgumentException(name + " must be greater than 0");
+        return value;
+    }
+
+    /**
      * Returns the value if it is positive, otherwise throws an
      * {@link IllegalArgumentException}.
      *

@@ -28,6 +28,7 @@ import com.lunarclient.apollo.module.packetenrichment.raytrace.Direction;
 import java.time.Duration;
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Range;
 
 /**
  * Represents a spray.
@@ -45,10 +46,12 @@ public final class Spray {
     /**
      * Returns the Lunar Client spray cosmetic id.
      *
+     * <p>The value must be greater than 0.</p>
+     *
      * @return the spray cosmetic id
      * @since 1.2.6
      */
-    int sprayId;
+    @Range(from = 1, to = Integer.MAX_VALUE) int sprayId;
 
     /**
      * Returns the {@link ApolloBlockLocation} of the block the spray is placed on.
@@ -77,8 +80,6 @@ public final class Spray {
 
     /**
      * Returns the {@link Duration} for how long the spray remains visible on the client.
-     *
-     * <p>Maximum duration is 600 seconds (10 minutes).</p>
      *
      * @return the display duration
      * @since 1.2.6
