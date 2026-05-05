@@ -49,62 +49,6 @@ public final class ModParticleChanger {
     /**
      * No documentation available.
      *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SHOW_BLOOD_PARTICLES = SimpleOption.<Boolean>builder()
-        .node("particle-changer", "show-blood-particles").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final NumberOption<Integer> BLOOD_MULTIPLIER = NumberOption.<Integer>number()
-        .node("particle-changer", "blood-multiplier").type(TypeToken.get(Integer.class))
-        .min(1).max(10)
-        .defaultValue(1)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> PLAYER_BLOOD_PARTICLES = SimpleOption.<Boolean>builder()
-        .node("particle-changer", "player-blood-particles").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> ENTITY_BLOOD_PARTICLES = SimpleOption.<Boolean>builder()
-        .node("particle-changer", "entity-blood-particles").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> PLAY_BLOOD_SOUND = SimpleOption.<Boolean>builder()
-        .node("particle-changer", "play-blood-sound").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> ALWAYS_ENCHANT_STRIKES = SimpleOption.<Boolean>builder()
@@ -114,24 +58,24 @@ public final class ModParticleChanger {
         .build();
 
     /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> AFFECT_ENCHANTED_WEAPONS = SimpleOption.<Boolean>builder()
-        .node("particle-changer", "affect-enchanted-weapons").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * Hide your players potion effect particles when you're in first person.
+     * Hide particles which are emitted in first person (e.g. potion effects).
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> HIDE_FIRST_PERSON_PARTICLES = SimpleOption.<Boolean>builder()
-        .comment("Hide your players potion effect particles when you're in first person")
+        .comment("Hide particles which are emitted in first person (e.g. potion effects)")
         .node("particle-changer", "hide-first-person-particles").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.6
+     */
+    public static final SimpleOption<Boolean> HIDE_BLOCK_BREAK_PARTICLES = SimpleOption.<Boolean>builder()
+        .node("particle-changer", "hide-block-break-particles").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();
@@ -153,20 +97,9 @@ public final class ModParticleChanger {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Color> COLOR = SimpleOption.<Color>builder()
-        .node("particle-changer", "color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(255, 255, 255))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("particle-changer", "scale").type(TypeToken.get(Float.class))
-        .min(0.5F).max(2.0F)
+        .min(0.25F).max(2.0F)
         .defaultValue(1.0F)
         .notifyClient()
         .build();
@@ -176,10 +109,10 @@ public final class ModParticleChanger {
      *
      * @since 1.0.0
      */
-    public static final NumberOption<Integer> PARTICLE_MULTIPLIER = NumberOption.<Integer>number()
-        .node("particle-changer", "particle-multiplier").type(TypeToken.get(Integer.class))
-        .min(1).max(10)
-        .defaultValue(1)
+    public static final NumberOption<Float> PARTICLE_MULTIPLIER = NumberOption.<Float>number()
+        .node("particle-changer", "particle-multiplier").type(TypeToken.get(Float.class))
+        .min(0.25F).max(10.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
@@ -202,6 +135,90 @@ public final class ModParticleChanger {
     public static final SimpleOption<Boolean> OVERLAY_COLOR = SimpleOption.<Boolean>builder()
         .node("particle-changer", "overlay-color").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Color> COLOR = SimpleOption.<Color>builder()
+        .node("particle-changer", "color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SHOW_BLOOD_PARTICLES = SimpleOption.<Boolean>builder()
+        .node("particle-changer", "show-blood-particles").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final NumberOption<Integer> BLOOD_MULTIPLIER = NumberOption.<Integer>number()
+        .node("particle-changer", "blood-multiplier").type(TypeToken.get(Integer.class))
+        .min(1).max(10)
+        .defaultValue(1)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> PLAYER_BLOOD_PARTICLES = SimpleOption.<Boolean>builder()
+        .node("particle-changer", "player-blood-particles").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> ENTITY_BLOOD_PARTICLES = SimpleOption.<Boolean>builder()
+        .node("particle-changer", "entity-blood-particles").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> PLAY_BLOOD_SOUND = SimpleOption.<Boolean>builder()
+        .node("particle-changer", "play-blood-sound").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> AFFECT_ENCHANTED_WEAPONS = SimpleOption.<Boolean>builder()
+        .node("particle-changer", "affect-enchanted-weapons").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
