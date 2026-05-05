@@ -72,7 +72,7 @@ public final class ModParticleChanger {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.6
      */
     public static final SimpleOption<Boolean> HIDE_BLOCK_BREAK_PARTICLES = SimpleOption.<Boolean>builder()
         .node("particle-changer", "hide-block-break-particles").type(TypeToken.get(Boolean.class))
