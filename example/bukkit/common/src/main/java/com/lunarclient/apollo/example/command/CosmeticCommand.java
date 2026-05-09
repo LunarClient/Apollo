@@ -25,11 +25,17 @@ package com.lunarclient.apollo.example.command;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.module.impl.CosmeticExample;
+import com.lunarclient.apollo.example.nms.CommandCosmetic;
 import com.lunarclient.apollo.example.nms.PlayerNpc;
+import com.lunarclient.apollo.example.util.CommandUtil;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -82,8 +88,16 @@ public class CosmeticCommand implements CommandExecutor {
 
         switch (args[0].toLowerCase()) {
             case "equip": {
+                if (args.length >= 3 && this.isCosmeticType(args[2])) {
+                    this.handleTypedEquip(player, example, uuid, npcName, args);
+                    break;
+                }
+
                 List<Integer> cosmeticIds = this.parseCosmeticIds(args);
                 example.equipNpcCosmeticsInternal(player, uuid, cosmeticIds);
+                this.persistEquipped(uuid, cosmeticIds.stream()
+                    .map(id -> CommandCosmetic.builder().id(id).build())
+                    .collect(Collectors.toList()));
                 player.sendMessage(ChatColor.GREEN + "Equipped cosmetics " + cosmeticIds + " on NPC " + npcName);
                 break;
             }
@@ -91,12 +105,14 @@ public class CosmeticCommand implements CommandExecutor {
             case "unequip": {
                 List<Integer> cosmeticIds = this.parseCosmeticIds(args);
                 example.unequipNpcCosmeticsInternal(player, uuid, cosmeticIds);
+                this.persistUnequipped(uuid, cosmeticIds);
                 player.sendMessage(ChatColor.GREEN + "Unequipped cosmetics " + cosmeticIds + " from NPC " + npcName);
                 break;
             }
 
             case "reset": {
                 example.resetNpcCosmeticsExample(player, uuid);
+                this.persistReset(uuid);
                 player.sendMessage(ChatColor.GREEN + "Reset all cosmetics on NPC " + npcName);
                 break;
             }
@@ -170,6 +186,125 @@ public class CosmeticCommand implements CommandExecutor {
         return true;
     }
 
+    private boolean isCosmeticType(String type) {
+        String lower = type.toLowerCase();
+        return "hat".equals(lower) || "cloak".equals(lower) || "pet".equals(lower) || "body".equals(lower);
+    }
+
+    private void handleTypedEquip(Player player, CosmeticExample example, UUID uuid, String npcName, String[] args) {
+        if (args.length < 4) {
+            this.sendUsage(player);
+            return;
+        }
+
+        int cosmeticId;
+        try {
+            cosmeticId = Integer.parseInt(args[3]);
+        } catch (NumberFormatException ex) {
+            player.sendMessage(ChatColor.RED + "Cosmetic id must be an integer.");
+            return;
+        }
+
+        Map<String, String> options = this.parseOptions(args, 4);
+        String type = args[2].toLowerCase();
+
+        CommandCosmetic.Options optionsSpec;
+        switch (type) {
+            case "hat": {
+                optionsSpec = CommandCosmetic.Hat.builder()
+                    .showOverHelmet(CommandUtil.parseBoolean(options.get("showoverhelmet"), true))
+                    .showOverSkinLayer(CommandUtil.parseBoolean(options.get("showoverskinlayer"), true))
+                    .heightOffset(CommandUtil.parseFloat(options.get("heightoffset"), 0f))
+                    .build();
+                break;
+            }
+            case "cloak": {
+                optionsSpec = CommandCosmetic.Cloak.builder()
+                    .useClothPhysics(CommandUtil.parseBoolean(options.get("useclothphysics"), false))
+                    .build();
+                break;
+            }
+            case "pet": {
+                optionsSpec = CommandCosmetic.Pet.builder()
+                    .flipShoulder(CommandUtil.parseBoolean(options.get("flipshoulder"), false))
+                    .build();
+                break;
+            }
+            case "body": {
+                optionsSpec = CommandCosmetic.Body.builder()
+                    .showOverChestplate(CommandUtil.parseBoolean(options.get("showoverchestplate"), true))
+                    .showOverLeggings(CommandUtil.parseBoolean(options.get("showoverleggings"), true))
+                    .showOverBoots(CommandUtil.parseBoolean(options.get("showoverboots"), true))
+                    .build();
+                break;
+            }
+            default: {
+                this.sendUsage(player);
+                return;
+            }
+        }
+
+        CommandCosmetic spec = CommandCosmetic.builder()
+            .id(cosmeticId)
+            .options(optionsSpec)
+            .build();
+
+        example.equipNpcCosmeticInternal(player, uuid, spec);
+        this.persistEquipped(uuid, Collections.singletonList(spec));
+        player.sendMessage(ChatColor.GREEN + "Equipped " + type + " cosmetic " + cosmeticId + " on NPC " + npcName);
+    }
+
+    private void persistEquipped(UUID npcUuid, List<CommandCosmetic> equipped) {
+        Optional<PlayerNpc> npcOpt = ApolloExamplePlugin.getInstance().getNpcManager().findByUuid(npcUuid);
+        if (!npcOpt.isPresent()) {
+            return;
+        }
+
+        List<CommandCosmetic> cosmetics = npcOpt.get().getCosmetics();
+        for (CommandCosmetic cosmetic : equipped) {
+            cosmetics.removeIf(existing -> existing.getId() == cosmetic.getId());
+            cosmetics.add(cosmetic);
+        }
+
+        ApolloExamplePlugin.getInstance().getNpcManager().save();
+    }
+
+    private void persistUnequipped(UUID npcUuid, List<Integer> cosmeticIds) {
+        Optional<PlayerNpc> npcOpt = ApolloExamplePlugin.getInstance().getNpcManager().findByUuid(npcUuid);
+        if (!npcOpt.isPresent()) {
+            return;
+        }
+
+        npcOpt.get().getCosmetics().removeIf(cosmetic -> cosmeticIds.contains(cosmetic.getId()));
+        ApolloExamplePlugin.getInstance().getNpcManager().save();
+    }
+
+    private void persistReset(UUID npcUuid) {
+        Optional<PlayerNpc> npcOpt = ApolloExamplePlugin.getInstance().getNpcManager().findByUuid(npcUuid);
+        if (!npcOpt.isPresent()) {
+            return;
+        }
+
+        npcOpt.get().getCosmetics().clear();
+        ApolloExamplePlugin.getInstance().getNpcManager().save();
+    }
+
+    private Map<String, String> parseOptions(String[] args, int startIndex) {
+        Map<String, String> options = new HashMap<>();
+        for (int i = startIndex; i < args.length; i++) {
+            String token = args[i];
+            int index = token.indexOf('=');
+
+            if (index <= 0 || index == token.length() - 1) {
+                continue;
+            }
+
+            options.put(token.substring(0, index).toLowerCase(), token.substring(index + 1));
+        }
+
+        return options;
+    }
+
     private List<Integer> parseCosmeticIds(String[] args) {
         List<Integer> ids = new ArrayList<>();
         for (int i = 2; i < args.length; i++) {
@@ -184,8 +319,26 @@ public class CosmeticCommand implements CommandExecutor {
     private void sendUsage(Player player) {
         player.sendMessage("Usage:");
         player.sendMessage(" - /cosmetic equip <npc_name> [cosmeticIds]");
+        player.sendMessage(ChatColor.ITALIC + "   /cosmetic equip Apollo 434 3654 3977");
+        player.sendMessage("");
+        player.sendMessage(" - /cosmetic equip <npc_name> hat <id>");
+        player.sendMessage(ChatColor.ITALIC + "   /cosmetic equip Apollo hat 434 showOverHelmet=true showOverSkinLayer=true heightOffset=0.0");
+        player.sendMessage("");
+        player.sendMessage(" - /cosmetic equip <npc_name> cloak <id>");
+        player.sendMessage(ChatColor.ITALIC + "   /cosmetic equip Apollo cloak 3 useClothPhysics=true");
+        player.sendMessage("");
+        player.sendMessage(" - /cosmetic equip <npc_name> pet <id>");
+        player.sendMessage(ChatColor.ITALIC + "   /cosmetic equip Apollo pet 5095 flipShoulder=true");
+        player.sendMessage("");
+        player.sendMessage(" - /cosmetic equip <npc_name> body <id>");
+        player.sendMessage(ChatColor.ITALIC + "   /cosmetic equip Apollo body 3977 showOverChestplate=true showOverLeggings=true showOverBoots=true");
+        player.sendMessage("");
         player.sendMessage(" - /cosmetic unequip <npc_name> [cosmeticIds]");
+        player.sendMessage(ChatColor.ITALIC + "   /cosmetic unequip Apollo 434 3654");
+        player.sendMessage("");
         player.sendMessage(" - /cosmetic reset <npc_name>");
+        player.sendMessage(ChatColor.ITALIC + "   /cosmetic reset Apollo");
+        player.sendMessage("");
         this.sendSprayUsage(player);
     }
 

@@ -86,17 +86,6 @@ public class NpcCommand implements CommandExecutor {
                 break;
             }
 
-            case "reset": {
-                if (npcManager.getNpcs().isEmpty()) {
-                    player.sendMessage(ChatColor.YELLOW + "There are no NPCs to remove.");
-                    break;
-                }
-
-                npcManager.removeAll();
-                player.sendMessage(ChatColor.GREEN + "Removed all tracked NPCs.");
-                break;
-            }
-
             default: {
                 this.sendUsage(player);
                 break;
@@ -109,7 +98,6 @@ public class NpcCommand implements CommandExecutor {
     private void sendUsage(Player player) {
         player.sendMessage("Usage: /npc spawn <name>");
         player.sendMessage("Usage: /npc remove <name>");
-        player.sendMessage("Usage: /npc reset");
     }
 
 }
