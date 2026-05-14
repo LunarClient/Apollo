@@ -67,12 +67,14 @@ public final class NpcManager implements Listener {
 
     private final Map<UUID, PlayerNpc> npcs = new HashMap<>();
     private final JavaPlugin plugin;
+    private final NpcStore store;
 
     public NpcManager(JavaPlugin plugin) {
         this.plugin = plugin;
+        this.store = new NpcStore(plugin);
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
-        Bukkit.getScheduler().runTask(plugin, this::spawnDefaultNpcs);
+        Bukkit.getScheduler().runTask(plugin, this::loadOrSpawnDefaults);
     }
 
     public void removeNpc(UUID uuid) {
@@ -82,9 +84,10 @@ public final class NpcManager implements Listener {
         }
 
         this.despawnNpcs(npc);
+        this.store.save(this.npcs.values());
     }
 
-    public void removeAll() {
+    public void despawnAll() {
         for (PlayerNpc npc : new ArrayList<>(this.npcs.values())) {
             this.despawnNpcs(npc);
         }
@@ -96,6 +99,14 @@ public final class NpcManager implements Listener {
         return this.npcs.values().stream()
             .filter(npc -> npc.getName().equalsIgnoreCase(name))
             .findFirst();
+    }
+
+    public Optional<PlayerNpc> findByUuid(UUID uuid) {
+        return Optional.ofNullable(this.npcs.get(uuid));
+    }
+
+    public void save() {
+        this.store.save(this.npcs.values());
     }
 
     public Collection<PlayerNpc> getNpcs() {
@@ -118,11 +129,43 @@ public final class NpcManager implements Listener {
         }
     }
 
+    private void loadOrSpawnDefaults() {
+        if (!this.store.exists()) {
+            this.spawnDefaultNpcs();
+            this.store.save(this.npcs.values());
+            return;
+        }
+
+        for (NpcStore.Entry entry : this.store.load()) {
+            Location location = this.store.toLocation(entry);
+
+            if (location == null) {
+                continue;
+            }
+
+            PlayerNpc npc = this.spawnNpc(entry.getName(), location, entry.getUuid());
+            if (npc != null) {
+                npc.setCosmetics(new ArrayList<>(entry.getCosmetics()));
+            }
+        }
+    }
+
     private void spawnDefaultNpcs() {
         this.spawnNpc("Apollo", new Location(Bukkit.getWorld("world"), 20.5, 65, 5.5, 90f, 0f));
     }
 
     public @Nullable PlayerNpc spawnNpc(String name, Location location) {
+        UUID npcUuid = new UUID(UUID.randomUUID().getMostSignificantBits(), 0L);
+        PlayerNpc npc = this.spawnNpc(name, location, npcUuid);
+
+        if (npc != null) {
+            this.store.save(this.npcs.values());
+        }
+
+        return npc;
+    }
+
+    public @Nullable PlayerNpc spawnNpc(String name, Location location, UUID npcUuid) {
         World world = location.getWorld();
         if (world == null) {
             return null;
@@ -131,7 +174,6 @@ public final class NpcManager implements Listener {
         MinecraftServer server = MinecraftServer.getServer();
         ServerLevel level = ((CraftWorld) world).getHandle();
 
-        UUID npcUuid = new UUID(UUID.randomUUID().getMostSignificantBits(), 0L);
         GameProfile profile = new GameProfile(npcUuid, name);
         ServerPlayer npc = new ServerPlayer(server, level, profile, NpcManager.NPC_CLIENT_INFO);
 

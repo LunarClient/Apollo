@@ -23,29 +23,45 @@
  */
 package com.lunarclient.apollo.example.nms;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import net.minecraft.server.level.ServerPlayer;
-import org.bukkit.Location;
 
 @Getter
-@RequiredArgsConstructor
-public final class PlayerNpc {
+@Builder
+public final class CommandCosmetic {
 
-    private final UUID uuid;
-    private final String name;
-    private final Location location;
-    private final ServerPlayer handle;
+    int id;
+    Options options;
 
-    @Setter
-    private List<CommandCosmetic> cosmetics = new ArrayList<>();
+    public abstract static class Options {
+    }
 
-    public int getEntityId() {
-        return this.handle.getId();
+    @Getter
+    @Builder
+    public static final class Hat extends Options {
+        @Builder.Default boolean showOverHelmet = true;
+        @Builder.Default boolean showOverSkinLayer = true;
+        @Builder.Default float heightOffset = 0f;
+    }
+
+    @Getter
+    @Builder
+    public static final class Cloak extends Options {
+        @Builder.Default boolean useClothPhysics = false;
+    }
+
+    @Getter
+    @Builder
+    public static final class Pet extends Options {
+        @Builder.Default boolean flipShoulder = false;
+    }
+
+    @Getter
+    @Builder
+    public static final class Body extends Options {
+        @Builder.Default boolean showOverChestplate = true;
+        @Builder.Default boolean showOverLeggings = true;
+        @Builder.Default boolean showOverBoots = true;
     }
 
 }

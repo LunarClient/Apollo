@@ -152,7 +152,7 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         if (this.npcManager != null) {
-            this.npcManager.removeAll();
+            this.npcManager.despawnAll();
         }
     }
 

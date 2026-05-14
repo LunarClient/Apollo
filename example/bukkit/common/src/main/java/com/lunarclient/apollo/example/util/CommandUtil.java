@@ -21,31 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.nms;
+package com.lunarclient.apollo.example.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import net.minecraft.server.level.ServerPlayer;
-import org.bukkit.Location;
+public final class CommandUtil {
 
-@Getter
-@RequiredArgsConstructor
-public final class PlayerNpc {
+    public static boolean parseBoolean(String value, boolean fallback) {
+        return value != null ? Boolean.parseBoolean(value) : fallback;
+    }
 
-    private final UUID uuid;
-    private final String name;
-    private final Location location;
-    private final ServerPlayer handle;
+    public static float parseFloat(String value, float fallback) {
+        if (value == null) {
+            return fallback;
+        }
 
-    @Setter
-    private List<CommandCosmetic> cosmetics = new ArrayList<>();
+        try {
+            return Float.parseFloat(value);
+        } catch (NumberFormatException ex) {
+            return fallback;
+        }
+    }
 
-    public int getEntityId() {
-        return this.handle.getId();
+    private CommandUtil() {
     }
 
 }

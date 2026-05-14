@@ -9,6 +9,7 @@ folia-supported: true
 commands:
     npc:
         description: "NPCs!"
+        aliases: [apollonpc]
     autotexthotkey:
         description: "Auto Text Hotkey!"
     beam:
