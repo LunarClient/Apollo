@@ -52,6 +52,7 @@ public final class ProtobufPacketUtil {
     static {
         // Module Options the client needs to be notified about. These properties are sent with the enable module packet.
         // While using the Apollo plugin this would be equivalent to modifying the config.yml
+        CONFIG_MODULE_PROPERTIES.put("colored_fire", "persist-colors-on-unload", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("combat", "disable-miss-penalty", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-attack.send-packet", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-chat-open.send-packet", Value.newBuilder().setBoolValue(false).build());
