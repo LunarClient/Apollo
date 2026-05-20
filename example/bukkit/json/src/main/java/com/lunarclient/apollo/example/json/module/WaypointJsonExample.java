@@ -50,6 +50,27 @@ public class WaypointJsonExample extends WaypointExample {
     }
 
     @Override
+    public void displayWaypointWithTextStyle(Player viewer) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.waypoint.v1.DisplayWaypointMessage");
+        message.addProperty("name", "POI");
+        message.add("location", JsonUtil.createBlockLocationObject(
+            new Location(Bukkit.getWorld("world"), -500, 100, -500)
+        ));
+        message.add("color", JsonUtil.createColorObject(Color.GREEN));
+        message.addProperty("prevent_removal", false);
+        message.addProperty("hidden", false);
+
+        JsonObject style = new JsonObject();
+        style.addProperty("show_icons", true);
+        style.addProperty("label_scale", 0.5F);
+        style.addProperty("text_icon_scale", 0.7F);
+        message.add("style", style);
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
     public void removeWaypointExample(Player viewer) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.waypoint.v1.RemoveWaypointMessage");

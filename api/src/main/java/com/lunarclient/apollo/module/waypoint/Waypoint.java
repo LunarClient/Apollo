@@ -27,6 +27,7 @@ import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import java.awt.Color;
 import lombok.Builder;
 import lombok.Getter;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a waypoint which can be shown on the client.
@@ -81,5 +82,46 @@ public final class Waypoint {
      * @since 1.0.0
      */
     boolean hidden;
+
+    /**
+     * Whether the beacon beam for this waypoint is drawn.
+     *
+     * @since 1.2.7
+     */
+    @Builder.Default
+    boolean showBeam = true;
+
+    /**
+     * Whether the in-world block outline highlight at the waypoint location is drawn.
+     *
+     * @since 1.2.7
+     */
+    @Builder.Default
+    boolean highlightBlock = true;
+
+    /**
+     * Line width of the block highlight outline when {@link #highlightBlock} is enabled.
+     *
+     * <p>Accepts {@code 1.5F} to {@code 7.5F}. Leaving the
+     * field  at its default of {@code 0.0F} is treated as a
+     * fallback to the player's own configured line width.</p>
+     *
+     * @since 1.2.7
+     */
+    @Builder.Default
+    float highlightBlockLineWidth = 0.0F;
+
+    /**
+     * Label and HUD text overrides applied to this waypoint.
+     *
+     * <p>Set to a built {@link WaypointTextStyle} to drive the
+     * client's text rendering from the server; leave {@code null} to
+     * defer to the Lunar waypoint mod's own settings.</p>
+     *
+     * @return the text style, or {@code null} when no override is sent
+     * @since 1.2.7
+     */
+    @Builder.Default
+    @Nullable WaypointTextStyle textStyle = null;
 
 }

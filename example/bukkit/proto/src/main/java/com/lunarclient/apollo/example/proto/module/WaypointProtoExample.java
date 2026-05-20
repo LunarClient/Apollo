@@ -29,6 +29,7 @@ import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
 import com.lunarclient.apollo.waypoint.v1.DisplayWaypointMessage;
 import com.lunarclient.apollo.waypoint.v1.RemoveWaypointMessage;
 import com.lunarclient.apollo.waypoint.v1.ResetWaypointsMessage;
+import com.lunarclient.apollo.waypoint.v1.WaypointTextStyle;
 import java.awt.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -43,6 +44,24 @@ public class WaypointProtoExample extends WaypointExample {
             .setColor(ProtobufUtil.createColorProto(Color.ORANGE))
             .setPreventRemoval(false)
             .setHidden(false)
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void displayWaypointWithTextStyle(Player viewer) {
+        DisplayWaypointMessage message = DisplayWaypointMessage.newBuilder()
+            .setName("POI")
+            .setLocation(ProtobufUtil.createBlockLocationProto(new Location(viewer.getWorld(), -500, 100, -500)))
+            .setColor(ProtobufUtil.createColorProto(Color.GREEN))
+            .setPreventRemoval(false)
+            .setHidden(false)
+            .setStyle(WaypointTextStyle.newBuilder()
+                .setShowIcons(true)
+                .setLabelScale(0.5F)
+                .setTextIconScale(0.7F)
+                .build())
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);
