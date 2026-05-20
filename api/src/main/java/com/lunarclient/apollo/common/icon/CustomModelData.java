@@ -23,60 +23,57 @@
  */
 package com.lunarclient.apollo.common.icon;
 
-import com.lunarclient.apollo.common.profile.Profile;
+import java.util.Collections;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
-import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents an item stack icon.
+ * Represents the custom model data attached to an {@link ItemStackIcon}.
  *
- * @since 1.0.0
+ * <p>Mirrors the Minecraft 1.21.4 {@code CustomModelData} item component, which
+ * replaced the single integer value with four parallel lists.</p>
+ *
+ * @since 1.2.7
  */
 @Getter
 @Builder
-public final class ItemStackIcon extends Icon {
+public final class CustomModelData {
 
     /**
-     * Returns the icon {@link String} item name.
+     * Returns the custom model data {@link Float} values.
      *
-     * @return the icon item name
-     * @since 1.0.0
-     */
-    String itemName;
-
-    /**
-     * Returns the icon {@link Integer} item id.
-     *
-     * @return the icon item id
-     * @since 1.0.0
-     */
-    int itemId;
-
-    /**
-     * Returns the icon {@link Integer} custom model data.
-     *
-     * @return the icon custom model data
-     * @deprecated for removal since 1.2.7, use {@link ItemStackIcon#customModelDataObject} instead.
-     * @since 1.0.7
-     */
-    @Deprecated
-    int customModelData;
-
-    /**
-     * Returns the icon {@link CustomModelData} object.
-     *
-     * @return the icon custom model data object
+     * @return the custom model data floats
      * @since 1.2.7
      */
-    @Nullable CustomModelData customModelDataObject;
+    @Builder.Default
+    List<Float> floats = Collections.emptyList();
 
     /**
-     * Returns the icon {@link Profile}.
+     * Returns the custom model data {@link Boolean} flags.
      *
-     * @return the icon profile
-     * @since 1.2.6
+     * @return the custom model data flags
+     * @since 1.2.7
      */
-    @Nullable Profile profile;
+    @Builder.Default
+    List<Boolean> flags = Collections.emptyList();
+
+    /**
+     * Returns the custom model data {@link String} values.
+     *
+     * @return the custom model data strings
+     * @since 1.2.7
+     */
+    @Builder.Default
+    List<String> strings = Collections.emptyList();
+
+    /**
+     * Returns the custom model data color {@link Integer} values.
+     *
+     * @return the custom model data colors
+     * @since 1.2.7
+     */
+    @Builder.Default
+    List<Integer> colors = Collections.emptyList();
 
 }

@@ -28,6 +28,7 @@ import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.common.cuboid.Cuboid2D;
 import com.lunarclient.apollo.common.cuboid.Cuboid3D;
 import com.lunarclient.apollo.common.icon.AdvancedResourceLocationIcon;
+import com.lunarclient.apollo.common.icon.CustomModelData;
 import com.lunarclient.apollo.common.icon.Icon;
 import com.lunarclient.apollo.common.icon.ItemStackIcon;
 import com.lunarclient.apollo.common.icon.ResourceLocationIcon;
@@ -577,6 +578,11 @@ public final class NetworkTypes {
             .setItemId(icon.getItemId())
             .setCustomModelData(icon.getCustomModelData());
 
+        CustomModelData customModelData = icon.getCustomModelDataObject();
+        if (customModelData != null) {
+            builder.setCustomModelDataObject(NetworkTypes.toProtobuf(customModelData));
+        }
+
         if (icon.getItemName() != null) {
             builder.setItemName(icon.getItemName());
         }
@@ -602,11 +608,49 @@ public final class NetworkTypes {
             .itemId(icon.getItemId())
             .customModelData(icon.getCustomModelData());
 
+        if (icon.hasCustomModelDataObject()) {
+            builder.customModelDataObject(NetworkTypes.fromProtobuf(icon.getCustomModelDataObject()));
+        }
+
         if (icon.hasProfile()) {
             builder.profile(NetworkTypes.fromProtobuf(icon.getProfile()));
         }
 
         return builder.build();
+    }
+
+    /**
+     * Converts a {@link CustomModelData} object to a
+     * {@link com.lunarclient.apollo.common.v1.CustomModelData} proto message.
+     *
+     * @param object the custom model data
+     * @return the proto custom model data message
+     * @since 1.2.7
+     */
+    public static com.lunarclient.apollo.common.v1.CustomModelData toProtobuf(CustomModelData object) {
+        return com.lunarclient.apollo.common.v1.CustomModelData.newBuilder()
+            .addAllFloats(object.getFloats())
+            .addAllFlags(object.getFlags())
+            .addAllStrings(object.getStrings())
+            .addAllColors(object.getColors())
+            .build();
+    }
+
+    /**
+     * Converts a {@link com.lunarclient.apollo.common.v1.CustomModelData}
+     * proto message to a {@link CustomModelData} object.
+     *
+     * @param message the custom model data message
+     * @return the custom model data object
+     * @since 1.2.7
+     */
+    public static CustomModelData fromProtobuf(com.lunarclient.apollo.common.v1.CustomModelData message) {
+        return CustomModelData.builder()
+            .floats(message.getFloatsList())
+            .flags(message.getFlagsList())
+            .strings(message.getStringsList())
+            .colors(message.getColorsList())
+            .build();
     }
 
     /**
