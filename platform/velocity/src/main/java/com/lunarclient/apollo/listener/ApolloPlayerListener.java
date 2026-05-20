@@ -25,7 +25,6 @@ package com.lunarclient.apollo.listener;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
-import com.lunarclient.apollo.ApolloVelocityPlatform;
 import com.lunarclient.apollo.player.ApolloPlayerManagerImpl;
 import com.lunarclient.apollo.wrapper.VelocityApolloPlayer;
 import com.velocitypowered.api.event.Subscribe;
@@ -33,6 +32,7 @@ import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.event.player.PlayerChannelRegisterEvent;
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.messages.ChannelIdentifier;
 
 /**
  * Handles registration and un-registration of Apollo players.
@@ -49,7 +49,15 @@ public final class ApolloPlayerListener {
      */
     @Subscribe
     public void onPlayerRegisterChannel(PlayerChannelRegisterEvent event) {
-        if (!event.getChannels().contains(ApolloVelocityPlatform.PLUGIN_CHANNEL)) {
+        boolean registered = false;
+        for (ChannelIdentifier channel : event.getChannels()) {
+            if (channel.getId().equals(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
+                registered = true;
+                break;
+            }
+        }
+
+        if (!registered) {
             return;
         }
 
@@ -65,7 +73,7 @@ public final class ApolloPlayerListener {
      */
     @Subscribe
     public void onPluginMessage(PluginMessageEvent event) {
-        if (!event.getIdentifier().equals(ApolloVelocityPlatform.PLUGIN_CHANNEL)) {
+        if (!event.getIdentifier().getId().equals(ApolloManager.PLUGIN_MESSAGE_CHANNEL)) {
             return;
         }
 
