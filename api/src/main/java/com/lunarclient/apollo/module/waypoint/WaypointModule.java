@@ -127,4 +127,22 @@ public abstract class WaypointModule extends ApolloModule {
      */
     public abstract void resetWaypoints(Recipients recipients);
 
+    /**
+     * Shows a {@link Waypoint} for the {@link Recipients} that was previously hidden.
+     *
+     * @param recipients   the recipients that are receiving the packet
+     * @param waypointName the waypoint name
+     * @since 1.2.7
+     */
+    public abstract void showWaypoint(Recipients recipients, String waypointName);
+
+    /**
+     * Hides a {@link Waypoint} for the {@link Recipients} without removing it.
+     *
+     * @param recipients   the recipients that are receiving the packet
+     * @param waypointName the waypoint name
+     * @since 1.2.7
+     */
+    public abstract void hideWaypoint(Recipients recipients, String waypointName);
+
 }

@@ -12,6 +12,9 @@ The waypoint module allows you to interact with the Waypoints mod in Lunar Clien
     - Supply a custom name for the waypoint.
     - Control the ability to remove the waypoint. (They will always have the option to disable the waypoint, even if you prevent it from being deleted client-side.)
     - Control if the waypoint is set to be hidden by default.
+    - Toggle the beam and the block outline highlight.
+    - Override the on-screen label, icons, scaling, padding, borders, text shadow and distance HUD per waypoint.
+    - Show or hide an existing waypoint without removing it.
 
 ![Waypoint Module Example](/modules/waypoint/overview.png#center)
 
@@ -57,12 +60,60 @@ public void displayWaypointExample(Player viewer) {
 }
 ```
 
+### Displaying a Waypoint with Text Style
+
+Attach a `WaypointTextStyle` to override the on-screen label, icons, scaling and distance HUD on a per-waypoint basis. Any field you leave at its default keeps deferring to the player's own Waypoints mod settings — see the [`Waypoint` Options](#waypoint-options) section below for the full list and accepted ranges.
+
+```java
+public void displayWaypointWithTextStyle(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.waypointModule.displayWaypoint(apolloPlayer, Waypoint.builder()
+            .name("POI")
+            .location(ApolloBlockLocation.builder()
+                .world("world")
+                .x(-500)
+                .y(100)
+                .z(-500)
+                .build()
+            )
+            .color(Color.GREEN)
+            .preventRemoval(false)
+            .hidden(false)
+            .textStyle(WaypointTextStyle.builder()
+                .showIcons(true)
+                .labelScale(0.5F)
+                .textIconScale(0.7F)
+                .build())
+            .build()
+        );
+    });
+}
+```
+
 ### Removing a Waypoint
 
 ```java
 public void removeWaypointExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
     apolloPlayerOpt.ifPresent(apolloPlayer -> this.waypointModule.removeWaypoint(apolloPlayer, "KoTH"));
+}
+```
+
+### Showing or Hiding an Existing Waypoint
+
+Use these to toggle visibility of a waypoint already sent to the client, without removing it.
+
+```java
+public void showWaypointExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.waypointModule.showWaypoint(apolloPlayer, "KoTH"));
+}
+
+public void hideWaypointExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.waypointModule.hideWaypoint(apolloPlayer, "KoTH"));
 }
 ```
 
@@ -143,6 +194,41 @@ Custom colors can be created from any RGB values using `new Color(int red, int g
 .hidden(false)
 ```
 
+`.showBeam(Boolean)` whether the beacon beam for this waypoint is drawn. Defaults to `true`.
+
+```java
+.showBeam(true)
+```
+
+`.highlightBlock(Boolean)` whether the in-world block outline highlight at the waypoint location is drawn. Defaults to `true`.
+
+```java
+.highlightBlock(true)
+```
+
+`.highlightBlockLineWidth(float)` line width of the block highlight outline when `highlightBlock` is enabled. Accepts `1.5F` to `7.5F`. Leaving the field at its default of `0.0F` is treated as a fallback to the player's own configured line width.
+
+```java
+.highlightBlockLineWidth(5.0F)
+```
+
+`.textStyle(WaypointTextStyle)` overrides for the on-screen label, icons and distance HUD. Leave unset (or `null`) to defer entirely to the player's own Waypoints mod settings.
+
+```java
+.textStyle(WaypointTextStyle.builder()
+    .showText(true)
+    .onlyShowTextWhenLookingNear(false)
+    .showIcons(false)
+    .textIconScale(1.5F)   // 0.1F to 3.0F
+    .labelScale(1.0F)      // 0.1F to 2.0F
+    .boxPadding(4.0F)      // 1.0F to 8.0F
+    .boxBorders(true)
+    .textShadow(false)
+    .showDistance(true)
+    .build()
+)
+```
+
 </Tab>
 
 <Tab>
@@ -171,11 +257,52 @@ public void displayWaypointExample(Player viewer) {
 }
 ```
 
+**Displaying a Waypoint with Text Style**
+
+```java
+public void displayWaypointWithTextStyle(Player viewer) {
+    DisplayWaypointMessage message = DisplayWaypointMessage.newBuilder()
+        .setName("POI")
+        .setLocation(ProtobufUtil.createBlockLocationProto(new Location(viewer.getWorld(), -500, 100, -500)))
+        .setColor(ProtobufUtil.createColorProto(Color.GREEN))
+        .setPreventRemoval(false)
+        .setHidden(false)
+        .setStyle(WaypointTextStyle.newBuilder()
+            .setShowIcons(true)
+            .setLabelScale(0.5F)
+            .setTextIconScale(0.7F)
+            .build())
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
 **Removing a Waypoint**
 
 ```java
 public void removeWaypointExample(Player viewer) {
     RemoveWaypointMessage message = RemoveWaypointMessage.newBuilder()
+        .setName("KoTH")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Showing or Hiding an Existing Waypoint**
+
+```java
+public void showWaypointExample(Player viewer) {
+    ShowWaypointMessage message = ShowWaypointMessage.newBuilder()
+        .setName("KoTH")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+
+public void hideWaypointExample(Player viewer) {
+    HideWaypointMessage message = HideWaypointMessage.newBuilder()
         .setName("KoTH")
         .build();
 
@@ -222,12 +349,56 @@ public void displayWaypointExample(Player viewer) {
 }
 ```
 
+**Displaying a Waypoint with Text Style**
+
+```java
+public void displayWaypointWithTextStyle(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.waypoint.v1.DisplayWaypointMessage");
+    message.addProperty("name", "POI");
+    message.add("location", JsonUtil.createBlockLocationObject(
+        new Location(Bukkit.getWorld("world"), -500, 100, -500)
+    ));
+    message.add("color", JsonUtil.createColorObject(Color.GREEN));
+    message.addProperty("prevent_removal", false);
+    message.addProperty("hidden", false);
+
+    JsonObject style = new JsonObject();
+    style.addProperty("show_icons", true);
+    style.addProperty("label_scale", 0.5F);
+    style.addProperty("text_icon_scale", 0.7F);
+    message.add("style", style);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
 **Removing a Waypoint**
 
 ```java
 public void removeWaypointExample(Player viewer) {
     JsonObject message = new JsonObject();
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.waypoint.v1.RemoveWaypointMessage");
+    message.addProperty("name", "KoTH");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Showing or Hiding an Existing Waypoint**
+
+```java
+public void showWaypointExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.waypoint.v1.ShowWaypointMessage");
+    message.addProperty("name", "KoTH");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+
+public void hideWaypointExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.waypoint.v1.HideWaypointMessage");
     message.addProperty("name", "KoTH");
 
     JsonPacketUtil.sendPacket(viewer, message);

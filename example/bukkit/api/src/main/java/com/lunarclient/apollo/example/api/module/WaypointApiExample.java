@@ -28,6 +28,7 @@ import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.example.module.impl.WaypointExample;
 import com.lunarclient.apollo.module.waypoint.Waypoint;
 import com.lunarclient.apollo.module.waypoint.WaypointModule;
+import com.lunarclient.apollo.module.waypoint.WaypointTextStyle;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.awt.Color;
 import java.util.Optional;
@@ -54,6 +55,33 @@ public class WaypointApiExample extends WaypointExample {
                 .color(Color.ORANGE)
                 .preventRemoval(false) // If the player can delete the waypoint
                 .hidden(false)
+                .build()
+            );
+        });
+    }
+
+    @Override
+    public void displayWaypointWithTextStyle(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            this.waypointModule.displayWaypoint(apolloPlayer, Waypoint.builder()
+                .name("POI")
+                .location(ApolloBlockLocation.builder()
+                    .world("world") // The world the waypoint should display in
+                    .x(-500)
+                    .y(100)
+                    .z(-500)
+                    .build()
+                )
+                .color(Color.GREEN)
+                .preventRemoval(false) // If the player can delete the waypoint
+                .hidden(false)
+                .textStyle(WaypointTextStyle.builder()
+                    .showIcons(true)
+                    .labelScale(0.5F)
+                    .textIconScale(0.7F)
+                    .build())
                 .build()
             );
         });

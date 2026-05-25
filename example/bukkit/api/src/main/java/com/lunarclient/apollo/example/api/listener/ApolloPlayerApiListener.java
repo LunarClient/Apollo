@@ -64,7 +64,6 @@ public class ApolloPlayerApiListener implements ApolloListener {
 
         this.example.getBeamExample().displayBeamExample(player);
         this.example.getBorderExample().displayBorderExample(player);
-        this.example.getWaypointExample().displayWaypointExample(player);
 
         CooldownExample cooldownExample = this.example.getCooldownExample();
         cooldownExample.displayCooldownItemExample(player);

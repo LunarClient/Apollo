@@ -43,7 +43,7 @@ public class WaypointCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /waypoint <display|remove|reset>");
+            player.sendMessage("Usage: /waypoint <display|displayWithStyle|remove|reset>");
             return true;
         }
 
@@ -53,6 +53,12 @@ public class WaypointCommand implements CommandExecutor {
             case "display": {
                 waypointExample.displayWaypointExample(player);
                 player.sendMessage("Displaying waypoint....");
+                break;
+            }
+
+            case "displaywithstyle": {
+                waypointExample.displayWaypointWithTextStyle(player);
+                player.sendMessage("Displaying waypoint with style....");
                 break;
             }
 
@@ -68,7 +74,7 @@ public class WaypointCommand implements CommandExecutor {
             }
 
             default: {
-                player.sendMessage("Usage: /waypoint <display|remove|reset>");
+                player.sendMessage("Usage: /waypoint <display|displayWithStyle|remove|reset>");
                 break;
             }
         }

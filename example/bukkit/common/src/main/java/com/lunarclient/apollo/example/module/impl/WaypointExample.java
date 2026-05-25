@@ -30,6 +30,8 @@ public abstract class WaypointExample extends ApolloModuleExample {
 
     public abstract void displayWaypointExample(Player viewer);
 
+    public abstract void displayWaypointWithTextStyle(Player viewer);
+
     public abstract void removeWaypointExample(Player viewer);
 
     public abstract void resetWaypointsExample(Player viewer);
