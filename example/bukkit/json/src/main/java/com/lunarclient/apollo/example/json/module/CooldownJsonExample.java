@@ -40,7 +40,7 @@ public class CooldownJsonExample extends CooldownExample {
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
         message.addProperty("name", "enderpearl-cooldown");
         message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
-        message.add("icon", JsonUtil.createItemStackIconObject("ENDER_PEARL", 0, 0));
+        message.add("icon", JsonUtil.createItemStackIconObject("ENDER_PEARL", 0));
 
         JsonPacketUtil.sendPacket(viewer, message);
     }
@@ -51,7 +51,7 @@ public class CooldownJsonExample extends CooldownExample {
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cooldown.v1.DisplayCooldownMessage");
         message.addProperty("name", "book-cooldown");
         message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(30)));
-        message.add("icon", JsonUtil.createItemStackIconObject("BOOK", 0, 0));
+        message.add("icon", JsonUtil.createItemStackIconObject("BOOK", 0));
 
         JsonObject style = new JsonObject();
         style.add("circle_start_color", JsonUtil.createColorObject(new Color(255, 85, 85))); // ApolloColors.RED
@@ -70,7 +70,7 @@ public class CooldownJsonExample extends CooldownExample {
         message.addProperty("name", "player-head-cooldown");
         message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(15)));
         message.add("icon", JsonUtil.createItemStackIconObject(
-            "PLAYER_HEAD", 0, 0,
+            "PLAYER_HEAD", 0, null,
             JsonUtil.createProfileObject(
                 UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd"),
                 "e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ4MjUwNWJjZjNiYTU5YzJiZTdlMmQzNmY0ZTJiZGE4MzZmMmZkMTk0YjYyMTJhMmExYzRiNGEyYTQ3MWUifX19",

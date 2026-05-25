@@ -27,6 +27,7 @@ import com.google.protobuf.Timestamp;
 import com.lunarclient.apollo.common.v1.AdvancedResourceLocationIcon;
 import com.lunarclient.apollo.common.v1.BlockLocation;
 import com.lunarclient.apollo.common.v1.Cuboid2D;
+import com.lunarclient.apollo.common.v1.CustomModelData;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.ItemStackIcon;
 import com.lunarclient.apollo.common.v1.Profile;
@@ -35,6 +36,7 @@ import com.lunarclient.apollo.common.v1.SimpleResourceLocationIcon;
 import com.lunarclient.apollo.common.v1.Uuid;
 import java.awt.Color;
 import java.time.Duration;
+import java.util.List;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -115,17 +117,20 @@ public final class ProtobufUtil {
         return location;
     }
 
-    public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData) {
-        return ProtobufUtil.createItemStackIconProto(itemName, itemId, customModelData, null);
+    public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId) {
+        return ProtobufUtil.createItemStackIconProto(itemName, itemId, null, null);
     }
 
-    public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData, @Nullable Profile profile) {
+    public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId, @Nullable CustomModelData customModelData, @Nullable Profile profile) {
         ItemStackIcon.Builder iconBuilder = ItemStackIcon.newBuilder()
-            .setItemId(itemId)
-            .setCustomModelData(customModelData);
+            .setItemId(itemId);
 
         if (itemName != null) {
             iconBuilder.setItemName(itemName);
+        }
+
+        if (customModelData != null) {
+            iconBuilder.setCustomModelDataObject(customModelData);
         }
 
         if (profile != null) {
@@ -133,6 +138,15 @@ public final class ProtobufUtil {
         }
 
         return iconBuilder.build();
+    }
+
+    public static CustomModelData createCustomModelDataProto(List<Float> floats, List<Boolean> flags, List<String> strings, List<Integer> colors) {
+        return CustomModelData.newBuilder()
+            .addAllFloats(floats)
+            .addAllFlags(flags)
+            .addAllStrings(strings)
+            .addAllColors(colors)
+            .build();
     }
 
     public static Profile createProfileProto(@Nullable UUID id, String texture, String signature) {

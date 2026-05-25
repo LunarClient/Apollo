@@ -35,12 +35,12 @@ public final class ItemStackIcon extends Icon {
     int itemId;
 
     /**
-     * Returns the icon {@link Integer} custom model data.
+     * Returns the icon {@link CustomModelData} object.
      *
-     * @return the icon custom model data
-     * @since 1.0.7
+     * @return the icon custom model data object
+     * @since 1.2.7
      */
-    int customModelData;
+    @Nullable CustomModelData customModelDataObject;
 
     /**
      * Returns the icon {@link Profile}.
@@ -49,6 +49,48 @@ public final class ItemStackIcon extends Icon {
      * @since 1.2.6
      */
     @Nullable Profile profile;
+
+}
+```
+
+## `CustomModelData` Builder
+
+The `CustomModelData` builder mirrors the Minecraft 1.21.4+ custom model data object.
+
+```java
+public final class CustomModelData {
+
+    /**
+     * Returns the custom model data {@link Float} values.
+     *
+     * @return the custom model data floats
+     * @since 1.2.7
+     */
+    List<Float> floats;
+
+    /**
+     * Returns the custom model data {@link Boolean} flags.
+     *
+     * @return the custom model data flags
+     * @since 1.2.7
+     */
+    List<Boolean> flags;
+
+    /**
+     * Returns the custom model data {@link String} values.
+     *
+     * @return the custom model data strings
+     * @since 1.2.7
+     */
+    List<String> strings;
+
+    /**
+     * Returns the custom model data color {@link Integer} values.
+     *
+     * @return the custom model data colors
+     * @since 1.2.7
+     */
+    List<Integer> colors;
 
 }
 ```

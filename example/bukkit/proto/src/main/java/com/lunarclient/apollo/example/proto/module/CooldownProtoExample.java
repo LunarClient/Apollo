@@ -44,7 +44,7 @@ public class CooldownProtoExample extends CooldownExample {
             .setName("enderpearl-cooldown")
             .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
             .setIcon(Icon.newBuilder()
-                .setItemStack(ProtobufUtil.createItemStackIconProto("ENDER_PEARL", 0, 0))
+                .setItemStack(ProtobufUtil.createItemStackIconProto("ENDER_PEARL", 0))
                 .build())
             .build();
 
@@ -57,7 +57,7 @@ public class CooldownProtoExample extends CooldownExample {
             .setName("book-cooldown")
             .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(30)))
             .setIcon(Icon.newBuilder()
-                .setItemStack(ProtobufUtil.createItemStackIconProto("BOOK", 0, 0))
+                .setItemStack(ProtobufUtil.createItemStackIconProto("BOOK", 0))
                 .build())
             .setStyle(CooldownStyle.newBuilder()
                 .setCircleStartColor(ProtobufUtil.createColorProto(new Color(255, 85, 85))) // ApolloColors.RED
@@ -77,7 +77,7 @@ public class CooldownProtoExample extends CooldownExample {
             .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(15)))
             .setIcon(Icon.newBuilder()
                 .setItemStack(ProtobufUtil.createItemStackIconProto(
-                    "PLAYER_HEAD", 0, 0,
+                    "PLAYER_HEAD", 0, null,
                     ProtobufUtil.createProfileProto(
                         UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd"),
                         "e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ4MjUwNWJjZjNiYTU5YzJiZTdlMmQzNmY0ZTJiZGE4MzZmMmZkMTk0YjYyMTJhMmExYzRiNGEyYTQ3MWUifX19",
