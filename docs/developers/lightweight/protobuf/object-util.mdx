@@ -97,17 +97,20 @@ public static Location toBukkitPlayerLocation(JsonObject message) {
 Icon-related methods
 
 ```java
-public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData) {
-    return ProtobufUtil.createItemStackIconProto(itemName, itemId, customModelData, null);
+public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId) {
+    return ProtobufUtil.createItemStackIconProto(itemName, itemId, null, null);
 }
 
-public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId, int customModelData, @Nullable Profile profile) {
+public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, int itemId, @Nullable CustomModelData customModelData, @Nullable Profile profile) {
     ItemStackIcon.Builder iconBuilder = ItemStackIcon.newBuilder()
-        .setItemId(itemId)
-        .setCustomModelData(customModelData);
+        .setItemId(itemId);
 
     if (itemName != null) {
         iconBuilder.setItemName(itemName);
+    }
+
+    if (customModelData != null) {
+        iconBuilder.setCustomModelDataObject(customModelData);
     }
 
     if (profile != null) {
@@ -115,6 +118,15 @@ public static ItemStackIcon createItemStackIconProto(@Nullable String itemName, 
     }
 
     return iconBuilder.build();
+}
+
+public static CustomModelData createCustomModelDataProto(List<Float> floats, List<Boolean> flags, List<String> strings, List<Integer> colors) {
+    return CustomModelData.newBuilder()
+        .addAllFloats(floats)
+        .addAllFlags(flags)
+        .addAllStrings(strings)
+        .addAllColors(colors)
+        .build();
 }
 
 public static Profile createProfileProto(@Nullable UUID id, String texture, String signature) {

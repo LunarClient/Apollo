@@ -23,10 +23,12 @@
  */
 package com.lunarclient.apollo.example.json.util;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.awt.Color;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.bukkit.Bukkit;
@@ -139,11 +141,11 @@ public final class JsonUtil {
         return location;
     }
 
-    public static JsonObject createItemStackIconObject(@Nullable String itemName, int itemId, int customModelData) {
-        return JsonUtil.createItemStackIconObject(itemName, itemId, customModelData, null);
+    public static JsonObject createItemStackIconObject(@Nullable String itemName, int itemId) {
+        return JsonUtil.createItemStackIconObject(itemName, itemId, null, null);
     }
 
-    public static JsonObject createItemStackIconObject(@Nullable String itemName, int itemId, int customModelData, @Nullable JsonObject profile) {
+    public static JsonObject createItemStackIconObject(@Nullable String itemName, int itemId, @Nullable JsonObject customModelData, @Nullable JsonObject profile) {
         JsonObject itemIconObject = new JsonObject();
         if (itemName != null) {
             itemIconObject.addProperty("item_name", itemName);
@@ -151,7 +153,9 @@ public final class JsonUtil {
             itemIconObject.addProperty("item_id", itemId);
         }
 
-        itemIconObject.addProperty("custom_model_data", customModelData);
+        if (customModelData != null) {
+            itemIconObject.add("custom_model_data_object", customModelData);
+        }
 
         if (profile != null) {
             itemIconObject.add("profile", profile);
@@ -160,6 +164,28 @@ public final class JsonUtil {
         JsonObject iconObject = new JsonObject();
         iconObject.add("item_stack", itemIconObject);
         return iconObject;
+    }
+
+    public static JsonObject createCustomModelDataObject(List<Float> floats, List<Boolean> flags, List<String> strings, List<Integer> colors) {
+        JsonObject customModelDataObject = new JsonObject();
+
+        JsonArray floatsArray = new JsonArray();
+        floats.forEach(floatsArray::add);
+        customModelDataObject.add("floats", floatsArray);
+
+        JsonArray flagsArray = new JsonArray();
+        flags.forEach(flagsArray::add);
+        customModelDataObject.add("flags", flagsArray);
+
+        JsonArray stringsArray = new JsonArray();
+        strings.forEach(stringsArray::add);
+        customModelDataObject.add("strings", stringsArray);
+
+        JsonArray colorsArray = new JsonArray();
+        colors.forEach(colorsArray::add);
+        customModelDataObject.add("colors", colorsArray);
+
+        return customModelDataObject;
     }
 
     public static JsonObject createProfileObject(@Nullable UUID id, @NotNull String texture, @NotNull String signature) {
