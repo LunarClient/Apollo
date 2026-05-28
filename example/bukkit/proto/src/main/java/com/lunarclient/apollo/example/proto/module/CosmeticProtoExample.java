@@ -27,11 +27,15 @@ import com.google.common.collect.Lists;
 import com.lunarclient.apollo.cosmetic.v1.CloakOptions;
 import com.lunarclient.apollo.cosmetic.v1.Cosmetic;
 import com.lunarclient.apollo.cosmetic.v1.DisplaySprayMessage;
+import com.lunarclient.apollo.cosmetic.v1.Emote;
 import com.lunarclient.apollo.cosmetic.v1.EquipNpcCosmeticsMessage;
 import com.lunarclient.apollo.cosmetic.v1.PetOptions;
 import com.lunarclient.apollo.cosmetic.v1.RemoveSprayMessage;
 import com.lunarclient.apollo.cosmetic.v1.ResetNpcCosmeticsMessage;
+import com.lunarclient.apollo.cosmetic.v1.ResetNpcEmotesMessage;
 import com.lunarclient.apollo.cosmetic.v1.ResetSpraysMessage;
+import com.lunarclient.apollo.cosmetic.v1.StartNpcEmoteMessage;
+import com.lunarclient.apollo.cosmetic.v1.StopNpcEmoteMessage;
 import com.lunarclient.apollo.cosmetic.v1.UnequipNpcCosmeticsMessage;
 import com.lunarclient.apollo.example.module.impl.CosmeticExample;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
@@ -82,6 +86,16 @@ public class CosmeticProtoExample extends CosmeticExample {
     }
 
     @Override
+    public void equipNpcCosmeticsCopyLocalExample(Player viewer, UUID npcUuid) {
+        EquipNpcCosmeticsMessage message = EquipNpcCosmeticsMessage.newBuilder()
+            .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
+            .setCopyLocalCosmetics(true)
+            .build();
+
+        ProtobufPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
     public void equipNpcCosmeticsInternal(Player viewer, UUID npcUuid, List<Integer> cosmeticIds) {
         List<Cosmetic> cosmetics = cosmeticIds.stream()
             .map(id -> Cosmetic.newBuilder().setId(id).build())
@@ -123,6 +137,46 @@ public class CosmeticProtoExample extends CosmeticExample {
             .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
             .build();
 
+        ProtobufPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void startNpcEmoteExample(Player viewer, UUID npcUuid) {
+        StartNpcEmoteMessage message = StartNpcEmoteMessage.newBuilder()
+            .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
+            .setEmote(Emote.newBuilder()
+                .setId(56)
+                .build())
+            .build();
+
+        ProtobufPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void startNpcEmoteInternal(Player viewer, UUID npcUuid, int emoteId, int metadata) {
+        StartNpcEmoteMessage message = StartNpcEmoteMessage.newBuilder()
+            .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
+            .setEmote(Emote.newBuilder()
+                .setId(emoteId)
+                .setMetadata(metadata)
+                .build())
+            .build();
+
+        ProtobufPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void stopNpcEmoteExample(Player viewer, UUID npcUuid) {
+        StopNpcEmoteMessage message = StopNpcEmoteMessage.newBuilder()
+            .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
+            .build();
+
+        ProtobufPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void resetNpcEmotesExample() {
+        ResetNpcEmotesMessage message = ResetNpcEmotesMessage.getDefaultInstance();
         ProtobufPacketUtil.broadcastPacket(message);
     }
 

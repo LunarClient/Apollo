@@ -30,6 +30,7 @@ import com.lunarclient.apollo.example.module.impl.CosmeticExample;
 import com.lunarclient.apollo.example.nms.CommandCosmetic;
 import com.lunarclient.apollo.module.cosmetic.Cosmetic;
 import com.lunarclient.apollo.module.cosmetic.CosmeticModule;
+import com.lunarclient.apollo.module.cosmetic.Emote;
 import com.lunarclient.apollo.module.cosmetic.Spray;
 import com.lunarclient.apollo.module.cosmetic.options.BodyOptions;
 import com.lunarclient.apollo.module.cosmetic.options.CloakOptions;
@@ -40,6 +41,7 @@ import com.lunarclient.apollo.module.packetenrichment.raytrace.Direction;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -80,6 +82,11 @@ public class CosmeticApiExample extends CosmeticExample {
 
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(apolloPlayer -> this.cosmeticModule.equipNpcCosmetics(apolloPlayer, npcUuid, cosmetics));
+    }
+
+    @Override
+    public void equipNpcCosmeticsCopyLocalExample(Player viewer, UUID npcUuid) {
+        this.cosmeticModule.equipNpcCosmetics(Recipients.ofEveryone(), npcUuid, new ArrayList<>(), true);
     }
 
     @Override
@@ -156,6 +163,35 @@ public class CosmeticApiExample extends CosmeticExample {
     @Override
     public void resetNpcCosmeticsExample(Player viewer, UUID npcUuid) {
         this.cosmeticModule.resetNpcCosmetics(Recipients.ofEveryone(), npcUuid);
+    }
+
+    @Override
+    public void startNpcEmoteExample(Player viewer, UUID npcUuid) {
+        Emote emote = Emote.builder()
+            .id(56)
+            .build();
+
+        this.cosmeticModule.startNpcEmote(Recipients.ofEveryone(), npcUuid, emote);
+    }
+
+    @Override
+    public void startNpcEmoteInternal(Player viewer, UUID npcUuid, int emoteId, int metadata) {
+        Emote emote = Emote.builder()
+            .id(emoteId)
+            .metadata(metadata)
+            .build();
+
+        this.cosmeticModule.startNpcEmote(Recipients.ofEveryone(), npcUuid, emote);
+    }
+
+    @Override
+    public void stopNpcEmoteExample(Player viewer, UUID npcUuid) {
+        this.cosmeticModule.stopNpcEmote(Recipients.ofEveryone(), npcUuid);
+    }
+
+    @Override
+    public void resetNpcEmotesExample() {
+        this.cosmeticModule.resetNpcEmotes(Recipients.ofEveryone());
     }
 
     @Override

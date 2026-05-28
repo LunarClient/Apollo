@@ -77,6 +77,16 @@ public class CosmeticJsonExample extends CosmeticExample {
     }
 
     @Override
+    public void equipNpcCosmeticsCopyLocalExample(Player viewer, UUID npcUuid) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.EquipNpcCosmeticsMessage");
+        message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
+        message.addProperty("copy_local_cosmetics", true);
+
+        JsonPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
     public void equipNpcCosmeticsInternal(Player viewer, UUID npcUuid, List<Integer> cosmeticIds) {
         JsonArray cosmeticsArray = new JsonArray();
         for (int cosmeticId : cosmeticIds) {
@@ -126,6 +136,50 @@ public class CosmeticJsonExample extends CosmeticExample {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.ResetNpcCosmeticsMessage");
         message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
+
+        JsonPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void startNpcEmoteExample(Player viewer, UUID npcUuid) {
+        JsonObject emote = new JsonObject();
+        emote.addProperty("id", 56);
+
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.StartNpcEmoteMessage");
+        message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
+        message.add("emote", emote);
+
+        JsonPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void startNpcEmoteInternal(Player viewer, UUID npcUuid, int emoteId, int metadata) {
+        JsonObject emote = new JsonObject();
+        emote.addProperty("id", emoteId);
+        emote.addProperty("metadata", metadata);
+
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.StartNpcEmoteMessage");
+        message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
+        message.add("emote", emote);
+
+        JsonPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void stopNpcEmoteExample(Player viewer, UUID npcUuid) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.StopNpcEmoteMessage");
+        message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
+
+        JsonPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void resetNpcEmotesExample() {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.ResetNpcEmotesMessage");
 
         JsonPacketUtil.broadcastPacket(message);
     }

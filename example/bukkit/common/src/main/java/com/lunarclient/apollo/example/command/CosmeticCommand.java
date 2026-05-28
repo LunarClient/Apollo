@@ -65,25 +65,19 @@ public class CosmeticCommand implements CommandExecutor {
             return this.handleSpray(player, example, args);
         }
 
+        if ("emote".equalsIgnoreCase(args[0])) {
+            return this.handleEmote(player, example, args);
+        }
+
         if (args.length < 2) {
             this.sendUsage(player);
             return true;
         }
 
         String npcName = args[1];
-        boolean uuidParam = npcName.contains("-");
-
-        Optional<PlayerNpc> npcOpt = ApolloExamplePlugin.getInstance().getNpcManager().findByName(npcName);
-        if (!npcOpt.isPresent() && !uuidParam) {
-            player.sendMessage(ChatColor.RED + "No NPC found with name: " + npcName);
+        UUID uuid = this.resolveNpcUuid(player, npcName);
+        if (uuid == null) {
             return true;
-        }
-
-        UUID uuid;
-        if (uuidParam) {
-            uuid = UUID.fromString(npcName);
-        } else {
-            uuid = npcOpt.get().getUuid();
         }
 
         switch (args[0].toLowerCase()) {
@@ -99,6 +93,12 @@ public class CosmeticCommand implements CommandExecutor {
                     .map(id -> CommandCosmetic.builder().id(id).build())
                     .collect(Collectors.toList()));
                 player.sendMessage(ChatColor.GREEN + "Equipped cosmetics " + cosmeticIds + " on NPC " + npcName);
+                break;
+            }
+
+            case "equiplocal": {
+                example.equipNpcCosmeticsCopyLocalExample(player, uuid);
+                player.sendMessage(ChatColor.GREEN + "Equip local cosmetics on NPC " + npcName);
                 break;
             }
 
@@ -184,6 +184,88 @@ public class CosmeticCommand implements CommandExecutor {
         }
 
         return true;
+    }
+
+    private boolean handleEmote(Player player, CosmeticExample example, String[] args) {
+        if (args.length < 2) {
+            this.sendEmoteUsage(player);
+            return true;
+        }
+
+        switch (args[1].toLowerCase()) {
+            case "start": {
+                if (args.length < 4) {
+                    this.sendEmoteUsage(player);
+                    return true;
+                }
+
+                UUID uuid = this.resolveNpcUuid(player, args[2]);
+                if (uuid == null) {
+                    return true;
+                }
+
+                int emoteId;
+                try {
+                    emoteId = Integer.parseInt(args[3]);
+                } catch (NumberFormatException e) {
+                    player.sendMessage(ChatColor.RED + "Emote id must be an integer.");
+                    return true;
+                }
+
+                int metadata = 0;
+                if (args.length >= 5) {
+                    try {
+                        metadata = Integer.parseInt(args[4]);
+                    } catch (NumberFormatException e) {
+                        player.sendMessage(ChatColor.RED + "Emote metadata must be an integer.");
+                        return true;
+                    }
+                }
+
+                example.startNpcEmoteInternal(player, uuid, emoteId, metadata);
+                player.sendMessage(ChatColor.GREEN + "Started emote " + emoteId + " on NPC " + args[2]);
+                break;
+            }
+
+            case "stop": {
+                if (args.length < 3) {
+                    this.sendEmoteUsage(player);
+                    return true;
+                }
+
+                UUID uuid = this.resolveNpcUuid(player, args[2]);
+                if (uuid == null) {
+                    return true;
+                }
+
+                example.stopNpcEmoteExample(player, uuid);
+                player.sendMessage(ChatColor.GREEN + "Stopped emote on NPC " + args[2]);
+                break;
+            }
+
+            case "reset": {
+                example.resetNpcEmotesExample();
+                player.sendMessage(ChatColor.GREEN + "Reset all NPC emotes");
+                break;
+            }
+
+            default: {
+                this.sendEmoteUsage(player);
+                break;
+            }
+        }
+
+        return true;
+    }
+
+    private UUID resolveNpcUuid(Player player, String npcName) {
+        Optional<PlayerNpc> npcOpt = ApolloExamplePlugin.getInstance().getNpcManager().findByName(npcName);
+        if (!npcOpt.isPresent()) {
+            player.sendMessage(ChatColor.RED + "No NPC found with name: " + npcName);
+            return null;
+        }
+
+        return npcOpt.get().getUuid();
     }
 
     private boolean isCosmeticType(String type) {
@@ -318,6 +400,14 @@ public class CosmeticCommand implements CommandExecutor {
 
     private void sendUsage(Player player) {
         player.sendMessage("Usage:");
+        this.sendCosmeticUsage(player);
+        player.sendMessage("");
+        this.sendEmoteUsage(player);
+        player.sendMessage("");
+        this.sendSprayUsage(player);
+    }
+
+    private void sendCosmeticUsage(Player player) {
         player.sendMessage(" - /cosmetic equip <npc_name> [cosmeticIds]");
         player.sendMessage(ChatColor.ITALIC + "   /cosmetic equip Apollo 434 3654 3977");
         player.sendMessage("");
@@ -333,13 +423,21 @@ public class CosmeticCommand implements CommandExecutor {
         player.sendMessage(" - /cosmetic equip <npc_name> body <id>");
         player.sendMessage(ChatColor.ITALIC + "   /cosmetic equip Apollo body 3977 showOverChestplate=true showOverLeggings=true showOverBoots=true");
         player.sendMessage("");
+        player.sendMessage(" - /cosmetic equiplocal <npc_name>");
+        player.sendMessage(ChatColor.ITALIC + "   /cosmetic equiplocal Apollo");
+        player.sendMessage("");
         player.sendMessage(" - /cosmetic unequip <npc_name> [cosmeticIds]");
         player.sendMessage(ChatColor.ITALIC + "   /cosmetic unequip Apollo 434 3654");
         player.sendMessage("");
         player.sendMessage(" - /cosmetic reset <npc_name>");
         player.sendMessage(ChatColor.ITALIC + "   /cosmetic reset Apollo");
-        player.sendMessage("");
-        this.sendSprayUsage(player);
+    }
+
+    private void sendEmoteUsage(Player player) {
+        player.sendMessage(" - /cosmetic emote start <npc_name> <id> [metadata]");
+        player.sendMessage(ChatColor.ITALIC + "   /cosmetic emote start Apollo 342 1 (Coin Flip, metadata 1 = heads)");
+        player.sendMessage(" - /cosmetic emote stop <npc_name>");
+        player.sendMessage(" - /cosmetic emote reset");
     }
 
     private void sendSprayUsage(Player player) {
