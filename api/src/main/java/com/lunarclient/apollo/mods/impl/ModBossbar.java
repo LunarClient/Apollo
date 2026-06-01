@@ -87,7 +87,7 @@ public final class ModBossbar {
      */
     public static final SimpleOption<Boolean> CUSTOM_BOSS_BAR = SimpleOption.<Boolean>builder()
         .node("bossbar", "custom-boss-bar").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
+        .defaultValue(false)
         .notifyClient()
         .build();
 

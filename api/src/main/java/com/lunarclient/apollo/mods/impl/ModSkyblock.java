@@ -59,54 +59,6 @@ public final class ModSkyblock {
         .build();
 
     /**
-     * Automatically copies rare drops and pet drops to the clipboard.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> AUTO_COPY_RARE_DROPS = SimpleOption.<Boolean>builder()
-        .comment("Automatically copies rare drops and pet drops to the clipboard.")
-        .node("skyblock", "auto-copy-rare-drops").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Replaces left clicks in menus with a middle click. Hold control to override.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> SKY_BLOCK_MIDDLE_CLICK_ITEMS = SimpleOption.<Boolean>builder()
-        .comment("Replaces left clicks in menus with a middle click. Hold control to override.")
-        .node("skyblock", "sky-block-middle-click-items").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Shows the creation date of the item in the lore.
-     *
-     * @since 1.1.7
-     */
-    public static final SimpleOption<Boolean> SKY_BLOCK_CREATION_DATE = SimpleOption.<Boolean>builder()
-        .comment("Shows the creation date of the item in the lore.")
-        .node("skyblock", "sky-block-creation-date").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Shows the item's SkyBlock ID in the lore.
-     *
-     * @since 1.1.7
-     */
-    public static final SimpleOption<Boolean> SKY_BLOCK_ITEM_ID = SimpleOption.<Boolean>builder()
-        .comment("Shows the item's SkyBlock ID in the lore.")
-        .node("skyblock", "sky-block-item-id").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
      * Adds tab completion to the /warp command.
      *
      * @since 1.2.2
@@ -119,64 +71,6 @@ public final class ModSkyblock {
         .build();
 
     /**
-     * Hides ex-coop members in the collection menu.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_EX_COOPS = SimpleOption.<Boolean>builder()
-        .comment("Hides ex-coop members in the collection menu.")
-        .node("skyblock", "skyblock-hide-ex-coops").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_MAGIC_SOUP_MESSAGES = SimpleOption.<Boolean>builder()
-        .node("skyblock", "skyblock-hide-magic-soup-messages").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Hides other players near important NPCs.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_PLAYERS_NEAR_NPCS = SimpleOption.<Boolean>builder()
-        .comment("Hides other players near important NPCs.")
-        .node("skyblock", "skyblock-hide-players-near-n-p-cs").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_OTHERS_GIFTS = SimpleOption.<Boolean>builder()
-        .node("skyblock", "skyblock-hide-others-gifts").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * Hides spambots that send malicious websites in chat.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_ADBLOCK = SimpleOption.<Boolean>builder()
-        .comment("Hides spambots that send malicious websites in chat.")
-        .node("skyblock", "skyblock-adblock").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
      * Fixes being unable to use the "Pick Block" keybind on items when it is bound to a mouse button.
      *
      * @since 1.2.5
@@ -184,28 +78,6 @@ public final class ModSkyblock {
     public static final SimpleOption<Boolean> MIDDLE_CLICK_ARMOR_FIX = SimpleOption.<Boolean>builder()
         .comment("Fixes being unable to use the \"Pick Block\" keybind on items when it is bound to a mouse button.")
         .node("skyblock", "middle-click-armor-fix").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_HUNGER = SimpleOption.<Boolean>builder()
-        .node("skyblock", "skyblock-hide-hunger").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_ARMOR = SimpleOption.<Boolean>builder()
-        .node("skyblock", "skyblock-hide-armor").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();
@@ -278,183 +150,6 @@ public final class ModSkyblock {
         .build();
 
     /**
-     * Provides QOL for the Diana mayor that helps the user quickly locate burrows.
-     *
-     * @since 1.1.5
-     */
-    public static final SimpleOption<Boolean> GRIFFIN_BURROW_ESTIMATES = SimpleOption.<Boolean>builder()
-        .comment("Provides QOL for the Diana mayor that helps the user quickly locate burrows.")
-        .node("skyblock", "griffin-burrow-estimates").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Color> BURROW_ESTIMATE_COLOR = SimpleOption.<Color>builder()
-        .node("skyblock", "burrow-estimate-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(255, 255, 0))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> BURROW_ESTIMATE_LINE = SimpleOption.<Boolean>builder()
-        .node("skyblock", "burrow-estimate-line").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> BURROW_ESTIMATE_BEAM = SimpleOption.<Boolean>builder()
-        .node("skyblock", "burrow-estimate-beam").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> BURROW_ESTIMATES_PRIORITIZE_PLAYER_WAYPOINTS = SimpleOption.<Boolean>builder()
-        .node("skyblock", "burrow-estimates-prioritize-player-waypoints").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> BURROW_WARP_TO_NEAREST_ALERT = SimpleOption.<Boolean>builder()
-        .node("skyblock", "burrow-warp-to-nearest-alert").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Color> BURROW_MOB_COLOR = SimpleOption.<Color>builder()
-        .node("skyblock", "burrow-mob-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(255, 0, 0))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Color> BURROW_TREASURE_COLOR = SimpleOption.<Color>builder()
-        .node("skyblock", "burrow-treasure-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(0, 255, 0))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Color> BURROW_START_COLOR = SimpleOption.<Color>builder()
-        .node("skyblock", "burrow-start-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(0, 255, 0))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Color> BURROW_UNKNOWN_COLOR = SimpleOption.<Color>builder()
-        .node("skyblock", "burrow-unknown-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(0, 255, 0))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> BURROW_BEAM = SimpleOption.<Boolean>builder()
-        .node("skyblock", "burrow-beam").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.8
-     */
-    public static final SimpleOption<Boolean> HIGHLIGHT_GLOWING_MUSHROOMS = SimpleOption.<Boolean>builder()
-        .node("skyblock", "highlight-glowing-mushrooms").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.6
-     */
-    public static final SimpleOption<Boolean> SKY_BLOCK_WISHING_COMPASS = SimpleOption.<Boolean>builder()
-        .node("skyblock", "sky-block-wishing-compass").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.6
-     */
-    public static final SimpleOption<Boolean> SKY_BLOCK_FINISHED_COMMISSIONS = SimpleOption.<Boolean>builder()
-        .node("skyblock", "sky-block-finished-commissions").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.6
-     */
-    public static final SimpleOption<Boolean> SKY_BLOCK_METAL_DETECTOR = SimpleOption.<Boolean>builder()
-        .node("skyblock", "sky-block-metal-detector").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.4
-     */
-    public static final SimpleOption<Boolean> SKY_BLOCK_METAL_DETECTOR_LINE = SimpleOption.<Boolean>builder()
-        .node("skyblock", "sky-block-metal-detector-line").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
      * Fixes your fishing bobber sinking in lava.
      *
      * @since 1.0.9
@@ -462,394 +157,6 @@ public final class ModSkyblock {
     public static final SimpleOption<Boolean> FIX_LAVA_BOBBER = SimpleOption.<Boolean>builder()
         .comment("Fixes your fishing bobber sinking in lava.")
         .node("skyblock", "fix-lava-bobber").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Changes the texture of lava to water in the Crimson Isles and Kuudra.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> REPLACE_LAVA_WITH_WATER_CRIMSON = SimpleOption.<Boolean>builder()
-        .comment("Changes the texture of lava to water in the Crimson Isles and Kuudra.")
-        .node("skyblock", "replace-lava-with-water-crimson").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Changes the texture of lava to water everywhere in SkyBlock.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> REPLACE_LAVA_WITH_WATER_EVERYWHERE = SimpleOption.<Boolean>builder()
-        .comment("Changes the texture of lava to water everywhere in SkyBlock.")
-        .node("skyblock", "replace-lava-with-water-everywhere").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Hides players and fishing rods near your bobber while you are fishing.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_FISHING_HIDE_PLAYERS = SimpleOption.<Boolean>builder()
-        .comment("Hides players and fishing rods near your bobber while you are fishing.")
-        .node("skyblock", "skyblock-fishing-hide-players").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Shows which hotspot the Hotspot Radar item is pointing to.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_FISHING_HOTSPOT_LOCATOR = SimpleOption.<Boolean>builder()
-        .comment("Shows which hotspot the Hotspot Radar item is pointing to.")
-        .node("skyblock", "skyblock-fishing-hotspot-locator").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Provides a chat message on boss kill that tells you how long it took to kill!.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> SLAYER_BOSS_TIMER = SimpleOption.<Boolean>builder()
-        .comment("Provides a chat message on boss kill that tells you how long it took to kill!")
-        .node("skyblock", "slayer-boss-timer").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> SLAYER_MINI_BOSS_ALERT = SimpleOption.<Boolean>builder()
-        .node("skyblock", "slayer-mini-boss-alert").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Used in Stillgore of the Rift, this feature tells you where to go to refresh the duration of inactive Effigies.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> INACTIVE_EFFIGY_WAYPOINTS = SimpleOption.<Boolean>builder()
-        .comment("Used in Stillgore of the Rift, this feature tells you where to go to refresh the duration of inactive Effigies.")
-        .node("skyblock", "inactive-effigy-waypoints").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Highlights a boss when it can be 1 tapped using steak stake.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> VAMPIRE_STEAK_DISPLAY = SimpleOption.<Boolean>builder()
-        .comment("Highlights a boss when it can be 1 tapped using steak stake.")
-        .node("skyblock", "vampire-steak-display").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Highlights blood ichors present during T5 Bloodfiends.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> VAMPIRE_ICHOR_DISPLAY = SimpleOption.<Boolean>builder()
-        .comment("Highlights blood ichors present during T5 Bloodfiends")
-        .node("skyblock", "vampire-ichor-display").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Shows the positions where you can trap the gray blazes.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> GRAVITY_WELL_WAYPOINTS = SimpleOption.<Boolean>builder()
-        .comment("Shows the positions where you can trap the gray blazes.")
-        .node("skyblock", "gravity-well-waypoints").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.5
-     */
-    public static final SimpleOption<Boolean> SHOW_KUUDRA_HEALTH = SimpleOption.<Boolean>builder()
-        .node("skyblock", "show-kuudra-health").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.8
-     */
-    public static final SimpleOption<Boolean> HIGHLIGHT_END_NODES = SimpleOption.<Boolean>builder()
-        .node("skyblock", "highlight-end-nodes").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Makes Giant HP more visible by showing their HP at their feet.
-     *
-     * @since 1.1.5
-     */
-    public static final SimpleOption<Boolean> SHOW_GIANT_HPAT_FEET = SimpleOption.<Boolean>builder()
-        .comment("Makes Giant HP more visible by showing their HP at their feet.")
-        .node("skyblock", "show-giant-h-p-at-feet").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Makes Professor's Guardians HP more visible.
-     *
-     * @since 1.2.1
-     */
-    public static final SimpleOption<Boolean> SHOW_PROFESSOR_GUARDIAN_HP = SimpleOption.<Boolean>builder()
-        .comment("Makes Professor's Guardians HP more visible.")
-        .node("skyblock", "show-professor-guardian-h-p").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.1
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_DUNGEON_QUALITY = SimpleOption.<Boolean>builder()
-        .node("skyblock", "skyblock-dungeon-quality").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_SECRETS_COLLECTED = SimpleOption.<Boolean>builder()
-        .node("skyblock", "skyblock-secrets-collected").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.1
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_NON_STARRED = SimpleOption.<Boolean>builder()
-        .node("skyblock", "skyblock-hide-non-starred").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * Shows how long it takes to do each terminal stage in chat (and also Simon Says)!.
-     *
-     * @since 1.2.1
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_TERMINAL_SPLIT_TIMERS = SimpleOption.<Boolean>builder()
-        .comment("Shows how long it takes to do each terminal stage in chat (and also Simon Says)!")
-        .node("skyblock", "skyblock-terminal-split-timers").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> ENABLE_DUNGEON_ROUTES = SimpleOption.<Boolean>builder()
-        .node("skyblock", "enable-dungeon-routes").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> DEFAULT_SECRET_ROUTES_ENABLED = SimpleOption.<Boolean>builder()
-        .node("skyblock", "default-secret-routes-enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SECRET_ROUTES_NAMES_AT_START = SimpleOption.<Boolean>builder()
-        .node("skyblock", "secret-routes-names-at-start").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Color> SECRET_ROUTES_NAME_COLOR = SimpleOption.<Color>builder()
-        .node("skyblock", "secret-routes-name-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(255, 0, 0))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_HELP_TEXT = SimpleOption.<Boolean>builder()
-        .node("skyblock", "secret-routes-disable-help-text").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SECRET_ROUTES_ALLOW_PEARLING = SimpleOption.<Boolean>builder()
-        .node("skyblock", "secret-routes-allow-pearling").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_SUPERBOOM = SimpleOption.<Boolean>builder()
-        .node("skyblock", "secret-routes-disable-superboom").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_BLOCK = SimpleOption.<Boolean>builder()
-        .node("skyblock", "secret-routes-disable-block").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_LEVER = SimpleOption.<Boolean>builder()
-        .node("skyblock", "secret-routes-disable-lever").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_ETHERWARP = SimpleOption.<Boolean>builder()
-        .node("skyblock", "secret-routes-disable-etherwarp").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_SECRET = SimpleOption.<Boolean>builder()
-        .node("skyblock", "secret-routes-disable-secret").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_MISC = SimpleOption.<Boolean>builder()
-        .node("skyblock", "secret-routes-disable-misc").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_PEARLS = SimpleOption.<Boolean>builder()
-        .node("skyblock", "secret-routes-disable-pearls").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Provides a general line thickness option that applies to most features with box/line rendering.
-     *
-     * @since 1.1.7
-     */
-    public static final NumberOption<Float> SKYBLOCK_LINE_THICKNESS = NumberOption.<Float>number()
-        .comment("Provides a general line thickness option that applies to most features with box/line rendering.")
-        .node("skyblock", "skyblock-line-thickness").type(TypeToken.get(Float.class))
-        .min(1.0F).max(10.0F)
-        .defaultValue(4.0F)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> HIDE_MIDAS_STAFF = SimpleOption.<Boolean>builder()
-        .node("skyblock", "hide-midas-staff").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> HIDE_FALLING_BLOCKS = SimpleOption.<Boolean>builder()
-        .node("skyblock", "hide-falling-blocks").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();
@@ -866,14 +173,15 @@ public final class ModSkyblock {
         .build();
 
     /**
-     * Routes menu clicks to /sbmenu command in order to prevent sticky item.
+     * Provides a general line thickness option that applies to most features with box/line rendering.
      *
-     * @since 1.1.9
+     * @since 1.1.7
      */
-    public static final SimpleOption<Boolean> SB_MENU_CLICK_TO_COMMAND = SimpleOption.<Boolean>builder()
-        .comment("Routes menu clicks to /sbmenu command in order to prevent sticky item.")
-        .node("skyblock", "sb-menu-click-to-command").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
+    public static final NumberOption<Float> SKYBLOCK_LINE_THICKNESS = NumberOption.<Float>number()
+        .comment("Provides a general line thickness option that applies to most features with box/line rendering.")
+        .node("skyblock", "skyblock-line-thickness").type(TypeToken.get(Float.class))
+        .min(1.0F).max(10.0F)
+        .defaultValue(4.0F)
         .notifyClient()
         .build();
 
@@ -897,6 +205,759 @@ public final class ModSkyblock {
         .node("skyblock", "custom-chime-volume").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.0F)
         .defaultValue(5.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * Automatically copies rare drops and pet drops to the clipboard.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> AUTO_COPY_RARE_DROPS = SimpleOption.<Boolean>builder()
+        .comment("Automatically copies rare drops and pet drops to the clipboard.")
+        .node("skyblock", "auto-copy-rare-drops").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Replaces left clicks in menus with a middle click. Hold control to override.
+     *
+     * @since 1.1.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKY_BLOCK_MIDDLE_CLICK_ITEMS = SimpleOption.<Boolean>builder()
+        .comment("Replaces left clicks in menus with a middle click. Hold control to override.")
+        .node("skyblock", "sky-block-middle-click-items").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows the creation date of the item in the lore.
+     *
+     * @since 1.1.7
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKY_BLOCK_CREATION_DATE = SimpleOption.<Boolean>builder()
+        .comment("Shows the creation date of the item in the lore.")
+        .node("skyblock", "sky-block-creation-date").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows the item's SkyBlock ID in the lore.
+     *
+     * @since 1.1.7
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKY_BLOCK_ITEM_ID = SimpleOption.<Boolean>builder()
+        .comment("Shows the item's SkyBlock ID in the lore.")
+        .node("skyblock", "sky-block-item-id").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Hides ex-coop members in the collection menu.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_EX_COOPS = SimpleOption.<Boolean>builder()
+        .comment("Hides ex-coop members in the collection menu.")
+        .node("skyblock", "skyblock-hide-ex-coops").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_MAGIC_SOUP_MESSAGES = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-magic-soup-messages").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Hides other players near important NPCs.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_PLAYERS_NEAR_NPCS = SimpleOption.<Boolean>builder()
+        .comment("Hides other players near important NPCs.")
+        .node("skyblock", "skyblock-hide-players-near-n-p-cs").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_OTHERS_GIFTS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-others-gifts").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Hides spambots that send malicious websites in chat.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_ADBLOCK = SimpleOption.<Boolean>builder()
+        .comment("Hides spambots that send malicious websites in chat.")
+        .node("skyblock", "skyblock-adblock").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_HUNGER = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-hunger").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_ARMOR = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-armor").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Provides QOL for the Diana mayor that helps the user quickly locate burrows.
+     *
+     * @since 1.1.5
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> GRIFFIN_BURROW_ESTIMATES = SimpleOption.<Boolean>builder()
+        .comment("Provides QOL for the Diana mayor that helps the user quickly locate burrows.")
+        .node("skyblock", "griffin-burrow-estimates").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Color> BURROW_ESTIMATE_COLOR = SimpleOption.<Color>builder()
+        .node("skyblock", "burrow-estimate-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> BURROW_ESTIMATE_LINE = SimpleOption.<Boolean>builder()
+        .node("skyblock", "burrow-estimate-line").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> BURROW_ESTIMATE_BEAM = SimpleOption.<Boolean>builder()
+        .node("skyblock", "burrow-estimate-beam").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> BURROW_ESTIMATES_PRIORITIZE_PLAYER_WAYPOINTS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "burrow-estimates-prioritize-player-waypoints").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> BURROW_WARP_TO_NEAREST_ALERT = SimpleOption.<Boolean>builder()
+        .node("skyblock", "burrow-warp-to-nearest-alert").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Color> BURROW_MOB_COLOR = SimpleOption.<Color>builder()
+        .node("skyblock", "burrow-mob-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Color> BURROW_TREASURE_COLOR = SimpleOption.<Color>builder()
+        .node("skyblock", "burrow-treasure-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Color> BURROW_START_COLOR = SimpleOption.<Color>builder()
+        .node("skyblock", "burrow-start-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Color> BURROW_UNKNOWN_COLOR = SimpleOption.<Color>builder()
+        .node("skyblock", "burrow-unknown-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> BURROW_BEAM = SimpleOption.<Boolean>builder()
+        .node("skyblock", "burrow-beam").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.8
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> HIGHLIGHT_GLOWING_MUSHROOMS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "highlight-glowing-mushrooms").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.6
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKY_BLOCK_WISHING_COMPASS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-wishing-compass").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.6
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKY_BLOCK_FINISHED_COMMISSIONS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-finished-commissions").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.6
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKY_BLOCK_METAL_DETECTOR = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-metal-detector").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.4
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKY_BLOCK_METAL_DETECTOR_LINE = SimpleOption.<Boolean>builder()
+        .node("skyblock", "sky-block-metal-detector-line").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Changes the texture of lava to water in the Crimson Isles and Kuudra.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> REPLACE_LAVA_WITH_WATER_CRIMSON = SimpleOption.<Boolean>builder()
+        .comment("Changes the texture of lava to water in the Crimson Isles and Kuudra.")
+        .node("skyblock", "replace-lava-with-water-crimson").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Changes the texture of lava to water everywhere in SkyBlock.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> REPLACE_LAVA_WITH_WATER_EVERYWHERE = SimpleOption.<Boolean>builder()
+        .comment("Changes the texture of lava to water everywhere in SkyBlock.")
+        .node("skyblock", "replace-lava-with-water-everywhere").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Hides players and fishing rods near your bobber while you are fishing.
+     *
+     * @since 1.1.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_FISHING_HIDE_PLAYERS = SimpleOption.<Boolean>builder()
+        .comment("Hides players and fishing rods near your bobber while you are fishing.")
+        .node("skyblock", "skyblock-fishing-hide-players").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows which hotspot the Hotspot Radar item is pointing to.
+     *
+     * @since 1.1.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_FISHING_HOTSPOT_LOCATOR = SimpleOption.<Boolean>builder()
+        .comment("Shows which hotspot the Hotspot Radar item is pointing to.")
+        .node("skyblock", "skyblock-fishing-hotspot-locator").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Provides a chat message on boss kill that tells you how long it took to kill!.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SLAYER_BOSS_TIMER = SimpleOption.<Boolean>builder()
+        .comment("Provides a chat message on boss kill that tells you how long it took to kill!")
+        .node("skyblock", "slayer-boss-timer").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SLAYER_MINI_BOSS_ALERT = SimpleOption.<Boolean>builder()
+        .node("skyblock", "slayer-mini-boss-alert").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Used in Stillgore of the Rift, this feature tells you where to go to refresh the duration of inactive Effigies.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> INACTIVE_EFFIGY_WAYPOINTS = SimpleOption.<Boolean>builder()
+        .comment("Used in Stillgore of the Rift, this feature tells you where to go to refresh the duration of inactive Effigies.")
+        .node("skyblock", "inactive-effigy-waypoints").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Highlights a boss when it can be 1 tapped using steak stake.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> VAMPIRE_STEAK_DISPLAY = SimpleOption.<Boolean>builder()
+        .comment("Highlights a boss when it can be 1 tapped using steak stake.")
+        .node("skyblock", "vampire-steak-display").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Highlights blood ichors present during T5 Bloodfiends.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> VAMPIRE_ICHOR_DISPLAY = SimpleOption.<Boolean>builder()
+        .comment("Highlights blood ichors present during T5 Bloodfiends")
+        .node("skyblock", "vampire-ichor-display").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows the positions where you can trap the gray blazes.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> GRAVITY_WELL_WAYPOINTS = SimpleOption.<Boolean>builder()
+        .comment("Shows the positions where you can trap the gray blazes.")
+        .node("skyblock", "gravity-well-waypoints").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.5
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SHOW_KUUDRA_HEALTH = SimpleOption.<Boolean>builder()
+        .node("skyblock", "show-kuudra-health").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.8
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> HIGHLIGHT_END_NODES = SimpleOption.<Boolean>builder()
+        .node("skyblock", "highlight-end-nodes").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Makes Giant HP more visible by showing their HP at their feet.
+     *
+     * @since 1.1.5
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SHOW_GIANT_HPAT_FEET = SimpleOption.<Boolean>builder()
+        .comment("Makes Giant HP more visible by showing their HP at their feet.")
+        .node("skyblock", "show-giant-h-p-at-feet").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Makes Professor's Guardians HP more visible.
+     *
+     * @since 1.2.1
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SHOW_PROFESSOR_GUARDIAN_HP = SimpleOption.<Boolean>builder()
+        .comment("Makes Professor's Guardians HP more visible.")
+        .node("skyblock", "show-professor-guardian-h-p").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.1
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_DUNGEON_QUALITY = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-dungeon-quality").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_SECRETS_COLLECTED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-secrets-collected").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.1
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_HIDE_NON_STARRED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "skyblock-hide-non-starred").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows how long it takes to do each terminal stage in chat (and also Simon Says)!.
+     *
+     * @since 1.2.1
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SKYBLOCK_TERMINAL_SPLIT_TIMERS = SimpleOption.<Boolean>builder()
+        .comment("Shows how long it takes to do each terminal stage in chat (and also Simon Says)!")
+        .node("skyblock", "skyblock-terminal-split-timers").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> ENABLE_DUNGEON_ROUTES = SimpleOption.<Boolean>builder()
+        .node("skyblock", "enable-dungeon-routes").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> DEFAULT_SECRET_ROUTES_ENABLED = SimpleOption.<Boolean>builder()
+        .node("skyblock", "default-secret-routes-enabled").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SECRET_ROUTES_NAMES_AT_START = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-names-at-start").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Color> SECRET_ROUTES_NAME_COLOR = SimpleOption.<Color>builder()
+        .node("skyblock", "secret-routes-name-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_HELP_TEXT = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-help-text").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SECRET_ROUTES_ALLOW_PEARLING = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-allow-pearling").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_SUPERBOOM = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-superboom").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_BLOCK = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-block").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_LEVER = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-lever").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_ETHERWARP = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-etherwarp").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_SECRET = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-secret").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_MISC = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-misc").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.2
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SECRET_ROUTES_DISABLE_PEARLS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "secret-routes-disable-pearls").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> HIDE_MIDAS_STAFF = SimpleOption.<Boolean>builder()
+        .node("skyblock", "hide-midas-staff").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> HIDE_FALLING_BLOCKS = SimpleOption.<Boolean>builder()
+        .node("skyblock", "hide-falling-blocks").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Routes menu clicks to /sbmenu command in order to prevent sticky item.
+     *
+     * @since 1.1.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SB_MENU_CLICK_TO_COMMAND = SimpleOption.<Boolean>builder()
+        .comment("Routes menu clicks to /sbmenu command in order to prevent sticky item.")
+        .node("skyblock", "sb-menu-click-to-command").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
