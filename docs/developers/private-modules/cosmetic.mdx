@@ -9,6 +9,9 @@ The cosmetic module allows you to interact and utilize all the various cosmetic 
 - Add wearable cosmetics to NPC entities
   - Grants the ability to put any cosmetic on an NPC
   - Uniquely customize various cosmetic options
+  - Copy the viewer's own equipped cosmetics onto an NPC
+- Play emotes on NPC entities
+  - Start, stop, and reset emotes on an NPC
 - Add sprays to any location
   - Grants the ability to put any spray on a block
   - Customize the rotation, direction options, and duration
@@ -69,6 +72,14 @@ public void equipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
 }
 ```
 
+**Equip cosmetics on an NPC, copying the recipient's own cosmetics**
+
+```java
+public void equipNpcCosmeticsCopyLocalExample(UUID npcUuid) {
+    this.cosmeticModule.equipNpcCosmetics(Recipients.ofEveryone(), npcUuid, new ArrayList<>(), true);
+}
+```
+
 **Unequip cosmetics from an NPC**
 
 ```java
@@ -86,6 +97,34 @@ public void unequipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
 ```java
 public void resetNpcCosmeticsExample(UUID npcUuid) {
     this.cosmeticModule.resetNpcCosmetics(Recipients.ofEveryone(), npcUuid);
+}
+```
+
+**Start an emote on an NPC**
+
+```java
+public void startNpcEmoteExample(UUID npcUuid) {
+    Emote emote = Emote.builder()
+        .id(56)
+        .build();
+
+    this.cosmeticModule.startNpcEmote(Recipients.ofEveryone(), npcUuid, emote);
+}
+```
+
+**Stop an emote on an NPC**
+
+```java
+public void stopNpcEmoteExample(UUID npcUuid) {
+    this.cosmeticModule.stopNpcEmote(Recipients.ofEveryone(), npcUuid);
+}
+```
+
+**Reset NPC emotes**
+
+```java
+public void resetNpcEmotesExample() {
+    this.cosmeticModule.resetNpcEmotes(Recipients.ofEveryone());
 }
 ```
 
@@ -188,6 +227,20 @@ public void resetSpraysExample() {
     .build())
 ```
 
+### `Emote` Options
+
+`.id(int)` is the Lunar Client emote id.
+
+```java
+.id(56)
+```
+
+`.metadata(int)` selects a variant for emotes that support one, and is ignored otherwise (default `0`). For example, a coin flip emote may use `1` for heads and `2` for tails, while a rock paper scissors emote may use `1` for rock, `2` for paper, and `3` for scissors.
+
+```java
+.metadata(1)
+```
+
 ### `Spray` Options
 
 `.sprayId(int)` is the Lunar Client spray cosmetic id.
@@ -270,6 +323,19 @@ public void equipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
 }
 ```
 
+**Equip cosmetics on an NPC, copying the recipient's own cosmetics**
+
+```java
+public void equipNpcCosmeticsCopyLocalExample(UUID npcUuid) {
+    EquipNpcCosmeticsMessage message = EquipNpcCosmeticsMessage.newBuilder()
+        .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
+        .setCopyLocalCosmetics(true)
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
 **Unequip cosmetics from an NPC**
 
 ```java
@@ -293,6 +359,42 @@ public void resetNpcCosmeticsExample(Player viewer, UUID npcUuid) {
         .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
         .build();
 
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+**Start an emote on an NPC**
+
+```java
+public void startNpcEmoteExample(UUID npcUuid) {
+    StartNpcEmoteMessage message = StartNpcEmoteMessage.newBuilder()
+        .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
+        .setEmote(Emote.newBuilder()
+            .setId(56)
+            .build())
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+**Stop an emote on an NPC**
+
+```java
+public void stopNpcEmoteExample(UUID npcUuid) {
+    StopNpcEmoteMessage message = StopNpcEmoteMessage.newBuilder()
+        .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+```
+
+**Reset NPC emotes**
+
+```java
+public void resetNpcEmotesExample() {
+    ResetNpcEmotesMessage message = ResetNpcEmotesMessage.getDefaultInstance();
     ProtobufPacketUtil.broadcastPacket(message);
 }
 ```
@@ -395,6 +497,19 @@ public void equipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
 }
 ```
 
+**Equip cosmetics on an NPC, copying the recipient's own cosmetics**
+
+```java
+public void equipNpcCosmeticsCopyLocalExample(UUID npcUuid) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.EquipNpcCosmeticsMessage");
+    message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
+    message.addProperty("copy_local_cosmetics", true);
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
 **Unequip cosmetics from an NPC**
 
 ```java
@@ -420,6 +535,45 @@ public void resetNpcCosmeticsExample(Player viewer, UUID npcUuid) {
     JsonObject message = new JsonObject();
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.ResetNpcCosmeticsMessage");
     message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Start an emote on an NPC**
+
+```java
+public void startNpcEmoteExample(UUID npcUuid) {
+    JsonObject emote = new JsonObject();
+    emote.addProperty("id", 56);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.StartNpcEmoteMessage");
+    message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
+    message.add("emote", emote);
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Stop an emote on an NPC**
+
+```java
+public void stopNpcEmoteExample(UUID npcUuid) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.StopNpcEmoteMessage");
+    message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Reset NPC emotes**
+
+```java
+public void resetNpcEmotesExample() {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.ResetNpcEmotesMessage");
 
     JsonPacketUtil.broadcastPacket(message);
 }

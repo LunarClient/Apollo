@@ -59,6 +59,19 @@ public abstract class CosmeticModule extends ApolloModule {
     public abstract void equipNpcCosmetics(Recipients recipients, UUID npcUuid, List<Cosmetic> cosmetics);
 
     /**
+     * Equips the provided cosmetics on an NPC for the given {@link Recipients}, optionally layered on
+     * top of each recipient's own equipped cosmetics.
+     *
+     * @param recipients         the recipients that are receiving the packet
+     * @param npcUuid            the {@link UUID} of the NPC to equip the cosmetics on
+     * @param cosmetics          the cosmetics to equip, including optional {@link CosmeticOptions} per entry
+     *                           ({@link HatOptions}, {@link CloakOptions}, {@link PetOptions}, or {@link BodyOptions})
+     * @param copyLocalCosmetics {@code true} to copy each recipient's own equipped cosmetics onto the NPC first
+     * @since 1.2.7
+     */
+    public abstract void equipNpcCosmetics(Recipients recipients, UUID npcUuid, List<Cosmetic> cosmetics, boolean copyLocalCosmetics);
+
+    /**
      * Unequips the provided cosmetics from an NPC for the given {@link Recipients}.
      *
      * @param recipients  the recipients that are receiving the packet
@@ -76,6 +89,35 @@ public abstract class CosmeticModule extends ApolloModule {
      * @since 1.2.6
      */
     public abstract void resetNpcCosmetics(Recipients recipients, UUID npcUuid);
+
+    /**
+     * Starts an emote on an NPC for the given {@link Recipients}.
+     *
+     * <p>Starting an emote replaces any emote already playing on the NPC.</p>
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param npcUuid    the {@link UUID} of the NPC to play the emote on
+     * @param emote      the emote to play
+     * @since 1.2.7
+     */
+    public abstract void startNpcEmote(Recipients recipients, UUID npcUuid, Emote emote);
+
+    /**
+     * Stops the emote currently playing on an NPC for the given {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param npcUuid    the {@link UUID} of the NPC to stop the emote on
+     * @since 1.2.7
+     */
+    public abstract void stopNpcEmote(Recipients recipients, UUID npcUuid);
+
+    /**
+     * Stops all emotes playing on every NPC for the given {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @since 1.2.7
+     */
+    public abstract void resetNpcEmotes(Recipients recipients);
 
     /**
      * Displays a spray for the given {@link Recipients}.

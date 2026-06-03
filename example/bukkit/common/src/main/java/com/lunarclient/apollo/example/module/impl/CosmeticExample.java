@@ -34,6 +34,8 @@ public abstract class CosmeticExample extends ApolloModuleExample {
 
     public abstract void equipNpcCosmeticsExample(Player viewer, UUID npcUuid);
 
+    public abstract void equipNpcCosmeticsCopyLocalExample(Player viewer, UUID npcUuid);
+
     public abstract void equipNpcCosmeticsInternal(Player viewer, UUID npcUuid, List<Integer> cosmeticIds);
 
     public void equipNpcCosmeticInternal(Player viewer, UUID npcUuid, CommandCosmetic cosmetic) {
@@ -49,6 +51,14 @@ public abstract class CosmeticExample extends ApolloModuleExample {
     public abstract void unequipNpcCosmeticsInternal(Player viewer, UUID npcUuid, List<Integer> cosmeticIds);
 
     public abstract void resetNpcCosmeticsExample(Player viewer, UUID npcUuid);
+
+    public abstract void startNpcEmoteExample(Player viewer, UUID npcUuid);
+
+    public abstract void startNpcEmoteInternal(Player viewer, UUID npcUuid, int emoteId, int metadata);
+
+    public abstract void stopNpcEmoteExample(Player viewer, UUID npcUuid);
+
+    public abstract void resetNpcEmotesExample();
 
     public abstract void displaySprayExample(Player viewer, int sprayId);
 

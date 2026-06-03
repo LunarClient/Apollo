@@ -28,7 +28,10 @@ import com.lunarclient.apollo.cosmetic.v1.DisplaySprayMessage;
 import com.lunarclient.apollo.cosmetic.v1.EquipNpcCosmeticsMessage;
 import com.lunarclient.apollo.cosmetic.v1.RemoveSprayMessage;
 import com.lunarclient.apollo.cosmetic.v1.ResetNpcCosmeticsMessage;
+import com.lunarclient.apollo.cosmetic.v1.ResetNpcEmotesMessage;
 import com.lunarclient.apollo.cosmetic.v1.ResetSpraysMessage;
+import com.lunarclient.apollo.cosmetic.v1.StartNpcEmoteMessage;
+import com.lunarclient.apollo.cosmetic.v1.StopNpcEmoteMessage;
 import com.lunarclient.apollo.cosmetic.v1.UnequipNpcCosmeticsMessage;
 import com.lunarclient.apollo.module.cosmetic.options.BodyOptions;
 import com.lunarclient.apollo.module.cosmetic.options.CloakOptions;
@@ -55,6 +58,11 @@ public final class CosmeticModuleImpl extends CosmeticModule {
 
     @Override
     public void equipNpcCosmetics(@NonNull Recipients recipients, @NonNull UUID npcUuid, @NonNull List<Cosmetic> cosmetics) {
+        this.equipNpcCosmetics(recipients, npcUuid, cosmetics, false);
+    }
+
+    @Override
+    public void equipNpcCosmetics(@NonNull Recipients recipients, @NonNull UUID npcUuid, @NonNull List<Cosmetic> cosmetics, boolean copyLocalCosmetics) {
         List<com.lunarclient.apollo.cosmetic.v1.Cosmetic> cosmeticsProto = cosmetics.stream()
             .map(this::toProtobuf)
             .collect(Collectors.toList());
@@ -62,6 +70,7 @@ public final class CosmeticModuleImpl extends CosmeticModule {
         EquipNpcCosmeticsMessage message = EquipNpcCosmeticsMessage.newBuilder()
             .setNpcUuid(NetworkTypes.toProtobuf(npcUuid))
             .addAllCosmetics(cosmeticsProto)
+            .setCopyLocalCosmetics(copyLocalCosmetics)
             .build();
 
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
@@ -87,6 +96,34 @@ public final class CosmeticModuleImpl extends CosmeticModule {
             .setNpcUuid(NetworkTypes.toProtobuf(npcUuid))
             .build();
 
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void startNpcEmote(@NonNull Recipients recipients, @NonNull UUID npcUuid, @NonNull Emote emote) {
+        StartNpcEmoteMessage message = StartNpcEmoteMessage.newBuilder()
+            .setNpcUuid(NetworkTypes.toProtobuf(npcUuid))
+            .setEmote(com.lunarclient.apollo.cosmetic.v1.Emote.newBuilder()
+                .setId(checkStrictlyPositive(emote.getId(), "Emote#id"))
+                .setMetadata(emote.getMetadata())
+                .build())
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void stopNpcEmote(@NonNull Recipients recipients, @NonNull UUID npcUuid) {
+        StopNpcEmoteMessage message = StopNpcEmoteMessage.newBuilder()
+            .setNpcUuid(NetworkTypes.toProtobuf(npcUuid))
+            .build();
+
+        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+    }
+
+    @Override
+    public void resetNpcEmotes(@NonNull Recipients recipients) {
+        ResetNpcEmotesMessage message = ResetNpcEmotesMessage.getDefaultInstance();
         recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
     }
 
