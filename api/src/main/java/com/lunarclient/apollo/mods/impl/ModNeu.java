@@ -27,10 +27,11 @@ import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Skyblock Mod made by Moulberry.
+ * No documentation available.
  *
  * @since 1.0.0
  */
+@Deprecated
 public final class ModNeu {
 
     /**
@@ -38,6 +39,7 @@ public final class ModNeu {
      *
      * @since 1.0.0
      */
+    @Deprecated
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("neu", "enabled").type(TypeToken.get(Boolean.class))
         .defaultValue(true)

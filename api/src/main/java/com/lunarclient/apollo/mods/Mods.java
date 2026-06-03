@@ -135,7 +135,6 @@ public final class Mods {
             ModOneSevenVisuals.class,
             ModFps.class,
             ModCps.class,
-            ModSba.class,
             ModToggleSneak.class,
             ModZoom.class,
             ModHypixelMod.class,
@@ -206,7 +205,6 @@ public final class Mods {
             ModChunkBorders.class,
             ModSoundChanger.class,
             ModWaila.class,
-            ModNeu.class,
             ModHurtCam.class,
             ModTierTagger.class,
             ModDamageTint.class,
@@ -222,7 +220,9 @@ public final class Mods {
             ModInventoryMod.class,
             ModF3Display.class,
             ModRadio.class,
-            ModUhcOverlay.class
+            ModUhcOverlay.class,
+            ModSba.class,
+            ModNeu.class
         );
 
     private Mods() {
