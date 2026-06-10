@@ -47,9 +47,21 @@ public final class CombatModule extends ApolloModule {
         .node("disable-miss-penalty").type(TypeToken.get(Boolean.class))
         .defaultValue(false).notifyClient().build();
 
+    /**
+     * Whether the player can attack and use an item at the same time,
+     * like in 1.7. Only applies to players on 1.8.
+     *
+     * @since 1.2.8
+     */
+    public static final SimpleOption<Boolean> ALLOW_ATTACK_AND_USE = Option.<Boolean>builder()
+        .comment("Set to 'true' to allow attacking and using an item at the same time on 1.8, otherwise 'false'.")
+        .node("allow-attack-and-use").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
     CombatModule() {
         this.registerOptions(
-            CombatModule.DISABLE_MISS_PENALTY
+            CombatModule.DISABLE_MISS_PENALTY,
+            CombatModule.ALLOW_ATTACK_AND_USE
         );
     }
 

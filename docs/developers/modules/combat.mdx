@@ -7,6 +7,7 @@ import { Callout, Tab, Tabs } from 'nextra-theme-docs'
 The combat module allows you to modify certain aspects of combat that are usually handled client-sided.
 
 - Adds the ability to disable the miss penalty, on all versions 1.8 and above.
+- Adds the ability to attack and use an item at the same time, like in 1.7, for players on 1.8.
 
 ### Sample Code
 Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
@@ -27,6 +28,14 @@ public void setDisableMissPenalty(boolean value) {
 }
 ```
 
+### Toggle Attack and Use
+
+```java
+public void setAllowAttackAndUse(boolean value) {
+    this.combatModule.getOptions().set(CombatModule.ALLOW_ATTACK_AND_USE, value);
+}
+```
+
 </Tab>
 
 <Tab>
@@ -41,6 +50,18 @@ public void setDisableMissPenalty(boolean value) {
 public void setDisableMissPenalty(boolean value) {
     Map<String, Value> properties = new HashMap<>();
     properties.put("disable-miss-penalty", Value.newBuilder().setBoolValue(value).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("combat", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+### Toggle Attack and Use
+
+```java
+public void setAllowAttackAndUse(boolean value) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("allow-attack-and-use", Value.newBuilder().setBoolValue(value).build());
 
     ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("combat", properties);
     ProtobufPacketUtil.broadcastPacket(settings);
@@ -67,6 +88,18 @@ public void setDisableMissPenalty(boolean value) {
 }
 ```
 
+### Toggle Attack and Use
+
+```java
+public void setAllowAttackAndUse(boolean value) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("allow-attack-and-use", value);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("combat", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
 </Tab>
 
 </Tabs>
@@ -75,6 +108,11 @@ public void setDisableMissPenalty(boolean value) {
 
 - __`DISABLE_MISS_PENALTY`__
     - Whether the player gets a hit delay for a missed hit.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+- __`ALLOW_ATTACK_AND_USE`__
+    - Whether the player can attack and use an item at the same time, like in 1.7. Only applies to players on 1.8.
     - Values
         - Type: `Boolean`
         - Default: `false`
