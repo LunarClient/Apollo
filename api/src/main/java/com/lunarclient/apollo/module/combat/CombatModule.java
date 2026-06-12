@@ -49,12 +49,12 @@ public final class CombatModule extends ApolloModule {
 
     /**
      * Whether the player can attack and use an item at the same time,
-     * like in 1.7. Only applies to players on 1.8.
+     * like in 1.7. Applies to all versions 1.8 and above.
      *
      * @since 1.2.8
      */
     public static final SimpleOption<Boolean> ALLOW_ATTACK_AND_USE = Option.<Boolean>builder()
-        .comment("Set to 'true' to allow attacking and using an item at the same time on 1.8, otherwise 'false'.")
+        .comment("Set to 'true' to allow attacking and using an item at the same time on all versions 1.8 and above, otherwise 'false'.")
         .node("allow-attack-and-use").type(TypeToken.get(Boolean.class))
         .defaultValue(false).notifyClient().build();
 
