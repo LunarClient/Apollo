@@ -7,7 +7,7 @@ import { Callout, Tab, Tabs } from 'nextra-theme-docs'
 The combat module allows you to modify certain aspects of combat that are usually handled client-sided.
 
 - Adds the ability to disable the miss penalty, on all versions 1.8 and above.
-- Adds the ability to attack and use an item at the same time, like in 1.7, on all versions 1.8 and above.
+- Adds the ability to dig and use an item at the same time, like in 1.7, on all versions 1.8 and above.
 
 ### Sample Code
 Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
@@ -28,11 +28,11 @@ public void setDisableMissPenalty(boolean value) {
 }
 ```
 
-### Toggle Attack and Use
+### Toggle Dig and Use
 
 ```java
-public void setAllowAttackAndUse(boolean value) {
-    this.combatModule.getOptions().set(CombatModule.ALLOW_ATTACK_AND_USE, value);
+public void setAllowDigAndUse(boolean value) {
+    this.combatModule.getOptions().set(CombatModule.ALLOW_DIG_AND_USE, value);
 }
 ```
 
@@ -56,12 +56,12 @@ public void setDisableMissPenalty(boolean value) {
 }
 ```
 
-### Toggle Attack and Use
+### Toggle Dig and Use
 
 ```java
-public void setAllowAttackAndUse(boolean value) {
+public void setAllowDigAndUse(boolean value) {
     Map<String, Value> properties = new HashMap<>();
-    properties.put("allow-attack-and-use", Value.newBuilder().setBoolValue(value).build());
+    properties.put("allow-dig-and-use", Value.newBuilder().setBoolValue(value).build());
 
     ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("combat", properties);
     ProtobufPacketUtil.broadcastPacket(settings);
@@ -88,12 +88,12 @@ public void setDisableMissPenalty(boolean value) {
 }
 ```
 
-### Toggle Attack and Use
+### Toggle Dig and Use
 
 ```java
-public void setAllowAttackAndUse(boolean value) {
+public void setAllowDigAndUse(boolean value) {
     Map<String, Object> properties = new HashMap<>();
-    properties.put("allow-attack-and-use", value);
+    properties.put("allow-dig-and-use", value);
 
     JsonObject message = JsonUtil.createEnableModuleObjectWithType("combat", properties);
     JsonPacketUtil.broadcastPacket(message);
@@ -107,12 +107,12 @@ public void setAllowAttackAndUse(boolean value) {
 ## Available options
 
 - __`DISABLE_MISS_PENALTY`__
-    - Whether the player gets a hit delay for a missed hit.
+    - Whether the player gets a hit delay for a missed hit. Enabling this option may cause compatibility issues with anti-cheats.
     - Values
         - Type: `Boolean`
         - Default: `false`
-- __`ALLOW_ATTACK_AND_USE`__
-    - Whether the player can attack and use an item at the same time, like in 1.7. Applies to all versions 1.8 and above.
+- __`ALLOW_DIG_AND_USE`__
+    - Whether the player can dig and use an item at the same time, like in 1.7. Applies to all versions 1.8 and above. Enabling this option may cause compatibility issues with anti-cheats.
     - Values
         - Type: `Boolean`
         - Default: `false`
