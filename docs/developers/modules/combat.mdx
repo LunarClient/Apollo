@@ -7,6 +7,7 @@ import { Callout, Tab, Tabs } from 'nextra-theme-docs'
 The combat module allows you to modify certain aspects of combat that are usually handled client-sided.
 
 - Adds the ability to disable the miss penalty, on all versions 1.8 and above.
+- Adds the ability to dig and use an item at the same time, like in 1.7, on all versions 1.8 and above.
 
 ### Sample Code
 Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
@@ -27,6 +28,14 @@ public void setDisableMissPenalty(boolean value) {
 }
 ```
 
+### Toggle Dig and Use
+
+```java
+public void setAllowDigAndUse(boolean value) {
+    this.combatModule.getOptions().set(CombatModule.ALLOW_DIG_AND_USE, value);
+}
+```
+
 </Tab>
 
 <Tab>
@@ -35,12 +44,24 @@ public void setDisableMissPenalty(boolean value) {
 **Lightweight Protobuf examples.** See [Lightweight Protobuf](/apollo/developers/lightweight/protobuf) for setup.
 </Callout>
 
-### Toggle Miss Penalty
+**Toggle Miss Penalty**
 
 ```java
 public void setDisableMissPenalty(boolean value) {
     Map<String, Value> properties = new HashMap<>();
     properties.put("disable-miss-penalty", Value.newBuilder().setBoolValue(value).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("combat", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+**Toggle Dig and Use**
+
+```java
+public void setAllowDigAndUse(boolean value) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("allow-dig-and-use", Value.newBuilder().setBoolValue(value).build());
 
     ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("combat", properties);
     ProtobufPacketUtil.broadcastPacket(settings);
@@ -55,12 +76,24 @@ public void setDisableMissPenalty(boolean value) {
 **Lightweight JSON examples.** See [Lightweight JSON](/apollo/developers/lightweight/json) for setup.
 </Callout>
 
-### Toggle Miss Penalty
+**Toggle Miss Penalty**
 
 ```java
 public void setDisableMissPenalty(boolean value) {
     Map<String, Object> properties = new HashMap<>();
     properties.put("disable-miss-penalty", value);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("combat", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Toggle Dig and Use**
+
+```java
+public void setAllowDigAndUse(boolean value) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("allow-dig-and-use", value);
 
     JsonObject message = JsonUtil.createEnableModuleObjectWithType("combat", properties);
     JsonPacketUtil.broadcastPacket(message);
@@ -74,7 +107,12 @@ public void setDisableMissPenalty(boolean value) {
 ## Available options
 
 - __`DISABLE_MISS_PENALTY`__
-    - Whether the player gets a hit delay for a missed hit.
+    - Whether the player gets a hit delay for a missed hit. Enabling this option may cause compatibility issues with anti-cheats.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+- __`ALLOW_DIG_AND_USE`__
+    - Whether the player can dig and use an item at the same time, like in 1.7. Applies to all versions 1.8 and above. Enabling this option may cause compatibility issues with anti-cheats.
     - Values
         - Type: `Boolean`
         - Default: `false`

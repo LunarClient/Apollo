@@ -40,16 +40,32 @@ public final class CombatModule extends ApolloModule {
     /**
      * Whether the player gets a hit delay for a missed hit.
      *
+     * <p>Enabling this option may cause compatibility issues with anti-cheats.</p>
+     *
      * @since 1.0.4
      */
     public static final SimpleOption<Boolean> DISABLE_MISS_PENALTY = Option.<Boolean>builder()
-        .comment("Set to 'true' to remove the miss penalty on all versions 1.8 and above, otherwise 'false'.")
+        .comment("Set to 'true' to remove the miss penalty on all versions 1.8 and above, otherwise 'false'. Enabling this option may cause compatibility issues with anti-cheats.")
         .node("disable-miss-penalty").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    /**
+     * Whether the player can dig and use an item at the same time,
+     * like in 1.7. Applies to all versions 1.8 and above.
+     *
+     * <p>Enabling this option may cause compatibility issues with anti-cheats.</p>
+     *
+     * @since 1.2.8
+     */
+    public static final SimpleOption<Boolean> ALLOW_DIG_AND_USE = Option.<Boolean>builder()
+        .comment("Set to 'true' to allow digging and using an item at the same time on all versions 1.8 and above, otherwise 'false'. Enabling this option may cause compatibility issues with anti-cheats.")
+        .node("allow-dig-and-use").type(TypeToken.get(Boolean.class))
         .defaultValue(false).notifyClient().build();
 
     CombatModule() {
         this.registerOptions(
-            CombatModule.DISABLE_MISS_PENALTY
+            CombatModule.DISABLE_MISS_PENALTY,
+            CombatModule.ALLOW_DIG_AND_USE
         );
     }
 
