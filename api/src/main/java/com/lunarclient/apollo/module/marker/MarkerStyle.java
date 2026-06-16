@@ -23,6 +23,9 @@
  */
 package com.lunarclient.apollo.module.marker;
 
+import com.lunarclient.apollo.module.marker.display.MarkerDescriptionDisplay;
+import com.lunarclient.apollo.module.marker.display.MarkerDisplayCondition;
+import com.lunarclient.apollo.module.marker.display.MarkerOwnerDisplay;
 import lombok.Builder;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;

@@ -24,6 +24,12 @@
 package com.lunarclient.apollo.module.marker;
 
 import com.lunarclient.apollo.common.location.ApolloLocation;
+import com.lunarclient.apollo.module.marker.display.MarkerFlag;
+import com.lunarclient.apollo.module.marker.target.BlockMarkerTarget;
+import com.lunarclient.apollo.module.marker.target.EntityMarkerTarget;
+import com.lunarclient.apollo.module.marker.target.ItemMarkerTarget;
+import com.lunarclient.apollo.module.marker.target.MarkerTarget;
+import com.lunarclient.apollo.module.marker.target.PlayerMarkerTarget;
 import java.awt.Color;
 import java.time.Duration;
 import java.util.UUID;

@@ -21,27 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.marker;
+package com.lunarclient.apollo.module.marker.target;
 
-import com.lunarclient.apollo.common.icon.ItemStackIcon;
+import com.lunarclient.apollo.module.marker.Marker;
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 
 /**
- * Represents a {@link Marker} that marks an item.
+ * Represents a {@link Marker} that marks a player.
  *
  * @since 1.2.8
  */
 @Getter
 @Builder
-public class ItemMarkerTarget extends MarkerTarget {
+public class PlayerMarkerTarget extends MarkerTarget {
 
     /**
-     * Returns the {@link ItemStackIcon} of the marked item.
+     * Returns the marked player's {@link UUID}.
      *
-     * @return the item stack icon
+     * @return the player uuid
      * @since 1.2.8
      */
-    ItemStackIcon itemStack;
+    UUID playerId;
+
+    /**
+     * Returns the marked player's {@link String} name.
+     *
+     * @return the player name
+     * @since 1.2.8
+     */
+    String playerName;
 
 }

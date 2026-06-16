@@ -21,15 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.marker;
+package com.lunarclient.apollo.module.marker.display;
 
 /**
- * Represents how a marker's description (what was marked) is displayed.
+ * Represents how a marker's owner is displayed.
  *
  * @since 1.2.8
  */
-public enum MarkerDescriptionDisplay {
-    ICON,
-    TEXT
+public enum MarkerOwnerDisplay {
+    HEAD,
+    NAME
 
 }

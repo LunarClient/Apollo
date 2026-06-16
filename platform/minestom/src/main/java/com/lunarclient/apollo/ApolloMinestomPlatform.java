@@ -54,6 +54,8 @@ import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.inventory.InventoryModule;
 import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
+import com.lunarclient.apollo.module.marker.MarkerModule;
+import com.lunarclient.apollo.module.marker.MarkerModuleImpl;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.module.modsettings.ModSettingModuleImpl;
 import com.lunarclient.apollo.module.nametag.NametagModule;
@@ -172,6 +174,7 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
             .addModule(HologramModule.class, new HologramModuleImpl())
             .addModule(InventoryModule.class)
             .addModule(LimbModule.class, new LimbModuleImpl())
+            .addModule(MarkerModule.class, new MarkerModuleImpl())
             .addModule(ModSettingModule.class, new ModSettingModuleImpl())
             .addModule(NametagModule.class, new NametagModuleImpl())
             .addModule(NickHiderModule.class, new NickHiderModuleImpl())

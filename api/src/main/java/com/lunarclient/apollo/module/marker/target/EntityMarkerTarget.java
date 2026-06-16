@@ -21,16 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.marker;
+package com.lunarclient.apollo.module.marker.target;
+
+import com.lunarclient.apollo.module.marker.Marker;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
- * Represents when part of a marker (owner, description, coordinates, distance) is shown.
+ * Represents a {@link Marker} that marks an entity.
  *
  * @since 1.2.8
  */
-public enum MarkerDisplayCondition {
-    NEVER,
-    HOVER,
-    ALWAYS
+@Getter
+@Builder
+public class EntityMarkerTarget extends MarkerTarget {
+
+    /**
+     * Returns the marked entity type's registry name.
+     *
+     * @return the entity type registry name, e.g. {@code minecraft:zombie}
+     * @since 1.2.8
+     */
+    String entityType;
 
 }

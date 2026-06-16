@@ -21,26 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.marker;
+package com.lunarclient.apollo.module.marker.target;
 
+import com.lunarclient.apollo.common.icon.ItemStackIcon;
+import com.lunarclient.apollo.module.marker.Marker;
 import lombok.Builder;
 import lombok.Getter;
 
 /**
- * Represents a {@link Marker} that marks an entity.
+ * Represents a {@link Marker} that marks a block.
  *
  * @since 1.2.8
  */
 @Getter
 @Builder
-public class EntityMarkerTarget extends MarkerTarget {
+public class BlockMarkerTarget extends MarkerTarget {
 
     /**
-     * Returns the marked entity type's registry name.
+     * Returns the {@link ItemStackIcon} of the marked block.
      *
-     * @return the entity type registry name, e.g. {@code minecraft:zombie}
+     * @return the item stack icon
      * @since 1.2.8
      */
-    String entityType;
+    ItemStackIcon itemStack;
 
 }

@@ -21,15 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.marker;
+package com.lunarclient.apollo.module.marker.target;
+
+import com.lunarclient.apollo.common.icon.ItemStackIcon;
+import com.lunarclient.apollo.module.marker.Marker;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
- * Represents how a marker's owner is displayed.
+ * Represents a {@link Marker} that marks an item.
  *
  * @since 1.2.8
  */
-public enum MarkerOwnerDisplay {
-    HEAD,
-    NAME
+@Getter
+@Builder
+public class ItemMarkerTarget extends MarkerTarget {
+
+    /**
+     * Returns the {@link ItemStackIcon} of the marked item.
+     *
+     * @return the item stack icon
+     * @since 1.2.8
+     */
+    ItemStackIcon itemStack;
 
 }

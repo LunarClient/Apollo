@@ -21,7 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.marker;
+package com.lunarclient.apollo.module.marker.target;
+
+import com.lunarclient.apollo.module.marker.Marker;
 
 /**
  * The abstract base class for what a {@link Marker} marks, which drives the description icon

@@ -21,17 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.module.marker;
+package com.lunarclient.apollo.module.marker.display;
 
 /**
- * Represents a marker flag.
+ * Represents when part of a marker (owner, description, coordinates, distance) is shown.
  *
  * @since 1.2.8
  */
-public enum MarkerFlag {
-    NORMAL,
-    DANGER,
-    INFO,
-    INTEREST
+public enum MarkerDisplayCondition {
+    NEVER,
+    HOVER,
+    ALWAYS
 
 }
