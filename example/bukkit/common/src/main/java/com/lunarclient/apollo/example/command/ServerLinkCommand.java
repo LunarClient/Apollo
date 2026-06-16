@@ -25,6 +25,8 @@ package com.lunarclient.apollo.example.command;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.module.impl.ServerLinkExample;
+import java.util.Arrays;
+import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,6 +34,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class ServerLinkCommand implements CommandExecutor {
+
+    private static final List<String> LEGACY_PLACEMENTS = Arrays.asList("NEW_ROW", "REPLACE_ACHIEVEMENTS", "REPLACE_STATISTICS");
+    private static final List<String> MODERN_PLACEMENTS = Arrays.asList("REPLACE_REPORT_BUGS", "REPLACE_ACHIEVEMENTS", "REPLACE_STATISTICS");
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -42,8 +47,8 @@ public class ServerLinkCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (args.length != 1) {
-            player.sendMessage("Usage: /serverlink <overrideResource|resetResource|addServerLink|removeServerLink|resetServerLinks>");
+        if (args.length < 1) {
+            this.sendUsage(player);
             return true;
         }
 
@@ -80,12 +85,55 @@ public class ServerLinkCommand implements CommandExecutor {
                 break;
             }
 
+            case "legacyplacement": {
+                if (args.length != 2) {
+                    player.sendMessage("Usage: /serverlink legacyPlacement <" + String.join("|", LEGACY_PLACEMENTS) + ">");
+                    return true;
+                }
+
+                String placement = args[1].toUpperCase();
+
+                if (!LEGACY_PLACEMENTS.contains(placement)) {
+                    player.sendMessage("Invalid placement, must be one of: " + String.join("|", LEGACY_PLACEMENTS));
+                    return true;
+                }
+
+                serverLinkExample.setLegacyButtonPlacementExample(placement);
+                player.sendMessage("Legacy server link button placement has been set to " + placement);
+                break;
+            }
+
+            case "modernplacement": {
+                if (args.length != 2) {
+                    player.sendMessage("Usage: /serverlink modernPlacement <" + String.join("|", MODERN_PLACEMENTS) + ">");
+                    return true;
+                }
+
+                String placement = args[1].toUpperCase();
+
+                if (!MODERN_PLACEMENTS.contains(placement)) {
+                    player.sendMessage("Invalid placement, must be one of: " + String.join("|", MODERN_PLACEMENTS));
+                    return true;
+                }
+
+                serverLinkExample.setModernButtonPlacementExample(placement);
+                player.sendMessage("Modern server link button placement has been set to " + placement);
+                break;
+            }
+
             default: {
-                player.sendMessage("Usage: /serverlink <overrideResource|resetResource|addServerLink|removeServerLink|resetServerLinks>");
+                this.sendUsage(player);
                 break;
             }
         }
 
         return true;
+    }
+
+    private void sendUsage(Player player) {
+        player.sendMessage("Usage:");
+        player.sendMessage("/serverlink <overrideResource|resetResource|addServerLink|removeServerLink|resetServerLinks>");
+        player.sendMessage("/serverlink legacyPlacement <" + String.join("|", LEGACY_PLACEMENTS) + ">");
+        player.sendMessage("/serverlink modernPlacement <" + String.join("|", MODERN_PLACEMENTS) + ">");
     }
 }

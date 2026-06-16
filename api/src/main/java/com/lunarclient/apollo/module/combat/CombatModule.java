@@ -45,7 +45,10 @@ public final class CombatModule extends ApolloModule {
      * @since 1.0.4
      */
     public static final SimpleOption<Boolean> DISABLE_MISS_PENALTY = Option.<Boolean>builder()
-        .comment("Set to 'true' to remove the miss penalty on all versions 1.8 and above, otherwise 'false'. Enabling this option may cause compatibility issues with anti-cheats.")
+        .comment(
+            "Set to 'true' to remove the miss penalty on all versions 1.8 and above, otherwise 'false'.",
+            "Enabling this option may cause compatibility issues with anti-cheats."
+        )
         .node("disable-miss-penalty").type(TypeToken.get(Boolean.class))
         .defaultValue(false).notifyClient().build();
 
@@ -58,7 +61,10 @@ public final class CombatModule extends ApolloModule {
      * @since 1.2.8
      */
     public static final SimpleOption<Boolean> ALLOW_DIG_AND_USE = Option.<Boolean>builder()
-        .comment("Set to 'true' to allow digging and using an item at the same time on all versions 1.8 and above, otherwise 'false'. Enabling this option may cause compatibility issues with anti-cheats.")
+        .comment(
+            "Set to 'true' to allow digging and using an item at the same time on all versions 1.8 and above, otherwise 'false'.",
+            "Enabling this option may cause compatibility issues with anti-cheats."
+        )
         .node("allow-dig-and-use").type(TypeToken.get(Boolean.class))
         .defaultValue(false).notifyClient().build();
 
