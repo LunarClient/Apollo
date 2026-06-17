@@ -28,7 +28,7 @@ import org.bukkit.entity.Player;
 
 public abstract class MarkerExample extends ApolloModuleExample {
 
-    public abstract void displayLootChestMarkerExample(Player viewer);
+    public abstract void displayBlockMarkerExample(Player viewer);
 
     public abstract void displayPlayerMarkerExample(Player viewer);
 

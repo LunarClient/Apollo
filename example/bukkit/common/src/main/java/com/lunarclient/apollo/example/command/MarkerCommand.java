@@ -51,8 +51,8 @@ public class MarkerCommand implements CommandExecutor {
 
         switch (args[0].toLowerCase()) {
             case "chest": {
-                markerExample.displayLootChestMarkerExample(player);
-                player.sendMessage("Marking a loot chest....");
+                markerExample.displayBlockMarkerExample(player);
+                player.sendMessage("Marking a block....");
                 break;
             }
 

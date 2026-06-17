@@ -25,10 +25,10 @@ Explore each integration by cycling through each tab, to find the best fit for y
 **Apollo API examples.** See [General](/apollo/developers/general) for common patterns and helpers.
 </Callout>
 
-### Marking a loot chest
+### Marking a block
 
 ```java
-public void displayLootChestMarkerExample(Player viewer) {
+public void displayBlockMarkerExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
@@ -296,10 +296,10 @@ When `compactMode` is enabled the marker uses a compact single-row layout, and
     Make sure the server is sending the world name to the client as shown in the [Player Detection](/apollo/developers/lightweight/protobuf/player-detection) example.
 </Callout>
 
-**Marking a loot chest**
+**Marking a block**
 
 ```java
-public void displayLootChestMarkerExample(Player viewer) {
+public void displayBlockMarkerExample(Player viewer) {
     DisplayMarkerMessage message = DisplayMarkerMessage.newBuilder()
         .setId("loot-chest")
         .setLocation(ProtobufUtil.createLocationProto(viewer.getLocation()))
@@ -482,10 +482,10 @@ public void resetMarkersExample(Player viewer) {
     Make sure the server is sending the world name to the client as shown in the [Player Detection](/apollo/developers/lightweight/json/player-detection) example.
 </Callout>
 
-**Marking a loot chest**
+**Marking a block**
 
 ```java
-public void displayLootChestMarkerExample(Player viewer) {
+public void displayBlockMarkerExample(Player viewer) {
     JsonObject message = new JsonObject();
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.marker.v1.DisplayMarkerMessage");
     message.addProperty("id", "loot-chest");

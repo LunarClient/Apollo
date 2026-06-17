@@ -50,7 +50,7 @@ public class MarkerApiExample extends MarkerExample {
     private final MarkerModule markerModule = Apollo.getModuleManager().getModule(MarkerModule.class);
 
     @Override
-    public void displayLootChestMarkerExample(Player viewer) {
+    public void displayBlockMarkerExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {

@@ -52,7 +52,7 @@ import org.bukkit.entity.Player;
 public class MarkerProtoExample extends MarkerExample {
 
     @Override
-    public void displayLootChestMarkerExample(Player viewer) {
+    public void displayBlockMarkerExample(Player viewer) {
         DisplayMarkerMessage message = DisplayMarkerMessage.newBuilder()
             .setId("loot-chest")
             .setLocation(ProtobufUtil.createLocationProto(viewer.getLocation()))

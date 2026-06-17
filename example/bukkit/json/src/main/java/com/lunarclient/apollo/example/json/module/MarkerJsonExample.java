@@ -37,7 +37,7 @@ import org.bukkit.entity.Player;
 public class MarkerJsonExample extends MarkerExample {
 
     @Override
-    public void displayLootChestMarkerExample(Player viewer) {
+    public void displayBlockMarkerExample(Player viewer) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.marker.v1.DisplayMarkerMessage");
         message.addProperty("id", "loot-chest");
