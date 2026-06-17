@@ -42,6 +42,8 @@ commands:
         description: "Inventory!"
     limb:
         description: "Limb!"
+    marker:
+        description: "Markers!"
     modsettings:
         description: "ModSettings!"
     nametag:

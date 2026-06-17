@@ -38,6 +38,7 @@ import com.lunarclient.apollo.example.json.module.EntityJsonExample;
 import com.lunarclient.apollo.example.json.module.GlowJsonExample;
 import com.lunarclient.apollo.example.json.module.HologramJsonExample;
 import com.lunarclient.apollo.example.json.module.LimbJsonExample;
+import com.lunarclient.apollo.example.json.module.MarkerJsonExample;
 import com.lunarclient.apollo.example.json.module.ModSettingsJsonExample;
 import com.lunarclient.apollo.example.json.module.NametagJsonExample;
 import com.lunarclient.apollo.example.json.module.NickHiderJsonExample;
@@ -82,6 +83,7 @@ public class ApolloJsonExamplePlatform extends ApolloExamplePlugin {
         this.setGlowExample(new GlowJsonExample());
         this.setHologramExample(new HologramJsonExample());
         this.setLimbExample(new LimbJsonExample());
+        this.setMarkerExample(new MarkerJsonExample());
         this.setModSettingsExample(new ModSettingsJsonExample());
         this.setNametagExample(new NametagJsonExample());
         this.setNickHiderExample(new NickHiderJsonExample());
