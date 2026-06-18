@@ -21,25 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.module.impl;
+package com.lunarclient.apollo.module.serverlink.pausemenu;
 
-import com.lunarclient.apollo.example.module.ApolloModuleExample;
-import org.bukkit.entity.Player;
+/**
+ * Represents where the server links button is placed in the pause menu
+ * (1.7-1.12), where it is added on a new line by default.
+ *
+ * @since 1.2.8
+ */
+public enum LegacyServerLinkPlacement {
 
-public abstract class ServerLinkExample extends ApolloModuleExample {
+    /**
+     * Adds the server links button on a dedicated new row, shifting the
+     * remaining buttons down.
+     *
+     * @since 1.2.8
+     */
+    NEW_ROW,
 
-    public abstract void overrideServerLinkResourceExample(Player viewer);
+    /**
+     * Replaces the vanilla achievements button with the server links button.
+     *
+     * @since 1.2.8
+     */
+    REPLACE_ACHIEVEMENTS,
 
-    public abstract void resetServerLinkResourceExample(Player viewer);
-
-    public abstract void addServerLinkExample(Player viewer);
-
-    public abstract void removeServerLinkExample(Player viewer);
-
-    public abstract void resetServerLinksExample(Player viewer);
-
-    public abstract void setLegacyButtonPlacementExample(String placement);
-
-    public abstract void setModernButtonPlacementExample(String placement);
+    /**
+     * Replaces the vanilla statistics button with the server links button.
+     *
+     * @since 1.2.8
+     */
+    REPLACE_STATISTICS
 
 }

@@ -29,6 +29,8 @@ import com.lunarclient.apollo.common.icon.ResourceLocationIcon;
 import com.lunarclient.apollo.example.module.impl.ServerLinkExample;
 import com.lunarclient.apollo.module.serverlink.ServerLink;
 import com.lunarclient.apollo.module.serverlink.ServerLinkModule;
+import com.lunarclient.apollo.module.serverlink.pausemenu.LegacyServerLinkPlacement;
+import com.lunarclient.apollo.module.serverlink.pausemenu.ModernServerLinkPlacement;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.Optional;
 import net.kyori.adventure.text.Component;
@@ -96,6 +98,18 @@ public class ServerLinkApiExample extends ServerLinkExample {
     public void resetServerLinksExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
         apolloPlayerOpt.ifPresent(this.serverLinkModule::resetServerLinks);
+    }
+
+    @Override
+    public void setLegacyButtonPlacementExample(String placement) {
+        LegacyServerLinkPlacement legacyPlacement = LegacyServerLinkPlacement.valueOf(placement);
+        this.serverLinkModule.getOptions().set(ServerLinkModule.LEGACY_BUTTON_PLACEMENT, legacyPlacement);
+    }
+
+    @Override
+    public void setModernButtonPlacementExample(String placement) {
+        ModernServerLinkPlacement modernPlacement = ModernServerLinkPlacement.valueOf(placement);
+        this.serverLinkModule.getOptions().set(ServerLinkModule.MODERN_BUTTON_PLACEMENT, modernPlacement);
     }
 
 }

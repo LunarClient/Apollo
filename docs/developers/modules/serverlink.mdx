@@ -100,6 +100,24 @@ public void resetServerLinksExample(Player viewer) {
 }
 ```
 
+### Set Legacy Button Placement
+
+```java
+public void setLegacyButtonPlacementExample(String placement) {
+    LegacyServerLinkPlacement legacyPlacement = LegacyServerLinkPlacement.valueOf(placement);
+    this.serverLinkModule.getOptions().set(ServerLinkModule.LEGACY_BUTTON_PLACEMENT, legacyPlacement);
+}
+```
+
+### Set Modern Button Placement
+
+```java
+public void setModernButtonPlacementExample(String placement) {
+    ModernServerLinkPlacement modernPlacement = ModernServerLinkPlacement.valueOf(placement);
+    this.serverLinkModule.getOptions().set(ServerLinkModule.MODERN_BUTTON_PLACEMENT, modernPlacement);
+}
+```
+
 ### `ServerLink` Options
 
 `.id(String)` sets a unique identifier for the server link.
@@ -205,6 +223,30 @@ public void resetServerLinksExample(Player viewer) {
 }
 ```
 
+**Set Legacy Button Placement**
+
+```java
+public void setLegacyButtonPlacementExample(String placement) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("legacy-button-placement", Value.newBuilder().setStringValue(placement).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("server_link", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+**Set Modern Button Placement**
+
+```java
+public void setModernButtonPlacementExample(String placement) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("modern-button-placement", Value.newBuilder().setStringValue(placement).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("server_link", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
 </Tab>
 
 <Tab>
@@ -288,6 +330,44 @@ public void resetServerLinksExample(Player viewer) {
 }
 ```
 
+**Set Legacy Button Placement**
+
+```java
+public void setLegacyButtonPlacementExample(String placement) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("legacy-button-placement", placement);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("server_link", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+**Set Modern Button Placement**
+
+```java
+public void setModernButtonPlacementExample(String placement) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("modern-button-placement", placement);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("server_link", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
 </Tab>
 
 </Tabs>
+
+## Available options
+
+- __`LEGACY_BUTTON_PLACEMENT`__
+    - Where the server links button appears in the pause menu (1.7-1.12), where it is added on a new line by default.
+    - Values
+        - Type: `LegacyServerLinkPlacement` (`NEW_ROW`, `REPLACE_ACHIEVEMENTS`, `REPLACE_STATISTICS`)
+        - Default: `NEW_ROW`
+
+- __`MODERN_BUTTON_PLACEMENT`__
+    - Where the server links button appears in the pause menu (1.16.1+), where it replaces the existing report bugs button by default. Has no effect on 1.21+ (handled natively).
+    - Values
+        - Type: `ModernServerLinkPlacement` (`REPLACE_REPORT_BUGS`, `REPLACE_ACHIEVEMENTS`, `REPLACE_STATISTICS`)
+        - Default: `REPLACE_REPORT_BUGS`

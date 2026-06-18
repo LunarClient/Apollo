@@ -24,6 +24,8 @@
 package com.lunarclient.apollo.example.proto.module;
 
 import com.google.common.collect.Lists;
+import com.google.protobuf.Value;
+import com.lunarclient.apollo.configurable.v1.ConfigurableSettings;
 import com.lunarclient.apollo.example.module.impl.ServerLinkExample;
 import com.lunarclient.apollo.example.proto.util.AdventureUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
@@ -34,7 +36,9 @@ import com.lunarclient.apollo.serverlink.v1.RemoveServerLinkMessage;
 import com.lunarclient.apollo.serverlink.v1.ResetServerLinkResourceMessage;
 import com.lunarclient.apollo.serverlink.v1.ResetServerLinksMessage;
 import com.lunarclient.apollo.serverlink.v1.ServerLink;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
@@ -101,6 +105,24 @@ public class ServerLinkProtoExample extends ServerLinkExample {
     public void resetServerLinksExample(Player viewer) {
         ResetServerLinksMessage message = ResetServerLinksMessage.getDefaultInstance();
         ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void setLegacyButtonPlacementExample(String placement) {
+        Map<String, Value> properties = new HashMap<>();
+        properties.put("legacy-button-placement", Value.newBuilder().setStringValue(placement).build());
+
+        ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("server_link", properties);
+        ProtobufPacketUtil.broadcastPacket(settings);
+    }
+
+    @Override
+    public void setModernButtonPlacementExample(String placement) {
+        Map<String, Value> properties = new HashMap<>();
+        properties.put("modern-button-placement", Value.newBuilder().setStringValue(placement).build());
+
+        ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("server_link", properties);
+        ProtobufPacketUtil.broadcastPacket(settings);
     }
 
 }
