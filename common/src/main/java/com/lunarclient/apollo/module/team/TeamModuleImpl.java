@@ -23,10 +23,10 @@
  */
 package com.lunarclient.apollo.module.team;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.team.v1.ResetTeamMembersMessage;
 import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
@@ -53,13 +53,13 @@ public final class TeamModuleImpl extends TeamModule {
             .addAllMembers(teamMembersProto)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetTeamMembers(@NonNull Recipients recipients) {
         ResetTeamMembersMessage message = ResetTeamMembersMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     private com.lunarclient.apollo.team.v1.TeamMember toProtobuf(TeamMember member) {

@@ -23,12 +23,12 @@
  */
 package com.lunarclient.apollo.module.nametag;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.nametag.v1.OverrideNametagMessage;
 import com.lunarclient.apollo.nametag.v1.ResetNametagMessage;
 import com.lunarclient.apollo.nametag.v1.ResetNametagsMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.util.List;
 import java.util.UUID;
@@ -53,7 +53,7 @@ public final class NametagModuleImpl extends NametagModule {
             .addAllAdventureJsonLines(lines)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -62,13 +62,13 @@ public final class NametagModuleImpl extends NametagModule {
             .setPlayerUuid(NetworkTypes.toProtobuf(playerUuid))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetNametags(@NonNull Recipients recipients) {
         ResetNametagsMessage message = ResetNametagsMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

@@ -23,10 +23,10 @@
  */
 package com.lunarclient.apollo.module.serverlink;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.common.icon.ResourceLocationIcon;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.serverlink.v1.AddServerLinkMessage;
 import com.lunarclient.apollo.serverlink.v1.OverrideServerLinkResourceMessage;
@@ -51,13 +51,13 @@ public final class ServerLinkModuleImpl extends ServerLinkModule {
             .setIcon(NetworkTypes.toProtobuf(icon))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetServerLinkResource(@NonNull Recipients recipients) {
         ResetServerLinkResourceMessage message = ResetServerLinkResourceMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -75,7 +75,7 @@ public final class ServerLinkModuleImpl extends ServerLinkModule {
             .addAllServerLinks(serverLinksProto)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -94,13 +94,13 @@ public final class ServerLinkModuleImpl extends ServerLinkModule {
             .addAllServerLinkIds(serverLinkIds)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetServerLinks(@NonNull Recipients recipients) {
         ResetServerLinksMessage message = ResetServerLinksMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     private com.lunarclient.apollo.serverlink.v1.ServerLink toProtobuf(ServerLink serverLink) {

@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.module.vignette;
 
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.vignette.v1.DisplayVignetteMessage;
 import com.lunarclient.apollo.vignette.v1.ResetVignetteMessage;
@@ -45,13 +45,13 @@ public final class VignetteModuleImpl extends VignetteModule {
             .setOpacity(checkRange(vignette.getOpacity(), 0, 1, "Vignette#opacity"))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetVignette(@NonNull Recipients recipients) {
         ResetVignetteMessage message = ResetVignetteMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }
