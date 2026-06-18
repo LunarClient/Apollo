@@ -30,6 +30,8 @@ import com.lunarclient.apollo.example.json.util.AdventureUtil;
 import com.lunarclient.apollo.example.json.util.JsonPacketUtil;
 import com.lunarclient.apollo.example.json.util.JsonUtil;
 import com.lunarclient.apollo.example.module.impl.ServerLinkExample;
+import java.util.HashMap;
+import java.util.Map;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
@@ -94,6 +96,24 @@ public class ServerLinkJsonExample extends ServerLinkExample {
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.serverlink.v1.ResetServerLinksMessage");
 
         JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void setLegacyButtonPlacementExample(String placement) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("legacy-button-placement", placement);
+
+        JsonObject message = JsonUtil.createEnableModuleObjectWithType("server_link", properties);
+        JsonPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void setModernButtonPlacementExample(String placement) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("modern-button-placement", placement);
+
+        JsonObject message = JsonUtil.createEnableModuleObjectWithType("server_link", properties);
+        JsonPacketUtil.broadcastPacket(message);
     }
 
 }

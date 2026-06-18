@@ -87,6 +87,22 @@ public abstract class OptionBuilder<V, M extends OptionBuilder<V, M, I>, I exten
     }
 
     /**
+     * Sets the option comment to the provided lines, joined with a newline, and
+     * returns this builder.
+     *
+     * <p>Each provided line is rendered as its own comment line in the
+     * configuration.</p>
+     *
+     * @param lines the comment lines
+     * @return this builder
+     * @since 1.2.8
+     */
+    public M comment(@NonNull String... lines) {
+        this.comment = String.join("\n", lines);
+        return (M) this;
+    }
+
+    /**
      * Sets the option default value to the provided {@code T} value and
      * returns this builder.
      *

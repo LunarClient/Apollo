@@ -21,25 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.module.impl;
+package com.lunarclient.apollo.module.serverlink.pausemenu;
 
-import com.lunarclient.apollo.example.module.ApolloModuleExample;
-import org.bukkit.entity.Player;
+/**
+ * Represents where the server links button is placed in the pause menu
+ * (1.16.1+), where it replaces the existing report bugs button by default.
+ *
+ * <p>On 1.21 and above the server links button is handled natively and this
+ * option has no effect.</p>
+ *
+ * @since 1.2.8
+ */
+public enum ModernServerLinkPlacement {
 
-public abstract class ServerLinkExample extends ApolloModuleExample {
+    /**
+     * Replaces the report bugs button with the server links button.
+     *
+     * @since 1.2.8
+     */
+    REPLACE_REPORT_BUGS,
 
-    public abstract void overrideServerLinkResourceExample(Player viewer);
+    /**
+     * Replaces the vanilla advancements button with the server links button.
+     *
+     * @since 1.2.8
+     */
+    REPLACE_ACHIEVEMENTS,
 
-    public abstract void resetServerLinkResourceExample(Player viewer);
-
-    public abstract void addServerLinkExample(Player viewer);
-
-    public abstract void removeServerLinkExample(Player viewer);
-
-    public abstract void resetServerLinksExample(Player viewer);
-
-    public abstract void setLegacyButtonPlacementExample(String placement);
-
-    public abstract void setModernButtonPlacementExample(String placement);
+    /**
+     * Replaces the vanilla statistics button with the server links button.
+     *
+     * @since 1.2.8
+     */
+    REPLACE_STATISTICS
 
 }
