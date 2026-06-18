@@ -27,12 +27,11 @@ import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayerManager;
 import com.lunarclient.apollo.recipients.Recipients;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import lombok.NonNull;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.Player;
@@ -76,11 +75,12 @@ public final class MinestomApollo {
      */
     public static Recipients getRecipientsFrom(@NonNull Collection<Player> players) {
         ApolloPlayerManager playerManager = Apollo.getPlayerManager();
-        List<ApolloPlayer> apolloPlayers = players.stream()
-            .map(player -> playerManager.getPlayer(player.getUuid()))
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .collect(Collectors.toList());
+        List<ApolloPlayer> apolloPlayers = new ArrayList<>(players.size());
+
+        for (Player player : players) {
+            playerManager.getPlayer(player.getUuid())
+                .ifPresent(apolloPlayers::add);
+        }
 
         return Recipients.of(apolloPlayers);
     }

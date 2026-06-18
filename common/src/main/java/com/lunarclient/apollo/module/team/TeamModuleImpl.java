@@ -32,7 +32,6 @@ import com.lunarclient.apollo.team.v1.ResetTeamMembersMessage;
 import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
 import java.awt.Color;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.NonNull;
 import net.kyori.adventure.text.Component;
 
@@ -45,15 +44,13 @@ public final class TeamModuleImpl extends TeamModule {
 
     @Override
     public void updateTeamMembers(@NonNull Recipients recipients, @NonNull List<TeamMember> teamMembers) {
-        List<com.lunarclient.apollo.team.v1.TeamMember> teamMembersProto = teamMembers.stream()
-            .map(this::toProtobuf)
-            .collect(Collectors.toList());
+        UpdateTeamMembersMessage.Builder builder = UpdateTeamMembersMessage.newBuilder();
 
-        UpdateTeamMembersMessage message = UpdateTeamMembersMessage.newBuilder()
-            .addAllMembers(teamMembersProto)
-            .build();
+        for (TeamMember teamMember : teamMembers) {
+            builder.addMembers(this.toProtobuf(teamMember));
+        }
 
-        ApolloManager.getNetworkManager().sendPacket(recipients, message);
+        ApolloManager.getNetworkManager().sendPacket(recipients, builder.build());
     }
 
     @Override
