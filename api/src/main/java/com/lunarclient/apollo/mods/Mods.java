@@ -26,6 +26,7 @@ package com.lunarclient.apollo.mods;
 import com.lunarclient.apollo.mods.impl.Mod2dItems;
 import com.lunarclient.apollo.mods.impl.Mod3dSkins;
 import com.lunarclient.apollo.mods.impl.ModArmorstatus;
+import com.lunarclient.apollo.mods.impl.ModAttackIndicator;
 import com.lunarclient.apollo.mods.impl.ModAudioSubtitles;
 import com.lunarclient.apollo.mods.impl.ModAutoTextActions;
 import com.lunarclient.apollo.mods.impl.ModAutoTextHotkey;
@@ -49,6 +50,7 @@ import com.lunarclient.apollo.mods.impl.ModFov;
 import com.lunarclient.apollo.mods.impl.ModFps;
 import com.lunarclient.apollo.mods.impl.ModFreelook;
 import com.lunarclient.apollo.mods.impl.ModGlintColorizer;
+import com.lunarclient.apollo.mods.impl.ModGuiScale;
 import com.lunarclient.apollo.mods.impl.ModHitColor;
 import com.lunarclient.apollo.mods.impl.ModHitbox;
 import com.lunarclient.apollo.mods.impl.ModHorseStats;
@@ -145,6 +147,7 @@ public final class Mods {
             ModCoordinates.class,
             ModDayCounter.class,
             ModCrosshair.class,
+            ModAttackIndicator.class,
             ModPotionEffects.class,
             ModDirectionHud.class,
             ModWaypoints.class,
@@ -219,9 +222,10 @@ public final class Mods {
             ModKillSounds.class,
             ModInventoryMod.class,
             ModF3Display.class,
+            ModGuiScale.class,
             ModRadio.class,
-            ModUhcOverlay.class,
             ModSba.class,
+            ModUhcOverlay.class,
             ModNeu.class
         );
 
