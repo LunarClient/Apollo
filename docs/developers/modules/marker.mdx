@@ -268,6 +268,11 @@ public void resetMarkersExample(Player viewer) {
 
 `.style(MarkerStyle)` overrides the marker's appearance and text. Leave unset (or `null`) to defer entirely to the player's own Markers mod settings.
 
+<Callout type="info">
+When `compactMode` is enabled the marker uses a compact single-row layout, and
+`ownerDisplay`, `descriptionDisplay` and `ownerSuffix` are ignored.
+</Callout>
+
 ```java
 .style(MarkerStyle.builder()
     .scale(1.0F)                                       // 0.5F to 2.0F
@@ -284,11 +289,6 @@ public void resetMarkersExample(Player viewer) {
     .build()
 )
 ```
-
-<Callout type="info">
-When `compactMode` is enabled the marker uses a compact single-row layout, and
-`ownerDisplay`, `descriptionDisplay` and `ownerSuffix` are ignored.
-</Callout>
 
 </Tab>
 
