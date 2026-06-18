@@ -25,13 +25,16 @@ package com.lunarclient.apollo.wrapper;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.player.ApolloPlayerManager;
 import com.lunarclient.apollo.recipients.ForwardingRecipients;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.world.ApolloWorld;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Set;
 import lombok.AllArgsConstructor;
+import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
 
 /**
@@ -51,11 +54,16 @@ public final class MinestomApolloWorld implements ApolloWorld, ForwardingRecipie
 
     @Override
     public Collection<ApolloPlayer> getPlayers() {
-        return this.instance.getPlayers().stream()
-            .map(player -> Apollo.getPlayerManager().getPlayer(player.getUuid()))
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .collect(Collectors.toList());
+        ApolloPlayerManager playerManager = Apollo.getPlayerManager();
+        Set<Player> players = this.instance.getPlayers();
+        List<ApolloPlayer> apolloPlayers = new ArrayList<>(players.size());
+
+        for (Player player : players) {
+            playerManager.getPlayer(player.getUuid())
+                .ifPresent(apolloPlayers::add);
+        }
+
+        return apolloPlayers;
     }
 
     @Override

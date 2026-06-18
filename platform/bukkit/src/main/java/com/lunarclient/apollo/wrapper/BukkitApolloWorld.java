@@ -25,14 +25,16 @@ package com.lunarclient.apollo.wrapper;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.player.ApolloPlayerManager;
 import com.lunarclient.apollo.recipients.ForwardingRecipients;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.world.ApolloWorld;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 /**
  * The Bukkit implementation of {@link ApolloWorld}.
@@ -51,11 +53,16 @@ public final class BukkitApolloWorld implements ApolloWorld, ForwardingRecipient
 
     @Override
     public Collection<ApolloPlayer> getPlayers() {
-        return this.world.getPlayers().stream()
-            .map(player -> Apollo.getPlayerManager().getPlayer(player.getUniqueId()))
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .collect(Collectors.toList());
+        ApolloPlayerManager playerManager = Apollo.getPlayerManager();
+        List<Player> players = this.world.getPlayers();
+        List<ApolloPlayer> apolloPlayers = new ArrayList<>(players.size());
+
+        for (Player player : players) {
+            playerManager.getPlayer(player.getUniqueId())
+                .ifPresent(apolloPlayers::add);
+        }
+
+        return apolloPlayers;
     }
 
     @Override
