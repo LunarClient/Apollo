@@ -48,6 +48,16 @@ public abstract class StaffModModule extends ApolloModule {
     public abstract void enableStaffMods(Recipients recipients, List<StaffMod> mods);
 
     /**
+     * Enables the {@link StaffMod}s for the {@link Recipients}.
+     *
+     * @param recipients       the recipients that are receiving the packet
+     * @param mods             the staff mods
+     * @param enabledByDefault whether the staff mods should be enabled by default on the client
+     * @since 1.2.8
+     */
+    public abstract void enableStaffMods(Recipients recipients, List<StaffMod> mods, boolean enabledByDefault);
+
+    /**
      * Disables the {@link StaffMod}s from the {@link Recipients}.
      *
      * @param recipients the recipients that are receiving the packet
@@ -63,6 +73,15 @@ public abstract class StaffModModule extends ApolloModule {
      * @since 1.0.0
      */
     public abstract void enableAllStaffMods(Recipients recipients);
+
+    /**
+     * Enables all {@link StaffMod}s for the {@link Recipients}.
+     *
+     * @param recipients       the recipients that are receiving the packet
+     * @param enabledByDefault whether the staff mods should be enabled by default on the client
+     * @since 1.2.8
+     */
+    public abstract void enableAllStaffMods(Recipients recipients, boolean enabledByDefault);
 
     /**
      * Disables all {@link StaffMod}s from the {@link Recipients}.
