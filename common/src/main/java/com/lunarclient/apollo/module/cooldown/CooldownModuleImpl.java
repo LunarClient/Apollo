@@ -23,11 +23,11 @@
  */
 package com.lunarclient.apollo.module.cooldown;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.cooldown.v1.DisplayCooldownMessage;
 import com.lunarclient.apollo.cooldown.v1.RemoveCooldownMessage;
 import com.lunarclient.apollo.cooldown.v1.ResetCooldownsMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.awt.Color;
 import lombok.NonNull;
@@ -52,7 +52,7 @@ public final class CooldownModuleImpl extends CooldownModule {
         }
 
         DisplayCooldownMessage message = builder.build();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -61,7 +61,7 @@ public final class CooldownModuleImpl extends CooldownModule {
             .setName(cooldownName)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -72,7 +72,7 @@ public final class CooldownModuleImpl extends CooldownModule {
     @Override
     public void resetCooldowns(@NonNull Recipients recipients) {
         ResetCooldownsMessage message = ResetCooldownsMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     private com.lunarclient.apollo.cooldown.v1.CooldownStyle toProtobuf(CooldownStyle style) {

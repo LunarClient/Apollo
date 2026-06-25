@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.title;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.title.v1.DisplayTitleMessage;
 import com.lunarclient.apollo.title.v1.ResetTitlesMessage;
@@ -54,13 +54,13 @@ public final class TitleModuleImpl extends TitleModule {
             .setInterpolationRate(checkPositive(title.getInterpolationRate(), "Title#interpolationRate"))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetTitles(@NonNull Recipients recipients) {
         ResetTitlesMessage message = ResetTitlesMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

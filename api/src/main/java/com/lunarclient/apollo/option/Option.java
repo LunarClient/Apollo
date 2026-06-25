@@ -130,6 +130,15 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
      */
     boolean notify;
 
+    /**
+     * Returns the option key.
+     *
+     * @return the key string
+     * @since 1.2.8
+     */
+    @EqualsAndHashCode.Exclude
+    String key;
+
     Option(M builder) {
         this.path = requireNonNull(builder.node, "node");
         this.typeToken = requireNonNull(builder.typeToken, "typeToken");
@@ -137,16 +146,8 @@ public abstract class Option<V, M extends OptionBuilder<V, M, I>, I extends Opti
         this.comment = builder.comment;
         this.defaultValue = builder.defaultValue;
         this.notify = builder.notify;
-    }
 
-    /**
-     * Returns the key as a joined {@link String}.
-     *
-     * @return the key string
-     * @since 1.0.0
-     */
-    public String getKey() {
-        return String.join(".", this.getPath());
+        this.key = String.join(".", this.path);
     }
 
     @Override
