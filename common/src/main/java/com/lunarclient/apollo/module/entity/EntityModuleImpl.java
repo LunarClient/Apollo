@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.module.entity;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.entity.v1.FlipEntityMessage;
@@ -30,7 +31,6 @@ import com.lunarclient.apollo.entity.v1.OverrideRainbowSheepMessage;
 import com.lunarclient.apollo.entity.v1.ResetFlipedEntityMessage;
 import com.lunarclient.apollo.entity.v1.ResetRainbowSheepMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.util.List;
 import java.util.Set;
@@ -54,7 +54,7 @@ public final class EntityModuleImpl extends EntityModule {
             .addAllEntityIds(sheepUuidsProto)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -67,7 +67,7 @@ public final class EntityModuleImpl extends EntityModule {
             .addAllEntityIds(sheepUuidsProto)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -80,7 +80,7 @@ public final class EntityModuleImpl extends EntityModule {
             .addAllEntityIds(entityUuidsProto)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -93,7 +93,7 @@ public final class EntityModuleImpl extends EntityModule {
             .addAllEntityIds(entityUuidsProto)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

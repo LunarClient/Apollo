@@ -24,6 +24,7 @@
 package com.lunarclient.apollo.network;
 
 import com.google.protobuf.Any;
+import com.google.protobuf.Message;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
@@ -31,6 +32,7 @@ import com.lunarclient.apollo.event.ApolloSendPacketEvent;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.util.UUID;
 import lombok.NoArgsConstructor;
 
@@ -60,6 +62,31 @@ public final class ApolloNetworkManager {
         for (Throwable throwable : result.getThrowing()) {
             throwable.printStackTrace();
         }
+    }
+
+    /**
+     * Sends the provided message packet to the provided {@link Recipients}.
+     *
+     * @param recipients the recipients to send the packet to
+     * @param message    the message to send
+     * @since 1.2.8
+     */
+    public void sendPacket(Recipients recipients, Message message) {
+        Any packet = Any.pack(message);
+        byte[] data = packet.toByteArray();
+
+        recipients.forEach(recipient -> {
+            EventBus.EventResult<ApolloSendPacketEvent> result = EventBus.getBus()
+                .post(new ApolloSendPacketEvent((ApolloPlayer) recipient, packet));
+
+            if (!result.getEvent().isCancelled()) {
+                ((AbstractApolloPlayer) recipient).sendPacket(data);
+            }
+
+            for (Throwable throwable : result.getThrowing()) {
+                throwable.printStackTrace();
+            }
+        });
     }
 
     /**

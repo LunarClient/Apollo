@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.module.tebex;
 
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.tebex.v1.OpenTebexEmbeddedCheckoutMessage;
 import lombok.NonNull;
@@ -50,7 +50,7 @@ public final class TebexModuleImpl extends TebexModule {
         }
 
         OpenTebexEmbeddedCheckoutMessage message = builder.build();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }
