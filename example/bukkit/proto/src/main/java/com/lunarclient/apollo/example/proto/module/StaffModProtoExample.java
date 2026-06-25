@@ -41,6 +41,7 @@ public class StaffModProtoExample extends StaffModExample {
 
         EnableStaffModsMessage message = EnableStaffModsMessage.newBuilder()
             .addAllStaffMods(Collections.singletonList(StaffMod.STAFF_MOD_XRAY))
+            .setEnabledByDefault(true)
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);
