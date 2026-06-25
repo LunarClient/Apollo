@@ -23,10 +23,10 @@
  */
 package com.lunarclient.apollo.module.chat;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage;
 import com.lunarclient.apollo.chat.v1.RemoveLiveChatMessageMessage;
 import com.lunarclient.apollo.common.ApolloComponent;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 import net.kyori.adventure.text.Component;
@@ -45,7 +45,7 @@ public final class ChatModuleImpl extends ChatModule {
             .setMessageId(messageId)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -54,7 +54,7 @@ public final class ChatModuleImpl extends ChatModule {
             .setMessageId(messageId)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

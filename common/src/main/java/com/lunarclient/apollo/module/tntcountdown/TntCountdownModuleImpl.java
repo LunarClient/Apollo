@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.tntcountdown;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.ApolloEntity;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.tntcountdown.v1.SetTntCountdownMessage;
 import lombok.NonNull;
@@ -51,7 +51,7 @@ public final class TntCountdownModuleImpl extends TntCountdownModule {
             .setDurationTicks(checkPositive(ticks, "TntCountdown#ticks"))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

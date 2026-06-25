@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.module.staffmod;
 
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.staffmod.v1.DisableStaffModsMessage;
 import com.lunarclient.apollo.staffmod.v1.EnableStaffModsMessage;
@@ -62,7 +62,7 @@ public final class StaffModModuleImpl extends StaffModModule {
             .addAllStaffMods(staffModsProto)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -75,17 +75,17 @@ public final class StaffModModuleImpl extends StaffModModule {
             .addAllStaffMods(staffModsProto)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void enableAllStaffMods(@NonNull Recipients recipients) {
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(this.enableAllStaffModsMessage));
+        ApolloManager.getNetworkManager().sendPacket(recipients, this.enableAllStaffModsMessage);
     }
 
     @Override
     public void disableAllStaffMods(@NonNull Recipients recipients) {
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(this.disableAllStaffModsMessage));
+        ApolloManager.getNetworkManager().sendPacket(recipients, this.disableAllStaffModsMessage);
     }
 
     private com.lunarclient.apollo.staffmod.v1.StaffMod toProtobuf(StaffMod staffMod) {

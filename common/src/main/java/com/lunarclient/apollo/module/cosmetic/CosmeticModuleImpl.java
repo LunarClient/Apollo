@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.module.cosmetic;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.cosmetic.v1.DisplaySprayMessage;
 import com.lunarclient.apollo.cosmetic.v1.EquipNpcCosmeticsMessage;
@@ -39,7 +40,6 @@ import com.lunarclient.apollo.module.cosmetic.options.CosmeticOptions;
 import com.lunarclient.apollo.module.cosmetic.options.HatOptions;
 import com.lunarclient.apollo.module.cosmetic.options.PetOptions;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.util.List;
 import java.util.UUID;
@@ -73,7 +73,7 @@ public final class CosmeticModuleImpl extends CosmeticModule {
             .setCopyLocalCosmetics(copyLocalCosmetics)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -87,7 +87,7 @@ public final class CosmeticModuleImpl extends CosmeticModule {
             .addAllCosmeticIds(validatedIds)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -96,7 +96,7 @@ public final class CosmeticModuleImpl extends CosmeticModule {
             .setNpcUuid(NetworkTypes.toProtobuf(npcUuid))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -109,7 +109,7 @@ public final class CosmeticModuleImpl extends CosmeticModule {
                 .build())
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -118,13 +118,13 @@ public final class CosmeticModuleImpl extends CosmeticModule {
             .setNpcUuid(NetworkTypes.toProtobuf(npcUuid))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetNpcEmotes(@NonNull Recipients recipients) {
         ResetNpcEmotesMessage message = ResetNpcEmotesMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -137,7 +137,7 @@ public final class CosmeticModuleImpl extends CosmeticModule {
             .setDuration(NetworkTypes.toProtobuf(spray.getDuration()))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -146,7 +146,7 @@ public final class CosmeticModuleImpl extends CosmeticModule {
             .setSprayId(checkStrictlyPositive(sprayId, "Spray#sprayId"))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -159,13 +159,13 @@ public final class CosmeticModuleImpl extends CosmeticModule {
         }
 
         RemoveSprayMessage message = builder.build();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetSprays(@NonNull Recipients recipients) {
         ResetSpraysMessage message = ResetSpraysMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     private com.lunarclient.apollo.cosmetic.v1.Cosmetic toProtobuf(Cosmetic cosmetic) {

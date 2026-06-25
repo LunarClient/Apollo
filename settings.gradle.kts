@@ -1,14 +1,6 @@
 pluginManagement {
     includeBuild("build-logic")
     repositories {
-        maven(url = "https://repo.stellardrift.ca/repository/internal/") {
-            name = "stellardriftReleases"
-            mavenContent { releasesOnly() }
-        }
-        maven(url = "https://repo.stellardrift.ca/repository/snapshots/") {
-            name = "stellardriftSnapshots"
-            mavenContent { snapshotsOnly() }
-        }
         gradlePluginPortal()
         maven("https://repo.jpenilla.xyz/snapshots")
     }

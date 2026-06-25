@@ -23,10 +23,10 @@
  */
 package com.lunarclient.apollo.module.stopwatch;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.common.location.HudPosition;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.stopwatch.v1.AddStopwatchMessage;
 import com.lunarclient.apollo.stopwatch.v1.AddTimerMessage;
@@ -54,19 +54,19 @@ public final class StopwatchModuleImpl extends StopwatchModule {
     @Override
     public void startStopwatch(@NonNull Recipients recipients) {
         StartStopwatchMessage message = StartStopwatchMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void stopStopwatch(@NonNull Recipients recipients) {
         StopStopwatchMessage message = StopStopwatchMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetStopwatch(@NonNull Recipients recipients) {
         ResetStopwatchMessage message = ResetStopwatchMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -94,7 +94,7 @@ public final class StopwatchModuleImpl extends StopwatchModule {
         }
 
         AddStopwatchMessage message = builder.build();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -103,7 +103,7 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             .setId(id)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -112,7 +112,7 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             .setId(id)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -121,7 +121,7 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             .setId(id)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -130,13 +130,13 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             .setId(id)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetStopwatches(@NonNull Recipients recipients) {
         ResetStopwatchesMessage message = ResetStopwatchesMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -171,7 +171,7 @@ public final class StopwatchModuleImpl extends StopwatchModule {
         }
 
         AddTimerMessage message = builder.build();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -180,7 +180,7 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             .setId(id)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -189,7 +189,7 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             .setId(id)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -198,7 +198,7 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             .setId(id)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -207,13 +207,13 @@ public final class StopwatchModuleImpl extends StopwatchModule {
             .setId(id)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetTimers(@NonNull Recipients recipients) {
         ResetTimersMessage message = ResetTimersMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }
