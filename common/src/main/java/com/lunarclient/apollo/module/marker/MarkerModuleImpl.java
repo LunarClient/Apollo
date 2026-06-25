@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.module.marker;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.marker.v1.BlockTarget;
 import com.lunarclient.apollo.marker.v1.DangerMarker;
 import com.lunarclient.apollo.marker.v1.DisplayMarkerMessage;
@@ -44,7 +45,6 @@ import com.lunarclient.apollo.module.marker.target.ItemMarkerTarget;
 import com.lunarclient.apollo.module.marker.target.MarkerTarget;
 import com.lunarclient.apollo.module.marker.target.PlayerMarkerTarget;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.awt.Color;
 import java.time.Duration;
@@ -62,7 +62,7 @@ public final class MarkerModuleImpl extends MarkerModule {
     @Override
     public void displayMarker(@NonNull Recipients recipients, @NonNull Marker marker) {
         DisplayMarkerMessage message = this.toProtobuf(marker);
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -71,7 +71,7 @@ public final class MarkerModuleImpl extends MarkerModule {
             .setId(markerId)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -82,7 +82,7 @@ public final class MarkerModuleImpl extends MarkerModule {
     @Override
     public void resetMarkers(@NonNull Recipients recipients) {
         ResetMarkersMessage message = ResetMarkersMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     private DisplayMarkerMessage toProtobuf(Marker marker) {
