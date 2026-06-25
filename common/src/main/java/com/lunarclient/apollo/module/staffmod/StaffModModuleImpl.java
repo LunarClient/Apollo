@@ -96,7 +96,7 @@ public final class StaffModModuleImpl extends StaffModModule {
             .setEnabledByDefault(enabledByDefault)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
