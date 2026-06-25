@@ -23,11 +23,11 @@
  */
 package com.lunarclient.apollo.module.coloredfire;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.coloredfire.v1.OverrideColoredFireMessage;
 import com.lunarclient.apollo.coloredfire.v1.ResetColoredFireMessage;
 import com.lunarclient.apollo.coloredfire.v1.ResetColoredFiresMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.awt.Color;
 import java.util.UUID;
@@ -47,7 +47,7 @@ public final class ColoredFireModuleImpl extends ColoredFireModule {
             .setColor(NetworkTypes.toProtobuf(color))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -56,13 +56,13 @@ public final class ColoredFireModuleImpl extends ColoredFireModule {
             .setPlayerUuid(NetworkTypes.toProtobuf(burningPlayer))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetColoredFires(@NonNull Recipients recipients) {
         ResetColoredFiresMessage message = ResetColoredFiresMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

@@ -26,6 +26,7 @@ package com.lunarclient.apollo.event;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -96,7 +97,8 @@ public final class EventBus {
         for (Method method : this.getEventMethods(instance)) {
             List<Consumer<? extends Event>> listeners = this.events.get(method.getParameterTypes()[0]);
             if (listeners != null) {
-                listeners.removeIf(consumer -> consumer instanceof ReflectiveConsumer && ((ReflectiveConsumer<?>) consumer).getInstance() == instance);
+                listeners.removeIf(consumer -> consumer instanceof ReflectiveConsumer
+                    && ((ReflectiveConsumer<?>) consumer).getInstance() == instance);
             }
         }
     }
@@ -127,17 +129,24 @@ public final class EventBus {
     @SuppressWarnings("unchecked")
     public <T extends Event> EventResult<T> post(@NonNull T event) {
         CopyOnWriteArrayList<Consumer<? extends Event>> consumers = this.events.get(event.getClass());
-        List<Throwable> throwables = new ArrayList<>();
-        if (consumers != null) {
-            for (Consumer<? extends Event> consumer : consumers) {
-                try {
-                    ((Consumer<T>) consumer).accept(event);
-                } catch (Throwable throwable) {
-                    throwables.add(throwable);
+        if (consumers == null || consumers.isEmpty()) {
+            return new EventResult<>(event, Collections.emptyList());
+        }
+
+        List<Throwable> throwables = null;
+        for (Consumer<? extends Event> consumer : consumers) {
+            try {
+                ((Consumer<T>) consumer).accept(event);
+            } catch (Throwable throwable) {
+                if (throwables == null) {
+                    throwables = new ArrayList<>();
                 }
+
+                throwables.add(throwable);
             }
         }
-        return new EventResult<>(event, throwables);
+
+        return new EventResult<>(event, throwables == null ? Collections.emptyList() : throwables);
     }
 
     private List<Method> getEventMethods(Object instance) {

@@ -23,12 +23,12 @@
  */
 package com.lunarclient.apollo.module.hologram;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.hologram.v1.DisplayHologramMessage;
 import com.lunarclient.apollo.hologram.v1.RemoveHologramMessage;
 import com.lunarclient.apollo.hologram.v1.ResetHologramsMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.util.stream.Collectors;
 import lombok.NonNull;
@@ -54,7 +54,7 @@ public final class HologramModuleImpl extends HologramModule {
             .setShowBackground(hologram.isShowBackground())
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -63,7 +63,7 @@ public final class HologramModuleImpl extends HologramModule {
             .setId(hologramId)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -74,7 +74,7 @@ public final class HologramModuleImpl extends HologramModule {
     @Override
     public void resetHolograms(@NonNull Recipients recipients) {
         ResetHologramsMessage message = ResetHologramsMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

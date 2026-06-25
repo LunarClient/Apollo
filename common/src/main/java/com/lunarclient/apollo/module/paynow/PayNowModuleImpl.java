@@ -23,8 +23,8 @@
  */
 package com.lunarclient.apollo.module.paynow;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.paynow.v1.OpenPayNowEmbeddedCheckoutMessage;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 
@@ -41,7 +41,7 @@ public final class PayNowModuleImpl extends PayNowModule {
             .setCheckoutToken(checkoutToken)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

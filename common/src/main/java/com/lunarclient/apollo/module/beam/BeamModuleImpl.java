@@ -23,11 +23,11 @@
  */
 package com.lunarclient.apollo.module.beam;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.beam.v1.DisplayBeaconBeamMessage;
 import com.lunarclient.apollo.beam.v1.RemoveBeaconBeamMessage;
 import com.lunarclient.apollo.beam.v1.ResetBeaconBeamsMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 
@@ -46,7 +46,7 @@ public final class BeamModuleImpl extends BeamModule {
             .setColor(NetworkTypes.toProtobuf(beam.getColor()))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -55,7 +55,7 @@ public final class BeamModuleImpl extends BeamModule {
             .setId(beamId)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -66,7 +66,7 @@ public final class BeamModuleImpl extends BeamModule {
     @Override
     public void resetBeams(@NonNull Recipients recipients) {
         ResetBeaconBeamsMessage message = ResetBeaconBeamsMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

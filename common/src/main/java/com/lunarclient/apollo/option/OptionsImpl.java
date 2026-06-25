@@ -24,12 +24,12 @@
 package com.lunarclient.apollo.option;
 
 import com.google.protobuf.Value;
-import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.option.ApolloUpdateOptionEvent;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -274,11 +274,9 @@ public class OptionsImpl implements Options {
             return;
         }
 
-        Collection<ApolloPlayer> players = player == null ? Apollo.getPlayerManager()
-            .getPlayers() : Collections.singleton(player);
-
+        Recipients recipients = player == null ? Recipients.ofEveryone() : player;
         Value valueWrapper = NetworkOptions.wrapValue(Value.newBuilder(), option.getTypeToken().getType(), value);
-        NetworkOptions.sendOption(this.module, option, valueWrapper, players);
+        NetworkOptions.sendOption(this.module, option, valueWrapper, recipients);
     }
 
 }

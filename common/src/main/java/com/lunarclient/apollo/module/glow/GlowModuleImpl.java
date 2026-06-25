@@ -23,11 +23,11 @@
  */
 package com.lunarclient.apollo.module.glow;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.glow.v1.OverrideGlowEffectMessage;
 import com.lunarclient.apollo.glow.v1.ResetGlowEffectMessage;
 import com.lunarclient.apollo.glow.v1.ResetGlowEffectsMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.awt.Color;
 import java.util.UUID;
@@ -56,7 +56,7 @@ public final class GlowModuleImpl extends GlowModule {
         }
 
         OverrideGlowEffectMessage message = builder.build();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -65,13 +65,13 @@ public final class GlowModuleImpl extends GlowModule {
             .setPlayerUuid(NetworkTypes.toProtobuf(glowingPlayer))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetGlow(@NonNull Recipients recipients) {
         ResetGlowEffectsMessage message = ResetGlowEffectsMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

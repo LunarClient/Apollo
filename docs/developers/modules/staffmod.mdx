@@ -37,7 +37,7 @@ public void enableStaffModsExample(Player viewer) {
     }
 
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY)));
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY), true));
 }
 ```
 
@@ -56,6 +56,8 @@ public void disableStaffModsExample(Player viewer) {
    - A list of all the player(s) you want to enable or disable the staff mod.
 2. `StaffMod.TYPE`
    - The type of staff mod(s) you want to enable for the `Recipients` player. See the [staff mod types](#staffmod-types) section for more.
+3. `boolean enabledByDefault`
+   - Only available on `enableStaffMods`. When `true`, the staff mod is automatically enabled on the player's client; when `false`, it is unlocked but left disabled for the player to toggle on themselves.
 
 ## `StaffMod` Types
 
@@ -79,6 +81,7 @@ public void enableStaffModsExample(Player viewer) {
 
     EnableStaffModsMessage message = EnableStaffModsMessage.newBuilder()
         .addAllStaffMods(Collections.singletonList(StaffMod.STAFF_MOD_XRAY))
+        .setEnabledByDefault(true)
         .build();
 
     ProtobufPacketUtil.sendPacket(viewer, message);
@@ -121,6 +124,7 @@ public void enableStaffModsExample(Player viewer) {
     JsonObject message = new JsonObject();
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.staffmod.v1.EnableStaffModsMessage");
     message.add("staff_mods", staffMods);
+    message.addProperty("enabled_by_default", true);
 
     JsonPacketUtil.sendPacket(viewer, message);
 }

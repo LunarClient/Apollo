@@ -32,8 +32,7 @@ import com.lunarclient.apollo.configurable.v1.OverrideConfigurableSettingsMessag
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.Options;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
-import com.lunarclient.apollo.player.ApolloPlayer;
+import com.lunarclient.apollo.recipients.Recipients;
 import io.leangen.geantyref.GenericTypeReflector;
 import java.awt.Color;
 import java.lang.reflect.AnnotatedParameterizedType;
@@ -52,18 +51,18 @@ import org.jetbrains.annotations.Nullable;
 public final class NetworkOptions {
 
     /**
-     * Send a single option to a single player.
+     * Send a single option to the provided {@link Recipients}.
      *
-     * @param module  the module the option belongs to
-     * @param key     the option key
-     * @param value   the option value
-     * @param players the players to send the option to
+     * @param module     the module the option belongs to
+     * @param key        the option key
+     * @param value      the option value
+     * @param recipients the recipients to send the option to
      * @since 1.0.0
      */
     public static void sendOption(@Nullable ApolloModule module,
                                   Option<?, ?, ?> key,
                                   Value value,
-                                  Iterable<ApolloPlayer> players) {
+                                  Recipients recipients) {
         if (!key.isNotify()) {
             return;
         }
@@ -73,35 +72,31 @@ public final class NetworkOptions {
         moduleBuilder.putProperties(key.getKey(), value);
         modulesBuilder.addConfigurableSettings(moduleBuilder.build());
 
-        for (ApolloPlayer player : players) {
-            ((AbstractApolloPlayer) player).sendPacket(modulesBuilder.build());
-        }
+        ApolloManager.getNetworkManager().sendPacket(recipients, modulesBuilder.build());
     }
 
     /**
      * Sends the provided {@link ApolloModule}s options to the provided
-     * {@link ApolloPlayer}s.
+     * {@link Recipients}.
      *
      * @param modules the modules to send the options of
      * @param onlyPresent send only the options that have a present value
-     * @param players the players to send the module options to
+     * @param recipients the recipients to send the module options to
      * @since 1.0.0
      */
     public static void sendOptions(Iterable<ApolloModule> modules,
                                    boolean onlyPresent,
-                                   ApolloPlayer... players) {
-        for (ApolloPlayer player : players) {
-            OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
+                                   Recipients recipients) {
+        OverrideConfigurableSettingsMessage.Builder modulesBuilder = OverrideConfigurableSettingsMessage.newBuilder();
 
-            for (ApolloModule module : modules) {
-                modulesBuilder.addConfigurableSettings(NetworkOptions.moduleWithOptions(
-                    module,
-                    onlyPresent
-                ).build());
-            }
-
-            ((AbstractApolloPlayer) player).sendPacket(modulesBuilder.build());
+        for (ApolloModule module : modules) {
+            modulesBuilder.addConfigurableSettings(NetworkOptions.moduleWithOptions(
+                module,
+                onlyPresent
+            ).build());
         }
+
+        ApolloManager.getNetworkManager().sendPacket(recipients, modulesBuilder.build());
     }
 
     /**
