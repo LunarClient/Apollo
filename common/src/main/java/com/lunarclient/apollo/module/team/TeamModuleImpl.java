@@ -23,16 +23,15 @@
  */
 package com.lunarclient.apollo.module.team;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.team.v1.ResetTeamMembersMessage;
 import com.lunarclient.apollo.team.v1.UpdateTeamMembersMessage;
 import java.awt.Color;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.NonNull;
 import net.kyori.adventure.text.Component;
 
@@ -45,21 +44,19 @@ public final class TeamModuleImpl extends TeamModule {
 
     @Override
     public void updateTeamMembers(@NonNull Recipients recipients, @NonNull List<TeamMember> teamMembers) {
-        List<com.lunarclient.apollo.team.v1.TeamMember> teamMembersProto = teamMembers.stream()
-            .map(this::toProtobuf)
-            .collect(Collectors.toList());
+        UpdateTeamMembersMessage.Builder builder = UpdateTeamMembersMessage.newBuilder();
 
-        UpdateTeamMembersMessage message = UpdateTeamMembersMessage.newBuilder()
-            .addAllMembers(teamMembersProto)
-            .build();
+        for (TeamMember teamMember : teamMembers) {
+            builder.addMembers(this.toProtobuf(teamMember));
+        }
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, builder.build());
     }
 
     @Override
     public void resetTeamMembers(@NonNull Recipients recipients) {
         ResetTeamMembersMessage message = ResetTeamMembersMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     private com.lunarclient.apollo.team.v1.TeamMember toProtobuf(TeamMember member) {

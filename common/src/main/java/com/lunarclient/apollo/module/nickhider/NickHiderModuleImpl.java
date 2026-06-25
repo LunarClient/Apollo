@@ -23,9 +23,9 @@
  */
 package com.lunarclient.apollo.module.nickhider;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.nickhider.v1.OverrideNickHiderMessage;
 import com.lunarclient.apollo.nickhider.v1.ResetNickHiderMessage;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 
@@ -42,13 +42,13 @@ public final class NickHiderModuleImpl extends NickHiderModule {
             .setNick(nick)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetNick(@NonNull Recipients recipients) {
         ResetNickHiderMessage message = ResetNickHiderMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

@@ -23,11 +23,11 @@
  */
 package com.lunarclient.apollo.module.notification;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.ApolloComponent;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.notification.v1.DisplayNotificationMessage;
 import com.lunarclient.apollo.notification.v1.ResetNotificationsMessage;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 import net.kyori.adventure.text.Component;
@@ -70,13 +70,13 @@ public final class NotificationModuleImpl extends NotificationModule {
         }
 
         DisplayNotificationMessage message = builder.build();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetNotifications(@NonNull Recipients recipients) {
         ResetNotificationsMessage message = ResetNotificationsMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

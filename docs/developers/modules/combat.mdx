@@ -7,6 +7,7 @@ import { Callout, Tab, Tabs } from 'nextra-theme-docs'
 The combat module allows you to modify certain aspects of combat that are usually handled client-sided.
 
 - Adds the ability to disable the miss penalty, on all versions 1.8 and above.
+- Adds the ability to disable the miss penalty when targeting a block, on all versions 1.8 and above.
 - Adds the ability to dig and use an item at the same time, like in 1.7, on all versions 1.8 and above.
 
 ### Sample Code
@@ -25,6 +26,14 @@ Explore each integration by cycling through each tab, to find the best fit for y
 ```java
 public void setDisableMissPenalty(boolean value) {
     this.combatModule.getOptions().set(CombatModule.DISABLE_MISS_PENALTY, value);
+}
+```
+
+### Toggle Block Miss Penalty
+
+```java
+public void setDisableBlockMissPenalty(boolean value) {
+    this.combatModule.getOptions().set(CombatModule.DISABLE_BLOCK_MISS_PENALTY, value);
 }
 ```
 
@@ -50,6 +59,18 @@ public void setAllowDigAndUse(boolean value) {
 public void setDisableMissPenalty(boolean value) {
     Map<String, Value> properties = new HashMap<>();
     properties.put("disable-miss-penalty", Value.newBuilder().setBoolValue(value).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("combat", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+**Toggle Block Miss Penalty**
+
+```java
+public void setDisableBlockMissPenalty(boolean value) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("disable-block-miss-penalty", Value.newBuilder().setBoolValue(value).build());
 
     ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("combat", properties);
     ProtobufPacketUtil.broadcastPacket(settings);
@@ -88,6 +109,18 @@ public void setDisableMissPenalty(boolean value) {
 }
 ```
 
+**Toggle Block Miss Penalty**
+
+```java
+public void setDisableBlockMissPenalty(boolean value) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("disable-block-miss-penalty", value);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("combat", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
 **Toggle Dig and Use**
 
 ```java
@@ -108,6 +141,11 @@ public void setAllowDigAndUse(boolean value) {
 
 - __`DISABLE_MISS_PENALTY`__
     - Whether the player gets a hit delay for a missed hit. Enabling this option may cause compatibility issues with anti-cheats.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+- __`DISABLE_BLOCK_MISS_PENALTY`__
+    - Whether the player gets a hit delay for a missed hit while targeting a block. Applies to all versions 1.8 and above. Enabling this option may cause compatibility issues with anti-cheats.
     - Values
         - Type: `Boolean`
         - Default: `false`

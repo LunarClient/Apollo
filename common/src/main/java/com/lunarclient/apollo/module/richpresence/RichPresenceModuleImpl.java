@@ -23,7 +23,7 @@
  */
 package com.lunarclient.apollo.module.richpresence;
 
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.richpresence.v1.OverrideServerRichPresenceMessage;
 import com.lunarclient.apollo.richpresence.v1.ResetServerRichPresenceMessage;
@@ -73,13 +73,13 @@ public final class RichPresenceModuleImpl extends RichPresenceModule {
         }
 
         OverrideServerRichPresenceMessage message = builder.build();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
     public void resetServerRichPresence(@NonNull Recipients recipients) {
         ResetServerRichPresenceMessage message = ResetServerRichPresenceMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

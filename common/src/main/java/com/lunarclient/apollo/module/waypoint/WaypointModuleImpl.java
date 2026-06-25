@@ -23,11 +23,11 @@
  */
 package com.lunarclient.apollo.module.waypoint;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.network.NetworkTypes;
 import com.lunarclient.apollo.option.config.Serializer;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import com.lunarclient.apollo.waypoint.v1.DisplayWaypointMessage;
@@ -68,7 +68,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
     @Override
     public void displayWaypoint(@NonNull Recipients recipients, @NonNull Waypoint waypoint) {
         DisplayWaypointMessage message = this.toProtobuf(waypoint);
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -77,7 +77,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
             .setName(waypointName)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -88,7 +88,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
     @Override
     public void resetWaypoints(@NonNull Recipients recipients) {
         ResetWaypointsMessage message = ResetWaypointsMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -97,7 +97,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
             .setName(waypointName)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -106,7 +106,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
             .setName(waypointName)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     private void onPlayerRegister(ApolloRegisterPlayerEvent event) {
@@ -115,7 +115,7 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
 
         if (waypoints != null) {
             for (Waypoint waypoint : waypoints) {
-                ((AbstractApolloPlayer) player).sendPacket(this.toProtobuf(waypoint));
+                ApolloManager.getNetworkManager().sendPacket(player, this.toProtobuf(waypoint));
             }
         }
     }

@@ -23,11 +23,11 @@
  */
 package com.lunarclient.apollo.module.border;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.border.v1.DisplayBorderMessage;
 import com.lunarclient.apollo.border.v1.RemoveBorderMessage;
 import com.lunarclient.apollo.border.v1.ResetBordersMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import lombok.NonNull;
 
@@ -53,7 +53,7 @@ public final class BorderModuleImpl extends BorderModule {
             .setDurationTicks(checkPositive(border.getDurationTicks(), "Border#durationTicks"))
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -62,7 +62,7 @@ public final class BorderModuleImpl extends BorderModule {
             .setId(borderId)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -73,7 +73,7 @@ public final class BorderModuleImpl extends BorderModule {
     @Override
     public void resetBorders(@NonNull Recipients recipients) {
         ResetBordersMessage message = ResetBordersMessage.getDefaultInstance();
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
 }

@@ -23,12 +23,12 @@
  */
 package com.lunarclient.apollo.module.limb;
 
+import com.lunarclient.apollo.ApolloManager;
 import com.lunarclient.apollo.limb.v1.HideArmorPiecesMessage;
 import com.lunarclient.apollo.limb.v1.HideBodyPartMessage;
 import com.lunarclient.apollo.limb.v1.ResetArmorPiecesMessage;
 import com.lunarclient.apollo.limb.v1.ResetBodyPartMessage;
 import com.lunarclient.apollo.network.NetworkTypes;
-import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.util.Collection;
 import java.util.Set;
@@ -54,7 +54,7 @@ public final class LimbModuleImpl extends LimbModule {
             .addAllArmorPieces(pieces)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -68,7 +68,7 @@ public final class LimbModuleImpl extends LimbModule {
             .addAllArmorPieces(pieces)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -82,7 +82,7 @@ public final class LimbModuleImpl extends LimbModule {
             .addAllBodyParts(parts)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override
@@ -96,7 +96,7 @@ public final class LimbModuleImpl extends LimbModule {
             .addAllBodyParts(parts)
             .build();
 
-        recipients.forEach(player -> ((AbstractApolloPlayer) player).sendPacket(message));
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     private com.lunarclient.apollo.limb.v1.ArmorPiece toProtobuf(ArmorPiece armorPiece) {
