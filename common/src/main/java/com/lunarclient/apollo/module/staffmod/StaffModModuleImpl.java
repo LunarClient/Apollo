@@ -54,12 +54,18 @@ public final class StaffModModuleImpl extends StaffModModule {
 
     @Override
     public void enableStaffMods(@NonNull Recipients recipients, @NonNull List<StaffMod> mods) {
+        this.enableStaffMods(recipients, mods, false);
+    }
+
+    @Override
+    public void enableStaffMods(@NonNull Recipients recipients, @NonNull List<StaffMod> mods, boolean enabledByDefault) {
         Set<com.lunarclient.apollo.staffmod.v1.StaffMod> staffModsProto = mods.stream()
             .map(this::toProtobuf)
             .collect(Collectors.toSet());
 
         EnableStaffModsMessage message = EnableStaffModsMessage.newBuilder()
             .addAllStaffMods(staffModsProto)
+            .setEnabledByDefault(enabledByDefault)
             .build();
 
         ApolloManager.getNetworkManager().sendPacket(recipients, message);
@@ -81,6 +87,16 @@ public final class StaffModModuleImpl extends StaffModModule {
     @Override
     public void enableAllStaffMods(@NonNull Recipients recipients) {
         ApolloManager.getNetworkManager().sendPacket(recipients, this.enableAllStaffModsMessage);
+    }
+
+    @Override
+    public void enableAllStaffMods(@NonNull Recipients recipients, boolean enabledByDefault) {
+        EnableStaffModsMessage message = EnableStaffModsMessage.newBuilder()
+            .addAllStaffMods(this.staffMods)
+            .setEnabledByDefault(enabledByDefault)
+            .build();
+
+        ApolloManager.getNetworkManager().sendPacket(recipients, message);
     }
 
     @Override

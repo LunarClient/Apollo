@@ -47,6 +47,7 @@ public class StaffModJsonExample extends StaffModExample {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.staffmod.v1.EnableStaffModsMessage");
         message.add("staff_mods", staffMods);
+        message.addProperty("enabled_by_default", true);
 
         JsonPacketUtil.sendPacket(viewer, message);
     }
