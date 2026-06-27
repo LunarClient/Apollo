@@ -1,0 +1,688 @@
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+
+# Marker Module
+
+## Overview
+
+The marker module allows you to place in-world markers from Lunar Client's Markers mod.
+
+- Place a marker at any exact location, attributed to any owner.
+- Pick the marker flag (Normal, Danger, Info, Interest) and optionally override its color.
+- Describe what is marked (an item, block, entity or player) to drive the marker's description icon and text.
+- Override the appearance per marker
+
+![Marker Module Example](/modules/marker/overview.gif#center)
+
+<div style={{ textAlign: "center" }}>
+    <small>Create your own custom indicators using the Lunar Client Markers mod.</small>
+</div>
+
+## Integration
+
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+### Sample Code
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+<Callout type="info">
+**Apollo API examples.** See [General](/apollo/developers/general) for common patterns and helpers.
+</Callout>
+
+### Marking a block
+
+```java
+public void displayBlockMarkerExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        Location location = viewer.getLocation();
+
+        this.markerModule.displayMarker(apolloPlayer, Marker.builder()
+            .id("loot-chest")
+            .location(ApolloLocation.builder()
+                .world(location.getWorld().getName())
+                .x(location.getX())
+                .y(location.getY())
+                .z(location.getZ())
+                .build())
+            .ownerId(viewer.getUniqueId())
+            .ownerName("")
+            .flag(MarkerFlag.INTEREST)
+            .target(BlockMarkerTarget.builder()
+                .itemStack(ItemStackIcon.builder().itemName("minecraft:chest").build())
+                .build())
+            .duration(Duration.ofSeconds(60))
+            .style(MarkerStyle.builder()
+                .showOwner(MarkerDisplayCondition.NEVER)
+                .showDescription(MarkerDisplayCondition.ALWAYS)
+                .build())
+            .build()
+        );
+    });
+}
+```
+
+### Marking a player
+
+```java
+public void displayPlayerMarkerExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        Location location = viewer.getLocation();
+
+        this.markerModule.displayMarker(apolloPlayer, Marker.builder()
+            .id("bounty")
+            .location(ApolloLocation.builder()
+                .world(location.getWorld().getName())
+                .x(location.getX())
+                .y(location.getY())
+                .z(location.getZ())
+                .build())
+            .ownerId(viewer.getUniqueId())
+            .ownerName(viewer.getName())
+            .flag(MarkerFlag.DANGER)
+            .color(Color.RED)
+            .target(PlayerMarkerTarget.builder()
+                .playerId(UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd"))
+                .playerName("ItsNature")
+                .build())
+            .inGameNotification(true)
+            .style(MarkerStyle.builder()
+                .showOwner(MarkerDisplayCondition.NEVER)
+                .showDescription(MarkerDisplayCondition.ALWAYS)
+                .build())
+            .build()
+        );
+    });
+}
+```
+
+### Marking an item
+
+```java
+public void displayItemMarkerExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        Location location = viewer.getLocation();
+
+        this.markerModule.displayMarker(apolloPlayer, Marker.builder()
+            .id("wither-loot")
+            .location(ApolloLocation.builder()
+                .world(location.getWorld().getName())
+                .x(location.getX())
+                .y(location.getY())
+                .z(location.getZ())
+                .build())
+            .ownerId(viewer.getUniqueId())
+            .ownerName(viewer.getName())
+            .flag(MarkerFlag.INFO)
+            .target(ItemMarkerTarget.builder()
+                .itemStack(ItemStackIcon.builder().itemName("minecraft:nether_star").build())
+                .build())
+            .chatNotify(true)
+            .style(MarkerStyle.builder()
+                .showOwner(MarkerDisplayCondition.NEVER)
+                .showDescription(MarkerDisplayCondition.ALWAYS)
+                .build())
+            .build()
+        );
+    });
+}
+```
+
+### Marking an entity
+
+```java
+public void displayEntityMarkerExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        Location location = viewer.getLocation();
+
+        this.markerModule.displayMarker(apolloPlayer, Marker.builder()
+            .id("tutorial-npc")
+            .location(ApolloLocation.builder()
+                .world(location.getWorld().getName())
+                .x(location.getX())
+                .y(location.getY())
+                .z(location.getZ())
+                .build())
+            .ownerId(UUID.randomUUID())
+            .ownerName("Tutorial NPC")
+            .flag(MarkerFlag.INTEREST)
+            .target(EntityMarkerTarget.builder()
+                .entityType("minecraft:villager")
+                .build())
+            .style(MarkerStyle.builder()
+                .scale(1.3F)
+                .ownerSuffix("")
+                .ownerDisplay(MarkerOwnerDisplay.NAME)
+                .showOwner(MarkerDisplayCondition.HOVER)
+                .showDistance(MarkerDisplayCondition.NEVER)
+                .build())
+            .build()
+        );
+    });
+}
+```
+
+### Removing markers
+
+```java
+public void removeMarkersExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.markerModule.removeMarker(apolloPlayer, "loot-chest");
+        this.markerModule.removeMarker(apolloPlayer, "bounty");
+        this.markerModule.removeMarker(apolloPlayer, "wither-loot");
+        this.markerModule.removeMarker(apolloPlayer, "tutorial-npc");
+    });
+}
+```
+
+### Resetting all markers
+
+```java
+public void resetMarkersExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.markerModule::resetMarkers);
+}
+```
+
+### `Marker` Options
+
+`.id(String)` should include a unique identifier for the marker. Re-sending a marker with an existing id updates it in place.
+
+```java
+.id("loot-chest")
+```
+
+`.location(ApolloLocation)` is the exact location the marker is shown at. See the [locations utilities page](/apollo/developers/utilities/locations) for more.
+
+```java
+.location(ApolloLocation.builder()
+    .world("world")
+    .x(0.5D)
+    .y(64.0D)
+    .z(0.5D)
+    .build()
+)
+```
+
+`.ownerId(UUID)` and `.ownerName(String)` set the marker's owner. The owner's head is pulled from the player's tab list; if the owner is the viewing player they are shown as themselves.
+
+```java
+.ownerId(viewer.getUniqueId())
+.ownerName(viewer.getName())
+```
+
+`.flag(MarkerFlag)` is required and is the marker's flag, which sets its icon shape and base color. One of `NORMAL`, `DANGER`, `INFO`, `INTEREST`.
+
+```java
+.flag(MarkerFlag.DANGER)
+```
+
+`.color(java.awt.Color)` overrides the color for the chosen flag. Supports alpha. Leave unset to use the player's own configured color for that flag. See the [colors page](/apollo/developers/utilities/colors) for more.
+
+```java
+.color(Color.RED)
+```
+
+`.target(MarkerTarget)` is required and describes what is marked, which drives the description icon and text. Use an `ItemMarkerTarget` or `BlockMarkerTarget` (each wrapping an `ItemStackIcon` a block uses its item form), an `EntityMarkerTarget` (entity registry name) or a `PlayerMarkerTarget` (a player UUID + name).
+
+```java
+.target(BlockMarkerTarget.builder()
+    .itemStack(ItemStackIcon.builder().itemName("minecraft:chest").build())
+    .build())
+```
+
+`.duration(java.time.Duration)` is how long the marker stays visible. Leave unset to defer to the player's configured marker visible-duration.
+
+```java
+.duration(Duration.ofSeconds(60))
+```
+
+`.inGameNotification(boolean)` shows a Lunar pop-up when the marker first appears. Defaults to `false`.
+
+```java
+.inGameNotification(false)
+```
+
+`.chatNotify(boolean)` posts a chat message when the marker first appears. Defaults to `false`.
+
+```java
+.chatNotify(false)
+```
+
+`.middleClickRemove(boolean)` lets the player middle-click the marker to remove it. Defaults to `true`.
+
+```java
+.middleClickRemove(true)
+```
+
+`.style(MarkerStyle)` overrides the marker's appearance and text. Leave unset (or `null`) to defer entirely to the player's own Markers mod settings.
+
+<Callout type="info">
+When `compactMode` is enabled the marker uses a compact single-row layout, and
+`ownerDisplay`, `descriptionDisplay` and `ownerSuffix` are ignored.
+</Callout>
+
+```java
+.style(MarkerStyle.builder()
+    .scale(1.0F)                                       // 0.5F to 2.0F
+    .animateMarkerOnHover(true)
+    .compactMode(false)
+    .textShadow(true)
+    .ownerSuffix("'s Marker")                          // "" hides the suffix
+    .ownerDisplay(MarkerOwnerDisplay.HEAD)
+    .showOwner(MarkerDisplayCondition.ALWAYS)
+    .showCoordinates(MarkerDisplayCondition.NEVER)
+    .showDistance(MarkerDisplayCondition.HOVER)
+    .showDescription(MarkerDisplayCondition.HOVER)
+    .descriptionDisplay(MarkerDescriptionDisplay.ICON)
+    .build()
+)
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight Protobuf examples.** See [Lightweight Protobuf](/apollo/developers/lightweight/protobuf) for setup.
+</Callout>
+
+<Callout type="warning">
+    Make sure the server is sending the world name to the client as shown in the [Player Detection](/apollo/developers/lightweight/protobuf/player-detection) example.
+</Callout>
+
+**Marking a block**
+
+```java
+public void displayBlockMarkerExample(Player viewer) {
+    DisplayMarkerMessage message = DisplayMarkerMessage.newBuilder()
+        .setId("loot-chest")
+        .setLocation(ProtobufUtil.createLocationProto(viewer.getLocation()))
+        .setOwnerId(ProtobufUtil.createUuidProto(viewer.getUniqueId()))
+        .setOwnerName("")
+        .setFlag(MarkerFlag.newBuilder()
+            .setInterest(InterestMarker.getDefaultInstance())
+            .build())
+        .setTarget(MarkerTarget.newBuilder()
+            .setBlock(BlockTarget.newBuilder()
+                .setItemStack(ProtobufUtil.createItemStackIconProto("minecraft:chest", 0))
+                .build())
+            .build())
+        .setDuration(ProtobufUtil.createDurationProto(Duration.ofSeconds(60)))
+        .setStyle(MarkerStyle.newBuilder()
+            .setScale(1.0F)
+            .setAnimateMarkerOnHover(true)
+            .setCompactMode(false)
+            .setTextShadow(true)
+            .setOwnerSuffix("'s Marker")
+            .setOwnerDisplay(MarkerOwnerDisplay.MARKER_OWNER_DISPLAY_HEAD)
+            .setShowOwner(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_NEVER)
+            .setShowCoordinates(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_NEVER)
+            .setShowDistance(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_HOVER)
+            .setShowDescription(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_ALWAYS)
+            .setDescriptionDisplay(MarkerDescriptionDisplay.MARKER_DESCRIPTION_DISPLAY_ICON)
+            .build())
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Marking a player**
+
+```java
+public void displayPlayerMarkerExample(Player viewer) {
+    DisplayMarkerMessage message = DisplayMarkerMessage.newBuilder()
+        .setId("bounty")
+        .setLocation(ProtobufUtil.createLocationProto(viewer.getLocation()))
+        .setOwnerId(ProtobufUtil.createUuidProto(viewer.getUniqueId()))
+        .setOwnerName(viewer.getName())
+        .setFlag(MarkerFlag.newBuilder()
+            .setDanger(DangerMarker.newBuilder()
+                .setColor(ProtobufUtil.createColorProto(Color.RED))
+                .build())
+            .build())
+        .setTarget(MarkerTarget.newBuilder()
+            .setPlayer(PlayerTarget.newBuilder()
+                .setUuid(ProtobufUtil.createUuidProto(UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd")))
+                .setName("ItsNature")
+                .build())
+            .build())
+        .setInGameNotification(true)
+        .setStyle(MarkerStyle.newBuilder()
+            .setScale(1.0F)
+            .setAnimateMarkerOnHover(true)
+            .setCompactMode(false)
+            .setTextShadow(true)
+            .setOwnerSuffix("'s Marker")
+            .setOwnerDisplay(MarkerOwnerDisplay.MARKER_OWNER_DISPLAY_HEAD)
+            .setShowOwner(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_NEVER)
+            .setShowCoordinates(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_NEVER)
+            .setShowDistance(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_HOVER)
+            .setShowDescription(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_ALWAYS)
+            .setDescriptionDisplay(MarkerDescriptionDisplay.MARKER_DESCRIPTION_DISPLAY_ICON)
+            .build())
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Marking an item**
+
+```java
+public void displayItemMarkerExample(Player viewer) {
+    DisplayMarkerMessage message = DisplayMarkerMessage.newBuilder()
+        .setId("wither-loot")
+        .setLocation(ProtobufUtil.createLocationProto(viewer.getLocation()))
+        .setOwnerId(ProtobufUtil.createUuidProto(viewer.getUniqueId()))
+        .setOwnerName(viewer.getName())
+        .setFlag(MarkerFlag.newBuilder()
+            .setInfo(InfoMarker.getDefaultInstance())
+            .build())
+        .setTarget(MarkerTarget.newBuilder()
+            .setItem(ItemTarget.newBuilder()
+                .setItemStack(ProtobufUtil.createItemStackIconProto("minecraft:nether_star", 0))
+                .build())
+            .build())
+        .setChatNotify(true)
+        .setStyle(MarkerStyle.newBuilder()
+            .setScale(1.0F)
+            .setAnimateMarkerOnHover(true)
+            .setCompactMode(false)
+            .setTextShadow(true)
+            .setOwnerSuffix("'s Marker")
+            .setOwnerDisplay(MarkerOwnerDisplay.MARKER_OWNER_DISPLAY_HEAD)
+            .setShowOwner(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_NEVER)
+            .setShowCoordinates(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_NEVER)
+            .setShowDistance(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_HOVER)
+            .setShowDescription(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_ALWAYS)
+            .setDescriptionDisplay(MarkerDescriptionDisplay.MARKER_DESCRIPTION_DISPLAY_ICON)
+            .build())
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Marking an entity**
+
+```java
+public void displayEntityMarkerExample(Player viewer) {
+    DisplayMarkerMessage message = DisplayMarkerMessage.newBuilder()
+        .setId("tutorial-npc")
+        .setLocation(ProtobufUtil.createLocationProto(viewer.getLocation()))
+        .setOwnerId(ProtobufUtil.createUuidProto(UUID.randomUUID()))
+        .setOwnerName("Tutorial NPC")
+        .setFlag(MarkerFlag.newBuilder()
+            .setInterest(InterestMarker.getDefaultInstance())
+            .build())
+        .setTarget(MarkerTarget.newBuilder()
+            .setEntity(EntityTarget.newBuilder()
+                .setEntityType("minecraft:villager")
+                .build())
+            .build())
+        .setStyle(MarkerStyle.newBuilder()
+            .setScale(1.3F)
+            .setAnimateMarkerOnHover(true)
+            .setCompactMode(false)
+            .setTextShadow(true)
+            .setOwnerSuffix("")
+            .setOwnerDisplay(MarkerOwnerDisplay.MARKER_OWNER_DISPLAY_NAME)
+            .setShowOwner(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_HOVER)
+            .setShowCoordinates(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_NEVER)
+            .setShowDistance(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_NEVER)
+            .setShowDescription(MarkerDisplayCondition.MARKER_DISPLAY_CONDITION_HOVER)
+            .setDescriptionDisplay(MarkerDescriptionDisplay.MARKER_DESCRIPTION_DISPLAY_ICON)
+            .build())
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Removing markers**
+
+```java
+public void removeMarkersExample(Player viewer) {
+    List<String> markerIds = Arrays.asList("loot-chest", "bounty", "wither-loot", "tutorial-npc");
+    for (String id : markerIds) {
+        RemoveMarkerMessage message = RemoveMarkerMessage.newBuilder()
+            .setId(id)
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+}
+```
+
+**Resetting all markers**
+
+```java
+public void resetMarkersExample(Player viewer) {
+    ResetMarkersMessage message = ResetMarkersMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight JSON examples.** See [Lightweight JSON](/apollo/developers/lightweight/json) for setup.
+</Callout>
+
+<Callout type="warning">
+    Make sure the server is sending the world name to the client as shown in the [Player Detection](/apollo/developers/lightweight/json/player-detection) example.
+</Callout>
+
+**Marking a block**
+
+```java
+public void displayBlockMarkerExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.marker.v1.DisplayMarkerMessage");
+    message.addProperty("id", "loot-chest");
+    message.add("location", JsonUtil.createLocationObject(viewer.getLocation()));
+    message.add("owner_id", JsonUtil.createUuidObject(viewer.getUniqueId()));
+    message.addProperty("owner_name", "");
+
+    JsonObject flag = new JsonObject();
+    flag.add("interest", new JsonObject());
+    message.add("flag", flag);
+
+    JsonObject itemStack = new JsonObject();
+    itemStack.addProperty("item_name", "minecraft:chest");
+    JsonObject block = new JsonObject();
+    block.add("item_stack", itemStack);
+    JsonObject target = new JsonObject();
+    target.add("block", block);
+    message.add("target", target);
+
+    message.addProperty("duration", JsonUtil.createDurationObject(Duration.ofSeconds(60)));
+
+    JsonObject style = new JsonObject();
+    style.addProperty("scale", 1.0F);
+    style.addProperty("animate_marker_on_hover", true);
+    style.addProperty("compact_mode", false);
+    style.addProperty("text_shadow", true);
+    style.addProperty("owner_suffix", "'s Marker");
+    style.addProperty("owner_display", "MARKER_OWNER_DISPLAY_HEAD");
+    style.addProperty("show_owner", "MARKER_DISPLAY_CONDITION_NEVER");
+    style.addProperty("show_coordinates", "MARKER_DISPLAY_CONDITION_NEVER");
+    style.addProperty("show_distance", "MARKER_DISPLAY_CONDITION_HOVER");
+    style.addProperty("show_description", "MARKER_DISPLAY_CONDITION_ALWAYS");
+    style.addProperty("description_display", "MARKER_DESCRIPTION_DISPLAY_ICON");
+    message.add("style", style);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Marking a player**
+
+```java
+public void displayPlayerMarkerExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.marker.v1.DisplayMarkerMessage");
+    message.addProperty("id", "bounty");
+    message.add("location", JsonUtil.createLocationObject(viewer.getLocation()));
+    message.add("owner_id", JsonUtil.createUuidObject(viewer.getUniqueId()));
+    message.addProperty("owner_name", viewer.getName());
+
+    JsonObject danger = new JsonObject();
+    danger.add("color", JsonUtil.createColorObject(Color.RED));
+    JsonObject flag = new JsonObject();
+    flag.add("danger", danger);
+    message.add("flag", flag);
+
+    JsonObject player = new JsonObject();
+    player.add("uuid", JsonUtil.createUuidObject(UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd")));
+    player.addProperty("name", "ItsNature");
+    JsonObject target = new JsonObject();
+    target.add("player", player);
+    message.add("target", target);
+
+    message.addProperty("in_game_notification", true);
+
+    JsonObject style = new JsonObject();
+    style.addProperty("scale", 1.0F);
+    style.addProperty("animate_marker_on_hover", true);
+    style.addProperty("compact_mode", false);
+    style.addProperty("text_shadow", true);
+    style.addProperty("owner_suffix", "'s Marker");
+    style.addProperty("owner_display", "MARKER_OWNER_DISPLAY_HEAD");
+    style.addProperty("show_owner", "MARKER_DISPLAY_CONDITION_NEVER");
+    style.addProperty("show_coordinates", "MARKER_DISPLAY_CONDITION_NEVER");
+    style.addProperty("show_distance", "MARKER_DISPLAY_CONDITION_HOVER");
+    style.addProperty("show_description", "MARKER_DISPLAY_CONDITION_ALWAYS");
+    style.addProperty("description_display", "MARKER_DESCRIPTION_DISPLAY_ICON");
+    message.add("style", style);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Marking an item**
+
+```java
+public void displayItemMarkerExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.marker.v1.DisplayMarkerMessage");
+    message.addProperty("id", "wither-loot");
+    message.add("location", JsonUtil.createLocationObject(viewer.getLocation()));
+    message.add("owner_id", JsonUtil.createUuidObject(viewer.getUniqueId()));
+    message.addProperty("owner_name", viewer.getName());
+
+    JsonObject flag = new JsonObject();
+    flag.add("info", new JsonObject());
+    message.add("flag", flag);
+
+    JsonObject itemStack = new JsonObject();
+    itemStack.addProperty("item_name", "minecraft:nether_star");
+    JsonObject item = new JsonObject();
+    item.add("item_stack", itemStack);
+    JsonObject target = new JsonObject();
+    target.add("item", item);
+    message.add("target", target);
+
+    message.addProperty("chat_notify", true);
+
+    JsonObject style = new JsonObject();
+    style.addProperty("scale", 1.0F);
+    style.addProperty("animate_marker_on_hover", true);
+    style.addProperty("compact_mode", false);
+    style.addProperty("text_shadow", true);
+    style.addProperty("owner_suffix", "'s Marker");
+    style.addProperty("owner_display", "MARKER_OWNER_DISPLAY_HEAD");
+    style.addProperty("show_owner", "MARKER_DISPLAY_CONDITION_NEVER");
+    style.addProperty("show_coordinates", "MARKER_DISPLAY_CONDITION_NEVER");
+    style.addProperty("show_distance", "MARKER_DISPLAY_CONDITION_HOVER");
+    style.addProperty("show_description", "MARKER_DISPLAY_CONDITION_ALWAYS");
+    style.addProperty("description_display", "MARKER_DESCRIPTION_DISPLAY_ICON");
+    message.add("style", style);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Marking an entity**
+
+```java
+public void displayEntityMarkerExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.marker.v1.DisplayMarkerMessage");
+    message.addProperty("id", "tutorial-npc");
+    message.add("location", JsonUtil.createLocationObject(viewer.getLocation()));
+    message.add("owner_id", JsonUtil.createUuidObject(UUID.randomUUID()));
+    message.addProperty("owner_name", "Tutorial NPC");
+
+    JsonObject flag = new JsonObject();
+    flag.add("interest", new JsonObject());
+    message.add("flag", flag);
+
+    JsonObject entity = new JsonObject();
+    entity.addProperty("entity_type", "minecraft:villager");
+    JsonObject target = new JsonObject();
+    target.add("entity", entity);
+    message.add("target", target);
+
+    JsonObject style = new JsonObject();
+    style.addProperty("scale", 1.3F);
+    style.addProperty("animate_marker_on_hover", true);
+    style.addProperty("compact_mode", false);
+    style.addProperty("text_shadow", true);
+    style.addProperty("owner_suffix", "");
+    style.addProperty("owner_display", "MARKER_OWNER_DISPLAY_NAME");
+    style.addProperty("show_owner", "MARKER_DISPLAY_CONDITION_HOVER");
+    style.addProperty("show_coordinates", "MARKER_DISPLAY_CONDITION_NEVER");
+    style.addProperty("show_distance", "MARKER_DISPLAY_CONDITION_NEVER");
+    style.addProperty("show_description", "MARKER_DISPLAY_CONDITION_HOVER");
+    style.addProperty("description_display", "MARKER_DESCRIPTION_DISPLAY_ICON");
+    message.add("style", style);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Removing markers**
+
+```java
+public void removeMarkersExample(Player viewer) {
+    List<String> markerIds = Arrays.asList("loot-chest", "bounty", "wither-loot", "tutorial-npc");
+    for (String id : markerIds) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.marker.v1.RemoveMarkerMessage");
+        message.addProperty("id", id);
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+}
+```
+
+**Resetting all markers**
+
+```java
+public void resetMarkersExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.marker.v1.ResetMarkersMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>

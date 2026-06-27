@@ -50,6 +50,8 @@ import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
+import com.lunarclient.apollo.module.marker.MarkerModule;
+import com.lunarclient.apollo.module.marker.MarkerModuleImpl;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.module.modsettings.ModSettingModuleImpl;
 import com.lunarclient.apollo.module.nametag.NametagModule;
@@ -131,6 +133,7 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(EntityModule.class, new EntityModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
             .addModule(LimbModule.class, new LimbModuleImpl())
+            .addModule(MarkerModule.class, new MarkerModuleImpl())
             .addModule(ModSettingModule.class, new ModSettingModuleImpl())
             .addModule(NametagModule.class, new NametagModuleImpl())
             .addModule(NotificationModule.class, new NotificationModuleImpl())

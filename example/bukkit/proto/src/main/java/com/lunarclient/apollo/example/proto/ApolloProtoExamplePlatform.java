@@ -38,6 +38,7 @@ import com.lunarclient.apollo.example.proto.module.EntityProtoExample;
 import com.lunarclient.apollo.example.proto.module.GlowProtoExample;
 import com.lunarclient.apollo.example.proto.module.HologramProtoExample;
 import com.lunarclient.apollo.example.proto.module.LimbProtoExample;
+import com.lunarclient.apollo.example.proto.module.MarkerProtoExample;
 import com.lunarclient.apollo.example.proto.module.ModSettingsProtoExample;
 import com.lunarclient.apollo.example.proto.module.NametagProtoExample;
 import com.lunarclient.apollo.example.proto.module.NickHiderProtoExample;
@@ -82,6 +83,7 @@ public class ApolloProtoExamplePlatform extends ApolloExamplePlugin {
         this.setGlowExample(new GlowProtoExample());
         this.setHologramExample(new HologramProtoExample());
         this.setLimbExample(new LimbProtoExample());
+        this.setMarkerExample(new MarkerProtoExample());
         this.setModSettingsExample(new ModSettingsProtoExample());
         this.setNametagExample(new NametagProtoExample());
         this.setNickHiderExample(new NickHiderProtoExample());
