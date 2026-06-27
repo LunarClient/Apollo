@@ -1,0 +1,212 @@
+# Attack Indicator
+
+Allows you to customize the crosshair attack indicator
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleAttackIndicatorExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModAttackIndicator.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HORIZONTAL`__
+    - Config Key: `horizontal`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SCALE`__
+    - Config Key: `scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.25F`
+        - Maximum: `5.0F`
+
+- __`SHOW_IN_HUD_EDITOR`__
+    - Config Key: `show-in-hud-editor`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`ALWAYS_SHOW`__
+    - Config Key: `always-show`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`RENDER_ICON`__
+    - Config Key: `render-icon`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BACKGROUND`__
+    - Config Key: `background`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BACKGROUND_COLOR`__
+    - Config Key: `background-color`
+    - Values
+        - Type: `String`
+        - Default: `#6F000000`
+
+- __`BORDER`__
+    - Config Key: `border`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BORDER_THICKNESS`__
+    - Config Key: `border-thickness`
+    - Values
+        - Type: `Float`
+        - Default: `0.5F`
+        - Minimum: `0.5F`
+        - Maximum: `3.0F`
+
+- __`BORDER_COLOR`__
+    - Config Key: `border-color`
+    - Values
+        - Type: `String`
+        - Default: `#9F000000`
+
+- __`VANILLA_BLENDING`__
+    - Config Key: `vanilla-blending`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DYNAMIC_COLOR`__
+    - Config Key: `dynamic-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`COLOR_LOW`__
+    - Config Key: `color-low`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF0000`
+
+- __`COLOR_HIGH`__
+    - Config Key: `color-high`
+    - Values
+        - Type: `String`
+        - Default: `#FF00FF00`
+
+- __`COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`SWORDS`__
+    - Config Key: `swords`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`AXES`__
+    - Config Key: `axes`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`PICKAXES`__
+    - Config Key: `pickaxes`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOVEL`__
+    - Config Key: `shovel`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`NON_WEAPONS`__
+    - Show the generic attack swing cooldown when switching items (includes hand)
+    - Config Key: `non-weapons`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ATTACK_INDICATOR_PLAY_SOUND_VANILLA`__
+    - Play a ding when the weapon cooldowns are done
+    - Config Key: `attack-indicator-play-sound-vanilla`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SLEEP`__
+    - Config Key: `sleep`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BLOCK_BREAKING`__
+    - Config Key: `block-breaking`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ENDER_PEARL`__
+    - Config Key: `ender-pearl`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CHORUS_FRUIT`__
+    - Config Key: `chorus-fruit`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BOWS`__
+    - Config Key: `bows`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHIELDS`__
+    - Config Key: `shields`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CONSUMABLES`__
+    - Foods & Potions
+    - Config Key: `consumables`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`STORAGE`__
+    - Show capacity of storage items (bundles, shulker boxes)
+    - Config Key: `storage`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ATTACK_INDICATOR_PLAY_SOUND_CUSTOM`__
+    - Play a ding when the cooldowns/indicators are done (excluding Sleep Progress, Block Breaking, Consumables and Storage Items)
+    - Config Key: `attack-indicator-play-sound-custom`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

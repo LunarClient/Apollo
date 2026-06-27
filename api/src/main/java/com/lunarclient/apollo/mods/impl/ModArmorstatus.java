@@ -128,6 +128,40 @@ public final class ModArmorstatus {
     /**
      * No documentation available.
      *
+     * @since 1.2.8
+     */
+    public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
+        .node("armorstatus", "background").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.8
+     */
+    public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
+        .node("armorstatus", "border").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.8
+     */
+    public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
+        .node("armorstatus", "border-thickness").type(TypeToken.get(Float.class))
+        .min(0.5F).max(3.0F)
+        .defaultValue(0.5F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> DAMAGE_OVERLAY = SimpleOption.<Boolean>builder()
@@ -166,6 +200,28 @@ public final class ModArmorstatus {
     public static final SimpleOption<Boolean> MAX_DAMAGE = SimpleOption.<Boolean>builder()
         .node("armorstatus", "max-damage").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.8
+     */
+    public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
+        .node("armorstatus", "background-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 111))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.8
+     */
+    public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
+        .node("armorstatus", "border-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 159))
         .notifyClient()
         .build();
 
