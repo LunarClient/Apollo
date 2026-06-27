@@ -49,7 +49,7 @@ public final class ModCrosshair {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.8
      */
     public static final SimpleOption<Boolean> SHOW_IN_F5 = SimpleOption.<Boolean>builder()
         .node("crosshair", "show-in-f5").type(TypeToken.get(Boolean.class))

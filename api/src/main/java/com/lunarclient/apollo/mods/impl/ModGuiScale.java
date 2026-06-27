@@ -30,14 +30,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * Allows you to set a custom GUI scale different from the Minecraft settings.
  *
- * @since %release_version%
+ * @since 1.2.8
  */
 public final class ModGuiScale {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.8
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("gui-scale", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModGuiScale {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.8
      */
     public static final NumberOption<Float> HOTBAR_SCALE = NumberOption.<Float>number()
         .node("gui-scale", "hotbar-scale").type(TypeToken.get(Float.class))
@@ -60,7 +60,7 @@ public final class ModGuiScale {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.8
      */
     public static final NumberOption<Integer> INVENTORY_SCALE = NumberOption.<Integer>number()
         .node("gui-scale", "inventory-scale").type(TypeToken.get(Integer.class))
