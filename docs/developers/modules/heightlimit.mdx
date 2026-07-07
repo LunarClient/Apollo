@@ -1,0 +1,207 @@
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+
+# Height Limit Module
+
+## Overview
+
+The height limit module allows servers to control the build-height limit displayed by the Height Limit mod.
+
+- Adds the ability to set a height limit per world, rendered as a block overlay and HUD display.
+
+<Callout type="info">
+  This module is disabled by default, if you wish to use this module you will need to enable it in `config.yml`.
+</Callout>
+
+## Integration
+
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+<Callout type="info">
+**Apollo API examples.** See [General](/apollo/developers/general) for common patterns and helpers.
+</Callout>
+
+### Overriding a Height Limit
+
+```java
+public void overrideHeightLimitExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.heightLimitModule.overrideHeightLimit(apolloPlayer, HeightLimit.builder()
+            .world(viewer.getWorld().getName())
+            .limit(100)
+            .displayName(Component.text()
+                .content("Spawn")
+                .color(NamedTextColor.GOLD)
+                .build()
+            )
+            .build()
+        );
+    });
+}
+```
+
+### Removing a Height Limit
+
+```java
+public void removeHeightLimitExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.heightLimitModule.removeHeightLimit(apolloPlayer, viewer.getWorld().getName()));
+}
+```
+
+### Resetting all Height Limits
+
+```java
+public void resetHeightLimitsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.heightLimitModule::resetHeightLimits);
+}
+```
+
+### `HeightLimit` Options
+
+`.world(String)` is the world, by name, that you wish to apply the height limit to. Sending a height limit for an already-known world replaces that worlds entry.
+
+```java
+.world("world")
+```
+
+`.limit(Integer)` is the Y level where block placement is denied. The highest buildable layer is `limit - 1`.
+
+```java
+.limit(100)
+```
+
+`.displayName(Component)` is the optional display name shown on the clients height limit HUD.
+
+```java
+.displayName(Component.text()
+    .content("Spawn")
+    .color(NamedTextColor.GOLD)
+    .build()
+)
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight Protobuf examples.** See [Lightweight Protobuf](/apollo/developers/lightweight/protobuf) for setup.
+</Callout>
+
+<Callout type="warning">
+    Make sure the server is sending the world name to the client as show in the [Player Detection](/apollo/developers/lightweight/protobuf/player-detection) example.
+</Callout>
+
+**Overriding a Height Limit**
+
+```java
+public void overrideHeightLimitExample(Player viewer) {
+    OverrideHeightLimitMessage message = OverrideHeightLimitMessage.newBuilder()
+        .setWorld(viewer.getWorld().getName())
+        .setLimit(100)
+        .setDisplayNameAdventureJsonLines(AdventureUtil.toJson(
+            Component.text()
+                .content("Spawn")
+                .color(NamedTextColor.GOLD)
+                .build()
+        ))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Removing a Height Limit**
+
+```java
+public void removeHeightLimitExample(Player viewer) {
+    RemoveHeightLimitMessage message = RemoveHeightLimitMessage.newBuilder()
+        .setWorld(viewer.getWorld().getName())
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Height Limits**
+
+```java
+public void resetHeightLimitsExample(Player viewer) {
+    ResetHeightLimitsMessage message = ResetHeightLimitsMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight JSON examples.** See [Lightweight JSON](/apollo/developers/lightweight/json) for setup.
+</Callout>
+
+<Callout type="warning">
+    Make sure the server is sending the world name to the client as show in the [Player Detection](/apollo/developers/lightweight/json/player-detection) example.
+</Callout>
+
+**Overriding a Height Limit**
+
+```java
+public void overrideHeightLimitExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.heightlimit.v1.OverrideHeightLimitMessage");
+    message.addProperty("world", viewer.getWorld().getName());
+    message.addProperty("limit", 100);
+    message.addProperty("display_name_adventure_json_lines", AdventureUtil.toJson(
+        Component.text()
+            .content("Spawn")
+            .color(NamedTextColor.GOLD)
+            .build()
+    ));
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Removing a Height Limit**
+
+```java
+public void removeHeightLimitExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.heightlimit.v1.RemoveHeightLimitMessage");
+    message.addProperty("world", viewer.getWorld().getName());
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Height Limits**
+
+```java
+public void resetHeightLimitsExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.heightlimit.v1.ResetHeightLimitsMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Available options
+
+- __`DEFAULT_HEIGHT_LIMITS`__
+    - Sets the default height limits to send to the player.
+    - Values
+        - Type: `List<HeightLimit>`
+        - Default: `Empty List`

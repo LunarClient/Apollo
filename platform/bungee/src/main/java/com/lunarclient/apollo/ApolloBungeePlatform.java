@@ -46,6 +46,8 @@ import com.lunarclient.apollo.module.cosmetic.CosmeticModule;
 import com.lunarclient.apollo.module.cosmetic.CosmeticModuleImpl;
 import com.lunarclient.apollo.module.entity.EntityModule;
 import com.lunarclient.apollo.module.entity.EntityModuleImpl;
+import com.lunarclient.apollo.module.heightlimit.HeightLimitModule;
+import com.lunarclient.apollo.module.heightlimit.HeightLimitModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
@@ -131,6 +133,7 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(CombatModule.class)
             .addModule(CooldownModule.class, new CooldownModuleImpl())
             .addModule(EntityModule.class, new EntityModuleImpl())
+            .addModule(HeightLimitModule.class, new HeightLimitModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
             .addModule(LimbModule.class, new LimbModuleImpl())
             .addModule(MarkerModule.class, new MarkerModuleImpl())

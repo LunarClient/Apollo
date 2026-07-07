@@ -36,6 +36,7 @@ import com.lunarclient.apollo.example.proto.module.CooldownProtoExample;
 import com.lunarclient.apollo.example.proto.module.CosmeticProtoExample;
 import com.lunarclient.apollo.example.proto.module.EntityProtoExample;
 import com.lunarclient.apollo.example.proto.module.GlowProtoExample;
+import com.lunarclient.apollo.example.proto.module.HeightLimitProtoExample;
 import com.lunarclient.apollo.example.proto.module.HologramProtoExample;
 import com.lunarclient.apollo.example.proto.module.LimbProtoExample;
 import com.lunarclient.apollo.example.proto.module.MarkerProtoExample;
@@ -81,6 +82,7 @@ public class ApolloProtoExamplePlatform extends ApolloExamplePlugin {
         this.setCooldownExample(new CooldownProtoExample());
         this.setEntityExample(new EntityProtoExample());
         this.setGlowExample(new GlowProtoExample());
+        this.setHeightLimitExample(new HeightLimitProtoExample());
         this.setHologramExample(new HologramProtoExample());
         this.setLimbExample(new LimbProtoExample());
         this.setMarkerExample(new MarkerProtoExample());

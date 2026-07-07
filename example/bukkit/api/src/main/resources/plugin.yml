@@ -36,6 +36,8 @@ commands:
         description: "Glint!"
     glow:
         description: "Glow!"
+    heightlimit:
+        description: "Height Limit!"
     hologram:
         description: "Holograms!"
     inventory:
