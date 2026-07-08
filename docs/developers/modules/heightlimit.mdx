@@ -12,6 +12,10 @@ The height limit module allows servers to control the build-height limit display
   This module is disabled by default, if you wish to use this module you will need to enable it in `config.yml`.
 </Callout>
 
+<Callout type="warning">
+  This module only provides a visual indicator for the player, the server is still responsible for cancelling block placement above the height limit.
+</Callout>
+
 ## Integration
 
 ### Sample Code
@@ -33,13 +37,9 @@ public void overrideHeightLimitExample(Player viewer) {
 
     apolloPlayerOpt.ifPresent(apolloPlayer -> {
         this.heightLimitModule.overrideHeightLimit(apolloPlayer, HeightLimit.builder()
-            .world(viewer.getWorld().getName())
-            .limit(100)
-            .displayName(Component.text()
-                .content("Spawn")
-                .color(NamedTextColor.GOLD)
-                .build()
-            )
+            .world("world_the_end")
+            .limit(150)
+            .displayName(Component.text("The End", NamedTextColor.DARK_PURPLE))
             .build()
         );
     });
@@ -51,7 +51,7 @@ public void overrideHeightLimitExample(Player viewer) {
 ```java
 public void removeHeightLimitExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.heightLimitModule.removeHeightLimit(apolloPlayer, viewer.getWorld().getName()));
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.heightLimitModule.removeHeightLimit(apolloPlayer, "world_the_end"));
 }
 ```
 
@@ -69,23 +69,19 @@ public void resetHeightLimitsExample(Player viewer) {
 `.world(String)` is the world, by name, that you wish to apply the height limit to. Sending a height limit for an already-known world replaces that worlds entry.
 
 ```java
-.world("world")
+.world("world_the_end")
 ```
 
 `.limit(Integer)` is the Y level where block placement is denied. The highest buildable layer is `limit - 1`.
 
 ```java
-.limit(100)
+.limit(150)
 ```
 
 `.displayName(Component)` is the optional display name shown on the clients height limit HUD.
 
 ```java
-.displayName(Component.text()
-    .content("Spawn")
-    .color(NamedTextColor.GOLD)
-    .build()
-)
+.displayName(Component.text("The End", NamedTextColor.DARK_PURPLE))
 ```
 
 </Tab>
@@ -105,13 +101,10 @@ public void resetHeightLimitsExample(Player viewer) {
 ```java
 public void overrideHeightLimitExample(Player viewer) {
     OverrideHeightLimitMessage message = OverrideHeightLimitMessage.newBuilder()
-        .setWorld(viewer.getWorld().getName())
-        .setLimit(100)
+        .setWorld("world_the_end")
+        .setLimit(150)
         .setDisplayNameAdventureJsonLines(AdventureUtil.toJson(
-            Component.text()
-                .content("Spawn")
-                .color(NamedTextColor.GOLD)
-                .build()
+            Component.text("The End", NamedTextColor.DARK_PURPLE)
         ))
         .build();
 
@@ -124,7 +117,7 @@ public void overrideHeightLimitExample(Player viewer) {
 ```java
 public void removeHeightLimitExample(Player viewer) {
     RemoveHeightLimitMessage message = RemoveHeightLimitMessage.newBuilder()
-        .setWorld(viewer.getWorld().getName())
+        .setWorld("world_the_end")
         .build();
 
     ProtobufPacketUtil.sendPacket(viewer, message);
@@ -158,13 +151,10 @@ public void resetHeightLimitsExample(Player viewer) {
 public void overrideHeightLimitExample(Player viewer) {
     JsonObject message = new JsonObject();
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.heightlimit.v1.OverrideHeightLimitMessage");
-    message.addProperty("world", viewer.getWorld().getName());
-    message.addProperty("limit", 100);
+    message.addProperty("world", "world_the_end");
+    message.addProperty("limit", 150);
     message.addProperty("display_name_adventure_json_lines", AdventureUtil.toJson(
-        Component.text()
-            .content("Spawn")
-            .color(NamedTextColor.GOLD)
-            .build()
+        Component.text("The End", NamedTextColor.DARK_PURPLE)
     ));
 
     JsonPacketUtil.sendPacket(viewer, message);
@@ -177,7 +167,7 @@ public void overrideHeightLimitExample(Player viewer) {
 public void removeHeightLimitExample(Player viewer) {
     JsonObject message = new JsonObject();
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.heightlimit.v1.RemoveHeightLimitMessage");
-    message.addProperty("world", viewer.getWorld().getName());
+    message.addProperty("world", "world_the_end");
 
     JsonPacketUtil.sendPacket(viewer, message);
 }
@@ -204,4 +194,9 @@ public void resetHeightLimitsExample(Player viewer) {
     - Sets the default height limits to send to the player.
     - Values
         - Type: `List<HeightLimit>`
-        - Default: `Empty List`
+        - Default:
+            ```yaml
+            - world: world
+              limit: 200
+              display-name: '&6Overworld'
+            ```

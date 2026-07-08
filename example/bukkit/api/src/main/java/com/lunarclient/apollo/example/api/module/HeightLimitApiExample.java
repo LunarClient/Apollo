@@ -43,13 +43,9 @@ public class HeightLimitApiExample extends HeightLimitExample {
 
         apolloPlayerOpt.ifPresent(apolloPlayer -> {
             this.heightLimitModule.overrideHeightLimit(apolloPlayer, HeightLimit.builder()
-                .world(viewer.getWorld().getName())
-                .limit(100)
-                .displayName(Component.text()
-                    .content("Spawn")
-                    .color(NamedTextColor.GOLD)
-                    .build()
-                )
+                .world("world_the_end")
+                .limit(150)
+                .displayName(Component.text("The End", NamedTextColor.DARK_PURPLE))
                 .build()
             );
         });
@@ -58,7 +54,7 @@ public class HeightLimitApiExample extends HeightLimitExample {
     @Override
     public void removeHeightLimitExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.heightLimitModule.removeHeightLimit(apolloPlayer, viewer.getWorld().getName()));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.heightLimitModule.removeHeightLimit(apolloPlayer, "world_the_end"));
     }
 
     @Override

@@ -37,7 +37,6 @@ import java.util.Arrays;
 import java.util.List;
 import lombok.NonNull;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -99,6 +98,10 @@ public final class HeightLimitModuleImpl extends HeightLimitModule implements Se
     }
 
     private void onPlayerRegister(ApolloRegisterPlayerEvent event) {
+        if (!this.isEnabled()) {
+            return;
+        }
+
         ApolloPlayer player = event.getPlayer();
         List<HeightLimit> heightLimits = this.getOptions().get(player, HeightLimitModule.DEFAULT_HEIGHT_LIMITS);
 
@@ -119,7 +122,7 @@ public final class HeightLimitModuleImpl extends HeightLimitModule implements Se
 
             String displayName = node.node("display-name").getString();
             if (displayName != null) {
-                builder.displayName(ApolloComponent.fromLegacy(displayName));
+                builder.displayName(ApolloComponent.fromLegacyAmpersand(displayName));
             }
 
             return builder.build();
@@ -137,7 +140,7 @@ public final class HeightLimitModuleImpl extends HeightLimitModule implements Se
 
             Component displayName = heightLimit.getDisplayName();
             if (displayName != null) {
-                node.node("display-name").set(LegacyComponentSerializer.legacyAmpersand().serialize(displayName));
+                node.node("display-name").set(ApolloComponent.toLegacyAmpersand(displayName));
             }
         }
 

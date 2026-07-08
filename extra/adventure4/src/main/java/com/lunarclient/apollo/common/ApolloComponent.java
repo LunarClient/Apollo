@@ -76,8 +76,20 @@ public final class ApolloComponent {
      * @return the component from the legacy string
      * @since 1.2.9
      */
-    public static Component fromLegacy(@NonNull String legacy) {
+    public static Component fromLegacyAmpersand(@NonNull String legacy) {
         return LegacyComponentSerializer.legacyAmpersand().deserialize(legacy);
+    }
+
+    /**
+     * Returns this component as a legacy {@link String},
+     * using {@code &} color codes.
+     *
+     * @param component the component to make into a legacy string
+     * @return the legacy string for this component
+     * @since 1.2.9
+     */
+    public static String toLegacyAmpersand(@NonNull Component component) {
+        return LegacyComponentSerializer.legacyAmpersand().serialize(component);
     }
 
     private ApolloComponent() {

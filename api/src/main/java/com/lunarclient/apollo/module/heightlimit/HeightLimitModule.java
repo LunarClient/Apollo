@@ -30,7 +30,10 @@ import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.recipients.Recipients;
 import io.leangen.geantyref.TypeToken;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -40,11 +43,21 @@ import org.jetbrains.annotations.ApiStatus;
  * (block overlay and HUD display). The client resolves the active limit
  * against the world the player is currently in.</p>
  *
+ * <p>This module only provides a visual indicator for the player. The
+ * server is still responsible for cancelling block placement above the
+ * height limit.</p>
+ *
  * @since 1.2.9
  */
 @ApiStatus.NonExtendable
 @ModuleDefinition(id = "height_limit", name = "Height Limit")
 public abstract class HeightLimitModule extends ApolloModule {
+
+    private static final HeightLimit OVERWORLD_HEIGHT_LIMIT = HeightLimit.builder()
+        .world("world")
+        .limit(200)
+        .displayName(Component.text("Overworld", NamedTextColor.GOLD))
+        .build();
 
     /**
      * Returns the default list of height limits to send to the player.
@@ -54,7 +67,7 @@ public abstract class HeightLimitModule extends ApolloModule {
     public static final ListOption<HeightLimit> DEFAULT_HEIGHT_LIMITS = Option.<HeightLimit>list()
         .comment("Sets the default height limits to send to the player.")
         .node("default-height-limits").type(new TypeToken<List<HeightLimit>>() {})
-        .defaultValue(new ArrayList<>())
+        .defaultValue(new ArrayList<>(Collections.singletonList(HeightLimitModule.OVERWORLD_HEIGHT_LIMIT)))
         .build();
 
     protected HeightLimitModule() {

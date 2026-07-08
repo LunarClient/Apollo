@@ -38,13 +38,10 @@ public class HeightLimitProtoExample extends HeightLimitExample {
     @Override
     public void overrideHeightLimitExample(Player viewer) {
         OverrideHeightLimitMessage message = OverrideHeightLimitMessage.newBuilder()
-            .setWorld(viewer.getWorld().getName())
-            .setLimit(100)
+            .setWorld("world_the_end")
+            .setLimit(150)
             .setDisplayNameAdventureJsonLines(AdventureUtil.toJson(
-                Component.text()
-                    .content("Spawn")
-                    .color(NamedTextColor.GOLD)
-                    .build()
+                Component.text("The End", NamedTextColor.DARK_PURPLE)
             ))
             .build();
 
@@ -54,7 +51,7 @@ public class HeightLimitProtoExample extends HeightLimitExample {
     @Override
     public void removeHeightLimitExample(Player viewer) {
         RemoveHeightLimitMessage message = RemoveHeightLimitMessage.newBuilder()
-            .setWorld(viewer.getWorld().getName())
+            .setWorld("world_the_end")
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);

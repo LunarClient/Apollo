@@ -37,13 +37,10 @@ public class HeightLimitJsonExample extends HeightLimitExample {
     public void overrideHeightLimitExample(Player viewer) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.heightlimit.v1.OverrideHeightLimitMessage");
-        message.addProperty("world", viewer.getWorld().getName());
-        message.addProperty("limit", 100);
+        message.addProperty("world", "world_the_end");
+        message.addProperty("limit", 150);
         message.addProperty("display_name_adventure_json_lines", AdventureUtil.toJson(
-            Component.text()
-                .content("Spawn")
-                .color(NamedTextColor.GOLD)
-                .build()
+            Component.text("The End", NamedTextColor.DARK_PURPLE)
         ));
 
         JsonPacketUtil.sendPacket(viewer, message);
@@ -53,7 +50,7 @@ public class HeightLimitJsonExample extends HeightLimitExample {
     public void removeHeightLimitExample(Player viewer) {
         JsonObject message = new JsonObject();
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.heightlimit.v1.RemoveHeightLimitMessage");
-        message.addProperty("world", viewer.getWorld().getName());
+        message.addProperty("world", "world_the_end");
 
         JsonPacketUtil.sendPacket(viewer, message);
     }

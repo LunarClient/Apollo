@@ -433,7 +433,18 @@ public void resetWaypointsExample(Player viewer) {
     - Sets the default waypoints to send to the player.
     - Values
         - Type: `List<Waypoint>`
-        - Default: `Empty List`
+        - Default:
+            ```yaml
+            - name: Spawn
+              location:
+                  world: world
+                  x: 0
+                  y: 100
+                  z: 0
+              color: '#FF0000'
+              prevent-removal: false
+              hidden: false
+            ```
 
 ## Automatic Waypoint Creation from Chat
 
