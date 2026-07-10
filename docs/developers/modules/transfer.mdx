@@ -119,6 +119,7 @@ public void transferExample(Player viewer) {
 
 <Callout type="info">
   You can provide up to `10` different addresses per ping packet.
+  Requests with more addresses are rejected with an `IllegalArgumentException`.
 </Callout>
 
 
@@ -209,6 +210,7 @@ public void transferExample(Player player) {
 
 <Callout type="info">
   You can provide up to `10` different addresses per ping packet.
+  Addresses beyond the first `10` are reported as `STATUS_TIMED_OUT` instead of being pinged.
 </Callout>
 
 ```java

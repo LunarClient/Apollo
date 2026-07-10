@@ -53,9 +53,20 @@ public final class TransferModuleImpl extends TransferModule {
 
     @Override
     public Future<PingResponse> ping(@NonNull ApolloPlayer player, @NonNull PingRequest request) {
+        List<String> serverIps = request.getServerIps();
+
+        if (serverIps == null || serverIps.isEmpty()) {
+            throw new IllegalArgumentException("PingRequest must contain at least 1 server IP!");
+        }
+
+        if (serverIps.size() > MAX_PINGS_PER_PACKET) {
+            throw new IllegalArgumentException("PingRequest supports up to " + MAX_PINGS_PER_PACKET
+                + " server IPs, got " + serverIps.size() + "!");
+        }
+
         com.lunarclient.apollo.transfer.v1.PingRequest requestProto = com.lunarclient.apollo.transfer.v1.PingRequest.newBuilder()
             .setRequestId(ByteString.copyFromUtf8(request.getRequestId().toString()))
-            .addAllServerIps(request.getServerIps())
+            .addAllServerIps(serverIps)
             .build();
 
         return ((AbstractApolloPlayer) player).sendRoundTripPacket(request, requestProto);

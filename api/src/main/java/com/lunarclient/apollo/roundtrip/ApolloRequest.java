@@ -67,4 +67,14 @@ public class ApolloRequest<T extends ApolloResponse> {
         this.sentTime = System.currentTimeMillis();
     }
 
+    /**
+     * Returns the time to wait for a response, in milliseconds.
+     *
+     * @return the request timeout, in milliseconds
+     * @since 1.2.9
+     */
+    public long getTimeoutMillis() {
+        return TIMEOUT;
+    }
+
 }
