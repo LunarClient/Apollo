@@ -24,6 +24,9 @@
 package com.lunarclient.apollo.example.proto.listener;
 
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.module.impl.CosmeticExample;
+import com.lunarclient.apollo.example.nms.CommandCosmetic;
+import com.lunarclient.apollo.example.nms.PlayerNpc;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
 import com.lunarclient.apollo.player.v1.UpdatePlayerWorldMessage;
 import java.util.HashSet;
@@ -79,6 +82,26 @@ public class ApolloPlayerProtoListener implements Listener {
 
         PLAYERS_RUNNING_APOLLO.add(player.getUniqueId());
         player.sendMessage("You are using LunarClient!");
+
+        this.applyNpcCosmetics(player);
+    }
+
+    private void applyNpcCosmetics(Player player) {
+        CosmeticExample cosmeticExample = this.plugin.getCosmeticExample();
+        if (cosmeticExample == null) {
+            return;
+        }
+
+        for (PlayerNpc npc : this.plugin.getNpcManager().getNpcs()) {
+            for (CommandCosmetic spec : npc.getCosmetics()) {
+                cosmeticExample.equipNpcCosmeticToViewer(player, npc.getUuid(), spec);
+            }
+
+            PlayerNpc.ActiveEmote emote = npc.getActiveEmote();
+            if (emote != null && npc.getViewers().contains(player.getUniqueId())) {
+                cosmeticExample.startNpcEmoteToViewer(player, npc.getUuid(), emote.getEmoteId(), emote.getMetadata());
+            }
+        }
     }
 
     @EventHandler

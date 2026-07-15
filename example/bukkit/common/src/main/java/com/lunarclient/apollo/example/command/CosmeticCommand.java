@@ -222,7 +222,12 @@ public class CosmeticCommand implements CommandExecutor {
                     }
                 }
 
-                example.startNpcEmoteInternal(player, uuid, emoteId, metadata);
+                example.startNpcEmoteInternal(uuid, emoteId, metadata);
+
+                int emoteMetadata = metadata;
+                ApolloExamplePlugin.getInstance().getNpcManager().findByUuid(uuid)
+                    .ifPresent(npc -> npc.setActiveEmote(new PlayerNpc.ActiveEmote(emoteId, emoteMetadata)));
+
                 player.sendMessage(ChatColor.GREEN + "Started emote " + emoteId + " on NPC " + args[2]);
                 break;
             }
@@ -238,13 +243,22 @@ public class CosmeticCommand implements CommandExecutor {
                     return true;
                 }
 
-                example.stopNpcEmoteExample(player, uuid);
+                example.stopNpcEmoteInternal(uuid);
+
+                ApolloExamplePlugin.getInstance().getNpcManager().findByUuid(uuid)
+                    .ifPresent(npc -> npc.setActiveEmote(null));
+
                 player.sendMessage(ChatColor.GREEN + "Stopped emote on NPC " + args[2]);
                 break;
             }
 
             case "reset": {
                 example.resetNpcEmotesExample();
+
+                for (PlayerNpc npc : ApolloExamplePlugin.getInstance().getNpcManager().getNpcs()) {
+                    npc.setActiveEmote(null);
+                }
+
                 player.sendMessage(ChatColor.GREEN + "Reset all NPC emotes");
                 break;
             }

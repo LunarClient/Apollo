@@ -93,6 +93,7 @@ import com.lunarclient.apollo.example.module.impl.TransferExample;
 import com.lunarclient.apollo.example.module.impl.VignetteExample;
 import com.lunarclient.apollo.example.module.impl.WaypointExample;
 import com.lunarclient.apollo.example.nms.NpcManager;
+import com.lunarclient.apollo.example.nms.PlayerNpc;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -153,6 +154,13 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
         this.registerCommands();
         this.registerModuleExamples();
         this.registerListeners();
+
+        this.npcManager.addViewerListener((viewer, npc) -> {
+            PlayerNpc.ActiveEmote emote = npc.getActiveEmote();
+            if (emote != null && this.cosmeticExample != null) {
+                this.cosmeticExample.startNpcEmoteToViewer(viewer, npc.getUuid(), emote.getEmoteId(), emote.getMetadata());
+            }
+        });
     }
 
     @Override
