@@ -30,6 +30,8 @@ The majority of this module is handled through Apollo's [event system](/apollo/d
 The following events are related to the packet enrichment module, you can find more information about each event on the [events page](/apollo/developers/events).
 * `ApolloPlayerChatCloseEvent`
 * `ApolloPlayerChatOpenEvent`
+* `ApolloPlayerInventoryCloseEvent`
+* `ApolloPlayerInventoryOpenEvent`
 * `ApolloPlayerAttackEvent`
 * `ApolloPlayerUseItemEvent`
 * `ApolloPlayerUseItemBucketEvent`
@@ -84,6 +86,32 @@ Visit [Apollo Serverbound packets](/apollo/developers/lightweight/protobuf/serve
 
 - __`PLAYER_CHAT_CLOSE_EVENT`__
   - Controls whether Apollo fires `ApolloPlayerChatCloseEvent` when the packet is received.
+  - Disable this and handle the packet yourself if you require asynchronous or off-thread processing.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_INVENTORY_OPEN_PACKET`__
+  - Controls whether the client sends an additional player inventory open packet to the server.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_INVENTORY_OPEN_EVENT`__
+  - Controls whether Apollo fires `ApolloPlayerInventoryOpenEvent` when the packet is received.
+  - Disable this and handle the packet yourself if you require asynchronous or off-thread processing.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_INVENTORY_CLOSE_PACKET`__
+  - Controls whether the client sends an additional player inventory close packet to the server.
+  - Values
+    - Type: `Boolean`
+    - Default: `false`
+
+- __`PLAYER_INVENTORY_CLOSE_EVENT`__
+  - Controls whether Apollo fires `ApolloPlayerInventoryCloseEvent` when the packet is received.
   - Disable this and handle the packet yourself if you require asynchronous or off-thread processing.
   - Values
     - Type: `Boolean`

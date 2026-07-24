@@ -43,7 +43,7 @@ public class ChatCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /chat <display|remove>");
+            this.sendUsage(player);
             return true;
         }
 
@@ -62,12 +62,52 @@ public class ChatCommand implements CommandExecutor {
                 break;
             }
 
+            case "displaychannels": {
+                chatExample.displayChannelsLayoutExample(player);
+                player.sendMessage("Displaying channel chat buttons....");
+                break;
+            }
+
+            case "displaystaff": {
+                chatExample.displayStaffChatLayoutExample(player);
+                player.sendMessage("Displaying staff chat buttons....");
+                break;
+            }
+
+            case "updatebutton": {
+                chatExample.updateChatButtonExample(player);
+                player.sendMessage("Updating the public chat button....");
+                break;
+            }
+
+            case "removebutton": {
+                chatExample.removeChatButtonExample(player);
+                player.sendMessage("Removing the party chat button....");
+                break;
+            }
+
+            case "resetbuttons": {
+                chatExample.resetChatButtonsExample(player);
+                player.sendMessage("Resetting chat buttons....");
+                break;
+            }
+
             default: {
-                player.sendMessage("Usage: /chat <display|remove>");
+                this.sendUsage(player);
                 break;
             }
         }
 
         return true;
+    }
+
+    private void sendUsage(Player player) {
+        player.sendMessage("Usage: /chat display");
+        player.sendMessage("Usage: /chat remove");
+        player.sendMessage("Usage: /chat displayChannels");
+        player.sendMessage("Usage: /chat displayStaff");
+        player.sendMessage("Usage: /chat updateButton");
+        player.sendMessage("Usage: /chat removeButton");
+        player.sendMessage("Usage: /chat resetButtons");
     }
 }

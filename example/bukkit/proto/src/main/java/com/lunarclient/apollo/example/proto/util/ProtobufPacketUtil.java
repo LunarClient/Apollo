@@ -59,6 +59,8 @@ public final class ProtobufPacketUtil {
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-attack.send-packet", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-chat-open.send-packet", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-chat-close.send-packet", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-inventory-open.send-packet", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-inventory-close.send-packet", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-use-item.send-packet", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-use-item-bucket.send-packet", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("server_link", "legacy-button-placement", Value.newBuilder().setStringValue("NEW_ROW").build());

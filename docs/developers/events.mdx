@@ -219,6 +219,36 @@ _Called when the player opens their chat._
 </details>
 
 <details>
+<summary>ApolloPlayerInventoryCloseEvent</summary>
+
+### ApolloPlayerInventoryCloseEvent
+
+_Called when the player closes their inventory._
+
+| Field                      | Description                                        |
+| -------------------------- | -------------------------------------------------- |
+| `ApolloPlayer player`      | The Apollo player that sent the packet.            |
+| `long instantiationTimeMs` | The unix timestamp when the packet was created.    |
+| `PlayerInfo playerInfo`    | The player's general information.                  |
+
+</details>
+
+<details>
+<summary>ApolloPlayerInventoryOpenEvent</summary>
+
+### ApolloPlayerInventoryOpenEvent
+
+_Called when the player opens their inventory._
+
+| Field                      | Description                                        |
+| -------------------------- | -------------------------------------------------- |
+| `ApolloPlayer player`      | The Apollo player that sent the packet.            |
+| `long instantiationTimeMs` | The unix timestamp when the packet was created.    |
+| `PlayerInfo playerInfo`    | The player's general information.                  |
+
+</details>
+
+<details>
 <summary>ApolloPlayerAttackEvent</summary>
 
 ### ApolloPlayerAttackEvent

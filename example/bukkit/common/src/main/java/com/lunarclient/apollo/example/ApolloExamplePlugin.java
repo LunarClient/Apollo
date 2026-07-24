@@ -211,7 +211,6 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
 
     private void registerCommonModulesExamples() {
         this.glintExample = new GlintExample();
-        this.inventoryExample = new InventoryExample();
         this.saturationExample = new SaturationExample();
     }
 

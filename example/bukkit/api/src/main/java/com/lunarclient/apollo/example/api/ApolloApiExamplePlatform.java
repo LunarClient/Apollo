@@ -42,6 +42,7 @@ import com.lunarclient.apollo.example.api.module.EntityApiExample;
 import com.lunarclient.apollo.example.api.module.GlowApiExample;
 import com.lunarclient.apollo.example.api.module.HeightLimitApiExample;
 import com.lunarclient.apollo.example.api.module.HologramApiExample;
+import com.lunarclient.apollo.example.api.module.InventoryApiExample;
 import com.lunarclient.apollo.example.api.module.LimbApiExample;
 import com.lunarclient.apollo.example.api.module.MarkerApiExample;
 import com.lunarclient.apollo.example.api.module.ModSettingsApiExample;
@@ -88,6 +89,7 @@ public class ApolloApiExamplePlatform extends ApolloExamplePlugin {
         this.setBeamExample(new BeamApiExample());
         this.setBorderExample(new BorderApiExample());
         this.setChatExample(new ChatApiExample());
+        this.setInventoryExample(new InventoryApiExample());
         this.setCosmeticExample(new CosmeticApiExample());
         this.setColoredFireExample(new ColoredFireApiExample());
         this.setCombatExample(new CombatApiExample());

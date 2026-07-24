@@ -27,6 +27,8 @@ import com.lunarclient.apollo.event.ApolloReceivePacketEvent;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatCloseEvent;
 import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatOpenEvent;
+import com.lunarclient.apollo.event.packetenrichment.inventory.ApolloPlayerInventoryCloseEvent;
+import com.lunarclient.apollo.event.packetenrichment.inventory.ApolloPlayerInventoryOpenEvent;
 import com.lunarclient.apollo.event.packetenrichment.melee.ApolloPlayerAttackEvent;
 import com.lunarclient.apollo.event.packetenrichment.world.ApolloPlayerUseItemBucketEvent;
 import com.lunarclient.apollo.event.packetenrichment.world.ApolloPlayerUseItemEvent;
@@ -35,6 +37,8 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerAttackMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerChatCloseMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerChatOpenMessage;
+import com.lunarclient.apollo.packetenrichment.v1.PlayerInventoryCloseMessage;
+import com.lunarclient.apollo.packetenrichment.v1.PlayerInventoryOpenMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerUseItemBucketMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerUseItemMessage;
 
@@ -103,6 +107,36 @@ public final class PacketEnrichmentImpl extends PacketEnrichmentModule {
                     NetworkTypes.fromProtobuf(packet.getPlayerInfo()));
 
                 EventBus.EventResult<ApolloPlayerChatCloseEvent> result = EventBus.getBus().post(playerChatCloseEvent);
+
+                for (Throwable throwable : result.getThrowing()) {
+                    throwable.printStackTrace();
+                }
+            });
+        }
+
+        if (options.get(PacketEnrichmentModule.PLAYER_INVENTORY_OPEN_EVENT)) {
+            event.unpack(PlayerInventoryOpenMessage.class).ifPresent(packet -> {
+                ApolloPlayerInventoryOpenEvent playerInventoryOpenEvent = new ApolloPlayerInventoryOpenEvent(
+                    event.getPlayer(),
+                    NetworkTypes.fromProtobuf(packet.getPacketInfo().getInstantiationTime()),
+                    NetworkTypes.fromProtobuf(packet.getPlayerInfo()));
+
+                EventBus.EventResult<ApolloPlayerInventoryOpenEvent> result = EventBus.getBus().post(playerInventoryOpenEvent);
+
+                for (Throwable throwable : result.getThrowing()) {
+                    throwable.printStackTrace();
+                }
+            });
+        }
+
+        if (options.get(PacketEnrichmentModule.PLAYER_INVENTORY_CLOSE_EVENT)) {
+            event.unpack(PlayerInventoryCloseMessage.class).ifPresent(packet -> {
+                ApolloPlayerInventoryCloseEvent playerInventoryCloseEvent = new ApolloPlayerInventoryCloseEvent(
+                    event.getPlayer(),
+                    NetworkTypes.fromProtobuf(packet.getPacketInfo().getInstantiationTime()),
+                    NetworkTypes.fromProtobuf(packet.getPlayerInfo()));
+
+                EventBus.EventResult<ApolloPlayerInventoryCloseEvent> result = EventBus.getBus().post(playerInventoryCloseEvent);
 
                 for (Throwable throwable : result.getThrowing()) {
                     throwable.printStackTrace();

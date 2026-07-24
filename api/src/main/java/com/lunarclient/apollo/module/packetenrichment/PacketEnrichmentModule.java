@@ -103,6 +103,48 @@ public abstract class PacketEnrichmentModule extends ApolloModule {
         .defaultValue(false).build();
 
     /**
+     * Controls whether the client sends an additional player inventory open packet to the server.
+     *
+     * @since 1.2.9
+     */
+    public static final SimpleOption<Boolean> PLAYER_INVENTORY_OPEN_PACKET = Option.<Boolean>builder()
+        .comment("Set to 'true' to have the client send an additional player inventory open packet to the server, otherwise 'false'.")
+        .node("player-inventory-open", "send-packet").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    /**
+     * Controls whether Apollo fires {@link com.lunarclient.apollo.event.packetenrichment.inventory.ApolloPlayerInventoryOpenEvent}
+     * when the packet is received.
+     *
+     * @since 1.2.9
+     */
+    public static final SimpleOption<Boolean> PLAYER_INVENTORY_OPEN_EVENT = Option.<Boolean>builder()
+        .comment("If 'true', Apollo fires the player inventory open event on the main thread. Disable this and handle the packet yourself if you require asynchronous or off-thread processing.")
+        .node("player-inventory-open", "fire-apollo-event").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    /**
+     * Controls whether the client sends an additional player inventory close packet to the server.
+     *
+     * @since 1.2.9
+     */
+    public static final SimpleOption<Boolean> PLAYER_INVENTORY_CLOSE_PACKET = Option.<Boolean>builder()
+        .comment("Set to 'true' to have the client send an additional player inventory close packet to the server, otherwise 'false'.")
+        .node("player-inventory-close", "send-packet").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    /**
+     * Controls whether Apollo fires {@link com.lunarclient.apollo.event.packetenrichment.inventory.ApolloPlayerInventoryCloseEvent}
+     * when the packet is received.
+     *
+     * @since 1.2.9
+     */
+    public static final SimpleOption<Boolean> PLAYER_INVENTORY_CLOSE_EVENT = Option.<Boolean>builder()
+        .comment("If 'true', Apollo fires the player inventory close event on the main thread. Disable this and handle the packet yourself if you require asynchronous or off-thread processing.")
+        .node("player-inventory-close", "fire-apollo-event").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    /**
      * Controls whether the client sends an additional player use item packet to the server.
      *
      * @since 1.2.2
@@ -153,6 +195,10 @@ public abstract class PacketEnrichmentModule extends ApolloModule {
             PacketEnrichmentModule.PLAYER_CHAT_OPEN_EVENT,
             PacketEnrichmentModule.PLAYER_CHAT_CLOSE_PACKET,
             PacketEnrichmentModule.PLAYER_CHAT_CLOSE_EVENT,
+            PacketEnrichmentModule.PLAYER_INVENTORY_OPEN_PACKET,
+            PacketEnrichmentModule.PLAYER_INVENTORY_OPEN_EVENT,
+            PacketEnrichmentModule.PLAYER_INVENTORY_CLOSE_PACKET,
+            PacketEnrichmentModule.PLAYER_INVENTORY_CLOSE_EVENT,
             PacketEnrichmentModule.PLAYER_USE_ITEM_PACKET,
             PacketEnrichmentModule.PLAYER_USE_ITEM_EVENT,
             PacketEnrichmentModule.PLAYER_USE_ITEM_BUCKET_PACKET,
