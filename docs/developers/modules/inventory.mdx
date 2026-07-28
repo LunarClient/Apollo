@@ -14,6 +14,10 @@ The inventory module allows you to create customizable and professional user int
   - Ability to copy to clipboard.
   - Ability to hide item tooltips.
   - Ability to hide slot highlighting.
+- Display clickable inventory buttons in two fixed-size boxes on each side of the player inventory.
+  - Ability to mix adventure components and icons inside a single button.
+  - Ability to customize the button shape, size, position, colors and hover colors.
+  - Ability to run commands or open URLs on click.
 
 <Callout type="info">
   This module is disabled by default, if you wish to use this module you will need to enable it in `config.yml`.
@@ -180,3 +184,1430 @@ public final class ItemUtil {
 </Tab>
 
 </Tabs>
+
+## Inventory Buttons
+
+Display server-driven clickable buttons around the player inventory. Buttons live in two invisible fixed-size
+boxes (`92x166` GUI-scaled pixels each) on each side of the player inventory.
+
+Inventory buttons are built on Apollo's shared button system: `InventoryButton` extends `ApolloButton.
+Read the [buttons utilities page](/apollo/developers/utilities/buttons) for the shared
+concepts: content, tooltips, click actions, shapes, sizes, colors and the update semantics.
+
+<Callout type="info">
+  Displaying buttons with the same id replaces the previous button.
+</Callout>
+
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+<Callout type="info">
+**Apollo API examples.** See [General](/apollo/developers/general) for common patterns and helpers.
+</Callout>
+
+### Displaying Inventory Buttons
+
+```java
+public void displayInventoryExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        InventoryButton shop = InventoryButton.builder()
+            .id("shop")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(4, 4))
+            .size(InventoryButton.SIZE_MEDIUM)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("EMERALD")
+                    .build())
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Shop", NamedTextColor.GREEN),
+                Component.text("Browse categories and buy items", NamedTextColor.GRAY),
+                Component.text("Click to open", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/shop"))
+            .build();
+
+        InventoryButton vote = InventoryButton.builder()
+            .id("vote")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 52))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(new Color(34, 204, 68, 64))
+            .borderColor(new Color(190, 255, 205, 110))
+            .hoveredBackgroundColor(new Color(34, 204, 68, 130))
+            .hoveredBorderColor(new Color(190, 255, 205, 210))
+            .content(ApolloButtonContent.builder()
+                .append(Component.text("Vote"))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Vote", NamedTextColor.GREEN),
+                Component.text("Vote daily for rewards", NamedTextColor.GRAY)))
+            .onClick(ApolloButtonAction.openUrl("https://example.com/vote"))
+            .build();
+
+        this.inventoryModule.displayInventoryButtons(apolloPlayer, Arrays.asList(shop, vote));
+    });
+}
+```
+
+### Removing an Inventory Button
+
+```java
+public void removeInventoryButtonExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.inventoryModule.removeInventoryButton(apolloPlayer, "shop");
+        this.inventoryModule.removeInventoryButton(apolloPlayer, "vote");
+    });
+}
+```
+
+### Resetting all Inventory Buttons
+
+```java
+public void resetInventoryExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.inventoryModule::resetInventoryButtons);
+}
+```
+
+### Updating an Inventory Button
+
+Replaces the content and/or tooltip of a previously displayed button, leaving all other button properties unchanged.
+Buttons are matched by id; See the [buttons utilities page](/apollo/developers/utilities/buttons#updating-buttons) for the shared update semantics.
+
+```java
+public void updateInventoryButtonExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.inventoryModule.updateInventoryButton(apolloPlayer, "vote",
+        ApolloButtonContent.builder()
+            .append(Component.text("Thanks for voting!", NamedTextColor.GREEN))
+            .scale(0.85F)
+            .build(),
+        ApolloButtonTooltip.of(Component.text("Come back tomorrow!", NamedTextColor.GRAY))));
+}
+```
+
+### Live Inventory Buttons
+
+Content parts and tooltips can be **live**: instead of a static value, you provide a resolver that is called
+for each viewing player and re-broadcast automatically by the module (see [Live Button Broadcast](#live-button-broadcast) below).
+
+```java
+public void displayLiveInventoryButtonExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        InventoryButton players = InventoryButton.builder()
+            .id("players")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(6, 8))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(apolloViewer -> Component.text("Players: ", NamedTextColor.GRAY)
+                        .append(Component.text(Bukkit.getOnlinePlayers().size(), NamedTextColor.GREEN)),
+                    Duration.ofMillis(2500L))
+                .build())
+            .tooltip(ApolloButtonTooltip.live(apolloViewer -> Arrays.asList(
+                Component.text("Players currently online", NamedTextColor.GRAY)), Duration.ofMillis(2500L)))
+            .build();
+
+        this.inventoryModule.displayInventoryButton(apolloPlayer, players);
+    });
+}
+```
+
+### `InventoryButton` Options
+
+`InventoryButton` extends `ApolloButton`. All shared options: `.id(...)`, `.shape(...)`, `.backgroundColor(...)` & `.borderColor(...)`,
+`.content(...)`, `.tooltip(...)`, `.onClick(...)` and the hovered color overrides are documented on the [buttons utilities page](/apollo/developers/utilities/buttons),
+along with the `ApolloButtonContent`, `ApolloButtonTooltip` and `ApolloButtonAction` builders used above.
+
+`.box(InventoryButtonBox)` the box this button is placed in, either `LEFT` or `RIGHT` of the player inventory.
+Each box is `92x166` GUI-scaled pixels (`InventoryButton.BOX_WIDTH` x `InventoryButton.BOX_HEIGHT`).
+```java
+.box(InventoryButtonBox.LEFT)
+```
+
+`.inventoryType(InventoryType)` the inventory screen this button belongs to. `PLAYER` (the player inventory,
+shown on both the survival and creative screens) is the only supported type today.
+```java
+.inventoryType(InventoryType.PLAYER)
+```
+
+`.position(HudPosition)` the button position, in GUI-scaled pixels. The button must fit inside the `92x166` box, so `x + width <= 92` and `y + height <= 166`.
+```java
+.position(HudPosition.of(8, 8))
+```
+
+`.size(ApolloButtonSize)` the button size, in GUI-scaled pixels. Use one of the suggested inventory sizes:
+`InventoryButton.SIZE_SMALL` (26x26), `SIZE_MEDIUM` (40x40), `SIZE_LARGE` (84x84) or `SIZE_WIDE` (80x26) or
+a fully custom size via `ApolloButtonSize.of(width, height)`.
+```java
+.size(InventoryButton.SIZE_MEDIUM)
+.size(ApolloButtonSize.of(56, 24))
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight Protobuf examples.** See [Lightweight Protobuf](/apollo/developers/lightweight/protobuf) for setup.
+</Callout>
+
+### Displaying Inventory Buttons
+
+```java
+public void displayInventoryExample(Player viewer) {
+    InventoryButton shop = InventoryButton.newBuilder()
+        .setButton(Button.newBuilder()
+            .setId("shop")
+            .setPosition(HudPosition.newBuilder().setX(4).setY(4).build())
+            .setSize(ButtonSize.newBuilder().setWidth(40).setHeight(40).build())
+            .setShape(ButtonShape.BUTTON_SHAPE_ROUNDED_SQUARE)
+            .setBackgroundColor(ProtobufUtil.createColorProto(new Color(255, 255, 255, 40)))
+            .setBorderColor(ProtobufUtil.createColorProto(new Color(37, 37, 37, 128)))
+            .setContent(ButtonContent.newBuilder()
+                .addParts(ButtonContentPart.newBuilder()
+                    .setIcon(Icon.newBuilder()
+                        .setItemStack(ProtobufUtil.createItemStackIconProto("EMERALD", 0))
+                        .build())
+                    .build())
+                .setScale(1.0F)
+                .build())
+            .setTooltip(ButtonTooltip.newBuilder()
+                .addAdventureJsonLines(AdventureUtil.toJson(Component.text("Shop", NamedTextColor.GREEN)))
+                .build())
+            .setRunCommand("/shop")
+            .build())
+        .setBox(InventoryButtonBox.INVENTORY_BUTTON_BOX_LEFT)
+        .build();
+
+    DisplayInventoryButtonsMessage message = DisplayInventoryButtonsMessage.newBuilder()
+        .addInventoryButtons(shop)
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+`run_command`, `open_url` and `client_action` form the button's `on_click`: set at most one; a button without one is purely decorative. `client_action` executes a built-in client action.
+
+```java
+.setClientAction(ButtonClientAction.BUTTON_CLIENT_ACTION_OPEN_MINIMAP_VIEW)
+.setClientAction(ButtonClientAction.BUTTON_CLIENT_ACTION_OPEN_WAYPOINTS_MENU)
+```
+
+### Removing an Inventory Button
+
+```java
+public void removeInventoryButtonExample(Player viewer) {
+    RemoveInventoryButtonMessage message = RemoveInventoryButtonMessage.newBuilder()
+        .setId("shop")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting all Inventory Buttons
+
+```java
+public void resetInventoryExample(Player viewer) {
+    ResetInventoryButtonsMessage message = ResetInventoryButtonsMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Updating an Inventory Button
+
+Replaces the content and/or tooltip of a previously displayed button, leaving all other button properties unchanged.
+Buttons are matched by id; See the [buttons utilities page](/apollo/developers/utilities/buttons#updating-buttons) for the shared update semantics.
+
+```java
+public void updateInventoryButtonExample(Player viewer) {
+    UpdateInventoryButtonMessage message = UpdateInventoryButtonMessage.newBuilder()
+        .setId("vote")
+        .setUpdate(ButtonUpdate.newBuilder()
+            .setContent(ButtonContent.newBuilder()
+                .addParts(ButtonContentPart.newBuilder()
+                    .setAdventureJsonText(AdventureUtil.toJson(
+                        Component.text("Thanks for voting!", NamedTextColor.GREEN)))
+                    .build())
+                .setScale(0.85F)
+                .build())
+            .setTooltip(ButtonTooltip.newBuilder()
+                .addAdventureJsonLines(AdventureUtil.toJson(
+                    Component.text("Come back tomorrow!", NamedTextColor.GRAY)))
+                .build())
+            .build())
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+To keep values live, re-send updates from a repeating task (mirroring the team module example) and ideally only to players whose inventory is open,
+using the serverbound [`PlayerInventoryOpenMessage`/`PlayerInventoryCloseMessage`](/apollo/developers/lightweight/protobuf/serverbound-packets) packets from the packet enrichment module:
+
+```java
+Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::broadcastLiveButtonUpdates, 60L, 60L);
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight JSON examples.** See [Lightweight JSON](/apollo/developers/lightweight/json) for setup.
+</Callout>
+
+### Displaying Inventory Buttons
+
+```java
+public void displayInventoryExample(Player viewer) {
+    JsonObject position = new JsonObject();
+    position.addProperty("x", 4);
+    position.addProperty("y", 4);
+
+    JsonObject size = new JsonObject();
+    size.addProperty("width", 40);
+    size.addProperty("height", 40);
+
+    JsonObject button = new JsonObject();
+    button.addProperty("id", "shop");
+    button.add("position", position);
+    button.add("size", size);
+    button.addProperty("shape", "BUTTON_SHAPE_ROUNDED_SQUARE");
+    button.add("background_color", JsonUtil.createColorObject(new Color(255, 255, 255, 40)));
+    button.add("border_color", JsonUtil.createColorObject(new Color(37, 37, 37, 128)));
+
+    JsonObject iconPart = new JsonObject();
+    iconPart.add("icon", JsonUtil.createItemStackIconObject("EMERALD", 0));
+
+    JsonArray parts = new JsonArray();
+    parts.add(iconPart);
+
+    JsonObject content = new JsonObject();
+    content.add("parts", parts);
+    content.addProperty("scale", 1.0F);
+    button.add("content", content);
+
+    JsonArray tooltipLines = new JsonArray();
+    tooltipLines.add(AdventureUtil.toJson(Component.text("Shop", NamedTextColor.GREEN)));
+
+    JsonObject tooltip = new JsonObject();
+    tooltip.add("adventure_json_lines", tooltipLines);
+    button.add("tooltip", tooltip);
+
+    button.addProperty("run_command", "/shop");
+
+    JsonObject inventoryButton = new JsonObject();
+    inventoryButton.add("button", button);
+    inventoryButton.addProperty("box", "INVENTORY_BUTTON_BOX_LEFT");
+
+    JsonArray buttons = new JsonArray();
+    buttons.add(inventoryButton);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.inventory.v1.DisplayInventoryButtonsMessage");
+    message.add("inventory_buttons", buttons);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+`run_command`, `open_url` and `client_action` form the button's `on_click`: set at most one; a button without one is purely decorative. `client_action` executes a built-in client action.
+
+```java
+button.addProperty("client_action", "BUTTON_CLIENT_ACTION_OPEN_MINIMAP_VIEW");
+button.addProperty("client_action", "BUTTON_CLIENT_ACTION_OPEN_WAYPOINTS_MENU");
+```
+
+### Removing an Inventory Button
+
+```java
+public void removeInventoryButtonExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.inventory.v1.RemoveInventoryButtonMessage");
+    message.addProperty("id", "shop");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Resetting all Inventory Buttons
+
+```java
+public void resetInventoryExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.inventory.v1.ResetInventoryButtonsMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+### Updating an Inventory Button
+
+Replaces the content and/or tooltip of a previously displayed button, leaving all other button properties unchanged.
+Buttons are matched by id; See the [buttons utilities page](/apollo/developers/utilities/buttons#updating-buttons) for the shared update semantics.
+
+```java
+public void updateInventoryButtonExample(Player viewer) {
+    JsonObject textPart = new JsonObject();
+    textPart.addProperty("adventure_json_text", AdventureUtil.toJson(
+        Component.text("Thanks for voting!", NamedTextColor.GREEN)));
+
+    JsonArray parts = new JsonArray();
+    parts.add(textPart);
+
+    JsonObject content = new JsonObject();
+    content.add("parts", parts);
+    content.addProperty("scale", 0.85F);
+
+    JsonArray tooltipLines = new JsonArray();
+    tooltipLines.add(AdventureUtil.toJson(Component.text("Come back tomorrow!", NamedTextColor.GRAY)));
+
+    JsonObject tooltip = new JsonObject();
+    tooltip.add("adventure_json_lines", tooltipLines);
+
+    JsonObject update = new JsonObject();
+    update.add("content", content);
+    update.add("tooltip", tooltip);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.inventory.v1.UpdateInventoryButtonMessage");
+    message.addProperty("id", "vote");
+    message.add("update", update);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Live Button Broadcast
+
+Inventory buttons displayed through the Apollo API with live content parts or a live tooltip are re-resolved and
+re-sent automatically while the `buttons.live-broadcast` option is enabled (disabled by default); no
+scheduler code required. The broadcast engine ticks every server tick (50ms) and
+sends each live piece whenever its own update interval elapses, refreshing content and tooltip independently.
+
+Every live part and live tooltip carries its own update interval, set through the content builder's
+`append(resolver, Duration)` (or `ApolloButtonContentPart.live(resolver, Duration)`) and `ApolloButtonTooltip.live(resolver, Duration)`.
+Lightweight integrations replicate this by re-sending `UpdateInventoryButtonMessage` from their own repeating task.
+
+<Callout type="info">
+  With only `buttons.live-broadcast` enabled, updates are always sent to **every** player holding live
+  buttons, even while their inventory is closed. Also enable the packet enrichment module and its player
+  inventory open/close packets and events. Apollo then only sends updates to players who currently have their
+  inventory open, and pushes fresh values the moment the inventory is opened.
+</Callout>
+
+```diff
+  modules:
+    inventory:
+-     enable: false
++     enable: true
+      buttons:
+-       live-broadcast: false
++       live-broadcast: true
+    packet_enrichment:
+-     enable: false
++     enable: true
+      player-inventory-open:
+-       send-packet: false
++       send-packet: true
+-       fire-apollo-event: false
++       fire-apollo-event: true
+      player-inventory-close:
+-       send-packet: false
++       send-packet: true
+-       fire-apollo-event: false
++       fire-apollo-event: true
+```
+
+## Default Buttons
+
+Inventory buttons can be defined directly in `config.yml` and displayed automatically when a player joins, without any
+plugin code. Set `buttons.send-defaults` to `true` (it is `false` by default) and define the buttons under `buttons.defaults`.
+
+Config buttons are **static**: text is read as legacy strings (`&`-color codes) and icons as icon
+definitions. Live content parts and live tooltips require a resolver and are therefore only available
+through the API.
+
+```yaml
+modules:
+  inventory:
+    enable: true
+    buttons:
+      send-defaults: true
+      defaults:
+      - id: shop
+        inventory-type: PLAYER         # currently only PLAYER
+        box: LEFT                      # LEFT or RIGHT
+        position:
+          x: 4.0
+          y: 4.0
+        size:
+          width: 40.0
+          height: 40.0
+        shape: ROUNDED_SQUARE          # ROUNDED_SQUARE or CIRCLE
+        background-color: '#28FFFFFF'  # '#RRGGBB' or '#AARRGGBB'
+        border-color: '#80252525'
+        content:
+          scale: 1.0
+          parts:                       # each part is a 'text' or an 'icon'
+          - icon:
+              name: EMERALD
+        tooltip:
+        - '&aShop'
+        - '&7Browse categories and buy items'
+        - '&eClick to open'
+        on-click:                      # one of run-command, open-url or client-action
+          run-command: /shop
+```
+
+## Example Layouts
+
+The example plugin ships four complete, runnable inventory button layouts, each implemented in all three integration flavors.
+The Apollo API version of every layout is shown below, the `apollo-protos` and JSON versions are linked underneath each one, and all share an [`InventoryButtonParts`](https://github.com/LunarClient/Apollo/blob/master/example/bukkit/proto/src/main/java/com/lunarclient/apollo/example/proto/module/inventorybuttons/InventoryButtonParts.java) helper ([JSON variant](https://github.com/LunarClient/Apollo/blob/master/example/bukkit/json/src/main/java/com/lunarclient/apollo/example/json/module/inventorybuttons/InventoryButtonParts.java)) for the pieces every button needs.
+
+### Menu Layout
+
+A full server menu: shop, spawn, warps, ender chest and a live balance readout, profile, settings, vote, Discord and back to lobby buttons.
+
+# TODO: Add image/gif
+
+```java
+public static void display(InventoryModule inventoryModule, Player viewer) {
+    // Live parts refresh automatically only while the Apollo config enables
+    // modules.inventory.buttons.live-broadcast (see the inventory module docs)
+    Apollo.getPlayerManager().getPlayer(viewer.getUniqueId()).ifPresent(apolloPlayer -> {
+        InventoryButton shop = InventoryButton.builder()
+            .id("shop")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(4, 4))
+            .size(InventoryButton.SIZE_MEDIUM)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("EMERALD")
+                    .build())
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Shop", NamedTextColor.GREEN),
+                Component.text("Browse categories and buy items", NamedTextColor.GRAY),
+                Component.text("Click to open", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/shop"))
+            .build();
+
+        InventoryButton spawn = InventoryButton.builder()
+            .id("spawn")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(48, 4))
+            .size(InventoryButton.SIZE_MEDIUM)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("RED_BED")
+                    .build())
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Spawn", NamedTextColor.AQUA),
+                Component.text("Teleport back to spawn", NamedTextColor.GRAY),
+                Component.text("Click to teleport", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/spawn"))
+            .build();
+
+        InventoryButton warps = InventoryButton.builder()
+            .id("warps")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(4, 48))
+            .size(InventoryButton.SIZE_MEDIUM)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("COMPASS")
+                    .build())
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Warps", NamedTextColor.AQUA),
+                Component.text("Browse public warps", NamedTextColor.GRAY),
+                Component.text("Click to teleport", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/warps"))
+            .build();
+
+        InventoryButton enderChest = InventoryButton.builder()
+            .id("enderchest")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(48, 48))
+            .size(InventoryButton.SIZE_MEDIUM)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("ENDER_CHEST")
+                    .build())
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Ender Chest", NamedTextColor.LIGHT_PURPLE),
+                Component.text("Open your personal storage", NamedTextColor.GRAY),
+                Component.text("Click to open", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/enderchest"))
+            .build();
+
+        InventoryButton balance = InventoryButton.builder()
+            .id("balance")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(6, 92))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("GOLD_INGOT")
+                    .build())
+                .append(ApolloButtonContentPart.live(apolloViewer -> Component.text("$" +
+                        String.format("%,d", getBalance(apolloViewer.getUniqueId())), NamedTextColor.GOLD),
+                    Duration.ofMillis(2500L)))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(Component.text("Your balance", NamedTextColor.GOLD)))
+            .build();
+
+        InventoryButton profile = InventoryButton.builder()
+            .id("profile")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(4, 4))
+            .size(InventoryButton.SIZE_MEDIUM)
+            .shape(ApolloButtonShape.CIRCLE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("PLAYER_HEAD") // use "skull" for legacy with customModelData set to 3
+                    .profile(Profile.builder()
+                        .id(UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd"))
+                        .texture("e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ4MjUwNWJjZjNiYTU5YzJiZTdlMmQzNmY0ZTJiZGE4MzZmMmZkMTk0YjYyMTJhMmExYzRiNGEyYTQ3MWUifX19")
+                        .signature("")
+                        .build())
+                    .build())
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text(viewer.getName(), NamedTextColor.GOLD),
+                Component.text("View your stats", NamedTextColor.GRAY)))
+            .onClick(ApolloButtonAction.runCommand("/profile"))
+            .build();
+
+        InventoryButton settings = InventoryButton.builder()
+            .id("settings")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(48, 4))
+            .size(InventoryButton.SIZE_MEDIUM)
+            .shape(ApolloButtonShape.CIRCLE)
+            .backgroundColor(new Color(222, 160, 60, 85))
+            .borderColor(new Color(255, 218, 150, 140))
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("COMPARATOR")
+                    .build())
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Settings", NamedTextColor.WHITE),
+                Component.text("Server preferences", NamedTextColor.GRAY)))
+            .onClick(ApolloButtonAction.runCommand("/settings"))
+            .build();
+
+        InventoryButton vote = InventoryButton.builder()
+            .id("vote")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 52))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(new Color(34, 204, 68, 64))
+            .borderColor(new Color(190, 255, 205, 110))
+            .hoveredBackgroundColor(new Color(34, 204, 68, 130))
+            .hoveredBorderColor(new Color(190, 255, 205, 210))
+            .content(ApolloButtonContent.builder()
+                .append(Component.text("Vote"))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Vote", NamedTextColor.GREEN),
+                Component.text("Vote daily for rewards", NamedTextColor.GRAY)))
+            .onClick(ApolloButtonAction.openUrl("https://example.com/vote"))
+            .build();
+
+        InventoryButton discord = InventoryButton.builder()
+            .id("discord")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 84))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(new Color(88, 101, 242, 90))
+            .borderColor(new Color(150, 160, 250, 140))
+            .content(ApolloButtonContent.builder()
+                .append(Component.text("Discord"))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Discord", NamedTextColor.BLUE),
+                Component.text("Join our community", NamedTextColor.GRAY)))
+            .onClick(ApolloButtonAction.openUrl("https://lunarclient.dev/discord"))
+            .build();
+
+        InventoryButton lobby = InventoryButton.builder()
+            .id("lobby")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 136))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(new Color(224, 64, 64, 128))
+            .borderColor(new Color(255, 200, 200, 140))
+            .content(ApolloButtonContent.builder()
+                .append(Component.text("Back to Lobby"))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Back to Lobby", NamedTextColor.RED),
+                Component.text("Return to the main lobby", NamedTextColor.GRAY)))
+            .onClick(ApolloButtonAction.runCommand("/lobby"))
+            .build();
+
+        inventoryModule.displayInventoryButtons(apolloPlayer, Arrays.asList(shop, spawn, warps, enderChest, balance,
+            profile, settings, vote, discord, lobby));
+    });
+}
+
+// Demo economy: replace with your economy plugin lookup (e.g. Vault)
+private static long getBalance(UUID playerIdentifier) {
+    long drift = (System.currentTimeMillis() / 10_000L) % 250L;
+    return 1_000L + Math.abs(playerIdentifier.hashCode() % 4_000) + drift;
+}
+```
+
+The same layout built with raw payloads: [apollo-protos implementation](https://github.com/LunarClient/Apollo/blob/master/example/bukkit/proto/src/main/java/com/lunarclient/apollo/example/proto/module/inventorybuttons/MenuLayout.java) · [JSON implementation](https://github.com/LunarClient/Apollo/blob/master/example/bukkit/json/src/main/java/com/lunarclient/apollo/example/json/module/inventorybuttons/MenuLayout.java)
+
+### Hub Layout
+
+A hub server selector: Practice, Factions, BedWars and SoupPvP, profile, settings and a changelog button.
+
+# TODO: Add image/gif
+
+```java
+public static void display(InventoryModule inventoryModule, Player viewer) {
+    Apollo.getPlayerManager().getPlayer(viewer.getUniqueId()).ifPresent(apolloPlayer -> {
+        InventoryButton practice = InventoryButton.builder()
+            .id("practice")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(6, 8))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("SPLASH_POTION")
+                    .potion("healing")
+                    .build())
+                .append(Component.text("Practice", NamedTextColor.LIGHT_PURPLE))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(Component.text("Click to join!", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/server practice"))
+            .build();
+
+        InventoryButton factions = InventoryButton.builder()
+            .id("factions")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(6, 40))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("TNT")
+                    .build())
+                .append(Component.text("Factions", NamedTextColor.RED))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(Component.text("Click to join!", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/server factions"))
+            .build();
+
+        InventoryButton bedWars = InventoryButton.builder()
+            .id("bedwars")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(6, 72))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("RED_BED")
+                    .build())
+                .append(Component.text("BedWars", NamedTextColor.AQUA))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(Component.text("Click to join!", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/server bedwars"))
+            .build();
+
+        InventoryButton soupPvP = InventoryButton.builder()
+            .id("souppvp")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(6, 104))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("MUSHROOM_STEW")
+                    .build())
+                .append(Component.text("SoupPvP", NamedTextColor.GOLD))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(Component.text("Click to join!", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/server souppvp"))
+            .build();
+
+        InventoryButton profile = InventoryButton.builder()
+            .id("profile")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(4, 4))
+            .size(InventoryButton.SIZE_MEDIUM)
+            .shape(ApolloButtonShape.CIRCLE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("PLAYER_HEAD") // use "skull" for legacy with customModelData set to 3
+                    .profile(Profile.builder()
+                        .id(UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd"))
+                        .texture("e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ4MjUwNWJjZjNiYTU5YzJiZTdlMmQzNmY0ZTJiZGE4MzZmMmZkMTk0YjYyMTJhMmExYzRiNGEyYTQ3MWUifX19")
+                        .signature("")
+                        .build())
+                    .build())
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text(viewer.getName(), NamedTextColor.GOLD),
+                Component.text("View your stats", NamedTextColor.GRAY)))
+            .onClick(ApolloButtonAction.runCommand("/profile"))
+            .build();
+
+        InventoryButton settings = InventoryButton.builder()
+            .id("settings")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(48, 4))
+            .size(InventoryButton.SIZE_MEDIUM)
+            .shape(ApolloButtonShape.CIRCLE)
+            .backgroundColor(new Color(222, 160, 60, 85))
+            .borderColor(new Color(255, 218, 150, 140))
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("COMPARATOR")
+                    .build())
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Settings", NamedTextColor.WHITE),
+                Component.text("Server preferences", NamedTextColor.GRAY)))
+            .onClick(ApolloButtonAction.runCommand("/settings"))
+            .build();
+
+        InventoryButton changelog = InventoryButton.builder()
+            .id("changelog")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 52))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("WRITABLE_BOOK")
+                    .build())
+                .append(Component.text("Changelog"))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("🌙  Apollo - v1.2.8", NamedTextColor.GOLD),
+                Component.empty(),
+                Component.text("• Released Markers Module", NamedTextColor.GRAY),
+                Component.text("• Added ALLOW_DIG_AND_USE & DISABLE_BLOCK_MISS_PENALTY", NamedTextColor.GRAY),
+                Component.text("  options to Combat Module", NamedTextColor.GRAY),
+                Component.text("• Added configurable Server Link Button placement", NamedTextColor.GRAY),
+                Component.text("• Added API option to auto-enable Staff Mods", NamedTextColor.GRAY),
+                Component.text("  when unlocked via the Staff Mod Module", NamedTextColor.GRAY),
+                Component.text("• Improved performance with various optimizations", NamedTextColor.GRAY),
+                Component.empty(),
+                Component.text("Read the full changelog at", NamedTextColor.YELLOW),
+                Component.text("https://github.com/LunarClient/Apollo/releases/tag/v1.2.8", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.openUrl("https://github.com/LunarClient/Apollo/releases/tag/v1.2.8"))
+            .build();
+
+        inventoryModule.displayInventoryButtons(apolloPlayer, Arrays.asList(practice, factions, bedWars,
+            soupPvP, profile, settings, changelog));
+    });
+}
+```
+
+The same layout built with raw payloads: [apollo-protos implementation](https://github.com/LunarClient/Apollo/blob/master/example/bukkit/proto/src/main/java/com/lunarclient/apollo/example/proto/module/inventorybuttons/HubLayout.java) · [JSON implementation](https://github.com/LunarClient/Apollo/blob/master/example/bukkit/json/src/main/java/com/lunarclient/apollo/example/json/module/inventorybuttons/HubLayout.java)
+
+### Minigame Layout
+
+A minigame overlay: map info, a live kill counter and mod-aware Show Map / Waypoints buttons using client actions, profile, settings and back to lobby buttons.
+
+# TODO: Add image/gif
+
+```java
+public static void display(InventoryModule inventoryModule, Player viewer) {
+    // Live parts refresh automatically only while the Apollo config enables
+    // modules.inventory.buttons.live-broadcast (see the inventory module docs)
+    Apollo.getPlayerManager().getPlayer(viewer.getUniqueId()).ifPresent(apolloPlayer -> {
+        InventoryButton mapInfo = InventoryButton.builder()
+            .id("map-info")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(6, 8))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(Component.text("Map: Apollo", NamedTextColor.AQUA))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Built by the Lunar Client Team"),
+                Component.text("Released in 2024", NamedTextColor.GRAY)))
+            .build();
+
+        InventoryButton kills = InventoryButton.builder()
+            .id("kills")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(6, 40))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("IRON_SWORD")
+                    .build())
+                .append(apolloViewer -> Component.text("Kills: ", NamedTextColor.GRAY)
+                        .append(Component.text(getKills(apolloViewer), NamedTextColor.RED)),
+                    Duration.ofMillis(2500L))
+                .scale(1.0F)
+                .build())
+            .build();
+
+        InventoryButton lobby = InventoryButton.builder()
+            .id("lobby")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 136))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(new Color(224, 64, 64, 128))
+            .borderColor(new Color(255, 200, 200, 140))
+            .content(ApolloButtonContent.builder()
+                .append(Component.text("Back to Lobby"))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Back to Lobby", NamedTextColor.RED),
+                Component.text("Return to the main lobby", NamedTextColor.GRAY)))
+            .onClick(ApolloButtonAction.runCommand("/lobby"))
+            .build();
+
+        InventoryButton profile = InventoryButton.builder()
+            .id("profile")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(4, 4))
+            .size(InventoryButton.SIZE_MEDIUM)
+            .shape(ApolloButtonShape.CIRCLE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("PLAYER_HEAD") // use "skull" for legacy with customModelData set to 3
+                    .profile(Profile.builder()
+                        .id(UUID.fromString("f17627d8-1a97-487b-92ea-c04f413394bd"))
+                        .texture("e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ4MjUwNWJjZjNiYTU5YzJiZTdlMmQzNmY0ZTJiZGE4MzZmMmZkMTk0YjYyMTJhMmExYzRiNGEyYTQ3MWUifX19")
+                        .signature("")
+                        .build())
+                    .build())
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text(viewer.getName(), NamedTextColor.GOLD),
+                Component.text("View your stats", NamedTextColor.GRAY)))
+            .onClick(ApolloButtonAction.runCommand("/profile"))
+            .build();
+
+        InventoryButton settings = InventoryButton.builder()
+            .id("settings")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(48, 4))
+            .size(InventoryButton.SIZE_MEDIUM)
+            .shape(ApolloButtonShape.CIRCLE)
+            .backgroundColor(new Color(222, 160, 60, 85))
+            .borderColor(new Color(255, 218, 150, 140))
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("COMPARATOR")
+                    .build())
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Settings", NamedTextColor.WHITE),
+                Component.text("Server preferences", NamedTextColor.GRAY)))
+            .onClick(ApolloButtonAction.runCommand("/settings"))
+            .build();
+
+        ModSettingModule modSettingModule = Apollo.getModuleManager().getModule(ModSettingModule.class);
+        boolean minimapEnabled = modSettingModule.getStatus(apolloPlayer, ModMinimap.ENABLED);
+        boolean waypointsEnabled = modSettingModule.getStatus(apolloPlayer, ModWaypoints.ENABLED);
+
+        InventoryButton.InventoryButtonBuilder<?, ?> showMapBuilder = InventoryButton.builder()
+            .id("show-map")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 52))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("FILLED_MAP")
+                    .build())
+                .append(Component.text("Show Map"))
+                .scale(1.0F)
+                .build());
+
+        if (minimapEnabled) {
+            showMapBuilder
+                .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+                .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+                .tooltip(ApolloButtonTooltip.of(
+                    Component.text("Show Map", NamedTextColor.AQUA),
+                    Component.text("Open the fullscreen minimap view", NamedTextColor.GRAY)))
+                .onClick(ApolloButtonAction.clientAction(ApolloButtonClientAction.OPEN_MINIMAP_VIEW));
+        } else {
+            showMapBuilder
+                .backgroundColor(new Color(224, 64, 64, 128))
+                .borderColor(new Color(255, 200, 200, 140))
+                .tooltip(ApolloButtonTooltip.of(Component.text("Minimap mod must be enabled", NamedTextColor.RED)));
+        }
+
+        InventoryButton showMap = showMapBuilder.build();
+
+        InventoryButton.InventoryButtonBuilder<?, ?> waypointsBuilder = InventoryButton.builder()
+            .id("waypoints")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 84))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("LODESTONE")
+                    .build())
+                .append(Component.text("Waypoints"))
+                .scale(1.0F)
+                .build());
+
+        if (waypointsEnabled) {
+            waypointsBuilder
+                .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+                .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+                .tooltip(ApolloButtonTooltip.of(
+                    Component.text("Waypoints", NamedTextColor.GOLD),
+                    Component.text("Manage your waypoints", NamedTextColor.GRAY)))
+                .onClick(ApolloButtonAction.clientAction(ApolloButtonClientAction.OPEN_WAYPOINTS_MENU));
+        } else {
+            waypointsBuilder
+                .backgroundColor(new Color(224, 64, 64, 128))
+                .borderColor(new Color(255, 200, 200, 140))
+                .tooltip(ApolloButtonTooltip.of(Component.text("Waypoints mod must be enabled", NamedTextColor.RED)));
+        }
+
+        InventoryButton waypoints = waypointsBuilder.build();
+
+        inventoryModule.displayInventoryButtons(apolloPlayer, Arrays.asList(mapInfo, kills, lobby,
+            profile, settings, showMap, waypoints));
+    });
+}
+
+private static int getKills(ApolloPlayer apolloViewer) {
+    Player player = Bukkit.getPlayer(apolloViewer.getUniqueId());
+    return player != null ? player.getStatistic(Statistic.PLAYER_KILLS) : 0;
+}
+```
+
+The same layout built with raw payloads: [apollo-protos implementation](https://github.com/LunarClient/Apollo/blob/master/example/bukkit/proto/src/main/java/com/lunarclient/apollo/example/proto/module/inventorybuttons/MinigameLayout.java) · [JSON implementation](https://github.com/LunarClient/Apollo/blob/master/example/bukkit/json/src/main/java/com/lunarclient/apollo/example/json/module/inventorybuttons/MinigameLayout.java)
+
+### Staff Layout
+
+A live server-stats dashboard: player count, TPS, CPU and RAM refreshing every second (requires `buttons.live-broadcast`), gamemode switch buttons.
+
+# TODO: Add image/gif
+
+```java
+private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+public static void display(InventoryModule inventoryModule, Player viewer) {
+    // Live parts refresh automatically only while the Apollo config enables
+    // modules.inventory.buttons.live-broadcast (see the inventory module docs)
+    Apollo.getPlayerManager().getPlayer(viewer.getUniqueId()).ifPresent(apolloPlayer -> {
+        InventoryButton players = InventoryButton.builder()
+            .id("players")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(6, 8))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(apolloViewer -> Component.text("Players: ", NamedTextColor.GRAY)
+                        .append(Component.text(Bukkit.getOnlinePlayers().size(), NamedTextColor.GREEN)),
+                    Duration.ofSeconds(1))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.live(apolloViewer -> Arrays.asList(
+                    Component.text("Players currently online", NamedTextColor.GRAY),
+                    Component.empty(), refreshedLine()),
+                Duration.ofSeconds(1)))
+            .build();
+
+        InventoryButton tps = InventoryButton.builder()
+            .id("tps")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(6, 40))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(apolloViewer -> tpsContent(), Duration.ofSeconds(1))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.live(apolloViewer -> tpsTooltip(), Duration.ofSeconds(1)))
+            .build();
+
+        InventoryButton cpu = InventoryButton.builder()
+            .id("cpu")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(6, 72))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(apolloViewer -> cpuContent(), Duration.ofSeconds(1))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.live(apolloViewer -> cpuTooltip(), Duration.ofSeconds(1)))
+            .build();
+
+        InventoryButton ram = InventoryButton.builder()
+            .id("ram")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.LEFT)
+            .position(HudPosition.of(6, 104))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(apolloViewer -> ramContent(), Duration.ofSeconds(1))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.live(apolloViewer -> ramTooltip(), Duration.ofSeconds(1)))
+            .build();
+
+        InventoryButton survival = InventoryButton.builder()
+            .id("survival")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 8))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("IRON_SWORD")
+                    .build())
+                .append(Component.text("Survival"))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(Component.text("Click to switch!", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/gamemode survival"))
+            .build();
+
+        InventoryButton creative = InventoryButton.builder()
+            .id("creative")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 40))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("GRASS_BLOCK")
+                    .build())
+                .append(Component.text("Creative"))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(Component.text("Click to switch!", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/gamemode creative"))
+            .build();
+
+        InventoryButton adventure = InventoryButton.builder()
+            .id("adventure")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 72))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("FILLED_MAP")
+                    .build())
+                .append(Component.text("Adventure"))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(Component.text("Click to switch!", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/gamemode adventure"))
+            .build();
+
+        InventoryButton spectator = InventoryButton.builder()
+            .id("spectator")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 104))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("ENDER_EYE")
+                    .build())
+                .append(Component.text("Spectator"))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(Component.text("Click to switch!", NamedTextColor.YELLOW)))
+            .onClick(ApolloButtonAction.runCommand("/gamemode spectator"))
+            .build();
+
+        inventoryModule.displayInventoryButtons(apolloPlayer, Arrays.asList(players, tps, cpu, ram,
+            survival, creative, adventure, spectator));
+    });
+}
+
+private static Component tpsContent() {
+    double[] tps = ServerStatsUtil.getTps();
+    if (tps == null || tps.length == 0) {
+        return Component.text("TPS: N/A", NamedTextColor.GRAY);
+    }
+
+    double recent = Math.min(20.0D, tps[0]);
+    return Component.text("TPS: ", NamedTextColor.GRAY)
+        .append(Component.text(String.format("%.1f", recent), tpsColor(recent)));
+}
+
+private static List<Component> tpsTooltip() {
+    double[] tps = ServerStatsUtil.getTps();
+    if (tps == null || tps.length < 3) {
+        return Arrays.asList(
+            Component.text("TPS averages require a Paper based server", NamedTextColor.GRAY),
+            Component.empty(),
+            refreshedLine());
+    }
+
+    return Arrays.asList(
+        tpsAverageLine("1m", tps[0]),
+        tpsAverageLine("5m", tps[1]),
+        tpsAverageLine("15m", tps[2]),
+        Component.empty(),
+        refreshedLine());
+}
+
+private static Component tpsAverageLine(String window, double average) {
+    double tps = Math.min(20.0D, average);
+    return Component.text(window + ": ", NamedTextColor.GRAY)
+        .append(Component.text(String.format("%.2f", tps), tpsColor(tps)));
+}
+
+private static NamedTextColor tpsColor(double tps) {
+    if (tps >= 18.0D) {
+        return NamedTextColor.GREEN;
+    }
+
+    return tps >= 15.0D ? NamedTextColor.YELLOW : NamedTextColor.RED;
+}
+
+private static Component cpuContent() {
+    double load = ServerStatsUtil.getSystemLoadAverage();
+    if (load < 0.0D) {
+        return Component.text("CPU: N/A", NamedTextColor.GRAY);
+    }
+
+    return Component.text("CPU: ", NamedTextColor.GRAY)
+        .append(Component.text(String.format("%.2f", load), cpuColor(load)));
+}
+
+private static List<Component> cpuTooltip() {
+    double load = ServerStatsUtil.getSystemLoadAverage();
+    if (load < 0.0D) {
+        return Arrays.asList(
+            Component.text("The system load average is unavailable", NamedTextColor.GRAY),
+            Component.empty(),
+            refreshedLine());
+    }
+
+    int cores = ServerStatsUtil.getAvailableProcessors();
+    double perCore = load * 100.0D / cores;
+    return Arrays.asList(
+        Component.text("System load average (last minute)", NamedTextColor.GRAY),
+        Component.text("Cores: ", NamedTextColor.GRAY)
+            .append(Component.text(cores, NamedTextColor.WHITE)),
+        Component.text("Per core: ", NamedTextColor.GRAY)
+            .append(Component.text(String.format("%.0f%%", perCore), cpuColor(load))),
+        Component.empty(),
+        refreshedLine());
+}
+
+private static NamedTextColor cpuColor(double load) {
+    double perCore = load / ServerStatsUtil.getAvailableProcessors();
+    if (perCore < 0.5D) {
+        return NamedTextColor.GREEN;
+    }
+
+    return perCore < 1.0D ? NamedTextColor.YELLOW : NamedTextColor.RED;
+}
+
+private static Component ramContent() {
+    long used = ServerStatsUtil.getUsedRamMb();
+    long max = ServerStatsUtil.getMaxRamMb();
+    long percent = max <= 0 ? 0 : used * 100 / max;
+
+    return Component.text("RAM: ", NamedTextColor.GRAY)
+        .append(Component.text(percent + "%", ramColor(percent)));
+}
+
+private static List<Component> ramTooltip() {
+    return Arrays.asList(
+        Component.text("Used: ", NamedTextColor.GRAY)
+            .append(Component.text(ServerStatsUtil.getUsedRamMb() + " MB", NamedTextColor.WHITE)),
+        Component.text("Max: ", NamedTextColor.GRAY)
+            .append(Component.text(ServerStatsUtil.getMaxRamMb() + " MB", NamedTextColor.WHITE)),
+        Component.empty(),
+        refreshedLine());
+}
+
+private static NamedTextColor ramColor(long percent) {
+    if (percent < 60) {
+        return NamedTextColor.GREEN;
+    }
+
+    return percent < 85 ? NamedTextColor.YELLOW : NamedTextColor.RED;
+}
+
+private static Component refreshedLine() {
+    return Component.text("Updated at " + LocalTime.now().format(TIME_FORMAT), NamedTextColor.YELLOW, TextDecoration.ITALIC);
+}
+```
+
+The same layout built with raw payloads: [apollo-protos implementation](https://github.com/LunarClient/Apollo/blob/master/example/bukkit/proto/src/main/java/com/lunarclient/apollo/example/proto/module/inventorybuttons/StaffLayout.java) · [JSON implementation](https://github.com/LunarClient/Apollo/blob/master/example/bukkit/json/src/main/java/com/lunarclient/apollo/example/json/module/inventorybuttons/StaffLayout.java)
+
+## Available options
+
+- __`BROADCAST_LIVE_BUTTONS`__
+    - Whether live inventory button content is automatically re-resolved and re-sent to viewers.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SEND_DEFAULT_BUTTONS`__
+    - Whether the default buttons are displayed to players when they join.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DEFAULT_BUTTONS`__
+    - The default buttons displayed to joining players while `buttons.send-defaults` is enabled.
+    - Values
+        - Type: `List<InventoryButton>`
+        - Default: `menu-style sample buttons`
