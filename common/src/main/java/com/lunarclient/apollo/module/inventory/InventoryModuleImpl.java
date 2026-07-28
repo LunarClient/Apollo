@@ -30,6 +30,7 @@ import com.lunarclient.apollo.common.button.ApolloButtonTooltip;
 import com.lunarclient.apollo.common.button.content.ApolloButtonContent;
 import com.lunarclient.apollo.event.packetenrichment.inventory.ApolloPlayerInventoryCloseEvent;
 import com.lunarclient.apollo.event.packetenrichment.inventory.ApolloPlayerInventoryOpenEvent;
+import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
 import com.lunarclient.apollo.inventory.v1.DisplayInventoryButtonsMessage;
 import com.lunarclient.apollo.inventory.v1.RemoveInventoryButtonMessage;
@@ -40,6 +41,7 @@ import com.lunarclient.apollo.module.button.ButtonSurface;
 import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentModule;
 import com.lunarclient.apollo.network.ButtonNetworkTypes;
 import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.config.Serializer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.util.Collection;
@@ -53,7 +55,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @since 1.2.9
  */
-public final class InventoryModuleImpl extends InventoryModule implements ButtonSurface<InventoryButton, com.lunarclient.apollo.inventory.v1.InventoryButton> {
+public final class InventoryModuleImpl extends InventoryModule implements ButtonSurface<InventoryButton, com.lunarclient.apollo.inventory.v1.InventoryButton>, Serializer {
 
     private final ButtonModuleSupport<InventoryButton, com.lunarclient.apollo.inventory.v1.InventoryButton> support =
         new ButtonModuleSupport<>(this, this, InventoryModule.BROADCAST_LIVE_BUTTONS);
@@ -65,6 +67,8 @@ public final class InventoryModuleImpl extends InventoryModule implements Button
      */
     public InventoryModuleImpl() {
         super();
+        this.serializer(InventoryButton.class, new InventoryButtonSerializer());
+        this.handle(ApolloRegisterPlayerEvent.class, this::onPlayerRegister);
         this.handle(ApolloPlayerInventoryOpenEvent.class, event -> this.support.handleOpen(event.getPlayer()));
         this.handle(ApolloPlayerInventoryCloseEvent.class, event -> this.support.handleClose(event.getPlayer().getUniqueId()));
         this.handle(ApolloUnregisterPlayerEvent.class, event -> this.support.handleUnregister(event.getPlayer().getUniqueId()));
@@ -128,6 +132,25 @@ public final class InventoryModuleImpl extends InventoryModule implements Button
     @Override
     public void updateInventoryButtonTooltip(@NonNull Recipients recipients, @NonNull String buttonId, @Nullable ApolloButtonTooltip tooltip) {
         this.support.pushUpdate(recipients, buttonId, null, true, tooltip);
+    }
+
+    private void onPlayerRegister(ApolloRegisterPlayerEvent event) {
+        if (!this.isEnabled() || !this.getOptions().get(InventoryModule.SEND_DEFAULT_BUTTONS)) {
+            return;
+        }
+
+        ApolloPlayer player = event.getPlayer();
+        List<InventoryButton> buttons = this.getOptions().get(player, InventoryModule.DEFAULT_BUTTONS);
+        if (buttons == null || buttons.isEmpty()) {
+            return;
+        }
+
+        try {
+            this.support.displayButtons(player, buttons);
+        } catch (IllegalArgumentException exception) {
+            Apollo.getPlatform().getPlatformLogger()
+                .warning("Skipping the default inventory buttons: " + exception.getMessage());
+        }
     }
 
     @Override

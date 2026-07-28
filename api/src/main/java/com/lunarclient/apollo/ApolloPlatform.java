@@ -136,9 +136,6 @@ public interface ApolloPlatform {
          * Schedules a task to run asynchronously every period, first running
          * after the given delay.
          *
-         * <p>Repeating tasks die with the platform plugin, so they need no
-         * explicit cancellation handle.</p>
-         *
          * @param task   the task to run
          * @param delay  the delay before the first run
          * @param period the period between runs

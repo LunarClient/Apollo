@@ -38,12 +38,14 @@ import com.lunarclient.apollo.common.button.ApolloButtonTooltip;
 import com.lunarclient.apollo.common.button.content.ApolloButtonContent;
 import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatCloseEvent;
 import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatOpenEvent;
+import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
 import com.lunarclient.apollo.module.button.ButtonModuleSupport;
 import com.lunarclient.apollo.module.button.ButtonSurface;
 import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentModule;
 import com.lunarclient.apollo.network.ButtonNetworkTypes;
 import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.config.Serializer;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.util.Collection;
@@ -58,7 +60,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @since 1.0.2
  */
-public final class ChatModuleImpl extends ChatModule implements ButtonSurface<ChatButton, com.lunarclient.apollo.chat.v1.ChatButton> {
+public final class ChatModuleImpl extends ChatModule implements ButtonSurface<ChatButton, com.lunarclient.apollo.chat.v1.ChatButton>, Serializer {
 
     private final ButtonModuleSupport<ChatButton, com.lunarclient.apollo.chat.v1.ChatButton> support =
         new ButtonModuleSupport<>(this, this, ChatModule.BROADCAST_LIVE_BUTTONS);
@@ -70,6 +72,8 @@ public final class ChatModuleImpl extends ChatModule implements ButtonSurface<Ch
      */
     public ChatModuleImpl() {
         super();
+        this.serializer(ChatButton.class, new ChatButtonSerializer());
+        this.handle(ApolloRegisterPlayerEvent.class, this::onPlayerRegister);
         this.handle(ApolloPlayerChatOpenEvent.class, event -> this.support.handleOpen(event.getPlayer()));
         this.handle(ApolloPlayerChatCloseEvent.class, event -> this.support.handleClose(event.getPlayer().getUniqueId()));
         this.handle(ApolloUnregisterPlayerEvent.class, event -> this.support.handleUnregister(event.getPlayer().getUniqueId()));
@@ -142,6 +146,25 @@ public final class ChatModuleImpl extends ChatModule implements ButtonSurface<Ch
     @Override
     public void updateChatButtonTooltip(@NonNull Recipients recipients, @NonNull String buttonId, @Nullable ApolloButtonTooltip tooltip) {
         this.support.pushUpdate(recipients, buttonId, null, true, tooltip);
+    }
+
+    private void onPlayerRegister(ApolloRegisterPlayerEvent event) {
+        if (!this.isEnabled() || !this.getOptions().get(ChatModule.SEND_DEFAULT_BUTTONS)) {
+            return;
+        }
+
+        ApolloPlayer player = event.getPlayer();
+        List<ChatButton> buttons = this.getOptions().get(player, ChatModule.DEFAULT_BUTTONS);
+        if (buttons == null || buttons.isEmpty()) {
+            return;
+        }
+
+        try {
+            this.support.displayButtons(player, buttons);
+        } catch (IllegalArgumentException exception) {
+            Apollo.getPlatform().getPlatformLogger()
+                .warning("Skipping the default chat buttons: " + exception.getMessage());
+        }
     }
 
     @Override

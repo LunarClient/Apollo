@@ -48,7 +48,7 @@ public final class MenuLayout {
 
     public static void display(InventoryModule inventoryModule, Player viewer) {
         // Live parts refresh automatically only while the Apollo config enables
-        // modules.inventory.live-buttons.broadcast (see the inventory module docs)
+        // modules.inventory.buttons.live-broadcast (see the inventory module docs)
         Apollo.getPlayerManager().getPlayer(viewer.getUniqueId()).ifPresent(apolloPlayer -> {
             InventoryButton shop = InventoryButton.builder()
                 .id("shop")
