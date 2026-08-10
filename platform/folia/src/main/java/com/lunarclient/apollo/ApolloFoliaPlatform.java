@@ -48,6 +48,8 @@ import com.lunarclient.apollo.module.entity.EntityModule;
 import com.lunarclient.apollo.module.entity.EntityModuleImpl;
 import com.lunarclient.apollo.module.glow.GlowModule;
 import com.lunarclient.apollo.module.glow.GlowModuleImpl;
+import com.lunarclient.apollo.module.heightlimit.HeightLimitModule;
+import com.lunarclient.apollo.module.heightlimit.HeightLimitModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
@@ -138,6 +140,7 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
             .addModule(CooldownModule.class, new CooldownModuleImpl())
             .addModule(EntityModule.class, new EntityModuleImpl())
             .addModule(GlowModule.class, new GlowModuleImpl())
+            .addModule(HeightLimitModule.class, new HeightLimitModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
             .addModule(LimbModule.class, new LimbModuleImpl())
             .addModule(MarkerModule.class, new MarkerModuleImpl())

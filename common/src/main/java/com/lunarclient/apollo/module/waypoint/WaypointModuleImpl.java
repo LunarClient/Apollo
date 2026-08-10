@@ -110,6 +110,10 @@ public final class WaypointModuleImpl extends WaypointModule implements Serializ
     }
 
     private void onPlayerRegister(ApolloRegisterPlayerEvent event) {
+        if (!this.isEnabled()) {
+            return;
+        }
+
         ApolloPlayer player = event.getPlayer();
         List<Waypoint> waypoints = this.getOptions().get(player, WaypointModule.DEFAULT_WAYPOINTS);
 

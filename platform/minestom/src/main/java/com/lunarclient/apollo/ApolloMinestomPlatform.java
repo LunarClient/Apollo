@@ -49,6 +49,8 @@ import com.lunarclient.apollo.module.entity.EntityModuleImpl;
 import com.lunarclient.apollo.module.glint.GlintModule;
 import com.lunarclient.apollo.module.glow.GlowModule;
 import com.lunarclient.apollo.module.glow.GlowModuleImpl;
+import com.lunarclient.apollo.module.heightlimit.HeightLimitModule;
+import com.lunarclient.apollo.module.heightlimit.HeightLimitModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.inventory.InventoryModule;
@@ -171,6 +173,7 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
             .addModule(EntityModule.class, new EntityModuleImpl())
             .addModule(GlintModule.class)
             .addModule(GlowModule.class, new GlowModuleImpl())
+            .addModule(HeightLimitModule.class, new HeightLimitModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
             .addModule(InventoryModule.class)
             .addModule(LimbModule.class, new LimbModuleImpl())
