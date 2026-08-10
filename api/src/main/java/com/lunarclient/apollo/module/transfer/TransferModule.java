@@ -42,6 +42,14 @@ import org.jetbrains.annotations.ApiStatus;
 @ModuleDefinition(id = "transfer", name = "Transfer")
 public abstract class TransferModule extends ApolloModule {
 
+    /**
+     * The maximum amount of server IPs the client will ping
+     * for a single {@link PingRequest}.
+     *
+     * @since 1.2.9
+     */
+    public static final int MAX_PINGS_PER_PACKET = 10;
+
     @Override
     public Collection<ApolloPlatform.Kind> getSupportedPlatforms() {
         return Arrays.asList(ApolloPlatform.Kind.SERVER, ApolloPlatform.Kind.PROXY);
@@ -55,6 +63,8 @@ public abstract class TransferModule extends ApolloModule {
      * @param player    the player
      * @param serverIps all server IPs to ping
      * @return future to be listened to for errors/success
+     * @throws IllegalArgumentException if no server IPs or more than
+     *         {@value #MAX_PINGS_PER_PACKET} server IPs are provided
      * @since 1.0.0
      */
     public Future<PingResponse> ping(ApolloPlayer player, List<String> serverIps) {
@@ -85,6 +95,8 @@ public abstract class TransferModule extends ApolloModule {
      * @param player  the player
      * @param request the ping request
      * @return future to be listened to for errors/success
+     * @throws IllegalArgumentException if no server IPs or more than
+     *         {@value #MAX_PINGS_PER_PACKET} server IPs are provided
      * @since 1.0.0
      */
     public abstract Future<PingResponse> ping(ApolloPlayer player, PingRequest request);
