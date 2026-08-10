@@ -82,6 +82,11 @@ public class ApolloPlayerApiListener implements ApolloListener {
             for (CommandCosmetic spec : npc.getCosmetics()) {
                 cosmeticExample.equipNpcCosmeticToViewer(player, npc.getUuid(), spec);
             }
+
+            PlayerNpc.ActiveEmote emote = npc.getActiveEmote();
+            if (emote != null && npc.getViewers().contains(player.getUniqueId())) {
+                cosmeticExample.startNpcEmoteToViewer(player, npc.getUuid(), emote.getEmoteId(), emote.getMetadata());
+            }
         }
     }
 

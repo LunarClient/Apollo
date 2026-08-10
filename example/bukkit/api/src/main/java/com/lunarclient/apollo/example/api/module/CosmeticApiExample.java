@@ -175,18 +175,60 @@ public class CosmeticApiExample extends CosmeticExample {
     }
 
     @Override
-    public void startNpcEmoteInternal(Player viewer, UUID npcUuid, int emoteId, int metadata) {
+    public void startNpcEmoteInternal(UUID npcUuid, int emoteId, int metadata) {
+        List<ApolloPlayer> viewers = this.getApolloViewers(npcUuid);
+        if (viewers.isEmpty()) {
+            return;
+        }
+
         Emote emote = Emote.builder()
             .id(emoteId)
             .metadata(metadata)
             .build();
 
-        this.cosmeticModule.startNpcEmote(Recipients.ofEveryone(), npcUuid, emote);
+        this.cosmeticModule.startNpcEmote(Recipients.of(viewers), npcUuid, emote);
+    }
+
+    @Override
+    public void startNpcEmoteToViewer(Player viewer, UUID npcUuid, int emoteId, int metadata) {
+        Apollo.getPlayerManager().getPlayer(viewer.getUniqueId()).ifPresent(apolloPlayer -> {
+            Emote emote = Emote.builder()
+                .id(emoteId)
+                .metadata(metadata)
+                .build();
+
+            this.cosmeticModule.startNpcEmote(apolloPlayer, npcUuid, emote);
+        });
     }
 
     @Override
     public void stopNpcEmoteExample(Player viewer, UUID npcUuid) {
         this.cosmeticModule.stopNpcEmote(Recipients.ofEveryone(), npcUuid);
+    }
+
+    @Override
+    public void stopNpcEmoteInternal(UUID npcUuid) {
+        List<ApolloPlayer> viewers = this.getApolloViewers(npcUuid);
+        if (viewers.isEmpty()) {
+            return;
+        }
+
+        this.cosmeticModule.stopNpcEmote(Recipients.of(viewers), npcUuid);
+    }
+
+    @Override
+    public void stopNpcEmoteToViewer(Player viewer, UUID npcUuid) {
+        Apollo.getPlayerManager().getPlayer(viewer.getUniqueId()).ifPresent(apolloPlayer ->
+            this.cosmeticModule.stopNpcEmote(apolloPlayer, npcUuid));
+    }
+
+    private List<ApolloPlayer> getApolloViewers(UUID npcUuid) {
+        List<ApolloPlayer> viewers = new ArrayList<>();
+        for (Player player : this.getNpcViewers(npcUuid)) {
+            Apollo.getPlayerManager().getPlayer(player.getUniqueId()).ifPresent(viewers::add);
+        }
+
+        return viewers;
     }
 
     @Override

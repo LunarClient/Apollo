@@ -24,11 +24,13 @@
 package com.lunarclient.apollo.example.proto.module;
 
 import com.google.common.collect.Lists;
+import com.lunarclient.apollo.cosmetic.v1.BodyOptions;
 import com.lunarclient.apollo.cosmetic.v1.CloakOptions;
 import com.lunarclient.apollo.cosmetic.v1.Cosmetic;
 import com.lunarclient.apollo.cosmetic.v1.DisplaySprayMessage;
 import com.lunarclient.apollo.cosmetic.v1.Emote;
 import com.lunarclient.apollo.cosmetic.v1.EquipNpcCosmeticsMessage;
+import com.lunarclient.apollo.cosmetic.v1.HatOptions;
 import com.lunarclient.apollo.cosmetic.v1.PetOptions;
 import com.lunarclient.apollo.cosmetic.v1.RemoveSprayMessage;
 import com.lunarclient.apollo.cosmetic.v1.ResetNpcCosmeticsMessage;
@@ -38,6 +40,7 @@ import com.lunarclient.apollo.cosmetic.v1.StartNpcEmoteMessage;
 import com.lunarclient.apollo.cosmetic.v1.StopNpcEmoteMessage;
 import com.lunarclient.apollo.cosmetic.v1.UnequipNpcCosmeticsMessage;
 import com.lunarclient.apollo.example.module.impl.CosmeticExample;
+import com.lunarclient.apollo.example.nms.CommandCosmetic;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
 import com.lunarclient.apollo.packetenrichment.v1.Direction;
@@ -110,6 +113,51 @@ public class CosmeticProtoExample extends CosmeticExample {
     }
 
     @Override
+    public void equipNpcCosmeticInternal(Player viewer, UUID npcUuid, CommandCosmetic cosmetic) {
+        ProtobufPacketUtil.broadcastPacket(this.createEquipMessage(npcUuid, cosmetic));
+    }
+
+    @Override
+    public void equipNpcCosmeticToViewer(Player viewer, UUID npcUuid, CommandCosmetic cosmetic) {
+        ProtobufPacketUtil.sendPacket(viewer, this.createEquipMessage(npcUuid, cosmetic));
+    }
+
+    private EquipNpcCosmeticsMessage createEquipMessage(UUID npcUuid, CommandCosmetic cosmetic) {
+        Cosmetic.Builder cosmeticBuilder = Cosmetic.newBuilder()
+            .setId(cosmetic.getId());
+
+        CommandCosmetic.Options options = cosmetic.getOptions();
+        if (options instanceof CommandCosmetic.Hat) {
+            CommandCosmetic.Hat hat = (CommandCosmetic.Hat) options;
+            cosmeticBuilder.setHatOptions(HatOptions.newBuilder()
+                .setShowOverHelmet(hat.isShowOverHelmet())
+                .setShowOverSkinLayer(hat.isShowOverSkinLayer())
+                .setHeightOffset(hat.getHeightOffset())
+                .build());
+        } else if (options instanceof CommandCosmetic.Cloak) {
+            cosmeticBuilder.setCloakOptions(CloakOptions.newBuilder()
+                .setUseClothPhysics(((CommandCosmetic.Cloak) options).isUseClothPhysics())
+                .build());
+        } else if (options instanceof CommandCosmetic.Pet) {
+            cosmeticBuilder.setPetOptions(PetOptions.newBuilder()
+                .setFlipShoulder(((CommandCosmetic.Pet) options).isFlipShoulder())
+                .build());
+        } else if (options instanceof CommandCosmetic.Body) {
+            CommandCosmetic.Body body = (CommandCosmetic.Body) options;
+            cosmeticBuilder.setBodyOptions(BodyOptions.newBuilder()
+                .setShowOverChestplate(body.isShowOverChestplate())
+                .setShowOverLeggings(body.isShowOverLeggings())
+                .setShowOverBoots(body.isShowOverBoots())
+                .build());
+        }
+
+        return EquipNpcCosmeticsMessage.newBuilder()
+            .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
+            .addCosmetics(cosmeticBuilder.build())
+            .build();
+    }
+
+    @Override
     public void unequipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
         List<Integer> cosmeticIds = Lists.newArrayList(434, 3654, 5095, 3, 3977);
 
@@ -153,7 +201,7 @@ public class CosmeticProtoExample extends CosmeticExample {
     }
 
     @Override
-    public void startNpcEmoteInternal(Player viewer, UUID npcUuid, int emoteId, int metadata) {
+    public void startNpcEmoteToViewer(Player viewer, UUID npcUuid, int emoteId, int metadata) {
         StartNpcEmoteMessage message = StartNpcEmoteMessage.newBuilder()
             .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
             .setEmote(Emote.newBuilder()
@@ -162,7 +210,7 @@ public class CosmeticProtoExample extends CosmeticExample {
                 .build())
             .build();
 
-        ProtobufPacketUtil.broadcastPacket(message);
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     @Override
@@ -172,6 +220,15 @@ public class CosmeticProtoExample extends CosmeticExample {
             .build();
 
         ProtobufPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void stopNpcEmoteToViewer(Player viewer, UUID npcUuid) {
+        StopNpcEmoteMessage message = StopNpcEmoteMessage.newBuilder()
+            .setNpcUuid(ProtobufUtil.createUuidProto(npcUuid))
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     @Override

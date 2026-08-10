@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.example.module.impl;
 
+import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.module.ApolloModuleExample;
 import com.lunarclient.apollo.example.nms.CommandCosmetic;
 import java.util.Collections;
@@ -54,11 +55,29 @@ public abstract class CosmeticExample extends ApolloModuleExample {
 
     public abstract void startNpcEmoteExample(Player viewer, UUID npcUuid);
 
-    public abstract void startNpcEmoteInternal(Player viewer, UUID npcUuid, int emoteId, int metadata);
+    public void startNpcEmoteInternal(UUID npcUuid, int emoteId, int metadata) {
+        for (Player viewer : this.getNpcViewers(npcUuid)) {
+            this.startNpcEmoteToViewer(viewer, npcUuid, emoteId, metadata);
+        }
+    }
+
+    public abstract void startNpcEmoteToViewer(Player viewer, UUID npcUuid, int emoteId, int metadata);
 
     public abstract void stopNpcEmoteExample(Player viewer, UUID npcUuid);
 
+    public void stopNpcEmoteInternal(UUID npcUuid) {
+        for (Player viewer : this.getNpcViewers(npcUuid)) {
+            this.stopNpcEmoteToViewer(viewer, npcUuid);
+        }
+    }
+
+    public abstract void stopNpcEmoteToViewer(Player viewer, UUID npcUuid);
+
     public abstract void resetNpcEmotesExample();
+
+    protected List<Player> getNpcViewers(UUID npcUuid) {
+        return ApolloExamplePlugin.getInstance().getNpcManager().getViewers(npcUuid);
+    }
 
     public abstract void displaySprayExample(Player viewer, int sprayId);
 
