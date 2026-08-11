@@ -50,6 +50,11 @@ public final class NametagModuleImpl extends NametagModule {
             builder.addAdventureJsonLines(ApolloComponent.toJson(line));
         }
 
+        NametagVisibilityOverride visibility = nametag.getVisibilityOverride();
+        if (visibility != null && visibility != NametagVisibilityOverride.NONE) {
+            builder.setVisibilityOverride(this.toProtobuf(visibility));
+        }
+
         ApolloManager.getNetworkManager().sendPacket(recipients, builder.build());
     }
 
@@ -66,6 +71,10 @@ public final class NametagModuleImpl extends NametagModule {
     public void resetNametags(@NonNull Recipients recipients) {
         ResetNametagsMessage message = ResetNametagsMessage.getDefaultInstance();
         ApolloManager.getNetworkManager().sendPacket(recipients, message);
+    }
+
+    private com.lunarclient.apollo.nametag.v1.NametagVisibilityOverride toProtobuf(NametagVisibilityOverride visibility) {
+        return com.lunarclient.apollo.nametag.v1.NametagVisibilityOverride.forNumber(visibility.ordinal() + 1);
     }
 
 }

@@ -28,6 +28,7 @@ import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.example.module.impl.NametagExample;
 import com.lunarclient.apollo.module.nametag.Nametag;
 import com.lunarclient.apollo.module.nametag.NametagModule;
+import com.lunarclient.apollo.module.nametag.NametagVisibilityOverride;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import java.util.Optional;
@@ -54,6 +55,7 @@ public class NametagApiExample extends NametagExample {
                     .color(NamedTextColor.RED)
                     .build()
             ))
+            .visibilityOverride(NametagVisibilityOverride.NONE)
             .build()
         );
     }

@@ -58,6 +58,7 @@ public class NametagJsonExample extends NametagExample {
         message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.nametag.v1.OverrideNametagMessage");
         message.add("player_uuid", JsonUtil.createUuidObject(target.getUniqueId()));
         message.add("adventure_json_lines", lines);
+        message.addProperty("visibility_override", "NAMETAG_VISIBILITY_OVERRIDE_NONE");
 
         JsonPacketUtil.broadcastPacket(message);
     }
