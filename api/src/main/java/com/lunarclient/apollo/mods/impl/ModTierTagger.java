@@ -28,7 +28,7 @@ import io.leangen.geantyref.TypeToken;
 import java.awt.Color;
 
 /**
- * Show player's PvP tier on their Name Tag.
+ * Show player's PvP tier on their Name Tag. Also has a /lctiers command to look up player tiers.
  *
  * @since 1.1.9
  */
@@ -125,6 +125,17 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_MT1 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-m-t1").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(234, 193, 79))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_LT1 = SimpleOption.<Color>builder()
@@ -141,6 +152,17 @@ public final class ModTierTagger {
     public static final SimpleOption<Color> COLOR_HT2 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-h-t2").type(TypeToken.get(Color.class))
         .defaultValue(new Color(164, 179, 199))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_MT2 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-m-t2").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(150, 160, 174))
         .notifyClient()
         .build();
 
@@ -169,6 +191,17 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_MT3 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-m-t3").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(200, 120, 60))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_LT3 = SimpleOption.<Color>builder()
@@ -191,6 +224,17 @@ public final class ModTierTagger {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_MT4 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-m-t4").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(101, 91, 121))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.1
      */
     public static final SimpleOption<Color> COLOR_LT4 = SimpleOption.<Color>builder()
@@ -206,6 +250,17 @@ public final class ModTierTagger {
      */
     public static final SimpleOption<Color> COLOR_HT5 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-h-t5").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(101, 91, 121))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COLOR_MT5 = SimpleOption.<Color>builder()
+        .node("tier-tagger", "color-m-t5").type(TypeToken.get(Color.class))
         .defaultValue(new Color(101, 91, 121))
         .notifyClient()
         .build();

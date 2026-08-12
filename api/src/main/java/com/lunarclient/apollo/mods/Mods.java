@@ -25,6 +25,7 @@ package com.lunarclient.apollo.mods;
 
 import com.lunarclient.apollo.mods.impl.Mod2dItems;
 import com.lunarclient.apollo.mods.impl.Mod3dSkins;
+import com.lunarclient.apollo.mods.impl.ModActionBar;
 import com.lunarclient.apollo.mods.impl.ModArmorstatus;
 import com.lunarclient.apollo.mods.impl.ModAttackIndicator;
 import com.lunarclient.apollo.mods.impl.ModAudioSubtitles;
@@ -64,6 +65,8 @@ import com.lunarclient.apollo.mods.impl.ModItemPhysics;
 import com.lunarclient.apollo.mods.impl.ModItemTracker;
 import com.lunarclient.apollo.mods.impl.ModKeystrokes;
 import com.lunarclient.apollo.mods.impl.ModKillSounds;
+import com.lunarclient.apollo.mods.impl.ModKnockbackTrainer;
+import com.lunarclient.apollo.mods.impl.ModLightOverlay;
 import com.lunarclient.apollo.mods.impl.ModLighting;
 import com.lunarclient.apollo.mods.impl.ModMarkers;
 import com.lunarclient.apollo.mods.impl.ModMemory;
@@ -83,6 +86,7 @@ import com.lunarclient.apollo.mods.impl.ModPackOrganizer;
 import com.lunarclient.apollo.mods.impl.ModParticleChanger;
 import com.lunarclient.apollo.mods.impl.ModPing;
 import com.lunarclient.apollo.mods.impl.ModPlaytime;
+import com.lunarclient.apollo.mods.impl.ModPotionCounter;
 import com.lunarclient.apollo.mods.impl.ModPotionEffects;
 import com.lunarclient.apollo.mods.impl.ModPvpInfo;
 import com.lunarclient.apollo.mods.impl.ModQuickplay;
@@ -155,6 +159,7 @@ public final class Mods {
             ModScoreboard.class,
             ModTitles.class,
             ModItemCounter.class,
+            ModPotionCounter.class,
             ModPing.class,
             ModMotionBlur.class,
             ModPackOrganizer.class,
@@ -218,15 +223,18 @@ public final class Mods {
             ModOverlayMod.class,
             ModRewind.class,
             ModAudioSubtitles.class,
+            ModActionBar.class,
             ModShields.class,
+            ModLightOverlay.class,
             ModKillSounds.class,
             ModInventoryMod.class,
             ModF3Display.class,
             ModGuiScale.class,
+            ModKnockbackTrainer.class,
             ModRadio.class,
-            ModSba.class,
             ModUhcOverlay.class,
-            ModNeu.class
+            ModNeu.class,
+            ModSba.class
         );
 
     private Mods() {

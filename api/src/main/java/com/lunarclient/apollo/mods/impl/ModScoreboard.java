@@ -118,6 +118,17 @@ public final class ModScoreboard {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> DISPLAY_TOGGLE_MESSAGE = SimpleOption.<Boolean>builder()
+        .node("scoreboard", "display-toggle-message").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()

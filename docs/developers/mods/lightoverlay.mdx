@@ -1,0 +1,121 @@
+# Light Overlay
+
+Shows the light levels of blocks where mobs can spawn
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleLightOverlayExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLightOverlay.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`RENDER_RANGE_LIMIT`__
+    - The rendering limit (in chunks) for light overlay values. §eHigher values might lower your FPS.
+    - Config Key: `render-range-limit`
+    - Values
+        - Type: `Integer`
+        - Default: `2`
+        - Minimum: `1`
+        - Maximum: `12`
+
+- __`FAST_UPDATES`__
+    - With this option on, the overlay updates aren't deferred, and happen as fast as possible.
+This looks nicer (less "pop in"), but §eturning this option on comes at a potential performance cost.
+    - Config Key: `fast-updates`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CULLING`__
+    - Reduce the amount of overlays that are rendered, increasing performance, especially at higher rendering ranges.
+This comes at the expense of overlays at the edges of the screen sometimes popping in and out as you look around.
+It's highly recommended that this option is kept on, especially if using higher rendering ranges.
+    - Config Key: `culling`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`INCLUDE_SKY_LIGHT`__
+    - With this option on, the real, effective light value is displayed. With this option off, only the block light is used, completely ignoring the sky/day light.
+    - Config Key: `include-sky-light`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_UNSPAWNABLE_LIGHT`__
+    - Only show on blocks which have light levels that hostile mobs can spawn on
+    - Config Key: `hide-unspawnable-light`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CUSTOM_LIGHT_THRESHOLD`__
+    - Set a custom threshold for Light Check. This overrides the vanilla hostile mob spawning value, and shows the light overlay on all blocks on which the light level falls below this threshold
+    - Config Key: `custom-light-threshold`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`THRESHOLD`__
+    - Config Key: `threshold`
+    - Values
+        - Type: `Integer`
+        - Default: `15`
+        - Minimum: `0`
+        - Maximum: `15`
+
+- __`SHOW_LIGHT_VALUE`__
+    - Show a number for the light value of each block.
+Turning this option on might lower your FPS.
+    - Config Key: `show-light-value`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CROSS_THICKNESS`__
+    - Config Key: `cross-thickness`
+    - Values
+        - Type: `Float`
+        - Default: `2.0F`
+        - Minimum: `0.5F`
+        - Maximum: `10.0F`
+
+- __`TEXT_COLOR`__
+    - Config Key: `text-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`BRIGHT_COLOR`__
+    - Color where hostile mobs can't spawn
+    - Config Key: `bright-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF00FF00`
+
+- __`DARK_COLOR`__
+    - Color where hostile mobs can spawn
+    - Config Key: `dark-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF0000`
+
+- __`LIGHT_OVERLAY_DYNAMIC_COLOR`__
+    - When this is off, the color is picked based on the light level allowing hostile mobs to spawn. When this is on, the color is interpolated smoothly.
+    - Config Key: `light-overlay-dynamic-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

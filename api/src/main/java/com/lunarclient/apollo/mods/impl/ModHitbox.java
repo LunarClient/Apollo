@@ -107,6 +107,62 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_PLAYER_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-player-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_PLAYER_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-player-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * Only show the hitbox when the entity is within reach and under your crosshair.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_PLAYER_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .comment("Only show the hitbox when the entity is within reach and under your crosshair")
+        .node("hitbox", "hitbox-player-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_PLAYER_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-player-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_PLAYER_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-player-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> HITBOX_PLAYER_LOOK_VECTOR = SimpleOption.<Boolean>builder()
@@ -146,6 +202,61 @@ public final class ModHitbox {
     public static final SimpleOption<Color> HITBOX_ITEM_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-item-line-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_ITEM_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-item-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_ITEM_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-item-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_ITEM_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-item-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_ITEM_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-item-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_ITEM_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-item-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
         .notifyClient()
         .build();
 
@@ -197,6 +308,61 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_EXP_ORB_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-exp-orb-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_EXP_ORB_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-exp-orb-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_EXP_ORB_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-exp-orb-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_EXP_ORB_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-exp-orb-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_EXP_ORB_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-exp-orb-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> HITBOX_EXP_ORB_LOOK_VECTOR = SimpleOption.<Boolean>builder()
@@ -236,6 +402,61 @@ public final class ModHitbox {
     public static final SimpleOption<Color> HITBOX_ITEM_FRAME_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-item-frame-line-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_ITEM_FRAME_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-item-frame-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_ITEM_FRAME_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-item-frame-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_ITEM_FRAME_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-item-frame-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_ITEM_FRAME_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-item-frame-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_ITEM_FRAME_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-item-frame-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
         .notifyClient()
         .build();
 
@@ -287,6 +508,61 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_FIREWORK_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-firework-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_FIREWORK_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-firework-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_FIREWORK_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-firework-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_FIREWORK_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-firework-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_FIREWORK_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-firework-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_FIREWORK_LOOK_VECTOR = SimpleOption.<Boolean>builder()
@@ -326,6 +602,61 @@ public final class ModHitbox {
     public static final SimpleOption<Color> HITBOX_WITHER_SKULL_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-wither-skull-line-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_WITHER_SKULL_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-wither-skull-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_WITHER_SKULL_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-wither-skull-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_WITHER_SKULL_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-wither-skull-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_WITHER_SKULL_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-wither-skull-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_WITHER_SKULL_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-wither-skull-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
         .notifyClient()
         .build();
 
@@ -377,6 +708,61 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_SNOWBALL_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-snowball-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_SNOWBALL_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-snowball-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_SNOWBALL_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-snowball-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_SNOWBALL_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-snowball-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_SNOWBALL_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-snowball-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_SNOWBALL_LOOK_VECTOR = SimpleOption.<Boolean>builder()
@@ -416,6 +802,61 @@ public final class ModHitbox {
     public static final SimpleOption<Color> HITBOX_FIREBALL_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-fireball-line-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_FIREBALL_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-fireball-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_FIREBALL_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-fireball-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_FIREBALL_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-fireball-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_FIREBALL_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-fireball-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_FIREBALL_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-fireball-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
         .notifyClient()
         .build();
 
@@ -467,6 +908,61 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_ARROW_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-arrow-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_ARROW_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-arrow-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_ARROW_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-arrow-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_ARROW_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-arrow-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_ARROW_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-arrow-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_ARROW_LOOK_VECTOR = SimpleOption.<Boolean>builder()
@@ -506,6 +1002,61 @@ public final class ModHitbox {
     public static final SimpleOption<Color> HITBOX_PROJECTILE_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-projectile-line-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_PROJECTILE_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-projectile-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_PROJECTILE_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-projectile-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_PROJECTILE_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-projectile-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_PROJECTILE_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-projectile-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_PROJECTILE_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-projectile-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
         .notifyClient()
         .build();
 
@@ -557,6 +1108,62 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_MONSTER_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-monster-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_MONSTER_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-monster-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * Only show the hitbox when the entity is within reach and under your crosshair.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_MONSTER_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .comment("Only show the hitbox when the entity is within reach and under your crosshair")
+        .node("hitbox", "hitbox-monster-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_MONSTER_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-monster-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_MONSTER_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-monster-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_MONSTER_LOOK_VECTOR = SimpleOption.<Boolean>builder()
@@ -602,6 +1209,62 @@ public final class ModHitbox {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_PASSIVE_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-passive-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_PASSIVE_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-passive-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * Only show the hitbox when the entity is within reach and under your crosshair.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_PASSIVE_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .comment("Only show the hitbox when the entity is within reach and under your crosshair")
+        .node("hitbox", "hitbox-passive-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_PASSIVE_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-passive-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_PASSIVE_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-passive-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.2
      */
     public static final SimpleOption<Boolean> HITBOX_PASSIVE_LOOK_VECTOR = SimpleOption.<Boolean>builder()
@@ -641,6 +1304,61 @@ public final class ModHitbox {
     public static final SimpleOption<Color> HITBOX_OTHER_LINE_COLOR = SimpleOption.<Color>builder()
         .node("hitbox", "hitbox-other-line-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_OTHER_SHOW_HITTABLE_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-other-show-hittable-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_OTHER_HITTABLE_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-other-hittable-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 255, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_OTHER_ONLY_SHOW_HITTABLE = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-other-only-show-hittable").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HITBOX_OTHER_SHOW_DAMAGED_COLOR = SimpleOption.<Boolean>builder()
+        .node("hitbox", "hitbox-other-show-damaged-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HITBOX_OTHER_DAMAGED_COLOR = SimpleOption.<Color>builder()
+        .node("hitbox", "hitbox-other-damaged-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
         .notifyClient()
         .build();
 

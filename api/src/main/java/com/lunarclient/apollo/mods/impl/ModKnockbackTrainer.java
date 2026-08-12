@@ -23,34 +23,24 @@
  */
 package com.lunarclient.apollo.mods.impl;
 
+import com.lunarclient.apollo.option.NumberOption;
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
 
 /**
- * Updates the screenshot behaviour allowing you to instantly open, upload or tweet the image.
+ * Train jump resets: how close your jump press lands to the tick you were hit.
  *
- * @since 1.0.0
+ * @since %release_version%
  */
-public final class ModScreenshot {
+public final class ModKnockbackTrainer {
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
-        .node("screenshot", "enabled").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> COPY_AUTOMATICALLY = SimpleOption.<Boolean>builder()
-        .node("screenshot", "copy-automatically").type(TypeToken.get(Boolean.class))
+        .node("knockback-trainer", "enabled").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();
@@ -58,32 +48,34 @@ public final class ModScreenshot {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> UPLOAD_OPTION = SimpleOption.<Boolean>builder()
-        .node("screenshot", "upload-option").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
+    public static final NumberOption<Integer> TARGET_TICKS = NumberOption.<Integer>number()
+        .node("knockback-trainer", "target-ticks").type(TypeToken.get(Integer.class))
+        .min(0).max(6)
+        .defaultValue(0)
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> TWEET_OPTION = SimpleOption.<Boolean>builder()
-        .node("screenshot", "tweet-option").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
+    public static final NumberOption<Integer> WINDOW_TICKS = NumberOption.<Integer>number()
+        .node("knockback-trainer", "window-ticks").type(TypeToken.get(Integer.class))
+        .min(0).max(10)
+        .defaultValue(5)
         .notifyClient()
         .build();
 
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> COPY_OPTION = SimpleOption.<Boolean>builder()
-        .node("screenshot", "copy-option").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> FALLING_HIT_SOUND = SimpleOption.<Boolean>builder()
+        .node("knockback-trainer", "falling-hit-sound").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();
@@ -93,25 +85,14 @@ public final class ModScreenshot {
      *
      * @since %release_version%
      */
-    public static final SimpleOption<Boolean> DELETE_OPTION = SimpleOption.<Boolean>builder()
-        .node("screenshot", "delete-option").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
+    public static final NumberOption<Float> FALLING_HIT_SOUND_VOLUME = NumberOption.<Float>number()
+        .node("knockback-trainer", "falling-hit-sound-volume").type(TypeToken.get(Float.class))
+        .min(0.0F).max(1.0F)
+        .defaultValue(1.0F)
         .notifyClient()
         .build();
 
-    /**
-     * A screenshot file saved with world details enabled has metadata that contains your player coordinates, the biome, and more.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> WORLD_DETAILS = SimpleOption.<Boolean>builder()
-        .comment("A screenshot file saved with world details enabled has metadata that contains your player coordinates, the biome, and more.")
-        .node("screenshot", "world-details").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    private ModScreenshot() {
+    private ModKnockbackTrainer() {
     }
 
 }
