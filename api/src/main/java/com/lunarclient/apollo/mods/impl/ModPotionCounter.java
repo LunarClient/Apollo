@@ -31,14 +31,14 @@ import java.awt.Color;
 /**
  * Displays how many healing potions or soups are currently in your inventory on the HUD.
  *
- * @since %release_version%
+ * @since 1.2.9
  */
 public final class ModPotionCounter {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("potion-counter", "enabled").type(TypeToken.get(Boolean.class))
@@ -49,7 +49,7 @@ public final class ModPotionCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("potion-counter", "scale").type(TypeToken.get(Float.class))
@@ -61,7 +61,7 @@ public final class ModPotionCounter {
     /**
      * Adds a shadow to text.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .comment("Adds a shadow to text")
@@ -73,7 +73,7 @@ public final class ModPotionCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> BRACKETS = SimpleOption.<Boolean>builder()
         .node("potion-counter", "brackets").type(TypeToken.get(Boolean.class))
@@ -84,7 +84,7 @@ public final class ModPotionCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Color> BRACKET_COLOR = SimpleOption.<Color>builder()
         .node("potion-counter", "bracket-color").type(TypeToken.get(Color.class))
@@ -95,7 +95,7 @@ public final class ModPotionCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("potion-counter", "background").type(TypeToken.get(Boolean.class))
@@ -106,7 +106,7 @@ public final class ModPotionCounter {
     /**
      * If this is disabled the background will change size with the text.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> STATIC_BACKGROUND_WIDTH = SimpleOption.<Boolean>builder()
         .comment("If this is disabled the background will change size with the text.")
@@ -118,7 +118,7 @@ public final class ModPotionCounter {
     /**
      * If this is disabled the background will change size with the text.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> STATIC_BACKGROUND_HEIGHT = SimpleOption.<Boolean>builder()
         .comment("If this is disabled the background will change size with the text.")
@@ -130,7 +130,7 @@ public final class ModPotionCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Integer> BACKGROUND_WIDTH = NumberOption.<Integer>number()
         .node("potion-counter", "background-width").type(TypeToken.get(Integer.class))
@@ -142,7 +142,7 @@ public final class ModPotionCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Integer> BACKGROUND_HEIGHT = NumberOption.<Integer>number()
         .node("potion-counter", "background-height").type(TypeToken.get(Integer.class))
@@ -154,7 +154,7 @@ public final class ModPotionCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("potion-counter", "border").type(TypeToken.get(Boolean.class))
@@ -165,7 +165,7 @@ public final class ModPotionCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("potion-counter", "border-thickness").type(TypeToken.get(Float.class))
@@ -177,7 +177,7 @@ public final class ModPotionCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("potion-counter", "border-color").type(TypeToken.get(Color.class))
@@ -188,7 +188,7 @@ public final class ModPotionCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("potion-counter", "background-color").type(TypeToken.get(Color.class))
@@ -199,7 +199,7 @@ public final class ModPotionCounter {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("potion-counter", "text-color").type(TypeToken.get(Color.class))

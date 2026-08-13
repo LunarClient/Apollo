@@ -73,7 +73,7 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Float> FIRE_BLOCK_HEIGHT = NumberOption.<Float>number()
         .node("overlay-mod", "fire-block-height").type(TypeToken.get(Float.class))

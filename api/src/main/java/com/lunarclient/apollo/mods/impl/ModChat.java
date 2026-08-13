@@ -210,7 +210,7 @@ public final class ModChat {
     /**
      * Displays the player's Minecraft head before their message in chat.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> CHAT_HEADS = SimpleOption.<Boolean>builder()
         .comment("Displays the player's Minecraft head before their message in chat.")
@@ -222,7 +222,7 @@ public final class ModChat {
     /**
      * Looks up skins for chat senders that aren't in the tab list, like players on other servers of a network. Head detection may be less accurate.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> CHAT_HEADS_FETCH_UNKNOWN = SimpleOption.<Boolean>builder()
         .comment("Looks up skins for chat senders that aren't in the tab list, like players on other servers of a network. Head detection may be less accurate.")
@@ -234,7 +234,7 @@ public final class ModChat {
     /**
      * Adds emojis to chat. Shortcodes like :smile: autocomplete as you type, and emojis in messages show as colorful Twemoji.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> CHAT_EMOJI = SimpleOption.<Boolean>builder()
         .comment("Adds emojis to chat. Shortcodes like :smile: autocomplete as you type, and emojis in messages show as colorful Twemoji.")
@@ -246,7 +246,7 @@ public final class ModChat {
     /**
      * Shows emojis with Minecraft's built-in font instead of Twemoji images. Shortcodes the game font can't display are left as text.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> CHAT_EMOJI_UNICODE_ONLY = SimpleOption.<Boolean>builder()
         .comment("Shows emojis with Minecraft's built-in font instead of Twemoji images. Shortcodes the game font can't display are left as text.")
@@ -258,7 +258,7 @@ public final class ModChat {
     /**
      * Turns shortcodes like :skull: in other players' messages into emojis. When disabled, only emojis sent as actual characters are shown.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> CHAT_EMOJI_CONVERT_SHORTCODES = SimpleOption.<Boolean>builder()
         .comment("Turns shortcodes like :skull: in other players' messages into emojis. When disabled, only emojis sent as actual characters are shown.")

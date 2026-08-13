@@ -91,7 +91,7 @@ public final class ModScreenshot {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> DELETE_OPTION = SimpleOption.<Boolean>builder()
         .node("screenshot", "delete-option").type(TypeToken.get(Boolean.class))

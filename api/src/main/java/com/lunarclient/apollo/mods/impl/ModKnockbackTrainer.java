@@ -30,14 +30,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * Train jump resets: how close your jump press lands to the tick you were hit.
  *
- * @since %release_version%
+ * @since 1.2.9
  */
 public final class ModKnockbackTrainer {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("knockback-trainer", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModKnockbackTrainer {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Integer> TARGET_TICKS = NumberOption.<Integer>number()
         .node("knockback-trainer", "target-ticks").type(TypeToken.get(Integer.class))
@@ -60,7 +60,7 @@ public final class ModKnockbackTrainer {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Integer> WINDOW_TICKS = NumberOption.<Integer>number()
         .node("knockback-trainer", "window-ticks").type(TypeToken.get(Integer.class))
@@ -72,7 +72,7 @@ public final class ModKnockbackTrainer {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> FALLING_HIT_SOUND = SimpleOption.<Boolean>builder()
         .node("knockback-trainer", "falling-hit-sound").type(TypeToken.get(Boolean.class))
@@ -83,7 +83,7 @@ public final class ModKnockbackTrainer {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Float> FALLING_HIT_SOUND_VOLUME = NumberOption.<Float>number()
         .node("knockback-trainer", "falling-hit-sound-volume").type(TypeToken.get(Float.class))

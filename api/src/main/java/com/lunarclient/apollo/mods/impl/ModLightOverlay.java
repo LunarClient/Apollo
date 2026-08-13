@@ -31,14 +31,14 @@ import java.awt.Color;
 /**
  * Shows the light levels of blocks where mobs can spawn.
  *
- * @since %release_version%
+ * @since 1.2.9
  */
 public final class ModLightOverlay {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("light-overlay", "enabled").type(TypeToken.get(Boolean.class))
@@ -49,7 +49,7 @@ public final class ModLightOverlay {
     /**
      * The rendering limit (in chunks) for light overlay values. Higher values might lower your FPS.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Integer> RENDER_RANGE_LIMIT = NumberOption.<Integer>number()
         .comment("The rendering limit (in chunks) for light overlay values. Higher values might lower your FPS.")
@@ -62,7 +62,7 @@ public final class ModLightOverlay {
     /**
      * With this option on, the overlay updates aren't deferred, and happen as fast as possible.This looks nicer (less "pop in"), but turning this option on comes at a potential performance cost.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> FAST_UPDATES = SimpleOption.<Boolean>builder()
         .comment("With this option on, the overlay updates aren't deferred, and happen as fast as possible.This looks nicer (less \"pop in\"), but turning this option on comes at a potential performance cost.")
@@ -74,7 +74,7 @@ public final class ModLightOverlay {
     /**
      * Reduce the amount of overlays that are rendered, increasing performance, especially at higher rendering ranges.This comes at the expense of overlays at the edges of the screen sometimes popping in and out as you look around.It's highly recommended that this option is kept on, especially if using higher rendering ranges.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> CULLING = SimpleOption.<Boolean>builder()
         .comment("Reduce the amount of overlays that are rendered, increasing performance, especially at higher rendering ranges.This comes at the expense of overlays at the edges of the screen sometimes popping in and out as you look around.It's highly recommended that this option is kept on, especially if using higher rendering ranges.")
@@ -86,7 +86,7 @@ public final class ModLightOverlay {
     /**
      * With this option on, the real, effective light value is displayed. With this option off, only the block light is used, completely ignoring the sky/day light.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> INCLUDE_SKY_LIGHT = SimpleOption.<Boolean>builder()
         .comment("With this option on, the real, effective light value is displayed. With this option off, only the block light is used, completely ignoring the sky/day light.")
@@ -98,7 +98,7 @@ public final class ModLightOverlay {
     /**
      * Only show on blocks which have light levels that hostile mobs can spawn on.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> HIDE_UNSPAWNABLE_LIGHT = SimpleOption.<Boolean>builder()
         .comment("Only show on blocks which have light levels that hostile mobs can spawn on")
@@ -110,7 +110,7 @@ public final class ModLightOverlay {
     /**
      * Set a custom threshold for Light Check. This overrides the vanilla hostile mob spawning value, and shows the light overlay on all blocks on which the light level falls below this threshold.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> CUSTOM_LIGHT_THRESHOLD = SimpleOption.<Boolean>builder()
         .comment("Set a custom threshold for Light Check. This overrides the vanilla hostile mob spawning value, and shows the light overlay on all blocks on which the light level falls below this threshold")
@@ -122,7 +122,7 @@ public final class ModLightOverlay {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Integer> THRESHOLD = NumberOption.<Integer>number()
         .node("light-overlay", "threshold").type(TypeToken.get(Integer.class))
@@ -134,7 +134,7 @@ public final class ModLightOverlay {
     /**
      * Show a number for the light value of each block.Turning this option on might lower your FPS.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> SHOW_LIGHT_VALUE = SimpleOption.<Boolean>builder()
         .comment("Show a number for the light value of each block.Turning this option on might lower your FPS.")
@@ -146,7 +146,7 @@ public final class ModLightOverlay {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Float> CROSS_THICKNESS = NumberOption.<Float>number()
         .node("light-overlay", "cross-thickness").type(TypeToken.get(Float.class))
@@ -158,7 +158,7 @@ public final class ModLightOverlay {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("light-overlay", "text-color").type(TypeToken.get(Color.class))
@@ -169,7 +169,7 @@ public final class ModLightOverlay {
     /**
      * Color where hostile mobs can't spawn.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Color> BRIGHT_COLOR = SimpleOption.<Color>builder()
         .comment("Color where hostile mobs can't spawn")
@@ -181,7 +181,7 @@ public final class ModLightOverlay {
     /**
      * Color where hostile mobs can spawn.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Color> DARK_COLOR = SimpleOption.<Color>builder()
         .comment("Color where hostile mobs can spawn")
@@ -193,7 +193,7 @@ public final class ModLightOverlay {
     /**
      * When this is off, the color is picked based on the light level allowing hostile mobs to spawn. When this is on, the color is interpolated smoothly.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> LIGHT_OVERLAY_DYNAMIC_COLOR = SimpleOption.<Boolean>builder()
         .comment("When this is off, the color is picked based on the light level allowing hostile mobs to spawn. When this is on, the color is interpolated smoothly.")

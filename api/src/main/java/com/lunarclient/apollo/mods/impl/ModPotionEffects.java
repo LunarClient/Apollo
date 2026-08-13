@@ -49,7 +49,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> HIDE_AMBIENT_DURATION = SimpleOption.<Boolean>builder()
         .node("potion-effects", "hide-ambient-duration").type(TypeToken.get(Boolean.class))
@@ -60,7 +60,7 @@ public final class ModPotionEffects {
     /**
      * Put the good effects and the bad effects on separate lines.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> VANILLA_GROUP_EFFECTS = SimpleOption.<Boolean>builder()
         .comment("Put the good effects and the bad effects on separate lines")
@@ -72,7 +72,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> VANILLA_MODE_HORIZONTAL = SimpleOption.<Boolean>builder()
         .node("potion-effects", "vanilla-mode-horizontal").type(TypeToken.get(Boolean.class))
@@ -83,7 +83,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Integer> VANILLA_MODE_TILES_PER_LINE = NumberOption.<Integer>number()
         .node("potion-effects", "vanilla-mode-tiles-per-line").type(TypeToken.get(Integer.class))
@@ -106,7 +106,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Integer> MINIMAL_MODE_TILES_PER_LINE = NumberOption.<Integer>number()
         .node("potion-effects", "minimal-mode-tiles-per-line").type(TypeToken.get(Integer.class))
@@ -129,7 +129,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> EFFECT_DURATION = SimpleOption.<Boolean>builder()
         .node("potion-effects", "effect-duration").type(TypeToken.get(Boolean.class))
@@ -140,7 +140,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> EFFECT_AMPLIFIER = SimpleOption.<Boolean>builder()
         .node("potion-effects", "effect-amplifier").type(TypeToken.get(Boolean.class))
@@ -184,7 +184,7 @@ public final class ModPotionEffects {
     /**
      * With this enabled, the potion effect icon blinks as well.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> POTION_BLINK_ICON = SimpleOption.<Boolean>builder()
         .comment("With this enabled, the potion effect icon blinks as well")
@@ -208,7 +208,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Color> VANILLA_BLINK_COLOR = SimpleOption.<Color>builder()
         .node("potion-effects", "vanilla-blink-color").type(TypeToken.get(Color.class))
@@ -263,7 +263,7 @@ public final class ModPotionEffects {
     /**
      * Completely hide the potion effects mod HUD.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> HIDE_POTION_STATUS = SimpleOption.<Boolean>builder()
         .comment("Completely hide the potion effects mod HUD")
@@ -354,7 +354,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> COLOR_INFO_BASED_ON_EFFECT = SimpleOption.<Boolean>builder()
         .node("potion-effects", "color-info-based-on-effect").type(TypeToken.get(Boolean.class))
@@ -365,7 +365,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> SHOW_EFFECT_BACKGROUND = SimpleOption.<Boolean>builder()
         .node("potion-effects", "show-effect-background").type(TypeToken.get(Boolean.class))
@@ -387,7 +387,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Color> INFO_COLOR = SimpleOption.<Color>builder()
         .node("potion-effects", "info-color").type(TypeToken.get(Color.class))
@@ -398,7 +398,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Float> VANILLA_ICON_SCALE = NumberOption.<Float>number()
         .node("potion-effects", "vanilla-icon-scale").type(TypeToken.get(Float.class))
@@ -410,7 +410,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Float> VANILLA_TEXT_SCALE = NumberOption.<Float>number()
         .node("potion-effects", "vanilla-text-scale").type(TypeToken.get(Float.class))

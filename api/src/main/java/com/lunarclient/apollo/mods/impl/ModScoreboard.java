@@ -118,7 +118,7 @@ public final class ModScoreboard {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> DISPLAY_TOGGLE_MESSAGE = SimpleOption.<Boolean>builder()
         .node("scoreboard", "display-toggle-message").type(TypeToken.get(Boolean.class))

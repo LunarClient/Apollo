@@ -30,14 +30,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * Allows you to move and scale Minecraft's action bar.
  *
- * @since %release_version%
+ * @since 1.2.9
  */
 public final class ModActionBar {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("action-bar", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModActionBar {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.2.9
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("action-bar", "scale").type(TypeToken.get(Float.class))
