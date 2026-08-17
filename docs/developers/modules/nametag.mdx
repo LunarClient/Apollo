@@ -50,6 +50,7 @@ public void overrideNametagExample(Player target) {
                 .color(NamedTextColor.RED)
                 .build()
         ))
+        .visibilityOverride(NametagVisibilityOverride.NONE)
         .build()
     );
 }
@@ -100,6 +101,15 @@ public void resetNametagsExample(Player viewer) {
 ))
 ```
 
+`.visibilityOverride(NametagVisibilityOverride)` overrides the vanilla team-based nametag visibility outcome for the target player, from the viewpoint of the receiving player.
+- `SHOWN` displays the nametag as if the target's team nametag visibility were `always` (still respecting invisibility)
+- `HIDDEN` hides the nametag as if it were `never`, even when the target is not on any team.
+- `NONE` keeps the vanilla behavior.
+
+```java
+.visibilityOverride(NametagVisibilityOverride.NONE)
+```
+
 </Tab>
 
 <Tab>
@@ -129,6 +139,7 @@ public void overrideNametagExample(Player target) {
     OverrideNametagMessage message = OverrideNametagMessage.newBuilder()
         .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
         .addAllAdventureJsonLines(lines)
+        .setVisibilityOverride(NametagVisibilityOverride.NAMETAG_VISIBILITY_OVERRIDE_NONE)
         .build();
 
     ProtobufPacketUtil.broadcastPacket(message);
@@ -186,6 +197,7 @@ public void overrideNametagExample(Player target) {
     message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.nametag.v1.OverrideNametagMessage");
     message.add("player_uuid", JsonUtil.createUuidObject(target.getUniqueId()));
     message.add("adventure_json_lines", lines);
+    message.addProperty("visibility_override", "NAMETAG_VISIBILITY_OVERRIDE_NONE");
 
     JsonPacketUtil.broadcastPacket(message);
 }

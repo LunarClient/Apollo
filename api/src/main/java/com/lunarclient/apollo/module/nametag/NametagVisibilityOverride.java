@@ -23,35 +23,37 @@
  */
 package com.lunarclient.apollo.module.nametag;
 
-import java.util.List;
-import lombok.Builder;
-import lombok.Getter;
-import net.kyori.adventure.text.Component;
-
 /**
- * Represents a nametag which can be shown on the client.
+ * Represents an override of the vanilla team-based nametag visibility
+ * outcome for the target player, from the viewpoint of the receiving player.
  *
- * @since 1.0.0
+ * @since 1.2.9
  */
-@Getter
-@Builder
-public final class Nametag {
+public enum NametagVisibilityOverride {
 
     /**
-     * Returns a {@link List} of {@link Component} nametag.
+     * The vanilla team-based nametag visibility applies.
      *
-     * @return the nametag
-     * @since 1.0.0
-     */
-    List<Component> lines;
-
-    /**
-     * Returns the {@link NametagVisibilityOverride} override for this nametag.
-     *
-     * @return the visibility override
      * @since 1.2.9
      */
-    @Builder.Default
-    NametagVisibilityOverride visibilityOverride = NametagVisibilityOverride.NONE;
+    NONE,
+
+    /**
+     * Shows the nametag, as if the target's team nametag visibility
+     * were {@code always}, still respecting invisibility.
+     *
+     * @since 1.2.9
+     */
+    SHOWN,
+
+    /**
+     * Hides the nametag, as if the target's team nametag visibility
+     * were {@code never}.
+     *
+     * <p>Applies even when the target is not on any team.</p>
+     *
+     * @since 1.2.9
+     */
+    HIDDEN
 
 }
