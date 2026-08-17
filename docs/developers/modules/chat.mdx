@@ -438,7 +438,7 @@ along with the `ApolloButtonContent`, `ApolloButtonTooltip` and `ApolloButtonAct
 **Lightweight Protobuf examples.** See [Lightweight Protobuf](/apollo/developers/lightweight/protobuf) for setup.
 </Callout>
 
-### Displaying Chat Buttons
+**Displaying Chat Buttons**
 
 ```java
 public void displayChatButtonsExample(Player viewer) {
@@ -483,7 +483,7 @@ public void displayChatButtonsExample(Player viewer) {
 .setClientAction(ButtonClientAction.BUTTON_CLIENT_ACTION_OPEN_WAYPOINTS_MENU)
 ```
 
-### Removing a Chat Button
+**Removing a Chat Button**
 
 ```java
 public void removeChatButtonExample(Player viewer) {
@@ -495,7 +495,7 @@ public void removeChatButtonExample(Player viewer) {
 }
 ```
 
-### Resetting all Chat Buttons
+**Resetting all Chat Buttons**
 
 ```java
 public void resetChatButtonsExample(Player viewer) {
@@ -504,7 +504,7 @@ public void resetChatButtonsExample(Player viewer) {
 }
 ```
 
-### Updating a Chat Button
+**Updating a Chat Button**
 
 Replaces the content and/or tooltip of a previously displayed button, leaving all other button properties unchanged.
 Buttons are matched by id; See the [buttons utilities page](/apollo/developers/utilities/buttons#updating-buttons) for the shared update semantics.
@@ -547,7 +547,7 @@ Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::broadcastLiveButt
 **Lightweight JSON examples.** See [Lightweight JSON](/apollo/developers/lightweight/json) for setup.
 </Callout>
 
-### Displaying Chat Buttons
+**Displaying Chat Buttons**
 
 ```java
 public void displayChatButtonsExample(Player viewer) {
@@ -612,7 +612,7 @@ button.addProperty("client_action", "BUTTON_CLIENT_ACTION_OPEN_MINIMAP_VIEW");
 button.addProperty("client_action", "BUTTON_CLIENT_ACTION_OPEN_WAYPOINTS_MENU");
 ```
 
-### Removing a Chat Button
+**Removing a Chat Button**
 
 ```java
 public void removeChatButtonExample(Player viewer) {
@@ -624,7 +624,7 @@ public void removeChatButtonExample(Player viewer) {
 }
 ```
 
-### Resetting all Chat Buttons
+**Resetting all Chat Buttons**
 
 ```java
 public void resetChatButtonsExample(Player viewer) {
@@ -635,7 +635,7 @@ public void resetChatButtonsExample(Player viewer) {
 }
 ```
 
-### Updating a Chat Button
+**Updating a Chat Button**
 
 Replaces the content and/or tooltip of a previously displayed button, leaving all other button properties unchanged.
 Buttons are matched by id; See the [buttons utilities page](/apollo/developers/utilities/buttons#updating-buttons) for the shared update semantics.
@@ -674,8 +674,7 @@ public void updateChatButtonExample(Player viewer) {
 
 ## Live Button Broadcast
 
-Chat buttons displayed through the Apollo API with live content parts or a live tooltip are re-resolved and
-re-sent automatically while the `buttons.live-broadcast` option is enabled (disabled by default); no
+Chat buttons displayed through the Apollo API with live content parts or a live tooltip are automatically resent while the `buttons.live-broadcast` option is enabled (disabled by default); no
 scheduler code required. The broadcast engine ticks every server tick (50ms) and
 sends each live piece whenever its own update interval elapses, refreshing content and tooltip independently.
 
