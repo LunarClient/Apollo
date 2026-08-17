@@ -23,20 +23,66 @@
  */
 package com.lunarclient.apollo.module.chat;
 
+import com.google.protobuf.Message;
+import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.button.v1.ButtonUpdate;
+import com.lunarclient.apollo.chat.v1.DisplayChatButtonsMessage;
 import com.lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage;
+import com.lunarclient.apollo.chat.v1.RemoveChatButtonMessage;
 import com.lunarclient.apollo.chat.v1.RemoveLiveChatMessageMessage;
+import com.lunarclient.apollo.chat.v1.ResetChatButtonsMessage;
+import com.lunarclient.apollo.chat.v1.UpdateChatButtonMessage;
 import com.lunarclient.apollo.common.ApolloComponent;
+import com.lunarclient.apollo.common.button.ApolloButtonTooltip;
+import com.lunarclient.apollo.common.button.content.ApolloButtonContent;
+import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatCloseEvent;
+import com.lunarclient.apollo.event.packetenrichment.chat.ApolloPlayerChatOpenEvent;
+import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
+import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
+import com.lunarclient.apollo.module.button.ButtonModuleSupport;
+import com.lunarclient.apollo.module.button.ButtonSurface;
+import com.lunarclient.apollo.module.packetenrichment.PacketEnrichmentModule;
+import com.lunarclient.apollo.network.ButtonNetworkTypes;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.config.Serializer;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import lombok.NonNull;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Provides the chat module.
  *
  * @since 1.0.2
  */
-public final class ChatModuleImpl extends ChatModule {
+public final class ChatModuleImpl extends ChatModule implements ButtonSurface<ChatButton, com.lunarclient.apollo.chat.v1.ChatButton>, Serializer {
+
+    private final ButtonModuleSupport<ChatButton, com.lunarclient.apollo.chat.v1.ChatButton> support =
+        new ButtonModuleSupport<>(this, this, ChatModule.BROADCAST_LIVE_BUTTONS);
+
+    /**
+     * Creates a new instance of {@link ChatModuleImpl}.
+     *
+     * @since 1.2.9
+     */
+    public ChatModuleImpl() {
+        super();
+        this.serializer(ChatButton.class, new ChatButtonSerializer());
+        this.handle(ApolloRegisterPlayerEvent.class, this::onPlayerRegister);
+        this.handle(ApolloPlayerChatOpenEvent.class, event -> this.support.handleOpen(event.getPlayer()));
+        this.handle(ApolloPlayerChatCloseEvent.class, event -> this.support.handleClose(event.getPlayer().getUniqueId()));
+        this.handle(ApolloUnregisterPlayerEvent.class, event -> this.support.handleUnregister(event.getPlayer().getUniqueId()));
+    }
+
+    @Override
+    protected void onEnable() {
+        this.support.startBroadcast();
+    }
 
     @Override
     public void displayLiveChatMessage(@NonNull Recipients recipients, @NonNull Component text, int messageId) {
@@ -55,6 +101,128 @@ public final class ChatModuleImpl extends ChatModule {
             .build();
 
         ApolloManager.getNetworkManager().sendPacket(recipients, message);
+    }
+
+    @Override
+    public void displayChatButtons(@NonNull Recipients recipients, @NonNull Collection<ChatButton> buttons) {
+        if (buttons.size() > ChatButton.MAX_BUTTONS) {
+            throw new IllegalArgumentException("ChatButton batches support at most " + ChatButton.MAX_BUTTONS + " buttons");
+        }
+
+        this.support.displayButtons(recipients, buttons);
+    }
+
+    @Override
+    public void displayChatButton(@NonNull Recipients recipients, @NonNull ChatButton button) {
+        this.support.displayButtons(recipients, Collections.singleton(button));
+    }
+
+    @Override
+    public void removeChatButton(@NonNull Recipients recipients, @NonNull String buttonId) {
+        this.support.removeButton(recipients, buttonId);
+    }
+
+    @Override
+    public void removeChatButton(@NonNull Recipients recipients, @NonNull ChatButton button) {
+        this.support.removeButton(recipients, button.getId());
+    }
+
+    @Override
+    public void resetChatButtons(@NonNull Recipients recipients) {
+        this.support.resetButtons(recipients);
+    }
+
+    @Override
+    public void updateChatButton(@NonNull Recipients recipients, @NonNull String buttonId,
+                                 @NonNull ApolloButtonContent content, @Nullable ApolloButtonTooltip tooltip) {
+        this.support.pushUpdate(recipients, buttonId, content, true, tooltip);
+    }
+
+    @Override
+    public void updateChatButtonContent(@NonNull Recipients recipients, @NonNull String buttonId, @NonNull ApolloButtonContent content) {
+        this.support.pushUpdate(recipients, buttonId, content, false, null);
+    }
+
+    @Override
+    public void updateChatButtonTooltip(@NonNull Recipients recipients, @NonNull String buttonId, @Nullable ApolloButtonTooltip tooltip) {
+        this.support.pushUpdate(recipients, buttonId, null, true, tooltip);
+    }
+
+    private void onPlayerRegister(ApolloRegisterPlayerEvent event) {
+        if (!this.isEnabled() || !this.getOptions().get(ChatModule.SEND_DEFAULT_BUTTONS)) {
+            return;
+        }
+
+        ApolloPlayer player = event.getPlayer();
+        List<ChatButton> buttons = this.getOptions().get(player, ChatModule.DEFAULT_BUTTONS);
+        if (buttons == null || buttons.isEmpty()) {
+            return;
+        }
+
+        try {
+            this.support.displayButtons(player, buttons);
+        } catch (IllegalArgumentException exception) {
+            Apollo.getPlatform().getPlatformLogger()
+                .warning("Skipping the default chat buttons: " + exception.getMessage());
+        }
+    }
+
+    @Override
+    public void validate(ChatButton button) {
+        ButtonModuleSupport.validateCommon(button, ChatButton.BOX_WIDTH, ChatButton.BOX_HEIGHT);
+    }
+
+    @Override
+    public com.lunarclient.apollo.chat.v1.ChatButton toDisplayElement(ChatButton button, @Nullable ApolloPlayer viewer) {
+        return com.lunarclient.apollo.chat.v1.ChatButton.newBuilder()
+            .setButton(ButtonNetworkTypes.toProtobuf(button, viewer))
+            .build();
+    }
+
+    @Override
+    public Message createDisplay(List<com.lunarclient.apollo.chat.v1.ChatButton> elements) {
+        return DisplayChatButtonsMessage.newBuilder()
+            .addAllChatButtons(elements)
+            .build();
+    }
+
+    @Override
+    public Message createUpdate(String buttonId, ButtonUpdate update) {
+        return UpdateChatButtonMessage.newBuilder()
+            .setId(buttonId)
+            .setUpdate(update)
+            .build();
+    }
+
+    @Override
+    public Message createRemove(String buttonId) {
+        return RemoveChatButtonMessage.newBuilder()
+            .setId(buttonId)
+            .build();
+    }
+
+    @Override
+    public Message createReset() {
+        return ResetChatButtonsMessage.getDefaultInstance();
+    }
+
+    /**
+     * Returns whether open-chat tracking is available.
+     *
+     * @return whether open-chat tracking is active
+     */
+    @Override
+    public boolean isOpenTrackingActive() {
+        PacketEnrichmentModule packetEnrichment = Apollo.getModuleManager().getModule(PacketEnrichmentModule.class);
+        if (packetEnrichment == null || !packetEnrichment.isEnabled()) {
+            return false;
+        }
+
+        Options options = packetEnrichment.getOptions();
+        return options.get(PacketEnrichmentModule.PLAYER_CHAT_OPEN_PACKET)
+            && options.get(PacketEnrichmentModule.PLAYER_CHAT_CLOSE_PACKET)
+            && options.get(PacketEnrichmentModule.PLAYER_CHAT_OPEN_EVENT)
+            && options.get(PacketEnrichmentModule.PLAYER_CHAT_CLOSE_EVENT);
     }
 
 }

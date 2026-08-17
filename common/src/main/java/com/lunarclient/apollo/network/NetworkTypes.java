@@ -591,6 +591,10 @@ public final class NetworkTypes {
             builder.setProfile(NetworkTypes.toProtobuf(icon.getProfile()));
         }
 
+        if (icon.getPotion() != null) {
+            builder.setPotion(icon.getPotion());
+        }
+
         return builder.build();
     }
 
@@ -614,6 +618,10 @@ public final class NetworkTypes {
 
         if (icon.hasProfile()) {
             builder.profile(NetworkTypes.fromProtobuf(icon.getProfile()));
+        }
+
+        if (!icon.getPotion().isEmpty()) {
+            builder.potion(icon.getPotion());
         }
 
         return builder.build();

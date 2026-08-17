@@ -41,14 +41,84 @@ public class InventoryCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+
+        if (args.length == 0) {
+            this.sendUsage(player);
+            return true;
+        }
+
         InventoryExample inventoryExample = ApolloExamplePlugin.getInstance().getInventoryExample();
 
-        if (inventoryExample.inventoryModuleExample(player)) {
-            player.sendMessage("Giving items...");
-        } else {
-            player.sendMessage("Displaying menu...");
+        switch (args[0].toLowerCase()) {
+            case "giveitems": {
+                if (inventoryExample.inventoryModuleExample(player)) {
+                    player.sendMessage("Giving items...");
+                } else {
+                    player.sendMessage("Displaying menu...");
+                }
+
+                break;
+            }
+
+            case "displaymenu": {
+                inventoryExample.displayMenuLayoutExample(player);
+                player.sendMessage("Displaying menu layout buttons...");
+                break;
+            }
+
+            case "displayhub": {
+                inventoryExample.displayHubLayoutExample(player);
+                player.sendMessage("Displaying hub layout buttons...");
+                break;
+            }
+
+            case "displayminigame": {
+                inventoryExample.displayMinigameLayoutExample(player);
+                player.sendMessage("Displaying minigame layout buttons...");
+                break;
+            }
+
+            case "displaystaff": {
+                inventoryExample.displayStaffLayoutExample(player);
+                player.sendMessage("Displaying staff layout buttons...");
+                break;
+            }
+
+            case "removebutton": {
+                inventoryExample.removeInventoryButtonExample(player);
+                player.sendMessage("Removing buttons...");
+                break;
+            }
+
+            case "updatebutton": {
+                inventoryExample.updateInventoryButtonExample(player);
+                player.sendMessage("Updating the vote button...");
+                break;
+            }
+
+            case "resetbuttons": {
+                inventoryExample.resetInventoryButtonsExample(player);
+                player.sendMessage("Resetting buttons...");
+                break;
+            }
+
+            default: {
+                this.sendUsage(player);
+                break;
+            }
         }
 
         return true;
+    }
+
+    private void sendUsage(Player player) {
+        player.sendMessage("Usage: /inventory giveItems");
+        player.sendMessage("Usage: /inventory displayMenu");
+        player.sendMessage("Usage: /inventory displayHub");
+        player.sendMessage("Usage: /inventory displayMinigame");
+        player.sendMessage("Usage: /inventory displayStaff");
+        player.sendMessage("Usage: /inventory removeButton");
+        player.sendMessage("Usage: /inventory updateButton");
+        player.sendMessage("Usage: /inventory resetButtons");
     }
 }

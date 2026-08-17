@@ -36,6 +36,18 @@ import lombok.Getter;
 public final class HudPosition {
 
     /**
+     * Creates a new {@link HudPosition} with the given coordinates.
+     *
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return the hud position
+     * @since 1.2.9
+     */
+    public static HudPosition of(float x, float y) {
+        return new HudPosition(x, y);
+    }
+
+    /**
      * Returns the {@code float} X coordinate for this HUD position.
      *
      * @return the x coordinate

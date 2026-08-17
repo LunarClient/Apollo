@@ -25,6 +25,7 @@ package com.lunarclient.apollo;
 
 import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.stats.ApolloStats;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -93,6 +94,14 @@ public interface ApolloPlatform {
     Object getPlugin();
 
     /**
+     * Returns the platform {@link Scheduler}.
+     *
+     * @return the platform scheduler
+     * @since 1.2.9
+     */
+    Scheduler getScheduler();
+
+    /**
      * Represents the kind of server a platform is.
      *
      * @since 1.0.0
@@ -113,6 +122,28 @@ public interface ApolloPlatform {
         MINESTOM,
         BUNGEE,
         VELOCITY
+    }
+
+    /**
+     * Represents the platform scheduler, running tasks through the
+     * platform plugin's own scheduler.
+     *
+     * @since 1.2.9
+     */
+    interface Scheduler {
+
+        /**
+         * Schedules a task to run asynchronously every period, first running
+         * after the given delay.
+         *
+         * @param task   the task to run
+         * @param delay  the delay before the first run
+         * @param period the period between runs
+         * @param unit   the unit of the delay and period
+         * @since 1.2.9
+         */
+        void scheduleAsyncRepeating(Runnable task, long delay, long period, TimeUnit unit);
+
     }
 
 }

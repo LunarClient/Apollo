@@ -24,15 +24,22 @@
 package com.lunarclient.apollo.example.api.module;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.common.button.content.ApolloButtonContent;
+import com.lunarclient.apollo.common.icon.ItemStackIcon;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.api.module.chatbuttons.ChannelsLayout;
+import com.lunarclient.apollo.example.api.module.chatbuttons.StaffChatLayout;
 import com.lunarclient.apollo.example.module.impl.ChatExample;
 import com.lunarclient.apollo.example.util.ServerUtil;
 import com.lunarclient.apollo.module.chat.ChatModule;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ChatApiExample extends ChatExample {
@@ -97,6 +104,42 @@ public class ChatApiExample extends ChatExample {
                 task.cancel();
             }
         }, 1L, 20L);
+    }
+
+    @Override
+    public void displayChannelsLayoutExample(Player viewer) {
+        ChannelsLayout.display(this.chatModule, viewer);
+    }
+
+    @Override
+    public void displayStaffChatLayoutExample(Player viewer) {
+        StaffChatLayout.display(this.chatModule, viewer);
+    }
+
+    @Override
+    public void resetChatButtonsExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        apolloPlayerOpt.ifPresent(this.chatModule::resetChatButtons);
+    }
+
+    @Override
+    public void updateChatButtonExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.chatModule.updateChatButtonContent(apolloPlayer, "public-chat",
+            ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("PAPER")
+                    .build())
+                .append(Component.text("Public Chat", NamedTextColor.AQUA))
+                .scale(1.0F)
+                .build()));
+    }
+
+    @Override
+    public void removeChatButtonExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.chatModule.removeChatButton(apolloPlayer, "party-chat"));
     }
 
     @Override

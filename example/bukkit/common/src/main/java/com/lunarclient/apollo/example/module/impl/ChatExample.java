@@ -24,11 +24,22 @@
 package com.lunarclient.apollo.example.module.impl;
 
 import com.lunarclient.apollo.example.module.ApolloModuleExample;
+import org.bukkit.entity.Player;
 
 public abstract class ChatExample extends ApolloModuleExample {
 
     public abstract void displayLiveChatMessageExample();
 
     public abstract void removeLiveChatMessageExample();
+
+    public abstract void displayChannelsLayoutExample(Player viewer);
+
+    public abstract void displayStaffChatLayoutExample(Player viewer);
+
+    public abstract void updateChatButtonExample(Player viewer);
+
+    public abstract void removeChatButtonExample(Player viewer);
+
+    public abstract void resetChatButtonsExample(Player viewer);
 
 }

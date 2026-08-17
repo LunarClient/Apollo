@@ -32,7 +32,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class InventoryExample extends NMSExample {
+public abstract class InventoryExample extends NMSExample {
 
     public boolean inventoryModuleExample(Player player) {
         if (this.isOneEight()) {
@@ -114,5 +114,19 @@ public class InventoryExample extends NMSExample {
 
         player.openInventory(inventory);
     }
+
+    public abstract void displayMenuLayoutExample(Player viewer);
+
+    public abstract void displayHubLayoutExample(Player viewer);
+
+    public abstract void displayMinigameLayoutExample(Player viewer);
+
+    public abstract void displayStaffLayoutExample(Player viewer);
+
+    public abstract void removeInventoryButtonExample(Player viewer);
+
+    public abstract void updateInventoryButtonExample(Player viewer);
+
+    public abstract void resetInventoryButtonsExample(Player viewer);
 
 }

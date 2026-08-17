@@ -79,4 +79,12 @@ public final class ItemStackIcon extends Icon {
      */
     @Nullable Profile profile;
 
+    /**
+     * Returns the icon {@link String} potion id (e.g. {@code "healing"}).
+     *
+     * @return the icon potion id
+     * @since 1.2.9
+     */
+    @Nullable String potion;
+
 }

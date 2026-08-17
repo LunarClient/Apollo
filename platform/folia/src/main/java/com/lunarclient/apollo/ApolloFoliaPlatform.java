@@ -52,6 +52,8 @@ import com.lunarclient.apollo.module.heightlimit.HeightLimitModule;
 import com.lunarclient.apollo.module.heightlimit.HeightLimitModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
+import com.lunarclient.apollo.module.inventory.InventoryModule;
+import com.lunarclient.apollo.module.inventory.InventoryModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
 import com.lunarclient.apollo.module.marker.MarkerModule;
@@ -96,6 +98,7 @@ import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.wrapper.FoliaApolloStats;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
@@ -142,6 +145,7 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
             .addModule(GlowModule.class, new GlowModuleImpl())
             .addModule(HeightLimitModule.class, new HeightLimitModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
+            .addModule(InventoryModule.class, new InventoryModuleImpl())
             .addModule(LimbModule.class, new LimbModuleImpl())
             .addModule(MarkerModule.class, new MarkerModuleImpl())
             .addModule(ModSettingModule.class, new ModSettingModuleImpl())
@@ -208,6 +212,19 @@ public final class ApolloFoliaPlatform extends JavaPlugin implements ApolloPlatf
     @Override
     public ApolloStats getStats() {
         return this.stats;
+    }
+
+    private final Scheduler scheduler = new Scheduler() {
+        @Override
+        public void scheduleAsyncRepeating(Runnable task, long delay, long period, TimeUnit unit) {
+            Bukkit.getAsyncScheduler().runAtFixedRate(ApolloFoliaPlatform.this,
+                scheduledTask -> task.run(), delay, period, unit);
+        }
+    };
+
+    @Override
+    public Scheduler getScheduler() {
+        return this.scheduler;
     }
 
     @Override
