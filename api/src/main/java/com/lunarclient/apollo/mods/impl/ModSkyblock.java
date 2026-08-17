@@ -59,18 +59,6 @@ public final class ModSkyblock {
         .build();
 
     /**
-     * Adds tab completion to the /warp command.
-     *
-     * @since 1.2.2
-     */
-    public static final SimpleOption<Boolean> SKYBLOCK_AUTOCOMPLETE_WARPS = SimpleOption.<Boolean>builder()
-        .comment("Adds tab completion to the /warp command.")
-        .node("skyblock", "skyblock-autocomplete-warps").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
      * Fixes being unable to use the "Pick Block" keybind on items when it is bound to a mouse button.
      *
      * @since 1.2.5
@@ -78,6 +66,18 @@ public final class ModSkyblock {
     public static final SimpleOption<Boolean> MIDDLE_CLICK_ARMOR_FIX = SimpleOption.<Boolean>builder()
         .comment("Fixes being unable to use the \"Pick Block\" keybind on items when it is bound to a mouse button.")
         .node("skyblock", "middle-click-armor-fix").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Adds tab completion to the /warp command.
+     *
+     * @since 1.2.2
+     */
+    public static final SimpleOption<Boolean> SKYBLOCK_AUTOCOMPLETE_WARPS = SimpleOption.<Boolean>builder()
+        .comment("Adds tab completion to the /warp command.")
+        .node("skyblock", "skyblock-autocomplete-warps").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();
@@ -204,7 +204,7 @@ public final class ModSkyblock {
     public static final NumberOption<Float> CUSTOM_CHIME_VOLUME = NumberOption.<Float>number()
         .node("skyblock", "custom-chime-volume").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.0F)
-        .defaultValue(5.0F)
+        .defaultValue(0.5F)
         .notifyClient()
         .build();
 

@@ -115,6 +115,41 @@ For example, if your name is Notch, this will ping on Notch but not Notch123.
         - Type: `Boolean`
         - Default: `false`
 
+- __`CHAT_HEADS`__
+    - Displays the player's Minecraft head before their message in chat.
+    - Config Key: `chat-heads`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CHAT_HEADS_FETCH_UNKNOWN`__
+    - Looks up skins for chat senders that aren't in the tab list, like players on other servers of a network. Head detection may be less accurate.
+    - Config Key: `chat-heads-fetch-unknown`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CHAT_EMOJI`__
+    - Adds emojis to chat. Shortcodes like :smile: autocomplete as you type, and emojis in messages show as colorful Twemoji.
+    - Config Key: `chat-emoji`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`CHAT_EMOJI_UNICODE_ONLY`__
+    - Shows emojis with Minecraft's built-in font instead of Twemoji images. Shortcodes the game font can't display are left as text.
+    - Config Key: `chat-emoji-unicode-only`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CHAT_EMOJI_CONVERT_SHORTCODES`__
+    - Turns shortcodes like :skull: in other players' messages into emojis. When disabled, only emojis sent as actual characters are shown.
+    - Config Key: `chat-emoji-convert-shortcodes`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
 - __`COPY_CHAT`__
     - Copies the hovered chat message when holding the keybind and clicking.
     - Config Key: `copy-chat`

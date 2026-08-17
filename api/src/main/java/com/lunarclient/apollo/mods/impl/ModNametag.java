@@ -105,6 +105,18 @@ public final class ModNametag {
         .build();
 
     /**
+     * With this option enabled, your nametag will be hidden in third person when there is a passenger attached to you.
+     *
+     * @since 1.2.9
+     */
+    public static final SimpleOption<Boolean> HIDE_NAMETAG_F5PASSENGERS = SimpleOption.<Boolean>builder()
+        .comment("With this option enabled, your nametag will be hidden in third person when there is a passenger attached to you.")
+        .node("nametag", "hide-nametag-f5-passengers").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.2.1
