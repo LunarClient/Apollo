@@ -9,6 +9,7 @@
     "entity": "Entity",
     "glint": "Glint",
     "glow": "Glow",
+    "heightlimit": "Height Limit",
     "hologram": "Hologram",
     "inventory": "Inventory",
     "limb": "Limb",

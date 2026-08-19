@@ -1,0 +1,306 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Buttons
+
+## Overview
+
+Apollo provides a shared button system in the `com.lunarclient.apollo.common.button` package. The abstract
+`ApolloButton` carries everything a clickable GUI button needs: content, tooltip, colors, shape, size and a
+click action; independently of where the button is displayed. Each *surface* then defines the placement.
+
+Two surfaces are available today: the [inventory module](/apollo/developers/modules/inventory)'s inventory
+buttons, placed in two fixed-size boxes on each side of the player inventory, and the
+[chat module](/apollo/developers/modules/chat)'s chat buttons, placed in a strip between the chat input and
+the chat log.
+
+Buttons are always built through a surface type (e.g. `InventoryButton.builder()`), which adds the surface's
+placement properties and defines the container the button `position` is measured against. There is no
+standalone `ApolloButton.builder()`.
+
+## `ApolloButton` Properties
+
+Every surface builder inherits the following properties from `ApolloButton`.
+
+```java
+public abstract class ApolloButton {
+
+
+    /**
+     * Returns the button {@link String} id, unique within a single
+     * display batch.
+     *
+     * <p>Displaying another button with the same id replaces the
+     * previous one.</p>
+     *
+     * @since 1.2.9
+     */
+    @NotNull String id;
+
+    /**
+     * Returns the {@link HudPosition} of this button, relative to the
+     * top-left corner of the container it is placed in.
+     *
+     * <p>The button must fit inside the container: {@code 0 <= x},
+     * {@code 0 <= y}, {@code x + width <= container width} and
+     * {@code y + height <= container height}. See the surface type for
+     * its container dimensions (e.g. {@code InventoryButton#BOX_WIDTH}).</p>
+     *
+     * @since 1.2.9
+     */
+    @NotNull HudPosition position;
+
+    /**
+     * Returns the {@link ApolloButtonSize} of this button.
+     *
+     * <p>Use one of the surface's suggested sizes (e.g.
+     * {@code InventoryButton.SIZE_MEDIUM}) or a fully custom
+     * {@link ApolloButtonSize#of(float, float)}.</p>
+     *
+     * @return the button size
+     * @since 1.2.9
+     */
+    @NotNull ApolloButtonSize size;
+
+    /**
+     * Returns the {@link ApolloButtonShape} of this button.
+     *
+     * @since 1.2.9
+     */
+    @NotNull ApolloButtonShape shape;
+
+    /**
+     * Returns the {@link ApolloButtonContent} rendered inside this button.
+     *
+     * <p>Built via {@code ApolloButtonContent.builder()}, appending static
+     * components, icons or live per-player parts that are re-resolved
+     * whenever the content is sent (see the owning module's live button
+     * broadcast option, e.g. {@code InventoryModule#BROADCAST_LIVE_BUTTONS}).</p>
+     *
+     * @return the button content
+     * @since 1.2.9
+     */
+    @NotNull ApolloButtonContent content;
+
+    /**
+     * Returns the {@link ApolloButtonTooltip} shown while this button is hovered.
+     *
+     * <p>Built via {@code ApolloButtonTooltip.of(...)} for static lines,
+     * or {@code ApolloButtonTooltip.live(...)} for per-player lines that
+     * are re-resolved whenever the button content is sent (see the owning
+     * module's live button broadcast option, e.g.
+     * {@code InventoryModule#BROADCAST_LIVE_BUTTONS}).</p>
+     *
+     * @return the tooltip, or {@code null} for no tooltip
+     * @since 1.2.9
+     */
+    @Builder.Default
+    @Nullable ApolloButtonTooltip tooltip = null;
+
+    /**
+     * Returns the {@link ApolloButtonAction} executed when this button
+     * is clicked.
+     *
+     * <p>Built via {@link ApolloButtonAction#runCommand(String)},
+     * {@link ApolloButtonAction#openUrl(String)} or
+     * {@link ApolloButtonAction#clientAction(ApolloButtonClientAction)}.</p>
+     *
+     * @return the click action, or {@code null}
+     * @since 1.2.9
+     */
+    @Builder.Default
+    @Nullable ApolloButtonAction onClick = null;
+
+    /**
+     * Returns the background {@link Color} used while this button is hovered.
+     *
+     * @return the hovered background color, or {@code null}
+     * @since 1.2.9
+     */
+    @Builder.Default
+    @Nullable Color hoveredBackgroundColor = null;
+
+    /**
+     * Returns the border {@link Color} used while this button is hovered.
+     *
+     * @return the hovered border color, or {@code null}
+     * @since 1.2.9
+     */
+    @Builder.Default
+    @Nullable Color hoveredBorderColor = null;
+
+    /**
+     * Returns the background {@link Color} of this button.
+     *
+     * @return the background color
+     * @since 1.2.9
+     */
+    public abstract Color getBackgroundColor();
+
+    /**
+     * Returns the border {@link Color} of this button.
+     *
+     * @return the border color
+     * @since 1.2.9
+     */
+    public abstract Color getBorderColor();
+
+}
+```
+
+### Sample Code
+
+The chain below builds an inventory button; `.box(...)` is the inventory surface's placement property, while
+everything else is inherited from `ApolloButton`.
+
+```java
+public void displayButtonExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        InventoryButton vote = InventoryButton.builder()
+            .id("vote")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 52))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+            .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+            .content(ApolloButtonContent.builder()
+                .append(Component.text("Vote"))
+                .scale(1.0F)
+                .build())
+            .tooltip(ApolloButtonTooltip.of(
+                Component.text("Vote", NamedTextColor.GREEN),
+                Component.text("Vote daily for rewards", NamedTextColor.GRAY)))
+            .onClick(ApolloButtonAction.openUrl("https://example.com/vote"))
+            .build();
+
+        this.inventoryModule.displayInventoryButton(apolloPlayer, vote);
+    });
+}
+```
+
+## `ApolloButtonContent` Builder
+
+Button content is an ordered sequence of adventure components and icons, rendered as a single centered row.
+At least one part is required, and content supports at most 30 parts (`ApolloButtonContent.MAX_PARTS`)
+
+`.append(Component)` appends an adventure component to the content row.
+```java
+.append(Component.text("Vote for us!"))
+```
+
+`.append(Icon)` appends an icon to the content row. Read the [icons utilities page](/apollo/developers/utilities/icons) to learn more about icons.
+```java
+.append(ItemStackIcon.builder().itemName("NETHER_STAR").build())
+```
+
+`.append(Function<ApolloPlayer, Component>, Duration)` appends a live part, resolved into a component for each viewing
+player whenever the content is sent: at the owning module's live button broadcast (e.g. the inventory module's [live button broadcast](/apollo/developers/modules/inventory#live-button-broadcast))
+and refreshed at the given interval. The interval must be positive and is quantized to server ticks (50ms).
+Shorthand for `append(ApolloButtonContentPart.live(resolver, updateInterval))`.
+```java
+.append(apolloViewer -> Component.text(Bukkit.getOnlinePlayers().size(), NamedTextColor.GREEN), Duration.ofMillis(2500L))
+```
+
+`.append(ApolloButtonContentPart)` appends a pre-built content part; see the `ApolloButtonContentPart` factories (`component(...)`, `icon(...)`, `live(...)`).
+```java
+.append(ApolloButtonContentPart.live(
+    apolloViewer -> Component.text(getBalance(apolloViewer.getUniqueId()), NamedTextColor.GOLD),
+    Duration.ofMillis(2500L)))
+```
+
+`.scale(float)` sets the scale factor applied to the content row. Defaults to `1.0` and must be between `0.25` and `4`.
+```java
+.scale(1.0F)
+```
+
+### Sample Code
+
+```java
+public static ApolloButtonContent buttonContentExample() {
+    return ApolloButtonContent.builder()
+        .append(ItemStackIcon.builder().itemName("GOLD_INGOT").build())
+        .append(Component.text("Balance: ", NamedTextColor.GRAY))
+        .append(ApolloButtonContentPart.live(
+            apolloViewer -> Component.text(getBalance(apolloViewer.getUniqueId()), NamedTextColor.GOLD),
+            Duration.ofMillis(2500L)))
+        .scale(1.0F)
+        .build();
+}
+```
+
+## `ApolloButtonTooltip`
+
+The tooltip shown while a button is hovered, rendered like a vanilla item tooltip at the mouse. Built via
+`ApolloButtonTooltip.of(...)` for static lines (accepting either varargs or a `List<Component>`), or
+`ApolloButtonTooltip.live(resolver, Duration)` for a per-player resolver that is re-resolved whenever the
+button content is sent, refreshed at the given interval. The interval must be positive and is quantized to
+server ticks (50ms). Tooltips support at most 100 lines (`ApolloButtonTooltip.MAX_LINES`).
+
+```java
+ApolloButtonTooltip.of(
+    Component.text("Shop", NamedTextColor.GREEN),
+    Component.text("Browse the server shop", NamedTextColor.GRAY));
+
+ApolloButtonTooltip.live(apolloViewer -> Arrays.asList(
+    Component.text("Updated " + LocalTime.now(), NamedTextColor.DARK_GRAY)),
+    Duration.ofMillis(2500L));
+```
+
+## `ApolloButtonAction`
+
+The action executed when a button is clicked. A button without an action is purely decorative. Built via one
+of three factories, each returning a dedicated `ApolloButtonAction` subtype (`RunCommandAction`, `OpenUrlAction`, `ClientAction`):
+
+- `ApolloButtonAction.runCommand(String)` runs the command as the player. Must start with `/`. The client
+  shows a confirmation prompt before running the command.
+- `ApolloButtonAction.openUrl(String)` opens the URL. Respects the player's chat links setting and Apollo
+  link-prompt settings.
+- `ApolloButtonAction.clientAction(ApolloButtonClientAction)` executes a built-in client action:
+  `OPEN_MINIMAP_VIEW` opens Lunar's fullscreen minimap view (does nothing when the player has the MiniMap mod
+  disabled) or `OPEN_WAYPOINTS_MENU` opens the waypoints menu.
+
+```java
+.onClick(ApolloButtonAction.runCommand("/shop"))
+.onClick(ApolloButtonAction.openUrl("https://example.com/vote"))
+.onClick(ApolloButtonAction.clientAction(ApolloButtonClientAction.OPEN_MINIMAP_VIEW))
+```
+
+## `ApolloButtonShape`
+
+The button shape, either `ROUNDED_SQUARE` or `CIRCLE`. Rounded squares render with slightly rounded corners;
+circles use the smaller of the button's `width` and `height` as their diameter, centered within the button
+bounds.
+
+```java
+.shape(ApolloButtonShape.ROUNDED_SQUARE)
+```
+
+## `ApolloButtonSize`
+
+The button size, in GUI-scaled pixels, created via `ApolloButtonSize.of(width, height)`.
+
+```java
+.size(ApolloButtonSize.of(56, 24))
+.size(ApolloButtonSize.of(40))
+```
+
+Suggested size presets are per-surface, tuned to the surface's container dimensions; for inventory buttons they live
+on `InventoryButton` (`SIZE_SMALL`, `SIZE_MEDIUM`, `SIZE_LARGE`, `SIZE_WIDE`) and for chat buttons on `ChatButton` (`SIZE_SMALL`, `SIZE_MEDIUM`, `SIZE_ICON`);
+see the [inventory module page](/apollo/developers/modules/inventory#inventorybutton-options) and the [chat module page](/apollo/developers/modules/chat#chat-buttons).
+
+## Updating Buttons
+
+Modules expose update methods that replace the content and/or tooltip of a previously displayed button,
+leaving all other button properties unchanged (e.g. `InventoryModule#updateInventoryButton`, which takes an
+`ApolloButtonContent` and an `ApolloButtonTooltip`). Buttons are matched by id.
+
+The partial-update semantics are the same for every surface:
+
+- An unset `content` keeps the previous content; its parts and its scale; a present content replaces both.
+- An unset `tooltip` keeps the previous tooltip; a present tooltip fully replaces it, and a present tooltip with zero lines clears it.
+
+Live content parts and live tooltips are resolved per recipient before sending, both on manual updates and by the owning
+module's automatic live button broadcast. The broadcast refreshes content and tooltip independently, each on its own update interval.

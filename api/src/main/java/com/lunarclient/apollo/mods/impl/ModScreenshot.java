@@ -89,6 +89,17 @@ public final class ModScreenshot {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since 1.2.9
+     */
+    public static final SimpleOption<Boolean> DELETE_OPTION = SimpleOption.<Boolean>builder()
+        .node("screenshot", "delete-option").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
      * A screenshot file saved with world details enabled has metadata that contains your player coordinates, the biome, and more.
      *
      * @since 1.1.9

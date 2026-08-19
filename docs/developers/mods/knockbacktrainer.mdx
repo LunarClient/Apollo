@@ -1,0 +1,53 @@
+# Knockback Trainer
+
+Train jump resets: how close your jump press lands to the tick you were hit.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleKnockbackTrainerExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModKnockbackTrainer.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TARGET_TICKS`__
+    - Config Key: `target-ticks`
+    - Values
+        - Type: `Integer`
+        - Default: `0`
+        - Minimum: `0`
+        - Maximum: `6`
+
+- __`WINDOW_TICKS`__
+    - Config Key: `window-ticks`
+    - Values
+        - Type: `Integer`
+        - Default: `5`
+        - Minimum: `0`
+        - Maximum: `10`
+
+- __`FALLING_HIT_SOUND`__
+    - Config Key: `falling-hit-sound`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`FALLING_HIT_SOUND_VOLUME`__
+    - Config Key: `falling-hit-sound-volume`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.0F`
+        - Maximum: `1.0F`
+

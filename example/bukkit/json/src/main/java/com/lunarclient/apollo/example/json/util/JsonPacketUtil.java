@@ -58,6 +58,8 @@ public final class JsonPacketUtil {
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-attack.send-packet", false);
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-chat-open.send-packet", false);
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-chat-close.send-packet", false);
+        CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-inventory-open.send-packet", false);
+        CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-inventory-close.send-packet", false);
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-use-item.send-packet", false);
         CONFIG_MODULE_PROPERTIES.put("packet_enrichment", "player-use-item-bucket.send-packet", false);
         CONFIG_MODULE_PROPERTIES.put("server_link", "legacy-button-placement", "NEW_ROW");

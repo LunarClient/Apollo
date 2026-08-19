@@ -49,9 +49,12 @@ import com.lunarclient.apollo.module.entity.EntityModuleImpl;
 import com.lunarclient.apollo.module.glint.GlintModule;
 import com.lunarclient.apollo.module.glow.GlowModule;
 import com.lunarclient.apollo.module.glow.GlowModuleImpl;
+import com.lunarclient.apollo.module.heightlimit.HeightLimitModule;
+import com.lunarclient.apollo.module.heightlimit.HeightLimitModuleImpl;
 import com.lunarclient.apollo.module.hologram.HologramModule;
 import com.lunarclient.apollo.module.hologram.HologramModuleImpl;
 import com.lunarclient.apollo.module.inventory.InventoryModule;
+import com.lunarclient.apollo.module.inventory.InventoryModuleImpl;
 import com.lunarclient.apollo.module.limb.LimbModule;
 import com.lunarclient.apollo.module.limb.LimbModuleImpl;
 import com.lunarclient.apollo.module.marker.MarkerModule;
@@ -96,9 +99,12 @@ import com.lunarclient.apollo.option.Options;
 import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.stats.ApolloStats;
 import com.lunarclient.apollo.wrapper.MinestomApolloStats;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.Getter;
@@ -171,8 +177,9 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
             .addModule(EntityModule.class, new EntityModuleImpl())
             .addModule(GlintModule.class)
             .addModule(GlowModule.class, new GlowModuleImpl())
+            .addModule(HeightLimitModule.class, new HeightLimitModuleImpl())
             .addModule(HologramModule.class, new HologramModuleImpl())
-            .addModule(InventoryModule.class)
+            .addModule(InventoryModule.class, new InventoryModuleImpl())
             .addModule(LimbModule.class, new LimbModuleImpl())
             .addModule(MarkerModule.class, new MarkerModuleImpl())
             .addModule(ModSettingModule.class, new ModSettingModuleImpl())
@@ -246,12 +253,28 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
 
     @Override
     public String getApolloVersion() {
-        return "1.2.8";
+        return "1.2.9";
     }
 
     @Override
     public ApolloStats getStats() {
         return this.stats;
+    }
+
+    private final Scheduler scheduler = new Scheduler() {
+        @Override
+        public void scheduleAsyncRepeating(Runnable task, long delay, long period, TimeUnit unit) {
+            MinecraftServer.getSchedulerManager()
+                .buildTask(() -> ForkJoinPool.commonPool().execute(task))
+                .delay(Duration.ofMillis(unit.toMillis(delay)))
+                .repeat(Duration.ofMillis(unit.toMillis(period)))
+                .schedule();
+        }
+    };
+
+    @Override
+    public Scheduler getScheduler() {
+        return this.scheduler;
     }
 
     @Override

@@ -27,7 +27,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.json.module.InventoryJsonExample;
 import com.lunarclient.apollo.example.json.util.JsonUtil;
+import com.lunarclient.apollo.example.module.impl.InventoryExample;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import org.bukkit.Location;
@@ -72,6 +74,10 @@ public class ApolloPacketReceiveJsonListener implements PluginMessageListener {
             this.onPlayerChatOpen(payload);
         } else if ("lunarclient.apollo.packetenrichment.v1.PlayerChatCloseMessage".equals(type)) {
             this.onPlayerChatClose(payload);
+        } else if ("lunarclient.apollo.packetenrichment.v1.PlayerInventoryOpenMessage".equals(type)) {
+            this.onPlayerInventoryOpen(player, payload);
+        } else if ("lunarclient.apollo.packetenrichment.v1.PlayerInventoryCloseMessage".equals(type)) {
+            this.onPlayerInventoryClose(player, payload);
         } else if ("lunarclient.apollo.packetenrichment.v1.PlayerUseItemMessage".equals(type)) {
             this.onPlayerUseItem(payload);
         } else if ("lunarclient.apollo.packetenrichment.v1.PlayerUseItemBucketMessage".equals(type)) {
@@ -118,6 +124,26 @@ public class ApolloPacketReceiveJsonListener implements PluginMessageListener {
     private void onPlayerChatClose(JsonObject message) {
         long instantiationTimeMs = JsonUtil.toJavaTimestamp(message);
         this.onPlayerInfo(message.getAsJsonObject("player_info"));
+    }
+
+    private void onPlayerInventoryOpen(Player player, JsonObject message) {
+        long instantiationTimeMs = JsonUtil.toJavaTimestamp(message);
+        this.onPlayerInfo(message.getAsJsonObject("player_info"));
+
+        InventoryExample example = ApolloExamplePlugin.getInstance().getInventoryExample();
+        if (example instanceof InventoryJsonExample) {
+            ((InventoryJsonExample) example).handleInventoryOpen(player);
+        }
+    }
+
+    private void onPlayerInventoryClose(Player player, JsonObject message) {
+        long instantiationTimeMs = JsonUtil.toJavaTimestamp(message);
+        this.onPlayerInfo(message.getAsJsonObject("player_info"));
+
+        InventoryExample example = ApolloExamplePlugin.getInstance().getInventoryExample();
+        if (example instanceof InventoryJsonExample) {
+            ((InventoryJsonExample) example).handleInventoryClose(player);
+        }
     }
 
     private void onPlayerUseItem(JsonObject message) {

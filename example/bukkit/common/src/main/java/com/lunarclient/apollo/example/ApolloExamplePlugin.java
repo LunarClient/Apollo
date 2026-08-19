@@ -34,6 +34,7 @@ import com.lunarclient.apollo.example.command.CosmeticCommand;
 import com.lunarclient.apollo.example.command.EntityCommand;
 import com.lunarclient.apollo.example.command.GlintCommand;
 import com.lunarclient.apollo.example.command.GlowCommand;
+import com.lunarclient.apollo.example.command.HeightLimitCommand;
 import com.lunarclient.apollo.example.command.HologramCommand;
 import com.lunarclient.apollo.example.command.InventoryCommand;
 import com.lunarclient.apollo.example.command.LimbCommand;
@@ -68,6 +69,7 @@ import com.lunarclient.apollo.example.module.impl.CosmeticExample;
 import com.lunarclient.apollo.example.module.impl.EntityExample;
 import com.lunarclient.apollo.example.module.impl.GlintExample;
 import com.lunarclient.apollo.example.module.impl.GlowExample;
+import com.lunarclient.apollo.example.module.impl.HeightLimitExample;
 import com.lunarclient.apollo.example.module.impl.HologramExample;
 import com.lunarclient.apollo.example.module.impl.InventoryExample;
 import com.lunarclient.apollo.example.module.impl.LimbExample;
@@ -91,6 +93,7 @@ import com.lunarclient.apollo.example.module.impl.TransferExample;
 import com.lunarclient.apollo.example.module.impl.VignetteExample;
 import com.lunarclient.apollo.example.module.impl.WaypointExample;
 import com.lunarclient.apollo.example.nms.NpcManager;
+import com.lunarclient.apollo.example.nms.PlayerNpc;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -114,6 +117,7 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
     private EntityExample entityExample;
     private GlintExample glintExample;
     private GlowExample glowExample;
+    private HeightLimitExample heightLimitExample;
     private HologramExample hologramExample;
     private InventoryExample inventoryExample;
     private LimbExample limbExample;
@@ -150,6 +154,13 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
         this.registerCommands();
         this.registerModuleExamples();
         this.registerListeners();
+
+        this.npcManager.addViewerListener((viewer, npc) -> {
+            PlayerNpc.ActiveEmote emote = npc.getActiveEmote();
+            if (emote != null && this.cosmeticExample != null) {
+                this.cosmeticExample.startNpcEmoteToViewer(viewer, npc.getUuid(), emote.getEmoteId(), emote.getMetadata());
+            }
+        });
     }
 
     @Override
@@ -173,6 +184,7 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
         this.getCommand("entity").setExecutor(new EntityCommand());
         this.getCommand("glint").setExecutor(new GlintCommand());
         this.getCommand("glow").setExecutor(new GlowCommand());
+        this.getCommand("heightlimit").setExecutor(new HeightLimitCommand());
         this.getCommand("hologram").setExecutor(new HologramCommand());
         this.getCommand("inventory").setExecutor(new InventoryCommand());
         this.getCommand("limb").setExecutor(new LimbCommand());
@@ -199,7 +211,6 @@ public abstract class ApolloExamplePlugin extends JavaPlugin {
 
     private void registerCommonModulesExamples() {
         this.glintExample = new GlintExample();
-        this.inventoryExample = new InventoryExample();
         this.saturationExample = new SaturationExample();
     }
 

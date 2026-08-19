@@ -31,6 +31,8 @@ import com.lunarclient.apollo.common.v1.Location;
 import com.lunarclient.apollo.common.v1.LunarClientVersion;
 import com.lunarclient.apollo.common.v1.MinecraftVersion;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.module.impl.InventoryExample;
+import com.lunarclient.apollo.example.proto.module.InventoryProtoExample;
 import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
 import com.lunarclient.apollo.packetenrichment.v1.BlockHit;
 import com.lunarclient.apollo.packetenrichment.v1.Direction;
@@ -39,6 +41,8 @@ import com.lunarclient.apollo.packetenrichment.v1.PlayerAttackMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerChatCloseMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerChatOpenMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerInfo;
+import com.lunarclient.apollo.packetenrichment.v1.PlayerInventoryCloseMessage;
+import com.lunarclient.apollo.packetenrichment.v1.PlayerInventoryOpenMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerUseItemBucketMessage;
 import com.lunarclient.apollo.packetenrichment.v1.PlayerUseItemMessage;
 import com.lunarclient.apollo.packetenrichment.v1.RayTraceResult;
@@ -73,6 +77,10 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
                 this.onPlayerChatOpen(any.unpack(PlayerChatOpenMessage.class));
             } else if (any.is(PlayerChatCloseMessage.class)) {
                 this.onPlayerChatClose(any.unpack(PlayerChatCloseMessage.class));
+            } else if (any.is(PlayerInventoryOpenMessage.class)) {
+                this.onPlayerInventoryOpen(player, any.unpack(PlayerInventoryOpenMessage.class));
+            } else if (any.is(PlayerInventoryCloseMessage.class)) {
+                this.onPlayerInventoryClose(player, any.unpack(PlayerInventoryCloseMessage.class));
             } else if (any.is(PlayerUseItemMessage.class)) {
                 this.onPlayerUseItem(any.unpack(PlayerUseItemMessage.class));
             } else if (any.is(PlayerUseItemBucketMessage.class)) {
@@ -123,6 +131,30 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
 
         PlayerInfo playerInfo = message.getPlayerInfo();
         this.onPlayerInfo(playerInfo);
+    }
+
+    private void onPlayerInventoryOpen(Player player, PlayerInventoryOpenMessage message) {
+        long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
+
+        PlayerInfo playerInfo = message.getPlayerInfo();
+        this.onPlayerInfo(playerInfo);
+
+        InventoryExample example = ApolloExamplePlugin.getInstance().getInventoryExample();
+        if (example instanceof InventoryProtoExample) {
+            ((InventoryProtoExample) example).handleInventoryOpen(player);
+        }
+    }
+
+    private void onPlayerInventoryClose(Player player, PlayerInventoryCloseMessage message) {
+        long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
+
+        PlayerInfo playerInfo = message.getPlayerInfo();
+        this.onPlayerInfo(playerInfo);
+
+        InventoryExample example = ApolloExamplePlugin.getInstance().getInventoryExample();
+        if (example instanceof InventoryProtoExample) {
+            ((InventoryProtoExample) example).handleInventoryClose(player);
+        }
     }
 
     private void onPlayerUseItem(PlayerUseItemMessage message) {

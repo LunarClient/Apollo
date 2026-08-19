@@ -208,6 +208,66 @@ public final class ModChat {
         .build();
 
     /**
+     * Displays the player's Minecraft head before their message in chat.
+     *
+     * @since 1.2.9
+     */
+    public static final SimpleOption<Boolean> CHAT_HEADS = SimpleOption.<Boolean>builder()
+        .comment("Displays the player's Minecraft head before their message in chat.")
+        .node("chat", "chat-heads").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Looks up skins for chat senders that aren't in the tab list, like players on other servers of a network. Head detection may be less accurate.
+     *
+     * @since 1.2.9
+     */
+    public static final SimpleOption<Boolean> CHAT_HEADS_FETCH_UNKNOWN = SimpleOption.<Boolean>builder()
+        .comment("Looks up skins for chat senders that aren't in the tab list, like players on other servers of a network. Head detection may be less accurate.")
+        .node("chat", "chat-heads-fetch-unknown").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Adds emojis to chat. Shortcodes like :smile: autocomplete as you type, and emojis in messages show as colorful Twemoji.
+     *
+     * @since 1.2.9
+     */
+    public static final SimpleOption<Boolean> CHAT_EMOJI = SimpleOption.<Boolean>builder()
+        .comment("Adds emojis to chat. Shortcodes like :smile: autocomplete as you type, and emojis in messages show as colorful Twemoji.")
+        .node("chat", "chat-emoji").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows emojis with Minecraft's built-in font instead of Twemoji images. Shortcodes the game font can't display are left as text.
+     *
+     * @since 1.2.9
+     */
+    public static final SimpleOption<Boolean> CHAT_EMOJI_UNICODE_ONLY = SimpleOption.<Boolean>builder()
+        .comment("Shows emojis with Minecraft's built-in font instead of Twemoji images. Shortcodes the game font can't display are left as text.")
+        .node("chat", "chat-emoji-unicode-only").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Turns shortcodes like :skull: in other players' messages into emojis. When disabled, only emojis sent as actual characters are shown.
+     *
+     * @since 1.2.9
+     */
+    public static final SimpleOption<Boolean> CHAT_EMOJI_CONVERT_SHORTCODES = SimpleOption.<Boolean>builder()
+        .comment("Turns shortcodes like :skull: in other players' messages into emojis. When disabled, only emojis sent as actual characters are shown.")
+        .node("chat", "chat-emoji-convert-shortcodes").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
      * Copies the hovered chat message when holding the keybind and clicking.
      *
      * @since 1.0.0

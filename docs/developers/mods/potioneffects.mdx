@@ -21,13 +21,64 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `true`
 
-- __`SCALE`__
-    - Config Key: `scale`
+- __`HIDE_AMBIENT_DURATION`__
+    - Config Key: `hide-ambient-duration`
     - Values
-        - Type: `Float`
-        - Default: `1.0F`
-        - Minimum: `0.25F`
-        - Maximum: `5.0F`
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`VANILLA_GROUP_EFFECTS`__
+    - Put the good effects and the bad effects on separate lines
+    - Config Key: `vanilla-group-effects`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`VANILLA_MODE_HORIZONTAL`__
+    - Config Key: `vanilla-mode-horizontal`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`VANILLA_MODE_TILES_PER_LINE`__
+    - Config Key: `vanilla-mode-tiles-per-line`
+    - Values
+        - Type: `Integer`
+        - Default: `10`
+        - Minimum: `1`
+        - Maximum: `10`
+
+- __`MINIMAL_MODE_HORIZONTAL`__
+    - Config Key: `minimal-mode-horizontal`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`MINIMAL_MODE_TILES_PER_LINE`__
+    - Config Key: `minimal-mode-tiles-per-line`
+    - Values
+        - Type: `Integer`
+        - Default: `4`
+        - Minimum: `1`
+        - Maximum: `10`
+
+- __`EFFECT_NAME`__
+    - Config Key: `effect-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`EFFECT_DURATION`__
+    - Config Key: `effect-duration`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`EFFECT_AMPLIFIER`__
+    - Config Key: `effect-amplifier`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
 
 - __`SHOW_IN_INVENTORY`__
     - Config Key: `show-in-inventory`
@@ -41,18 +92,63 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `true`
 
-- __`EFFECT_NAME`__
-    - Config Key: `effect-name`
+- __`POTION_BLINK`__
+    - Config Key: `potion-blink`
     - Values
         - Type: `Boolean`
         - Default: `true`
 
-- __`TEXT_SHADOW`__
-    - Adds a shadow to text
-    - Config Key: `text-shadow`
+- __`POTION_BLINK_ICON`__
+    - With this enabled, the potion effect icon blinks as well
+    - Config Key: `potion-blink-icon`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BLINK_DURATION`__
+    - Config Key: `blink-duration`
+    - Values
+        - Type: `Integer`
+        - Default: `10`
+        - Minimum: `2`
+        - Maximum: `20`
+
+- __`VANILLA_BLINK_COLOR`__
+    - Config Key: `vanilla-blink-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`UPPERCASE_POTION_NAMES`__
+    - Config Key: `uppercase-potion-names`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`REVERSED_TEXT`__
+    - Config Key: `reversed-text`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`FORMATTED_DURATIONS`__
+    - Config Key: `formatted-durations`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_MODERN_ICONS`__
+    - Config Key: `hide-modern-icons`
     - Values
         - Type: `Boolean`
         - Default: `true`
+
+- __`HIDE_POTION_STATUS`__
+    - Completely hide the potion effects mod HUD
+    - Config Key: `hide-potion-status`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
 
 - __`BACKGROUND`__
     - Config Key: `background`
@@ -60,17 +156,11 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `true`
 
-- __`MINIMAL_MODE`__
-    - Config Key: `minimal-mode`
+- __`BACKGROUND_COLOR`__
+    - Config Key: `background-color`
     - Values
-        - Type: `Boolean`
-        - Default: `false`
-
-- __`MINIMAL_MODE_HORIZONTAL`__
-    - Config Key: `minimal-mode-horizontal`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
+        - Type: `String`
+        - Default: `#6F000000`
 
 - __`BORDER`__
     - Config Key: `border`
@@ -86,55 +176,18 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
         - Minimum: `0.5F`
         - Maximum: `3.0F`
 
-- __`FORMATTED_DURATIONS`__
-    - Config Key: `formatted-durations`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
-- __`UPPERCASE_POTION_NAMES`__
-    - Config Key: `uppercase-potion-names`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
-- __`REVERSED_TEXT`__
-    - Config Key: `reversed-text`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
-- __`HIDE_MODERN_ICONS`__
-    - Config Key: `hide-modern-icons`
-    - Values
-        - Type: `Boolean`
-        - Default: `true`
-
-- __`POTION_BLINK`__
-    - Config Key: `potion-blink`
-    - Values
-        - Type: `Boolean`
-        - Default: `true`
-
-- __`BLINK_DURATION`__
-    - Config Key: `blink-duration`
-    - Values
-        - Type: `Integer`
-        - Default: `10`
-        - Minimum: `2`
-        - Maximum: `20`
-
-- __`BACKGROUND_COLOR`__
-    - Config Key: `background-color`
-    - Values
-        - Type: `String`
-        - Default: `#6F000000`
-
 - __`BORDER_COLOR`__
     - Config Key: `border-color`
     - Values
         - Type: `String`
         - Default: `#9F000000`
+
+- __`TEXT_SHADOW`__
+    - Adds a shadow to text
+    - Config Key: `text-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
 
 - __`COLOR_NAME_BASED_ON_EFFECT`__
     - Config Key: `color-name-based-on-effect`
@@ -142,17 +195,53 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
+- __`COLOR_INFO_BASED_ON_EFFECT`__
+    - Config Key: `color-info-based-on-effect`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_EFFECT_BACKGROUND`__
+    - Config Key: `show-effect-background`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
 - __`TEXT_COLOR`__
     - Config Key: `text-color`
     - Values
         - Type: `String`
         - Default: `#FFFFFFFF`
 
-- __`DURATION_COLOR`__
-    - Config Key: `duration-color`
+- __`INFO_COLOR`__
+    - Config Key: `info-color`
     - Values
         - Type: `String`
         - Default: `#FFFFFFFF`
+
+- __`VANILLA_ICON_SCALE`__
+    - Config Key: `vanilla-icon-scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.25F`
+
+- __`VANILLA_TEXT_SCALE`__
+    - Config Key: `vanilla-text-scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.25F`
+        - Maximum: `2.0F`
+
+- __`SCALE`__
+    - Config Key: `scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.25F`
+        - Maximum: `5.0F`
 
 - __`EXCLUDE_PERM`__
     - Config Key: `exclude-perm`

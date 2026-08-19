@@ -32,7 +32,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class InventoryExample extends NMSExample {
+public abstract class InventoryExample extends NMSExample {
 
     public boolean inventoryModuleExample(Player player) {
         if (this.isOneEight()) {
@@ -46,12 +46,12 @@ public class InventoryExample extends NMSExample {
 
     public void inventoryModuleCommandExample(Player player) {
         player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:stone\",Count:1b,components:{\"minecraft:custom_name\":\"UNCLICKABLE\",\"minecraft:custom_data\":{lunar:{unclickable:true}}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:paper\",Count:1b,components:{\"minecraft:custom_name\":\"COPY TO CLIPBOARD\",\"minecraft:custom_data\":{lunar:{unclickable:true,copyToClipboard:\"lunarclient.com\"}}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:torch\",Count:1b,components:{\"minecraft:custom_name\":\"OPEN URL\",\"minecraft:custom_data\":{lunar:{unclickable:true,openUrl:\"https://lunarclient.com\"}}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:book\",Count:1b,components:{\"minecraft:custom_name\":\"SUGGEST COMMAND\",\"minecraft:custom_data\":{lunar:{unclickable:true,suggestCommand:\"/apollo\"}}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:writable_book\",Count:1b,components:{\"minecraft:custom_name\":\"RUN COMMAND\",\"minecraft:custom_data\":{lunar:{unclickable:true,runCommand:\"/apollo\"}}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:sponge\",Count:1b,components:{\"minecraft:custom_name\":\"HIDE ITEM TOOLTIP\",\"minecraft:custom_data\":{lunar:{unclickable:true,hideItemTooltip:true}}}}}");
-        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:dirt\",Count:1b,components:{\"minecraft:custom_name\":\"HIDE SLOT HIGHTLIGHT\",\"minecraft:custom_data\":{lunar:{unclickable:true,hideSlotHighlight:true}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:paper\",Count:1b,components:{\"minecraft:custom_name\":\"COPY TO CLIPBOARD\",\"minecraft:custom_data\":{lunar:{unclickable:true,copy_to_clipboard:\"lunarclient.com\"}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:torch\",Count:1b,components:{\"minecraft:custom_name\":\"OPEN URL\",\"minecraft:custom_data\":{lunar:{unclickable:true,open_url:\"https://lunarclient.com\"}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:book\",Count:1b,components:{\"minecraft:custom_name\":\"SUGGEST COMMAND\",\"minecraft:custom_data\":{lunar:{unclickable:true,suggest_command:\"/apollo\"}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:writable_book\",Count:1b,components:{\"minecraft:custom_name\":\"RUN COMMAND\",\"minecraft:custom_data\":{lunar:{unclickable:true,run_command:\"/apollo\"}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:sponge\",Count:1b,components:{\"minecraft:custom_name\":\"HIDE ITEM TOOLTIP\",\"minecraft:custom_data\":{lunar:{unclickable:true,hide_item_tooltip:true}}}}}");
+        player.performCommand("summon item ~ ~1 ~ {Item:{id:\"minecraft:dirt\",Count:1b,components:{\"minecraft:custom_name\":\"HIDE SLOT HIGHTLIGHT\",\"minecraft:custom_data\":{lunar:{unclickable:true,hide_slot_highlight:true}}}}}");
     }
 
     public void inventoryModuleNMSExample(Player player) {
@@ -70,7 +70,7 @@ public class InventoryExample extends NMSExample {
         );
 
         copyToClipboardItem = ItemUtil.addTag(copyToClipboardItem, "unclickable", true);
-        inventory.setItem(12, ItemUtil.addTag(copyToClipboardItem, "copyToClipboard", "lunarclient.com"));
+        inventory.setItem(12, ItemUtil.addTag(copyToClipboardItem, "copy_to_clipboard", "lunarclient.com"));
 
         ItemStack openUrlItem = ItemUtil.itemWithName(
             Material.TORCH,
@@ -78,7 +78,7 @@ public class InventoryExample extends NMSExample {
         );
 
         openUrlItem = ItemUtil.addTag(openUrlItem, "unclickable", true);
-        inventory.setItem(14, ItemUtil.addTag(openUrlItem, "openUrl", "https://lunarclient.com"));
+        inventory.setItem(14, ItemUtil.addTag(openUrlItem, "open_url", "https://lunarclient.com"));
 
         ItemStack suggestCommandItem = ItemUtil.itemWithName(
             Material.BOOK,
@@ -86,7 +86,7 @@ public class InventoryExample extends NMSExample {
         );
 
         suggestCommandItem = ItemUtil.addTag(suggestCommandItem, "unclickable", true);
-        inventory.setItem(16, ItemUtil.addTag(suggestCommandItem, "suggestCommand", "/apollo"));
+        inventory.setItem(16, ItemUtil.addTag(suggestCommandItem, "suggest_command", "/apollo"));
 
         ItemStack runCommandItem = ItemUtil.itemWithName(
             Material.ENCHANTED_BOOK,
@@ -94,7 +94,7 @@ public class InventoryExample extends NMSExample {
         );
 
         runCommandItem = ItemUtil.addTag(runCommandItem, "unclickable", true);
-        inventory.setItem(29, ItemUtil.addTag(runCommandItem, "runCommand", "/apollo"));
+        inventory.setItem(29, ItemUtil.addTag(runCommandItem, "run_command", "/apollo"));
 
         ItemStack hideTooltipItem = ItemUtil.itemWithName(
             Material.SPONGE,
@@ -102,7 +102,7 @@ public class InventoryExample extends NMSExample {
         );
 
         hideTooltipItem = ItemUtil.addTag(hideTooltipItem, "unclickable", true);
-        inventory.setItem(31, ItemUtil.addTag(hideTooltipItem, "hideItemTooltip", true));
+        inventory.setItem(31, ItemUtil.addTag(hideTooltipItem, "hide_item_tooltip", true));
 
         ItemStack hideHighlightItem = ItemUtil.itemWithName(
             Material.DIRT,
@@ -110,9 +110,23 @@ public class InventoryExample extends NMSExample {
         );
 
         hideHighlightItem = ItemUtil.addTag(hideHighlightItem, "unclickable", true);
-        inventory.setItem(33, ItemUtil.addTag(hideHighlightItem, "hideSlotHighlight", true));
+        inventory.setItem(33, ItemUtil.addTag(hideHighlightItem, "hide_slot_highlight", true));
 
         player.openInventory(inventory);
     }
+
+    public abstract void displayMenuLayoutExample(Player viewer);
+
+    public abstract void displayHubLayoutExample(Player viewer);
+
+    public abstract void displayMinigameLayoutExample(Player viewer);
+
+    public abstract void displayStaffLayoutExample(Player viewer);
+
+    public abstract void removeInventoryButtonExample(Player viewer);
+
+    public abstract void updateInventoryButtonExample(Player viewer);
+
+    public abstract void resetInventoryButtonsExample(Player viewer);
 
 }

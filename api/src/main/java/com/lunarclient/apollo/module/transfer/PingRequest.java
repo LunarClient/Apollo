@@ -45,4 +45,15 @@ public final class PingRequest extends ApolloRequest<PingResponse> {
      */
     List<String> serverIps;
 
+    /**
+     * Returns the timeout for ping requests, in milliseconds.
+     *
+     * @return the request timeout, in milliseconds
+     * @since 1.2.9
+     */
+    @Override
+    public long getTimeoutMillis() {
+        return 10_000L;
+    }
+
 }

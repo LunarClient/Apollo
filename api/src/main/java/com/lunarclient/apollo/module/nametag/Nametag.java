@@ -45,4 +45,13 @@ public final class Nametag {
      */
     List<Component> lines;
 
+    /**
+     * Returns the {@link NametagVisibilityOverride} override for this nametag.
+     *
+     * @return the visibility override
+     * @since 1.2.9
+     */
+    @Builder.Default
+    NametagVisibilityOverride visibilityOverride = NametagVisibilityOverride.NONE;
+
 }

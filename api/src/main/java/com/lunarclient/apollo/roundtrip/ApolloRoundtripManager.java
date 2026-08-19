@@ -119,13 +119,14 @@ public final class ApolloRoundtripManager {
                 this.paginationManager.handleTimeout(packetId);
 
                 if (listener != null) {
-                    Throwable error = new Throwable("Timeout exceeded!");
+                    Throwable error = new Throwable("Timeout exceeded! No " + request.getClass().getSimpleName()
+                        + " response received within " + request.getTimeoutMillis() + "ms");
                     future.handleFailure(error);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, ApolloRequest.TIMEOUT, TimeUnit.MILLISECONDS);
+        }, request.getTimeoutMillis(), TimeUnit.MILLISECONDS);
 
         this.listeners.put(packetId, (UncertainFuture<ApolloResponse>) future);
     }

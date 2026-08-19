@@ -1,6 +1,6 @@
 name: Apollo-Proto-Example
 main: com.lunarclient.apollo.example.proto.ApolloProtoExamplePlatform
-version: 1.2.8
+version: 1.2.9
 author: Moonsworth
 softdepend: [ Apollo-Bukkit ]
 api-version: 1.13
@@ -32,6 +32,8 @@ commands:
         description: "Glint!"
     glow:
         description: "Glow!"
+    heightlimit:
+        description: "Height Limit!"
     hologram:
         description: "Holograms!"
     inventory:
@@ -52,6 +54,8 @@ commands:
         description: "Pay Now!"
     richpresence:
         description: "Rich Presence!"
+    serverlink:
+        description: "Server Links!"
     saturation:
         description: "Saturation!"
     serverrule:

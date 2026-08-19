@@ -47,15 +47,15 @@ public final class ModPing {
         .build();
 
     /**
-     * Faster updates may impact performance.
+     * How often ping is measured. If you have trouble connecting to a server, try increasing this.
      *
      * @since 1.0.0
      */
     public static final NumberOption<Integer> UPDATE_INTERVAL_SEC = NumberOption.<Integer>number()
-        .comment("Faster updates may impact performance")
+        .comment("How often ping is measured. If you have trouble connecting to a server, try increasing this.")
         .node("ping", "update-interval-sec").type(TypeToken.get(Integer.class))
         .min(1).max(120)
-        .defaultValue(20)
+        .defaultValue(5)
         .notifyClient()
         .build();
 

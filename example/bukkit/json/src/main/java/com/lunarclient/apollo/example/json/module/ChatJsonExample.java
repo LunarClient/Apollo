@@ -25,14 +25,19 @@ package com.lunarclient.apollo.example.json.module;
 
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.json.module.chatbuttons.ChannelsLayout;
+import com.lunarclient.apollo.example.json.module.chatbuttons.ChatButtonParts;
+import com.lunarclient.apollo.example.json.module.chatbuttons.StaffChatLayout;
 import com.lunarclient.apollo.example.json.util.AdventureUtil;
 import com.lunarclient.apollo.example.json.util.JsonPacketUtil;
+import com.lunarclient.apollo.example.json.util.JsonUtil;
 import com.lunarclient.apollo.example.module.impl.ChatExample;
 import com.lunarclient.apollo.example.util.ServerUtil;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ChatJsonExample extends ChatExample {
@@ -104,6 +109,48 @@ public class ChatJsonExample extends ChatExample {
                 task.cancel();
             }
         }, 1L, 20L);
+    }
+
+    @Override
+    public void displayChannelsLayoutExample(Player viewer) {
+        ChannelsLayout.display(viewer);
+    }
+
+    @Override
+    public void displayStaffChatLayoutExample(Player viewer) {
+        StaffChatLayout.display(viewer);
+    }
+
+    @Override
+    public void resetChatButtonsExample(Player viewer) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.ResetChatButtonsMessage");
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void updateChatButtonExample(Player viewer) {
+        JsonObject update = new JsonObject();
+        update.add("content", ChatButtonParts.createContentObject(1.0F,
+            ChatButtonParts.iconPart(JsonUtil.createItemStackIconObject("PAPER", 0)),
+            ChatButtonParts.textPart(Component.text("Public Chat", NamedTextColor.AQUA))));
+
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.UpdateChatButtonMessage");
+        message.addProperty("id", "public-chat");
+        message.add("update", update);
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void removeChatButtonExample(Player viewer) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.RemoveChatButtonMessage");
+        message.addProperty("id", "party-chat");
+
+        JsonPacketUtil.sendPacket(viewer, message);
     }
 
     @Override

@@ -23,17 +23,28 @@
  */
 package com.lunarclient.apollo.example.proto.module;
 
+import com.lunarclient.apollo.button.v1.ButtonContent;
+import com.lunarclient.apollo.button.v1.ButtonUpdate;
 import com.lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage;
+import com.lunarclient.apollo.chat.v1.RemoveChatButtonMessage;
 import com.lunarclient.apollo.chat.v1.RemoveLiveChatMessageMessage;
+import com.lunarclient.apollo.chat.v1.ResetChatButtonsMessage;
+import com.lunarclient.apollo.chat.v1.UpdateChatButtonMessage;
+import com.lunarclient.apollo.common.v1.Icon;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.module.impl.ChatExample;
+import com.lunarclient.apollo.example.proto.module.chatbuttons.ChannelsLayout;
+import com.lunarclient.apollo.example.proto.module.chatbuttons.ChatButtonParts;
+import com.lunarclient.apollo.example.proto.module.chatbuttons.StaffChatLayout;
 import com.lunarclient.apollo.example.proto.util.AdventureUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
+import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
 import com.lunarclient.apollo.example.util.ServerUtil;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ChatProtoExample extends ChatExample {
@@ -103,6 +114,51 @@ public class ChatProtoExample extends ChatExample {
                 task.cancel();
             }
         }, 1L, 20L);
+    }
+
+    @Override
+    public void displayChannelsLayoutExample(Player viewer) {
+        ChannelsLayout.display(viewer);
+    }
+
+    @Override
+    public void displayStaffChatLayoutExample(Player viewer) {
+        StaffChatLayout.display(viewer);
+    }
+
+    @Override
+    public void resetChatButtonsExample(Player viewer) {
+        ResetChatButtonsMessage message = ResetChatButtonsMessage.getDefaultInstance();
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void updateChatButtonExample(Player viewer) {
+        ButtonUpdate update = ButtonUpdate.newBuilder()
+            .setContent(ButtonContent.newBuilder()
+                .addParts(ChatButtonParts.iconPart(Icon.newBuilder()
+                    .setItemStack(ProtobufUtil.createItemStackIconProto("PAPER", 0))
+                    .build()))
+                .addParts(ChatButtonParts.textPart(Component.text("Public Chat", NamedTextColor.AQUA)))
+                .setScale(1.0F)
+                .build())
+            .build();
+
+        UpdateChatButtonMessage message = UpdateChatButtonMessage.newBuilder()
+            .setId("public-chat")
+            .setUpdate(update)
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void removeChatButtonExample(Player viewer) {
+        RemoveChatButtonMessage message = RemoveChatButtonMessage.newBuilder()
+            .setId("party-chat")
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
     @Override

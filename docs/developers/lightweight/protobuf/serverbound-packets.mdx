@@ -31,6 +31,10 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
                 this.onPlayerChatOpen(any.unpack(PlayerChatOpenMessage.class));
             } else if (any.is(PlayerChatCloseMessage.class)) {
                 this.onPlayerChatClose(any.unpack(PlayerChatCloseMessage.class));
+            } else if (any.is(PlayerInventoryOpenMessage.class)) {
+                this.onPlayerInventoryOpen(player, any.unpack(PlayerInventoryOpenMessage.class));
+            } else if (any.is(PlayerInventoryCloseMessage.class)) {
+                this.onPlayerInventoryClose(player, any.unpack(PlayerInventoryCloseMessage.class));
             } else if (any.is(PlayerUseItemMessage.class)) {
                 this.onPlayerUseItem(any.unpack(PlayerUseItemMessage.class));
             } else if (any.is(PlayerUseItemBucketMessage.class)) {
@@ -81,6 +85,30 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
 
         PlayerInfo playerInfo = message.getPlayerInfo();
         this.onPlayerInfo(playerInfo);
+    }
+
+    private void onPlayerInventoryOpen(Player player, PlayerInventoryOpenMessage message) {
+        long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
+
+        PlayerInfo playerInfo = message.getPlayerInfo();
+        this.onPlayerInfo(playerInfo);
+
+        InventoryExample example = ApolloExamplePlugin.getInstance().getInventoryExample();
+        if (example instanceof InventoryProtoExample) {
+            ((InventoryProtoExample) example).handleInventoryOpen(player);
+        }
+    }
+
+    private void onPlayerInventoryClose(Player player, PlayerInventoryCloseMessage message) {
+        long instantiationTimeMs = ProtobufUtil.toJavaTimestamp(message.getPacketInfo().getInstantiationTime());
+
+        PlayerInfo playerInfo = message.getPlayerInfo();
+        this.onPlayerInfo(playerInfo);
+
+        InventoryExample example = ApolloExamplePlugin.getInstance().getInventoryExample();
+        if (example instanceof InventoryProtoExample) {
+            ((InventoryProtoExample) example).handleInventoryClose(player);
+        }
     }
 
     private void onPlayerUseItem(PlayerUseItemMessage message) {

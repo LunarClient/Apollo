@@ -26,6 +26,7 @@ package com.lunarclient.apollo.example.nms;
 import com.mojang.authlib.GameProfile;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -51,10 +52,12 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,7 +68,11 @@ public final class NpcManager implements Listener {
         HumanoidArm.RIGHT, false, false, ParticleStatus.ALL
     );
 
+    private static final double TRACKING_RANGE = 48.0;
+    private static final double TRACKING_RANGE_SQUARED = TRACKING_RANGE * TRACKING_RANGE;
+
     private final Map<UUID, PlayerNpc> npcs = new HashMap<>();
+    private final List<NpcViewerListener> viewerListeners = new ArrayList<>();
     private final JavaPlugin plugin;
     private final NpcStore store;
 
@@ -75,6 +82,11 @@ public final class NpcManager implements Listener {
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
         Bukkit.getScheduler().runTask(plugin, this::loadOrSpawnDefaults);
+        Bukkit.getScheduler().runTaskTimer(plugin, this::updateVisibility, 1L, 10L);
+    }
+
+    public void addViewerListener(NpcViewerListener listener) {
+        this.viewerListeners.add(listener);
     }
 
     public void removeNpc(UUID uuid) {
@@ -114,19 +126,71 @@ public final class NpcManager implements Listener {
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        ServerPlayer viewer = ((CraftPlayer) event.getPlayer()).getHandle();
-        for (PlayerNpc npc : this.npcs.values()) {
-            this.showNpc(viewer, npc);
-        }
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        this.forgetViewer(event.getPlayer());
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        ServerPlayer viewer = ((CraftPlayer) event.getPlayer()).getHandle();
+    public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
+        this.forgetViewer(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
+        this.forgetViewer(event.getPlayer());
+    }
+
+    private void forgetViewer(Player player) {
         for (PlayerNpc npc : this.npcs.values()) {
-            this.hideNpc(viewer, npc);
+            npc.getViewers().remove(player.getUniqueId());
         }
+    }
+
+    private void updateVisibility() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            for (PlayerNpc npc : this.npcs.values()) {
+                boolean inRange = this.isWithinTrackingRange(player, npc);
+                boolean viewing = npc.getViewers().contains(player.getUniqueId());
+
+                if (inRange && !viewing) {
+                    npc.getViewers().add(player.getUniqueId());
+                    this.showNpc(((CraftPlayer) player).getHandle(), npc);
+
+                    for (NpcViewerListener listener : this.viewerListeners) {
+                        listener.onNpcShown(player, npc);
+                    }
+                } else if (!inRange && viewing) {
+                    npc.getViewers().remove(player.getUniqueId());
+                    this.hideNpc(((CraftPlayer) player).getHandle(), npc);
+                }
+            }
+        }
+    }
+
+    private boolean isWithinTrackingRange(Player player, PlayerNpc npc) {
+        Location location = npc.getLocation();
+        World world = location.getWorld();
+
+        return world != null
+            && world.equals(player.getWorld())
+            && player.getLocation().distanceSquared(location) <= NpcManager.TRACKING_RANGE_SQUARED;
+    }
+
+    public List<Player> getViewers(UUID npcUuid) {
+        PlayerNpc npc = this.npcs.get(npcUuid);
+        if (npc == null) {
+            return Collections.emptyList();
+        }
+
+        List<Player> viewers = new ArrayList<>();
+        for (UUID viewerUuid : npc.getViewers()) {
+            Player player = Bukkit.getPlayer(viewerUuid);
+            if (player != null) {
+                viewers.add(player);
+            }
+        }
+
+        return viewers;
     }
 
     private void loadOrSpawnDefaults() {
@@ -184,9 +248,7 @@ public final class NpcManager implements Listener {
         PlayerNpc playerNpc = new PlayerNpc(npc.getUUID(), name, location.clone(), npc);
         this.npcs.put(playerNpc.getUuid(), playerNpc);
 
-        for (ServerPlayer viewer : server.getPlayerList().getPlayers()) {
-            this.showNpc(viewer, playerNpc);
-        }
+        this.updateVisibility();
 
         return playerNpc;
     }
@@ -220,9 +282,14 @@ public final class NpcManager implements Listener {
     }
 
     private void despawnNpcs(PlayerNpc npc) {
-        for (ServerPlayer player : MinecraftServer.getServer().getPlayerList().getPlayers()) {
-            this.hideNpc(player, npc);
+        for (UUID viewerUuid : npc.getViewers()) {
+            Player player = Bukkit.getPlayer(viewerUuid);
+            if (player != null) {
+                this.hideNpc(((CraftPlayer) player).getHandle(), npc);
+            }
         }
+
+        npc.getViewers().clear();
     }
 
 }

@@ -29,6 +29,7 @@ import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.json.util.JsonPacketUtil;
 import com.lunarclient.apollo.example.json.util.JsonUtil;
 import com.lunarclient.apollo.example.module.impl.CosmeticExample;
+import com.lunarclient.apollo.example.nms.CommandCosmetic;
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
@@ -104,6 +105,56 @@ public class CosmeticJsonExample extends CosmeticExample {
     }
 
     @Override
+    public void equipNpcCosmeticInternal(Player viewer, UUID npcUuid, CommandCosmetic cosmetic) {
+        JsonPacketUtil.broadcastPacket(this.createEquipMessage(npcUuid, cosmetic));
+    }
+
+    @Override
+    public void equipNpcCosmeticToViewer(Player viewer, UUID npcUuid, CommandCosmetic cosmetic) {
+        JsonPacketUtil.sendPacket(viewer, this.createEquipMessage(npcUuid, cosmetic));
+    }
+
+    private JsonObject createEquipMessage(UUID npcUuid, CommandCosmetic cosmetic) {
+        JsonObject cosmeticObject = new JsonObject();
+        cosmeticObject.addProperty("id", cosmetic.getId());
+
+        CommandCosmetic.Options options = cosmetic.getOptions();
+        if (options instanceof CommandCosmetic.Hat) {
+            CommandCosmetic.Hat hat = (CommandCosmetic.Hat) options;
+            JsonObject hatOptions = new JsonObject();
+            hatOptions.addProperty("show_over_helmet", hat.isShowOverHelmet());
+            hatOptions.addProperty("show_over_skin_layer", hat.isShowOverSkinLayer());
+            hatOptions.addProperty("height_offset", hat.getHeightOffset());
+            cosmeticObject.add("hat_options", hatOptions);
+        } else if (options instanceof CommandCosmetic.Cloak) {
+            JsonObject cloakOptions = new JsonObject();
+            cloakOptions.addProperty("use_cloth_physics", ((CommandCosmetic.Cloak) options).isUseClothPhysics());
+            cosmeticObject.add("cloak_options", cloakOptions);
+        } else if (options instanceof CommandCosmetic.Pet) {
+            JsonObject petOptions = new JsonObject();
+            petOptions.addProperty("flip_shoulder", ((CommandCosmetic.Pet) options).isFlipShoulder());
+            cosmeticObject.add("pet_options", petOptions);
+        } else if (options instanceof CommandCosmetic.Body) {
+            CommandCosmetic.Body body = (CommandCosmetic.Body) options;
+            JsonObject bodyOptions = new JsonObject();
+            bodyOptions.addProperty("show_over_chestplate", body.isShowOverChestplate());
+            bodyOptions.addProperty("show_over_leggings", body.isShowOverLeggings());
+            bodyOptions.addProperty("show_over_boots", body.isShowOverBoots());
+            cosmeticObject.add("body_options", bodyOptions);
+        }
+
+        JsonArray cosmeticsArray = new JsonArray();
+        cosmeticsArray.add(cosmeticObject);
+
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.EquipNpcCosmeticsMessage");
+        message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
+        message.add("cosmetics", cosmeticsArray);
+
+        return message;
+    }
+
+    @Override
     public void unequipNpcCosmeticsExample(Player viewer, UUID npcUuid) {
         List<Integer> cosmeticIds = Lists.newArrayList(434, 3654, 5095, 3, 3977);
 
@@ -154,7 +205,7 @@ public class CosmeticJsonExample extends CosmeticExample {
     }
 
     @Override
-    public void startNpcEmoteInternal(Player viewer, UUID npcUuid, int emoteId, int metadata) {
+    public void startNpcEmoteToViewer(Player viewer, UUID npcUuid, int emoteId, int metadata) {
         JsonObject emote = new JsonObject();
         emote.addProperty("id", emoteId);
         emote.addProperty("metadata", metadata);
@@ -164,7 +215,7 @@ public class CosmeticJsonExample extends CosmeticExample {
         message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
         message.add("emote", emote);
 
-        JsonPacketUtil.broadcastPacket(message);
+        JsonPacketUtil.sendPacket(viewer, message);
     }
 
     @Override
@@ -174,6 +225,15 @@ public class CosmeticJsonExample extends CosmeticExample {
         message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
 
         JsonPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void stopNpcEmoteToViewer(Player viewer, UUID npcUuid) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.cosmetic.v1.StopNpcEmoteMessage");
+        message.add("npc_uuid", JsonUtil.createUuidObject(npcUuid));
+
+        JsonPacketUtil.sendPacket(viewer, message);
     }
 
     @Override

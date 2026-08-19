@@ -28,6 +28,7 @@ import com.lunarclient.apollo.example.module.impl.NametagExample;
 import com.lunarclient.apollo.example.proto.util.AdventureUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
+import com.lunarclient.apollo.nametag.v1.NametagVisibilityOverride;
 import com.lunarclient.apollo.nametag.v1.OverrideNametagMessage;
 import com.lunarclient.apollo.nametag.v1.ResetNametagMessage;
 import com.lunarclient.apollo.nametag.v1.ResetNametagsMessage;
@@ -59,6 +60,7 @@ public class NametagProtoExample extends NametagExample {
         OverrideNametagMessage message = OverrideNametagMessage.newBuilder()
             .setPlayerUuid(ProtobufUtil.createUuidProto(target.getUniqueId()))
             .addAllAdventureJsonLines(lines)
+            .setVisibilityOverride(NametagVisibilityOverride.NAMETAG_VISIBILITY_OVERRIDE_NONE)
             .build();
 
         ProtobufPacketUtil.broadcastPacket(message);
