@@ -52,6 +52,7 @@ import com.lunarclient.apollo.mods.impl.ModFps;
 import com.lunarclient.apollo.mods.impl.ModFreelook;
 import com.lunarclient.apollo.mods.impl.ModGlintColorizer;
 import com.lunarclient.apollo.mods.impl.ModGuiScale;
+import com.lunarclient.apollo.mods.impl.ModHeightLimit;
 import com.lunarclient.apollo.mods.impl.ModHitColor;
 import com.lunarclient.apollo.mods.impl.ModHitbox;
 import com.lunarclient.apollo.mods.impl.ModHorseStats;
@@ -145,6 +146,7 @@ public final class Mods {
             ModZoom.class,
             ModHypixelMod.class,
             ModHypixelBedwars.class,
+            ModHeightLimit.class,
             ModQuickplay.class,
             ModArmorstatus.class,
             ModKeystrokes.class,
