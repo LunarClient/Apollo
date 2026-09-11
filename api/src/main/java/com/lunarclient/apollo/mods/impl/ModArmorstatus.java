@@ -51,18 +51,6 @@ public final class ModArmorstatus {
      *
      * @since 1.0.0
      */
-    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
-        .node("armorstatus", "scale").type(TypeToken.get(Float.class))
-        .min(0.25F).max(5.0F)
-        .defaultValue(1.0F)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> MOVE_ARMOR_INDIVIDUALLY = SimpleOption.<Boolean>builder()
         .node("armorstatus", "move-armor-individually").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
@@ -72,11 +60,44 @@ public final class ModArmorstatus {
     /**
      * No documentation available.
      *
-     * @since 1.1.9
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> HIDE_UNBREAKABLE_DURABILITY = SimpleOption.<Boolean>builder()
-        .node("armorstatus", "hide-unbreakable-durability").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> VANILLA_MODE = SimpleOption.<Boolean>builder()
+        .node("armorstatus", "vanilla-mode").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HOTBAR_ANCHOR = SimpleOption.<Boolean>builder()
+        .node("armorstatus", "hotbar-anchor").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ROUNDED_CORNERS = SimpleOption.<Boolean>builder()
+        .node("armorstatus", "rounded-corners").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HIDE_EMPTY_SLOTS = SimpleOption.<Boolean>builder()
+        .node("armorstatus", "hide-empty-slots").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -141,6 +162,17 @@ public final class ModArmorstatus {
      *
      * @since 1.2.8
      */
+    public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
+        .node("armorstatus", "background-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 111))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.2.8
+     */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("armorstatus", "border").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
@@ -162,11 +194,57 @@ public final class ModArmorstatus {
     /**
      * No documentation available.
      *
+     * @since 1.2.8
+     */
+    public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
+        .node("armorstatus", "border-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 0, 159))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
+        .node("armorstatus", "scale").type(TypeToken.get(Float.class))
+        .min(0.25F).max(5.0F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> DAMAGE_OVERLAY = SimpleOption.<Boolean>builder()
         .node("armorstatus", "damage-overlay").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> LOW_DURABILITY_INDICATOR = SimpleOption.<Boolean>builder()
+        .node("armorstatus", "low-durability-indicator").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Integer> LOW_DURABILITY_THRESHOLD = NumberOption.<Integer>number()
+        .node("armorstatus", "low-durability-threshold").type(TypeToken.get(Integer.class))
+        .min(1).max(100)
+        .defaultValue(10)
         .notifyClient()
         .build();
 
@@ -204,35 +282,14 @@ public final class ModArmorstatus {
         .build();
 
     /**
-     * No documentation available.
+     * Don't show damage value on items that are unbreakable.
      *
-     * @since 1.2.8
+     * @since 1.1.9
      */
-    public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
-        .node("armorstatus", "background-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(0, 0, 0, 111))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.2.8
-     */
-    public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
-        .node("armorstatus", "border-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(0, 0, 0, 159))
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> STATIC_DAMAGE_COLORS = SimpleOption.<Boolean>builder()
-        .node("armorstatus", "static-damage-colors").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
+    public static final SimpleOption<Boolean> HIDE_UNBREAKABLE_DURABILITY = SimpleOption.<Boolean>builder()
+        .comment("Don't show damage value on items that are unbreakable")
+        .node("armorstatus", "hide-unbreakable-durability").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -310,6 +367,17 @@ public final class ModArmorstatus {
     public static final SimpleOption<Color> LOWEST_COLOR = SimpleOption.<Color>builder()
         .node("armorstatus", "lowest-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(170, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> STATIC_DAMAGE_COLORS = SimpleOption.<Boolean>builder()
+        .node("armorstatus", "static-damage-colors").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

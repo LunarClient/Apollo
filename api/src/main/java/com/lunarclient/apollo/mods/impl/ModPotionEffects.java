@@ -93,6 +93,18 @@ public final class ModPotionEffects {
         .build();
 
     /**
+     * Use the vanilla spacing between each effect tile.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> VANILLA_SPACING = SimpleOption.<Boolean>builder()
+        .comment("Use the vanilla spacing between each effect tile")
+        .node("potion-effects", "vanilla-spacing").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.1.9
@@ -151,11 +163,33 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since 1.1.9
      */
-    public static final SimpleOption<Boolean> SHOW_IN_INVENTORY = SimpleOption.<Boolean>builder()
-        .node("potion-effects", "show-in-inventory").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
+    public static final SimpleOption<Boolean> FORMATTED_DURATIONS = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "formatted-durations").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> UPPERCASE_POTION_NAMES = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "uppercase-potion-names").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    public static final SimpleOption<Boolean> REVERSED_TEXT = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "reversed-text").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -219,33 +253,11 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since 1.1.9
+     * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> UPPERCASE_POTION_NAMES = SimpleOption.<Boolean>builder()
-        .node("potion-effects", "uppercase-potion-names").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> REVERSED_TEXT = SimpleOption.<Boolean>builder()
-        .node("potion-effects", "reversed-text").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> FORMATTED_DURATIONS = SimpleOption.<Boolean>builder()
-        .node("potion-effects", "formatted-durations").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
+    public static final SimpleOption<Boolean> SHOW_IN_INVENTORY = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "show-in-inventory").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -269,6 +281,97 @@ public final class ModPotionEffects {
         .comment("Completely hide the potion effects mod HUD")
         .node("potion-effects", "hide-potion-status").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Show effect duration with a progress bar in the inventory/hud.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EFFECT_BARS = SimpleOption.<Boolean>builder()
+        .comment("Show effect duration with a progress bar in the inventory/hud")
+        .node("potion-effects", "effect-bars").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EFFECT_BAR_VANILLA_HUD = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "effect-bar-vanilla-hud").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EFFECT_BAR_INVENTORY = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "effect-bar-inventory").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Show the duration bars on Lunar potion effect status huds.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EFFECT_BAR_LUNAR_HUD = SimpleOption.<Boolean>builder()
+        .comment("Show the duration bars on Lunar potion effect status huds")
+        .node("potion-effects", "effect-bar-lunar-hud").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EFFECT_BAR_HIDE_AMBIENT = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "effect-bar-hide-ambient").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Do a gradient animation on the bar color.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EFFECT_BAR_GRADIENT = SimpleOption.<Boolean>builder()
+        .comment("Do a gradient animation on the bar color")
+        .node("potion-effects", "effect-bar-gradient").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> EFFECT_BAR_CUSTOM_COLOR = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "effect-bar-custom-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> EFFECT_BAR_COLOR = SimpleOption.<Color>builder()
+        .node("potion-effects", "effect-bar-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
         .notifyClient()
         .build();
 
@@ -416,6 +519,17 @@ public final class ModPotionEffects {
         .node("potion-effects", "vanilla-text-scale").type(TypeToken.get(Float.class))
         .min(0.25F).max(2.0F)
         .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> USE_MINECRAFT_GUISCALE = SimpleOption.<Boolean>builder()
+        .node("potion-effects", "use-minecraft-g-u-i-scale").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
