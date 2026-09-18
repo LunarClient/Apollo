@@ -58,14 +58,15 @@ public final class ModGuiScale {
         .build();
 
     /**
-     * No documentation available.
+     * 0 = Auto/Vanilla Handling.
      *
      * @since 1.2.8
      */
     public static final NumberOption<Integer> INVENTORY_SCALE = NumberOption.<Integer>number()
+        .comment("0 = Auto/Vanilla Handling")
         .node("gui-scale", "inventory-scale").type(TypeToken.get(Integer.class))
-        .min(1).max(5)
-        .defaultValue(2)
+        .min(0).max(5)
+        .defaultValue(0)
         .notifyClient()
         .build();
 

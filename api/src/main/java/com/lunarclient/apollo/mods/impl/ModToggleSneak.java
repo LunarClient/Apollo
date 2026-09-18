@@ -59,6 +59,17 @@ public final class ModToggleSneak {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ALWAYS_SPRINT = SimpleOption.<Boolean>builder()
+        .node("toggle-sneak", "always-sprint").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SPRINT_KEYBIND_OVERRIDE = SimpleOption.<Boolean>builder()

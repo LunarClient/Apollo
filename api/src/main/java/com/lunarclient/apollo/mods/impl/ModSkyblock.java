@@ -190,6 +190,7 @@ public final class ModSkyblock {
      *
      * @since 1.2.5
      */
+    @Deprecated
     public static final SimpleOption<Boolean> CUSTOM_CHIME_VOLUME_ENABLED = SimpleOption.<Boolean>builder()
         .node("skyblock", "custom-chime-volume-enabled").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
@@ -201,6 +202,7 @@ public final class ModSkyblock {
      *
      * @since 1.2.5
      */
+    @Deprecated
     public static final NumberOption<Float> CUSTOM_CHIME_VOLUME = NumberOption.<Float>number()
         .node("skyblock", "custom-chime-volume").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.0F)
