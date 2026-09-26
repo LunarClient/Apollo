@@ -59,6 +59,17 @@ public final class ModToggleSneak {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ALWAYS_SPRINT = SimpleOption.<Boolean>builder()
+        .node("toggle-sneak", "always-sprint").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SPRINT_KEYBIND_OVERRIDE = SimpleOption.<Boolean>builder()
@@ -131,6 +142,18 @@ public final class ModToggleSneak {
         .node("toggle-sneak", "fly-boost-amount").type(TypeToken.get(Integer.class))
         .min(2).max(8)
         .defaultValue(4)
+        .notifyClient()
+        .build();
+
+    /**
+     * Limits fly boost to Creative and Spectator. Turn off to use it in any mode where you can fly.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> RESTRICT_FLY_BOOST = SimpleOption.<Boolean>builder()
+        .comment("Limits fly boost to Creative and Spectator. Turn off to use it in any mode where you can fly.")
+        .node("toggle-sneak", "restrict-fly-boost").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 

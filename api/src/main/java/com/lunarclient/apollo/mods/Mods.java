@@ -52,6 +52,7 @@ import com.lunarclient.apollo.mods.impl.ModFps;
 import com.lunarclient.apollo.mods.impl.ModFreelook;
 import com.lunarclient.apollo.mods.impl.ModGlintColorizer;
 import com.lunarclient.apollo.mods.impl.ModGuiScale;
+import com.lunarclient.apollo.mods.impl.ModHeightLimit;
 import com.lunarclient.apollo.mods.impl.ModHitColor;
 import com.lunarclient.apollo.mods.impl.ModHitbox;
 import com.lunarclient.apollo.mods.impl.ModHorseStats;
@@ -116,6 +117,7 @@ import com.lunarclient.apollo.mods.impl.ModTntCountdown;
 import com.lunarclient.apollo.mods.impl.ModToggleSneak;
 import com.lunarclient.apollo.mods.impl.ModTotemCounter;
 import com.lunarclient.apollo.mods.impl.ModUhcOverlay;
+import com.lunarclient.apollo.mods.impl.ModViewAngles;
 import com.lunarclient.apollo.mods.impl.ModWaila;
 import com.lunarclient.apollo.mods.impl.ModWaypoints;
 import com.lunarclient.apollo.mods.impl.ModWeatherChanger;
@@ -141,10 +143,12 @@ public final class Mods {
             ModOneSevenVisuals.class,
             ModFps.class,
             ModCps.class,
+            ModViewAngles.class,
             ModToggleSneak.class,
             ModZoom.class,
             ModHypixelMod.class,
             ModHypixelBedwars.class,
+            ModHeightLimit.class,
             ModQuickplay.class,
             ModArmorstatus.class,
             ModKeystrokes.class,
@@ -232,9 +236,9 @@ public final class Mods {
             ModGuiScale.class,
             ModKnockbackTrainer.class,
             ModRadio.class,
-            ModUhcOverlay.class,
             ModNeu.class,
-            ModSba.class
+            ModSba.class,
+            ModUhcOverlay.class
         );
 
     private Mods() {

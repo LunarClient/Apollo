@@ -46,67 +46,25 @@ public final class ModTierTagger {
         .build();
 
     /**
-     * No documentation available.
+     * Put the secondary tier on the left of the name and the primary tier on the right.
      *
-     * @since 1.1.9
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> MC_TIERS_FORMAT = SimpleOption.<Boolean>builder()
-        .node("tier-tagger", "mc-tiers-format").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> SWITCH_ORDER = SimpleOption.<Boolean>builder()
+        .comment("Put the secondary tier on the left of the name and the primary tier on the right")
+        .node("tier-tagger", "switch-order").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Put both tiers on one line above the nametag, instead of a line each.
      *
-     * @since 1.1.9
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> SUFFIX = SimpleOption.<Boolean>builder()
-        .node("tier-tagger", "suffix").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> SEPARATE_NAMETAG = SimpleOption.<Boolean>builder()
-        .node("tier-tagger", "separate-nametag").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> SHOW_GM_ICONS = SimpleOption.<Boolean>builder()
-        .node("tier-tagger", "show-gm-icons").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> SHOW_REGION = SimpleOption.<Boolean>builder()
-        .node("tier-tagger", "show-region").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.1.9
-     */
-    public static final SimpleOption<Boolean> SHOW_RETIRED = SimpleOption.<Boolean>builder()
-        .node("tier-tagger", "show-retired").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> COMBINE_SEPARATE_NAMETAGS = SimpleOption.<Boolean>builder()
+        .comment("Put both tiers on one line above the nametag, instead of a line each")
+        .node("tier-tagger", "combine-separate-nametags").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();
@@ -273,6 +231,78 @@ public final class ModTierTagger {
     public static final SimpleOption<Color> COLOR_LT5 = SimpleOption.<Color>builder()
         .node("tier-tagger", "color-l-t5").type(TypeToken.get(Color.class))
         .defaultValue(new Color(101, 91, 121))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> MC_TIERS_FORMAT = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "mc-tiers-format").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SUFFIX = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "suffix").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SEPARATE_NAMETAG = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "separate-nametag").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SHOW_GM_ICONS = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "show-gm-icons").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SHOW_REGION = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "show-region").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> SHOW_RETIRED = SimpleOption.<Boolean>builder()
+        .node("tier-tagger", "show-retired").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
