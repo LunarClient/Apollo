@@ -43,7 +43,7 @@ public final class ProtobufPacketUtil {
 
     private static final List<String> APOLLO_MODULES = Arrays.asList("auto_text_hotkey", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
         "cosmetic", "entity", "glint", "glow", "hologram", "inventory", "limb", "marker", "mod_setting", "nametag", "nick_hider", "notification", "pay_now", "packet_enrichment",
-        "rich_presence", "saturation", "server_link", "server_rule", "staff_mod", "stopwatch", "team", "tebex", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
+        "rich_presence", "saturation", "server_link", "server_rule", "staff_mod", "stopwatch", "team", "tebex", "title", "tnt_countdown", "totem_counter", "transfer", "vignette", "waypoint"
     );
 
     // Module Id -> Option key -> Value
@@ -86,6 +86,7 @@ public final class ProtobufPacketUtil {
         CONFIG_MODULE_PROPERTIES.put("server_rule", "crystal-optimizer", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("tnt_countdown", "tnt-ticks", Value.newBuilder().setNumberValue(80).build());
         CONFIG_MODULE_PROPERTIES.put("title", "clear-title-on-server-switch", Value.newBuilder().setBoolValue(false).build());
+        CONFIG_MODULE_PROPERTIES.put("totem_counter", "disable-local-tracking", Value.newBuilder().setBoolValue(false).build());
         CONFIG_MODULE_PROPERTIES.put("waypoint", "server-handles-waypoints", Value.newBuilder().setBoolValue(false).build());
     }
 

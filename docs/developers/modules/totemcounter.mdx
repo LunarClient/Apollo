@@ -1,0 +1,447 @@
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+
+# Totem Counter Module
+
+## Overview
+
+The totem counter module allows servers to control the totem pops displayed by the Totem Counter mod.
+
+- Adds the ability to override the totem pops of any player, shown on their nametag, tab list entry and the Totem Counter HUD.
+  - Display totem pops the client can't track on its own, such as pops outside of tracking range or before the player joined.
+  - Ability to stop the client from tracking and resetting totem pops on its own.
+
+An overridden totem counter replaces the client's own count for that player, and the client keeps counting on top of it unless `DISABLE_LOCAL_TRACKING` is enabled.
+
+<Callout type="info">
+  This module is only supported for 1.12 and above versions of Lunar Client.
+</Callout>
+
+<Callout type="info">
+  The Totem Counter mod is disabled by default, totem counters sent while it is disabled are ignored. See the [Totem Counter mod](/apollo/developers/mods/totemcounter) page to enable it for your players.
+</Callout>
+
+## Integration
+
+<Callout type="warning">
+  Enable `DISABLE_LOCAL_TRACKING` when sending every totem pop, otherwise the client also counts each pop and shows one more.
+</Callout>
+
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+<Callout type="info">
+**Apollo API examples.** See [General](/apollo/developers/general) for common patterns and helpers.
+</Callout>
+
+### Overriding a Totem Counter
+
+```java
+public void overrideTotemCounterExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.totemCounterModule.overrideTotemCounter(apolloPlayer, TotemCounter.builder()
+            .playerUuid(viewer.getUniqueId())
+            .pops(3)
+            .build()
+        );
+    });
+}
+```
+
+### Overriding multiple Totem Counters
+
+```java
+public void overrideTotemCountersExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        List<TotemCounter> totemCounters = Bukkit.getOnlinePlayers()
+            .stream().map(player -> TotemCounter.builder()
+                .playerUuid(player.getUniqueId())
+                .pops(2)
+                .build())
+            .collect(Collectors.toList());
+
+        this.totemCounterModule.overrideTotemCounters(apolloPlayer, totemCounters);
+    });
+}
+```
+
+### Resetting a Totem Counter
+
+The client forgets the player's totem pops, including the ones it tracked on its own.
+
+```java
+public void resetTotemCounterExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.totemCounterModule.resetTotemCounter(apolloPlayer, viewer.getUniqueId()));
+}
+```
+
+### Resetting all Totem Counters
+
+The client forgets every player's totem pops, including the ones it tracked on its own.
+
+```java
+public void resetTotemCountersExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.totemCounterModule::resetTotemCounters);
+}
+```
+
+### Tracking Totem Pops
+
+```java
+private final Map<UUID, Integer> totemPops = new ConcurrentHashMap<>();
+
+@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+private void onEntityResurrect(EntityResurrectEvent event) {
+    if (!(event.getEntity() instanceof Player)) {
+        return;
+    }
+
+    Player player = (Player) event.getEntity();
+    int pops = this.totemPops.merge(player.getUniqueId(), 1, Integer::sum);
+
+    // Pops are absolute, send the new total instead of an increment
+    this.totemCounterModule.overrideTotemCounter(Recipients.ofEveryone(), TotemCounter.builder()
+        .playerUuid(player.getUniqueId())
+        .pops(pops)
+        .build()
+    );
+}
+
+@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+private void onPlayerDeath(PlayerDeathEvent event) {
+    this.resetTotemPops(event.getEntity());
+}
+
+@EventHandler
+private void onPlayerQuit(PlayerQuitEvent event) {
+    this.resetTotemPops(event.getPlayer());
+}
+
+private void resetTotemPops(Player player) {
+    if (this.totemPops.remove(player.getUniqueId()) != null) {
+        this.totemCounterModule.resetTotemCounter(Recipients.ofEveryone(), player.getUniqueId());
+    }
+}
+```
+
+### Toggle Local Tracking
+
+```java
+public void setDisableLocalTracking(boolean value) {
+    this.totemCounterModule.getOptions().set(TotemCounterModule.DISABLE_LOCAL_TRACKING, value);
+}
+```
+
+### `overrideTotemCounter` & `overrideTotemCounters` Parameters
+
+1. `Recipients recipients`
+   - A list of all the player(s) you want to be able to see the updated totem counters.
+2. `TotemCounter totemCounter` or `Collection<TotemCounter> totemCounters`
+   - The totem counter(s) you want to display. See the [`TotemCounter` Options](#totemcounter-options) section for more.
+
+### `resetTotemCounter` Parameters
+
+1. `Recipients recipients`
+   - A list of all the player(s) you want to be able to see the updated totem counter.
+2. `UUID playerUuid`, `TotemCounter totemCounter` or `Collection<UUID> playerUuids`
+   - The player(s) you want to reset the totem counter of.
+
+### `TotemCounter` Options
+
+`.playerUuid(UUID)` is the player, by UUID, that you wish to apply the totem counter to. Sending a totem counter for an already known player replaces that player's pops.
+
+```java
+.playerUuid(viewer.getUniqueId())
+```
+
+`.pops(Integer)` is the amount of totems the player has popped. Values are absolute, not increments, so sending the same value twice is harmless. The client keeps counting from this value, unless `DISABLE_LOCAL_TRACKING` is enabled.
+
+```java
+.pops(3)
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight Protobuf examples.** See [Lightweight Protobuf](/apollo/developers/lightweight/protobuf) for setup.
+</Callout>
+
+**Overriding a Totem Counter**
+
+```java
+public void overrideTotemCounterExample(Player viewer) {
+    TotemCounter totemCounter = TotemCounter.newBuilder()
+        .setPlayerUuid(ProtobufUtil.createUuidProto(viewer.getUniqueId()))
+        .setPops(3)
+        .build();
+
+    OverrideTotemCountersMessage message = OverrideTotemCountersMessage.newBuilder()
+        .addTotemCounters(totemCounter)
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Overriding multiple Totem Counters**
+
+```java
+public void overrideTotemCountersExample(Player viewer) {
+    List<TotemCounter> totemCounters = Bukkit.getOnlinePlayers()
+        .stream().map(player -> TotemCounter.newBuilder()
+            .setPlayerUuid(ProtobufUtil.createUuidProto(player.getUniqueId()))
+            .setPops(2)
+            .build())
+        .collect(Collectors.toList());
+
+    OverrideTotemCountersMessage message = OverrideTotemCountersMessage.newBuilder()
+        .addAllTotemCounters(totemCounters)
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting a Totem Counter**
+
+```java
+public void resetTotemCounterExample(Player viewer) {
+    ResetTotemCounterMessage message = ResetTotemCounterMessage.newBuilder()
+        .addPlayerUuids(ProtobufUtil.createUuidProto(viewer.getUniqueId()))
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Totem Counters**
+
+```java
+public void resetTotemCountersExample(Player viewer) {
+    ResetTotemCountersMessage message = ResetTotemCountersMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Tracking Totem Pops**
+
+```java
+private final Map<UUID, Integer> totemPops = new ConcurrentHashMap<>();
+
+@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+private void onEntityResurrect(EntityResurrectEvent event) {
+    if (!(event.getEntity() instanceof Player)) {
+        return;
+    }
+
+    Player player = (Player) event.getEntity();
+    int pops = this.totemPops.merge(player.getUniqueId(), 1, Integer::sum);
+
+    // Pops are absolute, send the new total instead of an increment
+    TotemCounter totemCounter = TotemCounter.newBuilder()
+        .setPlayerUuid(ProtobufUtil.createUuidProto(player.getUniqueId()))
+        .setPops(pops)
+        .build();
+
+    OverrideTotemCountersMessage message = OverrideTotemCountersMessage.newBuilder()
+        .addTotemCounters(totemCounter)
+        .build();
+
+    ProtobufPacketUtil.broadcastPacket(message);
+}
+
+@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+private void onPlayerDeath(PlayerDeathEvent event) {
+    this.resetTotemPops(event.getEntity());
+}
+
+@EventHandler
+private void onPlayerQuit(PlayerQuitEvent event) {
+    this.resetTotemPops(event.getPlayer());
+}
+
+private void resetTotemPops(Player player) {
+    if (this.totemPops.remove(player.getUniqueId()) != null) {
+        ResetTotemCounterMessage message = ResetTotemCounterMessage.newBuilder()
+            .addPlayerUuids(ProtobufUtil.createUuidProto(player.getUniqueId()))
+            .build();
+
+        ProtobufPacketUtil.broadcastPacket(message);
+    }
+}
+```
+
+**Toggle Local Tracking**
+
+```java
+public void setDisableLocalTracking(boolean value) {
+    Map<String, Value> properties = new HashMap<>();
+    properties.put("disable-local-tracking", Value.newBuilder().setBoolValue(value).build());
+
+    ConfigurableSettings settings = ProtobufPacketUtil.createModuleMessage("totem_counter", properties);
+    ProtobufPacketUtil.broadcastPacket(settings);
+}
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight JSON examples.** See [Lightweight JSON](/apollo/developers/lightweight/json) for setup.
+</Callout>
+
+**Overriding a Totem Counter**
+
+```java
+public void overrideTotemCounterExample(Player viewer) {
+    JsonObject totemCounter = new JsonObject();
+    totemCounter.add("player_uuid", JsonUtil.createUuidObject(viewer.getUniqueId()));
+    totemCounter.addProperty("pops", 3);
+
+    JsonArray totemCounters = new JsonArray();
+    totemCounters.add(totemCounter);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.totemcounter.v1.OverrideTotemCountersMessage");
+    message.add("totem_counters", totemCounters);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Overriding multiple Totem Counters**
+
+```java
+public void overrideTotemCountersExample(Player viewer) {
+    JsonArray totemCounters = new JsonArray();
+
+    for (Player player : Bukkit.getOnlinePlayers()) {
+        JsonObject totemCounter = new JsonObject();
+        totemCounter.add("player_uuid", JsonUtil.createUuidObject(player.getUniqueId()));
+        totemCounter.addProperty("pops", 2);
+
+        totemCounters.add(totemCounter);
+    }
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.totemcounter.v1.OverrideTotemCountersMessage");
+    message.add("totem_counters", totemCounters);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting a Totem Counter**
+
+```java
+public void resetTotemCounterExample(Player viewer) {
+    JsonArray playerUuids = new JsonArray();
+    playerUuids.add(JsonUtil.createUuidObject(viewer.getUniqueId()));
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.totemcounter.v1.ResetTotemCounterMessage");
+    message.add("player_uuids", playerUuids);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Totem Counters**
+
+```java
+public void resetTotemCountersExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.totemcounter.v1.ResetTotemCountersMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Tracking Totem Pops**
+
+```java
+private final Map<UUID, Integer> totemPops = new ConcurrentHashMap<>();
+
+@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+private void onEntityResurrect(EntityResurrectEvent event) {
+    if (!(event.getEntity() instanceof Player)) {
+        return;
+    }
+
+    Player player = (Player) event.getEntity();
+    int pops = this.totemPops.merge(player.getUniqueId(), 1, Integer::sum);
+
+    // Pops are absolute, send the new total instead of an increment
+    JsonObject totemCounter = new JsonObject();
+    totemCounter.add("player_uuid", JsonUtil.createUuidObject(player.getUniqueId()));
+    totemCounter.addProperty("pops", pops);
+
+    JsonArray totemCounters = new JsonArray();
+    totemCounters.add(totemCounter);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.totemcounter.v1.OverrideTotemCountersMessage");
+    message.add("totem_counters", totemCounters);
+
+    JsonPacketUtil.broadcastPacket(message);
+}
+
+@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+private void onPlayerDeath(PlayerDeathEvent event) {
+    this.resetTotemPops(event.getEntity());
+}
+
+@EventHandler
+private void onPlayerQuit(PlayerQuitEvent event) {
+    this.resetTotemPops(event.getPlayer());
+}
+
+private void resetTotemPops(Player player) {
+    if (this.totemPops.remove(player.getUniqueId()) != null) {
+        JsonArray playerUuids = new JsonArray();
+        playerUuids.add(JsonUtil.createUuidObject(player.getUniqueId()));
+
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.totemcounter.v1.ResetTotemCounterMessage");
+        message.add("player_uuids", playerUuids);
+
+        JsonPacketUtil.broadcastPacket(message);
+    }
+}
+```
+
+**Toggle Local Tracking**
+
+```java
+public void setDisableLocalTracking(boolean value) {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put("disable-local-tracking", value);
+
+    JsonObject message = JsonUtil.createEnableModuleObjectWithType("totem_counter", properties);
+    JsonPacketUtil.broadcastPacket(message);
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Available options
+
+- __`DISABLE_LOCAL_TRACKING`__
+    - Whether the client stops tracking and resetting totem pops on its own.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`

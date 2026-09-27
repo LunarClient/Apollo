@@ -15,7 +15,7 @@ To utilize Apollo Modules, first define a list of the modules you want to use:
 ```java
 private static final List<String> APOLLO_MODULES = Arrays.asList("auto_text_hotkey", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
     "entity", "glint", "glow", "hologram", "inventory", "limb", "mod_setting", "nametag", "nick_hider", "notification", "pay_now", "packet_enrichment",
-    "rich_presence", "saturation", "server_link", "server_rule", "staff_mod", "stopwatch", "team", "tebex", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
+    "rich_presence", "saturation", "server_link", "server_rule", "staff_mod", "stopwatch", "team", "tebex", "title", "tnt_countdown", "totem_counter", "transfer", "vignette", "waypoint"
 );
 ```
 
@@ -65,6 +65,7 @@ static {
     CONFIG_MODULE_PROPERTIES.put("server_rule", "crystal-optimizer", Value.newBuilder().setBoolValue(false).build());
     CONFIG_MODULE_PROPERTIES.put("tnt_countdown", "tnt-ticks", Value.newBuilder().setNumberValue(80).build());
     CONFIG_MODULE_PROPERTIES.put("title", "clear-title-on-server-switch", Value.newBuilder().setBoolValue(false).build());
+    CONFIG_MODULE_PROPERTIES.put("totem_counter", "disable-local-tracking", Value.newBuilder().setBoolValue(false).build());
     CONFIG_MODULE_PROPERTIES.put("waypoint", "server-handles-waypoints", Value.newBuilder().setBoolValue(false).build());
 }
 ```
