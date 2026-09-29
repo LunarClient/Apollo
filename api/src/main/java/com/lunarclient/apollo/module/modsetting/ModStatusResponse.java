@@ -21,21 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.module.impl;
+package com.lunarclient.apollo.module.modsetting;
 
-import com.lunarclient.apollo.example.module.ApolloModuleExample;
-import org.bukkit.entity.Player;
+import com.lunarclient.apollo.module.RestrictedAccess;
+import com.lunarclient.apollo.roundtrip.pagination.ApolloPaginatedResponse;
+import java.util.List;
+import java.util.UUID;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-public abstract class ModSettingsExample extends ApolloModuleExample {
+/**
+ * Represents the mod status response.
+ *
+ * <p>The elements are the mod options the player has changed from their default
+ * value. Any option that is not listed is at its default value.</p>
+ *
+ * @since 1.3.0
+ */
+@Getter
+@SuperBuilder
+@RestrictedAccess
+public final class ModStatusResponse extends ApolloPaginatedResponse<ModOptionStatus> {
 
-    public abstract void disableLightingModExample(Player viewer);
-
-    public abstract void rollbackLightingModEnabledState(Player viewer);
-
-    public abstract void broadcastDisableLightingModExample();
-
-    public abstract void requestInstalledModsExample(Player viewer);
-
-    public abstract void requestModStatusExample(Player viewer);
+    @Override
+    public ApolloPaginatedResponse<ModOptionStatus> combine(UUID packetId, List<ModOptionStatus> elements) {
+        return ModStatusResponse.builder()
+            .packetId(packetId)
+            .elements(elements)
+            .build();
+    }
 
 }
