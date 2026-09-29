@@ -27,6 +27,7 @@ import com.lunarclient.apollo.ApolloPlatform;
 import com.lunarclient.apollo.async.Future;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.module.RestrictedAccess;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.util.ConfigTarget;
@@ -65,6 +66,7 @@ public abstract class ModSettingModule extends ApolloModule {
      * @return the value of the option
      * @since 1.2.1
      */
+    @RestrictedAccess
     public abstract <T, C extends Option<T, ?, ?>> T getStatus(@NotNull ApolloPlayer player, @NonNull C option);
 
     /**
@@ -75,5 +77,17 @@ public abstract class ModSettingModule extends ApolloModule {
      * @since 1.2.5
      */
     public abstract Future<InstalledModsResponse> requestInstalledMods(ApolloPlayer player);
+
+    /**
+     * Sends the {@link ModStatusRequest} to the {@link ApolloPlayer}.
+     *
+     * <p>The response also updates {@link #getStatus(ApolloPlayer, Option)}.</p>
+     *
+     * @param player the player
+     * @return future to be listened to for errors/success
+     * @since 1.3.0
+     */
+    @RestrictedAccess
+    public abstract Future<ModStatusResponse> requestModStatus(ApolloPlayer player);
 
 }

@@ -21,21 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.module.impl;
+package com.lunarclient.apollo.module;
 
-import com.lunarclient.apollo.example.module.ApolloModuleExample;
-import org.bukkit.entity.Player;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public abstract class ModSettingsExample extends ApolloModuleExample {
-
-    public abstract void disableLightingModExample(Player viewer);
-
-    public abstract void rollbackLightingModEnabledState(Player viewer);
-
-    public abstract void broadcastDisableLightingModExample();
-
-    public abstract void requestInstalledModsExample(Player viewer);
-
-    public abstract void requestModStatusExample(Player viewer);
-
+/**
+ * Marks access restricted Apollo API, either a whole module or part of a public module.
+ *
+ * <p>Restricted API only works on servers approved by the Lunar Client team. Lunar Client
+ * enforces this, so without approval the API does not throw, it just has no effect.</p>
+ *
+ * <p>See <a href="https://lunarclient.dev/apollo/developers/private-modules">Private Modules</a>
+ * to request access.</p>
+ *
+ * @since 1.3.0
+ */
+@Documented
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD})
+@Retention(RetentionPolicy.CLASS)
+public @interface RestrictedAccess {
+    // Marker annotation.
 }
