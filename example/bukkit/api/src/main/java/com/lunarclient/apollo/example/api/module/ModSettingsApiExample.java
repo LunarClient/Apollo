@@ -79,4 +79,24 @@ public class ModSettingsApiExample extends ModSettingsExample {
             });
     }
 
+    @Override
+    public void requestModStatusExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        if (!apolloPlayerOpt.isPresent()) {
+            viewer.sendMessage("Join with Lunar Client to test this feature!");
+            return;
+        }
+
+        this.modSettingModule.requestModStatus(apolloPlayerOpt.get())
+            .onSuccess(response -> {
+                List<String> options = response.getElements()
+                    .stream().map(status -> status.getOption().getKey() + "=" + status.getValue())
+                    .collect(Collectors.toList());
+
+                viewer.sendMessage("Found " + options.size() + " changed options: " + options);
+            })
+            .onFailure(exception -> viewer.sendMessage("Failed to receive a response in time."));
+    }
+
 }

@@ -21,54 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.event.modsetting;
+package com.lunarclient.apollo.module.modsetting;
 
-import com.lunarclient.apollo.event.Event;
 import com.lunarclient.apollo.module.RestrictedAccess;
-import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.option.Option;
-import com.lunarclient.apollo.player.ApolloPlayer;
-import lombok.Value;
-import org.jetbrains.annotations.Nullable;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
- * Represents an event that is fired when a player's Lunar Client mod option is updated.
+ * Represents the current value of a Lunar Client mod option.
  *
- * <p>This event is fired for live updates only, not for the options listed in a
- * {@link ModSettingModule#requestModStatus(ApolloPlayer)} response.</p>
- *
- * <p>This event is part of the private Mod Status API of {@link ModSettingModule}. Lunar Client
- * only reports mod status to servers that have been granted access, so this event is never
- * fired on other servers.</p>
- *
- * @since 1.2.1
+ * @since 1.3.0
  */
-@Value
+@Getter
+@Builder
 @RestrictedAccess
-public class ApolloUpdateModOptionEvent implements Event {
+public final class ModOptionStatus {
 
     /**
-     * The {@link ApolloPlayer} that the option was updated for.
-     *
-     * @return the player
-     * @since 1.2.1
-     */
-    ApolloPlayer player;
-
-    /**
-     * The {@link Option} that was updated.
+     * Returns the mod {@link Option}.
      *
      * @return the option
-     * @since 1.2.1
+     * @since 1.3.0
      */
     Option<?, ?, ?> option;
 
     /**
-     * The new value of the option.
+     * Returns the current {@link Object} value of the option.
      *
-     * @return the new value
-     * @since 1.2.1
+     * @return the value
+     * @since 1.3.0
      */
-    @Nullable Object value;
+    Object value;
 
 }
