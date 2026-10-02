@@ -48,6 +48,13 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
         - Minimum: `1`
         - Maximum: `10`
 
+- __`VANILLA_SPACING`__
+    - Use the vanilla spacing between each effect tile
+    - Config Key: `vanilla-spacing`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
 - __`MINIMAL_MODE_HORIZONTAL`__
     - Config Key: `minimal-mode-horizontal`
     - Values
@@ -80,11 +87,23 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `true`
 
-- __`SHOW_IN_INVENTORY`__
-    - Config Key: `show-in-inventory`
+- __`FORMATTED_DURATIONS`__
+    - Config Key: `formatted-durations`
     - Values
         - Type: `Boolean`
-        - Default: `true`
+        - Default: `false`
+
+- __`UPPERCASE_POTION_NAMES`__
+    - Config Key: `uppercase-potion-names`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`REVERSED_TEXT`__
+    - Config Key: `reversed-text`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
 
 - __`SHOW_WHILE_TYPING`__
     - Config Key: `show-while-typing`
@@ -119,23 +138,11 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
         - Type: `String`
         - Default: `#FFFFFFFF`
 
-- __`UPPERCASE_POTION_NAMES`__
-    - Config Key: `uppercase-potion-names`
+- __`SHOW_IN_INVENTORY`__
+    - Config Key: `show-in-inventory`
     - Values
         - Type: `Boolean`
-        - Default: `false`
-
-- __`REVERSED_TEXT`__
-    - Config Key: `reversed-text`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
-- __`FORMATTED_DURATIONS`__
-    - Config Key: `formatted-durations`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
+        - Default: `true`
 
 - __`HIDE_MODERN_ICONS`__
     - Config Key: `hide-modern-icons`
@@ -149,6 +156,57 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
     - Values
         - Type: `Boolean`
         - Default: `false`
+
+- __`EFFECT_BARS`__
+    - Show effect duration with a progress bar in the inventory/hud
+    - Config Key: `effect-bars`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EFFECT_BAR_VANILLA_HUD`__
+    - Config Key: `effect-bar-vanilla-hud`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`EFFECT_BAR_INVENTORY`__
+    - Config Key: `effect-bar-inventory`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`EFFECT_BAR_LUNAR_HUD`__
+    - Show the duration bars on Lunar potion effect status huds
+    - Config Key: `effect-bar-lunar-hud`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EFFECT_BAR_HIDE_AMBIENT`__
+    - Config Key: `effect-bar-hide-ambient`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`EFFECT_BAR_GRADIENT`__
+    - Do a gradient animation on the bar color
+    - Config Key: `effect-bar-gradient`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`EFFECT_BAR_CUSTOM_COLOR`__
+    - Config Key: `effect-bar-custom-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`EFFECT_BAR_COLOR`__
+    - Config Key: `effect-bar-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
 
 - __`BACKGROUND`__
     - Config Key: `background`
@@ -234,6 +292,12 @@ public void togglePotionEffectsExample(Player viewer, boolean value) {
         - Default: `1.0F`
         - Minimum: `0.25F`
         - Maximum: `2.0F`
+
+- __`USE_MINECRAFT_GUISCALE`__
+    - Config Key: `use-minecraft-g-u-i-scale`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
 
 - __`SCALE`__
     - Config Key: `scale`
