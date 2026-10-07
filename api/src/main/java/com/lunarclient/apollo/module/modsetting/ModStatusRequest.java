@@ -21,21 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.module.impl;
+package com.lunarclient.apollo.module.modsetting;
 
-import com.lunarclient.apollo.example.module.ApolloModuleExample;
-import org.bukkit.entity.Player;
+import com.lunarclient.apollo.module.RestrictedAccess;
+import com.lunarclient.apollo.roundtrip.ApolloRequest;
+import lombok.Builder;
 
-public abstract class ModSettingsExample extends ApolloModuleExample {
-
-    public abstract void disableLightingModExample(Player viewer);
-
-    public abstract void rollbackLightingModEnabledState(Player viewer);
-
-    public abstract void broadcastDisableLightingModExample();
-
-    public abstract void requestInstalledModsExample(Player viewer);
-
-    public abstract void requestModStatusExample(Player viewer);
+/**
+ * Represents the mod status request.
+ *
+ * @since 1.3.0
+ */
+@Builder
+@RestrictedAccess
+public final class ModStatusRequest extends ApolloRequest<ModStatusResponse> {
 
 }

@@ -32,6 +32,8 @@ import com.lunarclient.apollo.example.proto.listener.ApolloRoundtripProtoListene
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
 import com.lunarclient.apollo.modsetting.v1.InstalledModsRequest;
 import com.lunarclient.apollo.modsetting.v1.Mod;
+import com.lunarclient.apollo.modsetting.v1.ModOptionStatus;
+import com.lunarclient.apollo.modsetting.v1.ModStatusRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +86,27 @@ public class ModSettingsProtoExample extends ModSettingsExample {
                     .collect(Collectors.toList());
 
                 viewer.sendMessage("Found " + modIds.size() + " mods: " + modIds);
+            }).exceptionally(throwable -> {
+                viewer.sendMessage("Failed to receive a response in time.");
+                return null;
+            });
+    }
+
+    @Override
+    public void requestModStatusExample(Player viewer) {
+        UUID requestId = UUID.randomUUID();
+
+        ModStatusRequest request = ModStatusRequest.newBuilder()
+            .setRequestId(ByteString.copyFromUtf8(requestId.toString()))
+            .build();
+
+        ApolloRoundtripProtoListener.getInstance().sendModStatusRequest(viewer, requestId, request)
+            .thenAccept(modOptions -> {
+                List<String> keys = modOptions.stream()
+                    .map(ModOptionStatus::getKey)
+                    .collect(Collectors.toList());
+
+                viewer.sendMessage("Found " + keys.size() + " changed options: " + keys);
             }).exceptionally(throwable -> {
                 viewer.sendMessage("Failed to receive a response in time.");
                 return null;

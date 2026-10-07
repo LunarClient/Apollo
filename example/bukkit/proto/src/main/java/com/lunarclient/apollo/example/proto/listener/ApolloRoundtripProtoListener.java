@@ -30,6 +30,9 @@ import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
 import com.lunarclient.apollo.modsetting.v1.InstalledModsResponse;
 import com.lunarclient.apollo.modsetting.v1.Mod;
+import com.lunarclient.apollo.modsetting.v1.ModOptionStatus;
+import com.lunarclient.apollo.modsetting.v1.ModStatusRequest;
+import com.lunarclient.apollo.modsetting.v1.ModStatusResponse;
 import com.lunarclient.apollo.transfer.v1.PingResponse;
 import com.lunarclient.apollo.transfer.v1.TransferResponse;
 import java.util.ArrayList;
@@ -56,6 +59,8 @@ public class ApolloRoundtripProtoListener implements PluginMessageListener {
     private final Map<UUID, Map<UUID, CompletableFuture<GeneratedMessageV3>>> roundTripPacketFutures = new ConcurrentHashMap<>();
     private final Map<UUID, CompletableFuture<List<Mod>>> paginatedFutures = new ConcurrentHashMap<>();
     private final Map<UUID, List<Mod>> paginatedAccumulator = new ConcurrentHashMap<>();
+    private final Map<UUID, CompletableFuture<List<ModOptionStatus>>> modStatusFutures = new ConcurrentHashMap<>();
+    private final Map<UUID, List<ModOptionStatus>> modStatusAccumulator = new ConcurrentHashMap<>();
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
     public ApolloRoundtripProtoListener(ApolloExamplePlugin plugin) {
@@ -79,6 +84,10 @@ public class ApolloRoundtripProtoListener implements PluginMessageListener {
                 InstalledModsResponse message = any.unpack(InstalledModsResponse.class);
                 UUID requestId = UUID.fromString(message.getRequestId().toStringUtf8());
                 this.handlePagedResponse(requestId, message);
+            } else if (any.is(ModStatusResponse.class)) {
+                ModStatusResponse message = any.unpack(ModStatusResponse.class);
+                UUID requestId = UUID.fromString(message.getRequestId().toStringUtf8());
+                this.handleModStatusPage(requestId, message);
             }
 
         } catch (InvalidProtocolBufferException e) {
@@ -123,6 +132,38 @@ public class ApolloRoundtripProtoListener implements PluginMessageListener {
         });
 
         return future;
+    }
+
+    public CompletableFuture<List<ModOptionStatus>> sendModStatusRequest(Player player, UUID requestId, ModStatusRequest request) {
+        ProtobufPacketUtil.sendPacket(player, request);
+
+        CompletableFuture<List<ModOptionStatus>> future = new CompletableFuture<>();
+        this.modStatusFutures.put(requestId, future);
+
+        ScheduledFuture<?> timeoutTask = this.executorService.schedule(() ->
+                future.completeExceptionally(new TimeoutException("Response timed out")),
+            10, TimeUnit.SECONDS
+        );
+
+        future.whenComplete((result, throwable) -> {
+            timeoutTask.cancel(false);
+            this.modStatusAccumulator.remove(requestId);
+        });
+
+        return future;
+    }
+
+    private void handleModStatusPage(UUID requestId, ModStatusResponse response) {
+        List<ModOptionStatus> accumulated = this.modStatusAccumulator.computeIfAbsent(requestId, k -> new ArrayList<>());
+        accumulated.addAll(response.getModOptionsList());
+
+        if (response.getPage() == response.getTotalPages() - 1) {
+            this.modStatusAccumulator.remove(requestId);
+            CompletableFuture<List<ModOptionStatus>> future = this.modStatusFutures.remove(requestId);
+            if (future != null) {
+                future.complete(accumulated);
+            }
+        }
     }
 
     private void handlePagedResponse(UUID requestId, InstalledModsResponse response) {

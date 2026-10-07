@@ -73,25 +73,27 @@ public class ApolloModStatusExample implements ApolloListener, Listener {
 
     private void printOptionStatusExample(Player player) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> {
-            // https://lunarclient.dev/apollo/developers/mods/waypoints#available-options
-            boolean waypointsEnabled = this.modSettingModule.getStatus(apolloPlayer, ModWaypoints.ENABLED);
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.requestModStatus(apolloPlayer)
+            .onSuccess(response -> {
+                // https://lunarclient.dev/apollo/developers/mods/waypoints#available-options
+                boolean waypointsEnabled = this.modSettingModule.getStatus(apolloPlayer, ModWaypoints.ENABLED);
 
-            // https://lunarclient.dev/apollo/developers/mods/minimap#available-options
-            float minimapScale = this.modSettingModule.getStatus(apolloPlayer, ModMinimap.SCALE);
+                // https://lunarclient.dev/apollo/developers/mods/minimap#available-options
+                float minimapScale = this.modSettingModule.getStatus(apolloPlayer, ModMinimap.SCALE);
 
-            // https://lunarclient.dev/apollo/developers/mods/fov#available-options
-            int fovDefaultFov = this.modSettingModule.getStatus(apolloPlayer, ModFov.DEFAULT_FOV);
+                // https://lunarclient.dev/apollo/developers/mods/fov#available-options
+                int fovDefaultFov = this.modSettingModule.getStatus(apolloPlayer, ModFov.DEFAULT_FOV);
 
-            apolloPlayer.sendMessage(Component.text("Waypoints Enabled: ")
-                .append(Component.text(waypointsEnabled)));
+                apolloPlayer.sendMessage(Component.text("Waypoints Enabled: ")
+                    .append(Component.text(waypointsEnabled)));
 
-            apolloPlayer.sendMessage(Component.text("Minimap Scale: ")
-                .append(Component.text(minimapScale)));
+                apolloPlayer.sendMessage(Component.text("Minimap Scale: ")
+                    .append(Component.text(minimapScale)));
 
-            apolloPlayer.sendMessage(Component.text("Fov Default Fov: ")
-                .append(Component.text(fovDefaultFov)));
-        });
+                apolloPlayer.sendMessage(Component.text("Fov Default Fov: ")
+                    .append(Component.text(fovDefaultFov)));
+            })
+            .onFailure(exception -> apolloPlayer.sendMessage(Component.text("Failed to receive a response in time."))));
     }
 
 }

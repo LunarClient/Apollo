@@ -39,12 +39,16 @@ import com.lunarclient.apollo.event.modsetting.ApolloUpdateModOptionEvent;
 import com.lunarclient.apollo.modsetting.v1.Mod;
 import com.lunarclient.apollo.module.modsetting.InstalledModsRequest;
 import com.lunarclient.apollo.module.modsetting.InstalledModsResponse;
+import com.lunarclient.apollo.module.modsetting.ModOptionStatus;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
+import com.lunarclient.apollo.module.modsetting.ModStatusRequest;
+import com.lunarclient.apollo.module.modsetting.ModStatusResponse;
 import com.lunarclient.apollo.network.NetworkOptions;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.StatusOptionsImpl;
 import com.lunarclient.apollo.player.AbstractApolloPlayer;
 import com.lunarclient.apollo.player.ApolloPlayer;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -89,6 +93,17 @@ public final class ModSettingModuleImpl extends ModSettingModule {
         return ((AbstractApolloPlayer) player).sendRoundTripPacket(request, requestProto);
     }
 
+    @Override
+    public Future<ModStatusResponse> requestModStatus(@NotNull ApolloPlayer player) {
+        ModStatusRequest request = ModStatusRequest.builder().build();
+
+        com.lunarclient.apollo.modsetting.v1.ModStatusRequest requestProto = com.lunarclient.apollo.modsetting.v1.ModStatusRequest.newBuilder()
+            .setRequestId(ByteString.copyFromUtf8(request.getRequestId().toString()))
+            .build();
+
+        return ((AbstractApolloPlayer) player).sendRoundTripPacket(request, requestProto);
+    }
+
     private void onReceivePacket(ApolloReceivePacketEvent event) {
         ApolloPlayer player = event.getPlayer();
         Any any = event.getPacket();
@@ -108,6 +123,17 @@ public final class ModSettingModuleImpl extends ModSettingModule {
                 .page(packet.getPage())
                 .totalPages(packet.getTotalPages())
                 .elements(mods)
+                .build();
+
+            ApolloManager.getRoundtripManager().handleResponse(response);
+        });
+
+        event.unpack(com.lunarclient.apollo.modsetting.v1.ModStatusResponse.class).ifPresent(packet -> {
+            ModStatusResponse response = ModStatusResponse.builder()
+                .packetId(UUID.fromString(packet.getRequestId().toStringUtf8()))
+                .page(packet.getPage())
+                .totalPages(packet.getTotalPages())
+                .elements(this.updateModStatus(player, packet))
                 .build();
 
             ApolloManager.getRoundtripManager().handleResponse(response);
@@ -186,6 +212,34 @@ public final class ModSettingModuleImpl extends ModSettingModule {
                 }
             }
         }
+    }
+
+    private List<ModOptionStatus> updateModStatus(ApolloPlayer player, com.lunarclient.apollo.modsetting.v1.ModStatusResponse packet) {
+        StatusOptionsImpl statusOptions = ApolloManager.getModsManager().getPlayerOptions();
+
+        if (packet.getPage() == 0) {
+            statusOptions.getPlayerOptions().remove(player.getUniqueId());
+        }
+
+        List<ModOptionStatus> elements = new ArrayList<>();
+        for (com.lunarclient.apollo.modsetting.v1.ModOptionStatus status : packet.getModOptionsList()) {
+            Option<?, ?, ?> option = statusOptions.getRegistry().get(status.getKey());
+
+            // Option exists on the client but doesn't exist in the API yet.
+            if (option == null) {
+                continue;
+            }
+
+            Object value = NetworkOptions.unwrapValue(status.getValue(), option.getTypeToken().getType());
+            statusOptions.set(player, option, value);
+
+            elements.add(ModOptionStatus.builder()
+                .option(option)
+                .value(value)
+                .build());
+        }
+
+        return elements;
     }
 
 }
