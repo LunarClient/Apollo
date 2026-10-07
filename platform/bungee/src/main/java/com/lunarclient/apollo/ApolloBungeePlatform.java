@@ -79,6 +79,8 @@ import com.lunarclient.apollo.module.tebex.TebexModule;
 import com.lunarclient.apollo.module.tebex.TebexModuleImpl;
 import com.lunarclient.apollo.module.title.TitleModule;
 import com.lunarclient.apollo.module.title.TitleModuleImpl;
+import com.lunarclient.apollo.module.totemcounter.TotemCounterModule;
+import com.lunarclient.apollo.module.totemcounter.TotemCounterModuleImpl;
 import com.lunarclient.apollo.module.transfer.TransferModule;
 import com.lunarclient.apollo.module.transfer.TransferModuleImpl;
 import com.lunarclient.apollo.module.vignette.VignetteModule;
@@ -153,6 +155,7 @@ public final class ApolloBungeePlatform implements PlatformPlugin, ApolloPlatfor
             .addModule(TeamModule.class, new TeamModuleImpl())
             .addModule(TebexModule.class, new TebexModuleImpl())
             .addModule(TitleModule.class, new TitleModuleImpl())
+            .addModule(TotemCounterModule.class, new TotemCounterModuleImpl())
             .addModule(TransferModule.class, new TransferModuleImpl())
             .addModule(VignetteModule.class, new VignetteModuleImpl())
             .addModule(WaypointModule.class, new WaypointModuleImpl());

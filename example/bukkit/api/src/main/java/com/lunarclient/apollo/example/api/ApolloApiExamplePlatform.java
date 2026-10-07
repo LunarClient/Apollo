@@ -59,6 +59,7 @@ import com.lunarclient.apollo.example.api.module.TeamApiExample;
 import com.lunarclient.apollo.example.api.module.TebexApiExample;
 import com.lunarclient.apollo.example.api.module.TitleApiExample;
 import com.lunarclient.apollo.example.api.module.TntCountdownApiExample;
+import com.lunarclient.apollo.example.api.module.TotemCounterApiExample;
 import com.lunarclient.apollo.example.api.module.TransferApiExample;
 import com.lunarclient.apollo.example.api.module.VignetteApiExample;
 import com.lunarclient.apollo.example.api.module.WaypointApiExample;
@@ -114,6 +115,7 @@ public class ApolloApiExamplePlatform extends ApolloExamplePlugin {
         this.setTebexExample(new TebexApiExample());
         this.setTitleExample(new TitleApiExample());
         this.setTntCountdownExample(new TntCountdownApiExample());
+        this.setTotemCounterExample(new TotemCounterApiExample());
         this.setTransferExample(new TransferApiExample());
         this.setVignetteExample(new VignetteApiExample());
         this.setWaypointExample(new WaypointApiExample());

@@ -21,29 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.util;
+package com.lunarclient.apollo.example.module.impl;
 
-public final class ServerUtil {
+import com.lunarclient.apollo.example.module.ApolloModuleExample;
+import org.bukkit.entity.Player;
 
-    public static boolean isFolia() {
-        try {
-            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
-    }
+public abstract class TotemCounterExample extends ApolloModuleExample {
 
-    public static boolean hasEntityResurrectEvent() {
-        try {
-            Class.forName("org.bukkit.event.entity.EntityResurrectEvent");
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
-    }
+    public abstract void overrideTotemCounterExample(Player viewer);
 
-    private ServerUtil() {
-    }
+    public abstract void overrideTotemCountersExample(Player viewer);
+
+    public abstract void resetTotemCounterExample(Player viewer);
+
+    public abstract void resetTotemCountersExample(Player viewer);
+
+    public abstract void setDisableLocalTracking(boolean value);
 
 }

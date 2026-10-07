@@ -21,29 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.lunarclient.apollo.example.util;
+package com.lunarclient.apollo.module.totemcounter;
 
-public final class ServerUtil {
+import java.util.UUID;
+import lombok.Builder;
+import lombok.Getter;
+import org.jetbrains.annotations.Range;
 
-    public static boolean isFolia() {
-        try {
-            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
-    }
+/**
+ * Represents a totem counter which can be shown on the client.
+ *
+ * @since 1.3.0
+ */
+@Getter
+@Builder
+public final class TotemCounter {
 
-    public static boolean hasEntityResurrectEvent() {
-        try {
-            Class.forName("org.bukkit.event.entity.EntityResurrectEvent");
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
-    }
+    /**
+     * Returns the totem counter player's {@link UUID}.
+     *
+     * @return the player uuid
+     * @since 1.3.0
+     */
+    UUID playerUuid;
 
-    private ServerUtil() {
-    }
+    /**
+     * Returns the totem counter {@link Integer} amount of totems the player
+     * has popped.
+     *
+     * @return the totem counter pops
+     * @since 1.3.0
+     */
+    @Range(from = 0, to = Integer.MAX_VALUE) int pops;
 
 }

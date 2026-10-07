@@ -72,6 +72,8 @@ commands:
         description: "Titles!"
     tntcountdown:
         description: "TNT Countdown!"
+    totemcounter:
+        description: "Totem Counter!"
     transfer:
         description: "Transfer!"
     vignette:
