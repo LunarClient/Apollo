@@ -28,7 +28,7 @@ import com.lunarclient.apollo.example.module.impl.StaffModExample;
 import com.lunarclient.apollo.module.staffmod.StaffMod;
 import com.lunarclient.apollo.module.staffmod.StaffModModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Optional;
 import org.bukkit.entity.Player;
 
@@ -43,13 +43,15 @@ public class StaffModApiExample extends StaffModExample {
         }
 
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY), true));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer,
+            Arrays.asList(StaffMod.XRAY, StaffMod.BHOP, StaffMod.NAMETAGS), true));
     }
 
     @Override
     public void disableStaffModsExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.disableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY)));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.disableStaffMods(apolloPlayer,
+            Arrays.asList(StaffMod.XRAY, StaffMod.BHOP, StaffMod.NAMETAGS)));
     }
 
 }

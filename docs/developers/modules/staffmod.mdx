@@ -7,13 +7,17 @@ import { Callout, Tab, Tabs } from 'nextra-theme-docs'
 The staff mod module allows you to interact with Lunar Client's built in staff mods.
 
 - Ability to grant and remove staff mods found in Lunar Client for players.
-  - Ability to allow players to enable/disable the X-ray mod.
+  - Ability to allow players to enable/disable the X-ray, BHop and Nametags mods.
 
 ![Staff Mod Module Example](/modules/staffmod/overview.png#center)
 
 <div style={{ textAlign: "center" }}>
     <small>Allow your staff to use hidden staff only mods, like xray!</small>
 </div>
+
+<Callout type="warning">
+  Enabling a staff mod may cause compatibility issues with anti-cheats. For example, your anti-cheat may flag staff members who use BHop, so exempt them from movement checks while it is granted.
+</Callout>
 
 ## Integration
 
@@ -37,7 +41,8 @@ public void enableStaffModsExample(Player viewer) {
     }
 
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY), true));
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.enableStaffMods(apolloPlayer,
+        Arrays.asList(StaffMod.XRAY, StaffMod.BHOP, StaffMod.NAMETAGS), true));
 }
 ```
 
@@ -46,7 +51,8 @@ public void enableStaffModsExample(Player viewer) {
 ```java
 public void disableStaffModsExample(Player viewer) {
     Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.disableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY)));
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.staffModModule.disableStaffMods(apolloPlayer,
+        Arrays.asList(StaffMod.XRAY, StaffMod.BHOP, StaffMod.NAMETAGS)));
 }
 ```
 
@@ -62,6 +68,11 @@ public void disableStaffModsExample(Player viewer) {
 ## `StaffMod` Types
 
 * `XRAY`
+  - Lets players see through blocks.
+* `BHOP`
+  - Automatically jumps while moving and keeps air speed up.
+* `NAMETAGS`
+  - Shows player nametags through walls and from far away, including sneaking, invisible and team-hidden players.
 
 </Tab>
 
@@ -80,7 +91,7 @@ public void enableStaffModsExample(Player viewer) {
     }
 
     EnableStaffModsMessage message = EnableStaffModsMessage.newBuilder()
-        .addAllStaffMods(Collections.singletonList(StaffMod.STAFF_MOD_XRAY))
+        .addAllStaffMods(Arrays.asList(StaffMod.STAFF_MOD_XRAY, StaffMod.STAFF_MOD_BHOP, StaffMod.STAFF_MOD_NAMETAGS))
         .setEnabledByDefault(true)
         .build();
 
@@ -93,7 +104,7 @@ public void enableStaffModsExample(Player viewer) {
 ```java
 public void disableStaffModsExample(Player viewer) {
     DisableStaffModsMessage message = DisableStaffModsMessage.newBuilder()
-        .addAllStaffMods(Collections.singletonList(StaffMod.STAFF_MOD_XRAY))
+        .addAllStaffMods(Arrays.asList(StaffMod.STAFF_MOD_XRAY, StaffMod.STAFF_MOD_BHOP, StaffMod.STAFF_MOD_NAMETAGS))
         .build();
 
     ProtobufPacketUtil.sendPacket(viewer, message);
@@ -116,8 +127,8 @@ public void enableStaffModsExample(Player viewer) {
         return;
     }
 
-    // 1 = xray
-    JsonArray staffMods = Stream.of(1)
+    // 1 = xray, 2 = bhop, 3 = nametags
+    JsonArray staffMods = Stream.of(1, 2, 3)
         .map(JsonPrimitive::new)
         .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
@@ -134,8 +145,8 @@ public void enableStaffModsExample(Player viewer) {
 
 ```java
 public void disableStaffModsExample(Player viewer) {
-    // 1 = xray
-    JsonArray staffMods = Stream.of(1)
+    // 1 = xray, 2 = bhop, 3 = nametags
+    JsonArray staffMods = Stream.of(1, 2, 3)
         .map(JsonPrimitive::new)
         .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 

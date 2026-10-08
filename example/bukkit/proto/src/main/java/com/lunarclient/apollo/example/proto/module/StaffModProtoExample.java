@@ -28,7 +28,7 @@ import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
 import com.lunarclient.apollo.staffmod.v1.DisableStaffModsMessage;
 import com.lunarclient.apollo.staffmod.v1.EnableStaffModsMessage;
 import com.lunarclient.apollo.staffmod.v1.StaffMod;
-import java.util.Collections;
+import java.util.Arrays;
 import org.bukkit.entity.Player;
 
 public class StaffModProtoExample extends StaffModExample {
@@ -40,7 +40,7 @@ public class StaffModProtoExample extends StaffModExample {
         }
 
         EnableStaffModsMessage message = EnableStaffModsMessage.newBuilder()
-            .addAllStaffMods(Collections.singletonList(StaffMod.STAFF_MOD_XRAY))
+            .addAllStaffMods(Arrays.asList(StaffMod.STAFF_MOD_XRAY, StaffMod.STAFF_MOD_BHOP, StaffMod.STAFF_MOD_NAMETAGS))
             .setEnabledByDefault(true)
             .build();
 
@@ -50,7 +50,7 @@ public class StaffModProtoExample extends StaffModExample {
     @Override
     public void disableStaffModsExample(Player viewer) {
         DisableStaffModsMessage message = DisableStaffModsMessage.newBuilder()
-            .addAllStaffMods(Collections.singletonList(StaffMod.STAFF_MOD_XRAY))
+            .addAllStaffMods(Arrays.asList(StaffMod.STAFF_MOD_XRAY, StaffMod.STAFF_MOD_BHOP, StaffMod.STAFF_MOD_NAMETAGS))
             .build();
 
         ProtobufPacketUtil.sendPacket(viewer, message);
