@@ -26,10 +26,32 @@ package com.lunarclient.apollo.module.staffmod;
 /**
  * Represents a staff mod that can be enabled on the client.
  *
+ * <p>Enabling a staff mod may cause compatibility issues with anti-cheats.</p>
+ *
  * @since 1.0.0
  */
 public enum StaffMod {
 
-    XRAY
+    /**
+     * Lets the player see through blocks.
+     *
+     * @since 1.0.0
+     */
+    XRAY,
+
+    /**
+     * Automatically jumps while moving and keeps air speed up.
+     *
+     * @since 1.3.0
+     */
+    BHOP,
+
+    /**
+     * Shows player nametags through walls and from far away, including
+     * sneaking, invisible and team-hidden players.
+     *
+     * @since 1.3.0
+     */
+    NAMETAGS
 
 }
