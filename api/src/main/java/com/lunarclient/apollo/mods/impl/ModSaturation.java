@@ -25,6 +25,7 @@ package com.lunarclient.apollo.mods.impl;
 
 import com.lunarclient.apollo.option.SimpleOption;
 import io.leangen.geantyref.TypeToken;
+import java.awt.Color;
 
 /**
  * Saturation HUD with AppleSkin features.
@@ -60,17 +61,6 @@ public final class ModSaturation {
      *
      * @since 1.0.0
      */
-    public static final SimpleOption<Boolean> SHOW_APPLESKIN_TOOLTIP = SimpleOption.<Boolean>builder()
-        .node("saturation", "show-appleskin-tooltip").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
     public static final SimpleOption<Boolean> SHOW_HELD_ITEM_HUNGER = SimpleOption.<Boolean>builder()
         .node("saturation", "show-held-item-hunger").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
@@ -85,6 +75,39 @@ public final class ModSaturation {
     public static final SimpleOption<Boolean> SHOW_HELD_ITEM_SATURATION = SimpleOption.<Boolean>builder()
         .node("saturation", "show-held-item-saturation").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    public static final SimpleOption<Boolean> SHOW_APPLESKIN_TOOLTIP = SimpleOption.<Boolean>builder()
+        .node("saturation", "show-appleskin-tooltip").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> USE_INVERSE_COLOR = SimpleOption.<Boolean>builder()
+        .node("saturation", "use-inverse-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> SATURATION_COLOR = SimpleOption.<Color>builder()
+        .node("saturation", "saturation-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 198, 0))
         .notifyClient()
         .build();
 

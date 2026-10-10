@@ -103,6 +103,17 @@ public final class ModPackDisplay {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> IGNORE_SERVER_PACK = SimpleOption.<Boolean>builder()
+        .node("pack-display", "ignore-server-pack").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * Adds a shadow to text.
      *
      * @since 1.0.0

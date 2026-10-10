@@ -129,6 +129,18 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final NumberOption<Integer> DECIMAL_PLACES = NumberOption.<Integer>number()
+        .node("coordinates", "decimal-places").type(TypeToken.get(Integer.class))
+        .min(0).max(10)
+        .defaultValue(2)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> MOVE_CHILDREN_INDIVIDUALLY = SimpleOption.<Boolean>builder()
