@@ -59,6 +59,18 @@ public final class ModOverlayMod {
         .build();
 
     /**
+     * Stop your hand from bobbing while holding a map.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> NO_MAP_BOBBING = SimpleOption.<Boolean>builder()
+        .comment("Stop your hand from bobbing while holding a map.")
+        .node("overlay-mod", "no-map-bobbing").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.2.2
@@ -125,6 +137,18 @@ public final class ModOverlayMod {
      */
     public static final NumberOption<Float> FROST_OVERLAY = NumberOption.<Float>number()
         .node("overlay-mod", "frost-overlay").type(TypeToken.get(Float.class))
+        .min(0.0F).max(1.0F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Float> FISHING_BOBBER_OVERLAY = NumberOption.<Float>number()
+        .node("overlay-mod", "fishing-bobber-overlay").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.0F)
         .defaultValue(1.0F)
         .notifyClient()
@@ -480,7 +504,18 @@ public final class ModOverlayMod {
      */
     public static final SimpleOption<Color> XP_ORB_COLOR = SimpleOption.<Color>builder()
         .node("overlay-mod", "xp-orb-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(255, 255, 255, 128))
+        .defaultValue(new Color(128, 255, 32, 128))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> XP_HOTBAR_TEXT_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "xp-hotbar-text-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(128, 255, 32))
         .notifyClient()
         .build();
 
@@ -519,6 +554,72 @@ public final class ModOverlayMod {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> CUSTOM_GUI_COLORS = SimpleOption.<Boolean>builder()
+        .node("overlay-mod", "custom-gui-colors").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> CONTAINER_TINT = SimpleOption.<Color>builder()
+        .node("overlay-mod", "container-tint").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(75, 75, 75))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HOTBAR_TINT = SimpleOption.<Color>builder()
+        .node("overlay-mod", "hotbar-tint").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(75, 75, 75))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> MENU_TINT = SimpleOption.<Color>builder()
+        .node("overlay-mod", "menu-tint").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(75, 75, 75))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> GUI_TEXT_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "gui-text-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(215, 215, 215))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> MENU_TEXT_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "menu-text-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(215, 215, 215))
+        .notifyClient()
+        .build();
+
+    /**
      * Improve visibility when riding a horse.
      *
      * @since 1.2.2
@@ -526,6 +627,28 @@ public final class ModOverlayMod {
     public static final SimpleOption<Boolean> HEADLESS_HORSES = SimpleOption.<Boolean>builder()
         .comment("Improve visibility when riding a horse")
         .node("overlay-mod", "headless-horses").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HEADLESS_LLAMAS = SimpleOption.<Boolean>builder()
+        .node("overlay-mod", "headless-l-lamas").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> HEADLESS_CAMELS = SimpleOption.<Boolean>builder()
+        .node("overlay-mod", "headless-camels").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();

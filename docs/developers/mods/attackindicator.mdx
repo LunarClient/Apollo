@@ -35,6 +35,13 @@ public void toggleAttackIndicatorExample(Player viewer, boolean value) {
         - Minimum: `0.25F`
         - Maximum: `5.0F`
 
+- __`LOCK_TO_VANILLA_POSITION`__
+    - Keeps the mod at the vanilla position and scale. It can't be moved or scaled in the HUD editor while this is on.
+    - Config Key: `lock-to-vanilla-position`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
 - __`SHOW_IN_HUD_EDITOR`__
     - Config Key: `show-in-hud-editor`
     - Values
@@ -146,13 +153,6 @@ public void toggleAttackIndicatorExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `false`
 
-- __`ATTACK_INDICATOR_PLAY_SOUND_VANILLA`__
-    - Play a ding when the weapon cooldowns are done
-    - Config Key: `attack-indicator-play-sound-vanilla`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
 - __`SLEEP`__
     - Config Key: `sleep`
     - Values
@@ -199,13 +199,6 @@ public void toggleAttackIndicatorExample(Player viewer, boolean value) {
 - __`STORAGE`__
     - Show capacity of storage items (bundles, shulker boxes)
     - Config Key: `storage`
-    - Values
-        - Type: `Boolean`
-        - Default: `false`
-
-- __`ATTACK_INDICATOR_PLAY_SOUND_CUSTOM`__
-    - Play a ding when the cooldowns/indicators are done (excluding Sleep Progress, Block Breaking, Consumables and Storage Items)
-    - Config Key: `attack-indicator-play-sound-custom`
     - Values
         - Type: `Boolean`
         - Default: `false`
