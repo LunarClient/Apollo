@@ -185,17 +185,6 @@ public final class ModChat {
         .build();
 
     /**
-     * No documentation available.
-     *
-     * @since 1.0.0
-     */
-    public static final SimpleOption<Boolean> CHAT_PING_SOUND = SimpleOption.<Boolean>builder()
-        .node("chat", "chat-ping-sound").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
      * Requires the ping message to exactly contain your name.For example, if your name is Notch, this will ping on Notch but not Notch123.
      *
      * @since 1.1.6
@@ -532,6 +521,18 @@ public final class ModChat {
     public static final SimpleOption<Boolean> SHOW_BRACKETS = SimpleOption.<Boolean>builder()
         .comment("Adds square brackets around the timestamp")
         .node("chat", "show-brackets").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> CHAT_PING_SOUND = SimpleOption.<Boolean>builder()
+        .node("chat", "chat-ping-sound").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();

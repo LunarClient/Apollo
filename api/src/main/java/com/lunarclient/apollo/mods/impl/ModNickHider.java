@@ -45,44 +45,48 @@ public final class ModNickHider {
         .build();
 
     /**
-     * No documentation available.
+     * Replaces your Hypixel nick with your real name, or with your Nickname when Hide Your Real Name is on.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> HIDE_NAME = SimpleOption.<Boolean>builder()
+        .comment("Replaces your Hypixel nick with your real name, or with your Nickname when Hide Your Real Name is on")
         .node("nick-hider", "hide-name").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Replaces your real name with your Nickname.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> HIDE_REAL_NAME = SimpleOption.<Boolean>builder()
+        .comment("Replaces your real name with your Nickname")
         .node("nick-hider", "hide-real-name").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Replaces the names of other players with the Hidden Player Prefix and a number.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> HIDE_OTHERS_NAMES = SimpleOption.<Boolean>builder()
+        .comment("Replaces the names of other players with the Hidden Player Prefix and a number")
         .node("nick-hider", "hide-others-names").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Shows every hidden player as the prefix followed by the Hidden Player Suffix, instead of numbering them.
      *
      * @since 1.2.2
      */
     public static final SimpleOption<Boolean> CUSTOM_SUFFIX = SimpleOption.<Boolean>builder()
+        .comment("Shows every hidden player as the prefix followed by the Hidden Player Suffix, instead of numbering them")
         .node("nick-hider", "custom-suffix").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
@@ -100,33 +104,36 @@ public final class ModNickHider {
         .build();
 
     /**
-     * No documentation available.
+     * Shows you as Steve or Alex, or with a set skin from another player.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> HIDE_OWN_SKIN = SimpleOption.<Boolean>builder()
+        .comment("Shows you as Steve or Alex, or with a set skin from another player")
         .node("nick-hider", "hide-own-skin").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
+        .defaultValue(false)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Shows your own skin even when a server changes it, for example with a Hypixel nick.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> USE_REAL_SKIN = SimpleOption.<Boolean>builder()
+        .comment("Shows your own skin even when a server changes it, for example with a Hypixel nick")
         .node("nick-hider", "use-real-skin").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();
 
     /**
-     * No documentation available.
+     * Shows other players as Steve or Alex.
      *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> HIDE_OTHERS_SKIN = SimpleOption.<Boolean>builder()
+        .comment("Shows other players as Steve or Alex")
         .node("nick-hider", "hide-others-skin").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()

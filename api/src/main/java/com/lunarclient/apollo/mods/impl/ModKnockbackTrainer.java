@@ -74,6 +74,7 @@ public final class ModKnockbackTrainer {
      *
      * @since 1.2.9
      */
+    @Deprecated
     public static final SimpleOption<Boolean> FALLING_HIT_SOUND = SimpleOption.<Boolean>builder()
         .node("knockback-trainer", "falling-hit-sound").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
@@ -85,6 +86,7 @@ public final class ModKnockbackTrainer {
      *
      * @since 1.2.9
      */
+    @Deprecated
     public static final NumberOption<Float> FALLING_HIT_SOUND_VOLUME = NumberOption.<Float>number()
         .node("knockback-trainer", "falling-hit-sound-volume").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.0F)
