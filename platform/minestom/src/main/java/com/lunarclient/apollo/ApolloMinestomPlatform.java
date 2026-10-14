@@ -256,7 +256,7 @@ public final class ApolloMinestomPlatform implements ApolloPlatform {
 
     @Override
     public String getApolloVersion() {
-        return "1.2.9";
+        return "1.3.0";
     }
 
     @Override
