@@ -105,7 +105,7 @@ public final class ModPackDisplay {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> IGNORE_SERVER_PACK = SimpleOption.<Boolean>builder()
         .node("pack-display", "ignore-server-pack").type(TypeToken.get(Boolean.class))

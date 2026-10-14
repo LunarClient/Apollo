@@ -61,7 +61,7 @@ public final class ModOverlayMod {
     /**
      * Stop your hand from bobbing while holding a map.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> NO_MAP_BOBBING = SimpleOption.<Boolean>builder()
         .comment("Stop your hand from bobbing while holding a map.")
@@ -145,7 +145,7 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Float> FISHING_BOBBER_OVERLAY = NumberOption.<Float>number()
         .node("overlay-mod", "fishing-bobber-overlay").type(TypeToken.get(Float.class))
@@ -511,7 +511,7 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> XP_HOTBAR_TEXT_COLOR = SimpleOption.<Color>builder()
         .node("overlay-mod", "xp-hotbar-text-color").type(TypeToken.get(Color.class))
@@ -556,7 +556,7 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> CUSTOM_GUI_COLORS = SimpleOption.<Boolean>builder()
         .node("overlay-mod", "custom-gui-colors").type(TypeToken.get(Boolean.class))
@@ -567,7 +567,7 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> CONTAINER_TINT = SimpleOption.<Color>builder()
         .node("overlay-mod", "container-tint").type(TypeToken.get(Color.class))
@@ -578,7 +578,7 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> HOTBAR_TINT = SimpleOption.<Color>builder()
         .node("overlay-mod", "hotbar-tint").type(TypeToken.get(Color.class))
@@ -589,7 +589,7 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> MENU_TINT = SimpleOption.<Color>builder()
         .node("overlay-mod", "menu-tint").type(TypeToken.get(Color.class))
@@ -600,7 +600,7 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> GUI_TEXT_COLOR = SimpleOption.<Color>builder()
         .node("overlay-mod", "gui-text-color").type(TypeToken.get(Color.class))
@@ -611,7 +611,7 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> MENU_TEXT_COLOR = SimpleOption.<Color>builder()
         .node("overlay-mod", "menu-text-color").type(TypeToken.get(Color.class))
@@ -634,7 +634,7 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> HEADLESS_LLAMAS = SimpleOption.<Boolean>builder()
         .node("overlay-mod", "headless-l-lamas").type(TypeToken.get(Boolean.class))
@@ -645,7 +645,7 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> HEADLESS_CAMELS = SimpleOption.<Boolean>builder()
         .node("overlay-mod", "headless-camels").type(TypeToken.get(Boolean.class))

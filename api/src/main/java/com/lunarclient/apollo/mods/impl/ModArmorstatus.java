@@ -60,7 +60,7 @@ public final class ModArmorstatus {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> VANILLA_MODE = SimpleOption.<Boolean>builder()
         .node("armorstatus", "vanilla-mode").type(TypeToken.get(Boolean.class))
@@ -71,7 +71,7 @@ public final class ModArmorstatus {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> HOTBAR_ANCHOR = SimpleOption.<Boolean>builder()
         .node("armorstatus", "hotbar-anchor").type(TypeToken.get(Boolean.class))
@@ -82,7 +82,7 @@ public final class ModArmorstatus {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> ROUNDED_CORNERS = SimpleOption.<Boolean>builder()
         .node("armorstatus", "rounded-corners").type(TypeToken.get(Boolean.class))
@@ -93,7 +93,7 @@ public final class ModArmorstatus {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> HIDE_EMPTY_SLOTS = SimpleOption.<Boolean>builder()
         .node("armorstatus", "hide-empty-slots").type(TypeToken.get(Boolean.class))
@@ -228,7 +228,7 @@ public final class ModArmorstatus {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> LOW_DURABILITY_INDICATOR = SimpleOption.<Boolean>builder()
         .node("armorstatus", "low-durability-indicator").type(TypeToken.get(Boolean.class))
@@ -239,7 +239,7 @@ public final class ModArmorstatus {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Integer> LOW_DURABILITY_THRESHOLD = NumberOption.<Integer>number()
         .node("armorstatus", "low-durability-threshold").type(TypeToken.get(Integer.class))

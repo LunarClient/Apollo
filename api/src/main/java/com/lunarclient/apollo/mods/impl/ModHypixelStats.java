@@ -29,14 +29,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * Tracks stats across different Hypixel games.
  *
- * @since %release_version%
+ * @since 1.3.0
  */
 public final class ModHypixelStats {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("hypixel-stats", "enabled").type(TypeToken.get(Boolean.class))

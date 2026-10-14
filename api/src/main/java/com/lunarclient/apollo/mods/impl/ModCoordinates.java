@@ -129,7 +129,7 @@ public final class ModCoordinates {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Integer> DECIMAL_PLACES = NumberOption.<Integer>number()
         .node("coordinates", "decimal-places").type(TypeToken.get(Integer.class))

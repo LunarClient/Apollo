@@ -30,14 +30,14 @@ import io.leangen.geantyref.TypeToken;
 /**
  * Customize the locator bar's position, size, and displayed information.
  *
- * @since %release_version%
+ * @since 1.3.0
  */
 public final class ModLocatorBar {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("locator-bar", "enabled").type(TypeToken.get(Boolean.class))
@@ -48,7 +48,7 @@ public final class ModLocatorBar {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> HIDE_LOCATOR_BAR = SimpleOption.<Boolean>builder()
         .node("locator-bar", "hide-locator-bar").type(TypeToken.get(Boolean.class))
@@ -59,7 +59,7 @@ public final class ModLocatorBar {
     /**
      * Move and scale the locator bar like a HUD mod instead of keeping it in the hotbar.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> DETACHED = SimpleOption.<Boolean>builder()
         .comment("Move and scale the locator bar like a HUD mod instead of keeping it in the hotbar")
@@ -71,7 +71,7 @@ public final class ModLocatorBar {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("locator-bar", "scale").type(TypeToken.get(Float.class))
@@ -83,7 +83,7 @@ public final class ModLocatorBar {
     /**
      * Draw the head of a player instead of the colored dot.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> USE_PLAYER_HEADS = SimpleOption.<Boolean>builder()
         .comment("Draw the head of a player instead of the colored dot")
@@ -95,7 +95,7 @@ public final class ModLocatorBar {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Float> PLAYER_HEAD_SCALE = NumberOption.<Float>number()
         .node("locator-bar", "player-head-scale").type(TypeToken.get(Float.class))
@@ -107,7 +107,7 @@ public final class ModLocatorBar {
     /**
      * Draw an outline around the head with the dot color.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> PLAYER_HEAD_HIGHLIGHT = SimpleOption.<Boolean>builder()
         .comment("Draw an outline around the head with the dot color")
@@ -119,7 +119,7 @@ public final class ModLocatorBar {
     /**
      * Players beyond the range show as the colored dot.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> LIMIT_HEAD_RANGE = SimpleOption.<Boolean>builder()
         .comment("Players beyond the range show as the colored dot")
@@ -131,7 +131,7 @@ public final class ModLocatorBar {
     /**
      * The maximum distance in blocks at which player heads show.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Integer> PLAYER_HEAD_DISPLAY_RANGE = NumberOption.<Integer>number()
         .comment("The maximum distance in blocks at which player heads show")
@@ -144,7 +144,7 @@ public final class ModLocatorBar {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> SHOW_PLAYER_NAME = SimpleOption.<Boolean>builder()
         .node("locator-bar", "show-player-name").type(TypeToken.get(Boolean.class))
@@ -155,7 +155,7 @@ public final class ModLocatorBar {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Float> PLAYER_NAME_SCALE = NumberOption.<Float>number()
         .node("locator-bar", "player-name-scale").type(TypeToken.get(Float.class))
@@ -167,7 +167,7 @@ public final class ModLocatorBar {
     /**
      * Only draw the name of a player when you look toward them.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> ONLY_SHOW_NAME_WHEN_LOOKING_NEAR = SimpleOption.<Boolean>builder()
         .comment("Only draw the name of a player when you look toward them")
@@ -179,7 +179,7 @@ public final class ModLocatorBar {
     /**
      * Only draw the names of players within the range.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> LIMIT_NAME_RANGE = SimpleOption.<Boolean>builder()
         .comment("Only draw the names of players within the range")
@@ -191,7 +191,7 @@ public final class ModLocatorBar {
     /**
      * The maximum distance in blocks at which player names show.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Integer> PLAYER_NAME_DISPLAY_RANGE = NumberOption.<Integer>number()
         .comment("The maximum distance in blocks at which player names show")
@@ -204,7 +204,7 @@ public final class ModLocatorBar {
     /**
      * Color the player name with their team color, or with their dot color when they have no team.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> COLORED_PLAYER_NAME = SimpleOption.<Boolean>builder()
         .comment("Color the player name with their team color, or with their dot color when they have no team")
@@ -216,7 +216,7 @@ public final class ModLocatorBar {
     /**
      * When names overlap, only draw the name closest to the middle of the bar.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> HIDE_OVERLAPPING_NAMES = SimpleOption.<Boolean>builder()
         .comment("When names overlap, only draw the name closest to the middle of the bar")
@@ -228,7 +228,7 @@ public final class ModLocatorBar {
     /**
      * Cut names longer than 8 characters, but keep them different from other players.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> CUT_LONG_NAMES = SimpleOption.<Boolean>builder()
         .comment("Cut names longer than 8 characters, but keep them different from other players")
@@ -240,7 +240,7 @@ public final class ModLocatorBar {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> SHOW_DIRECTION = SimpleOption.<Boolean>builder()
         .node("locator-bar", "show-direction").type(TypeToken.get(Boolean.class))
@@ -251,7 +251,7 @@ public final class ModLocatorBar {
     /**
      * Show +Z, -Z, +X and -X instead of the direction letters.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> USE_COORDINATE_DIRECTIONS = SimpleOption.<Boolean>builder()
         .comment("Show +Z, -Z, +X and -X instead of the direction letters")
@@ -263,7 +263,7 @@ public final class ModLocatorBar {
     /**
      * Draw the dots or player heads. Turn this off to only show the names.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> SHOW_BAR_ICONS = SimpleOption.<Boolean>builder()
         .comment("Draw the dots or player heads. Turn this off to only show the names")
@@ -275,7 +275,7 @@ public final class ModLocatorBar {
     /**
      * Draw the waypoints on the xp bar instead of the locator bar.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> USE_XP_BAR = SimpleOption.<Boolean>builder()
         .comment("Draw the waypoints on the xp bar instead of the locator bar")
@@ -287,7 +287,7 @@ public final class ModLocatorBar {
     /**
      * Adds a shadow to text.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .comment("Adds a shadow to text")
@@ -299,7 +299,7 @@ public final class ModLocatorBar {
     /**
      * Only show the extra info while the peek keybind is held down.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> LOCATOR_BAR_PEEK = SimpleOption.<Boolean>builder()
         .comment("Only show the extra info while the peek keybind is held down")
@@ -311,7 +311,7 @@ public final class ModLocatorBar {
     /**
      * Hide the locator bar until you hold the peek keybind.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> ONLY_SHOW_WHILE_PEEKING = SimpleOption.<Boolean>builder()
         .comment("Hide the locator bar until you hold the peek keybind")

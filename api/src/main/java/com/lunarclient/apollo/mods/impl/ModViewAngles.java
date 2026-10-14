@@ -31,14 +31,14 @@ import java.awt.Color;
 /**
  * Display your yaw and pitch, with optional flight targets, speed, and altitude.
  *
- * @since %release_version%
+ * @since 1.3.0
  */
 public final class ModViewAngles {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("view-angles", "enabled").type(TypeToken.get(Boolean.class))
@@ -49,7 +49,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("view-angles", "scale").type(TypeToken.get(Float.class))
@@ -61,7 +61,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Integer> DECIMAL_PLACES = NumberOption.<Integer>number()
         .node("view-angles", "decimal-places").type(TypeToken.get(Integer.class))
@@ -73,7 +73,7 @@ public final class ModViewAngles {
     /**
      * Shows your left and right rotation.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> SHOW_YAW = SimpleOption.<Boolean>builder()
         .comment("Shows your left and right rotation.")
@@ -85,7 +85,7 @@ public final class ModViewAngles {
     /**
      * Shows how far you look up or down.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> SHOW_PITCH = SimpleOption.<Boolean>builder()
         .comment("Shows how far you look up or down.")
@@ -97,7 +97,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> OPTIMAL_PITCH_INDICATOR = SimpleOption.<Boolean>builder()
         .node("view-angles", "optimal-pitch-indicator").type(TypeToken.get(Boolean.class))
@@ -108,7 +108,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Float> ASCEND_TARGET = NumberOption.<Float>number()
         .node("view-angles", "ascend-target").type(TypeToken.get(Float.class))
@@ -120,7 +120,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Float> DESCEND_TARGET = NumberOption.<Float>number()
         .node("view-angles", "descend-target").type(TypeToken.get(Float.class))
@@ -132,7 +132,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> SHOW_SPEED = SimpleOption.<Boolean>builder()
         .node("view-angles", "show-speed").type(TypeToken.get(Boolean.class))
@@ -143,7 +143,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> SHOW_ALTITUDE = SimpleOption.<Boolean>builder()
         .node("view-angles", "show-altitude").type(TypeToken.get(Boolean.class))
@@ -154,7 +154,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> SHOW_IN_FIRST_PERSON = SimpleOption.<Boolean>builder()
         .node("view-angles", "show-in-first-person").type(TypeToken.get(Boolean.class))
@@ -165,7 +165,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> SHOW_IN_THIRD_PERSON = SimpleOption.<Boolean>builder()
         .node("view-angles", "show-in-third-person").type(TypeToken.get(Boolean.class))
@@ -176,7 +176,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> SHOW_WHILE_ELYTRA_FLYING_ONLY = SimpleOption.<Boolean>builder()
         .node("view-angles", "show-while-elytra-flying-only").type(TypeToken.get(Boolean.class))
@@ -187,7 +187,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> REVERSE_ORDER = SimpleOption.<Boolean>builder()
         .node("view-angles", "reverse-order").type(TypeToken.get(Boolean.class))
@@ -198,7 +198,7 @@ public final class ModViewAngles {
     /**
      * Adds a shadow to text.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .comment("Adds a shadow to text")
@@ -210,7 +210,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> BRACKETS = SimpleOption.<Boolean>builder()
         .node("view-angles", "brackets").type(TypeToken.get(Boolean.class))
@@ -221,7 +221,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> BRACKET_COLOR = SimpleOption.<Color>builder()
         .node("view-angles", "bracket-color").type(TypeToken.get(Color.class))
@@ -232,7 +232,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("view-angles", "background").type(TypeToken.get(Boolean.class))
@@ -243,7 +243,7 @@ public final class ModViewAngles {
     /**
      * If this is disabled the background will change size with the text.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> STATIC_BACKGROUND_WIDTH = SimpleOption.<Boolean>builder()
         .comment("If this is disabled the background will change size with the text.")
@@ -255,7 +255,7 @@ public final class ModViewAngles {
     /**
      * If this is disabled the background will change size with the text.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> STATIC_BACKGROUND_HEIGHT = SimpleOption.<Boolean>builder()
         .comment("If this is disabled the background will change size with the text.")
@@ -267,7 +267,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Integer> BACKGROUND_WIDTH = NumberOption.<Integer>number()
         .node("view-angles", "background-width").type(TypeToken.get(Integer.class))
@@ -279,7 +279,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Integer> BACKGROUND_HEIGHT = NumberOption.<Integer>number()
         .node("view-angles", "background-height").type(TypeToken.get(Integer.class))
@@ -291,7 +291,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("view-angles", "border").type(TypeToken.get(Boolean.class))
@@ -302,7 +302,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("view-angles", "border-thickness").type(TypeToken.get(Float.class))
@@ -314,7 +314,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("view-angles", "border-color").type(TypeToken.get(Color.class))
@@ -325,7 +325,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("view-angles", "background-color").type(TypeToken.get(Color.class))
@@ -336,7 +336,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> LABEL_COLOR = SimpleOption.<Color>builder()
         .node("view-angles", "label-color").type(TypeToken.get(Color.class))
@@ -347,7 +347,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> VALUE_COLOR = SimpleOption.<Color>builder()
         .node("view-angles", "value-color").type(TypeToken.get(Color.class))
@@ -358,7 +358,7 @@ public final class ModViewAngles {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("view-angles", "text-color").type(TypeToken.get(Color.class))

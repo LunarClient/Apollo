@@ -31,14 +31,14 @@ import java.awt.Color;
 /**
  * Block overlay and HUD display to help you build up to map height limits.
  *
- * @since %release_version%
+ * @since 1.3.0
  */
 public final class ModHeightLimit {
 
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> ENABLED = SimpleOption.<Boolean>builder()
         .node("height-limit", "enabled").type(TypeToken.get(Boolean.class))
@@ -49,7 +49,7 @@ public final class ModHeightLimit {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Float> SCALE = NumberOption.<Float>number()
         .node("height-limit", "scale").type(TypeToken.get(Float.class))
@@ -61,7 +61,7 @@ public final class ModHeightLimit {
     /**
      * How far around you the block overlay is drawn.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Integer> RENDER_RANGE = NumberOption.<Integer>number()
         .comment("How far around you the block overlay is drawn")
@@ -74,7 +74,7 @@ public final class ModHeightLimit {
     /**
      * Display height limit information on the HUD.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> HEIGHT_LIMIT_OVERLAY = SimpleOption.<Boolean>builder()
         .comment("Display height limit information on the HUD")
@@ -86,7 +86,7 @@ public final class ModHeightLimit {
     /**
      * Adds a shadow to text.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> TEXT_SHADOW = SimpleOption.<Boolean>builder()
         .comment("Adds a shadow to text")
@@ -98,7 +98,7 @@ public final class ModHeightLimit {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> BACKGROUND = SimpleOption.<Boolean>builder()
         .node("height-limit", "background").type(TypeToken.get(Boolean.class))
@@ -109,7 +109,7 @@ public final class ModHeightLimit {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> BORDER = SimpleOption.<Boolean>builder()
         .node("height-limit", "border").type(TypeToken.get(Boolean.class))
@@ -120,7 +120,7 @@ public final class ModHeightLimit {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final NumberOption<Float> BORDER_THICKNESS = NumberOption.<Float>number()
         .node("height-limit", "border-thickness").type(TypeToken.get(Float.class))
@@ -132,7 +132,7 @@ public final class ModHeightLimit {
     /**
      * Automatically determine text alignment from position. Disable to manually set alignment.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> AUTO_ALIGN = SimpleOption.<Boolean>builder()
         .comment("Automatically determine text alignment from position. Disable to manually set alignment")
@@ -144,7 +144,7 @@ public final class ModHeightLimit {
     /**
      * Distance changes color depending on how close you are to the height limit.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> AUTO_COLOR_DISTANCE = SimpleOption.<Boolean>builder()
         .comment("Distance changes color depending on how close you are to the height limit")
@@ -156,7 +156,7 @@ public final class ModHeightLimit {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> TITLE_COLOR = SimpleOption.<Color>builder()
         .node("height-limit", "title-color").type(TypeToken.get(Color.class))
@@ -167,7 +167,7 @@ public final class ModHeightLimit {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> TEXT_COLOR = SimpleOption.<Color>builder()
         .node("height-limit", "text-color").type(TypeToken.get(Color.class))
@@ -178,7 +178,7 @@ public final class ModHeightLimit {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> NUMBER_COLOR = SimpleOption.<Color>builder()
         .node("height-limit", "number-color").type(TypeToken.get(Color.class))
@@ -189,7 +189,7 @@ public final class ModHeightLimit {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("height-limit", "background-color").type(TypeToken.get(Color.class))
@@ -200,7 +200,7 @@ public final class ModHeightLimit {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("height-limit", "border-color").type(TypeToken.get(Color.class))

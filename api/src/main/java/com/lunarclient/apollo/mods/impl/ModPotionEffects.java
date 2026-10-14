@@ -95,7 +95,7 @@ public final class ModPotionEffects {
     /**
      * Use the vanilla spacing between each effect tile.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> VANILLA_SPACING = SimpleOption.<Boolean>builder()
         .comment("Use the vanilla spacing between each effect tile")
@@ -287,7 +287,7 @@ public final class ModPotionEffects {
     /**
      * Show effect duration with a progress bar in the inventory/hud.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> EFFECT_BARS = SimpleOption.<Boolean>builder()
         .comment("Show effect duration with a progress bar in the inventory/hud")
@@ -299,7 +299,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> EFFECT_BAR_VANILLA_HUD = SimpleOption.<Boolean>builder()
         .node("potion-effects", "effect-bar-vanilla-hud").type(TypeToken.get(Boolean.class))
@@ -310,7 +310,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> EFFECT_BAR_INVENTORY = SimpleOption.<Boolean>builder()
         .node("potion-effects", "effect-bar-inventory").type(TypeToken.get(Boolean.class))
@@ -321,7 +321,7 @@ public final class ModPotionEffects {
     /**
      * Show the duration bars on Lunar potion effect status huds.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> EFFECT_BAR_LUNAR_HUD = SimpleOption.<Boolean>builder()
         .comment("Show the duration bars on Lunar potion effect status huds")
@@ -333,7 +333,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> EFFECT_BAR_HIDE_AMBIENT = SimpleOption.<Boolean>builder()
         .node("potion-effects", "effect-bar-hide-ambient").type(TypeToken.get(Boolean.class))
@@ -344,7 +344,7 @@ public final class ModPotionEffects {
     /**
      * Do a gradient animation on the bar color.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> EFFECT_BAR_GRADIENT = SimpleOption.<Boolean>builder()
         .comment("Do a gradient animation on the bar color")
@@ -356,7 +356,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> EFFECT_BAR_CUSTOM_COLOR = SimpleOption.<Boolean>builder()
         .node("potion-effects", "effect-bar-custom-color").type(TypeToken.get(Boolean.class))
@@ -367,7 +367,7 @@ public final class ModPotionEffects {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> EFFECT_BAR_COLOR = SimpleOption.<Color>builder()
         .node("potion-effects", "effect-bar-color").type(TypeToken.get(Color.class))
@@ -537,7 +537,7 @@ public final class ModPotionEffects {
     /**
      * Keeps the mod at the vanilla position and scale. It can't be moved or scaled in the HUD editor while this is on.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> LOCK_TO_VANILLA_POSITION = SimpleOption.<Boolean>builder()
         .comment("Keeps the mod at the vanilla position and scale. It can't be moved or scaled in the HUD editor while this is on.")
@@ -549,7 +549,7 @@ public final class ModPotionEffects {
     /**
      * On always uses the Minecraft GUI scale for this mod, and Off always uses the Lunar UI scale.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> USE_MINECRAFT_GUISCALE = SimpleOption.<Boolean>builder()
         .comment("On always uses the Minecraft GUI scale for this mod, and Off always uses the Lunar UI scale.")

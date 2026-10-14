@@ -48,7 +48,7 @@ public final class ModTierTagger {
     /**
      * Put the secondary tier on the left of the name and the primary tier on the right.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> SWITCH_ORDER = SimpleOption.<Boolean>builder()
         .comment("Put the secondary tier on the left of the name and the primary tier on the right")
@@ -60,7 +60,7 @@ public final class ModTierTagger {
     /**
      * Put both tiers on one line above the nametag, instead of a line each.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> COMBINE_SEPARATE_NAMETAGS = SimpleOption.<Boolean>builder()
         .comment("Put both tiers on one line above the nametag, instead of a line each")

@@ -92,7 +92,7 @@ public final class ModSaturation {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Boolean> USE_INVERSE_COLOR = SimpleOption.<Boolean>builder()
         .node("saturation", "use-inverse-color").type(TypeToken.get(Boolean.class))
@@ -103,7 +103,7 @@ public final class ModSaturation {
     /**
      * No documentation available.
      *
-     * @since %release_version%
+     * @since 1.3.0
      */
     public static final SimpleOption<Color> SATURATION_COLOR = SimpleOption.<Color>builder()
         .node("saturation", "saturation-color").type(TypeToken.get(Color.class))
