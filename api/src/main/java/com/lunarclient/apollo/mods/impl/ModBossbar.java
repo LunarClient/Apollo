@@ -103,11 +103,24 @@ public final class ModBossbar {
         .build();
 
     /**
-     * No documentation available.
+     * Keeps the mod at the vanilla position and scale. It can't be moved or scaled in the HUD editor while this is on.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> LOCK_TO_VANILLA_POSITION = SimpleOption.<Boolean>builder()
+        .comment("Keeps the mod at the vanilla position and scale. It can't be moved or scaled in the HUD editor while this is on.")
+        .node("bossbar", "lock-to-vanilla-position").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * On always uses the Minecraft GUI scale for this mod, and Off always uses the Lunar UI scale.
      *
      * @since 1.1.2
      */
     public static final SimpleOption<Boolean> USE_MINECRAFT_GUISCALE = SimpleOption.<Boolean>builder()
+        .comment("On always uses the Minecraft GUI scale for this mod, and Off always uses the Lunar UI scale.")
         .node("bossbar", "use-minecraft-g-u-i-scale").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()

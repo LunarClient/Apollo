@@ -59,6 +59,18 @@ public final class ModMinimap {
         .build();
 
     /**
+     * Create a viewable image file on your pc of the discovered map areas.For singleplayer, it's saved in the world folderFor Multiplayer, it's saved in the .minecraft folder.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> MINIMAP_SAVE_AS_PICTURE_FILE = SimpleOption.<Boolean>builder()
+        .comment("Create a viewable image file on your pc of the discovered map areas.For singleplayer, it's saved in the world folderFor Multiplayer, it's saved in the .minecraft folder")
+        .node("minimap", "minimap-save-as-picture-file").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.0.0

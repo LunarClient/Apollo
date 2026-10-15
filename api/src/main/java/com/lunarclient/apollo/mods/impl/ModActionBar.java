@@ -57,6 +57,18 @@ public final class ModActionBar {
         .notifyClient()
         .build();
 
+    /**
+     * Keeps the mod at the vanilla position and scale. It can't be moved or scaled in the HUD editor while this is on.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> LOCK_TO_VANILLA_POSITION = SimpleOption.<Boolean>builder()
+        .comment("Keeps the mod at the vanilla position and scale. It can't be moved or scaled in the HUD editor while this is on.")
+        .node("action-bar", "lock-to-vanilla-position").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
     private ModActionBar() {
     }
 

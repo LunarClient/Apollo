@@ -1,0 +1,188 @@
+# Locator Bar
+
+Customize the locator bar's position, size, and displayed information.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleLocatorBarExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModLocatorBar.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HIDE_LOCATOR_BAR`__
+    - Config Key: `hide-locator-bar`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DETACHED`__
+    - Move and scale the locator bar like a HUD mod instead of keeping it in the hotbar
+    - Config Key: `detached`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SCALE`__
+    - Config Key: `scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.5F`
+
+- __`USE_PLAYER_HEADS`__
+    - Draw the head of a player instead of the colored dot
+    - Config Key: `use-player-heads`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`PLAYER_HEAD_SCALE`__
+    - Config Key: `player-head-scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `2.0F`
+
+- __`PLAYER_HEAD_HIGHLIGHT`__
+    - Draw an outline around the head with the dot color
+    - Config Key: `player-head-highlight`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`LIMIT_HEAD_RANGE`__
+    - Players beyond the range show as the colored dot
+    - Config Key: `limit-head-range`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PLAYER_HEAD_DISPLAY_RANGE`__
+    - The maximum distance in blocks at which player heads show
+    - Config Key: `player-head-display-range`
+    - Values
+        - Type: `Integer`
+        - Default: `100`
+        - Minimum: `16`
+        - Maximum: `332`
+
+- __`SHOW_PLAYER_NAME`__
+    - Config Key: `show-player-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PLAYER_NAME_SCALE`__
+    - Config Key: `player-name-scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `1.0F`
+
+- __`ONLY_SHOW_NAME_WHEN_LOOKING_NEAR`__
+    - Only draw the name of a player when you look toward them
+    - Config Key: `only-show-name-when-looking-near`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`LIMIT_NAME_RANGE`__
+    - Only draw the names of players within the range
+    - Config Key: `limit-name-range`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`PLAYER_NAME_DISPLAY_RANGE`__
+    - The maximum distance in blocks at which player names show
+    - Config Key: `player-name-display-range`
+    - Values
+        - Type: `Integer`
+        - Default: `100`
+        - Minimum: `16`
+        - Maximum: `332`
+
+- __`COLORED_PLAYER_NAME`__
+    - Color the player name with their team color, or with their dot color when they have no team
+    - Config Key: `colored-player-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`HIDE_OVERLAPPING_NAMES`__
+    - When names overlap, only draw the name closest to the middle of the bar
+    - Config Key: `hide-overlapping-names`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`CUT_LONG_NAMES`__
+    - Cut names longer than 8 characters, but keep them different from other players
+    - Config Key: `cut-long-names`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_DIRECTION`__
+    - Config Key: `show-direction`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`USE_COORDINATE_DIRECTIONS`__
+    - Show +Z, -Z, +X and -X instead of the direction letters
+    - Config Key: `use-coordinate-directions`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_BAR_ICONS`__
+    - Draw the dots or player heads. Turn this off to only show the names
+    - Config Key: `show-bar-icons`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`USE_XP_BAR`__
+    - Draw the waypoints on the xp bar instead of the locator bar
+    - Config Key: `use-xp-bar`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`TEXT_SHADOW`__
+    - Adds a shadow to text
+    - Config Key: `text-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`LOCATOR_BAR_PEEK`__
+    - Only show the extra info while the peek keybind is held down
+    - Config Key: `locator-bar-peek`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`ONLY_SHOW_WHILE_PEEKING`__
+    - Hide the locator bar until you hold the peek keybind
+    - Config Key: `only-show-while-peeking`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

@@ -70,6 +70,18 @@ public final class ModAttackIndicator {
         .build();
 
     /**
+     * Keeps the mod at the vanilla position and scale. It can't be moved or scaled in the HUD editor while this is on.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> LOCK_TO_VANILLA_POSITION = SimpleOption.<Boolean>builder()
+        .comment("Keeps the mod at the vanilla position and scale. It can't be moved or scaled in the HUD editor while this is on.")
+        .node("attack-indicator", "lock-to-vanilla-position").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.2.8
@@ -270,18 +282,6 @@ public final class ModAttackIndicator {
         .build();
 
     /**
-     * Play a ding when the weapon cooldowns are done.
-     *
-     * @since 1.2.8
-     */
-    public static final SimpleOption<Boolean> ATTACK_INDICATOR_PLAY_SOUND_VANILLA = SimpleOption.<Boolean>builder()
-        .comment("Play a ding when the weapon cooldowns are done")
-        .node("attack-indicator", "attack-indicator-play-sound-vanilla").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
      * No documentation available.
      *
      * @since 1.2.8
@@ -372,10 +372,24 @@ public final class ModAttackIndicator {
         .build();
 
     /**
+     * Play a ding when the weapon cooldowns are done.
+     *
+     * @since 1.2.8
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> ATTACK_INDICATOR_PLAY_SOUND_VANILLA = SimpleOption.<Boolean>builder()
+        .comment("Play a ding when the weapon cooldowns are done")
+        .node("attack-indicator", "attack-indicator-play-sound-vanilla").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * Play a ding when the cooldowns/indicators are done (excluding Sleep Progress, Block Breaking, Consumables and Storage Items).
      *
      * @since 1.2.8
      */
+    @Deprecated
     public static final SimpleOption<Boolean> ATTACK_INDICATOR_PLAY_SOUND_CUSTOM = SimpleOption.<Boolean>builder()
         .comment("Play a ding when the cooldowns/indicators are done (excluding Sleep Progress, Block Breaking, Consumables and Storage Items)")
         .node("attack-indicator", "attack-indicator-play-sound-custom").type(TypeToken.get(Boolean.class))
