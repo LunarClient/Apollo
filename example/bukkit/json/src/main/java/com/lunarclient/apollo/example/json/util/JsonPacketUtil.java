@@ -42,7 +42,7 @@ public final class JsonPacketUtil {
 
     private static final List<String> APOLLO_MODULES = Arrays.asList("auto_text_hotkey", "beam", "border", "chat", "colored_fire", "combat", "cooldown",
         "cosmetic", "entity", "glint", "glow", "hologram", "inventory", "limb", "marker", "mod_setting", "nametag", "nick_hider", "notification", "pay_now", "packet_enrichment",
-        "rich_presence", "saturation", "server_link", "server_rule", "staff_mod", "stopwatch", "team", "tebex", "title", "tnt_countdown", "transfer", "vignette", "waypoint"
+        "rich_presence", "saturation", "server_link", "server_rule", "staff_mod", "stopwatch", "team", "tebex", "title", "tnt_countdown", "totem_counter", "transfer", "vignette", "waypoint"
     );
 
     // Module Id -> Option key -> Object
@@ -79,6 +79,7 @@ public final class JsonPacketUtil {
         CONFIG_MODULE_PROPERTIES.put("server_rule", "crystal-optimizer", false);
         CONFIG_MODULE_PROPERTIES.put("tnt_countdown", "tnt-ticks", 80);
         CONFIG_MODULE_PROPERTIES.put("title", "clear-title-on-server-switch", false);
+        CONFIG_MODULE_PROPERTIES.put("totem_counter", "disable-local-tracking", false);
         CONFIG_MODULE_PROPERTIES.put("waypoint", "server-handles-waypoints", false);
     }
 

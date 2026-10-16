@@ -88,6 +88,9 @@ public class ApolloRoundtripJsonListener implements PluginMessageListener {
         } else if ("lunarclient.apollo.modsetting.v1.InstalledModsResponse".equals(type)) {
             UUID requestId = UUID.fromString(payload.get("request_id").getAsString().replace("+", "-"));
             this.parseModGroups(requestId, payload);
+        } else if ("lunarclient.apollo.modsetting.v1.ModStatusResponse".equals(type)) {
+            UUID requestId = UUID.fromString(payload.get("request_id").getAsString().replace("+", "-"));
+            this.parseModStatus(requestId, payload);
         }
     }
 
@@ -149,6 +152,19 @@ public class ApolloRoundtripJsonListener implements PluginMessageListener {
                         accumulated.add(mod);
                     }
                 }
+            }
+        }
+
+        this.handlePage(requestId, accumulated, response);
+    }
+
+    private void parseModStatus(UUID requestId, JsonObject response) {
+        List<JsonObject> accumulated = this.paginatedAccumulator.computeIfAbsent(requestId, k -> new ArrayList<>());
+
+        JsonArray modOptions = response.getAsJsonArray("mod_options");
+        if (modOptions != null) {
+            for (JsonElement option : modOptions) {
+                accumulated.add(option.getAsJsonObject());
             }
         }
 

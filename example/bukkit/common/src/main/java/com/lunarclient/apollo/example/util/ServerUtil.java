@@ -34,6 +34,15 @@ public final class ServerUtil {
         }
     }
 
+    public static boolean hasEntityResurrectEvent() {
+        try {
+            Class.forName("org.bukkit.event.entity.EntityResurrectEvent");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
     private ServerUtil() {
     }
 

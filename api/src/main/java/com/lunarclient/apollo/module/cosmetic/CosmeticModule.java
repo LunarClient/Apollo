@@ -26,6 +26,7 @@ package com.lunarclient.apollo.module.cosmetic;
 import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
+import com.lunarclient.apollo.module.RestrictedAccess;
 import com.lunarclient.apollo.module.cosmetic.options.BodyOptions;
 import com.lunarclient.apollo.module.cosmetic.options.CloakOptions;
 import com.lunarclient.apollo.module.cosmetic.options.CosmeticOptions;
@@ -41,8 +42,11 @@ import org.jetbrains.annotations.Range;
 /**
  * Represents the cosmetic module.
  *
+ * <p>Access to this module is {@link RestrictedAccess restricted}.</p>
+ *
  * @since 1.2.6
  */
+@RestrictedAccess
 @ApiStatus.NonExtendable
 @ModuleDefinition(id = "cosmetic", name = "Cosmetic")
 public abstract class CosmeticModule extends ApolloModule {

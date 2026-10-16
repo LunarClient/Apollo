@@ -69,6 +69,17 @@ public final class ModInventoryMod {
         .notifyClient()
         .build();
 
+    /**
+     * No documentation available.
+     *
+     * @since 1.3.0
+     */
+    public static final SimpleOption<Boolean> CURSOR_RESET_CHEST_SCREENS_ONLY = SimpleOption.<Boolean>builder()
+        .node("inventory-mod", "cursor-reset-chest-screens-only").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
     private ModInventoryMod() {
     }
 

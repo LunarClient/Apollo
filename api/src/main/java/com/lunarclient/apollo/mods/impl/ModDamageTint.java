@@ -88,6 +88,7 @@ public final class ModDamageTint {
      *
      * @since 1.0.0
      */
+    @Deprecated
     public static final SimpleOption<Boolean> HEARTBEAT_AUDIO = SimpleOption.<Boolean>builder()
         .comment("Plays a heartbeat, becoming faster the lower your health.")
         .node("damage-tint", "heartbeat-audio").type(TypeToken.get(Boolean.class))
@@ -100,6 +101,7 @@ public final class ModDamageTint {
      *
      * @since 1.2.2
      */
+    @Deprecated
     public static final NumberOption<Float> HEARTBEAT_AUDIO_VOLUME = NumberOption.<Float>number()
         .node("damage-tint", "heartbeat-audio-volume").type(TypeToken.get(Float.class))
         .min(0.0F).max(1.0F)

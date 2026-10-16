@@ -39,6 +39,7 @@ import com.lunarclient.apollo.example.module.impl.InventoryExample;
 import com.lunarclient.apollo.mods.impl.ModMinimap;
 import com.lunarclient.apollo.mods.impl.ModWaypoints;
 import com.lunarclient.apollo.module.inventory.InventoryModule;
+import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.HashSet;
 import java.util.Optional;
@@ -55,6 +56,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class InventoryApiExample extends InventoryExample implements ApolloListener, Listener {
 
     private final InventoryModule inventoryModule = Apollo.getModuleManager().getModule(InventoryModule.class);
+    private final ModSettingModule modSettingModule = Apollo.getModuleManager().getModule(ModSettingModule.class);
 
     private final Set<UUID> minigameViewers = new HashSet<>();
 
@@ -77,6 +79,11 @@ public class InventoryApiExample extends InventoryExample implements ApolloListe
     public void displayMinigameLayoutExample(Player viewer) {
         this.minigameViewers.add(viewer.getUniqueId());
         MinigameLayout.display(this.inventoryModule, viewer);
+
+        // Show Map / Waypoints follow the player's mod settings (private Mod Status API)
+        Apollo.getPlayerManager().getPlayer(viewer.getUniqueId()).ifPresent(apolloPlayer -> this.modSettingModule
+            .requestModStatus(apolloPlayer)
+            .onSuccess(response -> this.inventoryModule.displayInventoryButtons(apolloPlayer, MinigameLayout.modButtons(apolloPlayer))));
     }
 
     @Override
@@ -120,6 +127,7 @@ public class InventoryApiExample extends InventoryExample implements ApolloListe
     }
 
     // Update Minigame layout if the player toggles their Minimap or Waypoint mod
+    // ApolloUpdateModOptionEvent is part of the private Mod Status API: https://lunarclient.dev/apollo/developers/private-modules/modstatus
     @Listen
     private void onApolloUpdateModOption(ApolloUpdateModOptionEvent event) {
         String optionKey = event.getOption().getKey();
@@ -127,15 +135,12 @@ public class InventoryApiExample extends InventoryExample implements ApolloListe
             return;
         }
 
-        UUID playerIdentifier = event.getPlayer().getUniqueId();
-        if (!this.minigameViewers.contains(playerIdentifier)) {
+        ApolloPlayer apolloPlayer = event.getPlayer();
+        if (!this.minigameViewers.contains(apolloPlayer.getUniqueId())) {
             return;
         }
 
-        Player viewer = Bukkit.getPlayer(playerIdentifier);
-        if (viewer != null) {
-            MinigameLayout.display(this.inventoryModule, viewer);
-        }
+        this.inventoryModule.displayInventoryButtons(apolloPlayer, MinigameLayout.modButtons(apolloPlayer));
     }
 
 }

@@ -39,8 +39,8 @@ public class StaffModJsonExample extends StaffModExample {
             return;
         }
 
-        // 1 = xray
-        JsonArray staffMods = Stream.of(1)
+        // 1 = xray, 2 = bhop, 3 = nametags
+        JsonArray staffMods = Stream.of(1, 2, 3)
             .map(JsonPrimitive::new)
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 
@@ -54,8 +54,8 @@ public class StaffModJsonExample extends StaffModExample {
 
     @Override
     public void disableStaffModsExample(Player viewer) {
-        // 1 = xray
-        JsonArray staffMods = Stream.of(1)
+        // 1 = xray, 2 = bhop, 3 = nametags
+        JsonArray staffMods = Stream.of(1, 2, 3)
             .map(JsonPrimitive::new)
             .collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
 

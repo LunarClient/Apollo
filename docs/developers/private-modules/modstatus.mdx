@@ -1,0 +1,181 @@
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+
+# Mod Status
+
+## Overview
+
+The Mod Status API is part of the [Mod Setting](/apollo/developers/modules/modsetting) module and provides a simple way to retrieve the **current** value of any Lunar Client mod or setting within a mod for a player.
+
+- Request the player's current mod settings
+  - The response lists every mod option the player has changed from its default value, split into pages
+  - Read the value of any mod option afterwards, such as whether a mod is enabled or the minimap scale
+- Listen for updates
+  - Get notified whenever the value of a player's mod option changes, including changes made by server overrides
+
+<Callout type="important">
+  The Mod Status API is a **private feature** of the public Mod Setting module and not publicly available.
+  To use this feature, you must be granted access by the Lunar Client team. [Learn More](/apollo/developers/private-modules)
+</Callout>
+
+## Integration
+
+### Sample Code
+
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+<Callout type="info">
+**Apollo API examples.** See [General](/apollo/developers/general) for common patterns and helpers.
+</Callout>
+
+**Request Mod Status**
+
+```java
+public void requestModStatusExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    if (!apolloPlayerOpt.isPresent()) {
+        viewer.sendMessage("Join with Lunar Client to test this feature!");
+        return;
+    }
+
+    this.modSettingModule.requestModStatus(apolloPlayerOpt.get())
+        .onSuccess(response -> {
+            List<String> options = response.getElements()
+                .stream().map(status -> status.getOption().getKey() + "=" + status.getValue())
+                .collect(Collectors.toList());
+
+            viewer.sendMessage("Found " + options.size() + " changed options: " + options);
+        })
+        .onFailure(exception -> viewer.sendMessage("Failed to receive a response in time."));
+}
+```
+
+**Retrieve the current value for options**
+
+`getStatus` returns the values from the latest mod status response and any live updates since.
+
+```java
+private final ModSettingModule modSettingModule = Apollo.getModuleManager().getModule(ModSettingModule.class);
+
+private void printOptionStatusExample(Player player) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.requestModStatus(apolloPlayer)
+        .onSuccess(response -> {
+            // https://lunarclient.dev/apollo/developers/mods/waypoints#available-options
+            boolean waypointsEnabled = this.modSettingModule.getStatus(apolloPlayer, ModWaypoints.ENABLED);
+
+            // https://lunarclient.dev/apollo/developers/mods/minimap#available-options
+            float minimapScale = this.modSettingModule.getStatus(apolloPlayer, ModMinimap.SCALE);
+
+            // https://lunarclient.dev/apollo/developers/mods/fov#available-options
+            int fovDefaultFov = this.modSettingModule.getStatus(apolloPlayer, ModFov.DEFAULT_FOV);
+
+            apolloPlayer.sendMessage(Component.text("Waypoints Enabled: ")
+                .append(Component.text(waypointsEnabled)));
+
+            apolloPlayer.sendMessage(Component.text("Minimap Scale: ")
+                .append(Component.text(minimapScale)));
+
+            apolloPlayer.sendMessage(Component.text("Fov Default Fov: ")
+                .append(Component.text(fovDefaultFov)));
+        })
+        .onFailure(exception -> apolloPlayer.sendMessage(Component.text("Failed to receive a response in time."))));
+}
+```
+
+**Listening for Updates**
+
+Apollo fires the [ApolloUpdateModOptionEvent](/apollo/developers/events) whenever a Lunar Client mod option is updated. It is not fired for the options listed in a mod status response.
+
+```java
+import com.lunarclient.apollo.event.ApolloListener;
+import com.lunarclient.apollo.event.EventBus;
+import com.lunarclient.apollo.event.Listen;
+import com.lunarclient.apollo.event.modsetting.ApolloUpdateModOptionEvent;
+import java.util.Objects;
+import net.kyori.adventure.text.Component;
+
+public class ApolloModStatusExample implements ApolloListener {
+
+    public ApolloModStatusExample() {
+        EventBus.getBus().register(this);
+    }
+
+    @Listen
+    private void onApolloUpdateModOption(ApolloUpdateModOptionEvent event) {
+        event.getPlayer().sendMessage(Component.text(event.getOption().getKey())
+            .append(Component.text(" was updated to "))
+            .append(Component.text(Objects.toString(event.getValue()))));
+    }
+
+}
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight Protobuf examples.** See [Lightweight Protobuf](/apollo/developers/lightweight/protobuf) for setup, and [Roundtrip Packets](/apollo/developers/lightweight/protobuf/roundtrip-packets) for `ApolloRoundtripProtoListener`.
+</Callout>
+
+**Request Mod Status**
+
+```java
+public void requestModStatusExample(Player viewer) {
+    UUID requestId = UUID.randomUUID();
+
+    ModStatusRequest request = ModStatusRequest.newBuilder()
+        .setRequestId(ByteString.copyFromUtf8(requestId.toString()))
+        .build();
+
+    ApolloRoundtripProtoListener.getInstance().sendModStatusRequest(viewer, requestId, request)
+        .thenAccept(modOptions -> {
+            List<String> keys = modOptions.stream()
+                .map(ModOptionStatus::getKey)
+                .collect(Collectors.toList());
+
+            viewer.sendMessage("Found " + keys.size() + " changed options: " + keys);
+        }).exceptionally(throwable -> {
+            viewer.sendMessage("Failed to receive a response in time.");
+            return null;
+        });
+}
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight JSON examples.** See [Lightweight JSON](/apollo/developers/lightweight/json) for setup, and [Roundtrip Packets](/apollo/developers/lightweight/json/roundtrip-packets) for `ApolloRoundtripJsonListener`.
+</Callout>
+
+**Request Mod Status**
+
+```java
+public void requestModStatusExample(Player viewer) {
+    UUID requestId = UUID.randomUUID();
+
+    ApolloRoundtripJsonListener.getInstance()
+        .sendPaginatedRequest(viewer, requestId, new JsonObject(), "lunarclient.apollo.modsetting.v1.ModStatusRequest")
+        .thenAccept(options -> {
+            List<String> keys = options.stream()
+                .map(option -> option.get("key").getAsString())
+                .collect(Collectors.toList());
+
+            viewer.sendMessage("Found " + keys.size() + " changed options: " + keys);
+        }).exceptionally(throwable -> {
+            viewer.sendMessage("Failed to receive a response in time.");
+            return null;
+        });
+}
+```
+
+</Tab>
+
+</Tabs>

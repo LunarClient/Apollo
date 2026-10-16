@@ -23,7 +23,6 @@
  */
 package com.lunarclient.apollo.player;
 
-import com.google.protobuf.Value;
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.client.version.LunarClientVersion;
 import com.lunarclient.apollo.client.version.MinecraftVersion;
@@ -31,8 +30,6 @@ import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.player.ApolloPlayerHandshakeEvent;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
-import com.lunarclient.apollo.module.modsetting.ModSettingModule;
-import com.lunarclient.apollo.module.modsettings.ModSettingModuleImpl;
 import com.lunarclient.apollo.module.paynow.PayNowEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.network.NetworkOptions;
@@ -148,15 +145,6 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
         apolloPlayer.setLunarClientVersion(lunarClientVersion);
         apolloPlayer.setTebexEmbeddedCheckoutSupport(tebexEmbeddedCheckoutSupport);
         apolloPlayer.setPayNowEmbeddedCheckoutSupport(payNowEmbeddedCheckoutSupport);
-
-        Map<String, Value> modStatus = message.getModStatusMap();
-        if (!modStatus.isEmpty()) {
-            ModSettingModuleImpl modSettingModule = (ModSettingModuleImpl) Apollo.getModuleManager().getModule(ModSettingModule.class);
-
-            if (modSettingModule.isEnabled()) {
-                modSettingModule.updateOptions(apolloPlayer, modStatus, false);
-            }
-        }
 
         ApolloPlayerHandshakeEvent event = new ApolloPlayerHandshakeEvent(
             player, minecraftVersion, lunarClientVersion, new ArrayList<>(),

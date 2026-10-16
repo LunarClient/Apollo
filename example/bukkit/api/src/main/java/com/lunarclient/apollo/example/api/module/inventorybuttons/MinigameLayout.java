@@ -42,7 +42,9 @@ import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.awt.Color;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -160,77 +162,84 @@ public final class MinigameLayout {
                 .onClick(ApolloButtonAction.runCommand("/settings"))
                 .build();
 
-            ModSettingModule modSettingModule = Apollo.getModuleManager().getModule(ModSettingModule.class);
-            boolean minimapEnabled = modSettingModule.getStatus(apolloPlayer, ModMinimap.ENABLED);
-            boolean waypointsEnabled = modSettingModule.getStatus(apolloPlayer, ModWaypoints.ENABLED);
-
-            InventoryButton.InventoryButtonBuilder<?, ?> showMapBuilder = InventoryButton.builder()
-                .id("show-map")
-                .inventoryType(InventoryType.PLAYER)
-                .box(InventoryButtonBox.RIGHT)
-                .position(HudPosition.of(6, 52))
-                .size(InventoryButton.SIZE_WIDE)
-                .shape(ApolloButtonShape.ROUNDED_SQUARE)
-                .content(ApolloButtonContent.builder()
-                    .append(ItemStackIcon.builder()
-                        .itemName("FILLED_MAP")
-                        .build())
-                    .append(Component.text("Show Map"))
-                    .scale(1.0F)
-                    .build());
-
-            if (minimapEnabled) {
-                showMapBuilder
-                    .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
-                    .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
-                    .tooltip(ApolloButtonTooltip.of(
-                        Component.text("Show Map", NamedTextColor.AQUA),
-                        Component.text("Open the fullscreen minimap view", NamedTextColor.GRAY)))
-                    .onClick(ApolloButtonAction.clientAction(ApolloButtonClientAction.OPEN_MINIMAP_VIEW));
-            } else {
-                showMapBuilder
-                    .backgroundColor(new Color(224, 64, 64, 128))
-                    .borderColor(new Color(255, 200, 200, 140))
-                    .tooltip(ApolloButtonTooltip.of(Component.text("Minimap mod must be enabled", NamedTextColor.RED)));
-            }
-
-            InventoryButton showMap = showMapBuilder.build();
-
-            InventoryButton.InventoryButtonBuilder<?, ?> waypointsBuilder = InventoryButton.builder()
-                .id("waypoints")
-                .inventoryType(InventoryType.PLAYER)
-                .box(InventoryButtonBox.RIGHT)
-                .position(HudPosition.of(6, 84))
-                .size(InventoryButton.SIZE_WIDE)
-                .shape(ApolloButtonShape.ROUNDED_SQUARE)
-                .content(ApolloButtonContent.builder()
-                    .append(ItemStackIcon.builder()
-                        .itemName("LODESTONE")
-                        .build())
-                    .append(Component.text("Waypoints"))
-                    .scale(1.0F)
-                    .build());
-
-            if (waypointsEnabled) {
-                waypointsBuilder
-                    .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
-                    .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
-                    .tooltip(ApolloButtonTooltip.of(
-                        Component.text("Waypoints", NamedTextColor.GOLD),
-                        Component.text("Manage your waypoints", NamedTextColor.GRAY)))
-                    .onClick(ApolloButtonAction.clientAction(ApolloButtonClientAction.OPEN_WAYPOINTS_MENU));
-            } else {
-                waypointsBuilder
-                    .backgroundColor(new Color(224, 64, 64, 128))
-                    .borderColor(new Color(255, 200, 200, 140))
-                    .tooltip(ApolloButtonTooltip.of(Component.text("Waypoints mod must be enabled", NamedTextColor.RED)));
-            }
-
-            InventoryButton waypoints = waypointsBuilder.build();
-
-            inventoryModule.displayInventoryButtons(apolloPlayer, Arrays.asList(mapInfo, kills, lobby,
-                profile, settings, showMap, waypoints));
+            List<InventoryButton> buttons = new ArrayList<>(Arrays.asList(mapInfo, kills, lobby, profile, settings));
+            buttons.addAll(modButtons(apolloPlayer));
+            inventoryModule.displayInventoryButtons(apolloPlayer, buttons);
         });
+    }
+
+    // Displaying these again with the same ids replaces the previous Show Map / Waypoints buttons
+    public static List<InventoryButton> modButtons(ApolloPlayer apolloPlayer) {
+        // getStatus is part of the private Mod Status API: https://lunarclient.dev/apollo/developers/private-modules/modstatus
+        ModSettingModule modSettingModule = Apollo.getModuleManager().getModule(ModSettingModule.class);
+        boolean minimapEnabled = modSettingModule.getStatus(apolloPlayer, ModMinimap.ENABLED);
+        boolean waypointsEnabled = modSettingModule.getStatus(apolloPlayer, ModWaypoints.ENABLED);
+
+        InventoryButton.InventoryButtonBuilder<?, ?> showMapBuilder = InventoryButton.builder()
+            .id("show-map")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 52))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("FILLED_MAP")
+                    .build())
+                .append(Component.text("Show Map"))
+                .scale(1.0F)
+                .build());
+
+        if (minimapEnabled) {
+            showMapBuilder
+                .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+                .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+                .tooltip(ApolloButtonTooltip.of(
+                    Component.text("Show Map", NamedTextColor.AQUA),
+                    Component.text("Open the fullscreen minimap view", NamedTextColor.GRAY)))
+                .onClick(ApolloButtonAction.clientAction(ApolloButtonClientAction.OPEN_MINIMAP_VIEW));
+        } else {
+            showMapBuilder
+                .backgroundColor(new Color(224, 64, 64, 128))
+                .borderColor(new Color(255, 200, 200, 140))
+                .tooltip(ApolloButtonTooltip.of(Component.text("Minimap mod must be enabled", NamedTextColor.RED)));
+        }
+
+        InventoryButton showMap = showMapBuilder.build();
+
+        InventoryButton.InventoryButtonBuilder<?, ?> waypointsBuilder = InventoryButton.builder()
+            .id("waypoints")
+            .inventoryType(InventoryType.PLAYER)
+            .box(InventoryButtonBox.RIGHT)
+            .position(HudPosition.of(6, 84))
+            .size(InventoryButton.SIZE_WIDE)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .content(ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("LODESTONE")
+                    .build())
+                .append(Component.text("Waypoints"))
+                .scale(1.0F)
+                .build());
+
+        if (waypointsEnabled) {
+            waypointsBuilder
+                .backgroundColor(InventoryButton.DEFAULT_BACKGROUND_COLOR)
+                .borderColor(InventoryButton.DEFAULT_BORDER_COLOR)
+                .tooltip(ApolloButtonTooltip.of(
+                    Component.text("Waypoints", NamedTextColor.GOLD),
+                    Component.text("Manage your waypoints", NamedTextColor.GRAY)))
+                .onClick(ApolloButtonAction.clientAction(ApolloButtonClientAction.OPEN_WAYPOINTS_MENU));
+        } else {
+            waypointsBuilder
+                .backgroundColor(new Color(224, 64, 64, 128))
+                .borderColor(new Color(255, 200, 200, 140))
+                .tooltip(ApolloButtonTooltip.of(Component.text("Waypoints mod must be enabled", NamedTextColor.RED)));
+        }
+
+        InventoryButton waypoints = waypointsBuilder.build();
+
+        return Arrays.asList(showMap, waypoints);
     }
 
     private static int getKills(ApolloPlayer apolloViewer) {

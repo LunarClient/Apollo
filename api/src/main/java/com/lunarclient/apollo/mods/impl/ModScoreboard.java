@@ -116,6 +116,18 @@ public final class ModScoreboard {
         .build();
 
     /**
+     * Keeps the mod at the vanilla position and scale. It can't be moved or scaled in the HUD editor while this is on.
+     *
+     * @since 1.3.0
+     */
+    public static final SimpleOption<Boolean> LOCK_TO_VANILLA_POSITION = SimpleOption.<Boolean>builder()
+        .comment("Keeps the mod at the vanilla position and scale. It can't be moved or scaled in the HUD editor while this is on.")
+        .node("scoreboard", "lock-to-vanilla-position").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.2.9

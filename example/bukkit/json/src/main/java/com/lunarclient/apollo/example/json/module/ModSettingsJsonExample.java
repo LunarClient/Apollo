@@ -83,4 +83,22 @@ public class ModSettingsJsonExample extends ModSettingsExample {
             });
     }
 
+    @Override
+    public void requestModStatusExample(Player viewer) {
+        UUID requestId = UUID.randomUUID();
+
+        ApolloRoundtripJsonListener.getInstance()
+            .sendPaginatedRequest(viewer, requestId, new JsonObject(), "lunarclient.apollo.modsetting.v1.ModStatusRequest")
+            .thenAccept(options -> {
+                List<String> keys = options.stream()
+                    .map(option -> option.get("key").getAsString())
+                    .collect(Collectors.toList());
+
+                viewer.sendMessage("Found " + keys.size() + " changed options: " + keys);
+            }).exceptionally(throwable -> {
+                viewer.sendMessage("Failed to receive a response in time.");
+                return null;
+            });
+    }
+
 }

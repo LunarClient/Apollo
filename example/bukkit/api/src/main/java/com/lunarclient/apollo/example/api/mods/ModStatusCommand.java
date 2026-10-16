@@ -25,10 +25,10 @@ package com.lunarclient.apollo.example.api.mods;
 
 import com.lunarclient.apollo.Apollo;
 import com.lunarclient.apollo.ApolloManager;
+import com.lunarclient.apollo.module.modsetting.ModOptionStatus;
 import com.lunarclient.apollo.module.modsetting.ModSettingModule;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.player.ApolloPlayer;
-import java.util.Map;
 import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -86,20 +86,22 @@ public class ModStatusCommand implements CommandExecutor {
     }
 
     private void sendCurrent(CommandSender sender, ApolloPlayer target) {
-        Map<String, Object> playerOptions = ApolloManager.getModsManager().getPlayerOptions().getPlayerOptions().get(target.getUniqueId());
+        this.modSettingModule.requestModStatus(target)
+            .onSuccess(response -> {
+                sender.sendMessage("-------------------------------------");
+                sender.sendMessage("Target: " + target.getName());
+                sender.sendMessage("");
 
-        sender.sendMessage("-------------------------------------");
-        sender.sendMessage("Target: " + target.getName());
-        sender.sendMessage("");
+                if (!response.getElements().isEmpty()) {
+                    for (ModOptionStatus status : response.getElements()) {
+                        sender.sendMessage(" - " + status.getOption().getKey() + "=" + status.getValue());
+                    }
+                } else {
+                    sender.sendMessage("No options found!");
+                }
 
-        if (playerOptions != null && !playerOptions.isEmpty()) {
-            for (Map.Entry<String, Object> entry : playerOptions.entrySet()) {
-                sender.sendMessage(" - " + entry.getKey() + "=" + entry.getValue());
-            }
-        } else {
-            sender.sendMessage("No options found!");
-        }
-
-        sender.sendMessage("-------------------------------------");
+                sender.sendMessage("-------------------------------------");
+            })
+            .onFailure(exception -> sender.sendMessage("Failed to receive a response in time."));
     }
 }

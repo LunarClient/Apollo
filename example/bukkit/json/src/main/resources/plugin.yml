@@ -1,6 +1,6 @@
 name: Apollo-Json-Example
 main: com.lunarclient.apollo.example.json.ApolloJsonExamplePlatform
-version: 1.2.9
+version: 1.3.0
 author: Moonsworth
 softdepend: [ Apollo-Bukkit ]
 api-version: 1.13
@@ -72,6 +72,8 @@ commands:
         description: "Titles!"
     tntcountdown:
         description: "TNT Countdown!"
+    totemcounter:
+        description: "Totem Counter!"
     transfer:
         description: "Transfer!"
     vignette:

@@ -1,0 +1,118 @@
+# Height Limit
+
+Block overlay and HUD display to help you build up to map height limits
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleHeightLimitExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModHeightLimit.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SCALE`__
+    - Config Key: `scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.25F`
+        - Maximum: `5.0F`
+
+- __`RENDER_RANGE`__
+    - How far around you the block overlay is drawn
+    - Config Key: `render-range`
+    - Values
+        - Type: `Integer`
+        - Default: `4`
+        - Minimum: `1`
+        - Maximum: `8`
+
+- __`HEIGHT_LIMIT_OVERLAY`__
+    - Display height limit information on the HUD
+    - Config Key: `height-limit-overlay`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TEXT_SHADOW`__
+    - Adds a shadow to text
+    - Config Key: `text-shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BACKGROUND`__
+    - Config Key: `background`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BORDER`__
+    - Config Key: `border`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BORDER_THICKNESS`__
+    - Config Key: `border-thickness`
+    - Values
+        - Type: `Float`
+        - Default: `0.5F`
+        - Minimum: `0.5F`
+        - Maximum: `3.0F`
+
+- __`AUTO_ALIGN`__
+    - Automatically determine text alignment from position. Disable to manually set alignment
+    - Config Key: `auto-align`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`AUTO_COLOR_DISTANCE`__
+    - Distance changes color depending on how close you are to the height limit
+    - Config Key: `auto-color-distance`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`TITLE_COLOR`__
+    - Config Key: `title-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFF55`
+
+- __`TEXT_COLOR`__
+    - Config Key: `text-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`NUMBER_COLOR`__
+    - Config Key: `number-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF55FF55`
+
+- __`BACKGROUND_COLOR`__
+    - Config Key: `background-color`
+    - Values
+        - Type: `String`
+        - Default: `#6F000000`
+
+- __`BORDER_COLOR`__
+    - Config Key: `border-color`
+    - Values
+        - Type: `String`
+        - Default: `#9F000000`
+

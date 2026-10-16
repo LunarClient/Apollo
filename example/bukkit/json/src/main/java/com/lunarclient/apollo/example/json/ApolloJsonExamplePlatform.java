@@ -55,6 +55,7 @@ import com.lunarclient.apollo.example.json.module.TeamJsonExample;
 import com.lunarclient.apollo.example.json.module.TebexJsonExample;
 import com.lunarclient.apollo.example.json.module.TitleJsonExample;
 import com.lunarclient.apollo.example.json.module.TntCountdownJsonExample;
+import com.lunarclient.apollo.example.json.module.TotemCounterJsonExample;
 import com.lunarclient.apollo.example.json.module.TransferJsonExample;
 import com.lunarclient.apollo.example.json.module.VignetteJsonExample;
 import com.lunarclient.apollo.example.json.module.WaypointJsonExample;
@@ -102,6 +103,7 @@ public class ApolloJsonExamplePlatform extends ApolloExamplePlugin {
         this.setTebexExample(new TebexJsonExample());
         this.setTitleExample(new TitleJsonExample());
         this.setTntCountdownExample(new TntCountdownJsonExample());
+        this.setTotemCounterExample(new TotemCounterJsonExample());
         this.setTransferExample(new TransferJsonExample());
         this.setVignetteExample(new VignetteJsonExample());
         this.setWaypointExample(new WaypointJsonExample());

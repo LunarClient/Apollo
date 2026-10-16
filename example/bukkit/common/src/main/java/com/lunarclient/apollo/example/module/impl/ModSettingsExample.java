@@ -36,4 +36,6 @@ public abstract class ModSettingsExample extends ApolloModuleExample {
 
     public abstract void requestInstalledModsExample(Player viewer);
 
+    public abstract void requestModStatusExample(Player viewer);
+
 }

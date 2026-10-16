@@ -12,7 +12,7 @@ You can find all available mods and their options under the mods section.
 - Adds the ability to interact with Lunar Client mods.
   - Ability to enable/disable mods.
   - Ability to change, enable or disable mod settings within a mod.
-  - Ability to retrieve the current value of any mod and settings within a mod.
+  - Ability to retrieve the current value of any mod and settings within a mod ([private feature](/apollo/developers/private-modules/modstatus)).
 
 ![Mod Settings Module Example](/modules/modsettings/overview.png#center)
 
@@ -22,65 +22,13 @@ You can find all available mods and their options under the mods section.
 
 ## Integration
 
-### Setting Status API
-The **Setting Status API** provides a simple way to retrieve the **current** value of any mod or any setting within a mod.
+### Mod Status API
+The **Mod Status API** allows you to **request** the current value of any mod option, and to listen for updates whenever one changes.
 
-**Retrieve the current value for options**
-
-```java
-private final ModSettingModule modSettingModule = Apollo.getModuleManager().getModule(ModSettingModule.class);
-
-private void printOptionStatusExample(Player player) {
-    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(player.getUniqueId());
-    apolloPlayerOpt.ifPresent(apolloPlayer -> {
-        // https://lunarclient.dev/apollo/developers/mods/waypoints#available-options
-        boolean waypointsEnabled = this.modSettingModule.getStatus(apolloPlayer, ModWaypoints.ENABLED);
-
-        // https://lunarclient.dev/apollo/developers/mods/minimap#available-options
-        float minimapScale = this.modSettingModule.getStatus(apolloPlayer, ModMinimap.SCALE);
-
-        // https://lunarclient.dev/apollo/developers/mods/fov#available-options
-        int fovDefaultFov = this.modSettingModule.getStatus(apolloPlayer, ModFov.DEFAULT_FOV);
-
-        apolloPlayer.sendMessage(Component.text("Waypoints Enabled: ")
-            .append(Component.text(waypointsEnabled)));
-
-        apolloPlayer.sendMessage(Component.text("Minimap Scale: ")
-            .append(Component.text(minimapScale)));
-
-        apolloPlayer.sendMessage(Component.text("Fov Default Fov: ")
-            .append(Component.text(fovDefaultFov)));
-    });
-}
-```
-
-**Listening for Updates**
-
-Apollo fires the [ApolloUpdateModOptionEvent](/apollo/developers/events), whenever a Lunar Client Mod Option is updated.
-
-```java
-import com.lunarclient.apollo.event.ApolloListener;
-import com.lunarclient.apollo.event.EventBus;
-import com.lunarclient.apollo.event.Listen;
-import com.lunarclient.apollo.event.modsetting.ApolloUpdateModOptionEvent;
-import java.util.Objects;
-import net.kyori.adventure.text.Component;
-
-public class ApolloModStatusExample implements ApolloListener {
-
-    public ApolloModStatusExample() {
-        EventBus.getBus().register(this);
-    }
-
-    @Listen
-    private void onApolloUpdateModOption(ApolloUpdateModOptionEvent event) {
-        event.getPlayer().sendMessage(Component.text(event.getOption().getKey())
-            .append(Component.text(" was updated to "))
-            .append(Component.text(Objects.toString(event.getValue()))));
-    }
-
-}
-```
+<Callout type="important">
+  The Mod Status API is a **private feature** of this module and not publicly available. The rest of the module, such as the Setting Interception API, stays public.
+  See [Mod Status](/apollo/developers/private-modules/modstatus) for usage, and [Private Modules](/apollo/developers/private-modules#how-to-request-access) to request access.
+</Callout>
 
 ### Setting Interception API
 The **Setting Interception API** allows you to **override** the value of any mod option.
