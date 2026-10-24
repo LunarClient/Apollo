@@ -162,6 +162,17 @@ public final class ModWaila {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ROUNDED_CORNERS = SimpleOption.<Boolean>builder()
+        .node("waila", "rounded-corners").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.1.9
      */
     public static final SimpleOption<Boolean> SHOW_BLOCK_COORDS = SimpleOption.<Boolean>builder()

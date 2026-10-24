@@ -42,6 +42,7 @@ import com.lunarclient.apollo.mods.impl.ModCooldowns;
 import com.lunarclient.apollo.mods.impl.ModCoordinates;
 import com.lunarclient.apollo.mods.impl.ModCps;
 import com.lunarclient.apollo.mods.impl.ModCrosshair;
+import com.lunarclient.apollo.mods.impl.ModCustomSkies;
 import com.lunarclient.apollo.mods.impl.ModDamageTint;
 import com.lunarclient.apollo.mods.impl.ModDayCounter;
 import com.lunarclient.apollo.mods.impl.ModDirectionHud;
@@ -72,6 +73,7 @@ import com.lunarclient.apollo.mods.impl.ModLightOverlay;
 import com.lunarclient.apollo.mods.impl.ModLighting;
 import com.lunarclient.apollo.mods.impl.ModLocatorBar;
 import com.lunarclient.apollo.mods.impl.ModMarkers;
+import com.lunarclient.apollo.mods.impl.ModMediaPlayer;
 import com.lunarclient.apollo.mods.impl.ModMemory;
 import com.lunarclient.apollo.mods.impl.ModMenuBlur;
 import com.lunarclient.apollo.mods.impl.ModMinimap;
@@ -185,6 +187,7 @@ public final class Mods {
             ModCombo.class,
             ModReachDisplay.class,
             ModTimeChanger.class,
+            ModCustomSkies.class,
             ModServerAddress.class,
             ModSaturation.class,
             ModColorSaturation.class,
@@ -240,8 +243,9 @@ public final class Mods {
             ModKnockbackTrainer.class,
             ModHypixelStats.class,
             ModRadio.class,
-            ModUhcOverlay.class,
+            ModMediaPlayer.class,
             ModSba.class,
+            ModUhcOverlay.class,
             ModNeu.class
         );
 

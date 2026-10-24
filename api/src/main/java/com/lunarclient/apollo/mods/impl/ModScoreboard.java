@@ -116,6 +116,17 @@ public final class ModScoreboard {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ROUNDED_CORNERS = SimpleOption.<Boolean>builder()
+        .node("scoreboard", "rounded-corners").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * Keeps the mod at the vanilla position and scale. It can't be moved or scaled in the HUD editor while this is on.
      *
      * @since 1.3.0

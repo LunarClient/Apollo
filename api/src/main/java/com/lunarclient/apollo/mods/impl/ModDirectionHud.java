@@ -129,6 +129,17 @@ public final class ModDirectionHud {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ROUNDED_CORNERS = SimpleOption.<Boolean>builder()
+        .node("direction-hud", "rounded-corners").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * Choose whether to show the Direction HUD when TAB is open.
      *
      * @since 1.1.9
