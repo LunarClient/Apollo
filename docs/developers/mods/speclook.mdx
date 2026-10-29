@@ -1,0 +1,53 @@
+# Speclook
+
+Freecam mode - Only available in singleplayer
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleSpeclookExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModSpeclook.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SPEC_LOOK_TOGGLE`__
+    - When enabled, quickly tapping the activation key will toggle it instead
+    - Config Key: `spec-look-toggle`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SPEC_LOOK_SPEED`__
+    - Base movement speed in freecam. Scrolling while in freecam also adjusts speed
+    - Config Key: `spec-look-speed`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.1F`
+        - Maximum: `10.0F`
+
+- __`SPEC_LOOK_HIDE_PLAYER`__
+    - Hides your own player while in freecam
+    - Config Key: `spec-look-hide-player`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SPEC_LOOK_DISABLE_WHEN_DAMAGED`__
+    - Automatically exits freecam when you take damage
+    - Config Key: `spec-look-disable-when-damaged`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

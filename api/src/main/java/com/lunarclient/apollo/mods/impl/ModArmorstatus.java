@@ -82,10 +82,10 @@ public final class ModArmorstatus {
     /**
      * No documentation available.
      *
-     * @since 1.3.0
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> ROUNDED_CORNERS = SimpleOption.<Boolean>builder()
-        .node("armorstatus", "rounded-corners").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> VANILLA_ROUNDED_CORNERS = SimpleOption.<Boolean>builder()
+        .node("armorstatus", "vanilla-rounded-corners").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();
@@ -199,6 +199,17 @@ public final class ModArmorstatus {
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("armorstatus", "border-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(0, 0, 0, 159))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.3.0
+     */
+    public static final SimpleOption<Boolean> ROUNDED_CORNERS = SimpleOption.<Boolean>builder()
+        .node("armorstatus", "rounded-corners").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

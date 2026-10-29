@@ -130,6 +130,17 @@ public final class ModHeightLimit {
         .build();
 
     /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ROUNDED_CORNERS = SimpleOption.<Boolean>builder()
+        .node("height-limit", "rounded-corners").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
      * Automatically determine text alignment from position. Disable to manually set alignment.
      *
      * @since 1.3.0
