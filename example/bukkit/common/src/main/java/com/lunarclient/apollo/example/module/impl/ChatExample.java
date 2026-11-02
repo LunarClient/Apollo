@@ -42,4 +42,18 @@ public abstract class ChatExample extends ApolloModuleExample {
 
     public abstract void resetChatButtonsExample(Player viewer);
 
+    public abstract void displayChatTabsExample(Player viewer);
+
+    public abstract void displayChatTabMessageExample(Player viewer);
+
+    public abstract void removeChatTabExample(Player viewer);
+
+    public abstract void resetChatTabsExample(Player viewer);
+
+    public abstract void displayChatPopupExample(Player viewer);
+
+    public abstract void removeChatPopupExample(Player viewer);
+
+    public abstract void resetChatPopupsExample(Player viewer);
+
 }

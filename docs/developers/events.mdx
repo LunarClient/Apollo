@@ -191,6 +191,24 @@ _Called when a Lunar Client Mod option is updated._
 </details>
 
 <details>
+<summary>ApolloChatPopupResponseEvent</summary>
+
+### ApolloChatPopupResponseEvent
+
+_Called when the player picks an option of a chat popup, or closes the popup without picking one._
+
+| Field                 | Description                                                                            |
+| --------------------- | -------------------------------------------------------------------------------------- |
+| `ApolloPlayer player` | The Apollo player that responded to the popup.                                         |
+| `String popupId`      | The id of the popup.                                                                   |
+| `String optionId`     | The id of the option that the player picked, or null when the player closed the popup. |
+
+The response comes from the client, so check that the popup id is one that you displayed to that player, and that you
+still wait for an answer to it, before you act on the event.
+
+</details>
+
+<details>
 <summary>ApolloPlayerChatCloseEvent</summary>
 
 ### ApolloPlayerChatCloseEvent

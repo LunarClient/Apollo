@@ -23,6 +23,7 @@
  */
 package com.lunarclient.apollo.example.json.module;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
 import com.lunarclient.apollo.example.json.module.chatbuttons.ChannelsLayout;
@@ -33,6 +34,7 @@ import com.lunarclient.apollo.example.json.util.JsonPacketUtil;
 import com.lunarclient.apollo.example.json.util.JsonUtil;
 import com.lunarclient.apollo.example.module.impl.ChatExample;
 import com.lunarclient.apollo.example.util.ServerUtil;
+import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -160,6 +162,118 @@ public class ChatJsonExample extends ChatExample {
         message.addProperty("message_id", 13);
 
         JsonPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void displayChatTabsExample(Player viewer) {
+        JsonArray staffPatterns = new JsonArray();
+        staffPatterns.add("^\\[Staff\\] ");
+
+        JsonObject staffTab = new JsonObject();
+        staffTab.addProperty("id", "staff");
+        staffTab.addProperty("display_name_adventure_json", AdventureUtil.toJson(
+            Component.text("Staff", NamedTextColor.RED)
+        ));
+        staffTab.add("patterns", staffPatterns);
+        staffTab.addProperty("input_prefix", "/staffchat ");
+        staffTab.addProperty("hide_from_all", true);
+
+        JsonObject eventsTab = new JsonObject();
+        eventsTab.addProperty("id", "events");
+        eventsTab.addProperty("display_name_adventure_json", AdventureUtil.toJson(
+            Component.text("Events", NamedTextColor.GOLD)
+        ));
+
+        JsonArray tabs = new JsonArray();
+        tabs.add(staffTab);
+        tabs.add(eventsTab);
+
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.DisplayChatTabsMessage");
+        message.add("chat_tabs", tabs);
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void displayChatTabMessageExample(Player viewer) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.DisplayChatTabMessageMessage");
+        message.addProperty("tab_id", "events");
+        message.addProperty("message_id", 14);
+        message.addProperty("adventure_json_lines", AdventureUtil.toJson(
+            Component.text("A KOTH event starts in 5 minutes!", NamedTextColor.GOLD)
+        ));
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void removeChatTabExample(Player viewer) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.RemoveChatTabMessage");
+        message.addProperty("id", "staff");
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void resetChatTabsExample(Player viewer) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.ResetChatTabsMessage");
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void displayChatPopupExample(Player viewer) {
+        JsonObject acceptOption = new JsonObject();
+        acceptOption.addProperty("id", "accept");
+        acceptOption.addProperty("label_adventure_json", AdventureUtil.toJson(
+            Component.text("Accept", NamedTextColor.GREEN)
+        ));
+
+        JsonObject denyOption = new JsonObject();
+        denyOption.addProperty("id", "deny");
+        denyOption.addProperty("label_adventure_json", AdventureUtil.toJson(
+            Component.text("Deny", NamedTextColor.RED)
+        ));
+
+        JsonArray options = new JsonArray();
+        options.add(acceptOption);
+        options.add(denyOption);
+
+        JsonObject popup = new JsonObject();
+        popup.addProperty("id", "duel-request");
+        popup.addProperty("title_adventure_json", AdventureUtil.toJson(Component.text("Duel Request")));
+        popup.addProperty("description_adventure_json", AdventureUtil.toJson(
+            Component.text("Steve wants to duel you.")
+        ));
+        popup.addProperty("display_time", JsonUtil.createDurationObject(Duration.ofSeconds(60)));
+        popup.add("options", options);
+
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.DisplayChatPopupMessage");
+        message.add("chat_popup", popup);
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void removeChatPopupExample(Player viewer) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.RemoveChatPopupMessage");
+        message.addProperty("id", "duel-request");
+
+        JsonPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void resetChatPopupsExample(Player viewer) {
+        JsonObject message = new JsonObject();
+        message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.ResetChatPopupsMessage");
+
+        JsonPacketUtil.sendPacket(viewer, message);
     }
 
 }

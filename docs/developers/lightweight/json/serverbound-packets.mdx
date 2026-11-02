@@ -4,7 +4,7 @@ import { Callout } from 'nextra-theme-docs'
 
 ## Overview
 
-Players using Lunar Client may send packets to the server for specific Apollo modules, such as the `PacketEnrichment Module` and/or when the player is joining the server. This example demonstrates how to handle packets sent from the client that are related to Apollo while using JSON messages.
+Players using Lunar Client may send packets to the server for specific Apollo modules, such as the `PacketEnrichment Module` and the chat popup responses of the `Chat Module`, and/or when the player is joining the server. This example demonstrates how to handle packets sent from the client that are related to Apollo while using JSON messages.
 
 Additionally, the `Transfer Module` expects a response packet from the client after the server sends a request. For an example of how to handle roundtrip packets, visit [Packet Roundtrip Example](/apollo/developers/lightweight/json/roundtrip-packets)
 
@@ -62,6 +62,11 @@ public class ApolloPacketReceiveJsonListener implements PluginMessageListener {
             this.onPlayerUseItem(payload);
         } else if ("lunarclient.apollo.packetenrichment.v1.PlayerUseItemBucketMessage".equals(type)) {
             this.onPlayerUseItemBucket(payload);
+        }
+
+        // Chat Module
+        if ("lunarclient.apollo.chat.v1.ChatPopupResponseMessage".equals(type)) {
+            this.onChatPopupResponse(player, payload);
         }
     }
 
@@ -163,6 +168,17 @@ public class ApolloPacketReceiveJsonListener implements PluginMessageListener {
         boolean jumping = info.get("jumping").getAsBoolean();
         float forwardSpeed = info.get("forward_speed").getAsFloat();
         float strafeSpeed = info.get("strafe_speed").getAsFloat();
+    }
+
+    private void onChatPopupResponse(Player player, JsonObject message) {
+        String popupId = message.get("popup_id").getAsString();
+        String optionId = message.get("option_id").getAsString();
+
+        if (optionId.isEmpty()) {
+            player.sendMessage("You closed the " + popupId + " popup.");
+        } else {
+            player.sendMessage("You picked " + optionId + " on the " + popupId + " popup.");
+        }
     }
 }
 ```

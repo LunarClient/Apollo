@@ -25,6 +25,7 @@ package com.lunarclient.apollo.example.proto.listener;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.lunarclient.apollo.chat.v1.ChatPopupResponseMessage;
 import com.lunarclient.apollo.common.v1.BlockLocation;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Location;
@@ -85,6 +86,11 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
                 this.onPlayerUseItem(any.unpack(PlayerUseItemMessage.class));
             } else if (any.is(PlayerUseItemBucketMessage.class)) {
                 this.onPlayerUseItemBucket(any.unpack(PlayerUseItemBucketMessage.class));
+            }
+
+            // Chat Module
+            if (any.is(ChatPopupResponseMessage.class)) {
+                this.onChatPopupResponse(player, any.unpack(ChatPopupResponseMessage.class));
             }
         } catch (InvalidProtocolBufferException e) {
             throw new RuntimeException(e);
@@ -197,6 +203,17 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
         boolean jumping = info.getJumping();
         float forwardSpeed = info.getForwardSpeed();
         float strafeSpeed = info.getStrafeSpeed();
+    }
+
+    private void onChatPopupResponse(Player player, ChatPopupResponseMessage message) {
+        String popupId = message.getPopupId();
+        String optionId = message.getOptionId();
+
+        if (optionId.isEmpty()) {
+            player.sendMessage("You closed the " + popupId + " popup.");
+        } else {
+            player.sendMessage("You picked " + optionId + " on the " + popupId + " popup.");
+        }
     }
 
 }
