@@ -40,6 +40,7 @@ import io.leangen.geantyref.TypeToken;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -104,11 +105,59 @@ public abstract class ChatModule extends ApolloModule {
         .defaultValue(ChatModule.createDefaultButtons())
         .build();
 
+    /**
+     * Controls whether the server's {@link ChatTab}s replace the client tabs,
+     * the chat tabs that Lunar Client adds itself, like the party and private
+     * message tabs. The "All" tab always stays.
+     *
+     * @since 1.3.1
+     */
+    public static final SimpleOption<Boolean> REPLACE_CLIENT_TABS = Option.<Boolean>builder()
+        .comment(
+            "Set to 'true' to hide the client tabs, the chat tabs that Lunar Client adds itself,",
+            "except the 'All' tab, otherwise 'false'."
+        )
+        .node("tabs", "replace-client-tabs").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    /**
+     * Controls whether the {@link #SERVER_TABS} are displayed to players when
+     * they join. It doesn't affect the tabs that the API displays.
+     *
+     * @since 1.3.1
+     */
+    public static final SimpleOption<Boolean> SEND_SERVER_TABS = Option.<Boolean>builder()
+        .comment(
+            "Set to 'true' to display the tabs listed under server-tabs to players when they join, otherwise",
+            "'false'. Tabs that a plugin displays through the API are sent either way."
+        )
+        .node("tabs", "send-server-tabs").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    /**
+     * The {@link ChatTab}s displayed to joining players while
+     * {@link #SEND_SERVER_TABS} is enabled.
+     *
+     * @since 1.3.1
+     */
+    public static final ListOption<ChatTab> SERVER_TABS = Option.<ChatTab>list()
+        .comment(
+            "Sets the chat tabs to display to players when they join, while send-server-tabs is enabled.",
+            "Display names are read as legacy strings ('&'-color codes), and patterns as Java regular",
+            "expressions that are matched against the plain text of each chat message."
+        )
+        .node("tabs", "server-tabs").type(new TypeToken<List<ChatTab>>() {})
+        .defaultValue(ChatModule.createServerTabs())
+        .build();
+
     protected ChatModule() {
         this.registerOptions(
             ChatModule.BROADCAST_LIVE_BUTTONS,
             ChatModule.SEND_DEFAULT_BUTTONS,
-            ChatModule.DEFAULT_BUTTONS
+            ChatModule.DEFAULT_BUTTONS,
+            ChatModule.REPLACE_CLIENT_TABS,
+            ChatModule.SEND_SERVER_TABS,
+            ChatModule.SERVER_TABS
         );
     }
 
@@ -218,6 +267,120 @@ public abstract class ChatModule extends ApolloModule {
      */
     public abstract void updateChatButtonTooltip(Recipients recipients, String buttonId,
                                                  @Nullable ApolloButtonTooltip tooltip);
+
+    /**
+     * Displays the {@link ChatTab}s to the {@link Recipients}, replacing a
+     * displayed tab with the same id.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tabs       the chat tabs
+     * @since 1.3.1
+     */
+    public abstract void displayChatTabs(Recipients recipients, Collection<ChatTab> tabs);
+
+    /**
+     * Displays the {@link ChatTab} to the {@link Recipients}, replacing a
+     * displayed tab with the same id.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tab        the chat tab
+     * @since 1.3.1
+     */
+    public abstract void displayChatTab(Recipients recipients, ChatTab tab);
+
+    /**
+     * Removes the {@link ChatTab} from the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tabId      the chat tab id
+     * @since 1.3.1
+     */
+    public abstract void removeChatTab(Recipients recipients, String tabId);
+
+    /**
+     * Removes the {@link ChatTab} from the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tab        the chat tab
+     * @since 1.3.1
+     */
+    public abstract void removeChatTab(Recipients recipients, ChatTab tab);
+
+    /**
+     * Resets all {@link ChatTab}s for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @since 1.3.1
+     */
+    public abstract void resetChatTabs(Recipients recipients);
+
+    /**
+     * Displays the message in a {@link ChatTab} of the {@link Recipients},
+     * without matching it against the tab patterns. The message doesn't show
+     * in the client's "All" tab.
+     *
+     * <p>The message id works like the one of
+     * {@link #displayLiveChatMessage(Recipients, Component, int)}, so the same
+     * id updates the message and {@link #removeLiveChatMessage(Recipients, int)}
+     * removes it. A client without the tab, or with chat tabs turned off,
+     * shows the message in the normal chat.
+     * Lunar Client versions from before chat tabs don't show the message at
+     * all.</p>
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tabId      the chat tab id
+     * @param text       the text to display
+     * @param messageId  the message id to update
+     * @since 1.3.1
+     */
+    public abstract void displayChatTabMessage(Recipients recipients, String tabId, Component text, int messageId);
+
+    /**
+     * Displays the {@link ChatPopup} to the {@link Recipients}, replacing a
+     * displayed popup with the same id.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param popup      the chat popup
+     * @since 1.3.1
+     */
+    public abstract void displayChatPopup(Recipients recipients, ChatPopup popup);
+
+    /**
+     * Removes the {@link ChatPopup} from the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param popupId    the chat popup id
+     * @since 1.3.1
+     */
+    public abstract void removeChatPopup(Recipients recipients, String popupId);
+
+    /**
+     * Removes the {@link ChatPopup} from the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param popup      the chat popup
+     * @since 1.3.1
+     */
+    public abstract void removeChatPopup(Recipients recipients, ChatPopup popup);
+
+    /**
+     * Resets all {@link ChatPopup}s for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @since 1.3.1
+     */
+    public abstract void resetChatPopups(Recipients recipients);
+
+    private static List<ChatTab> createServerTabs() {
+        ChatTab teamChat = ChatTab.builder()
+            .id("team")
+            .displayName(Component.text("Team", NamedTextColor.GREEN))
+            .pattern("^\\[Team\\] ")
+            .inputPrefix("/tc ")
+            .build();
+
+        return new ArrayList<>(Collections.singletonList(teamChat));
+    }
 
     private static List<ChatButton> createDefaultButtons() {
         ChatButton teamChat = ChatButton.builder()

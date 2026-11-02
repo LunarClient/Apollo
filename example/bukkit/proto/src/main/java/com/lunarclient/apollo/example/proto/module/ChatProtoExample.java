@@ -25,10 +25,20 @@ package com.lunarclient.apollo.example.proto.module;
 
 import com.lunarclient.apollo.button.v1.ButtonContent;
 import com.lunarclient.apollo.button.v1.ButtonUpdate;
+import com.lunarclient.apollo.chat.v1.ChatPopup;
+import com.lunarclient.apollo.chat.v1.ChatPopupOption;
+import com.lunarclient.apollo.chat.v1.ChatTab;
+import com.lunarclient.apollo.chat.v1.DisplayChatPopupMessage;
+import com.lunarclient.apollo.chat.v1.DisplayChatTabMessageMessage;
+import com.lunarclient.apollo.chat.v1.DisplayChatTabsMessage;
 import com.lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage;
 import com.lunarclient.apollo.chat.v1.RemoveChatButtonMessage;
+import com.lunarclient.apollo.chat.v1.RemoveChatPopupMessage;
+import com.lunarclient.apollo.chat.v1.RemoveChatTabMessage;
 import com.lunarclient.apollo.chat.v1.RemoveLiveChatMessageMessage;
 import com.lunarclient.apollo.chat.v1.ResetChatButtonsMessage;
+import com.lunarclient.apollo.chat.v1.ResetChatPopupsMessage;
+import com.lunarclient.apollo.chat.v1.ResetChatTabsMessage;
 import com.lunarclient.apollo.chat.v1.UpdateChatButtonMessage;
 import com.lunarclient.apollo.common.v1.Icon;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
@@ -40,6 +50,7 @@ import com.lunarclient.apollo.example.proto.util.AdventureUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufPacketUtil;
 import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
 import com.lunarclient.apollo.example.util.ServerUtil;
+import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -168,6 +179,90 @@ public class ChatProtoExample extends ChatExample {
             .build();
 
         ProtobufPacketUtil.broadcastPacket(message);
+    }
+
+    @Override
+    public void displayChatTabsExample(Player viewer) {
+        DisplayChatTabsMessage message = DisplayChatTabsMessage.newBuilder()
+            .addChatTabs(ChatTab.newBuilder()
+                .setId("staff")
+                .setDisplayNameAdventureJson(AdventureUtil.toJson(Component.text("Staff", NamedTextColor.RED)))
+                .addPatterns("^\\[Staff\\] ")
+                .setInputPrefix("/staffchat ")
+                .setHideFromAll(true)
+                .build())
+            .addChatTabs(ChatTab.newBuilder()
+                .setId("events")
+                .setDisplayNameAdventureJson(AdventureUtil.toJson(Component.text("Events", NamedTextColor.GOLD)))
+                .build())
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void displayChatTabMessageExample(Player viewer) {
+        DisplayChatTabMessageMessage message = DisplayChatTabMessageMessage.newBuilder()
+            .setTabId("events")
+            .setMessageId(14)
+            .setAdventureJsonLines(AdventureUtil.toJson(
+                Component.text("A KOTH event starts in 5 minutes!", NamedTextColor.GOLD)
+            ))
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void removeChatTabExample(Player viewer) {
+        RemoveChatTabMessage message = RemoveChatTabMessage.newBuilder()
+            .setId("staff")
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void resetChatTabsExample(Player viewer) {
+        ResetChatTabsMessage message = ResetChatTabsMessage.getDefaultInstance();
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void displayChatPopupExample(Player viewer) {
+        DisplayChatPopupMessage message = DisplayChatPopupMessage.newBuilder()
+            .setChatPopup(ChatPopup.newBuilder()
+                .setId("duel-request")
+                .setTitleAdventureJson(AdventureUtil.toJson(Component.text("Duel Request")))
+                .setDescriptionAdventureJson(AdventureUtil.toJson(Component.text("Steve wants to duel you.")))
+                .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofSeconds(60)))
+                .addOptions(ChatPopupOption.newBuilder()
+                    .setId("accept")
+                    .setLabelAdventureJson(AdventureUtil.toJson(Component.text("Accept", NamedTextColor.GREEN)))
+                    .build())
+                .addOptions(ChatPopupOption.newBuilder()
+                    .setId("deny")
+                    .setLabelAdventureJson(AdventureUtil.toJson(Component.text("Deny", NamedTextColor.RED)))
+                    .build())
+                .build())
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void removeChatPopupExample(Player viewer) {
+        RemoveChatPopupMessage message = RemoveChatPopupMessage.newBuilder()
+            .setId("duel-request")
+            .build();
+
+        ProtobufPacketUtil.sendPacket(viewer, message);
+    }
+
+    @Override
+    public void resetChatPopupsExample(Player viewer) {
+        ResetChatPopupsMessage message = ResetChatPopupsMessage.getDefaultInstance();
+        ProtobufPacketUtil.sendPacket(viewer, message);
     }
 
 }

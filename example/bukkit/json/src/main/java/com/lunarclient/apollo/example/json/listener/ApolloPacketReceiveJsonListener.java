@@ -83,6 +83,11 @@ public class ApolloPacketReceiveJsonListener implements PluginMessageListener {
         } else if ("lunarclient.apollo.packetenrichment.v1.PlayerUseItemBucketMessage".equals(type)) {
             this.onPlayerUseItemBucket(payload);
         }
+
+        // Chat Module
+        if ("lunarclient.apollo.chat.v1.ChatPopupResponseMessage".equals(type)) {
+            this.onChatPopupResponse(player, payload);
+        }
     }
 
     private void onPlayerHandshake(JsonObject message) {
@@ -183,6 +188,17 @@ public class ApolloPacketReceiveJsonListener implements PluginMessageListener {
         boolean jumping = info.get("jumping").getAsBoolean();
         float forwardSpeed = info.get("forward_speed").getAsFloat();
         float strafeSpeed = info.get("strafe_speed").getAsFloat();
+    }
+
+    private void onChatPopupResponse(Player player, JsonObject message) {
+        String popupId = message.get("popup_id").getAsString();
+        String optionId = message.get("option_id").getAsString();
+
+        if (optionId.isEmpty()) {
+            player.sendMessage("You closed the " + popupId + " popup.");
+        } else {
+            player.sendMessage("You picked " + optionId + " on the " + popupId + " popup.");
+        }
     }
 
 }
