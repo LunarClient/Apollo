@@ -1,0 +1,196 @@
+# Media Player
+
+See and control the media playing on your computer, like Spotify or your browser.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleMediaPlayerExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModMediaPlayer.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_HUD`__
+    - Config Key: `show-hud`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SCALE`__
+    - Config Key: `scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.25F`
+        - Maximum: `5.0F`
+
+- __`USE_MINECRAFT_FONT`__
+    - Draws the text in Minecraft's font, so it matches your resource pack.
+    - Config Key: `use-minecraft-font`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_COVER_ART`__
+    - Config Key: `show-cover-art`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_SONG_NAME`__
+    - Config Key: `show-song-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BOLD_SONG_NAME`__
+    - Config Key: `bold-song-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SONG_SCROLL_ANIMATION`__
+    - Config Key: `song-scroll-animation`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_ARTIST_NAME`__
+    - Config Key: `show-artist-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BOLD_ARTIST_NAME`__
+    - Config Key: `bold-artist-name`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_PROGRESS`__
+    - Config Key: `show-progress`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_DURATION`__
+    - Config Key: `show-duration`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_MEDIA_CONTROLS`__
+    - Config Key: `show-media-controls`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`ROUNDED_CORNERS`__
+    - Config Key: `rounded-corners`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_WHEN_NOTHING_PLAYING`__
+    - Config Key: `show-when-nothing-playing`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BACKGROUND`__
+    - Config Key: `background`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`STATIC_BACKGROUND_WIDTH`__
+    - If this is disabled the background will change size with the text.
+    - Config Key: `static-background-width`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`STATIC_BACKGROUND_HEIGHT`__
+    - If this is disabled the background will change size with the text.
+    - Config Key: `static-background-height`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BACKGROUND_WIDTH`__
+    - Config Key: `background-width`
+    - Values
+        - Type: `Integer`
+        - Default: `148`
+        - Minimum: `60`
+        - Maximum: `300`
+
+- __`BACKGROUND_HEIGHT`__
+    - Config Key: `background-height`
+    - Values
+        - Type: `Integer`
+        - Default: `24`
+        - Minimum: `22`
+        - Maximum: `64`
+
+- __`BORDER`__
+    - Config Key: `border`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BORDER_THICKNESS`__
+    - Config Key: `border-thickness`
+    - Values
+        - Type: `Float`
+        - Default: `0.5F`
+        - Minimum: `0.5F`
+        - Maximum: `3.0F`
+
+- __`BORDER_COLOR`__
+    - Config Key: `border-color`
+    - Values
+        - Type: `String`
+        - Default: `#14FFFFFF`
+
+- __`BACKGROUND_COLOR`__
+    - Config Key: `background-color`
+    - Values
+        - Type: `String`
+        - Default: `#DB14171A`
+
+- __`SONG_NAME_TEXT_COLOR`__
+    - Config Key: `song-name-text-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFFFFFF`
+
+- __`ARTIST_NAME_TEXT_COLOR`__
+    - Config Key: `artist-name-text-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF8B969B`
+
+- __`DURATION_TEXT_COLOR`__
+    - Config Key: `duration-text-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF8B969B`
+
+- __`MEDIA_PROGRESS_COLOR`__
+    - Config Key: `media-progress-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF00D465`
+
