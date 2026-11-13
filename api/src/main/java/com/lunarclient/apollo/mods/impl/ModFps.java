@@ -61,6 +61,17 @@ public final class ModFps {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_FPSTEXT = SimpleOption.<Boolean>builder()
+        .node("fps", "show-f-p-s-text").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.2
      */
     public static final SimpleOption<Boolean> REVERSE_ORDER = SimpleOption.<Boolean>builder()
@@ -193,6 +204,17 @@ public final class ModFps {
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("fps", "border-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(0, 0, 0, 159))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ROUNDED_CORNERS = SimpleOption.<Boolean>builder()
+        .node("fps", "rounded-corners").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

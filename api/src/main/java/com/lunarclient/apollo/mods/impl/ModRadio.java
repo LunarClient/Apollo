@@ -82,6 +82,18 @@ public final class ModRadio {
         .build();
 
     /**
+     * Draws the text in Minecraft's font, so it matches your resource pack.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> USE_MINECRAFT_FONT = SimpleOption.<Boolean>builder()
+        .comment("Draws the text in Minecraft's font, so it matches your resource pack.")
+        .node("radio", "use-minecraft-font").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
      * No documentation available.
      *
      * @since 1.1.7
@@ -95,10 +107,21 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> SHOW_SONG_NAME = SimpleOption.<Boolean>builder()
+        .node("radio", "show-song-name").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.1.7
      */
-    public static final SimpleOption<Boolean> SHOW_PROGRESS = SimpleOption.<Boolean>builder()
-        .node("radio", "show-progress").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> BOLD_SONG_NAME = SimpleOption.<Boolean>builder()
+        .node("radio", "bold-song-name").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();
@@ -117,11 +140,11 @@ public final class ModRadio {
     /**
      * No documentation available.
      *
-     * @since 1.1.7
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> SHOW_WHEN_NOTHING_PLAYING = SimpleOption.<Boolean>builder()
-        .node("radio", "show-when-nothing-playing").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
+    public static final SimpleOption<Boolean> SHOW_ARTIST_NAME = SimpleOption.<Boolean>builder()
+        .node("radio", "show-artist-name").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
         .notifyClient()
         .build();
 
@@ -141,8 +164,8 @@ public final class ModRadio {
      *
      * @since 1.1.7
      */
-    public static final SimpleOption<Boolean> BOLD_SONG_NAME = SimpleOption.<Boolean>builder()
-        .node("radio", "bold-song-name").type(TypeToken.get(Boolean.class))
+    public static final SimpleOption<Boolean> SHOW_PROGRESS = SimpleOption.<Boolean>builder()
+        .node("radio", "show-progress").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();
@@ -166,6 +189,28 @@ public final class ModRadio {
     public static final SimpleOption<Boolean> SHOW_PLAY_BUTTON = SimpleOption.<Boolean>builder()
         .node("radio", "show-play-button").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ROUNDED_CORNERS = SimpleOption.<Boolean>builder()
+        .node("radio", "rounded-corners").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.1.7
+     */
+    public static final SimpleOption<Boolean> SHOW_WHEN_NOTHING_PLAYING = SimpleOption.<Boolean>builder()
+        .node("radio", "show-when-nothing-playing").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -212,7 +257,7 @@ public final class ModRadio {
     public static final NumberOption<Integer> BACKGROUND_WIDTH = NumberOption.<Integer>number()
         .node("radio", "background-width").type(TypeToken.get(Integer.class))
         .min(60).max(300)
-        .defaultValue(140)
+        .defaultValue(148)
         .notifyClient()
         .build();
 
@@ -258,7 +303,7 @@ public final class ModRadio {
      */
     public static final SimpleOption<Color> BORDER_COLOR = SimpleOption.<Color>builder()
         .node("radio", "border-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(0, 0, 0, 159))
+        .defaultValue(new Color(255, 255, 255, 20))
         .notifyClient()
         .build();
 
@@ -269,7 +314,7 @@ public final class ModRadio {
      */
     public static final SimpleOption<Color> BACKGROUND_COLOR = SimpleOption.<Color>builder()
         .node("radio", "background-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(0, 0, 0, 111))
+        .defaultValue(new Color(20, 23, 26, 219))
         .notifyClient()
         .build();
 
@@ -291,7 +336,18 @@ public final class ModRadio {
      */
     public static final SimpleOption<Color> ARTIST_NAME_TEXT_COLOR = SimpleOption.<Color>builder()
         .node("radio", "artist-name-text-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(255, 255, 255))
+        .defaultValue(new Color(139, 150, 155))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> DURATION_TEXT_COLOR = SimpleOption.<Color>builder()
+        .node("radio", "duration-text-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(139, 150, 155))
         .notifyClient()
         .build();
 
@@ -302,7 +358,7 @@ public final class ModRadio {
      */
     public static final SimpleOption<Color> RADIO_PROGRESS_BAR_COLOR = SimpleOption.<Color>builder()
         .node("radio", "radio-progress-bar-color").type(TypeToken.get(Color.class))
-        .defaultValue(new Color(79, 148, 252))
+        .defaultValue(new Color(0, 212, 101))
         .notifyClient()
         .build();
 

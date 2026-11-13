@@ -1,0 +1,75 @@
+# Custom Skies
+
+Replace the overworld sky with a custom sky texture.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleCustomSkiesExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModCustomSkies.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CUSTOM_SKY_PREVIEW`__
+    - Config Key: `custom-sky-preview`
+    - Values
+        - Type: `Integer`
+        - Default: `0`
+        - Minimum: `-2147483648`
+        - Maximum: `2147483647`
+
+- __`DARKEN_AT_NIGHT`__
+    - Config Key: `darken-at-night`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`RANDOM_SKY`__
+    - Picks another sky each time you enter a world or another dimension.
+    - Config Key: `random-sky`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_IN_OVERWORLD`__
+    - Config Key: `show-in-overworld`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_IN_NETHER`__
+    - Config Key: `show-in-nether`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_IN_END`__
+    - Config Key: `show-in-end`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SHOW_IN_MODDED_DIMENSIONS`__
+    - Config Key: `show-in-modded-dimensions`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`SHOW_SKY_NOTIFICATIONS`__
+    - Shows a notification when a sky is selected, saved or deleted.
+    - Config Key: `show-sky-notifications`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+

@@ -50,6 +50,17 @@ public final class ModHitColor {
      *
      * @since 1.0.0
      */
+    public static final SimpleOption<Boolean> SHOULD_COLOR_ARMOR = SimpleOption.<Boolean>builder()
+        .node("hit-color", "should-color-armor").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since 1.0.0
+     */
     public static final SimpleOption<Color> HIT_ARMOR_COLOR = SimpleOption.<Color>builder()
         .node("hit-color", "hit-armor-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(153, 0, 0, 102))
@@ -59,11 +70,22 @@ public final class ModHitColor {
     /**
      * No documentation available.
      *
-     * @since 1.0.0
+     * @since %release_version%
      */
-    public static final SimpleOption<Boolean> SHOULD_COLOR_ARMOR = SimpleOption.<Boolean>builder()
-        .node("hit-color", "should-color-armor").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
+    public static final SimpleOption<Boolean> SHOULD_COLOR_HELD_ITEM = SimpleOption.<Boolean>builder()
+        .node("hit-color", "should-color-held-item").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HELD_ITEM_COLOR = SimpleOption.<Color>builder()
+        .node("hit-color", "held-item-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(153, 0, 0, 102))
         .notifyClient()
         .build();
 
