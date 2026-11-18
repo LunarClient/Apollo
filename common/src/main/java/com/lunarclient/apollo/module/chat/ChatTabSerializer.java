@@ -24,7 +24,18 @@
 package com.lunarclient.apollo.module.chat;
 
 import com.lunarclient.apollo.common.ApolloComponent;
+import com.lunarclient.apollo.common.button.ApolloButtonTooltip;
+import com.lunarclient.apollo.common.button.content.ApolloButtonContent;
+import com.lunarclient.apollo.common.button.content.ApolloButtonContentPart;
+import com.lunarclient.apollo.common.button.content.ComponentPart;
+import com.lunarclient.apollo.common.pattern.TextPattern;
+import com.lunarclient.apollo.common.pattern.TextPatternType;
+import com.lunarclient.apollo.module.button.ApolloButtonSerializer;
+import java.awt.Color;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+import net.kyori.adventure.text.Component;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -44,14 +55,41 @@ public final class ChatTabSerializer implements TypeSerializer<ChatTab> {
             throw new SerializationException("Required field id must not be empty!");
         }
 
+        ConfigurationNode displayNameNode = node.node("display-name");
+        ApolloButtonContent displayName;
+        if (displayNameNode.isMap()) {
+            displayName = ApolloButtonSerializer.readContent(displayNameNode);
+        } else {
+            String text = displayNameNode.getString();
+            if (text == null || text.isEmpty()) {
+                throw new SerializationException("Required field display-name must not be empty!");
+            }
+
+            displayName = ApolloButtonContent.builder()
+                .append(ApolloComponent.fromLegacyAmpersand(text))
+                .build();
+        }
+
+        List<TextPattern> patterns = new ArrayList<>();
+        for (ConfigurationNode pattern : node.node("patterns").childrenList()) {
+            patterns.add(this.readPattern(pattern));
+        }
+
         ChatTab.ChatTabBuilder builder = ChatTab.builder()
             .id(id)
-            .displayName(ApolloComponent.fromLegacyAmpersand(node.node("display-name").getString(id)))
+            .displayName(displayName)
+            .backgroundColor(node.node("background-color").get(Color.class))
+            .patterns(patterns)
             .inputPrefix(node.node("input-prefix").getString(""))
             .hideFromAll(node.node("hide-from-all").getBoolean(false));
 
-        for (ConfigurationNode pattern : node.node("patterns").childrenList()) {
-            builder.pattern(pattern.getString(""));
+        if (node.hasChild("tooltip")) {
+            List<Component> lines = new ArrayList<>();
+            for (ConfigurationNode line : node.node("tooltip").childrenList()) {
+                lines.add(ApolloComponent.fromLegacyAmpersand(line.getString("")));
+            }
+
+            builder.tooltip(ApolloButtonTooltip.of(lines));
         }
 
         return builder.build();
@@ -65,10 +103,94 @@ public final class ChatTabSerializer implements TypeSerializer<ChatTab> {
         }
 
         node.node("id").set(tab.getId());
-        node.node("display-name").set(ApolloComponent.toLegacyAmpersand(tab.getDisplayName()));
-        node.node("patterns").setList(String.class, tab.getPatterns());
+
+        ApolloButtonContent displayName = tab.getDisplayName();
+        List<ApolloButtonContentPart> parts = displayName.getParts();
+        if (parts.size() == 1 && parts.get(0) instanceof ComponentPart) {
+            node.node("display-name").set(ApolloComponent.toLegacyAmpersand(((ComponentPart) parts.get(0)).getComponent()));
+        } else {
+            ApolloButtonSerializer.writeContent(node.node("display-name"), displayName);
+        }
+
+        ApolloButtonTooltip tooltip = tab.getTooltip();
+        if (tooltip != null) {
+            if (tooltip.isLive() || tooltip.getLines() == null) {
+                throw new SerializationException("Live tooltips cannot be stored in the config!");
+            }
+
+            for (Component line : tooltip.getLines()) {
+                node.node("tooltip").appendListNode().set(ApolloComponent.toLegacyAmpersand(line));
+            }
+        }
+
+        if (tab.getBackgroundColor() != null) {
+            node.node("background-color").set(Color.class, tab.getBackgroundColor());
+        }
+
+        for (TextPattern pattern : tab.getPatterns()) {
+            ConfigurationNode patternNode = node.node("patterns").appendListNode();
+            patternNode.node(this.getPatternField(pattern.getType())).set(pattern.getValue());
+
+            if (pattern.isCaseSensitive()) {
+                patternNode.node("case-sensitive").set(true);
+            }
+        }
+
         node.node("input-prefix").set(tab.getInputPrefix());
         node.node("hide-from-all").set(tab.isHideFromAll());
+    }
+
+    private TextPattern readPattern(ConfigurationNode node) throws SerializationException {
+        if (!node.isMap()) {
+            throw new SerializationException("Patterns require a 'regex', 'contains' or 'starts-with' field!");
+        }
+
+        for (Object key : node.childrenMap().keySet()) {
+            String field = String.valueOf(key);
+            if (!field.equals("regex") && !field.equals("contains") && !field.equals("starts-with")
+                && !field.equals("case-sensitive")) {
+                throw new SerializationException("Unknown pattern field '" + field + "'!");
+            }
+        }
+
+        int typeFields = (node.hasChild("regex") ? 1 : 0) + (node.hasChild("contains") ? 1 : 0)
+            + (node.hasChild("starts-with") ? 1 : 0);
+        if (typeFields != 1) {
+            throw new SerializationException("Patterns require exactly one 'regex', 'contains' or 'starts-with' field!");
+        }
+
+        TextPattern pattern;
+        if (node.hasChild("regex")) {
+            pattern = TextPattern.regex(this.readPatternValue(node, "regex"));
+        } else if (node.hasChild("contains")) {
+            pattern = TextPattern.contains(this.readPatternValue(node, "contains"));
+        } else {
+            pattern = TextPattern.startsWith(this.readPatternValue(node, "starts-with"));
+        }
+
+        return pattern.withCaseSensitive(node.node("case-sensitive").getBoolean(false));
+    }
+
+    private String readPatternValue(ConfigurationNode node, String field) throws SerializationException {
+        String value = node.node(field).getString();
+        if (value == null || value.isEmpty()) {
+            throw new SerializationException("Pattern '" + field + "' must not be empty!");
+        }
+
+        return value;
+    }
+
+    private String getPatternField(TextPatternType type) throws SerializationException {
+        switch (type) {
+            case REGEX:
+                return "regex";
+            case CONTAINS:
+                return "contains";
+            case STARTS_WITH:
+                return "starts-with";
+            default:
+                throw new SerializationException("Unknown pattern type: " + type);
+        }
     }
 
 }

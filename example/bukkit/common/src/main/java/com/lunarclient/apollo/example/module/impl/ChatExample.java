@@ -44,6 +44,8 @@ public abstract class ChatExample extends ApolloModuleExample {
 
     public abstract void displayChatTabsExample(Player viewer);
 
+    public abstract void updateChatTabExample(Player viewer);
+
     public abstract void displayChatTabMessageExample(Player viewer);
 
     public abstract void removeChatTabExample(Player viewer);

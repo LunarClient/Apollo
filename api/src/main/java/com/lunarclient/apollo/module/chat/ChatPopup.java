@@ -25,11 +25,12 @@ package com.lunarclient.apollo.module.chat;
 
 import com.lunarclient.apollo.event.chat.ApolloChatPopupResponseEvent;
 import java.time.Duration;
+import java.util.Collections;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Singular;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -37,14 +38,14 @@ import org.jetbrains.annotations.Nullable;
  * style popup with options that the player can pick, for example to accept
  * or deny a friend request.
  *
- * <p>When the player picks an option, or closes the popup without picking
- * one, the client sends a response to the server, which posts an
- * {@link ApolloChatPopupResponseEvent}.</p>
+ * <p>When the popup closes, the client sends a response to the server,
+ * which posts an {@link ApolloChatPopupResponseEvent}.
+ * No response is sent when the server removes the popup.</p>
  *
  * @since 1.3.1
  */
 @Getter
-@Builder
+@Builder(toBuilder = true)
 public final class ChatPopup {
 
     /**
@@ -55,12 +56,45 @@ public final class ChatPopup {
     public static final int MAX_OPTIONS = 3;
 
     /**
+     * The maximum number of popups that the client keeps for a player,
+     * including its own popups for servers like Hypixel.
+     *
+     * <p>Over it, the client drops the oldest popup that it hasn't shown yet,
+     * and responds with {@link ApolloChatPopupResponseEvent.Status#DROPPED}
+     * for it.</p>
+     *
+     * @since 1.3.1
+     */
+    public static final int MAX_POPUPS = 20;
+
+    /**
+     * The maximum length of a title. The client cuts off a longer title.
+     *
+     * <p>Only the visible characters count, formatting codes don't, and the
+     * client never cuts inside a formatting code.</p>
+     *
+     * @since 1.3.1
+     */
+    public static final int MAX_TITLE_LENGTH = 128;
+
+    /**
+     * The maximum length of a description. The client cuts off a longer
+     * description.
+     *
+     * <p>Only the visible characters count, formatting codes don't, and the
+     * client never cuts inside a formatting code.</p>
+     *
+     * @since 1.3.1
+     */
+    public static final int MAX_DESCRIPTION_LENGTH = 512;
+
+    /**
      * Returns the chat popup {@link String} id.
      *
      * @return the chat popup id
      * @since 1.3.1
      */
-    String id;
+    @NotNull String id;
 
     /**
      * Returns the chat popup title {@link Component}.
@@ -68,7 +102,7 @@ public final class ChatPopup {
      * @return the chat popup title
      * @since 1.3.1
      */
-    Component title;
+    @NotNull Component title;
 
     /**
      * Returns the chat popup description {@link Component}, or null for a
@@ -100,6 +134,7 @@ public final class ChatPopup {
      * @return the chat popup options
      * @since 1.3.1
      */
-    @Singular List<ChatPopupOption> options;
+    @Builder.Default
+    @NotNull List<ChatPopupOption> options = Collections.emptyList();
 
 }

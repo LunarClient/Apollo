@@ -162,6 +162,21 @@ public final class InventoryModuleImpl extends InventoryModule implements Button
     }
 
     @Override
+    public String getId(InventoryButton button) {
+        return button.getId();
+    }
+
+    @Override
+    public ApolloButtonContent getContent(InventoryButton button) {
+        return button.getContent();
+    }
+
+    @Override
+    public @Nullable ApolloButtonTooltip getTooltip(InventoryButton button) {
+        return button.getTooltip();
+    }
+
+    @Override
     public com.lunarclient.apollo.inventory.v1.InventoryButton toDisplayElement(InventoryButton button, @Nullable ApolloPlayer viewer) {
         return com.lunarclient.apollo.inventory.v1.InventoryButton.newBuilder()
             .setButton(ButtonNetworkTypes.toProtobuf(button, viewer))

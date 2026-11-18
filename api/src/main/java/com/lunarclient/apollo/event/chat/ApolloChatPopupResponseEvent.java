@@ -31,8 +31,11 @@ import lombok.Value;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents an event that is fired when a player picks an option of a
- * {@link ChatPopup}, or closes the popup without picking one.
+ * Represents an event that is fired when a {@link ChatPopup} closes on the
+ * client.
+ *
+ * <p>It isn't fired when the server removes the popup, or for the popups
+ * that are still displayed when the player disconnects.</p>
  *
  * @since 1.3.1
  */
@@ -56,13 +59,77 @@ public class ApolloChatPopupResponseEvent implements Event {
     String popupId;
 
     /**
+     * The {@link ChatPopup} that was displayed to the player.
+     *
+     * @return the chat popup
+     * @since 1.3.1
+     */
+    ChatPopup popup;
+
+    /**
+     * The {@link Status} that tells why the popup closed.
+     *
+     * @return the response status
+     * @since 1.3.1
+     */
+    Status status;
+
+    /**
      * The id of the {@link ChatPopupOption} that the player picked, or null
-     * when the player closed the popup without picking an option.
+     * unless the status is {@link Status#PICKED}.
      *
      * @return the chat popup option id
      * @since 1.3.1
      */
     @Nullable
     String optionId;
+
+    /**
+     * Represents why a {@link ChatPopup} closed.
+     *
+     * @since 1.3.1
+     */
+    public enum Status {
+
+        /**
+         * The player picked an option.
+         *
+         * <p>An option with a run command or open URL action only counts as
+         * picked once its command runs or its URL opens, after the player
+         * confirms it.
+         * A client action or a select chat tab action counts as picked right
+         * away, even when it has nothing to do.
+         * Sending an option's run command, for example from chat, also picks
+         * it, in every popup with that command.</p>
+         *
+         * @since 1.3.1
+         */
+        PICKED,
+
+        /**
+         * The player closed the popup without picking an option, or picked an
+         * option whose action didn't happen, because they cancelled its prompt
+         * or its URL couldn't open.
+         *
+         * @since 1.3.1
+         */
+        DISMISSED,
+
+        /**
+         * The display time of the popup ran out.
+         *
+         * @since 1.3.1
+         */
+        EXPIRED,
+
+        /**
+         * The client threw the popup away without showing it, because it
+         * had too many popups.
+         *
+         * @since 1.3.1
+         */
+        DROPPED
+
+    }
 
 }

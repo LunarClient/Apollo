@@ -32,7 +32,9 @@ import com.lunarclient.apollo.common.v1.Location;
 import com.lunarclient.apollo.common.v1.LunarClientVersion;
 import com.lunarclient.apollo.common.v1.MinecraftVersion;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.module.impl.ChatExample;
 import com.lunarclient.apollo.example.module.impl.InventoryExample;
+import com.lunarclient.apollo.example.proto.module.ChatProtoExample;
 import com.lunarclient.apollo.example.proto.module.InventoryProtoExample;
 import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
 import com.lunarclient.apollo.packetenrichment.v1.BlockHit;
@@ -207,12 +209,36 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
 
     private void onChatPopupResponse(Player player, ChatPopupResponseMessage message) {
         String popupId = message.getPopupId();
-        String optionId = message.getOptionId();
 
-        if (optionId.isEmpty()) {
-            player.sendMessage("You closed the " + popupId + " popup.");
-        } else {
-            player.sendMessage("You picked " + optionId + " on the " + popupId + " popup.");
+        ChatExample example = ApolloExamplePlugin.getInstance().getChatExample();
+        if (example instanceof ChatProtoExample) {
+            ((ChatProtoExample) example).handleChatPopupResponse(player, popupId);
+        }
+
+        switch (message.getStatus()) {
+            case STATUS_PICKED: {
+                player.sendMessage("You picked " + message.getOptionId() + " on the " + popupId + " popup.");
+                break;
+            }
+
+            case STATUS_DISMISSED: {
+                player.sendMessage("You closed the " + popupId + " popup.");
+                break;
+            }
+
+            case STATUS_EXPIRED: {
+                player.sendMessage("The " + popupId + " popup expired.");
+                break;
+            }
+
+            case STATUS_DROPPED: {
+                player.sendMessage("The " + popupId + " popup was dropped, because you had too many popups.");
+                break;
+            }
+
+            default: {
+                break;
+            }
         }
     }
 

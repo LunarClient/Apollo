@@ -94,7 +94,13 @@ public class ChatCommand implements CommandExecutor {
 
             case "displaytabs": {
                 chatExample.displayChatTabsExample(player);
-                player.sendMessage("Displaying chat tabs....");
+                player.sendMessage("Displaying chat tabs and the Back to All chat button....");
+                break;
+            }
+
+            case "updatetab": {
+                chatExample.updateChatTabExample(player);
+                player.sendMessage("Updating the events chat tab....");
                 break;
             }
 
@@ -118,13 +124,13 @@ public class ChatCommand implements CommandExecutor {
 
             case "displaypopup": {
                 chatExample.displayChatPopupExample(player);
-                player.sendMessage("Displaying the duel request chat popup....");
+                player.sendMessage("Displaying a new duel request chat popup....");
                 break;
             }
 
             case "removepopup": {
                 chatExample.removeChatPopupExample(player);
-                player.sendMessage("Removing the duel request chat popup....");
+                player.sendMessage("Removing the last duel request chat popup....");
                 break;
             }
 
@@ -152,6 +158,7 @@ public class ChatCommand implements CommandExecutor {
         player.sendMessage("Usage: /chat removeButton");
         player.sendMessage("Usage: /chat resetButtons");
         player.sendMessage("Usage: /chat displayTabs");
+        player.sendMessage("Usage: /chat updateTab");
         player.sendMessage("Usage: /chat displayTabMessage");
         player.sendMessage("Usage: /chat removeTab");
         player.sendMessage("Usage: /chat resetTabs");

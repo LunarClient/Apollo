@@ -38,6 +38,7 @@ import com.lunarclient.apollo.common.button.action.ApolloButtonAction;
 import com.lunarclient.apollo.common.button.action.ClientAction;
 import com.lunarclient.apollo.common.button.action.OpenUrlAction;
 import com.lunarclient.apollo.common.button.action.RunCommandAction;
+import com.lunarclient.apollo.common.button.action.SelectChatTabAction;
 import com.lunarclient.apollo.common.button.content.ApolloButtonContent;
 import com.lunarclient.apollo.common.button.content.ApolloButtonContentPart;
 import com.lunarclient.apollo.common.button.content.ComponentPart;
@@ -95,8 +96,9 @@ public final class ButtonNetworkTypes {
         } else if (onClick instanceof OpenUrlAction) {
             builder.setOpenUrl(((OpenUrlAction) onClick).getUrl());
         } else if (onClick instanceof ClientAction) {
-            ClientAction clientAction = (ClientAction) onClick;
-            builder.setClientAction(ButtonClientAction.forNumber(clientAction.getAction().ordinal() + 1));
+            builder.setClientAction(toClientActionProtobuf((ClientAction) onClick));
+        } else if (onClick instanceof SelectChatTabAction) {
+            builder.setSelectChatTab(toSelectChatTabProtobuf((SelectChatTabAction) onClick));
         } else if (onClick != null) {
             throw new IllegalArgumentException("Unknown button action type: " + onClick.getClass().getName());
         }
@@ -112,6 +114,31 @@ public final class ButtonNetworkTypes {
         }
 
         return builder.build();
+    }
+
+    /**
+     * Serializes a client action.
+     *
+     * @param action the client action to serialize
+     * @return the protobuf client action
+     * @since 1.3.1
+     */
+    public static ButtonClientAction toClientActionProtobuf(ClientAction action) {
+        return ButtonClientAction.forNumber(action.getAction().ordinal() + 1);
+    }
+
+    /**
+     * Serializes a select chat tab action.
+     *
+     * @param action the select chat tab action to serialize
+     * @return the protobuf select chat tab action
+     * @since 1.3.1
+     */
+    public static com.lunarclient.apollo.button.v1.SelectChatTabAction toSelectChatTabProtobuf(SelectChatTabAction action) {
+        return com.lunarclient.apollo.button.v1.SelectChatTabAction.newBuilder()
+            .setTabId(action.getTabId())
+            .setOpenChat(action.isOpenChat())
+            .build();
     }
 
     /**

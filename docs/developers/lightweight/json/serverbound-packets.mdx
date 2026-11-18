@@ -8,6 +8,8 @@ Players using Lunar Client may send packets to the server for specific Apollo mo
 
 Additionally, the `Transfer Module` expects a response packet from the client after the server sends a request. For an example of how to handle roundtrip packets, visit [Packet Roundtrip Example](/apollo/developers/lightweight/json/roundtrip-packets)
 
+A chat popup response is `STATUS_PICKED` for an option with an on click action only once its command runs or its URL opens, after the player confirms the prompt. Cancelling that prompt sends `STATUS_DISMISSED`, like closing the popup without picking an option. See [Chat Popups](/apollo/developers/modules/chat#chat-popups) for the other statuses.
+
 <Callout type="info">
     Note that this method uses a different plugin channel for
     sending and receiving packets, which is `apollo:json`.
@@ -172,12 +174,33 @@ public class ApolloPacketReceiveJsonListener implements PluginMessageListener {
 
     private void onChatPopupResponse(Player player, JsonObject message) {
         String popupId = message.get("popup_id").getAsString();
-        String optionId = message.get("option_id").getAsString();
+        String status = message.get("status").getAsString();
 
-        if (optionId.isEmpty()) {
-            player.sendMessage("You closed the " + popupId + " popup.");
-        } else {
-            player.sendMessage("You picked " + optionId + " on the " + popupId + " popup.");
+        switch (status) {
+            case "STATUS_PICKED": {
+                String optionId = message.get("option_id").getAsString();
+                player.sendMessage("You picked " + optionId + " on the " + popupId + " popup.");
+                break;
+            }
+
+            case "STATUS_DISMISSED": {
+                player.sendMessage("You closed the " + popupId + " popup.");
+                break;
+            }
+
+            case "STATUS_EXPIRED": {
+                player.sendMessage("The " + popupId + " popup expired.");
+                break;
+            }
+
+            case "STATUS_DROPPED": {
+                player.sendMessage("The " + popupId + " popup was dropped, because you had too many popups.");
+                break;
+            }
+
+            default: {
+                break;
+            }
         }
     }
 }

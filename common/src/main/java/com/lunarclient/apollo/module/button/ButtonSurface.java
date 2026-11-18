@@ -25,7 +25,8 @@ package com.lunarclient.apollo.module.button;
 
 import com.google.protobuf.Message;
 import com.lunarclient.apollo.button.v1.ButtonUpdate;
-import com.lunarclient.apollo.common.button.ApolloButton;
+import com.lunarclient.apollo.common.button.ApolloButtonTooltip;
+import com.lunarclient.apollo.common.button.content.ApolloButtonContent;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import java.util.List;
 import org.jetbrains.annotations.Nullable;
@@ -33,11 +34,38 @@ import org.jetbrains.annotations.Nullable;
 /**
  * The per-surface strategy behind {@link ButtonModuleSupport}.
  *
- * @param <B> the button type
+ * @param <B> the button type, or another type with button content like a chat tab
  * @param <P> the protobuf message
  * @since 1.2.9
  */
-public interface ButtonSurface<B extends ApolloButton, P extends Message> {
+public interface ButtonSurface<B, P extends Message> {
+
+    /**
+     * Returns the id of a button.
+     *
+     * @param button the button
+     * @return the button id
+     * @since 1.3.1
+     */
+    String getId(B button);
+
+    /**
+     * Returns the content of a button.
+     *
+     * @param button the button
+     * @return the button content
+     * @since 1.3.1
+     */
+    ApolloButtonContent getContent(B button);
+
+    /**
+     * Returns the tooltip of a button.
+     *
+     * @param button the button
+     * @return the tooltip, or {@code null}
+     * @since 1.3.1
+     */
+    @Nullable ApolloButtonTooltip getTooltip(B button);
 
     /**
      * Validates a button before it is sent, throwing {@link IllegalArgumentException} on invalid buttons.

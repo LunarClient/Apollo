@@ -23,11 +23,17 @@
  */
 package com.lunarclient.apollo.module.chat;
 
+import com.lunarclient.apollo.common.button.ApolloButtonTooltip;
+import com.lunarclient.apollo.common.button.action.SelectChatTabAction;
+import com.lunarclient.apollo.common.button.content.ApolloButtonContent;
+import com.lunarclient.apollo.common.pattern.TextPattern;
+import java.awt.Color;
+import java.util.Collections;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Singular;
-import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a chat tab which can be shown on the client, in the tab bar
@@ -42,15 +48,28 @@ import net.kyori.adventure.text.Component;
  * @since 1.3.1
  */
 @Getter
-@Builder
+@Builder(toBuilder = true)
 public final class ChatTab {
 
     /**
-     * The maximum number of tabs that a server can show.
+     * The maximum number of server tabs that the client keeps at the same
+     * time, in total across every display call.
      *
      * @since 1.3.1
      */
     public static final int MAX_TABS = 16;
+
+    /**
+     * The maximum length of a display name.
+     *
+     * <p>The client cuts off a longer name, and only counts the visible
+     * characters of the text parts.
+     * Formatting codes don't count, and the client never cuts inside a
+     * formatting code.</p>
+     *
+     * @since 1.3.1
+     */
+    public static final int MAX_DISPLAY_NAME_LENGTH = 32;
 
     /**
      * The maximum number of patterns of a tab.
@@ -69,34 +88,62 @@ public final class ChatTab {
     /**
      * Returns the chat tab {@link String} id.
      *
+     * <p>It must not be {@link SelectChatTabAction#ALL_TAB_ID}, because
+     * that id selects the "All" tab.</p>
+     *
      * @return the chat tab id
      * @since 1.3.1
      */
-    String id;
+    @NotNull String id;
 
     /**
-     * Returns the chat tab display name {@link Component}, shown on the tab
-     * itself.
+     * Returns the chat tab display name {@link ApolloButtonContent}, shown on
+     * the tab itself.
+     *
+     * <p>The client ignores the content scale, because the tabs have the
+     * height of a chat line.
+     * Live parts are re-resolved like the ones of a {@link ChatButton}, see
+     * {@link ChatModule#BROADCAST_LIVE_TABS}.</p>
      *
      * @return the chat tab display name
      * @since 1.3.1
      */
-    Component displayName;
+    @NotNull ApolloButtonContent displayName;
 
     /**
-     * Returns the chat tab patterns, Java regular expressions that the
-     * client matches against the plain text of each chat message, without
-     * formatting codes.
+     * Returns the {@link ApolloButtonTooltip} shown while the tab is hovered.
      *
-     * <p>A message goes into the tab when one of the patterns finds a match
-     * in it, so a pattern needs a leading "^" to only match the start of a
-     * message. The message also stays in the "All" tab, unless
-     * {@link #hideFromAll} is set.</p>
+     * @return the tooltip, or {@code null} for no tooltip
+     * @since 1.3.1
+     */
+    @Builder.Default
+    @Nullable ApolloButtonTooltip tooltip = null;
+
+    /**
+     * Returns the background {@link Color} of the tab.
+     *
+     * @return the background color, or {@code null} for the background of
+     *     the chat input field
+     * @since 1.3.1
+     */
+    @Builder.Default
+    @Nullable Color backgroundColor = null;
+
+    /**
+     * Returns the chat tab {@link TextPattern}s, which the client matches
+     * against the plain text of each chat message, without formatting codes.
+     *
+     * <p>A message goes into the tab when one of the patterns matches it.
+     * The message also stays in the "All" tab, unless {@link #hideFromAll}
+     * is set.
+     * A tab without patterns only gets the messages that
+     * {@link ChatModule#displayChatTabMessage} adds to it.</p>
      *
      * @return the chat tab patterns
      * @since 1.3.1
      */
-    @Singular List<String> patterns;
+    @Builder.Default
+    @NotNull List<TextPattern> patterns = Collections.emptyList();
 
     /**
      * Returns the chat tab input prefix, which the client puts in front of
@@ -114,7 +161,8 @@ public final class ChatTab {
      * @return the chat tab input prefix
      * @since 1.3.1
      */
-    @Builder.Default String inputPrefix = "";
+    @Builder.Default
+    @NotNull String inputPrefix = "";
 
     /**
      * Returns whether the tab's messages only show in the tab, and not in

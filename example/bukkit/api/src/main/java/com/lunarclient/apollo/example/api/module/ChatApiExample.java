@@ -24,8 +24,14 @@
 package com.lunarclient.apollo.example.api.module;
 
 import com.lunarclient.apollo.Apollo;
+import com.lunarclient.apollo.common.button.ApolloButtonShape;
+import com.lunarclient.apollo.common.button.ApolloButtonTooltip;
+import com.lunarclient.apollo.common.button.action.ApolloButtonAction;
+import com.lunarclient.apollo.common.button.action.SelectChatTabAction;
 import com.lunarclient.apollo.common.button.content.ApolloButtonContent;
 import com.lunarclient.apollo.common.icon.ItemStackIcon;
+import com.lunarclient.apollo.common.location.HudPosition;
+import com.lunarclient.apollo.common.pattern.TextPattern;
 import com.lunarclient.apollo.event.ApolloListener;
 import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.Listen;
@@ -35,15 +41,20 @@ import com.lunarclient.apollo.example.api.module.chatbuttons.ChannelsLayout;
 import com.lunarclient.apollo.example.api.module.chatbuttons.StaffChatLayout;
 import com.lunarclient.apollo.example.module.impl.ChatExample;
 import com.lunarclient.apollo.example.util.ServerUtil;
+import com.lunarclient.apollo.module.chat.ChatButton;
 import com.lunarclient.apollo.module.chat.ChatModule;
 import com.lunarclient.apollo.module.chat.ChatPopup;
 import com.lunarclient.apollo.module.chat.ChatPopupOption;
 import com.lunarclient.apollo.module.chat.ChatTab;
 import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
+import java.awt.Color;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -54,6 +65,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class ChatApiExample extends ChatExample implements ApolloListener {
 
     private final ChatModule chatModule = Apollo.getModuleManager().getModule(ChatModule.class);
+    private final Map<UUID, String> duelRequestIds = new ConcurrentHashMap<>();
 
     public ChatApiExample() {
         EventBus.getBus().register(this);
@@ -164,19 +176,59 @@ public class ChatApiExample extends ChatExample implements ApolloListener {
     public void displayChatTabsExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.chatModule.displayChatTabs(apolloPlayer, Arrays.asList(
-            ChatTab.builder()
-                .id("staff")
-                .displayName(Component.text("Staff", NamedTextColor.RED))
-                .pattern("^\\[Staff\\] ")
-                .inputPrefix("/staffchat ")
-                .hideFromAll(true)
-                .build(),
-            ChatTab.builder()
-                .id("events")
-                .displayName(Component.text("Events", NamedTextColor.GOLD))
-                .build()
-        )));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            this.chatModule.displayChatTabs(apolloPlayer, Arrays.asList(
+                ChatTab.builder()
+                    .id("staff")
+                    .displayName(ApolloButtonContent.builder()
+                        .append(Component.text("Staff ", NamedTextColor.RED))
+                        .append(apolloViewer -> Component.text("(" + Bukkit.getOnlinePlayers().size() + ")", NamedTextColor.GRAY),
+                            Duration.ofSeconds(5))
+                        .build())
+                    .patterns(Arrays.asList(
+                        TextPattern.startsWith("[Staff] ").withCaseSensitive(true),
+                        TextPattern.regex("^\\[(Admin|Mod)\\] ")
+                    ))
+                    .inputPrefix("/staffchat ")
+                    .hideFromAll(true)
+                    .build(),
+                ChatTab.builder()
+                    .id("events")
+                    .displayName(ApolloButtonContent.builder()
+                        .append(ItemStackIcon.builder()
+                            .itemName("CLOCK")
+                            .build())
+                        .append(Component.text("Events", NamedTextColor.GOLD))
+                        .build())
+                    .tooltip(ApolloButtonTooltip.of(Component.text("Server events", NamedTextColor.YELLOW)))
+                    .backgroundColor(new Color(64, 32, 0, 160))
+                    .build()
+            ));
+
+            this.chatModule.displayChatButton(apolloPlayer, ChatButton.builder()
+                .id("back-to-all")
+                .position(HudPosition.of(264, 2))
+                .size(ChatButton.SIZE_SMALL)
+                .shape(ApolloButtonShape.ROUNDED_SQUARE)
+                .content(ApolloButtonContent.builder()
+                    .append(Component.text("Back to All"))
+                    .build())
+                .onClick(ApolloButtonAction.selectChatTab(SelectChatTabAction.ALL_TAB_ID))
+                .build());
+        });
+    }
+
+    @Override
+    public void updateChatTabExample(Player viewer) {
+        Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+        apolloPlayerOpt.ifPresent(apolloPlayer -> this.chatModule.updateChatTabContent(apolloPlayer, "events",
+            ApolloButtonContent.builder()
+                .append(ItemStackIcon.builder()
+                    .itemName("CLOCK")
+                    .build())
+                .append(Component.text("Events (1)", NamedTextColor.GOLD))
+                .build()));
     }
 
     @Override
@@ -205,27 +257,46 @@ public class ChatApiExample extends ChatExample implements ApolloListener {
     public void displayChatPopupExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
 
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.chatModule.displayChatPopup(apolloPlayer, ChatPopup.builder()
-            .id("duel-request")
-            .title(Component.text("Duel Request"))
-            .description(Component.text("Steve wants to duel you."))
-            .displayTime(Duration.ofSeconds(60))
-            .option(ChatPopupOption.builder()
-                .id("accept")
-                .label(Component.text("Accept", NamedTextColor.GREEN))
-                .build())
-            .option(ChatPopupOption.builder()
-                .id("deny")
-                .label(Component.text("Deny", NamedTextColor.RED))
-                .build())
-            .build()
-        ));
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            String popupId = "duel-request-" + UUID.randomUUID();
+            this.duelRequestIds.put(viewer.getUniqueId(), popupId);
+
+            this.chatModule.displayChatPopup(apolloPlayer, ChatPopup.builder()
+                .id(popupId)
+                .title(Component.text("Duel Request"))
+                .description(Component.text("Steve wants to duel you."))
+                .displayTime(Duration.ofSeconds(60))
+                .options(Arrays.asList(
+                    ChatPopupOption.builder()
+                        .id("accept")
+                        .label(Component.text("Accept", NamedTextColor.GREEN))
+                        .onClick(ApolloButtonAction.runCommand("/duel accept Steve"))
+                        .build(),
+                    ChatPopupOption.builder()
+                        .id("deny")
+                        .label(Component.text("Deny", NamedTextColor.RED))
+                        .build(),
+                    ChatPopupOption.builder()
+                        .id("reply")
+                        .label(Component.text("Reply", NamedTextColor.GRAY))
+                        .onClick(ApolloButtonAction.selectChatTab(SelectChatTabAction.ALL_TAB_ID, true))
+                        .build()
+                ))
+                .build()
+            );
+        });
     }
 
     @Override
     public void removeChatPopupExample(Player viewer) {
         Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
-        apolloPlayerOpt.ifPresent(apolloPlayer -> this.chatModule.removeChatPopup(apolloPlayer, "duel-request"));
+
+        apolloPlayerOpt.ifPresent(apolloPlayer -> {
+            String popupId = this.duelRequestIds.remove(viewer.getUniqueId());
+            if (popupId != null) {
+                this.chatModule.removeChatPopup(apolloPlayer, popupId);
+            }
+        });
     }
 
     @Override
@@ -237,12 +308,29 @@ public class ChatApiExample extends ChatExample implements ApolloListener {
     @Listen
     private void onChatPopupResponse(ApolloChatPopupResponseEvent event) {
         Player player = (Player) event.getPlayer().getPlayer();
-        String optionId = event.getOptionId();
+        String popupId = event.getPopupId();
+        this.duelRequestIds.remove(player.getUniqueId(), popupId);
 
-        if (optionId == null) {
-            player.sendMessage("You closed the " + event.getPopupId() + " popup.");
-        } else {
-            player.sendMessage("You picked " + optionId + " on the " + event.getPopupId() + " popup.");
+        switch (event.getStatus()) {
+            case PICKED: {
+                player.sendMessage("You picked " + event.getOptionId() + " on the " + popupId + " popup.");
+                break;
+            }
+
+            case DISMISSED: {
+                player.sendMessage("You closed the " + popupId + " popup.");
+                break;
+            }
+
+            case EXPIRED: {
+                player.sendMessage("The " + popupId + " popup expired.");
+                break;
+            }
+
+            case DROPPED: {
+                player.sendMessage("The " + popupId + " popup was dropped, because you had too many popups.");
+                break;
+            }
         }
     }
 

@@ -195,16 +195,22 @@ _Called when a Lunar Client Mod option is updated._
 
 ### ApolloChatPopupResponseEvent
 
-_Called when the player picks an option of a chat popup, or closes the popup without picking one._
+_Called when a chat popup closes on the client, except when the server removes it._
 
-| Field                 | Description                                                                            |
-| --------------------- | -------------------------------------------------------------------------------------- |
-| `ApolloPlayer player` | The Apollo player that responded to the popup.                                         |
-| `String popupId`      | The id of the popup.                                                                   |
-| `String optionId`     | The id of the option that the player picked, or null when the player closed the popup. |
+| Field                 | Description                                                                                        |
+| --------------------- | -------------------------------------------------------------------------------------------------- |
+| `ApolloPlayer player` | The Apollo player that the popup was displayed to.                                                 |
+| `String popupId`      | The id of the popup.                                                                               |
+| `ChatPopup popup`     | The popup that was displayed to the player.                                                        |
+| `Status status`       | Why the popup closed: `PICKED`, `DISMISSED`, `EXPIRED`, or `DROPPED` when the client had too many. |
+| `String optionId`     | The id of the option that the player picked, or null unless the status is `PICKED`.                |
 
-The response comes from the client, so check that the popup id is one that you displayed to that player, and that you
-still wait for an answer to it, before you act on the event.
+`PICKED` for an option with an on click action is only sent once its command runs or its URL opens, after the player
+confirms the prompt. Cancelling that prompt sends `DISMISSED`, like closing the popup without picking an option.
+
+Apollo only fires the event for a popup that it displayed to that player and that is still open, and for a `PICKED`
+response only when the option id is one of the popup's options. Use a new popup id for each request, because an answer
+to an earlier popup with the same id is attributed to the newer popup.
 
 </details>
 
