@@ -123,8 +123,9 @@ public abstract class ApolloButton {
      * is clicked.
      *
      * <p>Built via {@link ApolloButtonAction#runCommand(String)},
-     * {@link ApolloButtonAction#openUrl(String)} or
-     * {@link ApolloButtonAction#clientAction(ApolloButtonClientAction)}.</p>
+     * {@link ApolloButtonAction#openUrl(String)},
+     * {@link ApolloButtonAction#clientAction(ApolloButtonClientAction)} or
+     * {@link ApolloButtonAction#selectChatTab(String, boolean)}.</p>
      *
      * @return the click action, or {@code null}
      * @since 1.2.9

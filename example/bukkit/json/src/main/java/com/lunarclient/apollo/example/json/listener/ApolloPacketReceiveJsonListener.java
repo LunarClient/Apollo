@@ -27,8 +27,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.json.module.ChatJsonExample;
 import com.lunarclient.apollo.example.json.module.InventoryJsonExample;
 import com.lunarclient.apollo.example.json.util.JsonUtil;
+import com.lunarclient.apollo.example.module.impl.ChatExample;
 import com.lunarclient.apollo.example.module.impl.InventoryExample;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
@@ -82,6 +84,11 @@ public class ApolloPacketReceiveJsonListener implements PluginMessageListener {
             this.onPlayerUseItem(payload);
         } else if ("lunarclient.apollo.packetenrichment.v1.PlayerUseItemBucketMessage".equals(type)) {
             this.onPlayerUseItemBucket(payload);
+        }
+
+        // Chat Module
+        if ("lunarclient.apollo.chat.v1.ChatPopupResponseMessage".equals(type)) {
+            this.onChatPopupResponse(player, payload);
         }
     }
 
@@ -183,6 +190,43 @@ public class ApolloPacketReceiveJsonListener implements PluginMessageListener {
         boolean jumping = info.get("jumping").getAsBoolean();
         float forwardSpeed = info.get("forward_speed").getAsFloat();
         float strafeSpeed = info.get("strafe_speed").getAsFloat();
+    }
+
+    private void onChatPopupResponse(Player player, JsonObject message) {
+        String popupId = message.get("popup_id").getAsString();
+        String status = message.get("status").getAsString();
+
+        ChatExample example = ApolloExamplePlugin.getInstance().getChatExample();
+        if (example instanceof ChatJsonExample) {
+            ((ChatJsonExample) example).handleChatPopupResponse(player, popupId);
+        }
+
+        switch (status) {
+            case "STATUS_PICKED": {
+                String optionId = message.get("option_id").getAsString();
+                player.sendMessage("You picked " + optionId + " on the " + popupId + " popup.");
+                break;
+            }
+
+            case "STATUS_DISMISSED": {
+                player.sendMessage("You closed the " + popupId + " popup.");
+                break;
+            }
+
+            case "STATUS_EXPIRED": {
+                player.sendMessage("The " + popupId + " popup expired.");
+                break;
+            }
+
+            case "STATUS_DROPPED": {
+                player.sendMessage("The " + popupId + " popup was dropped, because you had too many popups.");
+                break;
+            }
+
+            default: {
+                break;
+            }
+        }
     }
 
 }

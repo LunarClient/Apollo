@@ -30,16 +30,19 @@ import com.lunarclient.apollo.common.button.action.ApolloButtonAction;
 import com.lunarclient.apollo.common.button.content.ApolloButtonContent;
 import com.lunarclient.apollo.common.icon.ItemStackIcon;
 import com.lunarclient.apollo.common.location.HudPosition;
+import com.lunarclient.apollo.common.pattern.TextPattern;
 import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.ModuleDefinition;
 import com.lunarclient.apollo.option.ListOption;
 import com.lunarclient.apollo.option.Option;
 import com.lunarclient.apollo.option.SimpleOption;
+import com.lunarclient.apollo.player.ApolloPlayer;
 import com.lunarclient.apollo.recipients.Recipients;
 import io.leangen.geantyref.TypeToken;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -104,11 +107,81 @@ public abstract class ChatModule extends ApolloModule {
         .defaultValue(ChatModule.createDefaultButtons())
         .build();
 
+    /**
+     * Controls whether the server's {@link ChatTab}s replace the client tabs,
+     * the chat tabs that Lunar Client adds itself, like the party and private
+     * message tabs. The "All" tab always stays.
+     *
+     * @since 1.3.1
+     */
+    public static final SimpleOption<Boolean> REPLACE_CLIENT_TABS = Option.<Boolean>builder()
+        .comment(
+            "Set to 'true' to hide the client tabs, the chat tabs that Lunar Client adds itself,",
+            "except the 'All' tab, otherwise 'false'."
+        )
+        .node("tabs", "replace-client-tabs").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).notifyClient().build();
+
+    /**
+     * Controls whether live {@link ChatTab} display names and tooltips are
+     * automatically re-resolved and re-sent to viewers.
+     *
+     * <p>When enabled, updates are sent to every player holding live tabs,
+     * even while their chat is closed, because the client also shows the
+     * name of the selected tab outside the open chat.</p>
+     *
+     * @since 1.3.1
+     */
+    public static final SimpleOption<Boolean> BROADCAST_LIVE_TABS = Option.<Boolean>builder()
+        .comment(
+            "Set to 'true' to automatically re-send resolved live chat tab content, otherwise 'false'.",
+            "Updates are sent even to players whose chat is closed, because the client also shows the",
+            "name of the selected tab outside the open chat."
+        )
+        .node("tabs", "live-broadcast").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    /**
+     * Controls whether the {@link #DEFAULT_TABS} are displayed to players
+     * when they join. It doesn't affect the tabs that the API displays.
+     *
+     * @since 1.3.1
+     */
+    public static final SimpleOption<Boolean> SEND_DEFAULT_TABS = Option.<Boolean>builder()
+        .comment(
+            "Set to 'true' to display the default tabs to players when they join, otherwise 'false'.",
+            "Tabs that a plugin displays through the API are sent either way."
+        )
+        .node("tabs", "send-defaults").type(TypeToken.get(Boolean.class))
+        .defaultValue(false).build();
+
+    /**
+     * The default {@link ChatTab}s displayed to joining players while
+     * {@link #SEND_DEFAULT_TABS} is enabled.
+     *
+     * @since 1.3.1
+     */
+    public static final ListOption<ChatTab> DEFAULT_TABS = Option.<ChatTab>list()
+        .comment(
+            "Sets the default tabs to display to players when they join, while send-defaults is enabled.",
+            "Display names are read as legacy strings ('&'-color codes), or as content with 'parts' like",
+            "button content, where the client ignores the scale. Each pattern has exactly one of",
+            "'regex', 'contains' or 'starts-with', and an optional 'case-sensitive', and is matched",
+            "against the plain text of each chat message."
+        )
+        .node("tabs", "defaults").type(new TypeToken<List<ChatTab>>() {})
+        .defaultValue(ChatModule.createDefaultTabs())
+        .build();
+
     protected ChatModule() {
         this.registerOptions(
             ChatModule.BROADCAST_LIVE_BUTTONS,
             ChatModule.SEND_DEFAULT_BUTTONS,
-            ChatModule.DEFAULT_BUTTONS
+            ChatModule.DEFAULT_BUTTONS,
+            ChatModule.REPLACE_CLIENT_TABS,
+            ChatModule.BROADCAST_LIVE_TABS,
+            ChatModule.SEND_DEFAULT_TABS,
+            ChatModule.DEFAULT_TABS
         );
     }
 
@@ -119,6 +192,11 @@ public abstract class ChatModule extends ApolloModule {
 
     /**
      * Displays the message to the {@link Recipients}.
+     *
+     * <p>Displaying another message with the same id replaces the previous
+     * one.
+     * Messages from {@link #displayChatTabMessage} share these ids, and -1
+     * must not be used, because the client uses it internally.</p>
      *
      * @param recipients the recipients that are receiving the packet
      * @param text       the text to display
@@ -218,6 +296,168 @@ public abstract class ChatModule extends ApolloModule {
      */
     public abstract void updateChatButtonTooltip(Recipients recipients, String buttonId,
                                                  @Nullable ApolloButtonTooltip tooltip);
+
+    /**
+     * Displays the {@link ChatTab}s to the {@link Recipients}, replacing a
+     * displayed tab with the same id.
+     *
+     * <p>Players who would have more than {@link ChatTab#MAX_TABS} tabs are
+     * skipped with a warning, and the others still get the tabs.
+     * When the recipient is a single {@link ApolloPlayer} who would go over
+     * the limit, an {@link IllegalArgumentException} is thrown instead.</p>
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tabs       the chat tabs
+     * @since 1.3.1
+     */
+    public abstract void displayChatTabs(Recipients recipients, Collection<ChatTab> tabs);
+
+    /**
+     * Displays the {@link ChatTab} to the {@link Recipients}, replacing a
+     * displayed tab with the same id.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tab        the chat tab
+     * @since 1.3.1
+     */
+    public abstract void displayChatTab(Recipients recipients, ChatTab tab);
+
+    /**
+     * Removes the {@link ChatTab} from the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tabId      the chat tab id
+     * @since 1.3.1
+     */
+    public abstract void removeChatTab(Recipients recipients, String tabId);
+
+    /**
+     * Removes the {@link ChatTab} from the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tab        the chat tab
+     * @since 1.3.1
+     */
+    public abstract void removeChatTab(Recipients recipients, ChatTab tab);
+
+    /**
+     * Resets all {@link ChatTab}s for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @since 1.3.1
+     */
+    public abstract void resetChatTabs(Recipients recipients);
+
+    /**
+     * Updates the display name and tooltip of a previously displayed
+     * {@link ChatTab} for the {@link Recipients}.
+     *
+     * <p>Unlike displaying the tab again, an update doesn't scroll the
+     * player's chat back down.</p>
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tabId      the chat tab id
+     * @param content    the new display name
+     * @param tooltip    the new tooltip, or {@code null} to clear the tooltip
+     * @since 1.3.1
+     */
+    public abstract void updateChatTab(Recipients recipients, String tabId,
+                                       ApolloButtonContent content, @Nullable ApolloButtonTooltip tooltip);
+
+    /**
+     * Updates only the display name of a previously displayed
+     * {@link ChatTab} for the {@link Recipients}, keeping the previous
+     * tooltip.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tabId      the chat tab id
+     * @param content    the new display name
+     * @since 1.3.1
+     */
+    public abstract void updateChatTabContent(Recipients recipients, String tabId, ApolloButtonContent content);
+
+    /**
+     * Updates only the tooltip of a previously displayed {@link ChatTab}
+     * for the {@link Recipients}, keeping the previous display name.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tabId      the chat tab id
+     * @param tooltip    the new tooltip, or {@code null} to clear the tooltip
+     * @since 1.3.1
+     */
+    public abstract void updateChatTabTooltip(Recipients recipients, String tabId,
+                                              @Nullable ApolloButtonTooltip tooltip);
+
+    /**
+     * Displays the message in a {@link ChatTab} of the {@link Recipients},
+     * without matching it against the tab patterns. The message doesn't show
+     * in the client's "All" tab.
+     *
+     * <p>Tab messages are live chat messages, so they share their ids with
+     * {@link #displayLiveChatMessage(Recipients, Component, int)}.
+     * The same id updates the message and
+     * {@link #removeLiveChatMessage(Recipients, int)} removes it.
+     * Don't use -1, because the client uses it internally.</p>
+     *
+     * <p>A client without the tab, with chat tabs turned off, or from before
+     * chat tabs shows the message in the normal chat.</p>
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param tabId      the chat tab id
+     * @param text       the text to display
+     * @param messageId  the message id to update
+     * @since 1.3.1
+     */
+    public abstract void displayChatTabMessage(Recipients recipients, String tabId, Component text, int messageId);
+
+    /**
+     * Displays the {@link ChatPopup} to the {@link Recipients}, replacing a
+     * displayed popup with the same id.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param popup      the chat popup
+     * @since 1.3.1
+     */
+    public abstract void displayChatPopup(Recipients recipients, ChatPopup popup);
+
+    /**
+     * Removes the {@link ChatPopup} from the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param popupId    the chat popup id
+     * @since 1.3.1
+     */
+    public abstract void removeChatPopup(Recipients recipients, String popupId);
+
+    /**
+     * Removes the {@link ChatPopup} from the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @param popup      the chat popup
+     * @since 1.3.1
+     */
+    public abstract void removeChatPopup(Recipients recipients, ChatPopup popup);
+
+    /**
+     * Resets all {@link ChatPopup}s for the {@link Recipients}.
+     *
+     * @param recipients the recipients that are receiving the packet
+     * @since 1.3.1
+     */
+    public abstract void resetChatPopups(Recipients recipients);
+
+    private static List<ChatTab> createDefaultTabs() {
+        ChatTab teamChat = ChatTab.builder()
+            .id("team")
+            .displayName(ApolloButtonContent.builder()
+                .append(Component.text("Team", NamedTextColor.GREEN))
+                .build())
+            .patterns(Collections.singletonList(TextPattern.startsWith("[Team] ")))
+            .inputPrefix("/tc ")
+            .build();
+
+        return new ArrayList<>(Collections.singletonList(teamChat));
+    }
 
     private static List<ChatButton> createDefaultButtons() {
         ChatButton teamChat = ChatButton.builder()

@@ -101,8 +101,9 @@ public abstract class ApolloButton {
      * is clicked.
      *
      * <p>Built via {@link ApolloButtonAction#runCommand(String)},
-     * {@link ApolloButtonAction#openUrl(String)} or
-     * {@link ApolloButtonAction#clientAction(ApolloButtonClientAction)}.</p>
+     * {@link ApolloButtonAction#openUrl(String)},
+     * {@link ApolloButtonAction#clientAction(ApolloButtonClientAction)} or
+     * {@link ApolloButtonAction#selectChatTab(String, boolean)}.</p>
      *
      * @return the click action, or {@code null}
      * @since 1.2.9
@@ -252,7 +253,8 @@ ApolloButtonTooltip.live(apolloViewer -> Arrays.asList(
 ## `ApolloButtonAction`
 
 The action executed when a button is clicked. A button without an action is purely decorative. Built via one
-of three factories, each returning a dedicated `ApolloButtonAction` subtype (`RunCommandAction`, `OpenUrlAction`, `ClientAction`):
+of these factories, each returning a dedicated `ApolloButtonAction` subtype (`RunCommandAction`, `OpenUrlAction`,
+`ClientAction`, `SelectChatTabAction`):
 
 - `ApolloButtonAction.runCommand(String)` runs the command as the player. Must start with `/`. The client
   shows a confirmation prompt before running the command.
@@ -261,11 +263,17 @@ of three factories, each returning a dedicated `ApolloButtonAction` subtype (`Ru
 - `ApolloButtonAction.clientAction(ApolloButtonClientAction)` executes a built-in client action:
   `OPEN_MINIMAP_VIEW` opens Lunar's fullscreen minimap view (does nothing when the player has the MiniMap mod
   disabled) or `OPEN_WAYPOINTS_MENU` opens the waypoints menu.
+- `ApolloButtonAction.selectChatTab(String)` selects the [chat tab](/apollo/developers/modules/chat#chat-tabs) with
+  that id, or the "All" tab for `"all"` (`SelectChatTabAction.ALL_TAB_ID`). The tab isn't switched when it doesn't
+  exist or the player turned chat tabs off. Without opening the chat, the client only shows the name of the tab for a
+  moment while the chat is closed, so use `selectChatTab(String, true)` to also open the chat. The chat opens even
+  when the tab can't be switched.
 
 ```java
 .onClick(ApolloButtonAction.runCommand("/shop"))
 .onClick(ApolloButtonAction.openUrl("https://example.com/vote"))
 .onClick(ApolloButtonAction.clientAction(ApolloButtonClientAction.OPEN_MINIMAP_VIEW))
+.onClick(ApolloButtonAction.selectChatTab(SelectChatTabAction.ALL_TAB_ID, true))
 ```
 
 ## `ApolloButtonShape`

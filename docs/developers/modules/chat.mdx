@@ -11,7 +11,15 @@ The chat module allows you to interact with and modify users chat feeds.
 - Display clickable chat buttons in a fixed-size box between the chat input field and the chat log.
   - Ability to mix adventure components and icons inside a single button.
   - Ability to customize the button shape, size, position, colors and hover colors.
-  - Ability to run commands or open URLs on click.
+  - Ability to run commands, open URLs or select a chat tab on click.
+- Add server tabs to the chat next to the client tabs, or replace the client tabs with yours.
+  - Ability to sort chat messages into a tab with regex, contains or starts with patterns.
+  - Ability to send a message straight into a tab.
+  - Ability to prefix what players type in a tab, for example with a channel command.
+  - Ability to mix adventure components, icons and live parts in a tab name, with a tooltip and a background color.
+- Display popups with up to 3 options, for prompts like friend, party or duel requests.
+  - Ability to run an action when the player picks an option.
+  - Ability to handle the option that the player picked, or why the popup closed, with an event.
 
 ![Chat Module Example](/modules/chat/overview.gif#center)
 
@@ -33,6 +41,11 @@ Explore each integration by cycling through each tab, to find the best fit for y
 </Callout>
 
 ### Displaying a Live Chat Message
+
+<Callout type="warning" emoji="⚠️">
+  Displaying a message with the same id replaces the previous message. Messages in [chat tabs](#chat-tabs) share these
+  ids, and `-1` must not be used, because the client uses it internally.
+</Callout>
 
 ```java
 public void displayLiveChatMessageExample() {
@@ -681,6 +694,7 @@ sends each live piece whenever its own update interval elapses, refreshing conte
 Every live part and live tooltip carries its own update interval, set through the content builder's
 `append(resolver, Duration)` (or `ApolloButtonContentPart.live(resolver, Duration)`) and `ApolloButtonTooltip.live(resolver, Duration)`.
 Lightweight integrations replicate this by re-sending `UpdateChatButtonMessage` from their own repeating task.
+Chat tabs have their own option, see [Live Tab Broadcast](#live-tab-broadcast).
 
 <Callout type="info">
   With only `buttons.live-broadcast` enabled, updates are always sent to **every** player holding live
@@ -744,7 +758,7 @@ modules:
           - text: '&aTeam Chat'
         tooltip:
         - '&eClick to switch!'
-        on-click:                      # one of run-command, open-url or client-action
+        on-click:                      # one of run-command, open-url, client-action or select-chat-tab
           run-command: /channel team
 ```
 
@@ -930,6 +944,1002 @@ public static void display(ChatModule chatModule, Player viewer) {
 
 The same layout built with raw payloads: [apollo-protos implementation](https://github.com/LunarClient/Apollo/blob/master/example/bukkit/proto/src/main/java/com/lunarclient/apollo/example/proto/module/chatbuttons/StaffChatLayout.java) · [JSON implementation](https://github.com/LunarClient/Apollo/blob/master/example/bukkit/json/src/main/java/com/lunarclient/apollo/example/json/module/chatbuttons/StaffChatLayout.java)
 
+## Chat Tabs
+
+Lunar Client shows a tab bar above the chat input while the chat is open. The "All" tab shows the whole chat. Next to
+it are two kinds of tabs:
+
+- **Client tabs** are the tabs that Lunar Client adds itself, like party and private messages.
+- **Server tabs** are the tabs that your server adds through this module, with the API or with `tabs.defaults` in
+  the config.
+
+Server tabs are added next to the client tabs, unless `tabs.replace-client-tabs` is enabled, which hides every client
+tab except "All". Tabs that the player made themselves stay either way.
+
+There are two ways for a message to get into a server tab, and they differ in whether the message also shows in "All":
+
+- **Patterns.** The client puts a chat message into your tab when one of the tab's patterns matches the message's plain
+  text, without formatting codes. The message still shows in "All" too, unless the tab has `hideFromAll` set. A pattern
+  is a `TextPattern.regex(...)`, `TextPattern.contains(...)` or `TextPattern.startsWith(...)`, and ignores the case of
+  the letters unless you call `.withCaseSensitive(true)` on it.
+- **`displayChatTabMessage`.** The message goes straight into the tab, without matching any pattern, and never shows
+  in "All". A tab without patterns only gets these messages. It works like a live chat message: the same message id
+  updates the message, and `removeLiveChatMessage` removes it. A player whose client doesn't have the tab, who turned
+  chat tabs off, or whose client is from before chat tabs sees the message in their normal chat instead.
+
+Tabs stay while the player switches between the servers behind a proxy, and are removed when the player disconnects.
+Apollo also runs on Velocity and BungeeCord, and when it runs on the proxy, it keeps track of the tabs across these
+switches. When Apollo runs on the backend servers instead, each backend server only knows the tabs that it displayed
+itself, so the 16 tab limit doesn't count the tabs that another backend server displayed.
+
+<Callout type="info">
+  Displaying a tab with the same id replaces the previous tab. A player can have at most 16 server tabs at the same
+  time, in total across every display call (`ChatTab.MAX_TABS`). Apollo skips the players that a display would take
+  over that with a warning, and throws when the call was for one player.
+</Callout>
+
+<Callout type="warning" emoji="⚠️">
+  These limits apply to every integration. A player can have at most 16 server tabs at the same time
+  (`ChatTab.MAX_TABS`), and a tab can have up to 16 patterns (`ChatTab.MAX_PATTERNS`) of up to 256 characters each
+  (`ChatTab.MAX_PATTERN_LENGTH`). The client cuts off a tab name longer than 32 characters
+  (`ChatTab.MAX_DISPLAY_NAME_LENGTH`). Only the visible characters of the text parts count, formatting codes don't,
+  and the client never cuts inside a formatting code.
+</Callout>
+
+<Callout type="warning" emoji="⚠️">
+  Tab messages are live chat messages, so they share their message ids with `displayLiveChatMessage`. Don't use `-1`,
+  because the client uses it internally.
+</Callout>
+
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+<Callout type="info">
+**Apollo API examples.** See [General](/apollo/developers/general) for common patterns and helpers.
+</Callout>
+
+### Displaying Chat Tabs
+
+The "Back to All" chat button selects the "All" tab with `ApolloButtonAction.selectChatTab`.
+
+```java
+public void displayChatTabsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        this.chatModule.displayChatTabs(apolloPlayer, Arrays.asList(
+            ChatTab.builder()
+                .id("staff")
+                .displayName(ApolloButtonContent.builder()
+                    .append(Component.text("Staff ", NamedTextColor.RED))
+                    .append(apolloViewer -> Component.text("(" + Bukkit.getOnlinePlayers().size() + ")", NamedTextColor.GRAY),
+                        Duration.ofSeconds(5))
+                    .build())
+                .patterns(Arrays.asList(
+                    TextPattern.startsWith("[Staff] ").withCaseSensitive(true),
+                    TextPattern.regex("^\\[(Admin|Mod)\\] ")
+                ))
+                .inputPrefix("/staffchat ")
+                .hideFromAll(true)
+                .build(),
+            ChatTab.builder()
+                .id("events")
+                .displayName(ApolloButtonContent.builder()
+                    .append(ItemStackIcon.builder()
+                        .itemName("CLOCK")
+                        .build())
+                    .append(Component.text("Events", NamedTextColor.GOLD))
+                    .build())
+                .tooltip(ApolloButtonTooltip.of(Component.text("Server events", NamedTextColor.YELLOW)))
+                .backgroundColor(new Color(64, 32, 0, 160))
+                .build()
+        ));
+
+        this.chatModule.displayChatButton(apolloPlayer, ChatButton.builder()
+            .id("back-to-all")
+            .position(HudPosition.of(264, 2))
+            .size(ChatButton.SIZE_SMALL)
+            .shape(ApolloButtonShape.ROUNDED_SQUARE)
+            .content(ApolloButtonContent.builder()
+                .append(Component.text("Back to All"))
+                .build())
+            .onClick(ApolloButtonAction.selectChatTab(SelectChatTabAction.ALL_TAB_ID))
+            .build());
+    });
+}
+```
+
+### Updating a Chat Tab
+
+Replaces the display name and/or tooltip of a displayed tab, without sending the whole tab again, because that would
+scroll the player's chat back down. `updateChatTab` replaces both, `updateChatTabContent` only the display name and
+`updateChatTabTooltip` only the tooltip.
+
+```java
+public void updateChatTabExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.chatModule.updateChatTabContent(apolloPlayer, "events",
+        ApolloButtonContent.builder()
+            .append(ItemStackIcon.builder()
+                .itemName("CLOCK")
+                .build())
+            .append(Component.text("Events (1)", NamedTextColor.GOLD))
+            .build()));
+}
+```
+
+### Displaying a Message in a Chat Tab
+
+```java
+public void displayChatTabMessageExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.chatModule.displayChatTabMessage(apolloPlayer, "events",
+        Component.text("A KOTH event starts in 5 minutes!", NamedTextColor.GOLD),
+        14
+    ));
+}
+```
+
+### Removing a Chat Tab
+
+```java
+public void removeChatTabExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.chatModule.removeChatTab(apolloPlayer, "staff"));
+}
+```
+
+### Resetting all Chat Tabs
+
+```java
+public void resetChatTabsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.chatModule::resetChatTabs);
+}
+```
+
+### `ChatTab` Options
+
+`.id(String)` is the tab id that the other methods refer to. It must not be `all`, because `selectChatTab("all")`
+selects the "All" tab.
+```java
+.id("staff")
+```
+
+`.displayName(ApolloButtonContent)` is the name on the tab, built like the content of a chat button, with text, icons
+and live parts. Live parts are re-sent while `tabs.live-broadcast` is enabled, see [Live Tab Broadcast](#live-tab-broadcast).
+The client ignores the scale, because the tabs have the height of a chat line.
+```java
+.displayName(ApolloButtonContent.builder()
+    .append(Component.text("Staff", NamedTextColor.RED))
+    .build())
+```
+
+`.tooltip(ApolloButtonTooltip)` is shown while the tab is hovered. Leave it out for no tooltip.
+```java
+.tooltip(ApolloButtonTooltip.of(Component.text("Server events", NamedTextColor.YELLOW)))
+```
+
+`.backgroundColor(Color)` is the background of the tab. Leave it out for the background of the chat input field.
+```java
+.backgroundColor(new Color(64, 32, 0, 160))
+```
+
+`.patterns(List<TextPattern>)` sorts the chat messages that one of the patterns matches into the tab. A tab can have
+up to 16 patterns (`ChatTab.MAX_PATTERNS`) of up to 256 characters each (`ChatTab.MAX_PATTERN_LENGTH`), and a pattern
+must not be empty, because an empty pattern matches every message. When a regex takes too long on a message, the client
+skips that pattern for the message, so keep regexes simple.
+```java
+.patterns(Arrays.asList(
+    TextPattern.startsWith("[Staff] ").withCaseSensitive(true),
+    TextPattern.contains("joined the queue"),
+    TextPattern.regex("^\\[(Admin|Mod)\\] ")
+))
+```
+
+`.inputPrefix(String)` is put in front of every message that a player sends while the tab is open. For example, with
+`/staffchat `, typing `hi` in the tab sends `/staffchat hi`. It only changes what the player sends, the patterns decide
+which messages go into the tab. Commands are sent unchanged. Leave it empty to send messages unchanged. A prefix that
+starts with `/` is a command, so the client puts a space after it when it doesn't end with one. Other prefixes like `!`
+are put right in front of the message.
+```java
+.inputPrefix("/staffchat ")
+```
+
+`.hideFromAll(boolean)` shows the tab's messages only in the tab, and not in the "All" tab.
+```java
+.hideFromAll(true)
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight Protobuf examples.** See [Lightweight Protobuf](/apollo/developers/lightweight/protobuf) for setup.
+</Callout>
+
+**Displaying Chat Tabs**
+
+```java
+public void displayChatTabsExample(Player viewer) {
+    DisplayChatTabsMessage tabsMessage = DisplayChatTabsMessage.newBuilder()
+        .addChatTabs(ChatTab.newBuilder()
+            .setId("staff")
+            .setDisplayName(ButtonContent.newBuilder()
+                .addParts(ChatButtonParts.textPart(Component.text("Staff", NamedTextColor.RED)))
+                .setScale(1.0F)
+                .build())
+            .addPatterns(TextPattern.newBuilder()
+                .setStartsWith("[Staff] ")
+                .setCaseSensitive(true)
+                .build())
+            .addPatterns(TextPattern.newBuilder()
+                .setRegex("^\\[(Admin|Mod)\\] ")
+                .build())
+            .setInputPrefix("/staffchat ")
+            .setHideFromAll(true)
+            .build())
+        .addChatTabs(ChatTab.newBuilder()
+            .setId("events")
+            .setDisplayName(ButtonContent.newBuilder()
+                .addParts(ChatButtonParts.iconPart(Icon.newBuilder()
+                    .setItemStack(ProtobufUtil.createItemStackIconProto("CLOCK", 0))
+                    .build()))
+                .addParts(ChatButtonParts.textPart(Component.text("Events", NamedTextColor.GOLD)))
+                .setScale(1.0F)
+                .build())
+            .setTooltip(ButtonTooltip.newBuilder()
+                .addAdventureJsonLines(AdventureUtil.toJson(Component.text("Server events", NamedTextColor.YELLOW)))
+                .build())
+            .setBackgroundColor(ProtobufUtil.createColorProto(new Color(64, 32, 0, 160)))
+            .build())
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, tabsMessage);
+
+    DisplayChatButtonsMessage buttonsMessage = DisplayChatButtonsMessage.newBuilder()
+        .addChatButtons(ChatButton.newBuilder()
+            .setButton(Button.newBuilder()
+                .setId("back-to-all")
+                .setPosition(HudPosition.newBuilder().setX(264).setY(2).build())
+                .setSize(ButtonSize.newBuilder().setWidth(56).setHeight(16).build())
+                .setShape(ButtonShape.BUTTON_SHAPE_ROUNDED_SQUARE)
+                .setBackgroundColor(ProtobufUtil.createColorProto(ChatButtonParts.BACKGROUND))
+                .setBorderColor(ProtobufUtil.createColorProto(ChatButtonParts.BORDER))
+                .setContent(ButtonContent.newBuilder()
+                    .addParts(ChatButtonParts.textPart(Component.text("Back to All")))
+                    .setScale(1.0F)
+                    .build())
+                .setSelectChatTab(SelectChatTabAction.newBuilder()
+                    .setTabId("all")
+                    .build())
+                .build())
+            .build())
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, buttonsMessage);
+}
+```
+
+**Updating a Chat Tab**
+
+```java
+public void updateChatTabExample(Player viewer) {
+    ButtonUpdate update = ButtonUpdate.newBuilder()
+        .setContent(ButtonContent.newBuilder()
+            .addParts(ChatButtonParts.textPart(Component.text("Events (1)", NamedTextColor.GOLD)))
+            .setScale(1.0F)
+            .build())
+        .build();
+
+    UpdateChatTabMessage message = UpdateChatTabMessage.newBuilder()
+        .setId("events")
+        .setUpdate(update)
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Displaying a Message in a Chat Tab**
+
+```java
+public void displayChatTabMessageExample(Player viewer) {
+    DisplayLiveChatMessageMessage message = DisplayLiveChatMessageMessage.newBuilder()
+        .setMessageId(14)
+        .setAdventureJsonLines(AdventureUtil.toJson(
+            Component.text("A KOTH event starts in 5 minutes!", NamedTextColor.GOLD)
+        ))
+        .setTabId("events")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Removing a Chat Tab**
+
+```java
+public void removeChatTabExample(Player viewer) {
+    RemoveChatTabMessage message = RemoveChatTabMessage.newBuilder()
+        .setId("staff")
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Chat Tabs**
+
+```java
+public void resetChatTabsExample(Player viewer) {
+    ResetChatTabsMessage message = ResetChatTabsMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight JSON examples.** See [Lightweight JSON](/apollo/developers/lightweight/json) for setup.
+</Callout>
+
+**Displaying Chat Tabs**
+
+```java
+public void displayChatTabsExample(Player viewer) {
+    JsonObject staffPattern = new JsonObject();
+    staffPattern.addProperty("starts_with", "[Staff] ");
+    staffPattern.addProperty("case_sensitive", true);
+
+    JsonObject adminPattern = new JsonObject();
+    adminPattern.addProperty("regex", "^\\[(Admin|Mod)\\] ");
+
+    JsonArray staffPatterns = new JsonArray();
+    staffPatterns.add(staffPattern);
+    staffPatterns.add(adminPattern);
+
+    JsonObject staffTab = new JsonObject();
+    staffTab.addProperty("id", "staff");
+    staffTab.add("display_name", ChatButtonParts.createContentObject(1.0F,
+        ChatButtonParts.textPart(Component.text("Staff", NamedTextColor.RED))));
+    staffTab.add("patterns", staffPatterns);
+    staffTab.addProperty("input_prefix", "/staffchat ");
+    staffTab.addProperty("hide_from_all", true);
+
+    JsonObject eventsTab = new JsonObject();
+    eventsTab.addProperty("id", "events");
+    eventsTab.add("display_name", ChatButtonParts.createContentObject(1.0F,
+        ChatButtonParts.iconPart(JsonUtil.createItemStackIconObject("CLOCK", 0)),
+        ChatButtonParts.textPart(Component.text("Events", NamedTextColor.GOLD))));
+    eventsTab.add("tooltip", ChatButtonParts.createTooltipObject(
+        Component.text("Server events", NamedTextColor.YELLOW)));
+    eventsTab.add("background_color", JsonUtil.createColorObject(new Color(64, 32, 0, 160)));
+
+    JsonArray tabs = new JsonArray();
+    tabs.add(staffTab);
+    tabs.add(eventsTab);
+
+    JsonObject tabsMessage = new JsonObject();
+    tabsMessage.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.DisplayChatTabsMessage");
+    tabsMessage.add("chat_tabs", tabs);
+
+    JsonPacketUtil.sendPacket(viewer, tabsMessage);
+
+    JsonObject selectChatTab = new JsonObject();
+    selectChatTab.addProperty("tab_id", "all");
+
+    JsonObject backToAll = ChatButtonParts.createButtonObject("back-to-all", 264, 2, 56, 16,
+        "BUTTON_SHAPE_ROUNDED_SQUARE", ChatButtonParts.BACKGROUND, ChatButtonParts.BORDER);
+    JsonObject backToAllButton = ChatButtonParts.button(backToAll);
+    backToAllButton.add("content", ChatButtonParts.createContentObject(1.0F,
+        ChatButtonParts.textPart(Component.text("Back to All"))));
+    backToAllButton.add("select_chat_tab", selectChatTab);
+
+    JsonPacketUtil.sendPacket(viewer, ChatButtonParts.createDisplayMessage(backToAll));
+}
+```
+
+**Updating a Chat Tab**
+
+```java
+public void updateChatTabExample(Player viewer) {
+    JsonObject update = new JsonObject();
+    update.add("content", ChatButtonParts.createContentObject(1.0F,
+        ChatButtonParts.iconPart(JsonUtil.createItemStackIconObject("CLOCK", 0)),
+        ChatButtonParts.textPart(Component.text("Events (1)", NamedTextColor.GOLD))));
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.UpdateChatTabMessage");
+    message.addProperty("id", "events");
+    message.add("update", update);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Displaying a Message in a Chat Tab**
+
+```java
+public void displayChatTabMessageExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.DisplayLiveChatMessageMessage");
+    message.addProperty("message_id", 14);
+    message.addProperty("adventure_json_lines", AdventureUtil.toJson(
+        Component.text("A KOTH event starts in 5 minutes!", NamedTextColor.GOLD)
+    ));
+    message.addProperty("tab_id", "events");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Removing a Chat Tab**
+
+```java
+public void removeChatTabExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.RemoveChatTabMessage");
+    message.addProperty("id", "staff");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Chat Tabs**
+
+```java
+public void resetChatTabsExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.ResetChatTabsMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Live Tab Broadcast
+
+Chat tabs displayed through the Apollo API with live parts in the display name or a live tooltip are automatically
+resent while the `tabs.live-broadcast` option is enabled (disabled by default). It works like
+[Live Button Broadcast](#live-button-broadcast), with its own option, so live tabs and live chat buttons are turned on
+separately. Lightweight integrations replicate this by re-sending `UpdateChatTabMessage` from their own repeating task.
+
+<Callout type="info">
+  Unlike live buttons, live tabs get updates even while the player's chat is closed, also with the packet enrichment
+  chat open/close tracking enabled, because the client shows the name of the selected tab outside the open chat too.
+</Callout>
+
+```diff
+  modules:
+    chat:
+      enable: true
+      tabs:
+-       live-broadcast: false
++       live-broadcast: true
+```
+
+## Default Tabs
+
+Chat tabs can also be defined in `config.yml` and displayed when a player joins, without any plugin code. Set
+`tabs.send-defaults` to `true` (it is `false` by default) and define the tabs under `tabs.defaults`. `send-defaults`
+only controls this list, tabs that a plugin displays through the API are sent either way.
+
+Config tabs are **static**: text is read as legacy strings (`&`-color codes) and icons as icon definitions. Live parts
+in the display name and live tooltips are only available through the API.
+
+The `display-name` is either a legacy string, or content with `parts` in the same format as the content of
+[Default Buttons](#default-buttons). The client ignores `scale` for tabs, because tabs have the height of a chat line.
+
+```yaml
+modules:
+  chat:
+    tabs:
+      replace-client-tabs: false
+      live-broadcast: false
+      send-defaults: true
+      defaults:
+      - id: team
+        display-name: '&aTeam'
+        tooltip:                       # optional
+        - '&7Your team chat'
+        background-color: '#80003300'  # optional, '#RRGGBB' or '#AARRGGBB'
+        patterns:                      # each has exactly one of regex, contains or starts-with
+        - starts-with: '[Team] '
+          case-sensitive: true         # optional, false by default
+        input-prefix: '/tc '
+        hide-from-all: false
+      - id: staff
+        display-name:
+          parts:                       # each part is a 'text' or an 'icon'
+          - icon:
+              name: SHIELD
+          - text: '&cStaff'
+        patterns:
+        - starts-with: '[Staff] '
+        input-prefix: '/sc '
+        hide-from-all: true
+```
+
+## Chat Popups
+
+Chat popups are notification style popups with up to 3 options that the player can pick, for prompts like friend, party
+or duel requests.
+
+When a popup closes, the client sends a response to the server, which Apollo posts as an `ApolloChatPopupResponseEvent`,
+so your plugin handles the answer in the event. Its status tells why the popup closed:
+
+- `PICKED`: the player picked the option with the event's option id. The option id is null for every other status.
+  An option with a run command or open URL action only counts as picked once its command runs or its URL opens, after
+  the player confirms the prompt. A client action or a select chat tab action counts as picked right away, even when
+  it has nothing to do, for example because the tab doesn't exist.
+  The player can also answer a popup by sending an option's run command themselves, for example by clicking a message
+  in chat. That closes every popup with an option that has that command, and sends `PICKED` for each of them.
+- `DISMISSED`: the player closed the popup without picking an option, or picked an option whose action didn't happen:
+  they cancelled its prompt, or its URL couldn't open because the player turned off chat links or the URL is invalid.
+- `EXPIRED`: the popup's display time ran out.
+- `DROPPED`: the client threw the popup away without showing it, because it had too many popups.
+
+<Callout type="warning" emoji="⚠️">
+An option whose run command is a command your plugin handles itself, like `/duel accept`, reaches your plugin twice:
+once as the command and once as a `PICKED` response. Handle the answer in only one of the two places.
+</Callout>
+
+No response is sent when the server removes the popup, or for the popups that are still displayed when the player
+disconnects. Popups stay when the player changes worlds or dimensions or switches between the servers behind a proxy,
+and are removed when the player disconnects. Lunar Client versions from before chat popups don't show them, and no response is sent for them then, so don't
+rely on getting a response for every popup. Apollo popups are shown even to players who turned the client's own chat
+popups off.
+
+Apollo keeps track of the popups that it displayed to each player, and only posts the event for a popup that is still
+displayed to that player, and for a `PICKED` response only when the option id is one of the popup's options. The event
+carries the `ChatPopup` that was displayed. The client keeps up to 20 popups (`ChatPopup.MAX_POPUPS`), which includes
+its own popups for servers like Hypixel, and responds
+with `DROPPED` for each popup it drops past that, so Apollo's tracking stays in step. Apollo only forgets popups on its
+own past 64 per player, for clients that never respond. When Apollo runs on the backend servers
+behind a proxy instead of on the proxy, a response to a popup that another backend server displayed doesn't post the
+event, because the response goes to the server that the player is on now.
+
+<Callout type="warning" emoji="⚠️">
+  Use a new popup id for each request, for example with a random UUID. Displaying a popup with the same id replaces the
+  previous popup, and when an answer to the previous popup is still on its way, that answer is attributed to the newer
+  popup.
+</Callout>
+
+<Callout type="warning" emoji="⚠️">
+  These limits apply to every integration. A popup can have up to 3 options (`ChatPopup.MAX_OPTIONS`). The client cuts
+  off a title longer than 128 characters (`ChatPopup.MAX_TITLE_LENGTH`), a description longer than 512 characters
+  (`ChatPopup.MAX_DESCRIPTION_LENGTH`) and an option label longer than 64 characters
+  (`ChatPopupOption.MAX_LABEL_LENGTH`). Only the visible characters count, formatting codes don't, and the client never
+  cuts inside a formatting code.
+</Callout>
+
+### Sample Code
+Explore each integration by cycling through each tab, to find the best fit for your requirements and needs.
+
+<Tabs items={['Apollo API', 'apollo-protos library', 'Manual JSON Object Construction']}>
+
+<Tab>
+
+<Callout type="info">
+**Apollo API examples.** See [General](/apollo/developers/general) for common patterns and helpers.
+</Callout>
+
+### Displaying a Chat Popup
+
+The example keeps the id of each player's last duel request, so that it can remove the popup again.
+
+```java
+private final Map<UUID, String> duelRequestIds = new ConcurrentHashMap<>();
+
+public void displayChatPopupExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        String popupId = "duel-request-" + UUID.randomUUID();
+        this.duelRequestIds.put(viewer.getUniqueId(), popupId);
+
+        this.chatModule.displayChatPopup(apolloPlayer, ChatPopup.builder()
+            .id(popupId)
+            .title(Component.text("Duel Request"))
+            .description(Component.text("Steve wants to duel you."))
+            .displayTime(Duration.ofSeconds(60))
+            .options(Arrays.asList(
+                ChatPopupOption.builder()
+                    .id("accept")
+                    .label(Component.text("Accept", NamedTextColor.GREEN))
+                    .onClick(ApolloButtonAction.runCommand("/duel accept Steve"))
+                    .build(),
+                ChatPopupOption.builder()
+                    .id("deny")
+                    .label(Component.text("Deny", NamedTextColor.RED))
+                    .build(),
+                ChatPopupOption.builder()
+                    .id("reply")
+                    .label(Component.text("Reply", NamedTextColor.GRAY))
+                    .onClick(ApolloButtonAction.selectChatTab(SelectChatTabAction.ALL_TAB_ID, true))
+                    .build()
+            ))
+            .build()
+        );
+    });
+}
+```
+
+### Removing a Chat Popup
+
+```java
+public void removeChatPopupExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+
+    apolloPlayerOpt.ifPresent(apolloPlayer -> {
+        String popupId = this.duelRequestIds.remove(viewer.getUniqueId());
+        if (popupId != null) {
+            this.chatModule.removeChatPopup(apolloPlayer, popupId);
+        }
+    });
+}
+```
+
+### Resetting all Chat Popups
+
+```java
+public void resetChatPopupsExample(Player viewer) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(this.chatModule::resetChatPopups);
+}
+```
+
+### Handling Chat Popup Responses
+
+Listen to the `ApolloChatPopupResponseEvent`, see [Events](/apollo/developers/events) for how to register a listener.
+
+```java
+@Listen
+private void onChatPopupResponse(ApolloChatPopupResponseEvent event) {
+    Player player = (Player) event.getPlayer().getPlayer();
+    String popupId = event.getPopupId();
+    this.duelRequestIds.remove(player.getUniqueId(), popupId);
+
+    switch (event.getStatus()) {
+        case PICKED: {
+            player.sendMessage("You picked " + event.getOptionId() + " on the " + popupId + " popup.");
+            break;
+        }
+
+        case DISMISSED: {
+            player.sendMessage("You closed the " + popupId + " popup.");
+            break;
+        }
+
+        case EXPIRED: {
+            player.sendMessage("The " + popupId + " popup expired.");
+            break;
+        }
+
+        case DROPPED: {
+            player.sendMessage("The " + popupId + " popup was dropped, because you had too many popups.");
+            break;
+        }
+    }
+}
+```
+
+### `ChatPopup` Options
+
+`.id(String)` is the popup id that the other methods and the response refer to.
+```java
+.id("duel-request-" + UUID.randomUUID())
+```
+
+`.title(Component)` is the title of the popup.
+```java
+.title(Component.text("Duel Request"))
+```
+
+`.description(Component)` is the text below the title. Leave it out for a popup without a description.
+```java
+.description(Component.text("Steve wants to duel you."))
+```
+
+`.displayTime(Duration)` is how long the popup stays, usually the time until the request that it asks about expires.
+Leave it out to keep the popup until the player closes it or the server removes it.
+```java
+.displayTime(Duration.ofSeconds(60))
+```
+
+`.options(List<ChatPopupOption>)` sets up to 3 options (`ChatPopup.MAX_OPTIONS`), and the client draws them as buttons
+in this order.
+```java
+.options(Arrays.asList(accept, deny))
+```
+
+### `ChatPopupOption` Options
+
+`.id(String)` is the option id that the response carries.
+```java
+.id("accept")
+```
+
+`.label(Component)` is the text on the option's button.
+```java
+.label(Component.text("Accept", NamedTextColor.GREEN))
+```
+
+`.onClick(ApolloButtonAction)` runs when the player picks the option, before the client sends the response. It takes
+the same actions as a button, see the [buttons utilities page](/apollo/developers/utilities/buttons#apollobuttonaction).
+The client asks the player before it runs a command or opens a URL, like it does for buttons. The response is only
+`PICKED` once the command runs or the URL opens, and cancelling the prompt sends `DISMISSED`. Leave it out to only send
+the response.
+```java
+.onClick(ApolloButtonAction.runCommand("/duel accept Steve"))
+.onClick(ApolloButtonAction.selectChatTab(SelectChatTabAction.ALL_TAB_ID, true))
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight Protobuf examples.** See [Lightweight Protobuf](/apollo/developers/lightweight/protobuf) for setup.
+</Callout>
+
+**Displaying a Chat Popup**
+
+```java
+private final Map<UUID, String> duelRequestIds = new ConcurrentHashMap<>();
+
+public void displayChatPopupExample(Player viewer) {
+    String popupId = "duel-request-" + UUID.randomUUID();
+    this.duelRequestIds.put(viewer.getUniqueId(), popupId);
+
+    DisplayChatPopupMessage message = DisplayChatPopupMessage.newBuilder()
+        .setChatPopup(ChatPopup.newBuilder()
+            .setId(popupId)
+            .setTitleAdventureJsonLines(AdventureUtil.toJson(Component.text("Duel Request")))
+            .setDescriptionAdventureJsonLines(AdventureUtil.toJson(Component.text("Steve wants to duel you.")))
+            .setDisplayTime(ProtobufUtil.createDurationProto(Duration.ofSeconds(60)))
+            .addOptions(ChatPopupOption.newBuilder()
+                .setId("accept")
+                .setLabelAdventureJsonLines(AdventureUtil.toJson(Component.text("Accept", NamedTextColor.GREEN)))
+                .setRunCommand("/duel accept Steve")
+                .build())
+            .addOptions(ChatPopupOption.newBuilder()
+                .setId("deny")
+                .setLabelAdventureJsonLines(AdventureUtil.toJson(Component.text("Deny", NamedTextColor.RED)))
+                .build())
+            .addOptions(ChatPopupOption.newBuilder()
+                .setId("reply")
+                .setLabelAdventureJsonLines(AdventureUtil.toJson(Component.text("Reply", NamedTextColor.GRAY)))
+                .setSelectChatTab(SelectChatTabAction.newBuilder()
+                    .setTabId("all")
+                    .setOpenChat(true)
+                    .build())
+                .build())
+            .build())
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Removing a Chat Popup**
+
+```java
+public void removeChatPopupExample(Player viewer) {
+    String popupId = this.duelRequestIds.remove(viewer.getUniqueId());
+    if (popupId == null) {
+        return;
+    }
+
+    RemoveChatPopupMessage message = RemoveChatPopupMessage.newBuilder()
+        .setId(popupId)
+        .build();
+
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Chat Popups**
+
+```java
+public void resetChatPopupsExample(Player viewer) {
+    ResetChatPopupsMessage message = ResetChatPopupsMessage.getDefaultInstance();
+    ProtobufPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Handling Chat Popup Responses**
+
+The client sends the response as a `ChatPopupResponseMessage`, see
+[Serverbound Packets](/apollo/developers/lightweight/protobuf/serverbound-packets) for the whole listener. The option id
+is empty unless the status is `STATUS_PICKED`. For an option with an on click action, `STATUS_PICKED` is only sent once
+its command runs or its URL opens, after the player confirms the prompt, and cancelling the prompt sends
+`STATUS_DISMISSED`. Unlike the Apollo API, a lightweight integration gets every response, so check that the popup id is
+one that you displayed to that player and still wait for an answer to.
+
+```java
+private void onChatPopupResponse(Player player, ChatPopupResponseMessage message) {
+    String popupId = message.getPopupId();
+
+    switch (message.getStatus()) {
+        case STATUS_PICKED: {
+            player.sendMessage("You picked " + message.getOptionId() + " on the " + popupId + " popup.");
+            break;
+        }
+
+        case STATUS_DISMISSED: {
+            player.sendMessage("You closed the " + popupId + " popup.");
+            break;
+        }
+
+        case STATUS_EXPIRED: {
+            player.sendMessage("The " + popupId + " popup expired.");
+            break;
+        }
+
+        case STATUS_DROPPED: {
+            player.sendMessage("The " + popupId + " popup was dropped, because you had too many popups.");
+            break;
+        }
+
+        default: {
+            break;
+        }
+    }
+}
+```
+
+</Tab>
+
+<Tab>
+
+<Callout type="info">
+**Lightweight JSON examples.** See [Lightweight JSON](/apollo/developers/lightweight/json) for setup.
+</Callout>
+
+**Displaying a Chat Popup**
+
+```java
+private final Map<UUID, String> duelRequestIds = new ConcurrentHashMap<>();
+
+public void displayChatPopupExample(Player viewer) {
+    String popupId = "duel-request-" + UUID.randomUUID();
+    this.duelRequestIds.put(viewer.getUniqueId(), popupId);
+
+    JsonObject acceptOption = new JsonObject();
+    acceptOption.addProperty("id", "accept");
+    acceptOption.addProperty("label_adventure_json_lines", AdventureUtil.toJson(
+        Component.text("Accept", NamedTextColor.GREEN)
+    ));
+    acceptOption.addProperty("run_command", "/duel accept Steve");
+
+    JsonObject denyOption = new JsonObject();
+    denyOption.addProperty("id", "deny");
+    denyOption.addProperty("label_adventure_json_lines", AdventureUtil.toJson(
+        Component.text("Deny", NamedTextColor.RED)
+    ));
+
+    JsonObject selectChatTab = new JsonObject();
+    selectChatTab.addProperty("tab_id", "all");
+    selectChatTab.addProperty("open_chat", true);
+
+    JsonObject replyOption = new JsonObject();
+    replyOption.addProperty("id", "reply");
+    replyOption.addProperty("label_adventure_json_lines", AdventureUtil.toJson(
+        Component.text("Reply", NamedTextColor.GRAY)
+    ));
+    replyOption.add("select_chat_tab", selectChatTab);
+
+    JsonArray options = new JsonArray();
+    options.add(acceptOption);
+    options.add(denyOption);
+    options.add(replyOption);
+
+    JsonObject popup = new JsonObject();
+    popup.addProperty("id", popupId);
+    popup.addProperty("title_adventure_json_lines", AdventureUtil.toJson(Component.text("Duel Request")));
+    popup.addProperty("description_adventure_json_lines", AdventureUtil.toJson(
+        Component.text("Steve wants to duel you.")
+    ));
+    popup.addProperty("display_time", JsonUtil.createDurationObject(Duration.ofSeconds(60)));
+    popup.add("options", options);
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.DisplayChatPopupMessage");
+    message.add("chat_popup", popup);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Removing a Chat Popup**
+
+```java
+public void removeChatPopupExample(Player viewer) {
+    String popupId = this.duelRequestIds.remove(viewer.getUniqueId());
+    if (popupId == null) {
+        return;
+    }
+
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.RemoveChatPopupMessage");
+    message.addProperty("id", popupId);
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Resetting all Chat Popups**
+
+```java
+public void resetChatPopupsExample(Player viewer) {
+    JsonObject message = new JsonObject();
+    message.addProperty("@type", "type.googleapis.com/lunarclient.apollo.chat.v1.ResetChatPopupsMessage");
+
+    JsonPacketUtil.sendPacket(viewer, message);
+}
+```
+
+**Handling Chat Popup Responses**
+
+The client sends the response as a `lunarclient.apollo.chat.v1.ChatPopupResponseMessage`, see
+[Serverbound Packets](/apollo/developers/lightweight/json/serverbound-packets) for the whole listener. The option id is
+only set when the status is `STATUS_PICKED`. For an option with an on click action, `STATUS_PICKED` is only sent once
+its command runs or its URL opens, after the player confirms the prompt, and cancelling the prompt sends
+`STATUS_DISMISSED`. Unlike the Apollo API, a lightweight integration gets every response, so check that the popup id is
+one that you displayed to that player and still wait for an answer to.
+
+```java
+private void onChatPopupResponse(Player player, JsonObject message) {
+    String popupId = message.get("popup_id").getAsString();
+    String status = message.get("status").getAsString();
+
+    switch (status) {
+        case "STATUS_PICKED": {
+            String optionId = message.get("option_id").getAsString();
+            player.sendMessage("You picked " + optionId + " on the " + popupId + " popup.");
+            break;
+        }
+
+        case "STATUS_DISMISSED": {
+            player.sendMessage("You closed the " + popupId + " popup.");
+            break;
+        }
+
+        case "STATUS_EXPIRED": {
+            player.sendMessage("The " + popupId + " popup expired.");
+            break;
+        }
+
+        case "STATUS_DROPPED": {
+            player.sendMessage("The " + popupId + " popup was dropped, because you had too many popups.");
+            break;
+        }
+
+        default: {
+            break;
+        }
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
 ## Available options
 
 - __`BROADCAST_LIVE_BUTTONS`__
@@ -949,4 +1959,28 @@ The same layout built with raw payloads: [apollo-protos implementation](https://
     - Values
         - Type: `List<ChatButton>`
         - Default: `chat-channels sample buttons`
+
+- __`REPLACE_CLIENT_TABS`__
+    - Whether the server tabs replace the client tabs, except the "All" tab.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`BROADCAST_LIVE_TABS`__
+    - Whether live chat tab display names and tooltips are automatically re-resolved and re-sent to viewers.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`SEND_DEFAULT_TABS`__
+    - Whether the default tabs are displayed to players when they join.
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`DEFAULT_TABS`__
+    - The default tabs displayed to joining players while `tabs.send-defaults` is enabled.
+    - Values
+        - Type: `List<ChatTab>`
+        - Default: `a sample team tab`
 

@@ -240,7 +240,7 @@ public abstract class ApolloModule implements ApolloListener {
      *
      * @since 1.0.0
      */
-    private void onDisable() {
+    protected void onDisable() {
     }
 
     private ModuleDefinition definition() {

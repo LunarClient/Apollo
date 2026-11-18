@@ -92,6 +92,54 @@ public class ChatCommand implements CommandExecutor {
                 break;
             }
 
+            case "displaytabs": {
+                chatExample.displayChatTabsExample(player);
+                player.sendMessage("Displaying chat tabs and the Back to All chat button....");
+                break;
+            }
+
+            case "updatetab": {
+                chatExample.updateChatTabExample(player);
+                player.sendMessage("Updating the events chat tab....");
+                break;
+            }
+
+            case "displaytabmessage": {
+                chatExample.displayChatTabMessageExample(player);
+                player.sendMessage("Displaying a message in the events chat tab....");
+                break;
+            }
+
+            case "removetab": {
+                chatExample.removeChatTabExample(player);
+                player.sendMessage("Removing the staff chat tab....");
+                break;
+            }
+
+            case "resettabs": {
+                chatExample.resetChatTabsExample(player);
+                player.sendMessage("Resetting chat tabs....");
+                break;
+            }
+
+            case "displaypopup": {
+                chatExample.displayChatPopupExample(player);
+                player.sendMessage("Displaying a new duel request chat popup....");
+                break;
+            }
+
+            case "removepopup": {
+                chatExample.removeChatPopupExample(player);
+                player.sendMessage("Removing the last duel request chat popup....");
+                break;
+            }
+
+            case "resetpopups": {
+                chatExample.resetChatPopupsExample(player);
+                player.sendMessage("Resetting chat popups....");
+                break;
+            }
+
             default: {
                 this.sendUsage(player);
                 break;
@@ -109,5 +157,13 @@ public class ChatCommand implements CommandExecutor {
         player.sendMessage("Usage: /chat updateButton");
         player.sendMessage("Usage: /chat removeButton");
         player.sendMessage("Usage: /chat resetButtons");
+        player.sendMessage("Usage: /chat displayTabs");
+        player.sendMessage("Usage: /chat updateTab");
+        player.sendMessage("Usage: /chat displayTabMessage");
+        player.sendMessage("Usage: /chat removeTab");
+        player.sendMessage("Usage: /chat resetTabs");
+        player.sendMessage("Usage: /chat displayPopup");
+        player.sendMessage("Usage: /chat removePopup");
+        player.sendMessage("Usage: /chat resetPopups");
     }
 }

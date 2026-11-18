@@ -25,13 +25,16 @@ package com.lunarclient.apollo.example.proto.listener;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.lunarclient.apollo.chat.v1.ChatPopupResponseMessage;
 import com.lunarclient.apollo.common.v1.BlockLocation;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Location;
 import com.lunarclient.apollo.common.v1.LunarClientVersion;
 import com.lunarclient.apollo.common.v1.MinecraftVersion;
 import com.lunarclient.apollo.example.ApolloExamplePlugin;
+import com.lunarclient.apollo.example.module.impl.ChatExample;
 import com.lunarclient.apollo.example.module.impl.InventoryExample;
+import com.lunarclient.apollo.example.proto.module.ChatProtoExample;
 import com.lunarclient.apollo.example.proto.module.InventoryProtoExample;
 import com.lunarclient.apollo.example.proto.util.ProtobufUtil;
 import com.lunarclient.apollo.packetenrichment.v1.BlockHit;
@@ -85,6 +88,11 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
                 this.onPlayerUseItem(any.unpack(PlayerUseItemMessage.class));
             } else if (any.is(PlayerUseItemBucketMessage.class)) {
                 this.onPlayerUseItemBucket(any.unpack(PlayerUseItemBucketMessage.class));
+            }
+
+            // Chat Module
+            if (any.is(ChatPopupResponseMessage.class)) {
+                this.onChatPopupResponse(player, any.unpack(ChatPopupResponseMessage.class));
             }
         } catch (InvalidProtocolBufferException e) {
             throw new RuntimeException(e);
@@ -197,6 +205,41 @@ public class ApolloPacketReceiveProtoListener implements PluginMessageListener {
         boolean jumping = info.getJumping();
         float forwardSpeed = info.getForwardSpeed();
         float strafeSpeed = info.getStrafeSpeed();
+    }
+
+    private void onChatPopupResponse(Player player, ChatPopupResponseMessage message) {
+        String popupId = message.getPopupId();
+
+        ChatExample example = ApolloExamplePlugin.getInstance().getChatExample();
+        if (example instanceof ChatProtoExample) {
+            ((ChatProtoExample) example).handleChatPopupResponse(player, popupId);
+        }
+
+        switch (message.getStatus()) {
+            case STATUS_PICKED: {
+                player.sendMessage("You picked " + message.getOptionId() + " on the " + popupId + " popup.");
+                break;
+            }
+
+            case STATUS_DISMISSED: {
+                player.sendMessage("You closed the " + popupId + " popup.");
+                break;
+            }
+
+            case STATUS_EXPIRED: {
+                player.sendMessage("The " + popupId + " popup expired.");
+                break;
+            }
+
+            case STATUS_DROPPED: {
+                player.sendMessage("The " + popupId + " popup was dropped, because you had too many popups.");
+                break;
+            }
+
+            default: {
+                break;
+            }
+        }
     }
 
 }

@@ -33,8 +33,8 @@ import org.jetbrains.annotations.ApiStatus;
  * The abstract base class for the action executed when an
  * {@link ApolloButton} is clicked.
  *
- * <p>Each action is one of {@link RunCommandAction}, {@link OpenUrlAction}
- * or {@link ClientAction}.</p>
+ * <p>Each action is one of {@link RunCommandAction}, {@link OpenUrlAction},
+ * {@link ClientAction} or {@link SelectChatTabAction}.</p>
  *
  * @since 1.2.9
  */
@@ -76,6 +76,42 @@ public abstract class ApolloButtonAction {
      */
     public static ClientAction clientAction(@NonNull ApolloButtonClientAction action) {
         return new ClientAction(action);
+    }
+
+    /**
+     * Creates an action that selects the chat tab with the given id,
+     * without opening the chat.
+     *
+     * <p>Use {@link SelectChatTabAction#ALL_TAB_ID} for the "All" tab.
+     * Nothing happens when the tab doesn't exist, or when the player turned
+     * chat tabs off.
+     * Without opening the chat, the client only shows the name of the tab
+     * for a moment while the chat is closed.</p>
+     *
+     * @param tabId the chat tab id
+     * @return the select chat tab action
+     * @since 1.3.1
+     */
+    public static SelectChatTabAction selectChatTab(@NonNull String tabId) {
+        return new SelectChatTabAction(tabId, false);
+    }
+
+    /**
+     * Creates an action that selects the chat tab with the given id.
+     *
+     * <p>Use {@link SelectChatTabAction#ALL_TAB_ID} for the "All" tab.
+     * The tab isn't switched when it doesn't exist, or when the player
+     * turned chat tabs off, but the chat still opens when openChat is set.
+     * Without opening the chat, the client only shows the name of the tab
+     * for a moment while the chat is closed.</p>
+     *
+     * @param tabId    the chat tab id
+     * @param openChat whether the action also opens the chat
+     * @return the select chat tab action
+     * @since 1.3.1
+     */
+    public static SelectChatTabAction selectChatTab(@NonNull String tabId, boolean openChat) {
+        return new SelectChatTabAction(tabId, openChat);
     }
 
 }

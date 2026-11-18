@@ -33,6 +33,7 @@ import com.lunarclient.apollo.common.button.action.ApolloButtonClientAction;
 import com.lunarclient.apollo.common.button.action.ClientAction;
 import com.lunarclient.apollo.common.button.action.OpenUrlAction;
 import com.lunarclient.apollo.common.button.action.RunCommandAction;
+import com.lunarclient.apollo.common.button.action.SelectChatTabAction;
 import com.lunarclient.apollo.common.button.content.ApolloButtonContent;
 import com.lunarclient.apollo.common.button.content.ApolloButtonContentPart;
 import com.lunarclient.apollo.common.button.content.ComponentPart;
@@ -65,25 +66,7 @@ public abstract class ApolloButtonSerializer<T extends ApolloButton> implements 
     @Override
     public T deserialize(Type type, ConfigurationNode node) throws SerializationException {
         try {
-            ApolloButtonContent.Builder content = ApolloButtonContent.builder();
-            for (ConfigurationNode part : node.node("content", "parts").childrenList()) {
-                if (part.hasChild("text")) {
-                    content.append(ApolloComponent.fromLegacyAmpersand(part.node("text").getString("")));
-                } else if (part.hasChild("icon")) {
-                    Icon icon = part.node("icon").get(Icon.class);
-                    if (icon == null) {
-                        throw new SerializationException("Button content part 'icon' must not be empty!");
-                    }
-
-                    content.append(icon);
-                } else {
-                    throw new SerializationException("Button content parts require a 'text' or 'icon' field!");
-                }
-            }
-
-            if (node.hasChild("content", "scale")) {
-                content.scale((float) node.node("content", "scale").getDouble(1.0D));
-            }
+            ApolloButtonContent content = ApolloButtonSerializer.readContent(node.node("content"));
 
             String id = this.virtualNode(node, "id").getString();
             if (id == null || id.isEmpty()) {
@@ -99,7 +82,7 @@ public abstract class ApolloButtonSerializer<T extends ApolloButton> implements 
                 (float) this.virtualNode(node, "size", "width").getDouble(),
                 (float) this.virtualNode(node, "size", "height").getDouble()));
             builder.shape(this.parseEnum(ApolloButtonShape.class, this.virtualNode(node, "shape").getString(), "shape"));
-            builder.content(content.build());
+            builder.content(content);
             builder.hoveredBackgroundColor(node.node("hovered-background-color").get(Color.class));
             builder.hoveredBorderColor(node.node("hovered-border-color").get(Color.class));
 
@@ -147,10 +130,7 @@ public abstract class ApolloButtonSerializer<T extends ApolloButton> implements 
             node.node("hovered-border-color").set(Color.class, button.getHoveredBorderColor());
         }
 
-        node.node("content", "scale").set((double) button.getContent().getScale());
-        for (ApolloButtonContentPart part : button.getContent().getParts()) {
-            this.writePart(node.node("content", "parts").appendListNode(), part);
-        }
+        ApolloButtonSerializer.writeContent(node.node("content"), button.getContent());
 
         ApolloButtonTooltip tooltip = button.getTooltip();
         if (tooltip != null) {
@@ -170,6 +150,10 @@ public abstract class ApolloButtonSerializer<T extends ApolloButton> implements 
             node.node("on-click", "open-url").set(((OpenUrlAction) action).getUrl());
         } else if (action instanceof ClientAction) {
             node.node("on-click", "client-action").set(((ClientAction) action).getAction().name());
+        } else if (action instanceof SelectChatTabAction) {
+            SelectChatTabAction selectChatTab = (SelectChatTabAction) action;
+            node.node("on-click", "select-chat-tab", "tab-id").set(selectChatTab.getTabId());
+            node.node("on-click", "select-chat-tab", "open-chat").set(selectChatTab.isOpenChat());
         }
     }
 
@@ -235,6 +219,60 @@ public abstract class ApolloButtonSerializer<T extends ApolloButton> implements 
         return source.node(path);
     }
 
+    /**
+     * Reads button content from the given node, with a 'text' or an 'icon'
+     * field on each entry of 'parts', and an optional 'scale'.
+     *
+     * @param node the content node
+     * @return the content
+     * @throws SerializationException if a part is invalid or the content is
+     *                                out of its limits
+     * @since 1.3.1
+     */
+    public static ApolloButtonContent readContent(ConfigurationNode node) throws SerializationException {
+        ApolloButtonContent.Builder content = ApolloButtonContent.builder();
+        for (ConfigurationNode part : node.node("parts").childrenList()) {
+            if (part.hasChild("text")) {
+                content.append(ApolloComponent.fromLegacyAmpersand(part.node("text").getString("")));
+            } else if (part.hasChild("icon")) {
+                Icon icon = part.node("icon").get(Icon.class);
+                if (icon == null) {
+                    throw new SerializationException("Button content part 'icon' must not be empty!");
+                }
+
+                content.append(icon);
+            } else {
+                throw new SerializationException("Button content parts require a 'text' or 'icon' field!");
+            }
+        }
+
+        try {
+            if (node.hasChild("scale")) {
+                content.scale((float) node.node("scale").getDouble(1.0D));
+            }
+
+            return content.build();
+        } catch (IllegalArgumentException exception) {
+            throw new SerializationException(exception.getMessage());
+        }
+    }
+
+    /**
+     * Writes button content to the given node in the format that
+     * {@link #readContent(ConfigurationNode)} reads.
+     *
+     * @param node    the content node
+     * @param content the content to write
+     * @throws SerializationException if the content has a live part
+     * @since 1.3.1
+     */
+    public static void writeContent(ConfigurationNode node, ApolloButtonContent content) throws SerializationException {
+        node.node("scale").set((double) content.getScale());
+        for (ApolloButtonContentPart part : content.getParts()) {
+            ApolloButtonSerializer.writePart(node.node("parts").appendListNode(), part);
+        }
+    }
+
     private ApolloButtonAction readAction(ConfigurationNode node) throws SerializationException {
         if (node.hasChild("run-command")) {
             return ApolloButtonAction.runCommand(node.node("run-command").getString(""));
@@ -249,10 +287,16 @@ public abstract class ApolloButtonSerializer<T extends ApolloButton> implements 
                 node.node("client-action").getString(), "client-action"));
         }
 
-        throw new SerializationException("on-click requires a 'run-command', 'open-url' or 'client-action' field!");
+        if (node.hasChild("select-chat-tab")) {
+            ConfigurationNode selectChatTab = node.node("select-chat-tab");
+            return ApolloButtonAction.selectChatTab(this.virtualNode(selectChatTab, "tab-id").getString(""),
+                selectChatTab.node("open-chat").getBoolean(false));
+        }
+
+        throw new SerializationException("on-click requires a 'run-command', 'open-url', 'client-action' or 'select-chat-tab' field!");
     }
 
-    private void writePart(ConfigurationNode node, ApolloButtonContentPart part) throws SerializationException {
+    private static void writePart(ConfigurationNode node, ApolloButtonContentPart part) throws SerializationException {
         if (part instanceof LiveComponentPart) {
             throw new SerializationException("Live content parts cannot be stored in the config!");
         }

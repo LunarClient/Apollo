@@ -32,6 +32,7 @@ import com.lunarclient.apollo.common.button.ApolloButtonSize;
 import com.lunarclient.apollo.common.button.ApolloButtonTooltip;
 import com.lunarclient.apollo.common.button.action.ApolloButtonAction;
 import com.lunarclient.apollo.common.button.action.RunCommandAction;
+import com.lunarclient.apollo.common.button.action.SelectChatTabAction;
 import com.lunarclient.apollo.common.button.content.ApolloButtonContent;
 import com.lunarclient.apollo.common.button.content.ApolloButtonContentPart;
 import com.lunarclient.apollo.common.button.content.LiveComponentPart;
@@ -59,12 +60,12 @@ import org.jetbrains.annotations.Nullable;
 /**
  * The shared engine behind every button module.
  *
- * @param <B> the button type
+ * @param <B> the button type, or another type with button content like a chat tab
  * @param <P> the protobuf message
  * @since 1.2.9
  */
 @RequiredArgsConstructor
-public final class ButtonModuleSupport<B extends ApolloButton, P extends Message> {
+public final class ButtonModuleSupport<B, P extends Message> {
 
     private static final long TICK_MILLIS = 50L;
 
@@ -113,8 +114,9 @@ public final class ButtonModuleSupport<B extends ApolloButton, P extends Message
         for (B button : buttons) {
             this.surface.validate(button);
 
-            if (!ids.add(button.getId())) {
-                throw new IllegalArgumentException("Duplicate button id '" + button.getId() + "' in display batch");
+            String id = this.surface.getId(button);
+            if (!ids.add(id)) {
+                throw new IllegalArgumentException("Duplicate button id '" + id + "' in display batch");
             }
 
             if (this.isLiveButton(button)) {
@@ -147,10 +149,11 @@ public final class ButtonModuleSupport<B extends ApolloButton, P extends Message
             Map<String, LiveButton> tracked = this.liveButtons.computeIfAbsent(player.getUniqueId(), uuid -> new ConcurrentHashMap<>());
 
             for (B button : buttons) {
+                String id = this.surface.getId(button);
                 if (this.isLiveButton(button)) {
-                    tracked.put(button.getId(), this.createLiveButton(button.getContent(), button.getTooltip(), now));
+                    tracked.put(id, this.createLiveButton(this.surface.getContent(button), this.surface.getTooltip(button), now));
                 } else {
-                    tracked.remove(button.getId());
+                    tracked.remove(id);
                 }
             }
         });
@@ -164,7 +167,7 @@ public final class ButtonModuleSupport<B extends ApolloButton, P extends Message
             }
 
             for (B button : buttons) {
-                tracked.remove(button.getId());
+                tracked.remove(this.surface.getId(button));
             }
         });
     }
@@ -410,9 +413,9 @@ public final class ButtonModuleSupport<B extends ApolloButton, P extends Message
         }
     }
 
-    private boolean isLiveButton(ApolloButton button) {
-        ApolloButtonTooltip tooltip = button.getTooltip();
-        return button.getContent().isLive() || (tooltip != null && tooltip.isLive());
+    private boolean isLiveButton(B button) {
+        ApolloButtonTooltip tooltip = this.surface.getTooltip(button);
+        return this.surface.getContent(button).isLive() || (tooltip != null && tooltip.isLive());
     }
 
     private static final class LiveButton {
@@ -482,9 +485,22 @@ public final class ButtonModuleSupport<B extends ApolloButton, P extends Message
             throw new IllegalArgumentException("ApolloButton must fit within the " + boxWidth + "x" + boxHeight + " button box");
         }
 
-        ApolloButtonAction onClick = button.getOnClick();
-        if (onClick instanceof RunCommandAction && !((RunCommandAction) onClick).getCommand().startsWith("/")) {
+        validateAction(button.getOnClick());
+    }
+
+    /**
+     * Validates a click action.
+     *
+     * @param action the action to validate, or {@code null}
+     * @since 1.3.1
+     */
+    public static void validateAction(@Nullable ApolloButtonAction action) {
+        if (action instanceof RunCommandAction && !((RunCommandAction) action).getCommand().startsWith("/")) {
             throw new IllegalArgumentException("RunCommandAction#command must start with '/'");
+        }
+
+        if (action instanceof SelectChatTabAction && ((SelectChatTabAction) action).getTabId().isEmpty()) {
+            throw new IllegalArgumentException("SelectChatTabAction#tabId must not be empty");
         }
     }
 

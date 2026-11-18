@@ -37,6 +37,7 @@ import com.lunarclient.apollo.common.location.ApolloBlockLocation;
 import com.lunarclient.apollo.common.location.ApolloLocation;
 import com.lunarclient.apollo.common.location.ApolloPlayerLocation;
 import com.lunarclient.apollo.common.location.HudPosition;
+import com.lunarclient.apollo.common.pattern.TextPattern;
 import com.lunarclient.apollo.common.profile.Profile;
 import com.lunarclient.apollo.common.v1.EntityId;
 import com.lunarclient.apollo.common.v1.Uuid;
@@ -797,6 +798,35 @@ public final class NetworkTypes {
             .minV(icon.getMinV())
             .maxV(icon.getMaxV())
             .build();
+    }
+
+    /**
+     * Converts a {@link TextPattern} object to a
+     * {@link com.lunarclient.apollo.common.v1.TextPattern} proto message.
+     *
+     * @param pattern the text pattern
+     * @return the proto text pattern message
+     * @since 1.3.1
+     */
+    public static com.lunarclient.apollo.common.v1.TextPattern toProtobuf(TextPattern pattern) {
+        com.lunarclient.apollo.common.v1.TextPattern.Builder builder = com.lunarclient.apollo.common.v1.TextPattern.newBuilder()
+            .setCaseSensitive(pattern.isCaseSensitive());
+
+        switch (pattern.getType()) {
+            case REGEX:
+                builder.setRegex(pattern.getValue());
+                break;
+            case CONTAINS:
+                builder.setContains(pattern.getValue());
+                break;
+            case STARTS_WITH:
+                builder.setStartsWith(pattern.getValue());
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown text pattern type: " + pattern.getType());
+        }
+
+        return builder.build();
     }
 
     private NetworkTypes() {
