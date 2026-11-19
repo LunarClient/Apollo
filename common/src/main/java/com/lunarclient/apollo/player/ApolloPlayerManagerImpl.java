@@ -30,9 +30,12 @@ import com.lunarclient.apollo.event.EventBus;
 import com.lunarclient.apollo.event.player.ApolloPlayerHandshakeEvent;
 import com.lunarclient.apollo.event.player.ApolloRegisterPlayerEvent;
 import com.lunarclient.apollo.event.player.ApolloUnregisterPlayerEvent;
+import com.lunarclient.apollo.module.ApolloModule;
 import com.lunarclient.apollo.module.paynow.PayNowEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.module.tebex.TebexEmbeddedCheckoutSupport;
 import com.lunarclient.apollo.network.NetworkOptions;
+import com.lunarclient.apollo.option.Options;
+import com.lunarclient.apollo.option.OptionsImpl;
 import com.lunarclient.apollo.player.v1.PlayerHandshakeMessage;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -73,6 +76,8 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
      */
     public void addPlayer(@NonNull ApolloPlayer player) {
         if (this.players.putIfAbsent(player.getUniqueId(), player) == null) {
+            this.clearPlayerOptions(player.getUniqueId());
+
             NetworkOptions.sendOptions(
                 Apollo.getModuleManager().getModules(),
                 true,
@@ -100,6 +105,17 @@ public final class ApolloPlayerManagerImpl implements ApolloPlayerManager {
                 .post(new ApolloUnregisterPlayerEvent(apolloPlayer));
             for (Throwable throwable : result.getThrowing()) {
                 throwable.printStackTrace();
+            }
+
+            this.clearPlayerOptions(player);
+        }
+    }
+
+    private void clearPlayerOptions(UUID player) {
+        for (ApolloModule module : Apollo.getModuleManager().getModules()) {
+            Options options = module.getOptions();
+            if (options instanceof OptionsImpl) {
+                ((OptionsImpl) options).getPlayerOptions().remove(player);
             }
         }
     }
