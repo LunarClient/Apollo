@@ -1,0 +1,142 @@
+# Sticky Notes
+
+Make sticky notes to stick to your screen.
+
+## Integration
+
+### How to toggle the mod
+
+```java
+public void toggleStickyNotesExample(Player viewer, boolean value) {
+    Optional<ApolloPlayer> apolloPlayerOpt = Apollo.getPlayerManager().getPlayer(viewer.getUniqueId());
+    apolloPlayerOpt.ifPresent(apolloPlayer -> this.modSettingModule.getOptions().set(apolloPlayer, ModStickyNotes.ENABLED, value));
+}
+```
+
+## Available options
+
+- __`ENABLED`__
+    - Config Key: `enabled`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`STICKY_NOTES_CLOSE_EDITOR_ON_OUTSIDE_CLICK`__
+    - Close the note editor when clicking anywhere other than a note
+    - Config Key: `sticky-notes-close-editor-on-outside-click`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`STICKY_NOTES_FOCUS_LAST_EDITED`__
+    - Resume editing the last note you edited when opening the note editor
+    - Config Key: `sticky-notes-focus-last-edited`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`STICKY_NOTES_NOTE_WIDTH`__
+    - Config Key: `sticky-notes-note-width`
+    - Values
+        - Type: `Integer`
+        - Default: `100`
+        - Minimum: `40`
+        - Maximum: `300`
+
+- __`BACKGROUND`__
+    - Config Key: `background`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BACKGROUND_COLOR`__
+    - Config Key: `background-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFF7E27A`
+
+- __`STICKY_NOTES_TITLE_BAR_COLOR`__
+    - Follows the background color until changed. Reset it to follow again.
+    - Config Key: `sticky-notes-title-bar-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFD9C66B`
+
+- __`BORDER`__
+    - Config Key: `border`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`BORDER_COLOR`__
+    - Config Key: `border-color`
+    - Values
+        - Type: `String`
+        - Default: `#FF8A7A2E`
+
+- __`BORDER_THICKNESS`__
+    - Config Key: `border-thickness`
+    - Values
+        - Type: `Float`
+        - Default: `0.5F`
+        - Minimum: `0.5F`
+        - Maximum: `3.0F`
+
+- __`ROUNDED_CORNERS`__
+    - Config Key: `rounded-corners`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`STICKY_NOTES_TITLE_SCALE`__
+    - Config Key: `scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `2.0F`
+
+- __`TITLE_COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FF2B2B2B`
+
+- __`STICKY_NOTES_CENTER_TITLE`__
+    - Config Key: `center`
+    - Values
+        - Type: `Boolean`
+        - Default: `true`
+
+- __`STICKY_NOTES_TITLE_SHADOW`__
+    - Config Key: `shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`STICKY_NOTES_TEXT_SCALE`__
+    - Config Key: `scale`
+    - Values
+        - Type: `Float`
+        - Default: `1.0F`
+        - Minimum: `0.5F`
+        - Maximum: `2.0F`
+
+- __`TEXT_COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FF2B2B2B`
+
+- __`STICKY_NOTES_CENTER_TEXT`__
+    - Config Key: `center`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`STICKY_NOTES_TEXT_SHADOW`__
+    - Config Key: `shadow`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+

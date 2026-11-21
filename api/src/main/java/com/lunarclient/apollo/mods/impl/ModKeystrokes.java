@@ -94,6 +94,17 @@ public final class ModKeystrokes {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> CLICK_COUNTS_ONLY = SimpleOption.<Boolean>builder()
+        .node("keystrokes", "click-counts-only").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.0.0
      */
     public static final SimpleOption<Boolean> USE_ARROWS = SimpleOption.<Boolean>builder()
@@ -121,6 +132,63 @@ public final class ModKeystrokes {
     public static final SimpleOption<Boolean> KEY_STROKES_SPACEBAR = SimpleOption.<Boolean>builder()
         .node("keystrokes", "key-strokes-spacebar").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> MOUSE_TRACKER = SimpleOption.<Boolean>builder()
+        .node("keystrokes", "mouse-tracker").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> MOUSE_TRACKER_COLOR = SimpleOption.<Color>builder()
+        .node("keystrokes", "mouse-tracker-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 255, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Float> MOUSE_TRACKER_DOT_SIZE = NumberOption.<Float>number()
+        .node("keystrokes", "mouse-tracker-dot-size").type(TypeToken.get(Float.class))
+        .min(0.5F).max(3.0F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Float> MOUSE_TRACKER_SENSITIVITY = NumberOption.<Float>number()
+        .node("keystrokes", "mouse-tracker-sensitivity").type(TypeToken.get(Float.class))
+        .min(0.25F).max(4.0F)
+        .defaultValue(1.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> MOUSE_TRACKER_IN_MENUS = SimpleOption.<Boolean>builder()
+        .node("keystrokes", "mouse-tracker-in-menus").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 
@@ -154,6 +222,17 @@ public final class ModKeystrokes {
      */
     public static final SimpleOption<Boolean> INNER_BORDER = SimpleOption.<Boolean>builder()
         .node("keystrokes", "inner-border").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> ROUNDED_CORNERS = SimpleOption.<Boolean>builder()
+        .node("keystrokes", "rounded-corners").type(TypeToken.get(Boolean.class))
         .defaultValue(false)
         .notifyClient()
         .build();

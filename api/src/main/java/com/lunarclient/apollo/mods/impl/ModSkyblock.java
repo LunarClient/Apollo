@@ -150,18 +150,6 @@ public final class ModSkyblock {
         .build();
 
     /**
-     * Fixes your fishing bobber sinking in lava.
-     *
-     * @since 1.0.9
-     */
-    public static final SimpleOption<Boolean> FIX_LAVA_BOBBER = SimpleOption.<Boolean>builder()
-        .comment("Fixes your fishing bobber sinking in lava.")
-        .node("skyblock", "fix-lava-bobber").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
      * No documentation available.
      *
      * @since 1.1.9
@@ -182,6 +170,19 @@ public final class ModSkyblock {
         .node("skyblock", "skyblock-line-thickness").type(TypeToken.get(Float.class))
         .min(1.0F).max(10.0F)
         .defaultValue(4.0F)
+        .notifyClient()
+        .build();
+
+    /**
+     * Fixes your fishing bobber sinking in lava.
+     *
+     * @since 1.0.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> FIX_LAVA_BOBBER = SimpleOption.<Boolean>builder()
+        .comment("Fixes your fishing bobber sinking in lava.")
+        .node("skyblock", "fix-lava-bobber").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
         .notifyClient()
         .build();
 

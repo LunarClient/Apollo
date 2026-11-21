@@ -221,42 +221,6 @@ public final class ModChat {
         .build();
 
     /**
-     * Adds emojis to chat. Shortcodes like :smile: autocomplete as you type, and emojis in messages show as colorful Twemoji.
-     *
-     * @since 1.2.9
-     */
-    public static final SimpleOption<Boolean> CHAT_EMOJI = SimpleOption.<Boolean>builder()
-        .comment("Adds emojis to chat. Shortcodes like :smile: autocomplete as you type, and emojis in messages show as colorful Twemoji.")
-        .node("chat", "chat-emoji").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
-     * Shows emojis with Minecraft's built-in font instead of Twemoji images. Shortcodes the game font can't display are left as text.
-     *
-     * @since 1.2.9
-     */
-    public static final SimpleOption<Boolean> CHAT_EMOJI_UNICODE_ONLY = SimpleOption.<Boolean>builder()
-        .comment("Shows emojis with Minecraft's built-in font instead of Twemoji images. Shortcodes the game font can't display are left as text.")
-        .node("chat", "chat-emoji-unicode-only").type(TypeToken.get(Boolean.class))
-        .defaultValue(false)
-        .notifyClient()
-        .build();
-
-    /**
-     * Turns shortcodes like :skull: in other players' messages into emojis. When disabled, only emojis sent as actual characters are shown.
-     *
-     * @since 1.2.9
-     */
-    public static final SimpleOption<Boolean> CHAT_EMOJI_CONVERT_SHORTCODES = SimpleOption.<Boolean>builder()
-        .comment("Turns shortcodes like :skull: in other players' messages into emojis. When disabled, only emojis sent as actual characters are shown.")
-        .node("chat", "chat-emoji-convert-shortcodes").type(TypeToken.get(Boolean.class))
-        .defaultValue(true)
-        .notifyClient()
-        .build();
-
-    /**
      * Copies the hovered chat message when holding the keybind and clicking.
      *
      * @since 1.0.0
@@ -521,6 +485,45 @@ public final class ModChat {
     public static final SimpleOption<Boolean> SHOW_BRACKETS = SimpleOption.<Boolean>builder()
         .comment("Adds square brackets around the timestamp")
         .node("chat", "show-brackets").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Adds emojis to chat. Shortcodes like :smile: autocomplete as you type, and emojis in messages show as colorful Twemoji.
+     *
+     * @since 1.2.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> CHAT_EMOJI = SimpleOption.<Boolean>builder()
+        .comment("Adds emojis to chat. Shortcodes like :smile: autocomplete as you type, and emojis in messages show as colorful Twemoji.")
+        .node("chat", "chat-emoji").type(TypeToken.get(Boolean.class))
+        .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * Shows emojis with Minecraft's built-in font instead of Twemoji images. Shortcodes the game font can't display are left as text.
+     *
+     * @since 1.2.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> CHAT_EMOJI_UNICODE_ONLY = SimpleOption.<Boolean>builder()
+        .comment("Shows emojis with Minecraft's built-in font instead of Twemoji images. Shortcodes the game font can't display are left as text.")
+        .node("chat", "chat-emoji-unicode-only").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * Turns shortcodes like :skull: in other players' messages into emojis. When disabled, only emojis sent as actual characters are shown.
+     *
+     * @since 1.2.9
+     */
+    @Deprecated
+    public static final SimpleOption<Boolean> CHAT_EMOJI_CONVERT_SHORTCODES = SimpleOption.<Boolean>builder()
+        .comment("Turns shortcodes like :skull: in other players' messages into emojis. When disabled, only emojis sent as actual characters are shown.")
+        .node("chat", "chat-emoji-convert-shortcodes").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
         .notifyClient()
         .build();

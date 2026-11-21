@@ -152,7 +152,7 @@ public void toggleOverlayExample(Player viewer, boolean value) {
         - Default: `false`
 
 - __`CLEAR_GLASS_OUTLINE_THICKNESS`__
-    - Config Key: `clear-glass-outline-thickness`
+    - Config Key: `outline-thickness`
     - Values
         - Type: `Integer`
         - Default: `1`
@@ -166,6 +166,18 @@ public void toggleOverlayExample(Player viewer, boolean value) {
         - Default: `1.0F`
         - Minimum: `0.0F`
         - Maximum: `1.0F`
+
+- __`CLEAR_GLASS_OUTLINE_CUSTOM_COLOR`__
+    - Config Key: `clear-glass-outline-custom-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`CLEAR_GLASS_OUTLINE_COLOR`__
+    - Config Key: `outline-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFEEEEEE`
 
 - __`ORE_OUTLINES`__
     - Config Key: `ore-outlines`
@@ -188,7 +200,7 @@ public void toggleOverlayExample(Player viewer, boolean value) {
         - Default: `true`
 
 - __`ORE_OUTLINE_THICKNESS`__
-    - Config Key: `ore-outline-thickness`
+    - Config Key: `outline-thickness`
     - Values
         - Type: `Integer`
         - Default: `1`
@@ -201,11 +213,23 @@ public void toggleOverlayExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `true`
 
+- __`DIAMOND_ORE_OUTLINE_COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FF68F5E4`
+
 - __`GOLD_ORE_OUTLINE`__
     - Config Key: `gold-ore-outline`
     - Values
         - Type: `Boolean`
         - Default: `true`
+
+- __`GOLD_ORE_OUTLINE_COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FFF6E451`
 
 - __`IRON_ORE_OUTLINE`__
     - Config Key: `iron-ore-outline`
@@ -213,11 +237,23 @@ public void toggleOverlayExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `true`
 
+- __`IRON_ORE_OUTLINE_COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FFD9AD90`
+
 - __`LAPIS_ORE_OUTLINE`__
     - Config Key: `lapis-ore-outline`
     - Values
         - Type: `Boolean`
         - Default: `true`
+
+- __`LAPIS_ORE_OUTLINE_COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FF5981E1`
 
 - __`REDSTONE_ORE_OUTLINE`__
     - Config Key: `redstone-ore-outline`
@@ -225,11 +261,23 @@ public void toggleOverlayExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `true`
 
+- __`REDSTONE_ORE_OUTLINE_COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFC0100`
+
 - __`EMERALD_ORE_OUTLINE`__
     - Config Key: `emerald-ore-outline`
     - Values
         - Type: `Boolean`
         - Default: `true`
+
+- __`EMERALD_ORE_OUTLINE_COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FF24FB6A`
 
 - __`COAL_ORE_OUTLINE`__
     - Config Key: `coal-ore-outline`
@@ -237,11 +285,65 @@ public void toggleOverlayExample(Player viewer, boolean value) {
         - Type: `Boolean`
         - Default: `true`
 
+- __`COAL_ORE_OUTLINE_COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FF363636`
+
 - __`NETHER_QUARTZ_ORE_OUTLINE`__
     - Config Key: `nether-quartz-ore-outline`
     - Values
         - Type: `Boolean`
         - Default: `true`
+
+- __`NETHER_QUARTZ_ORE_OUTLINE_COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FFCFC5B5`
+
+- __`WATER_SOURCE_OUTLINE`__
+    - Outline the top of water source blocks to make them easier to see
+    - Config Key: `water-source-outline`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`WATER_SOURCE_OUTLINE_THICKNESS`__
+    - Config Key: `outline-thickness`
+    - Values
+        - Type: `Integer`
+        - Default: `1`
+        - Minimum: `1`
+        - Maximum: `3`
+
+- __`WATER_SOURCE_OUTLINE_COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FF0000FF`
+
+- __`LAVA_SOURCE_OUTLINE`__
+    - Outline the top of lava source blocks to make them easier to see
+    - Config Key: `lava-source-outline`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`LAVA_SOURCE_OUTLINE_THICKNESS`__
+    - Config Key: `outline-thickness`
+    - Values
+        - Type: `Integer`
+        - Default: `1`
+        - Minimum: `1`
+        - Maximum: `3`
+
+- __`LAVA_SOURCE_OUTLINE_COLOR`__
+    - Config Key: `color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF0000`
 
 - __`BARRIER_OUTLINES`__
     - Config Key: `barrier-outlines`
@@ -250,7 +352,7 @@ public void toggleOverlayExample(Player viewer, boolean value) {
         - Default: `false`
 
 - __`BARRIER_OUTLINE_THICKNESS`__
-    - Config Key: `barrier-outline-thickness`
+    - Config Key: `outline-thickness`
     - Values
         - Type: `Integer`
         - Default: `1`
@@ -258,7 +360,7 @@ public void toggleOverlayExample(Player viewer, boolean value) {
         - Maximum: `3`
 
 - __`BARRIER_OUTLINE_COLOR`__
-    - Config Key: `barrier-outline-color`
+    - Config Key: `color`
     - Values
         - Type: `String`
         - Default: `#BFFF0000`
@@ -278,7 +380,7 @@ public void toggleOverlayExample(Player viewer, boolean value) {
         - Default: `false`
 
 - __`STRING_COLOR`__
-    - Config Key: `string-color`
+    - Config Key: `color`
     - Values
         - Type: `String`
         - Default: `#FFFF0000`
@@ -316,7 +418,7 @@ public void toggleOverlayExample(Player viewer, boolean value) {
         - Maximum: `3.0F`
 
 - __`FISHING_LINE_COLOR`__
-    - Config Key: `fishing-line-color`
+    - Config Key: `color`
     - Values
         - Type: `String`
         - Default: `#FF000000`
@@ -356,6 +458,30 @@ public void toggleOverlayExample(Player viewer, boolean value) {
     - Values
         - Type: `String`
         - Default: `#FFD7D7D7`
+
+- __`CUSTOM_HEALTH_COLOR`__
+    - Config Key: `custom-health-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HEALTH_COLOR`__
+    - Config Key: `health-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF0000`
+
+- __`CUSTOM_HUNGER_COLOR`__
+    - Config Key: `custom-hunger-color`
+    - Values
+        - Type: `Boolean`
+        - Default: `false`
+
+- __`HUNGER_COLOR`__
+    - Config Key: `hunger-color`
+    - Values
+        - Type: `String`
+        - Default: `#FFFF7700`
 
 - __`HEADLESS_HORSES`__
     - Improve visibility when riding a horse

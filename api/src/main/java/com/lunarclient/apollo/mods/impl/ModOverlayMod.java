@@ -285,6 +285,28 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> CLEAR_GLASS_OUTLINE_CUSTOM_COLOR = SimpleOption.<Boolean>builder()
+        .node("overlay-mod", "clear-glass-outline-custom-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> CLEAR_GLASS_OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "clear-glass-outline-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(238, 238, 238))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.2
      */
     public static final SimpleOption<Boolean> ORE_OUTLINES = SimpleOption.<Boolean>builder()
@@ -343,11 +365,33 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> DIAMOND_ORE_OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "diamond-ore-outline-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(104, 245, 228))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.2
      */
     public static final SimpleOption<Boolean> GOLD_ORE_OUTLINE = SimpleOption.<Boolean>builder()
         .node("overlay-mod", "gold-ore-outline").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> GOLD_ORE_OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "gold-ore-outline-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(246, 228, 81))
         .notifyClient()
         .build();
 
@@ -365,11 +409,33 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> IRON_ORE_OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "iron-ore-outline-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(217, 173, 144))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.2
      */
     public static final SimpleOption<Boolean> LAPIS_ORE_OUTLINE = SimpleOption.<Boolean>builder()
         .node("overlay-mod", "lapis-ore-outline").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> LAPIS_ORE_OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "lapis-ore-outline-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(89, 129, 225))
         .notifyClient()
         .build();
 
@@ -387,11 +453,33 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> REDSTONE_ORE_OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "redstone-ore-outline-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(252, 1, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.2
      */
     public static final SimpleOption<Boolean> EMERALD_ORE_OUTLINE = SimpleOption.<Boolean>builder()
         .node("overlay-mod", "emerald-ore-outline").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> EMERALD_ORE_OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "emerald-ore-outline-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(36, 251, 106))
         .notifyClient()
         .build();
 
@@ -409,11 +497,103 @@ public final class ModOverlayMod {
     /**
      * No documentation available.
      *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> COAL_ORE_OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "coal-ore-outline-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(54, 54, 54))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
      * @since 1.2.2
      */
     public static final SimpleOption<Boolean> NETHER_QUARTZ_ORE_OUTLINE = SimpleOption.<Boolean>builder()
         .node("overlay-mod", "nether-quartz-ore-outline").type(TypeToken.get(Boolean.class))
         .defaultValue(true)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> NETHER_QUARTZ_ORE_OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "nether-quartz-ore-outline-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(207, 197, 181))
+        .notifyClient()
+        .build();
+
+    /**
+     * Outline the top of water source blocks to make them easier to see.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> WATER_SOURCE_OUTLINE = SimpleOption.<Boolean>builder()
+        .comment("Outline the top of water source blocks to make them easier to see")
+        .node("overlay-mod", "water-source-outline").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Integer> WATER_SOURCE_OUTLINE_THICKNESS = NumberOption.<Integer>number()
+        .node("overlay-mod", "water-source-outline-thickness").type(TypeToken.get(Integer.class))
+        .min(1).max(3)
+        .defaultValue(1)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> WATER_SOURCE_OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "water-source-outline-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(0, 0, 255))
+        .notifyClient()
+        .build();
+
+    /**
+     * Outline the top of lava source blocks to make them easier to see.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> LAVA_SOURCE_OUTLINE = SimpleOption.<Boolean>builder()
+        .comment("Outline the top of lava source blocks to make them easier to see")
+        .node("overlay-mod", "lava-source-outline").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final NumberOption<Integer> LAVA_SOURCE_OUTLINE_THICKNESS = NumberOption.<Integer>number()
+        .node("overlay-mod", "lava-source-outline-thickness").type(TypeToken.get(Integer.class))
+        .min(1).max(3)
+        .defaultValue(1)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> LAVA_SOURCE_OUTLINE_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "lava-source-outline-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
         .notifyClient()
         .build();
 
@@ -616,6 +796,50 @@ public final class ModOverlayMod {
     public static final SimpleOption<Color> MENU_TEXT_COLOR = SimpleOption.<Color>builder()
         .node("overlay-mod", "menu-text-color").type(TypeToken.get(Color.class))
         .defaultValue(new Color(215, 215, 215))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> CUSTOM_HEALTH_COLOR = SimpleOption.<Boolean>builder()
+        .node("overlay-mod", "custom-health-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HEALTH_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "health-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 0, 0))
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Boolean> CUSTOM_HUNGER_COLOR = SimpleOption.<Boolean>builder()
+        .node("overlay-mod", "custom-hunger-color").type(TypeToken.get(Boolean.class))
+        .defaultValue(false)
+        .notifyClient()
+        .build();
+
+    /**
+     * No documentation available.
+     *
+     * @since %release_version%
+     */
+    public static final SimpleOption<Color> HUNGER_COLOR = SimpleOption.<Color>builder()
+        .node("overlay-mod", "hunger-color").type(TypeToken.get(Color.class))
+        .defaultValue(new Color(255, 119, 0))
         .notifyClient()
         .build();
 
